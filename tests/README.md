@@ -19,7 +19,7 @@ and both skip stages, role/error/hint colours, hint/pause/resume, rollover/reset
 invalid rounds, UID values, registry validation, filtered/random rounds,
 immutable LCD snapshots, and an application driven entirely by ports.
 
-Each firmware runner first runs those 11 cases, then executes 36 behavioural
+Each firmware runner first runs those 11 cases, then executes 37 behavioural
 cases with fake electrical/device I/O. Flow regressions drive real input adapters
 for pre-positioned R2, both held cards across questions, short/late/held buttons,
 all 900 blink samples, stopwatch resumption, stage arming, hint colours and
@@ -48,3 +48,8 @@ are historical fixtures from the supplied ZIP, not the active test contract.
 Simulation does not replace ESP32 cross-compilation, USB upload or physical
 RFID/LCD checks. Latest actual results: `../VERIFICATION.md`.
 
+
+The physical-wiring case drives every OFF/primary/combined colour through the
+real output adapter, checks the user's literal R1=16/17/26 and R2=13/14/25
+R/G/B pin wiring, and verifies the Serial `pins` guide. Ordinary mode checks
+that only the original GPIO25/26 outputs change for every logical colour.

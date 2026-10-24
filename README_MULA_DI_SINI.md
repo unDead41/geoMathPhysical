@@ -31,8 +31,8 @@ Jika dua RGB sudah dipasang, ubah satu baris dalam `config.h`:
 
 | RGB | R | G | B |
 |---|---:|---:|---:|
-| R1 | 25 | 13 | 14 |
-| R2 | 26 | 16 | 17 |
+| RGB1 / R1 bongkah | 16 | 17 | 26 |
+| RGB2 / R2 bentangan | 13 | 14 | 25 |
 
 `RGB_COMMON_ANODE = false` untuk common ke GND; gunakan `true` jika common anode. Setiap saluran LED memerlukan resistor seperti sambungan asal.
 

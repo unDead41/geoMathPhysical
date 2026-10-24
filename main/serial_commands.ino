@@ -187,9 +187,12 @@ void serialPrintPins() {
                 unsigned(RFID_SS_PINS[0]), unsigned(RFID_SS_PINS[1]), unsigned(RFID_RST_PIN));
   Serial.printf("LCD SDA=%u SCL=%u | B1=%u B2=%u (bias dalaman ikut polariti)\n",
                 unsigned(LCD_SDA_PIN), unsigned(LCD_SCL_PIN), unsigned(BUTTON_PINS[0]), unsigned(BUTTON_PINS[1]));
-  for (uint8_t i = 0; i < 2; ++i)
-    Serial.printf("RGB%u R/G/B=%u/%u/%u | %s\n", unsigned(i + 1), unsigned(RGB_PINS[i][0]),
-                  unsigned(RGB_PINS[i][1]), unsigned(RGB_PINS[i][2]), RGB_ENABLED ? "MOD RGB" : "LED BIASA: PIN R SAHAJA");
+  for (uint8_t i = 0; i < 2; ++i) {
+    if (RGB_ENABLED)
+      Serial.printf("RGB%u R/G/B=%u/%u/%u | MOD RGB\n", unsigned(i + 1), unsigned(RGB_PINS[i][0]),
+                    unsigned(RGB_PINS[i][1]), unsigned(RGB_PINS[i][2]));
+    else Serial.printf("LED%u GPIO=%u | LED BIASA\n", unsigned(i + 1), unsigned(LED_PINS[i]));
+  }
   Serial.println(F("RC522/modul butang=3.3V. LCD 5V melalui penukar aras I2C dua hala."));
 }
 

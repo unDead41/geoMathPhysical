@@ -36,7 +36,7 @@ Dalam panel PlatformIO > **Project Tasks**, pilih environment yang sepadan:
 | Environment | Perkakasan |
 |---|---|
 | `esp32dev` (default) | Dua LED biasa: GPIO25 dan GPIO26 |
-| `esp32dev-rgb` | Dua RGB empat kaki: R1=25/13/14, R2=26/16/17 |
+| `esp32dev-rgb` | Dua RGB empat kaki (R/G/B): R1=16/17/26, R2=13/14/25 |
 
 Pilih **General > Build** di bawah environment itu. Build boleh dijalankan
 tanpa ESP32 disambungkan. Tunggu keputusan `SUCCESS`.
@@ -199,7 +199,7 @@ python tests/run_tests.py --separate-modules
 python tests/run_tests.py --separate-modules --rgb
 ```
 
-Setiap arahan menjalankan 11 kes teras/application tanpa Arduino dan 36 kes
+Setiap arahan menjalankan 11 kes teras/application tanpa Arduino dan 37 kes
 integrasi firmware. Mod `--separate-modules` mengkompil setiap tab secara
 berasingan supaya header serta kebergantungan modul turut disahkan.
 

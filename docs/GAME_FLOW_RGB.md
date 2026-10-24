@@ -117,8 +117,16 @@ Di menu/keputusan kedua-dua LED biasa kekal ON kerana tiada saluran warna;
 label R1/R2 serta notis LCD menerangkan tindakan. Pin G/B tidak digunakan.
 
 Apabila pemasangan RGB empat kaki siap, Build/Upload environment
-**esp32dev-rgb** dalam VS Code + PlatformIO. GPIO dan polariti sedia ada kekal;
-rujuk [SAMBUNGAN.md](../SAMBUNGAN.md). Tiada pertukaran board atau format NVS.
+**esp32dev-rgb** dalam VS Code + PlatformIO. Polariti sedia ada kekal;
+rujuk [SAMBUNGAN.md](../SAMBUNGAN.md). Pemetaan pemasangan RGB pengguna terkini:
+
+| LED | R | G | B |
+|---|---:|---:|---:|
+| RGB1 / R1 bongkah | 16 | 17 | 26 |
+| RGB2 / R2 bentangan | 13 | 14 | 25 |
+
+Pin LED biasa kekal R1=25/R2=26, berasingan daripada susunan RGB di atas.
+Tiada pertukaran board atau format NVS.
 
 ## Fungsi guru
 

@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-10-24 - User RGB wiring update
+
+- Set RGB1/R1 bongkah to R=GPIO16, G=GPIO17, B=GPIO26 and RGB2/R2 bentangan
+  to R=GPIO13, G=GPIO14, B=GPIO25, as explicitly requested by the user.
+- Separate ordinary LED pins from RGB channels: esp32dev stays default with
+  R1=GPIO25/R2=GPIO26; esp32dev-rgb uses the new RGB wiring.
+- Update Serial pins output and wiring/user guides. Add a physical-output
+  regression for every colour, reader isolation and ordinary-mode compatibility.
+- Keep quiz flow, bank, UID/NVS, buttons and RFID pins unchanged.
+
 ## 2026-10-24 - Two-card flow on clean architecture
 
 - Require registered solid R1 then matching net R2 on every question; award +1

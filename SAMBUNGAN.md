@@ -71,17 +71,20 @@ Jika kekal PRESSED, sahkan polariti modul dan sambungan S / VCC / GND sebelum be
 
 ## Dua RGB - boleh dipasang kemudian
 
-| Saluran | RGB 1 | RGB 2 |
+| Saluran | RGB1 / R1 bongkah | RGB2 / R2 bentangan |
 |---|---|---|
-| R | GPIO25 | GPIO26 |
-| G | GPIO13 | GPIO16 |
-| B | GPIO14 | GPIO17 |
+| R | GPIO16 | GPIO13 |
+| G | GPIO17 | GPIO14 |
+| B | GPIO26 | GPIO25 |
 
-Gambar asal menggunakan LED biasa: anode LED1 pada GPIO25 dan LED2 pada GPIO26.
-Untuk dua RGB kemudian, pin itu menjadi saluran R; tambah empat sambungan G/B mengikut jadual.
-GPIO32/33 dikhaskan untuk butang, jadi tidak digunakan oleh RGB.
-Environment `esp32dev` kekal menggunakan dua LED biasa pada GPIO25/26.
-Saluran tambahan G/B digunakan selepas memilih `esp32dev-rgb`.
+Pemetaan RGB ini mengikut sambungan pengguna: RGB1 B=26, G=17, R=16;
+RGB2 B=25, G=14, R=13. RGB1 ialah petunjuk bongkah/R1 dan RGB2 bentangan/R2.
+GPIO32/33 dikhaskan untuk butang.
+
+Pemasangan LED biasa asal berasingan: LED R1 pada GPIO25 dan LED R2 pada GPIO26.
+Environment `esp32dev` mengekalkan pin itu melalui `LED_PINS`; `esp32dev-rgb`
+menggunakan `RGB_PINS` R/G/B dalam jadual di atas. GPIO25/26 ialah saluran B
+dalam pemasangan RGB, jadi pin LED biasa tidak lagi diambil daripada saluran R.
 
 Untuk setiap saluran: GPIO -> resistor 330 Ohm -> kaki R/G/B.
 Jumlah enam resistor, satu bagi setiap saluran.

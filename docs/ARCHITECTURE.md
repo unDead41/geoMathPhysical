@@ -104,3 +104,11 @@ perlu diubah. Tiada library/dependency produksi baharu.
 
 View menambah label R1/R2 pada ruang header dan mengekalkan tiga baris isi bank.
 Panduan terkini: [GAME_FLOW_RGB.md](GAME_FLOW_RGB.md).
+
+## Pin LED biasa dan pemasangan RGB
+
+`config.h` mengasingkan `LED_PINS` daripada `RGB_PINS`. Mod `esp32dev`
+mengekalkan R1=GPIO25/R2=GPIO26. Mod `esp32dev-rgb` menggunakan RGB1/R1
+R=16, G=17, B=26 dan RGB2/R2 R=13, G=14, B=25, mengikut sambungan pengguna.
+Driver memilih pemetaan mengikut environment tanpa mengubah peraturan permainan.
+Arahan Serial `pins` melaporkan pin yang digunakan oleh environment aktif.

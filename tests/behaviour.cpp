@@ -41,6 +41,7 @@ std::map<std::string,std::vector<uint8_t>> fakeNvs;
 #include "tag_registry.ino"
 #endif
 #include "expected_displays.h"
+#include "hardware/rgb.h"
 
 // Legacy characterization fixtures set synthetic states only in test utilities.
 // Production adapters see const snapshots and cannot mutate the application.
@@ -136,13 +137,13 @@ static void held_card(){
 static void leds(){
  fixture();start();select("C3");rgbUpdate();
 #if GEODECODER_RGB_ENABLED
- need(sim::pins[14]==HIGH&&sim::pins[17]==LOW,"R1 blue/R2 off missing at question start");
+ need(sim::pins[26]==HIGH&&sim::pins[25]==LOW,"R1 blue/R2 off missing at question start");
 #else
  need(sim::pins[25]==HIGH&&sim::pins[26]==LOW,"ordinary LEDs must start with R1 only");
 #endif
  quizOnScan(0,tag(Shape::CONE,0));rgbUpdate();
 #if GEODECODER_RGB_ENABLED
- need(sim::pins[13]==HIGH&&sim::pins[25]==LOW&&sim::pins[14]==LOW&&sim::pins[17]==HIGH,"R1 green/R2 blue missing");
+ need(sim::pins[17]==HIGH&&sim::pins[16]==LOW&&sim::pins[26]==LOW&&sim::pins[25]==HIGH,"R1 green/R2 blue missing");
 #else
  need(sim::pins[25]==HIGH&&sim::pins[26]==HIGH,"ordinary LEDs must hold R1 on while R2 waits");
 #endif
@@ -249,7 +250,7 @@ static void stage_hints_and_errors(){
  fixture();start();select("P1");appHintButton();rgbUpdate();
  need(appReaderColor(0)==RgbColor::YELLOW&&appReaderColor(1)==RgbColor::OFF,"solid hint colours wrong");
 #if GEODECODER_RGB_ENABLED
- need(sim::pins[25]==HIGH&&sim::pins[13]==HIGH&&sim::pins[14]==LOW,"yellow is not red+green");
+ need(sim::pins[16]==HIGH&&sim::pins[17]==HIGH&&sim::pins[26]==LOW,"yellow is not red+green");
 #endif
  quizOnScan(0,tag(Shape::CUBE,0));need(appReaderColor(0)==RgbColor::RED,"solid error not red");
  advance(1200);need(appReaderColor(0)==RgbColor::YELLOW&&testQuiz().showHint,"solid error lost hint");
@@ -346,8 +347,45 @@ static void teacher_tools_with_two_cards(){
  need(appState().mode==AppMode::STOPPED&&testQuiz().phase==QuizPhase::SETUP,"enrolment did not discard stale round");
 }
 
+
+// Drives the real output adapter against the user's literal physical wiring.
+// Detects wrong reader/channel routing and accidental use of RGB pins in LED mode.
+static void physical_led_wiring(){
+ fixture();rgbWriteReader(0,RgbColor::OFF);rgbWriteReader(1,RgbColor::OFF);
+ const RgbColor colours[]={RgbColor::OFF,RgbColor::RED,RgbColor::GREEN,RgbColor::BLUE,
+   RgbColor::YELLOW,RgbColor::CYAN,RgbColor::MAGENTA,RgbColor::WHITE};
+#if GEODECODER_RGB_ENABLED
+ const uint8_t physicalPins[2][3]={{16,17,26},{13,14,25}};
+ const bool channels[8][3]={{false,false,false},{true,false,false},{false,true,false},{false,false,true},
+   {true,true,false},{false,true,true},{true,false,true},{true,true,true}};
+ for(unsigned r=0;r<2;++r)for(unsigned colour=0;colour<8;++colour){
+  rgbWriteReader(r,colours[colour]);
+  for(unsigned reader=0;reader<2;++reader)for(unsigned channel=0;channel<3;++channel)
+   need(sim::pins[physicalPins[reader][channel]]==int(reader==r&&channels[colour][channel]),
+        "colour does not reach the requested physical reader/channel");
+  rgbWriteReader(r,RgbColor::OFF);
+ }
+ Serial.output.clear();command("pins");
+ need(Serial.output.find("RGB1 R/G/B=16/17/26")!=std::string::npos&&
+      Serial.output.find("RGB2 R/G/B=13/14/25")!=std::string::npos,"Serial pins guide has stale RGB wiring");
+#else
+ const auto before=sim::pins;
+ for(unsigned r=0;r<2;++r)for(unsigned colour=0;colour<8;++colour){
+  rgbWriteReader(r,colours[colour]);
+  for(unsigned pin=0;pin<sim::pins.size();++pin){
+   const int expected=pin==(r==0?25U:26U)?int(colour!=0):before[pin];
+   need(sim::pins[pin]==expected,"ordinary LED mapping changed or drove an RGB-only channel");
+  }
+  rgbWriteReader(r,RgbColor::OFF);
+ }
+ Serial.output.clear();command("pins");
+ need(Serial.output.find("LED1 GPIO=25")!=std::string::npos&&
+      Serial.output.find("LED2 GPIO=26")!=std::string::npos,"Serial pins guide has stale ordinary LED wiring");
+#endif
+}
+
 int main(){
- const std::pair<const char*,void(*)()> tests[]={{"stage_hints_errors_and_colours",stage_hints_and_errors},{"skip_stages_exact_blinks_and_clock",skip_both_stages_and_exact_blinks},{"early_net_requires_removal",early_positioned_net},{"short_blink_button_presses",short_blink_presses},{"menu_result_rgb_cadence",ambient_cadence_and_no_scoring},{"summary_next_resets",summary_next_resets},{"teacher_tools_with_two_cards",teacher_tools_with_two_cards},{"bank_15_and_round_variety",bank},{"menu_copy",menu},{"six_help_pages",help_pages},{"help_blocks_next",help_next},{"hint_toggle_and_timer",hint_toggle},{"lcd_header",header},{"two_cards_and_no_double_award",single_scan},{"net_reader_and_wrong_answers",net_reader},{"skip_notice_zero_points",skip_notice},{"buttons_during_notice",pending_buttons},{"automatic_last_correct_result",finish_correct},{"last_skip_result",finish_skip},{"single_reader_arming",fresh_reader},{"held_card_requires_removal",held_card},{"per_reader_led",leds},{"millis_rollover",clock_rollover},{"minutes_seconds_after_one_hour",long_time},{"nvs_and_filtered_round",saved_tags},{"all_15_question_and_hint_displays",all_copies},{"physical_hint_debounce_and_hold",physical_hint},{"complete_five_question_round",complete_round},{"physical_late_notice_buttons",late_notice_buttons},{"failed_nvs_write_is_transactional",nvs_failed_write},{"unavailable_nvs_rejects_registration",nvs_unavailable},{"duplicate_uid_keeps_mapping",duplicate_mapping},{"corrupt_storage_not_loaded_or_overwritten",corrupt_storage},{"application_pause_resume_clock",paused_application},{"serial_overflow_then_valid_command",serial_overflow_recovery},{"legacy_nvs_byte_image",legacy_nvs_image}};
+ const std::pair<const char*,void(*)()> tests[]={{"physical_led_wiring_all_colours",physical_led_wiring},{"stage_hints_errors_and_colours",stage_hints_and_errors},{"skip_stages_exact_blinks_and_clock",skip_both_stages_and_exact_blinks},{"early_net_requires_removal",early_positioned_net},{"short_blink_button_presses",short_blink_presses},{"menu_result_rgb_cadence",ambient_cadence_and_no_scoring},{"summary_next_resets",summary_next_resets},{"teacher_tools_with_two_cards",teacher_tools_with_two_cards},{"bank_15_and_round_variety",bank},{"menu_copy",menu},{"six_help_pages",help_pages},{"help_blocks_next",help_next},{"hint_toggle_and_timer",hint_toggle},{"lcd_header",header},{"two_cards_and_no_double_award",single_scan},{"net_reader_and_wrong_answers",net_reader},{"skip_notice_zero_points",skip_notice},{"buttons_during_notice",pending_buttons},{"automatic_last_correct_result",finish_correct},{"last_skip_result",finish_skip},{"single_reader_arming",fresh_reader},{"held_card_requires_removal",held_card},{"per_reader_led",leds},{"millis_rollover",clock_rollover},{"minutes_seconds_after_one_hour",long_time},{"nvs_and_filtered_round",saved_tags},{"all_15_question_and_hint_displays",all_copies},{"physical_hint_debounce_and_hold",physical_hint},{"complete_five_question_round",complete_round},{"physical_late_notice_buttons",late_notice_buttons},{"failed_nvs_write_is_transactional",nvs_failed_write},{"unavailable_nvs_rejects_registration",nvs_unavailable},{"duplicate_uid_keeps_mapping",duplicate_mapping},{"corrupt_storage_not_loaded_or_overwritten",corrupt_storage},{"application_pause_resume_clock",paused_application},{"serial_overflow_then_valid_command",serial_overflow_recovery},{"legacy_nvs_byte_image",legacy_nvs_image}};
  unsigned failures=0;for(const auto& test:tests){try{test.second();std::cout<<"PASS "<<test.first<<'\n';}catch(const std::exception& error){++failures;std::cout<<"FAIL "<<test.first<<": "<<error.what()<<'\n';}}
  std::cout<<(sizeof(tests)/sizeof(tests[0])-failures)<<"/"<<sizeof(tests)/sizeof(tests[0])<<" passed\n";return failures?1:0;
 }
