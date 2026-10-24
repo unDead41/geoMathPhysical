@@ -196,7 +196,7 @@ static void lcdSnapshots() {
   need(!std::strcmp(frame.rows[1], "Bongkah apakah ini? "), "LCD question changed");
   game.toggleHint();
   frame = buildLcdFrame({app, game.data(), game.current(), 14000, true, -1});
-  need(!std::strcmp(frame.rows[1], "HINT: Fikir susunan "), "LCD hint changed");
+  need(!std::strcmp(frame.rows[1], "HINT: Muka sisi akan"), "LCD hint changed");
   game.submit(0, Shape::PYRAMID, 0, 14000); game.submit(1, Shape::PYRAMID, 1, 14100); game.update(15000);
   frame = buildLcdFrame({app, game.data(), game.current(), game.elapsed(20000), true, -1});
   need(!std::strcmp(frame.rows[1], "Skor: 1/1 (100%)    "), "LCD summary score changed");

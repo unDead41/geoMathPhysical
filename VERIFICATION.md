@@ -1,114 +1,79 @@
-# GeoDecoder verification - Serial component tests, 24 October 2026
+# GeoDecoder verification - harmonised LCD bank, 24 October 2026
 
-Integration target: `main`, previously `66bf7959ecbf98d46b98492adb8fe924e0108743`.
-Source branch: `testing/components` at
-`36d999a9016cf0389005cede7567b654c462b03d`, incorporating the prior flow/RGB
-commit `e457b0536987d35042da4d47337fea65a0ad5d77`. Comparison confirmed main is
-an ancestor (source ahead 4, behind 0); no conflict or additional runtime change
-was needed. Integration preserves testing/components and codex/game-flow-rgb.
-The user explicitly authorized pushing the completed component work to main.
-Checkout/upload guides now point to main. The complete native matrix and both
-ESP32 builds below were rerun on the integration source before publication.
+Baseline main: `4a798fd835a8cca811ee1140f209900446c1fbf9`.
+Question branch: `b514d733a2e10f9cdc8640c0de2471513dc9f051`.
 
-Design/plan and command contract:
-`docs/superpowers/specs/2026-10-24-component-testing-design.md`,
-`docs/superpowers/plans/2026-10-24-component-testing.md`, `docs/COMPONENT_TESTS.md`.
+The reviewed bank is integrated with the current clean architecture, two-card
+game flow and component diagnostics. The `domain/types.h` include and injected
+`RandomIndex` round builder are retained.
 
-## Native simulation
+## Native checks
 
-| Firmware path | Ordinary | RGB |
+| Configuration | Pure core/application/view | Firmware integration |
 |---|---|---|
-| Arduino tabs, one translation unit | 11/11 core + 46/46 behaviour PASS | 11/11 core + 46/46 behaviour PASS |
-| Actual src/main.cpp entry | 11/11 core + 46/46 behaviour PASS | 11/11 core + 46/46 behaviour PASS |
-| Every tab compiled independently | 11/11 core + 46/46 behaviour PASS | 11/11 core + 46/46 behaviour PASS |
+| `--entrypoint src/main.cpp` | 11/11 passed | 46/46 passed |
+| `--entrypoint src/main.cpp --rgb` | 11/11 passed | 46/46 passed |
+| `--separate-modules` | 11/11 passed | 46/46 passed |
+| `--separate-modules --rgb` | 11/11 passed | 46/46 passed |
 
-Commands run:
+Commands use `python tests/run_tests.py` with the flags above. C++11,
+warnings as errors, ASan and UBSan remain enabled. The maintained bank case
+checks all source rows for printable ASCII and the 20-column limit, unique
+IDs, the preserved two solid/one net question metadata split per shape,
+and matching Serial/LCD wording. The integration case checks all 15 question
+and hint bodies. The pure LCD view case now expects the reviewed P1 hint.
 
-```text
-python tests/run_tests.py
-python tests/run_tests.py --rgb
-python tests/run_tests.py --entrypoint src/main.cpp
-python tests/run_tests.py --entrypoint src/main.cpp --rgb
-python tests/run_tests.py --separate-modules
-python tests/run_tests.py --separate-modules --rgb
-```
+Existing two-card scoring, stage routing, held-card/button interlocks, exact
+900 ms blink sequences, stopwatch pause/resume, user GPIO wiring, NVS byte-image
+and Serial component diagnostics all pass in the combined source.
 
-Each runner first builds/runs the pure core/view/application with no Arduino
-headers or device fakes. Integration compiles the real firmware with electrical
-I/O simulation. Both use C++11, -Wall -Wextra -Werror -pedantic, ASan and UBSan.
-LeakSanitizer remains disabled in the managed runtime.
+## ESP32 compilation
 
-Nine added cases were observed failing on the pre-feature code, then passing:
-real UART discovery/case/whitespace/path routing, LED ownership and 500/250 ms
-cycle/blink boundaries, R1/R2/both UID scans including unregistered cards,
-fresh version-register failures/recovery, raw/stable button changes and counts,
-no carried button input at exit, malformed paths/extra arguments and legacy
-command isolation, switching tests and millis rollover. A further red/green
-check ensures `stop extra` cannot accidentally exit an active diagnostic.
-
-Tests verify no score, no running quiz timer and no NVS writes; held cards and
-held buttons do not flood the monitor. Persistent LED OFF is not overwritten
-by menu colours. Existing 37 game, wiring, storage and Serial cases remain.
-
-## ESP32 build
-
-```text
-pio run -e esp32dev -e esp32dev-rgb
-```
+`pio run -e esp32dev -e esp32dev-rgb` completed successfully.
 
 | Environment | Result | Static RAM | Flash |
 |---|---|---:|---:|
-| esp32dev | SUCCESS | 22,772 / 327,680 (6.9%) | 335,729 / 1,310,720 (25.6%) |
-| esp32dev-rgb | SUCCESS | 22,772 / 327,680 (6.9%) | 335,777 / 1,310,720 (25.6%) |
+| esp32dev | SUCCESS | 22,772 / 327,680 | 335,921 / 1,310,720 |
+| esp32dev-rgb | SUCCESS | 22,772 / 327,680 | 335,969 / 1,310,720 |
 
-PlatformIO 6.1.18, Espressif32 6.12.0, Arduino-ESP32 2.0.17, Xtensa GCC
-8.4.0+2021r2-patch5, MFRC522 1.4.12 and hd44780 1.3.2. No new production
-library/board configuration or dynamic allocation was introduced by diagnostics.
+Toolchain: PlatformIO Core 6.1.18, Espressif32 6.12.0, Arduino-ESP32 2.0.17,
+Xtensa GCC 8.4.0+2021r2-patch5, MFRC522 1.4.12 and hd44780 1.3.2.
+These are compile-time image sizes, not physical performance measurements.
 
-## Preserved contracts / findings
+## Documentation
 
-- The existing game engine, pure application, bank, GPIO and NVS implementation
-  are unchanged. main/question_bank.h remains blob
-  `0f3d12455ddd730d2b52009aee4e89a40080ea4c`.
-- Ordinary esp32dev stays default with GPIO25/26. RGB1 R/G/B=16/17/26 and RGB2
-  =13/14/25. Reader/button wiring, common polarity and stored registrations stay.
-- Composition setup/output functions gate diagnostics; loop() is unchanged.
-- Diagnostic LED writes would otherwise be overwritten by menu output; explicit
-  session output ownership prevents that. Raw presses at serial exit would
-  otherwise become game presses; buttonsRequireRelease prevents that race.
-- Paths are fully validated before session/hardware mutation. Normal game or
-  enrolment commands are blocked until test/stop, except read-only inspection
-  and the stop alias. Invalid stop arguments do not exit diagnostics.
-- SPI VersionReg READY is a connection indication, not an antenna or UID test.
-  test/rfid/check does not perform a full RF self-test/reinitialisation. Confirm
-  UID scans and reset after wiring/power repair if needed.
+- [Text review of all screens](docs/LCD_QUESTION_REVIEW.md)
+- [Latest A4 PDF](docs/lcd/GeoDecoder_15_Contoh_LCD_Soalan_dan_Hint.pdf)
+- [15 matching PNGs](docs/lcd/GeoDecoder_15_Contoh_LCD_PNG.zip)
 
-## Independent final review
+All 30 question/hint frames were captured by executing the current
+`src/main.cpp` through the native LCD harness. Each frame has four rows of
+20 ASCII characters and matches the reviewed bank. Previews show the active
+R1 header at 00:14 and the hint at 00:19. Runtime changes the header to R2
+after the correct solid card without changing the question/hint body.
 
-A read-only review of the full implementation, spec/plan, real adapters, Serial
-routing and component regressions found no Critical, Important or Minor
-finding. It confirmed input isolation, persistent output ownership, malformed
-command rejection, release interlocks and cached/live RFID status distinctions.
-The reviewer checked the source and existing passing evidence; it did not imply
-physical testing or rerun the green suites. Physical wiring/colour/RF, upload and
-reconnect recovery beyond the documented probe still require the actual board.
+The PDF contains 15 landscape A4 pages with one fixed layout, side-by-side
+LCDs, textbook symbol terms, no metadata row and a gold accent inside the
+rounded banner. Each PNG comes from the final PDF. Visual inspection and
+pixel comparison confirmed the latest update changed only R1 in the LCD
+headers; the approved template remains identical on all pages.
 
-## Physical verification pending
+## Preserved contracts and findings
 
-No USB upload or physical hardware testing was performed. The diagnostics are
-implemented to make those tests easy, but native PASS and build SUCCESS do not
-establish physical operation or colour correctness.
+All 15 question IDs, answer shapes and legacy metadata remain. Runtime
+`AnswerStage`, rather than `Question.reader`, still chooses R1 then R2.
+No scoring, clock, game engine, component controller or GPIO change was made.
 
-1. Update main, then Build/Upload the matching environment in VS Code.
-2. Open Monitor at 115200 baud; send test/help and pins.
-3. Use test/rfid/check then test/rfid/r1, /r2, /all; scan/lift registered and
-   unregistered cards and verify each printed UID/reader on the real board.
-4. Use test/led/r1/red, /green, /blue and repeat for r2. Check yellow/cycle/blink/
-   off; compare physical colours to the Serial label. Verify reader isolation.
-5. Use test/button/all; press/hold/release both buttons. Check raw level, stable
-   transitions and one count per press. Game/menu actions must not occur.
-6. Hold a button while exiting with test/stop; release before starting a game.
-   Use play or NEXT and confirm normal game and enrolled cards still work.
+Ordinary LEDs remain GPIO25/26. User RGB wiring remains R1 R/G/B=16/17/26
+and R2=13/14/25. NVS namespace `geomath_q2`, registry key, shape IDs and the
+120-byte registry ABI remain unchanged; saved cards require no migration.
 
-Avoid full-flash erase. Previous wiring evidence is retained in
-`docs/archive/VERIFICATION_2026-10-24-rgb-wiring.md`.
+The previous question branch targeted the older architecture and included
+single-card documentation. Integration retains the current types/RNG API,
+updates the stale P1 hint fixture, and describes the active two-card rule.
+
+USB upload and physical LCD/RFID/button/LED tests were not performed.
+Physical readability and contrast still need a real-board check.
+
+The prior component integration evidence is retained in
+[the archive](docs/archive/VERIFICATION_2026-10-24-components.md).

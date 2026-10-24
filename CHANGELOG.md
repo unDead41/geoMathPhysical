@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-10-24 - Harmonised LCD questions and documentation
+
+- Harmonised all 15 questions and hints within three 20-character ASCII rows.
+- Used j for jejari and s for tinggi sendeng; net questions describe the net
+  or box dimensions without unrelated volume calculations.
+- Kept question/shape IDs and legacy metadata; every question still requires
+  the current R1 solid then R2 net sequence before awarding one point.
+- Preserved the clean architecture, injected-RNG round builder, component
+  diagnostics, user RGB wiring and saved card registrations.
+- Added source-length, ASCII, unique-ID and Serial/LCD consistency checks and
+  updated the pure LCD view fixture to the reviewed hint.
+- Added the latest static A4 PDF and 15 PNGs with textbook symbol terms,
+  no metadata row and a contained gold accent; previews include the R1 stage.
+
 ## 2026-10-24 - Integrate component testing into main
 
 - Merge testing/components at 36d999a into main, including its existing two-card

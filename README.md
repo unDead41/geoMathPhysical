@@ -206,6 +206,12 @@ Edit modul dalam `main/`; `src/main.cpp` menggunakan tab yang sama, tanpa
 salinan kedua logik permainan. `main/main.ino` masih boleh dibuka dalam
 Arduino IDE jika diperlukan.
 
+Lihat [semua 15 paparan soalan dan hint semasa](docs/LCD_QUESTION_REVIEW.md),
+[PDF dokumentasi A4](docs/lcd/GeoDecoder_15_Contoh_LCD_Soalan_dan_Hint.pdf)
+dan [set 15 PNG](docs/lcd/GeoDecoder_15_Contoh_LCD_PNG.zip).
+Gambar dalam `contoh display LCD/` ialah bahan pakej asal; bank runtime
+terkini berada dalam `main/question_bank.h`.
+
 ## Pengesahan dan kemas kini
 
 Ujian simulasi memerlukan Python 3 dan G++:

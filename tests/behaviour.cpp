@@ -68,7 +68,28 @@ static const Uid& tag(Shape shape,uint8_t reader){return testRegistry().tags[uin
 static void bank(){
  fixture();need(QUESTION_COUNT==15,"bank must contain 15 questions");
  unsigned counts[SHAPE_COUNT]={};std::set<unsigned> seen;
- for(const auto& q:QUESTIONS)++counts[uint8_t(q.answer)];
+ std::set<std::string> questionIds;
+ unsigned solidCounts[SHAPE_COUNT]={},netCounts[SHAPE_COUNT]={};
+ for(const auto& q:QUESTIONS){
+  need(uint8_t(q.answer)<SHAPE_COUNT,"question has invalid shape");
+  need(questionIds.insert(q.id).second,"duplicate question ID");
+  need(q.reader<READER_COUNT,"question has invalid reader");
+  ++counts[uint8_t(q.answer)];
+  ++(q.reader==0?solidCounts:netCounts)[uint8_t(q.answer)];
+  std::string fullText;
+  for(unsigned row=0;row<3;++row){
+   need(strlen(q.lines[row])<=LCD_COLUMNS,"source question would be truncated");
+   need(strlen(q.hint[row])<=LCD_COLUMNS,"source hint would be truncated");
+   for(const char* value:{q.lines[row],q.hint[row]})
+    for(const char* p=value;*p;++p)
+     need(static_cast<unsigned char>(*p)>=32&&static_cast<unsigned char>(*p)<=126,"LCD source must be printable ASCII");
+   if(row)fullText+=' ';
+   fullText+=q.lines[row];
+  }
+  need(fullText==q.fullText,"Serial question differs from LCD copy");
+ }
+ for(uint8_t shape=0;shape<SHAPE_COUNT;++shape)
+  need(solidCounts[shape]==2&&netCounts[shape]==1,"each shape needs two solid questions and one net question");
  for(auto n:counts)need(n==3,"each shape must have 3 questions");
  for(int round=0;round<100;++round){uint8_t out[ROUND_TARGET]={};need(bankBuildRound(ALL_SHAPES_MASK,out)==5,"all-shape round must have 5 questions");std::set<unsigned> ids,shapes;
   for(auto i:out){need(i<QUESTION_COUNT,"bank index out of bounds");ids.insert(i);shapes.insert(uint8_t(QUESTIONS[i].answer));seen.insert(i);}
