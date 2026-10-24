@@ -73,6 +73,26 @@ untuk inisialisasi reader, kemudian ulang `test/rfid/check` dan ujian UID.
 
 ## LED atau RGB
 
+Arahan ringkas terus dalam Serial Monitor:
+
+| RGB1 sahaja | RGB2 sahaja | Hasil |
+|---|---|---|
+| `R1Red` | `R2Red` | Merah kekal |
+| `R1Green` | `R2Green` | Hijau kekal |
+| `R1Blue` | `R2Blue` | Biru kekal |
+| `R1Yellow` | `R2Yellow` | Kuning kekal; saluran R dan G bersama |
+| `R1RGB` | `R2RGB` | Semua tujuh warna dalam susunan rawak, bertukar setiap 500 ms |
+| `R1Off` | `R2Off` | Padam; target lain juga padam |
+
+Hantar satu arahan, periksa warna fizikal, kemudian hantar yang seterusnya.
+Suffix `Cyan`, `Magenta` dan `White` juga boleh digunakan. Huruf besar/kecil
+diterima, misalnya `r1red`. Setiap arahan memilih satu target dan memadam target
+lain; ia tidak mengumpulkan pilihan R1/R2 daripada arahan sebelumnya.
+`R1RGB`/`R2RGB` tidak mengulang warna yang sama secara berturut-turut. Serial
+menulis `target=R1 colour=yellow` misalnya, supaya warna yang dilihat boleh
+dibandingkan dengan warna yang diminta. Gunakan warna tunggal untuk menyemak
+satu saluran. Semua pilihan kekal aktif sehingga arahan ujian lain atau `test/stop`.
+
 ```text
 test/led/r1/red
 test/led/r1/green
@@ -82,6 +102,7 @@ test/led/r2/green
 test/led/r2/blue
 test/led/all/yellow
 test/led/cycle
+test/led/random
 test/led/blink
 test/led/off
 test/stop
@@ -99,6 +120,7 @@ Jika target ditinggalkan (`test/led/red`), kedua-duanya diuji.
 | `white` | R, G dan B bersama |
 | `off` | Padam dan kekal padam sehingga arahan lain atau test/stop |
 | `cycle` | Merah → hijau → biru → kuning → sian → magenta → putih, 500 ms setiap warna, berulang |
+| `random` | Tujuh warna yang sama dalam susunan rawak, bertukar setiap 500 ms, tanpa warna sama berturut-turut |
 | `blink` | Putih 250 ms ON + 250 ms OFF, berulang |
 
 Hanya target dipilih menyala; LED lain padam. Output ujian tidak ditimpa warna
@@ -107,6 +129,10 @@ dibandingkan. Dalam mod LED biasa, semua warna selain OFF menjadi ON dan mesej
 menerangkannya. Pilih `esp32dev-rgb` untuk benar-benar memeriksa warna.
 
 ## Butang
+
+Taip **`ButtonTest`** untuk kedua-dua butang, **`NEXTTest`** untuk NEXT/GPIO32,
+atau **`HINTTest`** untuk HINT/GPIO33. Ini alias kepada watch berformat slash
+di bawah; kedua-dua short press dan long press diuji dalam watch yang sama.
 
 ```text
 test/button/status
@@ -125,8 +151,9 @@ kiraan dan memulakan watch kedua-duanya. Pertukaran watch juga bermula dari 0.
 Contoh output:
 
 ```text
-[TEST BUTTON] NEXT GPIO32 raw=LOW stable=TEKAN count=1
-[TEST BUTTON] NEXT GPIO32 raw=HIGH stable=LEPAS count=1
+[TEST BUTTON] NEXT GPIO32 raw=LOW stable=TEKAN count=1 short=0 long=0
+[TEST BUTTON] NEXT GPIO32 event=SHORT_PRESS duration=200ms short=1 long=0
+[TEST BUTTON] NEXT GPIO32 raw=HIGH stable=LEPAS count=1 short=1 long=0
 ```
 
 `raw` ialah aras elektrik sebenar; `stable` ialah bacaan selepas debounce 40 ms.
@@ -134,6 +161,31 @@ Default active LOW: dilepaskan HIGH, ditekan LOW. Kiraan bertambah pada tekanan
 stabil sahaja. Tahan satu butang: kiraan kekal satu. Lepaskan dan tekan lagi:
 kiraan bertambah. Perubahan raw ketika sentuhan melantun boleh muncul tetapi
 tidak dikira sebagai tekanan baharu sebelum stabil.
+
+`raw`/`stable` turut memaparkan kiraan `short`/`long`. Tempoh gesture bermula pada
+tekanan stabil dan tamat pada lepasan stabil selepas debounce:
+
+| Cara uji | Output |
+|---|---|
+| Tekan dan lepas sebelum 1,000 ms | `event=SHORT_PRESS duration=...ms`, sekali pada lepasan |
+| Tahan sekurang-kurangnya 1,000 ms | `event=LONG_PRESS duration=1000ms`, sekali ketika ambang dicapai |
+| Terus tahan | Tiada auto-repeat atau tambahan kiraan |
+| Lepaskan selepas long press | `event=RELEASE type=LONG duration=...ms`, tempoh penuh tanpa kiraan kedua |
+
+Contoh untuk HINT yang ditahan:
+
+```text
+[TEST BUTTON] HINT GPIO33 event=LONG_PRESS duration=1000ms short=0 long=1
+[TEST BUTTON] HINT GPIO33 event=RELEASE type=LONG duration=1800ms short=0 long=1
+```
+
+Loop yang lewat melaporkan tempoh sebenar ketika diperhatikan; ambang kekal
+1,000 ms. `count` ialah jumlah tekanan stabil yang bermula selepas watch
+sedia, `short` bertambah selepas lepasan, `long` ketika ambang dicapai.
+`test/status` dan `test/button/status` menunjukkan kiraan gesture. `reset`
+atau pertukaran ujian mengosongkannya. Butang sudah dipegang semasa mula watch
+perlu dilepaskan stabil dahulu, kemudian ditekan semula. Kedua-dua butang boleh
+diuji serentak dengan kiraan dan masa masing-masing.
 
 Dalam watch butang, LED berkaitan hijau ketika butang ditekan stabil, padam
 ketika dilepaskan. Kedua-dua butang tidak menjalankan permainan/menu semasa

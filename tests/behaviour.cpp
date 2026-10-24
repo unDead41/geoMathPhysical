@@ -408,10 +408,19 @@ static void physical_led_wiring(){
 }
 
 #include "component_behaviour.h"
+#include "calibration_behaviour.h"
 #include "unassign_behaviour.h"
 
 int main(){
  const std::pair<const char*,void(*)()> tests[]={
+ {"calibration_simple_rgb_commands",calibration_led_shortcuts},
+ {"calibration_random_colours_and_isolation",calibration_random_leds},
+ {"calibration_random_rollover_and_delayed_tick",calibration_random_rollover},
+ {"calibration_invalid_shortcuts",calibration_invalid_shortcuts},
+ {"calibration_button_short_press",calibration_button_short_press},
+ {"calibration_button_long_boundary",calibration_button_long_boundary},
+ {"calibration_buttons_held_entry_and_rollover",calibration_buttons_held_entry_and_rollover},
+ {"calibration_buttons_raw_held_entry",calibration_buttons_raw_held_entry},
  {"unassign_shape_pairs_and_aliases",unassign_shape_pairs},
  {"unassign_all_uart_and_reload",unassign_all_uart_and_reload},
  {"unassign_failed_storage_keeps_state",unassign_failed_storage},

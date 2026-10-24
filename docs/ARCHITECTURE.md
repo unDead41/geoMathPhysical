@@ -128,3 +128,11 @@ calls appStop to pause/cancel capture; stopping also requires stable button rele
 `rfidCheckConnections()` refreshes version registers while RF scanning is stopped;
 UID scans, rather than a version response alone, establish card-reading behaviour.
 See [COMPONENT_TESTS.md](COMPONENT_TESTS.md) for the command contract.
+
+Serial also routes one-token calibration shortcuts (R1Red/R1RGB, their R2
+equivalents, ButtonTest/NEXTTest/HINTTest) into the same diagnostic controller.
+Random LED state advances once per 500 ms tick; rendering only reads its colour.
+Short/long gesture timing and counters belong to that controller and consume the
+existing debounced button snapshots. A held input must be released before it
+can start a gesture. These reports do not alter normal application button events,
+and all game actions remain blocked while a component session owns the outputs.

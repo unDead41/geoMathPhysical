@@ -64,6 +64,7 @@ void serialExecute(char *line) {
     else componentTestsCommand(args[0]);
     return;
   }
+  if (argc == 1 && componentTestsShortcut(args[0])) return;
   if (componentTestsActive()) {
     if (argc == 1 && !strcmp(args[0], "stop")) componentTestsStop();
     else if (strcmp(args[0], "help") && strcmp(args[0], "status") && strcmp(args[0], "pins") &&
@@ -167,6 +168,8 @@ void serialPrintHelp() {
     "\n--- COMMANDS / SEMUA ARAHAN ---\n"
     "help                       : senarai ini\n"
     "test/help                  : ujian komponen RFID, LED dan butang\n"
+    "R1Red/R1Green/R1Yellow/R1RGB : uji warna RGB1 (R2 juga diterima)\n"
+    "ButtonTest/NEXTTest/HINTTest: uji SHORT_PRESS dan LONG_PRESS >=1s\n"
     "current                    : jenis aktif + kiraan\n"
     "current bongkah            : sama seperti current\n"
     "current kubus              : alias current bongkah\n"

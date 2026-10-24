@@ -19,7 +19,7 @@ and both skip stages, role/error/hint colours, hint/pause/resume, rollover/reset
 invalid rounds, UID values, registry validation, filtered/random rounds,
 immutable LCD snapshots, and an application driven entirely by ports.
 
-Each firmware runner first runs those 11 cases, then executes 52 behavioural
+Each firmware runner first runs those 11 cases, then executes 60 behavioural
 cases with fake electrical/device I/O. Flow regressions drive real input adapters
 for pre-positioned R2, both held cards across questions, short/late/held buttons,
 all 900 blink samples, stopwatch resumption, stage arming, hint colours and
@@ -61,6 +61,14 @@ invalid paths/extra arguments and command gating, test switching and rollover.
 The fake MFRC522 exposes per-reader VersionReg values only at the electrical
 boundary so the real probe path can be exercised. No component test writes NVS
 or scores a quiz. Every existing game regression remains active.
+
+`calibration_behaviour.h` adds eight UART/adapter cases for simple per-reader
+colour shortcuts, seven-colour random output and 500 ms boundaries, random
+rollover/delayed ticks, malformed shortcuts, short-press durations (200/999 ms),
+the exact 1,000 ms long threshold and non-repeat, independent/simultaneous
+buttons, reset/status, stable and unsampled held-on-entry buttons, release
+bounce and held-on-exit suppression. Both LED modes exercise the same commands;
+the existing cycle, blink, RFID and gameplay regressions remain active.
 
 `unassign_behaviour.h` adds six cases for pair/all deletion through real Serial
 commands: all five BM/English shape names plus the `kubu` alias, actual UART

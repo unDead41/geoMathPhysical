@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-10-25 - RGB and button calibration shortcuts
+
+- Add R1Red/R1Green/R1Blue/R1Yellow/R1RGB and matching R2 shortcuts, plus
+  Cyan/Magenta/White/Off. Single colours persist; RGB selects seven random
+  non-OFF colours, changing every 500 ms without consecutive duplicates.
+- Add test/led/target/random and ButtonTest/NEXTTest/HINTTest shortcuts.
+  Button watches report SHORT_PRESS on release below 1,000 ms, LONG_PRESS
+  once at or above 1,000 ms, final release duration and independent counts.
+- Ignore held-on-entry buttons until stable release; retain debounce,
+  nonblocking timing, diagnostic output ownership and gameplay isolation.
+- Add eight behavioural regressions and update Serial help and user guides.
+  Preserve the latest question bank, bulk unassign commands, GPIO/NVS and
+  ordinary-LED default; RGB hardware uses esp32dev-rgb.
+
 ## 2026-10-25 - Refresh current print and LCD assets
 
 - Replaced the three RFID cutting PDFs with the latest nameless source versions

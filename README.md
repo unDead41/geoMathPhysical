@@ -159,15 +159,26 @@ Ujian terus melalui Serial 115200 baud:
 test/help
 test/rfid/r1
 test/rfid/r2
-test/led/r1/red
-test/led/cycle
-test/button/all
+R1Red
+R1Green
+R1Yellow
+R1RGB
+R2Red
+R2Green
+R2Yellow
+R2RGB
+ButtonTest
 test/stop
 ```
 
 Hantar satu arahan dan uji komponennya sebelum memilih arahan lain. Ujian aktif
 menjeda permainan tanpa menukar pendaftaran kad. `test/stop` kembali ke menu.
 Untuk warna sebenar, Build/Upload `esp32dev-rgb` dengan pin RGB pengguna terkini.
+`R1RGB`/`R2RGB` memainkan tujuh warna rawak, bertukar setiap 500 ms; warna tunggal
+kekal menyala. `R1Blue`/`R2Blue` menguji saluran biru, `R1Off`/`R2Off` memadam.
+`ButtonTest` memantau kedua-dua butang; `NEXTTest` atau `HINTTest` memilih satu.
+Tekan/lepas kurang 1 saat untuk `SHORT_PRESS`; tahan sekurang-kurangnya 1 saat
+untuk `LONG_PRESS` sekali sahaja. Serial menunjukkan GPIO, tempoh dan kiraan.
 Panduan lengkap dan contoh output: [COMPONENT_TESTS.md](docs/COMPONENT_TESTS.md).
 
 ## Arahan terminal PlatformIO
@@ -236,7 +247,7 @@ python tests/run_tests.py --separate-modules
 python tests/run_tests.py --separate-modules --rgb
 ```
 
-Setiap arahan menjalankan 11 kes teras/application tanpa Arduino dan 52 kes
+Setiap arahan menjalankan 11 kes teras/application tanpa Arduino dan 60 kes
 integrasi firmware. Mod `--separate-modules` mengkompil setiap tab secara
 berasingan supaya header serta kebergantungan modul turut disahkan.
 

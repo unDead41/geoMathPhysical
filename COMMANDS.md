@@ -92,6 +92,26 @@ Serial mengekalkan maklumat teknikal guru; LCD memaparkan arahan murid sahaja.
 
 ## Ujian komponen
 
+Arahan ringkas untuk kalibrasi (satu arahan setiap baris):
+
+| Arahan | Hasil |
+|---|---|
+| `R1Red`, `R1Green`, `R1Blue`, `R1Yellow` | Warna pilihan kekal pada RGB1; RGB2 padam |
+| `R2Red`, `R2Green`, `R2Blue`, `R2Yellow` | Warna pilihan kekal pada RGB2; RGB1 padam |
+| `R1RGB`, `R2RGB` | Tujuh warna rawak pada target, 500 ms setiap warna; berterusan |
+| `R1Off`, `R2Off` | Kedua-dua output padam kerana target diminta OFF dan target lain sentiasa padam |
+| `ButtonTest` | Pantau short/long press NEXT dan HINT |
+| `NEXTTest`, `HINTTest` | Pantau satu butang sahaja |
+
+Suffix `Cyan`, `Magenta`, `White` juga diterima untuk kedua-dua RGB. Huruf
+besar/kecil tidak penting. Warna rawak bertukar kepada warna berbeza setiap
+langkah. `test/led/r1/random`, `test/led/r2/random` dan `test/led/random`
+menyediakan versi slash. `ButtonTest` ialah alias `test/button/all`.
+`SHORT_PRESS` dilapor apabila dilepaskan sebelum 1,000 ms; `LONG_PRESS` sekali
+apabila tahan mencapai 1,000 ms, diikuti tempoh akhir ketika dilepaskan.
+Masa diukur antara keadaan stabil selepas debounce 40 ms; tiada auto-repeat.
+Arahan `next`/`hint` untuk permainan kekal seperti sedia ada selepas keluar ujian.
+
 Taip `test/help` untuk arahan berformat slash seperti `test/rfid/r1`,
 `test/rfid/r2`, `test/rfid/check`, `test/led/r1/red`, `test/led/cycle` dan
 `test/button/all`. `test/status` menunjukkan sesi; `test/stop` atau `stop`

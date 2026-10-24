@@ -6,6 +6,8 @@
 void componentTestsBegin();
 bool componentTestsActive();
 void componentTestsCommand(const char *path);
+// Serial normalizes case and validates one argument before trying a shortcut.
+bool componentTestsShortcut(const char *name);
 void componentTestsStop();
 void componentTestsUpdate();
 RgbColor componentTestsReaderColor(uint8_t reader);
