@@ -163,6 +163,10 @@ Edit tab dalam `main/`; `src/main.cpp` menggunakan tab yang sama, tanpa
 salinan kedua logik permainan. `main/main.ino` masih boleh dibuka dalam
 Arduino IDE jika diperlukan.
 
+Lihat [semua 15 paparan soalan dan hint semasa](docs/LCD_QUESTION_REVIEW.md)
+untuk semakan teks LCD. Gambar dalam `contoh display LCD/` ialah bahan pakej
+asal; bank runtime terkini berada dalam `main/question_bank.h`.
+
 ## Pengesahan dan kemas kini
 
 Ujian simulasi memerlukan Python 3 dan G++:
@@ -187,3 +191,4 @@ Kemudian Build dan Upload semula melalui environment yang sama.
 Rujukan rasmi:
 [PlatformIO untuk VS Code](https://docs.platformio.org/en/latest/integration/ide/vscode.html),
 [ESP32 Dev Module](https://docs.platformio.org/en/latest/boards/espressif32/esp32dev.html).
+

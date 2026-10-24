@@ -1,5 +1,34 @@
 # GeoDecoder verification - 24 October 2026
 
+## Harmonised question bank verification
+
+Branch work is based on `75d22f14ecc9b1ccd55b93c1f6964647834c54eb`.
+All 15 question IDs, answer shapes and reader assignments are preserved.
+Question and hint text is updated; quiz flow, GPIO and NVS data are unchanged.
+
+| Check | Ordinary LEDs | Two RGB LEDs |
+|---|---|---|
+| `python tests/run_tests.py --entrypoint src/main.cpp` with matching RGB flag | 22/22 passed | 22/22 passed |
+| `pio run -e esp32dev -e esp32dev-rgb` | SUCCESS | SUCCESS |
+| All question and hint source rows fit 20 ASCII columns | PASS | PASS |
+| USB upload and physical LCD/RFID | Not performed | Not performed |
+
+The maintained bank case additionally checks printable ASCII in the actual
+source strings, three rows per screen, unique question IDs, exactly two solid
+questions and one net question per shape, and identical Serial/LCD question
+wording. This prevents a longer source row from silently passing through the
+LCD writer's truncation.
+
+`docs/LCD_QUESTION_REVIEW.md` contains all 30 screens obtained by executing
+`src/main.cpp` with the native fake LCD. For each question, the displayed
+question/time/score header is retained; the hint is opened five seconds later.
+Generated PDF/PNG previews use those exact 20-character rows.
+
+Students should be introduced to the formula notation before playing.
+Physical readability and LCD contrast still require a real-board check.
+
+## Original import verification
+
 Source: the user-supplied `Geo-Decoder Board.zip`. This import adds VS Code /
 PlatformIO support; the original quiz rules, question bank, wiring, persisted
 shape IDs and NVS storage format remain intact.
@@ -94,3 +123,4 @@ The original verification record is retained in
 files are labelled historical where they describe earlier question counts or
 interaction rules. `tests/core_test.cpp`, `tests/integration_test.cpp` and
 `tests/stubs/` are historical; `tests/run_tests.py` is the current suite.
+
