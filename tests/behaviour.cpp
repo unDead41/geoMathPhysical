@@ -410,9 +410,13 @@ static void physical_led_wiring(){
 #include "component_behaviour.h"
 #include "calibration_behaviour.h"
 #include "unassign_behaviour.h"
+#include "version_behaviour.h"
 
 int main(){
  const std::pair<const char*,void(*)()> tests[]={
+ {"version_boot_and_status",version_boot_and_status},
+ {"version_uart_preserves_game",version_uart_preserves_game},
+ {"version_diagnostics_and_arguments",version_diagnostics_and_arguments},
  {"calibration_simple_rgb_commands",calibration_led_shortcuts},
  {"calibration_random_colours_and_isolation",calibration_random_leds},
  {"calibration_random_rollover_and_delayed_tick",calibration_random_rollover},
@@ -431,4 +435,5 @@ int main(){
  unsigned failures=0;for(const auto& test:tests){try{test.second();std::cout<<"PASS "<<test.first<<'\n';}catch(const std::exception& error){++failures;std::cout<<"FAIL "<<test.first<<": "<<error.what()<<'\n';}}
  std::cout<<(sizeof(tests)/sizeof(tests[0])-failures)<<"/"<<sizeof(tests)/sizeof(tests[0])<<" passed\n";return failures?1:0;
 }
+
 

@@ -8,6 +8,7 @@
 #include "hardware/component_tests.h"
 #include "question_bank.h"
 #include "config.h"
+#include "firmware_version.h"
 #include <cctype>
 #include <cstdlib>
 #include <cstring>
@@ -24,7 +25,9 @@ bool serialOverflow = false;
 void serialBegin() {
   serialLength = 0; serialOverflow = false;
   Serial.begin(SERIAL_BAUD);
-  Serial.println(F("\nGeoDecoder | ESP32 | R1 BONGKAH + R2 BENTANGAN"));
+  Serial.println(F(""));
+  serialPrintVersion();
+  Serial.println(F("R1 BONGKAH + R2 BENTANGAN"));
   Serial.println(F("115200 baud, Newline / Both NL & CR. Taip help."));
 }
 
@@ -68,12 +71,14 @@ void serialExecute(char *line) {
   if (componentTestsActive()) {
     if (argc == 1 && !strcmp(args[0], "stop")) componentTestsStop();
     else if (strcmp(args[0], "help") && strcmp(args[0], "status") && strcmp(args[0], "pins") &&
-             strcmp(args[0], "tags") && strcmp(args[0], "bank") && strcmp(args[0], "current") && strcmp(args[0], "score")) {
+             strcmp(args[0], "tags") && strcmp(args[0], "bank") && strcmp(args[0], "current") &&
+             strcmp(args[0], "score") && strcmp(args[0], "version")) {
       Serial.println(F("[TEST] Taip test/stop sebelum arahan permainan/pendaftaran.")); return;
     }
   }
   if (argc == 1) {
     if (!strcmp(args[0], "help")) { serialPrintHelp(); return; }
+    if (!strcmp(args[0], "version")) { serialPrintVersion(); return; }
     if (!strcmp(args[0], "pins")) { serialPrintPins(); return; }
     if (!strcmp(args[0], "status")) { serialPrintStatus(); return; }
     if (!strcmp(args[0], "tags")) { registryPrint(); return; }
@@ -167,6 +172,7 @@ void serialPrintHelp() {
   Serial.println(F(
     "\n--- COMMANDS / SEMUA ARAHAN ---\n"
     "help                       : senarai ini\n"
+    "version                    : versi firmware + environment yang diupload\n"
     "test/help                  : ujian komponen RFID, LED dan butang\n"
     "R1Red/R1Green/R1Yellow/R1RGB : uji warna RGB1 (R2 juga diterima)\n"
     "ButtonTest/NEXTTest/HINTTest: uji SHORT_PRESS dan LONG_PRESS >=1s\n"
@@ -233,7 +239,13 @@ void serialPrintUid(uint8_t reader) {
                 unsigned(record.uid.size), static_cast<unsigned long>(record.count));
 }
 
+void serialPrintVersion() {
+  Serial.printf("[FIRMWARE] GeoDecoder %s | ESP32 | env=%s\n", GEODECODER_VERSION_TAG,
+                RGB_ENABLED ? "esp32dev-rgb" : "esp32dev");
+}
+
 void serialPrintStatus() {
+  serialPrintVersion();
   const char *mode = appState().mode == AppMode::PLAY ? "PLAY" : appState().mode == AppMode::UID_SCAN ? "UID_SCAN" :
                      appState().mode == AppMode::ENROLL ? "ENROLL" : "STOP";
   Serial.printf("[STATUS] mode=%s | NVS=%s | LCD=%s | LED=%s\n", mode,
@@ -256,4 +268,5 @@ void serialPrintBank() {
     Serial.printf("  HINT: %s | %s | %s\n", q.hint[0], q.hint[1], q.hint[2]);
   }
 }
+
 

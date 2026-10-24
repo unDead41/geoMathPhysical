@@ -6,6 +6,7 @@ Arahan maksimum 159 aksara. Baris terlalu panjang ditolak sepenuhnya.
 | Arahan | Fungsi |
 |---|---|
 | help | Senaraikan semua arahan, alias dan contoh |
+| version | Versi firmware yang sedang berjalan dan environment LED/RGB |
 | current | Jenis aktif, kiraan, pool dan status UID lengkap |
 | current bongkah | Alias current |
 | current kubus | Alias current, mengikut istilah asal pengguna |
@@ -36,7 +37,7 @@ Arahan maksimum 159 aksara. Baris terlalu panjang ditolak sepenuhnya.
 | retry | Reset pasangan soalan semasa dari R1 dan minta imbas semula; markah round kekal |
 | clear | Alias retry; tidak memadam pendaftaran UID |
 | score | Markah round, masa bermain, bilangan kombinasi salah dan soalan guna hint |
-| status | Mod aplikasi, perkakasan, UID terakhir, markah dan jenis aktif |
+| status | Versi firmware, mod aplikasi, perkakasan, UID terakhir, markah dan jenis aktif |
 | pins | Paparkan GPIO yang digunakan |
 | bank | Lima belas soalan, jenis jawapan dan pembayang untuk guru |
 
@@ -57,7 +58,7 @@ Untuk mendaftarkan tanpa menaip UID, gunakan assign r1 kubus dan imbas kad.
 
 ## Kesan terhadap round
 
-- help/current/tags/status/pins/score/bank tidak mengubah kuiz.
+- version/help/current/tags/status/pins/score/bank tidak mengubah kuiz.
 - check uid menjeda kuiz; play menyambung markah/soalan, tetapi pasangan perlu diimbas semula dari R1.
 - Perubahan melalui assign/unassign/use/set menyimpan NVS lalu membatalkan round lama.
 - Pendaftaran gagal kerana kad pendua/UID salah/NVS gagal tidak mengubah mapping.
@@ -121,3 +122,17 @@ keluar ujian dahulu; arahan baca sahaja kekal tersedia.
 
 Rujuk [panduan ujian komponen](docs/COMPONENT_TESTS.md) untuk semua target,
 warna, timing, watch butang dan maksud output RFID.
+
+## Versi yang sedang berjalan
+
+`version` boleh dibaca semasa kuiz atau ujian komponen tanpa mengubahnya.
+Banner ini juga muncul semasa boot dan pada permulaan output `status`:
+
+```text
+[FIRMWARE] GeoDecoder v1.0.0 | ESP32 | env=esp32dev-rgb
+```
+
+`env=esp32dev` menandakan LED biasa. Semak versi dengan README GitHub pada
+commit yang diupload. Jika Monitor dibuka selepas boot, taip `version`.
+Rujukan: [SOR versi](docs/SOR_VERSIONING.md).
+

@@ -27,6 +27,7 @@ melalui `AppPorts`. `main/main.ino` memasang semua adapter sekali dalam
 | `main/lcd_display.ino` | I2C serta menulis baris LCD yang berubah |
 | `main/nvs_storage.ino` | Adapter Preferences untuk byte registry |
 | `main/config.h` | Tetapan board: GPIO, polariti dan timing peranti |
+| `main/firmware_version.h` | Versi firmware untuk adapter Serial; bebas perkakasan |
 | `main/main.ino` | Composition root, pemasangan port dan loop |
 | `src/main.cpp` | Entry PlatformIO yang menggunakan tab yang sama |
 
@@ -70,6 +71,10 @@ Flow terkini memerlukan R1 bongkah kemudian R2 bentangan bagi setiap soalan.
 
 ## Panduan perubahan seterusnya
 
+- Baca [SOR versi](SOR_VERSIONING.md) dan semak versi main sebelum sebarang
+  kemas kini. Nombor runtime datang daripada `firmware_version.h`; adapter
+  Serial menggunakannya pada boot, `version` dan `status`. Versi firmware
+  berasingan daripada versi format storan UID/NVS.
 - Ubah ayat soalan/hint dalam `question_bank.h`.
 - Ubah peraturan kuiz dalam domain dan uji melalui `tests/domain.cpp`.
 - Ubah aliran aplikasi melalui API application; gunakan snapshot const.
@@ -136,3 +141,4 @@ Short/long gesture timing and counters belong to that controller and consume the
 existing debounced button snapshots. A held input must be released before it
 can start a gesture. These reports do not alter normal application button events,
 and all game actions remain blocked while a component session owns the outputs.
+

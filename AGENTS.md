@@ -1,5 +1,10 @@
 # GeoDecoder contributor guidance
 
+- Before any update, read `docs/SOR_VERSIONING.md` and inspect current `main`.
+  Every published main update must advance `main/firmware_version.h` and match
+  README's current version plus the top versioned CHANGELOG entry. Run
+  `python tools/check_version.py --previous-version v<last-main-version>`;
+  report the final version, branch and actual commit SHA. First numbered release: v1.0.0.
 - Read `README.md`, `docs/ARCHITECTURE.md`, `SAMBUNGAN.md`, `COMMANDS.md` and `VERIFICATION.md` before editing firmware.
 - Component tests: read `docs/COMPONENT_TESTS.md` before changing Serial diagnostics. Keep the controller outside pure domain/application, preserve nonblocking output ownership and suppress game actions during tests.
 - Active flow: `docs/GAME_FLOW_RGB.md`. Every question requires R1 solid then matching R2 net; only the pair earns +1. Use the runtime answer stage, not legacy `Question.reader`, to select the pad. Pause the clock during the three 150 ms ON/OFF blink cycles.
@@ -16,4 +21,5 @@
 - The active suite is `tests/behaviour.cpp` via `tests/run_tests.py`. `tests/core_test.cpp`, `tests/integration_test.cpp`, `tests/stubs/`, `VALIDATION.md` and the original design/plan/progress notes are historical files from earlier revisions and are not the current test contract.
 - Distinguish native simulation, ESP32 compile, USB upload and physical tests in reports. Do not claim hardware was tested from a native PASS or successful build.
 - Avoid full-flash erase during routine upload: it removes enrolled cards. Never commit real card UID lists, credentials, local COM settings, toolchains or `.pio/` build outputs.
+
 

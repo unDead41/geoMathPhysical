@@ -16,6 +16,8 @@ mode.add_argument('--entrypoint', type=Path, help='Exercise e.g. src/main.cpp')
 mode.add_argument('--separate-modules', action='store_true',
                   help='Compile every real .ino separately, with no include-order shortcuts')
 args = parser.parse_args()
+subprocess.run([sys.executable, str(root.parent / 'tools' / 'check_version.py')], check=True)
+subprocess.run([sys.executable, str(root / 'test_version_check.py')], check=True)
 subprocess.run([sys.executable, str(root / 'run_domain_tests.py')], check=True)
 with tempfile.TemporaryDirectory(prefix='geodecoder-test-') as tmp:
     exe = Path(tmp) / 'behaviour'
@@ -35,4 +37,5 @@ with tempfile.TemporaryDirectory(prefix='geodecoder-test-') as tmp:
     # LeakSanitizer cannot inspect /proc tasks in this managed runtime.
     env = dict(os.environ, ASAN_OPTIONS='detect_leaks=0')
     raise SystemExit(subprocess.run([str(exe)], env=env).returncode)
+
 

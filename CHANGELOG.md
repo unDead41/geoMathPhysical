@@ -1,5 +1,16 @@
 # Changelog
 
+## v1.0.0 - 2026-10-25
+
+- First formally numbered GeoDecoder release; previous dated entries describe
+  the unversioned baseline already included in this release.
+- Use `main/firmware_version.h` for the Serial boot banner, read-only `version`
+  command and `status`, including the compiled ordinary/RGB environment.
+- Publish the matching current version in README and add the future release
+  reference `docs/SOR_VERSIONING.md`, required by AGENTS.md.
+- Check firmware/README/changelog agreement in the maintained test runner and
+  add regressions for Serial identity, non-mutation and version-check failures.
+
 ## 2026-10-25 - RGB and button calibration shortcuts
 
 - Add R1Red/R1Green/R1Blue/R1Yellow/R1RGB and matching R2 shortcuts, plus
@@ -135,4 +146,5 @@ preserved; both ordinary LED and RGB firmware environments are supported.
 
 GPIO assignments, question content, quiz behaviour and persisted UID format
 remain those of the supplied firmware.
+
 

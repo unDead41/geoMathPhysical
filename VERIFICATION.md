@@ -1,93 +1,80 @@
-# GeoDecoder verification - component calibration, 25 October 2026
+# GeoDecoder v1.0.0 verification - 25 October 2026
 
-Firmware baseline main: `797a21f01ebcd47966aef5316aa813f2834e9347`.
-Publication baseline main: `2a49dcdbdf7f0fe82df632f2f8712618aa41aef5`.
-Local working branch: `codex/component-calibration`; publication target: `main`,
-explicitly requested by the user. The baseline includes the latest harmonised
-question bank and bulk Serial unassign commands.
-Main advanced with an assets/documentation-only update during this task. Its
-latest PDFs, removed old previews and documentation were retained; the firmware
-and tests did not change. Both new changelog entries were preserved.
+Initial inspected main: `2a49dcdbdf7f0fe82df632f2f8712618aa41aef5`.
+Final publication baseline: `22b3aed3617b16fc04dcc6d51447cd6166f50e3e`.
+Target: `main`. Main's concurrent RGB/button calibration update was retained
+before final checks; its question bank, assets, GPIO, NVS and tests are included.
 
-## Behaviour
+## Version identity and future reference
 
-- R1Red/Green/Blue/Yellow/Cyan/Magenta/White/Off and matching R2 commands
-  select persistent colours on one target, with the other target OFF.
-- R1RGB/R2RGB select seven random non-OFF colours, changing every 500 ms
-  without consecutive duplicates. test/led/target/random uses the same mode;
-  omitted target means both. Colours are logged for physical comparison.
-- ButtonTest/NEXTTest/HINTTest select the existing isolated button watch.
-  Short presses are reported once at stable release below 1,000 ms; long
-  presses once at or above 1,000 ms while held, then the final release duration.
-  Each button has independent short/long/total counts. Reset/switch clears them.
-- Duration uses debounced states (40 ms). Held-on-entry buttons, including
-  raw presses not yet sampled by the driver, require stable release before
-  starting a gesture. Bounce does not arm them. Held-on-exit input remains
-  suppressed until stable release before any fresh gameplay action.
-- Timing uses unsigned millis differences and no delay/retry loop. Diagnostics
-  keep owning outputs and block scoring, timer, enrolment and game buttons.
-  Existing slash commands, cycle/blink, teacher tools and normal game button
-  events remain compatible. Malformed/extra arguments do not start or change tests.
+- `main/firmware_version.h` is the sole runtime numeric version source.
+- Startup, read-only `version` and `status` show `GeoDecoder v1.0.0`, ESP32
+  and the compiled `esp32dev` or `esp32dev-rgb` configuration.
+- Queries work during the R2/hint stage and component diagnostics. Invalid
+  extra arguments are rejected; queries preserve quiz/application snapshots,
+  clock, selected reader, output GPIO and saved RFID registrations.
+- README's current-version marker and the first numbered changelog entry match.
+  The standard-library checker rejects disagreement and malformed/zero-padded
+  versions, and can require a numeric increase from the previous main version.
+- `docs/SOR_VERSIONING.md` records PATCH/MINOR/MAJOR rules, every published main
+  update, branch collisions, reporting, source/board matching and validation.
+  AGENTS.md requires reading it before updates. The maintained runner calls the
+  version checker before firmware tests. This does not claim a Git tag exists.
 
-## Native simulation
+## Native checks
+
+All six paths below were run on the final combined source. Each runner also
+passed the release consistency check and all six release-checker regression cases.
 
 | Runner flags (`python tests/run_tests.py`) | Pure core/application/view | Firmware integration |
 |---|---|---|
-| no flags (Arduino tabs) | 11/11 passed | 60/60 passed |
-| `--rgb` | 11/11 passed | 60/60 passed |
-| `--entrypoint src/main.cpp` | 11/11 passed | 60/60 passed |
-| `--entrypoint src/main.cpp --rgb` | 11/11 passed | 60/60 passed |
-| `--separate-modules` | 11/11 passed | 60/60 passed |
-| `--separate-modules --rgb` | 11/11 passed | 60/60 passed |
+| no flags (Arduino tabs) | 11/11 passed | 63/63 passed |
+| `--rgb` | 11/11 passed | 63/63 passed |
+| `--entrypoint src/main.cpp` | 11/11 passed | 63/63 passed |
+| `--entrypoint src/main.cpp --rgb` | 11/11 passed | 63/63 passed |
+| `--separate-modules` | 11/11 passed | 63/63 passed |
+| `--separate-modules --rgb` | 11/11 passed | 63/63 passed |
 
-All six maintained paths were freshly run. C++11 warnings-as-errors, ASan and
-UBSan remain enabled; LeakSanitizer remains disabled for this managed runtime.
-Tests use actual UART parsing, real debounce, output GPIO adapter, game loop
-and application; only electrical/device I/O is simulated.
+Three new firmware cases exercise real startup/status output, UART routing
+while a game is active, and diagnostic/invalid-input isolation. They first
+failed with the expected missing firmware identity; all original 52 integration
+cases on the initial baseline still passed. The incoming main added eight
+calibration cases, yielding 60 existing plus three version cases at publication.
+The first separate-module check exposed a missing diagnostic declaration in
+the new test header; adding its own public header resolved it. Final checks
+above compile all modules independently and pass with warnings as errors.
 
-Eight new cases cover shortcut target/channel selection and persistence, all
-seven random colours and 499/500 ms boundaries, random rollover/late ticks,
-invalid shortcuts, 200/999 ms short durations, the exact 1,000 ms long threshold,
-non-repeat and long release, independent/simultaneous buttons, status/reset,
-stable/unsampled held-on-entry buttons, bounce and held-on-exit suppression.
-Existing RFID, two-card scoring, LCD bank, bulk unassign and legacy NVS cases
-remain active. The starting baseline passed 11/11 core and 52/52 integration.
-Seven new feature cases first failed on unsupported commands. The added raw
-held-on-entry regression then failed on a fabricated gesture before its fix.
-Both red/green cycles were observed; all final cases pass.
+Six checker cases run the real Python CLI in temporary repositories: matching
+versions, README mismatch, latest changelog mismatch, malformed/zero-padded
+versions, non-increasing versions and numeric multi-digit ordering. They were
+observed failing before the checker existed and pass after implementation.
 
-Independent read-only code review found no Critical, Important or Minor issues.
-The reviewer reran the actual PlatformIO entry in RGB mode: 11/11 pure and
-60/60 integration passed. Physical tests, other ESP32 variants and the separate
-asset update were outside that review; the final documentation merge was checked
-separately and did not change firmware or tests.
+C++11, `-Wall -Wextra -Werror -pedantic`, AddressSanitizer and UBSan remain.
+LeakSanitizer remains disabled for this managed runtime. `git diff --check`
+and `python tools/check_version.py` pass.
 
 ## ESP32 compilation
 
-Command: `pio run -e esp32dev -e esp32dev-rgb`, using an isolated build directory.
-Exit code 0, both environments SUCCESS; no compiler warnings or errors.
+`pio run -e esp32dev -e esp32dev-rgb` completed with exit code 0. Both firmware
+environments SUCCESS, no compiler warnings/errors. Outputs were isolated in
+this task's own checkout; libraries came from the pinned local cache.
 
 | Environment | Static RAM | Flash |
 |---|---:|---:|
-| esp32dev | 22,812 / 327,680 | 338,005 / 1,310,720 |
-| esp32dev-rgb | 22,812 / 327,680 | 338,061 / 1,310,720 |
+| esp32dev | 22,812 / 327,680 | 338,245 / 1,310,720 |
+| esp32dev-rgb | 22,812 / 327,680 | 338,281 / 1,310,720 |
 
-PlatformIO Core 6.1.18, Espressif32 6.12.0, MFRC522 1.4.12, hd44780 1.3.2.
+PlatformIO Core 6.1.18, Espressif32 6.12.0, MFRC522 1.4.12 and hd44780 1.3.2.
+The version feature adds no runtime dependency and does not change game rules,
+question selection, pin mapping, saved card format or the ordinary-LED default.
 
-## Scope and physical checks
+## USB and physical checks
 
-Serial help, README, command/component guides, architecture and changelog are
-updated. Question bank, GPIO, ordinary-LED default, NVS ABI, saved registrations,
-dependencies, pure domain/application and loop are unchanged. Publication uses
-the actual baseline tree so binary assets from other work are retained.
-`git diff --check` passes.
+No USB upload or physical ESP32/RFID/LCD/button/RGB test was performed here.
+After pulling this release, Build and Upload the correct environment. In the
+115200-baud Monitor, type `version` and compare with README at that source
+commit. Reset the board to see the startup line again if desired.
+Git pull alone does not update the firmware already on the board.
 
-USB upload and physical ESP32/RFID/LCD/button/RGB tests were not performed.
-Upload esp32dev-rgb, then send one command at a time: R1Red/Green/Blue/Yellow,
-R1RGB, the matching R2 commands, ButtonTest, NEXTTest and HINTTest. Compare the
-requested colour and GPIO labels with the hardware. Check a short tap, a hold
-over one second and simultaneous buttons, then test/stop and stable release
-before returning to normal play. The guides provide the full command list.
-
-Previous bulk unassign verification is retained in
-[the archive](docs/archive/VERIFICATION_2026-10-24-bulk-unassign.md).
+Earlier calibration evidence is preserved in
+[the archive](docs/archive/VERIFICATION_2026-10-25-calibration.md).

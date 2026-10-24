@@ -1,5 +1,8 @@
 # GeoDecoder
 
+Versi semasa: **v1.0.0**.
+Rujukan kemas kini: [SOR versi](docs/SOR_VERSIONING.md) dan [changelog](CHANGELOG.md).
+
 Kuiz geometri 3D menggunakan ESP32 klasik/WROOM-32, dua pembaca MFRC522,
 LCD I2C 20x4, dua butang dan dua LED biasa atau dua RGB empat kaki.
 
@@ -73,6 +76,7 @@ kepada **115200 baud**, dan arahan dihantar selepas menekan Enter.
 Taip satu per satu:
 
 ```text
+version
 help
 pins
 status
@@ -196,6 +200,23 @@ pio device monitor -e esp32dev
 Untuk dua RGB, gantikan `esp32dev` dengan `esp32dev-rgb` dalam ketiga-tiga
 arahan. `Ctrl+C` menutup Monitor. Untuk melihat port: `pio device list`.
 
+## Semak versi firmware yang diupload
+
+Pada boot/reset ESP32, Serial 115200 baud memaparkan:
+
+```text
+[FIRMWARE] GeoDecoder v1.0.0 | ESP32 | env=esp32dev-rgb
+```
+
+Mod LED biasa memaparkan `env=esp32dev`. Jika Monitor dibuka selepas banner
+berlalu, taip `version`; `status` turut menunjukkan identiti yang sama.
+Arahan ini boleh dibaca semasa bermain atau semasa ujian komponen.
+
+Bandingkan versi itu dengan **Versi semasa** pada README GitHub bagi commit
+yang kamu pull. `git log -1 --oneline` mengenal pasti commit komputer.
+Pull mengemas kini PC; Build dan Upload mengemas kini ESP32. Jika nombor masih
+lama selepas pull, Upload semula environment yang betul. Rujuk [SOR versi](docs/SOR_VERSIONING.md).
+
 ## Struktur kod
 
 | Fail/folder | Tujuan |
@@ -204,6 +225,7 @@ arahan. `Ctrl+C` menutup Monitor. Untuk melihat port: `pio device list`.
 | `src/main.cpp` | Menggabungkan tab asal untuk build PlatformIO |
 | `main/main.ino` | `setup()` dan `loop()` sahaja |
 | `main/config.h` | Tetapan board: GPIO, polariti dan timing peranti |
+| `main/firmware_version.h` | Satu sumber nombor versi firmware |
 | `main/domain/` | Model, peraturan, validasi UID dan engine kuiz bebas Arduino |
 | `main/application/` | API aplikasi, snapshot baca sahaja dan port perkakasan |
 | `main/presentation/` | View LCD daripada snapshot dan kontrak Serial |
@@ -245,10 +267,12 @@ python tests/run_tests.py --entrypoint src/main.cpp
 python tests/run_tests.py --entrypoint src/main.cpp --rgb
 python tests/run_tests.py --separate-modules
 python tests/run_tests.py --separate-modules --rgb
+python tools/check_version.py
 ```
 
-Setiap arahan menjalankan 11 kes teras/application tanpa Arduino dan 60 kes
-integrasi firmware. Mod `--separate-modules` mengkompil setiap tab secara
+Setiap arahan `tests/run_tests.py` menyemak keselarasan versi, menjalankan
+11 kes teras/application tanpa Arduino dan 63 kes integrasi firmware.
+Mod `--separate-modules` mengkompil setiap tab secara
 berasingan supaya header serta kebergantungan modul turut disahkan.
 
 Ujian simulasi menyemak logik; ia tidak membuktikan sambungan wayar, bekalan
@@ -266,4 +290,5 @@ Kemudian Build dan Upload semula melalui environment yang sama.
 Rujukan rasmi:
 [PlatformIO untuk VS Code](https://docs.platformio.org/en/latest/integration/ide/vscode.html),
 [ESP32 Dev Module](https://docs.platformio.org/en/latest/boards/espressif32/esp32dev.html).
+
 

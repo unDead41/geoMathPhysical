@@ -10,6 +10,8 @@ python tests/run_tests.py --entrypoint src/main.cpp
 python tests/run_tests.py --entrypoint src/main.cpp --rgb
 python tests/run_tests.py --separate-modules
 python tests/run_tests.py --separate-modules --rgb
+python tools/check_version.py
+python tests/test_version_check.py
 ```
 
 The pure runner compiles and links the real domain, LCD view and four application
@@ -19,7 +21,8 @@ and both skip stages, role/error/hint colours, hint/pause/resume, rollover/reset
 invalid rounds, UID values, registry validation, filtered/random rounds,
 immutable LCD snapshots, and an application driven entirely by ports.
 
-Each firmware runner first runs those 11 cases, then executes 60 behavioural
+Each firmware runner first checks release agreement and six checker regressions,
+runs those 11 core cases, then executes 63 behavioural
 cases with fake electrical/device I/O. Flow regressions drive real input adapters
 for pre-positioned R2, both held cards across questions, short/late/held buttons,
 all 900 blink samples, stopwatch resumption, stage arming, hint colours and
@@ -78,3 +81,15 @@ storage, invalid extra arguments, legacy per-reader syntax, cancellation of
 capture/inspection and one complete storage commit per request. A first-write-only
 adapter catches implementations that commit one slot at a time. Diagnostic command
 gates also cover the new destructive commands.
+
+`version_behaviour.h` exercises the actual boot/status identity, case-insensitive
+UART `version` during an active R2 hint, and version/status lookups during LED
+diagnostics. It checks that the query and rejected extra arguments preserve
+quiz/application state, clock, GPIO output, reader mode and saved RFID mappings.
+The identity test accepts future numeric versions and checks the compiled LED
+environment; release agreement is checked separately against the header/docs.
+
+`test_version_check.py` runs the real release checker in temporary repositories:
+matching values, README/changelog disagreements, malformed/zero-padded versions,
+non-increasing releases and numeric ordering across multi-digit components.
+

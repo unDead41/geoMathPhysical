@@ -204,7 +204,7 @@ permainan secara automatik. Lepaskan butang sehingga stabil sebelum menekannya
 untuk bermain. Tekanan yang masih dipegang tidak dibawa ke menu/pusingan baharu.
 
 Masa/markah permainan kekal dijeda dan UID/NVS tidak ditulis oleh ujian. Semasa
-ujian aktif, `help`, `pins`, `status`, `tags`, `current`, `bank` dan `score` boleh
+ujian aktif, `version`, `help`, `pins`, `status`, `tags`, `current`, `bank` dan `score` boleh
 dibaca. Jalankan `test/stop` dahulu sebelum `play`, `next`, `hint`, `check uid`,
 `assign` atau perubahan registry. Semua arahan guru lama kekal tersedia selepas
 keluar. NEXT pada menu memulakan round baharu; Serial `play` boleh menyambung
@@ -216,3 +216,4 @@ dipaparkan semula selepas test/stop. Flow permainan dan bank soalan tidak beruba
 Rekod [VERIFICATION.md](../VERIFICATION.md) membezakan simulasi, build ESP32,
 upload USB dan ujian fizikal. Kejayaan build/simulasi tidak membuktikan keadaan
 wayar, warna fizikal atau prestasi antena pada board pengguna.
+
