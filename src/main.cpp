@@ -14,6 +14,7 @@
 #include "../main/nvs_storage.ino"
 #include "../main/app.ino"
 #include "../main/buttons.ino"
+#include "../main/component_tests.ino"
 #include "../main/lcd_display.ino"
 #include "../main/quiz.ino"
 #include "../main/rfid.ino"

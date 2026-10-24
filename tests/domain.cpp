@@ -24,24 +24,96 @@ static uint8_t pick(uint8_t n) {
   seed = seed * 1664525U + 1013904223U;
   return uint8_t(seed % n);
 }
+// Catches single-card awards, early R2 acceptance, and duplicate completion.
 static void scoring() {
   QuizEngine game(QUESTIONS, QUESTION_COUNT);
   const uint8_t round[] = {indexOf("P1"), indexOf("C3")};
   need(game.start(round, 2, 100), "start failed");
-  need(game.submit(0, Shape::PYRAMID, 0, 700), "scan was ignored");
-  need(game.data().score == 1 && game.data().advancePending, "correct scan must score once");
-  need(!game.submit(0, Shape::PYRAMID, 0, 701) && game.data().score == 1, "double award");
-  need(game.update(1699) == QuizTransition::NONE, "notice ended early");
-  need(game.update(1700) == QuizTransition::QUESTION && game.data().index == 1, "next question missing");
-  game.submit(0, Shape::CONE, 0, 1800);
-  need(game.data().feedback == Feedback::WRONG_PAD, "wrong reader scored");
-  game.submit(1, Shape::NONE, 255, 1801);
+  game.submit(1, Shape::PYRAMID, 1, 500);
+  need(game.data().score == 0 && !game.data().advancePending, "early net completed question");
+  need(game.submit(0, Shape::PYRAMID, 0, 700), "solid scan ignored");
+  need(game.data().score == 0 && !game.data().advancePending, "R1 alone must not score");
+  need(game.readerColor(0) == RgbColor::GREEN && game.readerColor(1) == RgbColor::BLUE,
+       "R1 success did not hold green and activate R2");
+  game.submit(0, Shape::PYRAMID, 0, 701);
+  need(game.data().score == 0, "repeated solid scored");
+  game.submit(1, Shape::PYRAMID, 1, 1000);
+  need(game.data().score == 1 && game.data().advancePending, "pair must score once");
+  need(!game.submit(1, Shape::PYRAMID, 1, 1001) && game.data().score == 1, "double award");
+  need(game.elapsed(1800) == 900, "completion blink counted as play time");
+  need(game.update(1899) == QuizTransition::NONE, "blink ended before 900 ms");
+  need(game.update(1900) == QuizTransition::QUESTION, "next question not opened at 900 ms");
+  need(game.elapsed(2000) == 1000, "clock failed to resume after blink");
+  game.submit(0, Shape::CONE, 0, 2100);
+  game.submit(1, Shape::NONE, 255, 2200);
   need(game.data().feedback == Feedback::UNKNOWN_UID, "unknown UID accepted");
-  game.submit(1, Shape::CUBE, 1, 1802);
+  game.submit(1, Shape::CUBE, 1, 2300);
   need(game.data().feedback == Feedback::WRONG && game.data().wrongAttempts == 1, "wrong shape not counted");
-  game.submit(1, Shape::CONE, 1, 2000);
-  need(game.data().score == 2 && game.elapsed(9000) == 1900, "last scan did not freeze clock");
-  need(game.update(3000) == QuizTransition::SUMMARY, "summary missing");
+  need(game.readerColor(0) == RgbColor::GREEN && game.readerColor(1) == RgbColor::RED,
+       "net error changed completed solid stage");
+  game.submit(1, Shape::CONE, 1, 2400);
+  need(game.data().score == 2 && game.elapsed(9000) == 1400, "final scan did not freeze clock");
+  need(game.update(3299) == QuizTransition::NONE, "final blink ended early");
+  need(game.update(3300) == QuizTransition::SUMMARY, "summary missing after 900 ms");
+}
+// Catches missing/extra ON/OFF phases and clock resume during transitions.
+static void blinkAndSkip() {
+  for (unsigned completedSolid = 0; completedSolid < 2; ++completedSolid) {
+    for (unsigned correct = 0; correct < 2; ++correct) {
+      QuizEngine game(QUESTIONS, QUESTION_COUNT);
+      const uint8_t round[] = {indexOf("K1"), indexOf("P1")};
+      game.start(round, 2, 0);
+      if (completedSolid || correct) game.submit(0, Shape::CUBE, 0, 500);
+      if (correct) game.submit(1, Shape::CUBE, 1, 1000);
+      else need(game.skip(1000), "skip rejected on active stage");
+      const RgbColor on = correct ? RgbColor::GREEN : RgbColor::RED;
+      need(game.data().score == correct, "partial/skip award incorrect");
+      for (uint32_t offset = 0; offset < 900; ++offset) {
+        need(game.update(1000 + offset) == QuizTransition::NONE, "transition ended early");
+        const RgbColor expected = (offset / 150) % 2 == 0 ? on : RgbColor::OFF;
+        need(game.readerColor(0) == expected && game.readerColor(1) == expected,
+             "blink must be exactly three synchronous 150 ms ON/OFF cycles");
+        game.resume(1000 + offset);
+        need(game.elapsed(1000 + offset) == 1000, "stopwatch ran during blink");
+        need(!game.submit(0, Shape::CUBE, 0, 1000 + offset) &&
+             !game.toggleHint() && !game.skip(1000 + offset) && !game.retry(), "transition accepted input");
+      }
+      need(game.update(1900) == QuizTransition::QUESTION, "transition duration is not 900 ms");
+      need(game.readerColor(0) == RgbColor::BLUE && game.readerColor(1) == RgbColor::OFF,
+           "next question kept stage progress");
+      need(game.elapsed(2000) == 1100, "resume counted blink time");
+    }
+  }
+}
+// Catches changing reader roles, stale hint state and loss of R1 progress.
+static void stageRetry() {
+  QuizEngine game(QUESTIONS, QUESTION_COUNT);
+  const uint8_t round[] = {indexOf("P1")};
+  game.start(round, 1, 0);
+  game.submit(0, Shape::PYRAMID, 1, 100); // net UID on solid pad
+  need(game.data().feedback == Feedback::WRONG_PAD && !game.data().awarded, "wrong role accepted");
+  game.submit(0, Shape::CUBE, 0, 200);
+  need(game.readerColor(0) == RgbColor::RED && game.readerColor(1) == RgbColor::OFF, "wrong solid colours");
+  game.update(1400);
+  need(game.readerColor(0) == RgbColor::BLUE, "error did not return to blue");
+  game.toggleHint();
+  const RgbColor hintColour = game.readerColor(0);
+  need(hintColour != RgbColor::BLUE && hintColour != RgbColor::RED && hintColour != RgbColor::OFF,
+       "hint must use a distinct yellow colour");
+  game.submit(0, Shape::CUBE, 0, 1500); game.update(2700);
+  need(game.readerColor(0) == hintColour && game.data().showHint, "error lost open hint colour");
+  game.submit(0, Shape::PYRAMID, 0, 3000);
+  need(!game.data().showHint && game.data().score == 0, "solid success must close hint without scoring");
+  game.toggleHint();
+  need(game.readerColor(0) == RgbColor::GREEN && game.readerColor(1) == hintColour, "net hint changed R1 green");
+  game.submit(1, Shape::CUBE, 1, 3100); game.update(4300);
+  need(game.readerColor(0) == RgbColor::GREEN && game.readerColor(1) == hintColour, "net retry lost hint/R1");
+  game.toggleHint();
+  need(game.readerColor(1) == RgbColor::BLUE && game.data().hintsUsed == 1, "hint toggling changed count");
+  game.submit(1, Shape::PYRAMID, 0, 4400);
+  need(game.data().feedback == Feedback::WRONG_PAD && game.data().score == 0, "solid UID on R2 accepted");
+  game.submit(1, Shape::PYRAMID, 1, 4500);
+  need(game.data().score == 1, "pair cannot complete while recovering from error");
 }
 static void hintAndPause() {
   QuizEngine game(QUESTIONS, QUESTION_COUNT);
@@ -120,12 +192,12 @@ static void lcdSnapshots() {
   AppState app = {AppMode::PLAY, -1, Shape::NONE, 0, false, 0};
   game.start(round, 1, 100);
   LcdFrame frame = buildLcdFrame({app, game.data(), game.current(), 14000, true, -1});
-  need(!std::strcmp(frame.rows[0], "Q1/1    00:14   S0/1"), "LCD header changed");
+  need(!std::strcmp(frame.rows[0], "Q1/1 R1 00:14   S0/1"), "LCD header changed");
   need(!std::strcmp(frame.rows[1], "Bongkah apakah ini? "), "LCD question changed");
   game.toggleHint();
   frame = buildLcdFrame({app, game.data(), game.current(), 14000, true, -1});
   need(!std::strcmp(frame.rows[1], "HINT: Fikir susunan "), "LCD hint changed");
-  game.submit(0, Shape::PYRAMID, 0, 14100); game.update(15100);
+  game.submit(0, Shape::PYRAMID, 0, 14000); game.submit(1, Shape::PYRAMID, 1, 14100); game.update(15000);
   frame = buildLcdFrame({app, game.data(), game.current(), game.elapsed(20000), true, -1});
   need(!std::strcmp(frame.rows[1], "Skor: 1/1 (100%)    "), "LCD summary score changed");
   need(!std::strcmp(frame.rows[2], "Masa akhir: 00:14   "), "LCD summary duration changed");
@@ -160,16 +232,19 @@ static void injectedApplication() {
   appNextButton();
   need(appState().mode == AppMode::PLAY && quizState().length == 5, "application needed a device to start");
   const Question q = *quizCurrentQuestion(); now = 750;
-  appHandleScan(q.reader, registryState().tags[uint8_t(q.answer)][q.reader]);
+  appHandleScan(0, registryState().tags[uint8_t(q.answer)][0]);
+  need(quizState().score == 0 && mode == ScanMode::R2, "R1 must activate R2 without scoring");
+  now = 850; appHandleScan(1, registryState().tags[uint8_t(q.answer)][1]);
   need(quizState().score == 1 && mode == ScanMode::STOPPED, "injected scan failed to score/stop reader");
   now = 1750; appUpdate();
   need(quizState().index == 1 && mode != ScanMode::STOPPED, "injected clock failed to advance");
   appStop(); now = 9000;
-  need(quizElapsedMs() == 1750, "injected clock did not pause");
+  need(quizElapsedMs() == 850, "injected clock included transition or menu time");
 }
 int main() {
   const std::pair<const char *, void(*)()> tests[] = {
-    {"score_routing_notice_and_final_freeze", scoring}, {"hint_pause_resume_skip", hintAndPause},
+    {"two_card_routing_award_and_final_freeze", scoring},
+    {"exact_blinks_skips_and_stopwatch", blinkAndSkip}, {"stage_retries_roles_and_hint_colours", stageRetry}, {"hint_pause_resume_skip", hintAndPause},
     {"clock_rollover_and_new_round", rolloverAndReset}, {"invalid_round_keeps_current_state", invalidRound},
     {"uid_value_validation", uidValues}, {"persisted_registry_validation", registryValues},
     {"random_round_coverage_and_filtering", randomRounds}, {"lcd_from_immutable_snapshot", lcdSnapshots},

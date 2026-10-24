@@ -36,7 +36,7 @@ Dalam panel PlatformIO > **Project Tasks**, pilih environment yang sepadan:
 | Environment | Perkakasan |
 |---|---|
 | `esp32dev` (default) | Dua LED biasa: GPIO25 dan GPIO26 |
-| `esp32dev-rgb` | Dua RGB empat kaki: R1=25/13/14, R2=26/16/17 |
+| `esp32dev-rgb` | Dua RGB empat kaki (R/G/B): R1=16/17/26, R2=13/14/25 |
 
 Pilih **General > Build** di bawah environment itu. Build boleh dijalankan
 tanpa ESP32 disambungkan. Tunggu keputusan `SUCCESS`.
@@ -118,15 +118,50 @@ RFID mesti READY dan semua jenis aktif mesti mempunyai UID R1 serta R2.
 
 ## 5. Main dan semak keputusan
 
-1. Tekan **NEXT** pada menu untuk memulakan pusingan.
-2. Ikut LED pembaca yang menyala dan imbas **satu** kad jawapan.
-3. Tekan **HINT** untuk buka/tutup petunjuk bagi soalan semasa.
-4. Tekan **NEXT** jika mahu melangkau dengan +0 markah.
-5. Selepas soalan terakhir, LCD memaparkan skor, peratus dan masa akhir.
-6. Masa akhir kekal; **NEXT** memulakan pusingan baharu dan **HINT** ke menu.
+1. Menu: kedua-dua RGB bertukar warna perlahan setiap 1,000 ms. NEXT memulakan
+   pusingan baharu pada skor 0 dan masa 00:00; HINT membuka cara bermain.
+2. **Setiap soalan memerlukan dua kad: R1 bongkah dahulu, kemudian R2 bentangan
+   yang sepadan.** R1 biru/R2 padam pada permulaan. R1 betul belum mendapat markah;
+   R1 kekal hijau dan R2 menjadi biru. Tahap aktif turut ditulis pada header LCD.
+3. Salah: pembaca aktif merah selama notis, kemudian kembali biru/kuning.
+   Cuba semula pada tahap sama; R1 kekal hijau jika sedang menjawab bentangan.
+4. HINT membuka/menutup petunjuk dan menjadikan pembaca aktif kuning. Masa terus
+   berjalan; imbasan masih diterima dan markah tidak ditolak.
+5. Dua kad betul: **+1 sekali sahaja**, kedua-dua RGB hijau berkelip tiga kali.
+   NEXT melangkau mana-mana tahap: **+0**, kedua-duanya merah berkelip tiga kali.
+6. Setiap kelipan ialah 150 ms ON + 150 ms OFF; jumlah 900 ms. Stopwatch dijeda
+   sepanjang kelipan. Jawapan/NEXT/HINT diabaikan; loop aplikasi terus berjalan.
+7. Soalan seterusnya bermula pada R1 biru/R2 padam dan masa bersambung.
+   Angkat kad sebelum mengimbas semula, termasuk kad yang sudah berada di R2.
+8. Pada tindakan akhir, masa dibekukan dahulu. Selepas tiga kelipan, LCD
+   menunjukkan skor, peratus dan masa akhir; RGB bertukar warna setiap 150 ms.
+9. Keputusan: NEXT memulakan pusingan baharu, HINT kembali ke menu perlahan.
 
-Dalam mod RGB: biru=menunggu imbasan, hijau=betul, merah=salah/kad tidak sah.
-Angkat kad sebelum mengimbas untuk soalan seterusnya.
+Environment default `esp32dev` kekal untuk **LED biasa**. Warna bukan padam
+menjadi LED ON; label tahap/notis LCD menerangkan tindakan. Pada tahap R2,
+R1 kekal ON. Menu/keputusan mempunyai dua LED ON; tiga kelipan tetap digunakan.
+Gunakan `esp32dev-rgb` hanya apabila pemasangan RGB siap.
+Panduan penuh: [flow dua kad dan RGB](docs/GAME_FLOW_RGB.md).
+
+## Uji komponen melalui Serial Monitor
+
+Fungsi daripada branch `testing/components` kini tersedia dalam `main`.
+Ujian terus melalui Serial 115200 baud:
+
+```text
+test/help
+test/rfid/r1
+test/rfid/r2
+test/led/r1/red
+test/led/cycle
+test/button/all
+test/stop
+```
+
+Hantar satu arahan dan uji komponennya sebelum memilih arahan lain. Ujian aktif
+menjeda permainan tanpa menukar pendaftaran kad. `test/stop` kembali ke menu.
+Untuk warna sebenar, Build/Upload `esp32dev-rgb` dengan pin RGB pengguna terkini.
+Panduan lengkap dan contoh output: [COMPONENT_TESTS.md](docs/COMPONENT_TESTS.md).
 
 ## Arahan terminal PlatformIO
 
@@ -184,7 +219,7 @@ python tests/run_tests.py --separate-modules
 python tests/run_tests.py --separate-modules --rgb
 ```
 
-Setiap arahan menjalankan 9 kes teras/application tanpa Arduino dan 29 kes
+Setiap arahan menjalankan 11 kes teras/application tanpa Arduino dan 46 kes
 integrasi firmware. Mod `--separate-modules` mengkompil setiap tab secara
 berasingan supaya header serta kebergantungan modul turut disahkan.
 

@@ -1,0 +1,233 @@
+#include "hardware/component_tests.h"
+#include "hardware/rfid.h"
+#include "hardware/buttons.h"
+#include "application/app.h"
+#include "config.h"
+#include <cstring>
+#include <cstdio>
+
+namespace {
+enum class ComponentMode : uint8_t { NONE, RFID, LED, BUTTON };
+enum class ComponentPattern : uint8_t { STEADY, CYCLE, BLINK };
+struct ComponentSession {
+  ComponentMode mode;
+  uint8_t selected;
+  RgbColor colour;
+  ComponentPattern pattern;
+  uint32_t startedMs;
+  bool lastRaw[2], lastStable[2];
+  uint32_t presses[2];
+  uint8_t lastStep;
+};
+ComponentSession componentSession = {};
+constexpr uint16_t COMPONENT_CYCLE_MS = 500, COMPONENT_BLINK_MS = 250;
+const RgbColor componentPalette[] = {RgbColor::RED, RgbColor::GREEN, RgbColor::BLUE,
+  RgbColor::YELLOW, RgbColor::CYAN, RgbColor::MAGENTA, RgbColor::WHITE};
+const char *const componentColourNames[] = {"off", "blue", "green", "red", "yellow", "cyan", "magenta", "white"};
+
+const char *componentModeName() {
+  switch (componentSession.mode) {
+    case ComponentMode::RFID: return "RFID";
+    case ComponentMode::LED: return "LED";
+    case ComponentMode::BUTTON: return "BUTTON";
+    case ComponentMode::NONE: return "NONE";
+  }
+  return "NONE";
+}
+const char *componentTargetName() {
+  return componentSession.selected == 1 ? "R1" : componentSession.selected == 2 ? "R2" : "ALL";
+}
+bool componentSelected(uint8_t index) {
+  return index < 2 && (componentSession.selected & (1U << index));
+}
+void componentError() { Serial.println(F("[TEST ERROR] Arahan ujian tidak sah. Taip test/help.")); }
+void componentHelp() {
+  Serial.println(F(
+    "\n--- UJIAN KOMPONEN / SERIAL 115200 ---\n"
+    "test/help                  : senarai arahan ujian\n"
+    "test/status                : sesi ujian aktif\n"
+    "test/stop                  : tamat ujian, kembali menu (alias stop)\n"
+    "test/rfid/status           : status boot/probe terakhir, tanpa ubah sesi\n"
+    "test/rfid/check            : semak SPI/versi terkini, kemudian imbas kedua-dua\n"
+    "test/rfid/r1               : baca UID di R1 sahaja\n"
+    "test/rfid/r2               : baca UID di R2 sahaja\n"
+    "test/rfid/all              : baca UID kedua-dua reader (alias scan)\n"
+    "test/led/r1/red            : merah pada RGB1 sahaja\n"
+    "test/led/r2/green          : hijau pada RGB2 sahaja\n"
+    "test/led/all/blue          : biru pada kedua-dua RGB\n"
+    "test/led/off               : kedua-dua padam sehingga test/stop\n"
+    "test/led/cycle             : 7 warna, 500ms setiap warna\n"
+    "test/led/blink             : putih 250ms ON + 250ms OFF\n"
+    "Warna: red green blue yellow cyan magenta white off.\n"
+    "Target LED: r1, r2, all; jika ditinggalkan, kedua-duanya.\n"
+    "test/button/status         : status raw + debounce sekali\n"
+    "test/button/all            : pantau NEXT dan HINT\n"
+    "test/button/next           : pantau NEXT sahaja\n"
+    "test/button/hint           : pantau HINT sahaja\n"
+    "test/button/reset          : kosongkan kiraan, pantau kedua-dua\n"
+    "Permainan/masa dijeda semasa ujian; tiada markah atau pendaftaran UID.\n"
+    "Baca status/pins/help semasa ujian; test/stop sebelum arahan lain.\n"
+    "LED biasa hanya ON/OFF; gunakan esp32dev-rgb untuk warna.\n"));
+}
+void componentPrintStatus() {
+  Serial.printf("[TEST STATUS] mode=%s target=%s B1=%lu B2=%lu\n", componentModeName(),
+    componentTargetName(), static_cast<unsigned long>(componentSession.presses[0]),
+    static_cast<unsigned long>(componentSession.presses[1]));
+}
+void componentPrintRfidStatus() {
+  Serial.println(F("[TEST RFID] Status tersimpan daripada boot/probe terakhir; UID menguji bacaan kad."));
+  for (uint8_t i = 0; i < 2; ++i) {
+    const ReaderRecord &record = rfidGetRecord(i);
+    Serial.printf("R%u firmware=0x%02X %s | SS=%u RST=%u\n", unsigned(i + 1),
+      unsigned(record.version), record.online ? "READY" : "NOT FOUND",
+      unsigned(RFID_SS_PINS[i]), unsigned(RFID_RST_PIN));
+  }
+}
+void componentPrintButton(uint8_t index) {
+  Serial.printf("[TEST BUTTON] %s GPIO%u raw=%s stable=%s count=%lu\n",
+    index == 0 ? "NEXT" : "HINT", unsigned(BUTTON_PINS[index]),
+    digitalRead(BUTTON_PINS[index]) == LOW ? "LOW" : "HIGH",
+    buttonIsPressed(index) ? "TEKAN" : "LEPAS", static_cast<unsigned long>(componentSession.presses[index]));
+}
+void componentEnter(ComponentMode mode, uint8_t selected) {
+  appStop(); // Pause clock, cancel enrolment and stop reader fields without changing registry.
+  buttonsRequireRelease();
+  componentSession = {};
+  componentSession.mode = mode; componentSession.selected = selected;
+  componentSession.startedMs = millis(); componentSession.lastStep = 255;
+  for (uint8_t i = 0; i < 2; ++i) {
+    componentSession.lastRaw[i] = digitalRead(BUTTON_PINS[i]);
+    componentSession.lastStable[i] = buttonIsPressed(i);
+  }
+}
+bool componentParseColour(const char *text, RgbColor &out) {
+  for (uint8_t i = 0; i < sizeof(componentColourNames) / sizeof(componentColourNames[0]); ++i) {
+    if (!strcmp(text, componentColourNames[i])) { out = RgbColor(i); return true; }
+  }
+  return false;
+}
+void componentStartRfid(uint8_t selected, bool check) {
+  componentEnter(ComponentMode::RFID, selected);
+  if (check) rfidCheckConnections();
+  rfidSetMode(selected == 1 ? ScanMode::R1 : selected == 2 ? ScanMode::R2 : ScanMode::BOTH);
+  componentPrintRfidStatus();
+  Serial.printf("[TEST RFID] mode=%s. Imbas/angkat kad; UID di Serial, tiada markah. test/stop untuk keluar.\n",
+                componentTargetName());
+}
+void componentStartLed(uint8_t selected, ComponentPattern pattern, RgbColor colour) {
+  componentEnter(ComponentMode::LED, selected);
+  componentSession.pattern = pattern; componentSession.colour = colour;
+  Serial.printf("[TEST LED] target=%s action=%s. test/stop untuk keluar.\n", componentTargetName(),
+    pattern == ComponentPattern::CYCLE ? "cycle" : pattern == ComponentPattern::BLINK ? "blink" : componentColourNames[uint8_t(colour)]);
+  if (!RGB_ENABLED) Serial.println(F("[TEST LED] LED BIASA: warna menjadi ON/OFF; warna RGB memerlukan esp32dev-rgb."));
+}
+void componentStartButtons(uint8_t selected) {
+  componentEnter(ComponentMode::BUTTON, selected);
+  Serial.println(F("[TEST BUTTON] Tekan/lepas butang dipilih. Kiraan selepas debounce; test/stop untuk keluar."));
+  for (uint8_t i = 0; i < 2; ++i) if (componentSelected(i)) componentPrintButton(i);
+}
+void componentPutRow(LcdFrame &frame, uint8_t row, const char *text) {
+  size_t n = strlen(text); if (n > 20) n = 20;
+  memcpy(frame.rows[row], text, n);
+}
+} // namespace
+
+void componentTestsBegin() { componentSession = {}; }
+bool componentTestsActive() { return componentSession.mode != ComponentMode::NONE; }
+void componentTestsStop() {
+  if (!componentTestsActive()) return;
+  componentSession.mode = ComponentMode::NONE;
+  buttonsRequireRelease(); // Includes raw presses not yet seen by buttonsUpdate().
+  appStop();
+  Serial.println(F("[TEST STOP] Ujian tamat. Menu utama; lepaskan butang sebelum bermain."));
+}
+
+void componentTestsCommand(const char *path) {
+  // Strict bounded parser: reject empty segments/trailing slashes/extra components
+  // before changing any session or touching hardware.
+  char buffer[80];
+  if (!path || strlen(path) >= sizeof(buffer)) { componentError(); return; }
+  strcpy(buffer, path);
+  char *parts[5] = {buffer}; uint8_t count = 1;
+  for (char *p = buffer; *p; ++p) if (*p == '/') {
+    if (p == buffer || p[-1] == '\0' || !p[1] || count == 5) { componentError(); return; }
+    *p = '\0'; parts[count++] = p + 1;
+  }
+  if (strcmp(parts[0], "test")) { componentError(); return; }
+  if (count == 1 || (count == 2 && !strcmp(parts[1], "help"))) { componentHelp(); return; }
+  if (count == 2 && !strcmp(parts[1], "stop")) { componentTestsStop(); return; }
+  if (count == 2 && !strcmp(parts[1], "status")) { componentPrintStatus(); return; }
+  const bool rfid = !strcmp(parts[1], "rfid"), led = !strcmp(parts[1], "led"), button = !strcmp(parts[1], "button");
+  if ((rfid || led || button) && (count == 2 || (count == 3 && !strcmp(parts[2], "help")))) {
+    componentHelp(); return;
+  }
+  if (rfid && count == 3) {
+    if (!strcmp(parts[2], "status")) { componentPrintRfidStatus(); return; }
+    if (!strcmp(parts[2], "check")) { componentStartRfid(3, true); return; }
+    const uint8_t selected = !strcmp(parts[2], "r1") ? 1 : !strcmp(parts[2], "r2") ? 2 :
+      (!strcmp(parts[2], "all") || !strcmp(parts[2], "scan")) ? 3 : 0;
+    if (selected) { componentStartRfid(selected, false); return; }
+  }
+  if (led && (count == 3 || count == 4)) {
+    const uint8_t selected = count == 3 ? 3 : !strcmp(parts[2], "r1") ? 1 : !strcmp(parts[2], "r2") ? 2 :
+      !strcmp(parts[2], "all") ? 3 : 0;
+    const char *action = parts[count - 1]; RgbColor colour = RgbColor::OFF;
+    if (selected && !strcmp(action, "cycle")) { componentStartLed(selected, ComponentPattern::CYCLE, colour); return; }
+    if (selected && !strcmp(action, "blink")) { componentStartLed(selected, ComponentPattern::BLINK, colour); return; }
+    if (selected && componentParseColour(action, colour)) { componentStartLed(selected, ComponentPattern::STEADY, colour); return; }
+  }
+  if (button && count == 3) {
+    if (!strcmp(parts[2], "status")) { for (uint8_t i = 0; i < 2; ++i) componentPrintButton(i); return; }
+    const uint8_t selected = !strcmp(parts[2], "next") ? 1 : !strcmp(parts[2], "hint") ? 2 :
+      (!strcmp(parts[2], "all") || !strcmp(parts[2], "reset")) ? 3 : 0;
+    if (selected) { componentStartButtons(selected); return; }
+  }
+  componentError();
+}
+
+void componentTestsUpdate() {
+  if (componentSession.mode == ComponentMode::BUTTON) {
+    for (uint8_t i = 0; i < 2; ++i) if (componentSelected(i)) {
+      const bool raw = digitalRead(BUTTON_PINS[i]), stable = buttonIsPressed(i);
+      if (raw == componentSession.lastRaw[i] && stable == componentSession.lastStable[i]) continue;
+      if (stable && !componentSession.lastStable[i] && componentSession.presses[i] < UINT32_MAX)
+        ++componentSession.presses[i];
+      componentSession.lastRaw[i] = raw; componentSession.lastStable[i] = stable;
+      componentPrintButton(i);
+    }
+  } else if (componentSession.mode == ComponentMode::LED && componentSession.pattern != ComponentPattern::STEADY) {
+    const bool cycle = componentSession.pattern == ComponentPattern::CYCLE;
+    const uint8_t step = uint8_t((uint32_t(millis() - componentSession.startedMs) /
+      (cycle ? COMPONENT_CYCLE_MS : COMPONENT_BLINK_MS)) % (cycle ? 7U : 2U));
+    if (step == componentSession.lastStep) return;
+    componentSession.lastStep = step;
+    const RgbColor colour = cycle ? componentPalette[step] : step ? RgbColor::OFF : RgbColor::WHITE;
+    Serial.printf("[TEST LED] target=%s colour=%s\n", componentTargetName(), componentColourNames[uint8_t(colour)]);
+  }
+}
+RgbColor componentTestsReaderColor(uint8_t reader) {
+  if (!componentSelected(reader)) return RgbColor::OFF;
+  switch (componentSession.mode) {
+    case ComponentMode::RFID: return rfidGetRecord(reader).online ? RgbColor::BLUE : RgbColor::RED;
+    case ComponentMode::BUTTON: return buttonIsPressed(reader) ? RgbColor::GREEN : RgbColor::OFF;
+    case ComponentMode::LED:
+      if (componentSession.pattern == ComponentPattern::CYCLE)
+        return componentPalette[(uint32_t(millis() - componentSession.startedMs) / COMPONENT_CYCLE_MS) % 7U];
+      if (componentSession.pattern == ComponentPattern::BLINK)
+        return (uint32_t(millis() - componentSession.startedMs) / COMPONENT_BLINK_MS) % 2U ? RgbColor::OFF : RgbColor::WHITE;
+      return componentSession.colour;
+    case ComponentMode::NONE: return RgbColor::OFF;
+  }
+  return RgbColor::OFF;
+}
+LcdFrame componentTestsLcdFrame() {
+  LcdFrame frame; memset(frame.rows, ' ', sizeof(frame.rows));
+  for (uint8_t row = 0; row < 4; ++row) frame.rows[row][20] = '\0';
+  componentPutRow(frame, 0, "UJIAN KOMPONEN");
+  char title[21]; snprintf(title, sizeof(title), "%s: %s", componentModeName(), componentTargetName());
+  componentPutRow(frame, 1, title);
+  componentPutRow(frame, 2, componentSession.mode == ComponentMode::RFID ? "Imbas kad pada RFID" :
+    componentSession.mode == ComponentMode::BUTTON ? "Tekan/lepas butang" : "Periksa warna LED");
+  componentPutRow(frame, 3, "Keluar: test/stop");
+  return frame;
+}

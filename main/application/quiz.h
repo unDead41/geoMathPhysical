@@ -13,6 +13,7 @@ void quizHint();
 void quizRetry();
 void quizOnScan(uint8_t reader, const Uid &uid);
 const Question *quizCurrentQuestion();
+uint8_t quizActiveReader();
 void quizPrintQuestion();
 void quizPrintScore();
 uint32_t quizElapsedMs();

@@ -16,12 +16,12 @@ struct LcdViewState {
 };
 
 const char *const LCD_INSTRUCTIONS[INSTRUCTION_PAGE_COUNT][2] = {
-  {"5 soalan. Pilih satu", "jawapan dan imbas."},
-  {"Imbas bongkah atau", "bentangan ikut LED."},
-  {"HINT: Lihat petunjuk", "HINT lagi: Soalan"},
-  {"NEXT: Langkau soalan", "Langkau: +0 markah"},
-  {"Betul: +1 markah", "Masa terus berjalan"},
-  {"Keputusan dipaparkan", "selepas 5 soalan."}
+  {"R1: Kad bongkah dulu", "R2: Bentangan sama"},
+  {"Biru: Sedia imbas", "Hijau: Tahap betul"},
+  {"HINT:Petunjuk kuning", "HINT lagi: Soalan"},
+  {"Merah: Cuba semula", "NEXT: Langkau (+0)"},
+  {"Dua betul:+1 markah", "3 kelip: Masa dijeda"},
+  {"Menu:Warna perlahan", "Tamat: Warna pantas"}
 };
 
 inline void lcdPutRow(char rows[4][21], uint8_t row, const char *text) {
@@ -61,8 +61,9 @@ inline void lcdQuizHeader(char rows[4][21], const QuizData &quiz, uint32_t elaps
   lcdPutRow(rows, 0, text);
   formatQuizTime(elapsedMs, duration, sizeof(duration));
   const size_t n = strlen(duration);
-  // Normal: Q1/5____00:14___S0/5. Minit lebih panjang menggunakan sela lebih pendek.
+  // Q1/5 R1 00:14   S0/5. The stage remains visible with ordinary LEDs too.
   const size_t position = n <= 5 ? 8 : 8 - (n - 4) / 2;
+  if (position >= 7) memcpy(rows[0] + 5, quiz.stage == AnswerStage::SOLID ? "R1" : "R2", 2);
   if (position + n <= 16) memcpy(rows[0] + position, duration, n);
   snprintf(text, sizeof(text), "S%u/%u", unsigned(quiz.score), unsigned(quiz.length));
   const size_t scoreLength = strlen(text);

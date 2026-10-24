@@ -14,16 +14,18 @@ python tests/run_tests.py --separate-modules --rgb
 
 The pure runner compiles and links the real domain, LCD view and four application
 tabs using only standard C++11 headers. It supplies typed application ports and
-executes 9 cases: scoring/routing/notices/freeze, hint/pause/resume/skip, rollover
-and reset, invalid rounds, UID values, registry validation, filtered/random
-rounds, immutable LCD snapshots, and an application driven entirely by ports.
+executes 11 cases: two-card scoring/routing/final freeze, every blink half-step
+and both skip stages, role/error/hint colours, hint/pause/resume, rollover/reset,
+invalid rounds, UID values, registry validation, filtered/random rounds,
+immutable LCD snapshots, and an application driven entirely by ports.
 
-Each firmware runner first runs those 9 cases, then executes 29 behavioural
-cases with fake electrical/device I/O. The original 22 cases remain; seven add
-failed/partial/unavailable NVS, duplicate UID rejection, corrupt-version rejection,
-pause/resume through commands, oversized Serial input recovery, and loading a
-literal pre-refactor NVS byte image. The latter verifies existing 120-byte
-storage, shape IDs and both UID reader roles independently of a new write.
+Each firmware runner first runs those 11 cases, then executes 46 behavioural
+cases with fake electrical/device I/O. Flow regressions drive real input adapters
+for pre-positioned R2, both held cards across questions, short/late/held buttons,
+all 900 blink samples, stopwatch resumption, stage arming, hint colours and
+menu/result cadence. Existing storage, Serial, 15 LCD-copy and debounce checks
+remain, with old single-card expectations replaced by the approved two-card rule.
+The literal pre-refactor NVS image still protects all 120 bytes and reader roles.
 
 `--entrypoint` tests the actual `src/main.cpp` used by PlatformIO.
 `--separate-modules` compiles every `main/*.ino` independently and links the
@@ -46,3 +48,16 @@ are historical fixtures from the supplied ZIP, not the active test contract.
 Simulation does not replace ESP32 cross-compilation, USB upload or physical
 RFID/LCD checks. Latest actual results: `../VERIFICATION.md`.
 
+
+The physical-wiring case drives every OFF/primary/combined colour through the
+real output adapter, checks the user's literal R1=16/17/26 and R2=13/14/25
+R/G/B pin wiring, and verifies the Serial `pins` guide. Ordinary mode checks
+that only the original GPIO25/26 outputs change for every logical colour.
+
+`component_behaviour.h` adds nine actual-UART/adapter regressions: command help
+and routing, LED output ownership/timing, selected RFID reads and refreshed
+connection failures/recovery, button debounce/watch/counts, held-button exit,
+invalid paths/extra arguments and command gating, test switching and rollover.
+The fake MFRC522 exposes per-reader VersionReg values only at the electrical
+boundary so the real probe path can be exercised. No component test writes NVS
+or scores a quiz. Every existing game regression remains active.

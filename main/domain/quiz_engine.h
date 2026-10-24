@@ -18,6 +18,7 @@ class QuizEngine {
  public:
   QuizEngine(const Question *bank, uint8_t count) : bank_(bank), count_(count) { reset(); }
   const QuizData &data() const { return data_; }
+  uint8_t activeReader() const { return data_.stage == AnswerStage::SOLID ? 0 : 1; }
   const Question *current() const {
     if (data_.phase != QuizPhase::QUESTION || data_.index >= data_.length ||
         data_.order[data_.index] >= count_) return nullptr;
@@ -33,7 +34,8 @@ class QuizEngine {
     data_.clockRunning = false;
   }
   void resume(uint32_t now) {
-    if (data_.phase != QuizPhase::QUESTION || data_.clockRunning || data_.clockFinished) return;
+    if (data_.phase != QuizPhase::QUESTION || data_.advancePending ||
+        data_.clockRunning || data_.clockFinished) return;
     data_.clockStartedMs = now; data_.clockRunning = true;
   }
   void finish(uint32_t now) { pause(now); data_.clockFinished = true; }
@@ -61,18 +63,25 @@ class QuizEngine {
   }
   bool retry() {
     if (!current() || data_.advancePending || data_.awarded) return false;
+    data_.stage = AnswerStage::SOLID;
     data_.feedback = Feedback::WAITING; data_.showHint = false;
     return true;
   }
   bool submit(uint8_t reader, Shape answer, uint8_t registeredReader, uint32_t now) {
     const Question *q = current();
-    if (reader >= READER_COUNT || !q || data_.advancePending || data_.awarded) return false;
+    if (reader >= READER_COUNT || !q || data_.advancePending || data_.awarded ||
+        reader != activeReader()) return false;
     data_.feedbackStartedMs = now;
-    if (reader != q->reader || (answer != Shape::NONE && registeredReader != q->reader))
+    if (answer != Shape::NONE && registeredReader != activeReader())
       data_.feedback = Feedback::WRONG_PAD;
     else if (answer == Shape::NONE) data_.feedback = Feedback::UNKNOWN_UID;
     else if (answer == q->answer) {
-      data_.awarded = true; ++data_.score; queueAdvance(Feedback::RIGHT, now);
+      if (data_.stage == AnswerStage::SOLID) {
+        data_.stage = AnswerStage::NET;
+        data_.feedback = Feedback::WAITING; data_.showHint = false;
+      } else {
+        data_.awarded = true; ++data_.score; queueAdvance(Feedback::RIGHT, now);
+      }
     } else {
       data_.feedback = Feedback::WRONG;
       if (data_.wrongAttempts < UINT16_MAX) ++data_.wrongAttempts;
@@ -83,13 +92,16 @@ class QuizEngine {
     if (data_.phase != QuizPhase::QUESTION) return QuizTransition::NONE;
     const uint32_t age = uint32_t(now - data_.feedbackStartedMs);
     if (data_.advancePending) {
-      if (age < QUIZ_NOTICE_MS) return QuizTransition::NONE;
+      if (age < QUIZ_NOTICE_MS) {
+        data_.blinkStep = uint8_t(age / QUIZ_BLINK_HALF_MS);
+        return QuizTransition::NONE;
+      }
       data_.advancePending = false;
       if (data_.index + 1 >= data_.length) {
         finish(now); data_.phase = QuizPhase::SUMMARY;
         return QuizTransition::SUMMARY;
       }
-      ++data_.index; clearCurrent();
+      ++data_.index; clearCurrent(); resume(now);
       return QuizTransition::QUESTION;
     }
     if (data_.feedback != Feedback::WAITING && age >= QUIZ_ERROR_MS)
@@ -98,22 +110,29 @@ class QuizEngine {
   }
   RgbColor readerColor(uint8_t reader) const {
     if (reader >= READER_COUNT) return RgbColor::OFF;
-    if (data_.phase == QuizPhase::SUMMARY) return RgbColor::GREEN;
     const Question *q = current();
-    if (!q || q->reader != reader || data_.feedback == Feedback::SKIPPED) return RgbColor::OFF;
-    if (data_.awarded) return RgbColor::GREEN;
+    if (!q) return RgbColor::OFF;
+    if (data_.advancePending) {
+      if (data_.blinkStep % 2) return RgbColor::OFF;
+      return data_.feedback == Feedback::RIGHT ? RgbColor::GREEN : RgbColor::RED;
+    }
+    if (data_.stage == AnswerStage::NET && reader == 0) return RgbColor::GREEN;
+    if (reader != activeReader()) return RgbColor::OFF;
     if (data_.feedback == Feedback::WRONG || data_.feedback == Feedback::UNKNOWN_UID ||
         data_.feedback == Feedback::WRONG_PAD) return RgbColor::RED;
-    return RgbColor::BLUE;
+    return data_.showHint ? RgbColor::YELLOW : RgbColor::BLUE;
   }
  private:
   void clearCurrent() {
     data_.awarded = data_.showHint = data_.hintUsedHere = data_.advancePending = false;
     data_.feedback = Feedback::WAITING; data_.feedbackStartedMs = 0;
+    data_.stage = AnswerStage::SOLID; data_.blinkStep = 0;
   }
   void queueAdvance(Feedback feedback, uint32_t now) {
     data_.feedback = feedback; data_.feedbackStartedMs = now;
     data_.advancePending = true; data_.showHint = false;
+    data_.blinkStep = 0;
+    pause(now);
     if (data_.index + 1 >= data_.length) finish(now);
   }
   const Question *bank_;

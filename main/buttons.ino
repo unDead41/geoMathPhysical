@@ -22,6 +22,9 @@ void buttonsBegin() {
 bool buttonIsPressed(uint8_t reader) {
   return reader < 2 && buttonStable[reader] == BUTTON_PRESSED_LEVEL[reader];
 }
+void buttonsRequireRelease() {
+  for (uint8_t i = 0; i < 2; ++i) buttonSuppressed[i] = true;
+}
 
 void buttonsUpdate() {
   const uint32_t now = millis();

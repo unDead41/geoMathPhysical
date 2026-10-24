@@ -43,6 +43,13 @@ bool rfidReaderEnabled(uint8_t reader) {
          (rfidScanMode == ScanMode::R1 && reader == 0) ||
          (rfidScanMode == ScanMode::R2 && reader == 1);
 }
+void rfidCheckConnections() {
+  rfidSetMode(ScanMode::STOPPED);
+  for (uint8_t i = 0; i < READER_COUNT; ++i) {
+    rfidRecords[i].version = rfidReaders[i].PCD_ReadRegister(MFRC522::VersionReg);
+    rfidRecords[i].online = rfidRecords[i].version != 0 && rfidRecords[i].version != 0xFF;
+  }
+}
 
 void rfidSetMode(ScanMode mode) {
   rfidScanMode = mode;

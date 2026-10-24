@@ -5,6 +5,7 @@
 #include "hardware/rfid.h"
 #include "hardware/buttons.h"
 #include "hardware/lcd.h"
+#include "hardware/component_tests.h"
 #include "question_bank.h"
 #include "config.h"
 #include <cctype>
@@ -58,6 +59,18 @@ void serialExecute(char *line) {
     args[argc++] = token; token = strtok_r(nullptr, " \t\v\f", &save);
   }
   if (!argc) return;
+  if (!strcmp(args[0], "test") || !strncmp(args[0], "test/", 5)) {
+    if (argc != 1) Serial.println(F("[TEST ERROR] Gunakan satu path sahaja. Taip test/help."));
+    else componentTestsCommand(args[0]);
+    return;
+  }
+  if (componentTestsActive()) {
+    if (argc == 1 && !strcmp(args[0], "stop")) componentTestsStop();
+    else if (strcmp(args[0], "help") && strcmp(args[0], "status") && strcmp(args[0], "pins") &&
+             strcmp(args[0], "tags") && strcmp(args[0], "bank") && strcmp(args[0], "current") && strcmp(args[0], "score")) {
+      Serial.println(F("[TEST] Taip test/stop sebelum arahan permainan/pendaftaran.")); return;
+    }
+  }
   if (argc == 1) {
     if (!strcmp(args[0], "help")) { serialPrintHelp(); return; }
     if (!strcmp(args[0], "pins")) { serialPrintPins(); return; }
@@ -143,6 +156,7 @@ void serialPrintHelp() {
   Serial.println(F(
     "\n--- COMMANDS / SEMUA ARAHAN ---\n"
     "help                       : senarai ini\n"
+    "test/help                  : ujian komponen RFID, LED dan butang\n"
     "current                    : jenis aktif + kiraan\n"
     "current bongkah            : sama seperti current\n"
     "current kubus              : alias current bongkah\n"
@@ -162,7 +176,7 @@ void serialPrintHelp() {
     "round new                  : reset markah + round rawak baharu\n"
     "next                       : sama seperti B1\n"
     "hint                       : sama seperti B2\n"
-    "retry / clear              : kosongkan jawapan belum betul, kekal markah\n"
+    "retry / clear              : ulang pasangan dari R1, kekal markah\n"
     "score                      : markah, salah, penggunaan hint\n"
     "status                     : status perkakasan + kuiz\n"
     "pins                       : semua GPIO\n"
@@ -175,8 +189,9 @@ void serialPrintHelp() {
     "Pendaftaran imbas tamat selepas satu kad berjaya atau timeout 30s.\n"
     "Menu: B1/NEXT=mula baharu; B2/HINT=cara bermain 6 halaman.\n"
     "Panduan: HINT maju hingga tamat lalu kembali menu.\n"
-    "Kuiz: B1=langkau (+0); B2=buka/tutup hint. Satu imbasan mengikut LED.\n"
-    "Betul=+1, beralih automatik selepas notis. Angkat kad sebelum imbas lagi.\n"
+    "Kuiz: B1=langkau (+0); B2=buka/tutup hint. R1 bongkah -> R2 bentangan.\n"
+    "Dua kad sepadan=+1 sekali. Tiga kelipan 150ms ON/OFF; masa dijeda.\n"
+    "Biru=imbas, kuning=hint, merah=salah, hijau=tahap betul. Angkat kad.\n"
     "Markah akhir: B1=main semula; B2=menu. Imbas/daftar: B1=menu/batal.\n"));
 }
 
@@ -186,9 +201,12 @@ void serialPrintPins() {
                 unsigned(RFID_SS_PINS[0]), unsigned(RFID_SS_PINS[1]), unsigned(RFID_RST_PIN));
   Serial.printf("LCD SDA=%u SCL=%u | B1=%u B2=%u (bias dalaman ikut polariti)\n",
                 unsigned(LCD_SDA_PIN), unsigned(LCD_SCL_PIN), unsigned(BUTTON_PINS[0]), unsigned(BUTTON_PINS[1]));
-  for (uint8_t i = 0; i < 2; ++i)
-    Serial.printf("RGB%u R/G/B=%u/%u/%u | %s\n", unsigned(i + 1), unsigned(RGB_PINS[i][0]),
-                  unsigned(RGB_PINS[i][1]), unsigned(RGB_PINS[i][2]), RGB_ENABLED ? "MOD RGB" : "LED BIASA: PIN R SAHAJA");
+  for (uint8_t i = 0; i < 2; ++i) {
+    if (RGB_ENABLED)
+      Serial.printf("RGB%u R/G/B=%u/%u/%u | MOD RGB\n", unsigned(i + 1), unsigned(RGB_PINS[i][0]),
+                    unsigned(RGB_PINS[i][1]), unsigned(RGB_PINS[i][2]));
+    else Serial.printf("LED%u GPIO=%u | LED BIASA\n", unsigned(i + 1), unsigned(LED_PINS[i]));
+  }
   Serial.println(F("RC522/modul butang=3.3V. LCD 5V melalui penukar aras I2C dua hala."));
 }
 
@@ -218,7 +236,7 @@ void serialPrintStatus() {
 void serialPrintBank() {
   Serial.println(F("[BANK] Soalan cadangan Bab 6; paparan ASCII disingkatkan untuk LCD."));
   for (const Question &q : QUESTIONS) {
-    Serial.printf("%s [%s, R%u] %s\n", q.id, shapeName(q.answer), unsigned(q.reader + 1), q.fullText);
+    Serial.printf("%s [%s, R1 -> R2] %s\n", q.id, shapeName(q.answer), q.fullText);
     Serial.printf("  HINT: %s | %s | %s\n", q.hint[0], q.hint[1], q.hint[2]);
   }
 }

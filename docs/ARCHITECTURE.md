@@ -65,8 +65,8 @@ Adapter menggunakan namespace `geomath_q2`, key `registry`, magic
 `0x474D5132` dan versi storan `1`. Write gagal tidak mengesahkan data RAM baharu.
 
 `esp32dev` menggunakan LED biasa; `esp32dev-rgb` mengaktifkan RGB empat kaki.
-Semua pin asal, soalan, hint, skor, masa akhir, arahan Serial dan aliran bermain
-dikekalkan. R1 ialah bongkah dan R2 ialah bentangan.
+Semua pin asal, bank soalan/hint, format UID dan arahan guru dikekalkan.
+Flow terkini memerlukan R1 bongkah kemudian R2 bentangan bagi setiap soalan.
 
 ## Panduan perubahan seterusnya
 
@@ -77,3 +77,54 @@ dikekalkan. R1 ialah bongkah dan R2 ialah bentangan.
 - Adapter baharu dipasang dalam `setup()`; domain tidak perlu tahu library adapter.
 - Jalankan ujian berkaitan dan build environment yang terkesan. Rujuk
   `tests/README.md` dan `VERIFICATION.md`.
+
+## Flow dua kad dan output masa
+
+`QuizData.stage` ialah `AnswerStage::SOLID` atau `NET`. `QuizEngine.activeReader()`
+memilih pembaca daripada tahap ini, bukan metadata lama `Question.reader`.
+Bank tidak perlu diubah apabila flow ditukar. R1 betul mengubah tahap tanpa
+menambah skor; R2 sepadan memberi +1 sekali dan menjadualkan peralihan.
+
+`advancePending` mewakili state kelipan yang menolak jawapan, hint, retry dan
+skip tambahan. `blinkStep` dipacu oleh umur notis melalui `update(now)`: enam
+separuh langkah 150 ms menghasilkan tepat tiga ON/OFF selama 900 ms. Kedua-dua
+warna dibina daripada langkah yang sama. Stopwatch dijeda sebelum kelipan;
+soalan seterusnya memulakannya semula, keputusan akhir kekal beku.
+
+`quiz.ino` menukar mod pembaca ketika tahap berubah dan memanggil port
+`requireFreshCards()`. Adapter memerlukan tiga poll kosong sebelum menerima
+kad semula; kad R2 yang diletakkan terlalu awal tidak boleh terus menjawab.
+Butang terus disampel semasa kelipan supaya tekanan yang bermula ketika input
+tersekat tidak tersimpan untuk skrin berikutnya.
+
+`app.ino` memiliki warna hiasan menu/keputusan: masa dan RNG datang melalui
+AppPorts; render warna tidak mengubah skor. Hardware memetakan warna logik
+kepada saluran RGB atau satu pin LED biasa. `main/main.ino` dan `loop()` tidak
+perlu diubah. Tiada library/dependency produksi baharu.
+
+View menambah label R1/R2 pada ruang header dan mengekalkan tiga baris isi bank.
+Panduan terkini: [GAME_FLOW_RGB.md](GAME_FLOW_RGB.md).
+
+## Pin LED biasa dan pemasangan RGB
+
+`config.h` mengasingkan `LED_PINS` daripada `RGB_PINS`. Mod `esp32dev`
+mengekalkan R1=GPIO25/R2=GPIO26. Mod `esp32dev-rgb` menggunakan RGB1/R1
+R=16, G=17, B=26 dan RGB2/R2 R=13, G=14, B=25, mengikut sambungan pengguna.
+Driver memilih pemetaan mengikut environment tanpa mengubah peraturan permainan.
+Arahan Serial `pins` melaporkan pin yang digunakan oleh environment aktif.
+
+## Component diagnostics
+
+`component_tests.ino` is an outer hardware integration utility with private session
+state and a contract in `hardware/component_tests.h`. It reuses existing RFID,
+button and output adapters; neither domain nor pure application gains a hardware
+dependency. The Serial adapter routes test paths and gates normal mutation
+commands during tests. Composition setup combines diagnostic/game button blocking
+and keeps scanned diagnostic UIDs away from the application scoring handler.
+
+The existing output tick drives nonblocking diagnostic updates and selects test
+LED/LCD output while a session owns it. The main loop remains unchanged. Starting
+calls appStop to pause/cancel capture; stopping also requires stable button release.
+`rfidCheckConnections()` refreshes version registers while RF scanning is stopped;
+UID scans, rather than a version response alone, establish card-reading behaviour.
+See [COMPONENT_TESTS.md](COMPONENT_TESTS.md) for the command contract.

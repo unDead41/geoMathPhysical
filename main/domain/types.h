@@ -9,15 +9,16 @@ enum class Shape : uint8_t {
 };
 enum class AppMode : uint8_t { STOPPED, PLAY, UID_SCAN, ENROLL };
 enum class QuizPhase : uint8_t { SETUP, QUESTION, SUMMARY };
+enum class AnswerStage : uint8_t { SOLID, NET };
 enum class Feedback : uint8_t { WAITING, WRONG, RIGHT, UNKNOWN_UID, WRONG_PAD, SKIPPED };
 enum class ScanMode : uint8_t { STOPPED, BOTH, R1, R2 };
-enum class RgbColor : uint8_t { OFF, BLUE, GREEN, RED };
+enum class RgbColor : uint8_t { OFF, BLUE, GREEN, RED, YELLOW, CYAN, MAGENTA, WHITE };
 struct Uid { uint8_t size; uint8_t bytes[10]; };
 using RandomIndex = uint8_t (*)(uint8_t upperExclusive);
 struct Question {
   const char *id;
   Shape answer;
-  uint8_t reader; // 0=bongkah/R1, 1=bentangan/R2. Satu imbasan sahaja.
+  uint8_t reader; // Legacy bank metadata; runtime stage always requires R1 then R2.
   const char *lines[3]; // <=20 aksara ASCII setiap baris.
   const char *hint[3];
   const char *fullText;
@@ -33,6 +34,8 @@ struct QuizData {
   QuizPhase phase;
   uint8_t order[ROUND_TARGET];
   uint8_t length, index, score;
+  AnswerStage stage;
+  uint8_t blinkStep;
   uint16_t wrongAttempts, hintsUsed;
   bool awarded, showHint, hintUsedHere, advancePending;
   Feedback feedback;

@@ -3,7 +3,39 @@
 #include "application/quiz.h"
 #include "application/registry.h"
 
-namespace { AppState state = {AppMode::STOPPED, -1, Shape::NONE, 0, false, 0}; }
+namespace {
+AppState state = {AppMode::STOPPED, -1, Shape::NONE, 0, false, 0};
+enum class AmbientMode : uint8_t { OFF, MENU, SUMMARY };
+AmbientMode ambientMode = AmbientMode::OFF;
+RgbColor ambientColors[READER_COUNT] = {};
+uint32_t ambientStartedMs = 0;
+
+void pickAmbientColors() {
+  // Non-off colours, always different from the preceding colour on each reader.
+  for (uint8_t r = 0; r < READER_COUNT; ++r) {
+    const uint8_t previous = uint8_t(ambientColors[r]);
+    uint8_t value = uint8_t(appPorts().randomIndex(previous ? 6 : 7) + 1);
+    if (previous && value >= previous) ++value;
+    ambientColors[r] = RgbColor(value);
+  }
+}
+void updateAmbientColors() {
+  const AmbientMode wanted = state.mode == AppMode::STOPPED ? AmbientMode::MENU :
+    state.mode == AppMode::PLAY && quizState().phase == QuizPhase::SUMMARY
+      ? AmbientMode::SUMMARY : AmbientMode::OFF;
+  const uint32_t now = appPorts().now();
+  if (wanted != ambientMode) {
+    ambientMode = wanted; ambientStartedMs = now;
+    if (wanted != AmbientMode::OFF) pickAmbientColors();
+    return;
+  }
+  if (wanted == AmbientMode::OFF) return;
+  const uint16_t interval = wanted == AmbientMode::MENU ? MENU_COLOR_MS : SUMMARY_COLOR_MS;
+  if (uint32_t(now - ambientStartedMs) >= interval) {
+    ambientStartedMs = now; pickAmbientColors();
+  }
+}
+}
 const AppState &appState() { return state; }
 
 void appBegin() {
@@ -19,6 +51,7 @@ void appStop() {
   state.showInstructions = false;
   state.instructionPage = 0;
   appPorts().setReaderMode(ScanMode::STOPPED);
+  updateAmbientColors();
 }
 
 void appNextButton() {
@@ -60,9 +93,10 @@ bool appPlay(bool newRound) {
   state.mode = AppMode::PLAY; state.enrollReader = -1; state.enrollShape = Shape::NONE;
   state.showInstructions = false;
   state.instructionPage = 0;
+  updateAmbientColors();
   quizResumeClock();
   quizArmCurrentReader();
-  appLogf("[PLAY] Ikut LED, imbas SATU jawapan. NEXT=langkau; HINT=buka/tutup petunjuk.\n");
+  appLogf("[PLAY] R1 bongkah dahulu, kemudian R2 bentangan sepadan. NEXT=langkau; HINT=petunjuk.\n");
   return true;
 }
 
@@ -102,6 +136,7 @@ void appHandleScan(uint8_t reader, const Uid &uid) {
 
 void appUpdate() {
   quizUpdate();
+  updateAmbientColors();
   if (state.mode == AppMode::ENROLL && uint32_t(appPorts().now() - state.enrollStarted) >= ENROLL_TIMEOUT_MS) {
     appStop();
     appLogf("[TIMEOUT] Pendaftaran dibatalkan; tiada UID baharu disimpan.\n");
@@ -117,6 +152,9 @@ RgbColor appReaderColor(uint8_t reader) {
     return reader == uint8_t(state.enrollReader) ? RgbColor::BLUE : RgbColor::OFF;
   if (state.mode == AppMode::UID_SCAN)
     return appPorts().readerEnabled(reader) ? RgbColor::BLUE : RgbColor::OFF;
+  if (state.mode == AppMode::STOPPED ||
+      (state.mode == AppMode::PLAY && quizState().phase == QuizPhase::SUMMARY))
+    return ambientColors[reader];
   return quizReaderColor(reader);
 }
 

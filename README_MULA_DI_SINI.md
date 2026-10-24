@@ -31,12 +31,12 @@ Jika dua RGB sudah dipasang, ubah satu baris dalam `config.h`:
 
 | RGB | R | G | B |
 |---|---:|---:|---:|
-| R1 | 25 | 13 | 14 |
-| R2 | 26 | 16 | 17 |
+| RGB1 / R1 bongkah | 16 | 17 | 26 |
+| RGB2 / R2 bentangan | 13 | 14 | 25 |
 
 `RGB_COMMON_ANODE = false` untuk common ke GND; gunakan `true` jika common anode. Setiap saluran LED memerlukan resistor seperti sambungan asal.
 
-Semasa soalan, hanya LED pembaca yang diperlukan menyala. Dalam mod RGB: biru menandakan tempat imbas, hijau untuk jawapan betul, merah untuk jawapan salah/kad tidak sah. Kedua-dua LED menyala pada keputusan akhir.
+Setiap soalan bermula dengan R1 biru dan R2 padam. Selepas bongkah betul, R1 kekal hijau dan R2 biru untuk bentangan. Kuning menandakan hint dan merah menandakan salah/kad tidak sah. Menu bertukar warna setiap 1,000 ms; keputusan setiap 150 ms. LED biasa memetakan semua warna kepada ON dan menggunakan notis/tahap LCD.
 
 ## Aktifkan semua lima bongkah
 
@@ -51,7 +51,7 @@ Selepas itu permainan boleh dimulakan dengan butang fizikal. Pilihan ini disimpa
 
 Tetapan jenis aktif daripada firmware lama dikekalkan. Jika dahulu hanya tiga jenis aktif, bank permainan menggunakan jenis itu sehingga arahan `use` di atas dijalankan. Jika UID belum lengkap, gunakan `tags`, `help` dan arahan `assign r1 <jenis>` / `assign r2 <jenis>` seperti sebelum ini.
 
-Setiap jenis mempunyai UID bongkah R1 dan UID bentangan R2 untuk menyokong semua jenis soalan. **Satu soalan hanya memerlukan satu kad pada pembaca yang ditunjukkan LED.**
+Setiap jenis mempunyai UID bongkah R1 dan UID bentangan R2. **Setiap soalan memerlukan kedua-dua kad secara berurutan: bongkah di R1, kemudian bentangan sepadan di R2.** R1 betul sahaja belum mendapat markah.
 
 ## Butang dan paparan
 
@@ -60,16 +60,16 @@ Setiap jenis mempunyai UID bongkah R1 dan UID bentangan R2 untuk menyokong semua
 | Menu utama | Mula pusingan baharu | Buka cara main halaman 1/6 |
 | Cara main | Kekal pada panduan | Maju satu halaman; selepas 6/6 kembali ke menu |
 | Soalan atau hint | Langkau dengan +0 markah | Buka hint; tekan lagi untuk kembali ke soalan |
-| Notis betul/langkau | Tunggu notis selesai | Tunggu notis selesai |
+| Tiga kelipan betul/langkau | Diabaikan sehingga dilepaskan | Diabaikan sehingga dilepaskan |
 | Keputusan akhir | Mula semula pada Q1, masa 00:00 dan skor 0 | Kembali ke menu |
 
-- Soalan normal menggunakan **satu kad bongkah pada R1**; soalan bentangan menggunakan **satu kad bentangan pada R2**.
-- Jawapan betul memberi **+1 sekali sahaja**, diikuti notis kira-kira satu saat sebelum beralih secara automatik.
-- Jawapan salah memberi peluang mencuba semula soalan yang sama. NEXT sentiasa boleh digunakan untuk langkau soalan belum selesai dengan +0.
+- Semua soalan menggunakan **kad bongkah di R1 kemudian kad bentangan di R2**. R2 hanya menerima jawapan selepas R1 betul.
+- Kedua-dua jawapan betul memberi **+1 sekali sahaja**, diikuti tiga kelipan hijau serentak, 150 ms ON + 150 ms OFF setiap kali; jumlah 900 ms. Langkau memberi +0 dan tiga kelipan merah.
+- Jawapan salah boleh dicuba semula pada tahap yang sama. Jika bentangan salah atau hint dibuka, R1 kekal hijau. NEXT boleh melangkau pada kedua-dua tahap dengan +0.
 - Angkat kad sebelum mengimbasnya untuk soalan baharu. Kad yang terus diletakkan tidak dikira sebagai jawapan baharu.
 - Tekanan yang dibuat semasa notis tidak dibawa ke soalan atau keputusan berikutnya.
-- Baris pertama permainan: `Q1/5    00:14   S0/5`. Tiga baris bawah memaparkan soalan atau hint, maksimum 20 aksara sebaris.
-- Masa terus berjalan ketika membaca soalan, hint dan notis antara soalan. Masa berhenti tepat apabila soalan terakhir dijawab betul atau dilangkau.
+- Baris pertama permainan: `Q1/5 R1 00:14   S0/5` (atau R2 pada tahap bentangan). Tiga baris bawah memaparkan soalan atau hint, maksimum 20 aksara sebaris.
+- Masa berjalan semasa soalan, hint dan notis salah. Masa dijeda sepanjang kelipan 900 ms dan disambung pada soalan seterusnya. Pada soalan terakhir, masa akhir dibekukan ketika dua kad lengkap atau soalan dilangkau, sebelum kelipan akhir.
 - Lima halaman panduan pertama tidak mengandungi `HINT: Seterusnya`; halaman terakhir mengekalkan `HINT: Menu utama` seperti gambar rujukan.
 - Keputusan akhir memaparkan skor, peratus dan masa akhir.
 
@@ -123,4 +123,6 @@ Dengan lima jenis aktif, setiap pusingan mengandungi lima soalan rawak: satu dar
 
 Folder `tests` menjalankan kod `.ino` sebenar dengan simulasi sambungan peranti. `python3 tests/run_tests.py` menyemak mod LED biasa; tambah `--rgb` untuk RGB. Persekitaran memerlukan Python 3 dan G++.
 
-Semakan native C++ dan simulasi merangkumi menu/panduan, semua 15 soalan dan hint, pemarkahan satu imbasan, langkau, masa/keputusan akhir, pembaca tunggal, kad yang tidak diangkat, butang fizikal, LED dan pemuatan NVS. Keputusan semakan repo terkini berada dalam `VERIFICATION.md`; upload dan ujian fizikal boleh dibuat terus melalui PlatformIO dalam VS Code.
+Semakan native C++ dan simulasi merangkumi menu/panduan, semua 15 soalan dan hint, pemarkahan dua kad secara berurutan, langkau, masa/keputusan akhir, pembaca tunggal, kad yang tidak diangkat, butang fizikal, LED dan pemuatan NVS. Keputusan semakan repo terkini berada dalam `VERIFICATION.md`; upload dan ujian fizikal boleh dibuat terus melalui PlatformIO dalam VS Code.
+
+Panduan terperinci: [Flow dua kad dan RGB](docs/GAME_FLOW_RGB.md).
