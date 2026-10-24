@@ -1,6 +1,13 @@
+#include "hardware/buttons.h"
+#include "hardware/inputs.h"
+#include "config.h"
+
+namespace {
 bool buttonLastRaw[2] = {}, buttonStable[2] = {};
 bool buttonSuppressed[2] = {};
 uint32_t buttonChangedMs[2] = {};
+
+}
 
 void buttonsBegin() {
   for (uint8_t i = 0; i < 2; ++i) {
@@ -24,7 +31,7 @@ void buttonsUpdate() {
     const bool pressed = raw == BUTTON_PRESSED_LEVEL[i];
     // Ingat bahawa tekanan ini berlaku semasa notis, walaupun debounce selesai
     // selepas soalan bertukar atau keputusan akhir sudah dipaparkan.
-    if (pressed && appMode == AppMode::PLAY && quiz.advancePending)
+    if (pressed && hardwareInputs().buttonsBlocked && hardwareInputs().buttonsBlocked())
       buttonSuppressed[i] = true;
     // Lepasan stabil juga membersihkan tekanan pendek yang belum sempat didebounce.
     if (!pressed && uint32_t(now - buttonChangedMs[i]) >= BUTTON_DEBOUNCE_MS)
@@ -33,9 +40,10 @@ void buttonsUpdate() {
       buttonStable[i] = raw;
       // Satu tindakan semasa ditekan stabil, bukan ketika dilepaskan.
       if (buttonIsPressed(i) && !buttonSuppressed[i]) {
-        if (i == 0) appNextButton();
-        else appHintButton();
+        if (i == 0 && hardwareInputs().next) hardwareInputs().next();
+        else if (i == 1 && hardwareInputs().hint) hardwareInputs().hint();
       }
     }
   }
 }
+

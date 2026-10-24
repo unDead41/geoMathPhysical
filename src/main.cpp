@@ -10,6 +10,8 @@
 #include <hd44780.h>
 #include <hd44780ioClass/hd44780_I2Cexp.h>
 #include "../main/main.ino"
+#include "../main/app_ports.ino"
+#include "../main/nvs_storage.ino"
 #include "../main/app.ino"
 #include "../main/buttons.ino"
 #include "../main/lcd_display.ino"
@@ -18,3 +20,4 @@
 #include "../main/rgb_leds.ino"
 #include "../main/serial_commands.ino"
 #include "../main/tag_registry.ino"
+

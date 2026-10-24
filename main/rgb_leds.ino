@@ -1,3 +1,6 @@
+#include "hardware/rgb.h"
+#include "config.h"
+
 // LED biasa: satu pin per pembaca. RGB pilihan: R/G/B dengan resistor setiap saluran.
 void rgbWriteReader(uint8_t reader, RgbColor color) {
   if (reader >= READER_COUNT) return;
@@ -5,10 +8,11 @@ void rgbWriteReader(uint8_t reader, RgbColor color) {
     digitalWrite(RGB_PINS[reader][0], color == RgbColor::OFF ? LOW : HIGH);
     return;
   }
-  // Kuning menggunakan R+G. Kekalkan polariti common cathode/anode untuk setiap saluran.
-  const bool on[3] = {color == RgbColor::RED || color == RgbColor::YELLOW,
-                      color == RgbColor::GREEN || color == RgbColor::YELLOW,
-                      color == RgbColor::BLUE};
+  const bool on[3] = {
+    color == RgbColor::RED || color == RgbColor::YELLOW || color == RgbColor::MAGENTA || color == RgbColor::WHITE,
+    color == RgbColor::GREEN || color == RgbColor::YELLOW || color == RgbColor::CYAN || color == RgbColor::WHITE,
+    color == RgbColor::BLUE || color == RgbColor::CYAN || color == RgbColor::MAGENTA || color == RgbColor::WHITE
+  };
   for (uint8_t channel = 0; channel < 3; ++channel)
     digitalWrite(RGB_PINS[reader][channel], (on[channel] != RGB_COMMON_ANODE) ? HIGH : LOW);
 }
@@ -22,13 +26,3 @@ void rgbBegin() {
   }
 }
 
-void rgbUpdate() {
-  for (uint8_t reader = 0; reader < READER_COUNT; ++reader) {
-    RgbColor color = quizReaderColor(reader);
-    if (appMode == AppMode::ENROLL)
-      color = reader == uint8_t(enrollReader) ? RgbColor::BLUE : RgbColor::OFF;
-    else if (appMode == AppMode::UID_SCAN)
-      color = rfidReaderEnabled(reader) ? RgbColor::BLUE : RgbColor::OFF;
-    rgbWriteReader(reader, color);
-  }
-}

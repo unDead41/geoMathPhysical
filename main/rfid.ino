@@ -1,10 +1,21 @@
+#include "hardware/rfid.h"
+#include "hardware/inputs.h"
+#include "domain/registry.h"
+#include "config.h"
+#include <SPI.h>
+#include <MFRC522.h>
+#include <cstring>
+
 // SPI dikongsi, SS berasingan. Hanya satu antena ON pada satu-satu masa.
+namespace {
 MFRC522 rfidReaders[READER_COUNT];
 ReaderRecord rfidRecords[READER_COUNT] = {};
 ScanMode rfidScanMode = ScanMode::STOPPED;
 int8_t rfidLastReader = -1, rfidActiveReader = -1;
 uint8_t rfidNextReader = 0;
 uint32_t rfidLastPoll = 0, rfidFieldStarted = 0;
+
+}
 
 void rfidBegin() {
   rfidScanMode = ScanMode::STOPPED;
@@ -90,7 +101,7 @@ void rfidUpdate() {
         const bool changed = !record.present || !uidEqual(record.uid, next);
         record.uid = next; record.present = true; record.misses = 0;
         dispatch = changed && !record.requireRemoval &&
-                   (appMode != AppMode::PLAY || rfidPadsArmed());
+                   rfidPadsArmed();
       }
       rfidReaders[i].PICC_HaltA();
       rfidReaders[i].PCD_StopCrypto1();
@@ -108,11 +119,11 @@ void rfidUpdate() {
   rfidActiveReader = -1; rfidLastPoll = millis();
   if (dispatch) {
     ++record.count; rfidLastReader = int8_t(i);
-    serialPrintUid(i);
-    appHandleScan(i, record.uid);
+    if (hardwareInputs().scan) hardwareInputs().scan(i, record.uid);
   }
 }
 
 const ReaderRecord &rfidGetRecord(uint8_t reader) { return rfidRecords[reader < 2 ? reader : 0]; }
 int8_t rfidGetLastReader() { return rfidLastReader; }
 ScanMode rfidGetMode() { return rfidScanMode; }
+

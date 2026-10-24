@@ -26,7 +26,7 @@ Arahan maksimum 159 aksara. Baris terlalu panjang ditolak sepenuhnya.
 | round new | Mula round baharu dan kosongkan markah round |
 | next | Sama seperti NEXT / B1: mula, sambung, seterusnya atau menu mengikut skrin |
 | hint | Sama seperti HINT / B2: cara bermain, pembayang atau menu mengikut skrin |
-| retry | Reset percubaan soalan semasa dan minta imbas semula; markah round kekal |
+| retry | Reset pasangan soalan semasa dari R1 dan minta imbas semula; markah round kekal |
 | clear | Alias retry; tidak memadam pendaftaran UID |
 | score | Markah round, masa bermain, bilangan kombinasi salah dan soalan guna hint |
 | status | Mod aplikasi, perkakasan, UID terakhir, markah dan jenis aktif |
@@ -51,7 +51,7 @@ Untuk mendaftarkan tanpa menaip UID, gunakan assign r1 kubus dan imbas kad.
 ## Kesan terhadap round
 
 - help/current/tags/status/pins/score/bank tidak mengubah kuiz.
-- check uid menjeda kuiz; play menyambung markah, tetapi jawapan belum betul perlu diimbas semula.
+- check uid menjeda kuiz; play menyambung markah/soalan, tetapi pasangan perlu diimbas semula dari R1.
 - Perubahan melalui assign/unassign/use/set menyimpan NVS lalu membatalkan round lama.
 - Pendaftaran gagal kerana kad pendua/UID salah/NVS gagal tidak mengubah mapping.
 - Pendaftaran imbas berhenti selepas satu simpanan berjaya. Gunakan stop untuk membatalkan.
@@ -62,5 +62,5 @@ Untuk mendaftarkan tanpa menaip UID, gunakan assign r1 kubus dan imbas kad.
 
 Menu utama: NEXT mula pusingan baharu, HINT cara bermain. Serial `play` boleh menyambung pusingan yang dijeda. Soalan: NEXT langkau +0 markah, HINT buka/tutup pembayang.
 Ringkasan: NEXT main semula, HINT menu. Semakan/pendaftaran: NEXT kembali menu atau batal.
-Masa berjalan semasa kuiz, berhenti pada akhir soalan terakhir, dan dijeda semasa menu/penyelenggaraan.
+Setiap soalan wajib R1 bongkah kemudian R2 bentangan sepadan; +1 hanya setelah kedua-duanya betul. Masa berjalan ketika menjawab/hint/notis salah, dijeda sepanjang tiga kelipan 900 ms, dan berhenti pada tindakan terakhir. Menu/penyelenggaraan menjeda masa. NEXT/HINT semasa kelipan diabaikan. Rujuk [flow dua kad](docs/GAME_FLOW_RGB.md).
 Serial mengekalkan maklumat teknikal guru; LCD memaparkan arahan murid sahaja.

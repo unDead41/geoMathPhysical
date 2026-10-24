@@ -80,8 +80,8 @@ Jika kekal PRESSED, sahkan polariti modul dan sambungan S / VCC / GND sebelum be
 Gambar asal menggunakan LED biasa: anode LED1 pada GPIO25 dan LED2 pada GPIO26.
 Untuk dua RGB kemudian, pin itu menjadi saluran R; tambah empat sambungan G/B mengikut jadual.
 GPIO32/33 dikhaskan untuk butang, jadi tidak digunakan oleh RGB.
-Mod default menggunakan dua LED biasa pada GPIO25/26 sahaja. Saluran tambahan
-GPIO13/14/16/17 tidak dipacu sehingga mod RGB diaktifkan.
+Environment `esp32dev` kekal menggunakan dua LED biasa pada GPIO25/26.
+Saluran tambahan G/B digunakan selepas memilih `esp32dev-rgb`.
 
 Untuk setiap saluran: GPIO -> resistor 330 Ohm -> kaki R/G/B.
 Jumlah enam resistor, satu bagi setiap saluran.
@@ -91,30 +91,35 @@ Default **common cathode**: kaki common ke GND; RGB_COMMON_ANODE = false.
 Jika **common anode**: kaki common ke 3V3 dan RGB_COMMON_ANODE = true.
 Jangan sambung common anode terus ke 5 V dengan sambungan GPIO ini.
 
-Dalam VS Code + PlatformIO, pilih environment **esp32dev-rgb** apabila RGB
-sudah dipasang, kemudian Build dan Upload. `esp32dev` kekal untuk LED biasa.
+Dalam VS Code, pilih **Project Tasks > esp32dev-rgb > Build / Upload** apabila
+kedua-dua RGB sudah dipasang. Environment ini menetapkan
+`GEODECODER_RGB_ENABLED=1`. Jika menggunakan Arduino IDE, ubah default macro
+tersebut dalam `main/config.h`.
 
-Jika menggunakan Arduino IDE, aktifkan dalam config.h:
+Petunjuk RGB bagi flow dua kad:
 
-    #define GEODECODER_RGB_ENABLED 1
+| Keadaan | RGB R1 | RGB R2 |
+|---|---|---|
+| Menu / cara main | Warna rawak setiap 1,000 ms | Warna rawak setiap 1,000 ms |
+| Menunggu bongkah | Biru | Padam |
+| Hint bongkah | Kuning | Padam |
+| Bongkah salah / UID tidak sah | Merah sementara | Padam |
+| Bongkah betul; menunggu bentangan | Hijau kekal | Biru |
+| Hint bentangan | Hijau kekal | Kuning |
+| Bentangan salah / UID tidak sah | Hijau kekal | Merah sementara |
+| Kedua-dua kad betul | Hijau berkelip 3 kali bersama | Hijau berkelip 3 kali bersama |
+| Langkau pada mana-mana tahap | Merah berkelip 3 kali bersama | Merah berkelip 3 kali bersama |
+| Semakan UID / pendaftaran | Biru jika pembaca ini aktif | Biru jika pembaca ini aktif |
+| Keputusan akhir | Warna rawak setiap 150 ms | Warna rawak setiap 150 ms |
 
-Semasa kuiz hanya RGB pembaca yang diperlukan menyala. Satu soalan
-memerlukan satu kad pada R1 (bongkah) atau R2 (bentangan), mengikut soalan.
+Notis salah ialah 1,200 ms, kemudian pembaca aktif kembali biru/kuning.
+Kelipan ialah 150 ms ON + 150 ms OFF, tiga kali, jumlah 900 ms; stopwatch
+berhenti sepanjang urutan itu. Menu/keputusan tidak menerima jawapan.
 
-| Keadaan | Warna |
-|---|---|
-| Menunggu jawapan | Biru pada pembaca aktif |
-| Hint dibuka | Kuning pada pembaca aktif; HINT lagi kembali biru |
-| Jawapan tepat | Hijau pada pembaca aktif, kira-kira 1 saat; +1 sekali |
-| Salah / UID tidak dikenali / jenis kad salah | Merah pada pembaca aktif, kira-kira 1.2 saat; kembali biru/kuning |
-| Langkau | Kuning pada pembaca aktif, kira-kira 1 saat; +0 |
-| Keputusan akhir | Kedua-duanya hijau, menandakan pusingan tamat |
-| Menu / cara bermain / stop | Kedua-duanya padam |
-| Semakan UID | Biru pada pembaca yang dipilih |
-| Pendaftaran kad | Biru pada pembaca pendaftaran sahaja |
-
-Kuning memerlukan kedua-dua saluran R dan G. LCD membezakan hint daripada
-notis langkau. [Flow penuh satu per satu](docs/GAME_FLOW_RGB.md).
+Dalam environment LED biasa, hanya GPIO25/26 dipandu. Semua warna selain
+padam menghasilkan ON. Maka tahap R2 mengekalkan kedua-dua LED ON, dan
+menu/keputusan juga ON; rujuk header R1/R2 dan notis LCD untuk tindakan.
+Timing tiga kelipan dikekalkan. Lihat [flow penuh](docs/GAME_FLOW_RGB.md).
 
 RGB dalam kod ini ialah LED biasa empat kaki, bukan WS2812/NeoPixel.
 GPIO16/17 dalam peta ini khusus board WROOM; ia tidak bebas pada sesetengah WROVER/PSRAM.
@@ -125,3 +130,4 @@ GPIO16/17 dalam peta ini khusus board WROOM; ia tidak bebas pada sesetengah WROV
 - Peta WROOM / WROVER: https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32/esp32-devkitc/user_guide.html
 - MFRC522: https://www.nxp.com/docs/en/data-sheet/MFRC522.pdf
 - Preferences/NVS: https://docs.espressif.com/projects/arduino-esp32/en/latest/api/preferences.html
+

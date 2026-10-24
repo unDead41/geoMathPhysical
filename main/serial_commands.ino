@@ -1,6 +1,24 @@
+#include "presentation/serial_commands.h"
+#include "application/app.h"
+#include "application/quiz.h"
+#include "application/registry.h"
+#include "hardware/rfid.h"
+#include "hardware/buttons.h"
+#include "hardware/lcd.h"
+#include "question_bank.h"
+#include "config.h"
+#include <cctype>
+#include <cstdlib>
+#include <cstring>
+
+void serialLog(const char *text) { Serial.printf("%s", text); }
+
+namespace {
 char serialLine[COMMAND_BUFFER_SIZE] = {};
 uint16_t serialLength = 0;
 bool serialOverflow = false;
+
+}
 
 void serialBegin() {
   serialLength = 0; serialOverflow = false;
@@ -53,7 +71,7 @@ void serialExecute(char *line) {
     if (!strcmp(args[0], "next")) { appNextButton(); return; }
     if (!strcmp(args[0], "hint")) { appHintButton(); return; }
     if (!strcmp(args[0], "retry") || !strcmp(args[0], "clear")) {
-      if (appMode == AppMode::PLAY) quizRetry();
+      if (appState().mode == AppMode::PLAY) quizRetry();
       else Serial.println(F("[INFO] Taip play dahulu."));
       return;
     }
@@ -144,7 +162,7 @@ void serialPrintHelp() {
     "round new                  : reset markah + round rawak baharu\n"
     "next                       : sama seperti B1\n"
     "hint                       : sama seperti B2\n"
-    "retry / clear              : kosongkan jawapan belum betul, kekal markah\n"
+    "retry / clear              : ulang pasangan dari R1, kekal markah\n"
     "score                      : markah, salah, penggunaan hint\n"
     "status                     : status perkakasan + kuiz\n"
     "pins                       : semua GPIO\n"
@@ -157,8 +175,9 @@ void serialPrintHelp() {
     "Pendaftaran imbas tamat selepas satu kad berjaya atau timeout 30s.\n"
     "Menu: B1/NEXT=mula baharu; B2/HINT=cara bermain 6 halaman.\n"
     "Panduan: HINT maju hingga tamat lalu kembali menu.\n"
-    "Kuiz: B1=langkau (+0); B2=buka/tutup hint. Satu imbasan mengikut LED.\n"
-    "Betul=+1, beralih automatik selepas notis. Angkat kad sebelum imbas lagi.\n"
+    "Kuiz: B1=langkau (+0); B2=buka/tutup hint. R1 bongkah -> R2 bentangan.\n"
+    "Dua kad sepadan=+1 sekali. Tiga kelipan 150ms ON/OFF; masa dijeda.\n"
+    "Biru=imbas, kuning=hint, merah=salah, hijau=tahap betul. Angkat kad.\n"
     "Markah akhir: B1=main semula; B2=menu. Imbas/daftar: B1=menu/batal.\n"));
 }
 
@@ -182,10 +201,10 @@ void serialPrintUid(uint8_t reader) {
 }
 
 void serialPrintStatus() {
-  const char *mode = appMode == AppMode::PLAY ? "PLAY" : appMode == AppMode::UID_SCAN ? "UID_SCAN" :
-                     appMode == AppMode::ENROLL ? "ENROLL" : "STOP";
+  const char *mode = appState().mode == AppMode::PLAY ? "PLAY" : appState().mode == AppMode::UID_SCAN ? "UID_SCAN" :
+                     appState().mode == AppMode::ENROLL ? "ENROLL" : "STOP";
   Serial.printf("[STATUS] mode=%s | NVS=%s | LCD=%s | LED=%s\n", mode,
-                registryStorageReady ? "READY" : "ERROR", lcdIsReady() ? "READY" : "ERROR",
+                registryIsStorageReady() ? "READY" : "ERROR", lcdIsReady() ? "READY" : "ERROR",
                 RGB_ENABLED ? "RGB" : "BIASA GPIO25/26");
   for (uint8_t i = 0; i < 2; ++i) {
     const ReaderRecord &r = rfidGetRecord(i);
@@ -200,7 +219,8 @@ void serialPrintStatus() {
 void serialPrintBank() {
   Serial.println(F("[BANK] Soalan cadangan Bab 6; paparan ASCII disingkatkan untuk LCD."));
   for (const Question &q : QUESTIONS) {
-    Serial.printf("%s [%s, R%u] %s\n", q.id, shapeName(q.answer), unsigned(q.reader + 1), q.fullText);
+    Serial.printf("%s [%s, R1 -> R2] %s\n", q.id, shapeName(q.answer), q.fullText);
     Serial.printf("  HINT: %s | %s | %s\n", q.hint[0], q.hint[1], q.hint[2]);
   }
 }
+

@@ -1,0 +1,106 @@
+# Architecture GeoDecoder
+
+Architecture ini menggunakan teras C++11 kecil yang boleh dijalankan tanpa
+Arduino. Modul aplikasi menerima masa, RNG, log, storan dan kawalan pembaca
+melalui `AppPorts`. `main/main.ino` memasang semua adapter sekali dalam
+`setup()` dan menjalankan kemas kini tanpa `delay()`.
+
+## Peta kod
+
+| Lokasi | Tanggungjawab |
+|---|---|
+| `main/domain/rules.h` | Bilangan jenis/soalan, masa notis dan polisi kuiz |
+| `main/domain/types.h` | Model nilai, state kuiz dan kontrak byte NVS |
+| `main/domain/quiz_engine.h` | Pemarkahan, hint, skip, peralihan soalan dan jam |
+| `main/domain/registry.h` | UID, nama bongkah, validasi blob dan carian peranan |
+| `main/question_bank.h` | Sumber utama 15 soalan/hint; pemilihan menerima RNG |
+| `main/application/*.h` | API modul, snapshot baca sahaja dan port luaran |
+| `main/app.ino` | Menu, mod main/semakan/pendaftaran dan tindakan pengguna |
+| `main/quiz.ino` | Menjalankan engine dan menterjemah peralihan kepada port/log |
+| `main/tag_registry.ino` | Operasi daftar/pilih jenis; sahkan write sebelum menerima RAM |
+| `main/app_ports.ino` | Port yang dipasang oleh setup dan pemformatan log |
+| `main/presentation/lcd_view.h` | Membina empat baris LCD daripada snapshot |
+| `main/presentation/lcd_frame.h` | Nilai bingkai 4 x 20 aksara untuk driver |
+| `main/serial_commands.ino` | Input/output guru dan pemetaan arahan kepada API aplikasi |
+| `main/hardware/*.h` | Kontrak driver dan callback input |
+| `main/rfid.ino`, `buttons.ino`, `rgb_leds.ino` | SPI, debounce dan output GPIO |
+| `main/lcd_display.ino` | I2C serta menulis baris LCD yang berubah |
+| `main/nvs_storage.ino` | Adapter Preferences untuk byte registry |
+| `main/config.h` | Tetapan board: GPIO, polariti dan timing peranti |
+| `main/main.ino` | Composition root, pemasangan port dan loop |
+| `src/main.cpp` | Entry PlatformIO yang menggunakan tab yang sama |
+
+## Aturan kebergantungan
+
+- Domain menggunakan standard C++ sahaja. Masa diberi sebagai nilai; ia tidak
+  memanggil `millis()`, Serial, GPIO atau Preferences.
+- Application bergantung pada domain dan port. `app.ino`, `quiz.ino`,
+  `tag_registry.ino` dan `app_ports.ino` boleh dilink tanpa Arduino.
+- View LCD membaca `LcdViewState` dan menghasilkan `LcdFrame` tanpa I2C.
+  Driver LCD menerima bingkai; ia tidak memilih soalan atau menukar skor.
+- Driver RFID/butang menghantar `InputEvents`. Hanya composition root
+  menghubungkan peristiwa itu dengan tindakan aplikasi.
+- Log guru boleh menggunakan status hardware melalui adapter Serial.
+- Tiada dependency produksi baharu dan tiada peruntukan heap dalam teras/port
+  yang ditambah oleh refactor ini.
+
+Setiap modul mempunyai satu pemilik state. Pengguna modul membaca
+`appState()`, `quizState()` dan `registryState()` sebagai rujukan const.
+Perubahan state dilakukan melalui tindakan aplikasi atau kaedah engine.
+Elakkan `extern` state mutable dalam header dan elakkan `const_cast` dalam
+kod produksi. Fixture regresi lama menggunakan cast dalam utiliti ujian sahaja;
+ujian teras baharu menggunakan API engine sebenar.
+
+Tab `.ino` dikekalkan sebagai modul integrasi untuk satu sumber firmware.
+Setiap tab menyertakan header sendiri. Ujian `--separate-modules` mengkompil
+setiap tab sebagai translation unit C++ berasingan untuk mengesan kebergantungan
+tersembunyi pada susunan import.
+
+## Kontrak perkakasan dan data
+
+`Shape` kekal CUBE=0, PYRAMID=1, CYLINDER=2, CONE=3, CUBOID=4, NONE=255.
+`Uid` ialah 11 byte. `RegistryData` ialah 120 byte, offset `tags` ialah 8.
+Semakan semasa kompilasi menghalang perubahan ABI tanpa migrasi yang disengajakan.
+Adapter menggunakan namespace `geomath_q2`, key `registry`, magic
+`0x474D5132` dan versi storan `1`. Write gagal tidak mengesahkan data RAM baharu.
+
+`esp32dev` menggunakan LED biasa; `esp32dev-rgb` mengaktifkan RGB empat kaki.
+Semua pin asal, bank soalan/hint, format UID dan arahan guru dikekalkan.
+Flow terkini memerlukan R1 bongkah kemudian R2 bentangan bagi setiap soalan.
+
+## Panduan perubahan seterusnya
+
+- Ubah ayat soalan/hint dalam `question_bank.h`.
+- Ubah peraturan kuiz dalam domain dan uji melalui `tests/domain.cpp`.
+- Ubah aliran aplikasi melalui API application; gunakan snapshot const.
+- Ubah susunan/teks skrin dalam view LCD; perubahan wayar dalam config/driver.
+- Adapter baharu dipasang dalam `setup()`; domain tidak perlu tahu library adapter.
+- Jalankan ujian berkaitan dan build environment yang terkesan. Rujuk
+  `tests/README.md` dan `VERIFICATION.md`.
+
+## Flow dua kad dan output masa
+
+`QuizData.stage` ialah `AnswerStage::SOLID` atau `NET`. `QuizEngine.activeReader()`
+memilih pembaca daripada tahap ini, bukan metadata lama `Question.reader`.
+Bank tidak perlu diubah apabila flow ditukar. R1 betul mengubah tahap tanpa
+menambah skor; R2 sepadan memberi +1 sekali dan menjadualkan peralihan.
+
+`advancePending` mewakili state kelipan yang menolak jawapan, hint, retry dan
+skip tambahan. `blinkStep` dipacu oleh umur notis melalui `update(now)`: enam
+separuh langkah 150 ms menghasilkan tepat tiga ON/OFF selama 900 ms. Kedua-dua
+warna dibina daripada langkah yang sama. Stopwatch dijeda sebelum kelipan;
+soalan seterusnya memulakannya semula, keputusan akhir kekal beku.
+
+`quiz.ino` menukar mod pembaca ketika tahap berubah dan memanggil port
+`requireFreshCards()`. Adapter memerlukan tiga poll kosong sebelum menerima
+kad semula; kad R2 yang diletakkan terlalu awal tidak boleh terus menjawab.
+Butang terus disampel semasa kelipan supaya tekanan yang bermula ketika input
+tersekat tidak tersimpan untuk skrin berikutnya.
+
+`app.ino` memiliki warna hiasan menu/keputusan: masa dan RNG datang melalui
+AppPorts; render warna tidak mengubah skor. Hardware memetakan warna logik
+kepada saluran RGB atau satu pin LED biasa. `main/main.ino` dan `loop()` tidak
+perlu diubah. Tiada library/dependency produksi baharu.
+
+View menambah label R1/R2 pada ruang header dan mengekalkan tiga baris isi bank.
+Panduan terkini: [GAME_FLOW_RGB.md](GAME_FLOW_RGB.md).

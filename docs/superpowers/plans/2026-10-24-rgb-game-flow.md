@@ -1,3 +1,6 @@
+> Historical single-card design. Superseded by the approved two-card flow;
+> see `2026-10-24-two-card-flow-design.md` / `2026-10-24-two-card-flow.md`.
+
 # GeoDecoder RGB Game Flow Implementation Plan
 
 > **For agentic workers:** Use superpowers:executing-plans inline for this small change.

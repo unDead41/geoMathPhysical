@@ -1,3 +1,6 @@
+> Historical single-card design. Superseded by the approved two-card flow;
+> see `2026-10-24-two-card-flow-design.md` / `2026-10-24-two-card-flow.md`.
+
 # GeoDecoder RGB game flow
 
 User request: explain the game one step at a time and update the working branch.
