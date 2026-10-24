@@ -1,6 +1,24 @@
+#include "presentation/serial_commands.h"
+#include "application/app.h"
+#include "application/quiz.h"
+#include "application/registry.h"
+#include "hardware/rfid.h"
+#include "hardware/buttons.h"
+#include "hardware/lcd.h"
+#include "question_bank.h"
+#include "config.h"
+#include <cctype>
+#include <cstdlib>
+#include <cstring>
+
+void serialLog(const char *text) { Serial.printf("%s", text); }
+
+namespace {
 char serialLine[COMMAND_BUFFER_SIZE] = {};
 uint16_t serialLength = 0;
 bool serialOverflow = false;
+
+}
 
 void serialBegin() {
   serialLength = 0; serialOverflow = false;
@@ -53,7 +71,7 @@ void serialExecute(char *line) {
     if (!strcmp(args[0], "next")) { appNextButton(); return; }
     if (!strcmp(args[0], "hint")) { appHintButton(); return; }
     if (!strcmp(args[0], "retry") || !strcmp(args[0], "clear")) {
-      if (appMode == AppMode::PLAY) quizRetry();
+      if (appState().mode == AppMode::PLAY) quizRetry();
       else Serial.println(F("[INFO] Taip play dahulu."));
       return;
     }
@@ -182,10 +200,10 @@ void serialPrintUid(uint8_t reader) {
 }
 
 void serialPrintStatus() {
-  const char *mode = appMode == AppMode::PLAY ? "PLAY" : appMode == AppMode::UID_SCAN ? "UID_SCAN" :
-                     appMode == AppMode::ENROLL ? "ENROLL" : "STOP";
+  const char *mode = appState().mode == AppMode::PLAY ? "PLAY" : appState().mode == AppMode::UID_SCAN ? "UID_SCAN" :
+                     appState().mode == AppMode::ENROLL ? "ENROLL" : "STOP";
   Serial.printf("[STATUS] mode=%s | NVS=%s | LCD=%s | LED=%s\n", mode,
-                registryStorageReady ? "READY" : "ERROR", lcdIsReady() ? "READY" : "ERROR",
+                registryIsStorageReady() ? "READY" : "ERROR", lcdIsReady() ? "READY" : "ERROR",
                 RGB_ENABLED ? "RGB" : "BIASA GPIO25/26");
   for (uint8_t i = 0; i < 2; ++i) {
     const ReaderRecord &r = rfidGetRecord(i);
@@ -204,3 +222,4 @@ void serialPrintBank() {
     Serial.printf("  HINT: %s | %s | %s\n", q.hint[0], q.hint[1], q.hint[2]);
   }
 }
+

@@ -1,3 +1,6 @@
+#include "hardware/rgb.h"
+#include "config.h"
+
 // LED biasa: satu pin per pembaca. RGB pilihan: R/G/B dengan resistor setiap saluran.
 void rgbWriteReader(uint8_t reader, RgbColor color) {
   if (reader >= READER_COUNT) return;
@@ -19,13 +22,3 @@ void rgbBegin() {
   }
 }
 
-void rgbUpdate() {
-  for (uint8_t reader = 0; reader < READER_COUNT; ++reader) {
-    RgbColor color = quizReaderColor(reader);
-    if (appMode == AppMode::ENROLL)
-      color = reader == uint8_t(enrollReader) ? RgbColor::BLUE : RgbColor::OFF;
-    else if (appMode == AppMode::UID_SCAN)
-      color = rfidReaderEnabled(reader) ? RgbColor::BLUE : RgbColor::OFF;
-    rgbWriteReader(reader, color);
-  }
-}

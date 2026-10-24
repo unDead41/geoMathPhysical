@@ -1,96 +1,93 @@
-# GeoDecoder verification - 24 October 2026
+# GeoDecoder verification - clean architecture, 24 October 2026
 
-Source: the user-supplied `Geo-Decoder Board.zip`. This import adds VS Code /
-PlatformIO support; the original quiz rules, question bank, wiring, persisted
-shape IDs and NVS storage format remain intact.
+Baseline: `main` commit `75d22f14ecc9b1ccd55b93c1f6964647834c54eb`.
+The original import report is retained in
+`docs/archive/VERIFICATION_2026-10-24-import.md`.
 
-## Results for the imported repository
+## Native verification
 
-| Check | Ordinary LEDs | Two RGB LEDs |
+| Mode | LED biasa | RGB |
 |---|---|---|
-| Original Arduino-tab native suite | 22/22 passed | 22/22 passed |
-| Final `src/main.cpp` native suite | 22/22 passed | 22/22 passed |
-| ESP32 cross-compilation and firmware link | SUCCESS | SUCCESS |
-| Local COM override configuration | PASS | PASS |
-| USB upload / physical device | Not performed | Not performed |
+| Arduino tabs in one translation unit | 29/29 passed | 29/29 passed |
+| Actual PlatformIO `src/main.cpp` entry | 29/29 passed | 29/29 passed |
+| Each tab compiled independently | 29/29 passed | 29/29 passed |
 
-Native verification commands (Linux, Python 3 and G++):
+Every maintained firmware runner also builds/runs 9/9 pure core/application/view
+cases with no Arduino headers, target defines or device fakes. It links the
+real application tabs and drives them through typed ports. C++11,
+`-Wall -Wextra -Werror -pedantic`, ASan and UBSan are enabled.
+
+Commands:
 
 ```text
 python tests/run_tests.py
 python tests/run_tests.py --rgb
 python tests/run_tests.py --entrypoint src/main.cpp
 python tests/run_tests.py --entrypoint src/main.cpp --rgb
+python tests/run_tests.py --separate-modules
+python tests/run_tests.py --separate-modules --rgb
 ```
 
-The final entry-point runs use C++11, `-Wall -Wextra -Werror -pedantic`,
-AddressSanitizer and UndefinedBehaviorSanitizer. The same 22 existing behavioural
-cases exercise the real firmware with simulated electrical/device I/O.
-No separate copy of quiz logic was introduced.
+The original 22 regression cases passed in both LED modes before refactoring.
+Seven added cases cover failed/partial/unavailable NVS, duplicate UID, corrupt stored
+version, command pause/resume, oversized command recovery and a literal
+pre-refactor 120-byte registry image. Existing regressions cover all 15 LCD
+question/hint displays, single-scan scoring, wrong reader/shape, hints and skips,
+notices, held-card removal, physical debounce/late presses, final-time freeze,
+millis rollover, long durations, per-reader LEDs and filtered round selection.
 
-ESP32 build command:
+## ESP32 builds
+
+Command:
 
 ```text
 pio run -e esp32dev -e esp32dev-rgb
 ```
 
-Build environment: PlatformIO Core 6.1.18; Espressif 32 platform 6.12.0;
-Arduino-ESP32 2.0.17 (`framework-arduinoespressif32` package
-3.20017.241212+sha.dcc1105b); MFRC522 1.4.12; hd44780 1.3.2;
-Xtensa ESP32 GCC 8.4.0+2021r2-patch5. These builds target classic ESP32/WROOM-32
-with 4 MB flash.
+| Environment | Cross-compile/link | Static RAM | Program flash |
+|---|---|---:|---:|
+| `esp32dev` | SUCCESS | 22,732 / 327,680 bytes (6.9%) | 329,929 / 1,310,720 bytes (25.2%) |
+| `esp32dev-rgb` | SUCCESS | 22,732 / 327,680 bytes (6.9%) | 329,945 / 1,310,720 bytes (25.2%) |
 
-| Environment | Static RAM | Program flash |
-|---|---:|---:|
-| `esp32dev` | 22,652 / 327,680 bytes (6.9%) | 329,141 / 1,310,720 bytes (25.1%) |
-| `esp32dev-rgb` | 22,652 / 327,680 bytes (6.9%) | 329,157 / 1,310,720 bytes (25.1%) |
+Compared with the verified import, each mode uses 80 additional static RAM bytes
+and 788 additional program bytes. The new core/ports introduce no heap
+allocation or production dependency. These are compile-time image sizes, not
+measurements of physical runtime performance or peak stack usage.
 
-The first cross-build exposed a missing `Wire.h` include path. The framework
-contained Wire and Preferences, but the dependency finder did not discover
-them through the shared tabs outside `src/`. `src/main.cpp` now declares the
-library includes directly; the final dependency graphs include Wire,
-Preferences and SPI, and both complete firmware builds succeed. Keep those
-explicit includes when maintaining the shared entry point.
+Toolchain: PlatformIO Core 6.1.18, Espressif32 6.12.0,
+Arduino-ESP32 2.0.17, Xtensa GCC 8.4.0+2021r2-patch5,
+MFRC522 1.4.12 and hd44780 1.3.2. Classic ESP32/WROOM-32, 4 MB flash.
 
-The per-computer configuration check copied `platformio.local.ini.example`
-into a temporary project: both environments resolved upload/monitor to COM5
-while retaining 115200 baud and their inherited firmware settings. COM5 is an
-example and must be replaced with the user's real port.
+## Preserved contracts
 
-## Coverage and preserved data
+- The 15 question IDs, answer types, reader roles, text and hint text are intact.
+- GPIO assignments, ordinary LED default and optional RGB wiring are intact.
+- NVS namespace `geomath_q2`, key `registry`, magic `0x474D5132`, version `1`.
+- Shape IDs 0..4 / NONE=255; `Uid` 11 bytes, `RegistryData` 120 bytes,
+  `tags` offset 8. Compile-time checks and a legacy byte-image test protect this.
+- Failed writes leave the accepted RAM mapping unchanged.
+- One firmware implementation serves the PlatformIO entry and sketch tabs.
 
-The maintained behavioural suite covers: all 15 question and hint displays;
-five-shape rounds without repeated IDs; six help pages; hint toggle and time;
-single-card scoring; wrong reader/shape; skip +0; pending-notice button presses;
-held-card removal; automatic final result; frozen final time; replay reset;
-physical-button debounce/hold; LED routing; millis rollover; durations beyond
-one hour; NVS reload; and active-type filtering.
+Architecture/API migration guidance: `docs/ARCHITECTURE.md`.
+No USB upload or physical-device test was performed in this environment.
 
-Namespace `geomath_q2`, key `registry`, magic 0x474D5132, storage version 1,
-`RegistryData` layout and existing `Shape` values are unchanged. Ordinary LED
-mode remains the default; `esp32dev-rgb` enables the six RGB GPIO channels.
-A normal firmware upload preserves the NVS region under the default partition
-layout. Full-flash erase removes the enrolled cards; a previous custom partition
-layout requires separate checking before upload.
+## Code review
 
-## Physical checks still required
+Independent read-only review found no blocking production issue. Two test gaps
+were addressed: recovery after an oversized command now uses the actual UART
+input path, and NVS tests now exercise a short positive write as well as a zero
+return. Temporary mutation checks confirmed each regression test detects its
+corresponding broken implementation; the working source was unchanged by those
+checks. The complete final native matrix then passed again.
 
-1. Upload through VS Code / PlatformIO to the actual classic ESP32.
-2. Run `status`, `tags` and `current`; confirm both readers are READY.
-3. Use `check uid 1` / `check uid 2` with the actual solid/net cards.
-4. Confirm the LCD is readable, both buttons have correct polarity, and only
-   the requested reader LED is active; check RGB colours if using RGB.
-5. Play a complete round, including a hint, wrong answer and skipped question.
-6. Confirm the final score/time and that final time stays fixed.
-7. Reset the ESP32 and confirm enrolled cards and active types are retained.
+## Physical checks
 
-The successful build does not establish antenna reliability, electrical
-safety, LCD contrast, correct USB drivers or working physical wiring.
+1. Pull current main, Build and Upload the matching environment in VS Code.
+2. Confirm `status`, `tags` and `current` show the enrolled cards and ready readers.
+3. Test each reader, both buttons, LCD and per-reader LED indication.
+4. Complete a round including wrong answer, hint and skip; confirm score/time.
+5. Keep the last result open and confirm its time remains fixed.
+6. Reset the board and confirm stored registrations and active types reload.
 
-## Earlier package notes
+Avoid full-flash erase when preserving enrolled cards.
 
-The original verification record is retained in
-`docs/archive/VERIFICATION_2026-10-16.md`. Other supplied design/plan/validation
-files are labelled historical where they describe earlier question counts or
-interaction rules. `tests/core_test.cpp`, `tests/integration_test.cpp` and
-`tests/stubs/` are historical; `tests/run_tests.py` is the current suite.

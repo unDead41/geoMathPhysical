@@ -150,16 +150,24 @@ arahan. `Ctrl+C` menutup Monitor. Untuk melihat port: `pio device list`.
 | `platformio.ini` | Board, library, pilihan LED dan Serial Monitor |
 | `src/main.cpp` | Menggabungkan tab asal untuk build PlatformIO |
 | `main/main.ino` | `setup()` dan `loop()` sahaja |
-| `main/config.h` | GPIO, polariti butang/LED, struktur dan deklarasi |
+| `main/config.h` | Tetapan board: GPIO, polariti dan timing peranti |
+| `main/domain/` | Model, peraturan, validasi UID dan engine kuiz bebas Arduino |
+| `main/application/` | API aplikasi, snapshot baca sahaja dan port perkakasan |
+| `main/presentation/` | View LCD daripada snapshot dan kontrak Serial |
+| `main/hardware/` | Kontrak driver dan peristiwa input |
 | `main/question_bank.h` | 15 soalan dan hint bagi lima jenis bongkah |
-| `main/*.ino` | Modul RFID, LCD, butang, kuiz, serial, LED dan UID |
+| `main/*.ino` | Implementasi modul aplikasi serta adapter RFID/LCD/butang/LED/NVS |
 | `tests/` | Ujian native dengan perkakasan simulasi |
 | `SAMBUNGAN.md` | Jadual wayar asal |
 | `COMMANDS.md` | Senarai penuh arahan Serial |
 | `contoh display LCD/` | Pratonton LCD daripada pakej asal |
 | `print_labels/` | PDF kad cetakan daripada pakej asal |
 
-Edit tab dalam `main/`; `src/main.cpp` menggunakan tab yang sama, tanpa
+Rujuk [panduan architecture](docs/ARCHITECTURE.md) sebelum mengubah modul.
+Engine kuiz menerima masa sebagai nilai; application menerima adapter melalui
+`AppPorts`. RFID/butang menghantar callback dan LCD menerima bingkai siap.
+
+Edit modul dalam `main/`; `src/main.cpp` menggunakan tab yang sama, tanpa
 salinan kedua logik permainan. `main/main.ino` masih boleh dibuka dalam
 Arduino IDE jika diperlukan.
 
@@ -170,7 +178,15 @@ Ujian simulasi memerlukan Python 3 dan G++:
 ```text
 python tests/run_tests.py
 python tests/run_tests.py --rgb
+python tests/run_tests.py --entrypoint src/main.cpp
+python tests/run_tests.py --entrypoint src/main.cpp --rgb
+python tests/run_tests.py --separate-modules
+python tests/run_tests.py --separate-modules --rgb
 ```
+
+Setiap arahan menjalankan 9 kes teras/application tanpa Arduino dan 29 kes
+integrasi firmware. Mod `--separate-modules` mengkompil setiap tab secara
+berasingan supaya header serta kebergantungan modul turut disahkan.
 
 Ujian simulasi menyemak logik; ia tidak membuktikan sambungan wayar, bekalan
 kuasa, bacaan antena atau paparan LCD fizikal. Lihat `VERIFICATION.md` untuk
@@ -187,3 +203,4 @@ Kemudian Build dan Upload semula melalui environment yang sama.
 Rujukan rasmi:
 [PlatformIO untuk VS Code](https://docs.platformio.org/en/latest/integration/ide/vscode.html),
 [ESP32 Dev Module](https://docs.platformio.org/en/latest/boards/espressif32/esp32dev.html).
+

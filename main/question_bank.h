@@ -1,4 +1,5 @@
 #pragma once
+#include "domain/types.h"
 
 // Satu jawapan setiap soalan. R1=bongkah; R2=bentangan.
 // Soalan R1 dikekalkan; R2 memerlukan tafsiran sebelum memilih bentangan.
@@ -72,13 +73,13 @@ static_assert(QUESTION_COUNT == SHAPE_COUNT * QUESTIONS_PER_SHAPE, "Tiga soalan 
 
 // Setiap jenis aktif diberi peluang dahulu; baki tempat diisi dengan ID unik.
 // Semua 5 jenis aktif: tepat 1 soalan rawak per jenis dalam pusingan 5 soalan.
-inline uint8_t bankBuildRound(uint8_t activeMask, uint8_t *out) {
-  if (!out || !activeMask || (activeMask & ~ALL_SHAPES_MASK)) return 0;
+inline uint8_t bankBuildRound(uint8_t activeMask, uint8_t *out, RandomIndex randomIndex) {
+  if (!randomIndex || !out || !activeMask || (activeMask & ~ALL_SHAPES_MASK)) return 0;
   uint8_t pool[QUESTION_COUNT] = {}, poolSize = 0;
   for (uint8_t i = 0; i < QUESTION_COUNT; ++i)
     if (activeMask & (1U << uint8_t(QUESTIONS[i].answer))) pool[poolSize++] = i;
   for (uint8_t n = poolSize; n > 1; --n) {
-    const uint8_t pick = uint8_t(random(n)), value = pool[n - 1];
+    const uint8_t pick = randomIndex(n), value = pool[n - 1];
     pool[n - 1] = pool[pick]; pool[pick] = value;
   }
   uint8_t length = 0, seenShapes = 0;
@@ -91,8 +92,9 @@ inline uint8_t bankBuildRound(uint8_t activeMask, uint8_t *out) {
   for (uint8_t i = 0; i < poolSize && length < ROUND_TARGET; ++i)
     if (!selected[pool[i]]) { out[length++] = pool[i]; selected[pool[i]] = true; }
   for (uint8_t n = length; n > 1; --n) {
-    const uint8_t pick = uint8_t(random(n)), value = out[n - 1];
+    const uint8_t pick = randomIndex(n), value = out[n - 1];
     out[n - 1] = out[pick]; out[pick] = value;
   }
   return length;
 }
+

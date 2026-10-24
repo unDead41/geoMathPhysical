@@ -80,7 +80,8 @@ Jika kekal PRESSED, sahkan polariti modul dan sambungan S / VCC / GND sebelum be
 Gambar asal menggunakan LED biasa: anode LED1 pada GPIO25 dan LED2 pada GPIO26.
 Untuk dua RGB kemudian, pin itu menjadi saluran R; tambah empat sambungan G/B mengikut jadual.
 GPIO32/33 dikhaskan untuk butang, jadi tidak digunakan oleh RGB.
-GEODECODER_RGB_ENABLED kekal 0: tiada pin RGB dipacu sehingga RGB dipasang dan diaktifkan.
+Environment `esp32dev` kekal menggunakan dua LED biasa pada GPIO25/26.
+Saluran tambahan G/B digunakan selepas memilih `esp32dev-rgb`.
 
 Untuk setiap saluran: GPIO -> resistor 330 Ohm -> kaki R/G/B.
 Jumlah enam resistor, satu bagi setiap saluran.
@@ -90,11 +91,13 @@ Default **common cathode**: kaki common ke GND; RGB_COMMON_ANODE = false.
 Jika **common anode**: kaki common ke 3V3 dan RGB_COMMON_ANODE = true.
 Jangan sambung common anode terus ke 5 V dengan sambungan GPIO ini.
 
-Aktifkan apabila LED sudah dipasang:
+Dalam VS Code, pilih **Project Tasks > esp32dev-rgb > Build / Upload** apabila
+kedua-dua RGB sudah dipasang. Environment ini menetapkan
+`GEODECODER_RGB_ENABLED=1`. Jika menggunakan Arduino IDE, ubah default macro
+tersebut dalam `main/config.h`.
 
-    #define GEODECODER_RGB_ENABLED 1
-
-Tetapan ini berada dalam config.h. Kedua-dua RGB menggunakan keputusan global yang sama:
+Semasa soalan, hanya RGB bagi pembaca yang diminta menyala; kedua-duanya hijau
+pada keputusan akhir:
 
 | Keadaan | Warna |
 |---|---|
@@ -112,3 +115,4 @@ GPIO16/17 dalam peta ini khusus board WROOM; ia tidak bebas pada sesetengah WROV
 - Peta WROOM / WROVER: https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32/esp32-devkitc/user_guide.html
 - MFRC522: https://www.nxp.com/docs/en/data-sheet/MFRC522.pdf
 - Preferences/NVS: https://docs.espressif.com/projects/arduino-esp32/en/latest/api/preferences.html
+
