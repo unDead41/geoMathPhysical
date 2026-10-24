@@ -14,6 +14,7 @@ Soalan bentangan menguji bentuk atau lipatan. Ukuran kotak dalam B3 membezakan r
 
 - [PDF 15 halaman](lcd/GeoDecoder_15_Contoh_LCD_Soalan_dan_Hint.pdf)
 - [Set 15 PNG](lcd/GeoDecoder_15_Contoh_LCD_PNG.zip)
+- [Indeks aset cetakan dan LCD](ASSETS.md)
 
 Semua halaman menggunakan satu templat A4 landskap yang tetap, dengan LCD soalan dan hint bersebelahan. Baris ID soalan dan label dimensi LCD telah dibuang daripada reka letak PDF; garisan emas berada dalam lengkungan banner. Petunjuk simbol menggunakan istilah Buku Teks Matematik Tingkatan 2 KSSM, Bab 6.
 
@@ -328,4 +329,4 @@ bulatan jadi tapak.
 - Metadata asal `Question.reader` dikekalkan untuk keserasian; tahap runtime menentukan pembaca aktif bagi flow dua kad.
 - Perkakasan fizikal belum diuji dalam kemas kini ini. Semak kontras dan keterbacaan LCD selepas upload.
 - Simbol rumus perlu diperkenalkan kepada murid sebelum bermain.
-- Pratonton gambar dalam folder pakej asal ialah bahan terdahulu; semakan ini menunjukkan bank soalan terkini.
+- PDF menggunakan versi sumber 4 yang terakhir dikemas kini pada 24 Oktober 2026; semua 90 baris soalan/hint sepadan dengan bank semasa. Gambar pratonton lama telah dikeluarkan daripada repo.

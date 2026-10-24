@@ -42,9 +42,9 @@ These are compile-time image sizes, not physical performance measurements.
 
 ## Documentation
 
-- [Text review of all screens](docs/LCD_QUESTION_REVIEW.md)
-- [Latest A4 PDF](docs/lcd/GeoDecoder_15_Contoh_LCD_Soalan_dan_Hint.pdf)
-- [15 matching PNGs](docs/lcd/GeoDecoder_15_Contoh_LCD_PNG.zip)
+- [Text review of all screens](../LCD_QUESTION_REVIEW.md)
+- [Latest A4 PDF](../lcd/GeoDecoder_15_Contoh_LCD_Soalan_dan_Hint.pdf)
+- [15 matching PNGs](../lcd/GeoDecoder_15_Contoh_LCD_PNG.zip)
 
 All 30 question/hint frames were captured by executing the current
 `src/main.cpp` through the native LCD harness. Each frame has four rows of
@@ -76,4 +76,4 @@ USB upload and physical LCD/RFID/button/LED tests were not performed.
 Physical readability and contrast still need a real-board check.
 
 The prior component integration evidence is retained in
-[the archive](docs/archive/VERIFICATION_2026-10-24-components.md).
+[the archive](VERIFICATION_2026-10-24-components.md).

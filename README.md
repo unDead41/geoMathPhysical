@@ -202,8 +202,8 @@ arahan. `Ctrl+C` menutup Monitor. Untuk melihat port: `pio device list`.
 | `tests/` | Ujian native dengan perkakasan simulasi |
 | `SAMBUNGAN.md` | Jadual wayar asal |
 | `COMMANDS.md` | Senarai penuh arahan Serial |
-| `contoh display LCD/` | Pratonton LCD daripada pakej asal |
-| `print_labels/` | PDF kad cetakan daripada pakej asal |
+| `docs/lcd/` | PDF 15 halaman dan set PNG paparan LCD terkini |
+| `print_labels/` | Tiga PDF kad RFID siap potong tanpa nama jawapan |
 
 Rujuk [panduan architecture](docs/ARCHITECTURE.md) sebelum mengubah modul.
 Engine kuiz menerima masa sebagai nilai; application menerima adapter melalui
@@ -216,8 +216,12 @@ Arduino IDE jika diperlukan.
 Lihat [semua 15 paparan soalan dan hint semasa](docs/LCD_QUESTION_REVIEW.md),
 [PDF dokumentasi A4](docs/lcd/GeoDecoder_15_Contoh_LCD_Soalan_dan_Hint.pdf)
 dan [set 15 PNG](docs/lcd/GeoDecoder_15_Contoh_LCD_PNG.zip).
-Gambar dalam `contoh display LCD/` ialah bahan pakej asal; bank runtime
-terkini berada dalam `main/question_bank.h`.
+Bahan cetakan terkini disenaraikan dalam [indeks aset](docs/ASSETS.md).
+Kad RFID: [set campuran model dan bentangan](print_labels/GeoDecoder_Kad_RFID_A4.pdf),
+[bentangan 2D kiri/kanan](print_labels/GeoDecoder_Kad_2D_Kiri_Kanan_A4.pdf) dan
+[model 3D kiri/kanan](print_labels/GeoDecoder_Kad_3D_Kiri_Kanan_A4.pdf).
+Cetak kad pada **Actual size / 100%**. Bank runtime berada dalam
+`main/question_bank.h`.
 
 ## Pengesahan dan kemas kini
 

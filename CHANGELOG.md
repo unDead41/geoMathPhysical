@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-10-25 - Refresh current print and LCD assets
+
+- Replaced the three RFID cutting PDFs with the latest nameless source versions
+  (version 2, 16 October): mixed solid/net cards, duplicated 2D nets and duplicated
+  3D models. Print at Actual size / 100%.
+- Replaced the LCD documentation PDF with its latest source version 4 from
+  24 October: one landscape A4 PDF with all 15 question/hint pages.
+- Retained the matching current ZIP of 15 PNGs; its bytes already match the latest
+  source. Removed all eight original LCD PNGs and the older standalone LCD preview.
+- Added the asset index and refreshed document links. Verified all 90 LCD question
+  and hint rows against the current bank; visually checked the PDFs and validated
+  the PNG archive. This change only affects assets and documentation.
+
 ## 2026-10-24 - Bulk Serial unassign commands
 
 - Add `unassign all` to remove all ten registered solid/net UIDs, and
