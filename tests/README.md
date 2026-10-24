@@ -19,7 +19,7 @@ and both skip stages, role/error/hint colours, hint/pause/resume, rollover/reset
 invalid rounds, UID values, registry validation, filtered/random rounds,
 immutable LCD snapshots, and an application driven entirely by ports.
 
-Each firmware runner first runs those 11 cases, then executes 46 behavioural
+Each firmware runner first runs those 11 cases, then executes 52 behavioural
 cases with fake electrical/device I/O. Flow regressions drive real input adapters
 for pre-positioned R2, both held cards across questions, short/late/held buttons,
 all 900 blink samples, stopwatch resumption, stage arming, hint colours and
@@ -61,3 +61,12 @@ invalid paths/extra arguments and command gating, test switching and rollover.
 The fake MFRC522 exposes per-reader VersionReg values only at the electrical
 boundary so the real probe path can be exercised. No component test writes NVS
 or scores a quiz. Every existing game regression remains active.
+
+`unassign_behaviour.h` adds six cases for pair/all deletion through real Serial
+commands: all five BM/English shape names plus the `kubu` alias, actual UART
+case/whitespace handling, persistence across reload, unchanged active selection
+and unrelated NVS, idempotent clearing/re-enrolment, failed/short/unavailable
+storage, invalid extra arguments, legacy per-reader syntax, cancellation of
+capture/inspection and one complete storage commit per request. A first-write-only
+adapter catches implementations that commit one slot at a time. Diagnostic command
+gates also cover the new destructive commands.

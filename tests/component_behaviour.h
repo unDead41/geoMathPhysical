@@ -149,7 +149,8 @@ static void component_invalid_paths_and_gates() {
   for (const char *line : bad) { componentSerial(line); advance(1); componentOutputs(true, false, false, false, false, false); }
   componentSerial("stop extra"); advance(1);
   componentOutputs(true, false, false, false, false, false);
-  const char *blocked[] = {"next", "hint", "play", "round new", "assign r1 kubus 04 A1 B2 C3", "check uid"};
+  const char *blocked[] = {"next", "hint", "play", "round new", "assign r1 kubus 04 A1 B2 C3", "check uid",
+    "unassign all", "unassign kubus", "unassign r1 kubus"};
   for (const char *line : blocked) {
     componentSerial(line); advance(1);
     need(appState().mode == AppMode::STOPPED && !appState().showInstructions && fakeNvs == saved,

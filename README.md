@@ -100,6 +100,13 @@ Ulang secara berasingan untuk `piramid`, `silinder`, `kon` dan `kuboid`.
 R1 ialah kad bongkah; R2 ialah kad bentangan. Setiap slot mesti menggunakan
 UID yang berbeza. Jangan tampal semua arahan `assign` serentak.
 
+Untuk daftar semula, `unassign all` memadam semua tagging R1/R2.
+`unassign kubus`, `unassign piramid`, `unassign silinder`, `unassign kon` atau
+`unassign kuboid` memadam pasangan jenis itu sahaja. `unassign kubu` juga
+diterima sebagai alias kubus. Taip `tags` untuk menyemak slot kosong, kemudian
+daftar kad semula. Arahan ini terus menyimpan perubahan dan membatalkan round
+lama; pilihan jenis aktif dikekalkan. Panduan penuh: [COMMANDS.md](COMMANDS.md).
+
 Jika hanya tiga jenis lengkap, aktifkan hanya jenis itu, contohnya:
 
 ```text
@@ -225,7 +232,7 @@ python tests/run_tests.py --separate-modules
 python tests/run_tests.py --separate-modules --rgb
 ```
 
-Setiap arahan menjalankan 11 kes teras/application tanpa Arduino dan 46 kes
+Setiap arahan menjalankan 11 kes teras/application tanpa Arduino dan 52 kes
 integrasi firmware. Mod `--separate-modules` mengkompil setiap tab secara
 berasingan supaya header serta kebergantungan modul turut disahkan.
 

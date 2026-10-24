@@ -19,6 +19,13 @@ Arahan maksimum 159 aksara. Baris terlalu panjang ditolak sepenuhnya.
 | assign r1 kubus | Tunggu satu kad bongkah kubus di R1, maksimum 30 saat |
 | assign r2 kubus | Tunggu satu kad bentangan kubus di R2 |
 | assign r1 kubus 04 A1 B2 C3 | Simpan/tukar UID terus; nombor ini contoh sahaja |
+| unassign all | Buang semua sepuluh UID bongkah dan bentangan, termasuk jenis tidak aktif |
+| unassign kubus | Buang kedua-dua UID R1/R2 untuk kubus sahaja |
+| unassign piramid | Buang kedua-dua UID R1/R2 untuk piramid sahaja |
+| unassign silinder | Buang kedua-dua UID R1/R2 untuk silinder sahaja |
+| unassign kon | Buang kedua-dua UID R1/R2 untuk kon sahaja |
+| unassign kuboid | Buang kedua-dua UID R1/R2 untuk kuboid sahaja |
+| unassign kubu | Alias unassign kubus |
 | unassign r1 kubus | Buang pendaftaran slot ini |
 | tags | Semua UID/peranan bagi lima jenis |
 | play | Mula atau sambung kuiz yang dijeda |
@@ -57,6 +64,24 @@ Untuk mendaftarkan tanpa menaip UID, gunakan assign r1 kubus dan imbas kad.
 - Pendaftaran imbas berhenti selepas satu simpanan berjaya. Gunakan stop untuk membatalkan.
 - UID sudah digunakan di slot lain: unassign slot lama dahulu.
 - Memilih jumlah jenis yang belum cukup pasangan UID akan ditolak, tanpa perubahan separa.
+
+## Padam tagging untuk daftar semula
+
+Hantar satu arahan setiap baris. Contohnya, `unassign all` memadam semua
+pendaftaran; `unassign piramid` memadam pasangan bongkah/R1 dan bentangan/R2
+piramid sahaja. Nama English seperti `unassign cube` juga diterima.
+Gunakan `unassign r1 piramid` jika mahu memadam kad bongkah sahaja.
+
+Pemadaman berlaku terus dan disimpan dalam NVS; `tags` menunjukkan slot kosong
+sebagai `BELUM DAFTAR`. Pilihan jenis aktif dikekalkan. Daftar semula pasangan
+jenis aktif melalui `assign`, atau pilih jenis lain yang masih lengkap melalui
+`use`, sebelum bermain. UID jenis lain kekal apabila satu pasangan dipadam.
+
+Semua slot yang diminta disimpan dalam satu write. Write gagal atau tidak
+lengkap tidak mengesahkan perubahan RAM atau membatalkan round. Selepas
+berjaya, round lama dikosongkan, pendaftaran/semakan imbas dibatalkan dan menu
+dibuka. Arahan salah atau argumen tambahan ditolak tanpa perubahan. Semasa
+ujian komponen, keluar dengan `test/stop` dahulu sebelum memadam tagging.
 
 ## Main secara fizikal
 

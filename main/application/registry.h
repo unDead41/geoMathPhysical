@@ -8,6 +8,7 @@ bool registryReady(Shape shape);
 bool registryActiveReady();
 bool registryAssign(uint8_t reader, Shape shape, const Uid &uid);
 bool registryUnassign(uint8_t reader, Shape shape);
+bool registryUnassignShapes(uint8_t mask);
 bool registrySetActive(uint8_t mask);
 bool registrySetCount(uint8_t count);
 Shape registryLookup(const Uid &uid, uint8_t &registeredReader);

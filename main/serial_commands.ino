@@ -142,6 +142,16 @@ void serialExecute(char *line) {
     if (registryAssign(reader, shape, uid)) appConfigurationChanged();
     return;
   }
+  if (argc == 2 && !strcmp(args[0], "unassign")) {
+    uint8_t mask = ALL_SHAPES_MASK;
+    if (strcmp(args[1], "all")) {
+      const Shape shape = !strcmp(args[1], "kubu") ? Shape::CUBE : shapeFromName(args[1]);
+      if (shape == Shape::NONE) { serialCommandError(); return; }
+      mask = shapeBit(shape);
+    }
+    if (registryUnassignShapes(mask)) appConfigurationChanged();
+    return;
+  }
   if (argc == 3 && !strcmp(args[0], "unassign")) {
     if (strcmp(args[1], "r1") && strcmp(args[1], "r2")) { serialCommandError(); return; }
     const Shape shape = shapeFromName(args[2]);
@@ -169,6 +179,9 @@ void serialPrintHelp() {
     "assign r1 kubus            : imbas kad bongkah kubus di R1\n"
     "assign r2 kubus            : imbas kad bentangan kubus di R2\n"
     "assign r1 kubus 04 A1 B2 C3 : daftar/tukar UID secara terus\n"
+    "unassign all               : buang semua UID R1 dan R2\n"
+    "unassign kubus             : buang pasangan R1 + R2 jenis ini\n"
+    "unassign kubu              : alias unassign kubus\n"
     "unassign r1 kubus          : buang satu pendaftaran\n"
     "tags                       : semua UID + peranan\n"
     "play                       : mula/sambung kuiz\n"

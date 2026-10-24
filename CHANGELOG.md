@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-10-24 - Bulk Serial unassign commands
+
+- Add `unassign all` to remove all ten registered solid/net UIDs, and
+  `unassign kubus/piramid/silinder/kon/kuboid` (one name per command) to remove
+  that shape's R1/R2 pair. Retain English names and accept `unassign kubu`.
+- Keep the existing `unassign r1/r2 <shape>` syntax and active shape selection.
+  Commit selected slots in one NVS write; failed writes keep accepted RAM and
+  the current round. Successful requests cancel old rounds and pending capture.
+- Document the new commands in Serial help and user guides. Add six behavioural
+  regressions and extend component-test isolation to the new commands.
+
 ## 2026-10-24 - Harmonised LCD questions and documentation
 
 - Harmonised all 15 questions and hints within three 20-character ASCII rows.

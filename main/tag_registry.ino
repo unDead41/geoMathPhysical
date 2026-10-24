@@ -87,6 +87,23 @@ bool registryUnassign(uint8_t reader, Shape shape) {
   return true;
 }
 
+bool registryUnassignShapes(uint8_t mask) {
+  if (!mask || (mask & ~ALL_SHAPES_MASK)) return false;
+  RegistryData candidate = registryData;
+  for (uint8_t s = 0; s < SHAPE_COUNT; ++s)
+    if (mask & (1U << s))
+      for (uint8_t r = 0; r < READER_COUNT; ++r) candidate.tags[s][r] = {};
+  // Save the complete selection once; a failed write must not accept a partial pair.
+  if (!registryCommit(candidate)) return false;
+  if (mask == ALL_SHAPES_MASK)
+    appLogf("[SAVED] Semua pendaftaran R1 bongkah dan R2 bentangan dibuang.\n");
+  else
+    for (uint8_t s = 0; s < SHAPE_COUNT; ++s)
+      if (mask & (1U << s))
+        appLogf("[SAVED] Pendaftaran R1 dan R2 %s dibuang.\n", shapeName(Shape(s)));
+  return true;
+}
+
 bool registrySetActive(uint8_t mask) {
   if (!mask || (mask & ~ALL_SHAPES_MASK)) {
     appLogf("[ERROR] Pilih sekurang-kurangnya satu jenis yang sah.\n"); return false;
