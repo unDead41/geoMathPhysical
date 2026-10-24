@@ -58,7 +58,7 @@ enum class AppMode : uint8_t { STOPPED, PLAY, UID_SCAN, ENROLL };
 enum class QuizPhase : uint8_t { SETUP, QUESTION, SUMMARY };
 enum class Feedback : uint8_t { WAITING, WRONG, RIGHT, UNKNOWN_UID, WRONG_PAD, SKIPPED };
 enum class ScanMode : uint8_t { STOPPED, BOTH, R1, R2 };
-enum class RgbColor : uint8_t { OFF, BLUE, GREEN, RED };
+enum class RgbColor : uint8_t { OFF, BLUE, GREEN, RED, YELLOW };
 struct Uid { uint8_t size; uint8_t bytes[10]; };
 struct Question {
   const char *id;

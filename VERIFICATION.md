@@ -1,5 +1,45 @@
 # GeoDecoder verification - 24 October 2026
 
+## RGB game flow - codex/game-flow-rgb
+
+Base main: `75d22f14ecc9b1ccd55b93c1f6964647834c54eb`.
+Adds yellow hint/skip feedback and six-page RGB instructions. Existing
+question text, score/time policy, GPIO and UID/NVS format are preserved.
+
+| Check | Ordinary LEDs | Two RGB LEDs |
+|---|---|---|
+| Arduino-tab native suite | 30/30 passed | 30/30 passed |
+| `src/main.cpp` native suite | 30/30 passed | 30/30 passed |
+| ESP32 cross-compilation and firmware link | SUCCESS | SUCCESS |
+| USB upload / physical RGB/LCD/RFID test | Not performed | Not performed |
+
+The same four native commands below were run for this change. All use the
+existing C++11 warnings-as-errors and Address/UndefinedBehavior sanitizers.
+Before the colour implementation, the RGB suite produced the expected
+failures for `hint_led_yellow_then_blue`,
+`error_led_recovers_to_question_or_hint` and
+`skip_led_yellow_until_next_question` (27/30 passed). All 30 cases then passed
+for both entry points in both LED modes.
+
+The added cases cover both reader roles, three invalid-answer types, error
+recovery with/without a hint, exact notice boundaries, per-reader green
+feedback, a 0/5 green completion, frozen final time, replay, idle/help,
+teacher scanning/enrolment/timeout, LCD instruction bounds and unused GPIOs
+in ordinary-LED mode. Native RGB checks use the default common-cathode setup.
+
+`pio run -e esp32dev -e esp32dev-rgb` completed with both environments SUCCESS,
+using the pinned platform/toolchain and library versions listed below.
+
+| Current environment | Static RAM | Program flash |
+|---|---:|---:|
+| `esp32dev` | 22,652 / 327,680 bytes (6.9%) | 329,157 / 1,310,720 bytes (25.1%) |
+| `esp32dev-rgb` | 22,652 / 327,680 bytes (6.9%) | 329,153 / 1,310,720 bytes (25.1%) |
+
+The ordinary-LED environment remains the default. After the unfinished RGB
+wiring is ready, build/upload `esp32dev-rgb` and physically check yellow
+(R+G), the selected reader, hint/skip distinction on the LCD and the final
+score/time. See [the step-by-step guide](docs/GAME_FLOW_RGB.md).
+
 Source: the user-supplied `Geo-Decoder Board.zip`. This import adds VS Code /
 PlatformIO support; the original quiz rules, question bank, wiring, persisted
 shape IDs and NVS storage format remain intact.

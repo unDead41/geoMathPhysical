@@ -4,11 +4,20 @@ char lcdPrevious[4][21] = {};
 
 const char *const LCD_INSTRUCTIONS[INSTRUCTION_PAGE_COUNT][2] = {
   {"5 soalan. Pilih satu", "jawapan dan imbas."},
+#if GEODECODER_RGB_ENABLED
+  {"Biru: Tempat imbas", "R1=3D R2=Bentangan"},
+#else
   {"Imbas bongkah atau", "bentangan ikut LED."},
+#endif
   {"HINT: Lihat petunjuk", "HINT lagi: Soalan"},
   {"NEXT: Langkau soalan", "Langkau: +0 markah"},
+#if GEODECODER_RGB_ENABLED
+  {"Hijau: Betul +1", "Merah: Cuba lagi"},
+  {"Kuning: Hint/langkau", "Akhir: Skor dan masa"}
+#else
   {"Betul: +1 markah", "Masa terus berjalan"},
   {"Keputusan dipaparkan", "selepas 5 soalan."}
+#endif
 };
 
 void lcdBegin() {

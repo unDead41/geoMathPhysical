@@ -105,8 +105,174 @@ static void late_notice_buttons(){
  }
 }
 
+// Expected channel combinations are literal electrical outputs, not calls to
+// quizColor(), so a wrong colour or a lit inactive reader fails these cases.
+static void expect_led(uint8_t reader, bool red, bool green, bool blue) {
+ rgbUpdate();
+#if GEODECODER_RGB_ENABLED
+ const bool expected[3] = {red, green, blue};
+ for (uint8_t channel = 0; channel < 3; ++channel)
+  need(sim::pins[RGB_PINS[reader][channel]] ==
+       (expected[channel] ? HIGH : LOW), "unexpected RGB channel output");
+#else
+ need(sim::pins[RGB_PINS[reader][0]] == ((red || green || blue) ? HIGH : LOW),
+      "unexpected ordinary LED output");
+#endif
+}
+
+static void hint_led_restore() {
+ fixture(); start(); select("C3");
+ appHintButton();
+ expect_led(0, false, false, false);
+ expect_led(1, true, true, false); // Yellow on the net reader only.
+ const uint32_t before = quizElapsedMs();
+ advance(1300);
+ need(quiz.showHint && quizElapsedMs() >= before + 1300, "hint stopped the clock");
+ appHintButton();
+ expect_led(1, false, false, true);
+ need(quiz.index == 0 && quiz.score == 0 && quiz.hintsUsed == 1,
+      "hint colour changed quiz progress");
+}
+
+static void error_led_recovery() {
+ for (uint8_t reader = 0; reader < 2; ++reader) {
+  for (unsigned hint = 0; hint < 2; ++hint) {
+   for (unsigned error = 0; error < 3; ++error) {
+    fixture(); start(); select(reader == 0 ? "K1" : "K3");
+    if (hint) appHintButton();
+    const Uid unknown = {4, {0x77, 0x88, 0x99, 0xAA}};
+    const Uid &uid = error == 0 ? tag(Shape::CONE, reader)
+                   : error == 1 ? unknown : tag(Shape::CUBE, 1 - reader);
+    quizOnScan(reader, uid);
+    expect_led(reader, true, false, false);
+    expect_led(1 - reader, false, false, false);
+    need(quiz.score == 0 && quiz.index == 0 && !quiz.advancePending,
+         "invalid answer changed quiz progress");
+    need(quiz.wrongAttempts == (error == 0 ? 1 : 0), "invalid UID/role counted as wrong shape");
+    advance(QUIZ_ERROR_MS - 1);
+    expect_led(reader, true, false, false);
+    advance(1);
+    expect_led(reader, hint != 0, hint != 0, hint == 0);
+    need(quiz.showHint == bool(hint), "error feedback hid the previous hint");
+   }
+  }
+ }
+}
+
+static void skip_led_notice() {
+ fixture(); start(); select("C3");
+ quiz.order[1] = questionId("K1");
+ appNextButton();
+ expect_led(1, true, true, false);
+ expect_led(0, false, false, false);
+ advance(QUIZ_NOTICE_MS - 1);
+ need(quiz.index == 0 && quiz.score == 0, "skip advanced before notice ended");
+ expect_led(1, true, true, false);
+ advance(1);
+ need(quiz.index == 1 && quiz.score == 0, "skip did not advance for zero points");
+ expect_led(0, false, false, true);
+ expect_led(1, false, false, false);
+}
+
+static void correct_led_notice() {
+ fixture(); start(); select("C3");
+ quiz.order[1] = questionId("K1");
+ appHintButton();
+ quizOnScan(1, tag(Shape::CONE, 1));
+ quizOnScan(1, tag(Shape::CONE, 1));
+ expect_led(1, false, true, false);
+ expect_led(0, false, false, false);
+ need(quiz.score == 1 && quiz.advancePending, "correct notice awarded twice");
+ advance(QUIZ_NOTICE_MS - 1);
+ expect_led(1, false, true, false);
+ advance(1);
+ expect_led(0, false, false, true);
+ expect_led(1, false, false, false);
+ need(!quiz.showHint && quiz.index == 1, "new question retained previous hint");
+}
+
+static void summary_led_replay() {
+ fixture(); start();
+ quiz.index = quiz.length - 1;
+ appNextButton();
+ const uint32_t finalTime = quizElapsedMs();
+ advance(QUIZ_NOTICE_MS);
+ need(quiz.phase == QuizPhase::SUMMARY && quiz.score == 0, "zero-score round failed to finish");
+ expect_led(0, false, true, false);
+ expect_led(1, false, true, false);
+ advance(2500);
+ need(quizElapsedMs() == finalTime, "summary colour restarted the clock");
+ appNextButton();
+ need(quiz.index == 0 && quiz.score == 0 && quizElapsedMs() == 0,
+      "replay did not reset the round");
+ const uint8_t active = quizCurrentQuestion()->reader;
+ expect_led(active, false, false, true);
+ expect_led(1 - active, false, false, false);
+}
+
+static void idle_teacher_leds() {
+ fixture();
+ expect_led(0, false, false, false);
+ expect_led(1, false, false, false);
+ appHintButton();
+ expect_led(0, false, false, false);
+ expect_led(1, false, false, false);
+ appStop();
+ start(); select("K1"); quizOnScan(0, tag(Shape::CONE, 0));
+ appStop();
+ expect_led(0, false, false, false);
+ expect_led(1, false, false, false);
+ appInspect(ScanMode::R1);
+ expect_led(0, false, false, true);
+ expect_led(1, false, false, false);
+ appInspect(ScanMode::BOTH);
+ expect_led(0, false, false, true);
+ expect_led(1, false, false, true);
+ need(appEnroll(1, Shape::CUBE), "teacher capture did not start");
+ expect_led(0, false, false, false);
+ expect_led(1, false, false, true);
+ advance(ENROLL_TIMEOUT_MS);
+ expect_led(0, false, false, false);
+ expect_led(1, false, false, false);
+}
+
+static void help_text_bounds() {
+ fixture();
+ for (const auto &page : LCD_INSTRUCTIONS)
+  for (const char *line : page) {
+   need(strlen(line) <= 20, "instruction clipped at the LCD edge");
+   for (const char *p = line; *p; ++p)
+    need(uint8_t(*p) >= 32 && uint8_t(*p) <= 126, "instruction uses unsupported LCD text");
+  }
+}
+
+static void ordinary_led_gpio_scope() {
+#if !GEODECODER_RGB_ENABLED
+ fixture();
+ for (uint8_t reader = 0; reader < 2; ++reader)
+  for (uint8_t channel = 1; channel < 3; ++channel)
+   sim::pins[RGB_PINS[reader][channel]] = HIGH;
+ rgbBegin(); start(); select("C3"); appHintButton(); rgbUpdate(); appStop(); rgbUpdate();
+ for (uint8_t reader = 0; reader < 2; ++reader)
+  for (uint8_t channel = 1; channel < 3; ++channel)
+   need(sim::pins[RGB_PINS[reader][channel]] == HIGH, "ordinary mode drove an unwired RGB channel");
+#endif
+}
+
 int main(){
  const std::pair<const char*,void(*)()> tests[]={{"bank_15_and_round_variety",bank},{"menu_copy",menu},{"six_help_pages",help_pages},{"help_blocks_next",help_next},{"hint_toggle_and_timer",hint_toggle},{"lcd_header",header},{"one_solid_scan_and_no_double_award",single_scan},{"net_reader_and_wrong_answers",net_reader},{"skip_notice_zero_points",skip_notice},{"buttons_during_notice",pending_buttons},{"automatic_last_correct_result",finish_correct},{"last_skip_result",finish_skip},{"single_reader_arming",fresh_reader},{"held_card_requires_removal",held_card},{"per_reader_led",leds},{"millis_rollover",clock_rollover},{"minutes_seconds_after_one_hour",long_time},{"nvs_and_filtered_round",saved_tags},{"all_15_question_and_hint_displays",all_copies},{"physical_hint_debounce_and_hold",physical_hint},{"complete_five_question_round",complete_round},{"physical_late_notice_buttons",late_notice_buttons}};
+ const std::pair<const char*,void(*)()> flowTests[] = {
+  {"hint_led_yellow_then_blue", hint_led_restore},
+  {"error_led_recovers_to_question_or_hint", error_led_recovery},
+  {"skip_led_yellow_until_next_question", skip_led_notice},
+  {"correct_led_overrides_hint_then_changes_reader", correct_led_notice},
+  {"summary_leds_and_replay_reset", summary_led_replay},
+  {"idle_and_teacher_led_routing", idle_teacher_leds},
+  {"instruction_text_fits_lcd", help_text_bounds},
+  {"ordinary_led_does_not_drive_extra_channels", ordinary_led_gpio_scope}
+ };
  unsigned failures=0;for(const auto& test:tests){try{test.second();std::cout<<"PASS "<<test.first<<'\n';}catch(const std::exception& error){++failures;std::cout<<"FAIL "<<test.first<<": "<<error.what()<<'\n';}}
- std::cout<<(sizeof(tests)/sizeof(tests[0])-failures)<<"/"<<sizeof(tests)/sizeof(tests[0])<<" passed\n";return failures?1:0;
+ for(const auto& test:flowTests){try{test.second();std::cout<<"PASS "<<test.first<<'\n';}catch(const std::exception& error){++failures;std::cout<<"FAIL "<<test.first<<": "<<error.what()<<'\n';}}
+ const unsigned total = sizeof(tests)/sizeof(tests[0]) + sizeof(flowTests)/sizeof(flowTests[0]);
+ std::cout<<(total-failures)<<"/"<<total<<" passed\n";return failures?1:0;
 }

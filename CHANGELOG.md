@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-10-24 - RGB game flow on codex/game-flow-rgb
+
+- Added yellow on the required reader while a hint is visible and during the
+  one-second skip notice. Wrong-card feedback stays red and restores the
+  previous blue question or yellow hint state after 1.2 seconds.
+- Kept per-reader blue guidance, single-award green feedback, green completion,
+  replay reset, ordinary-LED default, quiz rules, GPIO and saved-card format.
+- Added RGB colour guidance within the existing six LCD help pages.
+- Added a Malay guide explaining every gameplay step and corrected the wiring
+  guide's old global-colour and teacher-mode descriptions.
+- Extended the native behavioural suite for LED state transitions, errors,
+  reader routing, summary/replay, instruction bounds and ordinary GPIO scope.
+
 ## 2026-10-24 - Initial GitHub import and VS Code support
 
 - Imported the supplied `Geo-Decoder Board.zip`, including original firmware,

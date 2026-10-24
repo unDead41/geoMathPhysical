@@ -36,7 +36,14 @@ Jika dua RGB sudah dipasang, ubah satu baris dalam `config.h`:
 
 `RGB_COMMON_ANODE = false` untuk common ke GND; gunakan `true` jika common anode. Setiap saluran LED memerlukan resistor seperti sambungan asal.
 
-Semasa soalan, hanya LED pembaca yang diperlukan menyala. Dalam mod RGB: biru menandakan tempat imbas, hijau untuk jawapan betul, merah untuk jawapan salah/kad tidak sah. Kedua-dua LED menyala pada keputusan akhir.
+Semasa soalan, hanya LED pembaca yang diperlukan menyala. Dalam mod RGB:
+biru menandakan tempat imbas; kuning untuk hint atau notis langkau; hijau
+untuk jawapan betul; merah untuk jawapan salah/kad tidak sah. Selepas notis
+salah tamat, warna kembali biru atau kuning jika hint masih dibuka.
+Kedua-dua RGB hijau pada keputusan akhir, sebagai tanda pusingan selesai.
+
+Panduan penuh **[flow RGB satu per satu](docs/GAME_FLOW_RGB.md)** menerangkan
+menu, butang, imbasan, hint, percubaan semula, langkau dan keputusan.
 
 ## Aktifkan semua lima bongkah
 

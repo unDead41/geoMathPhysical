@@ -80,7 +80,8 @@ Jika kekal PRESSED, sahkan polariti modul dan sambungan S / VCC / GND sebelum be
 Gambar asal menggunakan LED biasa: anode LED1 pada GPIO25 dan LED2 pada GPIO26.
 Untuk dua RGB kemudian, pin itu menjadi saluran R; tambah empat sambungan G/B mengikut jadual.
 GPIO32/33 dikhaskan untuk butang, jadi tidak digunakan oleh RGB.
-GEODECODER_RGB_ENABLED kekal 0: tiada pin RGB dipacu sehingga RGB dipasang dan diaktifkan.
+Mod default menggunakan dua LED biasa pada GPIO25/26 sahaja. Saluran tambahan
+GPIO13/14/16/17 tidak dipacu sehingga mod RGB diaktifkan.
 
 Untuk setiap saluran: GPIO -> resistor 330 Ohm -> kaki R/G/B.
 Jumlah enam resistor, satu bagi setiap saluran.
@@ -90,18 +91,30 @@ Default **common cathode**: kaki common ke GND; RGB_COMMON_ANODE = false.
 Jika **common anode**: kaki common ke 3V3 dan RGB_COMMON_ANODE = true.
 Jangan sambung common anode terus ke 5 V dengan sambungan GPIO ini.
 
-Aktifkan apabila LED sudah dipasang:
+Dalam VS Code + PlatformIO, pilih environment **esp32dev-rgb** apabila RGB
+sudah dipasang, kemudian Build dan Upload. `esp32dev` kekal untuk LED biasa.
+
+Jika menggunakan Arduino IDE, aktifkan dalam config.h:
 
     #define GEODECODER_RGB_ENABLED 1
 
-Tetapan ini berada dalam config.h. Kedua-dua RGB menggunakan keputusan global yang sama:
+Semasa kuiz hanya RGB pembaca yang diperlukan menyala. Satu soalan
+memerlukan satu kad pada R1 (bongkah) atau R2 (bentangan), mengikut soalan.
 
 | Keadaan | Warna |
 |---|---|
-| Menunggu / pembayang | Biru |
-| Pasangan tepat untuk soalan | Hijau |
-| Salah / UID tidak dikenali / pad salah | Merah |
-| Mod setup, imbas UID, pendaftaran atau stop | Padam |
+| Menunggu jawapan | Biru pada pembaca aktif |
+| Hint dibuka | Kuning pada pembaca aktif; HINT lagi kembali biru |
+| Jawapan tepat | Hijau pada pembaca aktif, kira-kira 1 saat; +1 sekali |
+| Salah / UID tidak dikenali / jenis kad salah | Merah pada pembaca aktif, kira-kira 1.2 saat; kembali biru/kuning |
+| Langkau | Kuning pada pembaca aktif, kira-kira 1 saat; +0 |
+| Keputusan akhir | Kedua-duanya hijau, menandakan pusingan tamat |
+| Menu / cara bermain / stop | Kedua-duanya padam |
+| Semakan UID | Biru pada pembaca yang dipilih |
+| Pendaftaran kad | Biru pada pembaca pendaftaran sahaja |
+
+Kuning memerlukan kedua-dua saluran R dan G. LCD membezakan hint daripada
+notis langkau. [Flow penuh satu per satu](docs/GAME_FLOW_RGB.md).
 
 RGB dalam kod ini ialah LED biasa empat kaki, bukan WS2812/NeoPixel.
 GPIO16/17 dalam peta ini khusus board WROOM; ia tidak bebas pada sesetengah WROVER/PSRAM.

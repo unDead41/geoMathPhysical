@@ -125,8 +125,15 @@ RFID mesti READY dan semua jenis aktif mesti mempunyai UID R1 serta R2.
 5. Selepas soalan terakhir, LCD memaparkan skor, peratus dan masa akhir.
 6. Masa akhir kekal; **NEXT** memulakan pusingan baharu dan **HINT** ke menu.
 
-Dalam mod RGB: biru=menunggu imbasan, hijau=betul, merah=salah/kad tidak sah.
-Angkat kad sebelum mengimbas untuk soalan seterusnya.
+Dalam mod RGB: biru=menunggu imbasan, kuning=hint atau notis langkau,
+hijau=betul, merah=salah/kad tidak sah. Hanya pembaca soalan semasa menyala;
+kedua-duanya hijau pada keputusan akhir sebagai tanda pusingan tamat.
+Angkat kad sebelum mengimbas untuk soalan seterusnya. Selepas notis salah,
+warna kembali biru atau kuning mengikut sama ada hint masih dibuka.
+
+Lihat **[flow RGB satu per satu](docs/GAME_FLOW_RGB.md)** untuk urutan penuh,
+contoh LCD dan maksud warna. RGB masih pilihan sehingga pemasangan siap;
+environment default kekal `esp32dev` untuk LED biasa.
 
 ## Arahan terminal PlatformIO
 

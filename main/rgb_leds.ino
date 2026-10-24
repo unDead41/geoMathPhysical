@@ -5,7 +5,10 @@ void rgbWriteReader(uint8_t reader, RgbColor color) {
     digitalWrite(RGB_PINS[reader][0], color == RgbColor::OFF ? LOW : HIGH);
     return;
   }
-  const bool on[3] = {color == RgbColor::RED, color == RgbColor::GREEN, color == RgbColor::BLUE};
+  // Kuning menggunakan R+G. Kekalkan polariti common cathode/anode untuk setiap saluran.
+  const bool on[3] = {color == RgbColor::RED || color == RgbColor::YELLOW,
+                      color == RgbColor::GREEN || color == RgbColor::YELLOW,
+                      color == RgbColor::BLUE};
   for (uint8_t channel = 0; channel < 3; ++channel)
     digitalWrite(RGB_PINS[reader][channel], (on[channel] != RGB_COMMON_ANODE) ? HIGH : LOW);
 }

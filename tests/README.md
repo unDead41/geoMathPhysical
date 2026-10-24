@@ -10,12 +10,17 @@ python tests/run_tests.py --entrypoint src/main.cpp --rgb
 ```
 
 The first pair includes the Arduino tabs directly; the second pair exercises
-the PlatformIO entry point. Each run executes the same 22 behavioural cases
+the PlatformIO entry point. Each run executes the same 30 behavioural cases
 with fake electrical/device I/O. Requires Python 3 and G++ with AddressSanitizer
 and UndefinedBehaviorSanitizer support (the supplied commands target Linux).
 On a Windows setup without a compatible G++, use the PlatformIO firmware build
 and physical checks in `README.md`; do not interpret a missing G++ as an ESP32
 firmware failure.
+
+The RGB flow cases exercise yellow hints/skips, red error recovery with and
+without a visible hint, both reader roles, green correct/completion feedback,
+replay/menu/teacher routing and the 20-column ASCII instruction limit.
+Ordinary mode checks that the four unwired G/B pins are not driven.
 
 `behaviour.cpp`, `expected_displays.h`, `fakes/` and `run_tests.py` are current.
 The supplied `core_test.cpp`, `integration_test.cpp` and `stubs/` document

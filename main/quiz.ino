@@ -182,9 +182,10 @@ void quizOnScan(uint8_t reader, const Uid &uid) {
 RgbColor quizColor() {
   if (appMode != AppMode::PLAY) return RgbColor::OFF;
   if (quiz.phase == QuizPhase::SUMMARY || quiz.awarded) return RgbColor::GREEN;
-  if (quiz.phase != QuizPhase::QUESTION || quiz.feedback == Feedback::SKIPPED) return RgbColor::OFF;
+  if (quiz.phase != QuizPhase::QUESTION) return RgbColor::OFF;
   if (quiz.feedback == Feedback::WRONG || quiz.feedback == Feedback::UNKNOWN_UID ||
       quiz.feedback == Feedback::WRONG_PAD) return RgbColor::RED;
+  if (quiz.showHint || quiz.feedback == Feedback::SKIPPED) return RgbColor::YELLOW;
   return RgbColor::BLUE;
 }
 
