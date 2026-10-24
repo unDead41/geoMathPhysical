@@ -1,0 +1,5 @@
+; Salin sebagai platformio.local.ini dan guna nombor COM komputer sendiri.
+; Fail platformio.local.ini diabaikan Git.
+[env]
+upload_port = COM5
+monitor_port = COM5
