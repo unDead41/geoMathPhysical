@@ -101,10 +101,12 @@ pada keputusan akhir:
 
 | Keadaan | Warna |
 |---|---|
-| Menunggu / pembayang | Biru |
-| Pasangan tepat untuk soalan | Hijau |
-| Salah / UID tidak dikenali / pad salah | Merah |
-| Mod setup, imbas UID, pendaftaran atau stop | Padam |
+| Menunggu / petunjuk soalan | Biru pada pembaca yang diminta |
+| Jawapan betul | Hijau pada pembaca soalan |
+| Salah / UID tidak dikenali / pad salah | Merah pada pembaca soalan |
+| Semakan UID / pendaftaran | Biru pada pembaca aktif |
+| Menu / panduan / stop | Padam |
+| Keputusan akhir | Kedua-duanya hijau |
 
 RGB dalam kod ini ialah LED biasa empat kaki, bukan WS2812/NeoPixel.
 GPIO16/17 dalam peta ini khusus board WROOM; ia tidak bebas pada sesetengah WROVER/PSRAM.
