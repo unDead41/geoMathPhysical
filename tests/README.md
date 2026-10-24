@@ -19,7 +19,7 @@ and both skip stages, role/error/hint colours, hint/pause/resume, rollover/reset
 invalid rounds, UID values, registry validation, filtered/random rounds,
 immutable LCD snapshots, and an application driven entirely by ports.
 
-Each firmware runner first runs those 11 cases, then executes 37 behavioural
+Each firmware runner first runs those 11 cases, then executes 46 behavioural
 cases with fake electrical/device I/O. Flow regressions drive real input adapters
 for pre-positioned R2, both held cards across questions, short/late/held buttons,
 all 900 blink samples, stopwatch resumption, stage arming, hint colours and
@@ -53,3 +53,11 @@ The physical-wiring case drives every OFF/primary/combined colour through the
 real output adapter, checks the user's literal R1=16/17/26 and R2=13/14/25
 R/G/B pin wiring, and verifies the Serial `pins` guide. Ordinary mode checks
 that only the original GPIO25/26 outputs change for every logical colour.
+
+`component_behaviour.h` adds nine actual-UART/adapter regressions: command help
+and routing, LED output ownership/timing, selected RFID reads and refreshed
+connection failures/recovery, button debounce/watch/counts, held-button exit,
+invalid paths/extra arguments and command gating, test switching and rollover.
+The fake MFRC522 exposes per-reader VersionReg values only at the electrical
+boundary so the real probe path can be exercised. No component test writes NVS
+or scores a quiz. Every existing game regression remains active.

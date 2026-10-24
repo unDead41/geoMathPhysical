@@ -143,6 +143,25 @@ R1 kekal ON. Menu/keputusan mempunyai dua LED ON; tiga kelipan tetap digunakan.
 Gunakan `esp32dev-rgb` hanya apabila pemasangan RGB siap.
 Panduan penuh: [flow dua kad dan RGB](docs/GAME_FLOW_RGB.md).
 
+## Uji komponen melalui Serial Monitor
+
+Branch `testing/components` menyediakan ujian terus melalui Serial 115200 baud:
+
+```text
+test/help
+test/rfid/r1
+test/rfid/r2
+test/led/r1/red
+test/led/cycle
+test/button/all
+test/stop
+```
+
+Hantar satu arahan dan uji komponennya sebelum memilih arahan lain. Ujian aktif
+menjeda permainan tanpa menukar pendaftaran kad. `test/stop` kembali ke menu.
+Untuk warna sebenar, Build/Upload `esp32dev-rgb` dengan pin RGB pengguna terkini.
+Panduan lengkap dan contoh output: [COMPONENT_TESTS.md](docs/COMPONENT_TESTS.md).
+
 ## Arahan terminal PlatformIO
 
 Buka **PlatformIO > Quick Access > Miscellaneous > PlatformIO Core CLI**
@@ -199,7 +218,7 @@ python tests/run_tests.py --separate-modules
 python tests/run_tests.py --separate-modules --rgb
 ```
 
-Setiap arahan menjalankan 11 kes teras/application tanpa Arduino dan 37 kes
+Setiap arahan menjalankan 11 kes teras/application tanpa Arduino dan 46 kes
 integrasi firmware. Mod `--separate-modules` mengkompil setiap tab secara
 berasingan supaya header serta kebergantungan modul turut disahkan.
 

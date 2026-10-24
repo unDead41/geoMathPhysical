@@ -7,6 +7,7 @@ struct ReaderRecord {
   uint32_t count;
 };
 void rfidBegin();
+void rfidCheckConnections();
 void rfidUpdate();
 void rfidSetMode(ScanMode mode);
 void rfidRequireFreshCards();

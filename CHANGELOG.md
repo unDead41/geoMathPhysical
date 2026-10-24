@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-10-24 - Serial component diagnostics (testing/components)
+
+- Add discoverable test/rfid, test/led and test/button command paths, with
+  per-reader UID capture/live SPI version checks, persistent colours/cycle/blink
+  and raw/debounced button transitions with press counts.
+- Isolate tests from play, enrolment, timer and ambient output. test/stop or stop
+  returns to the menu; buttons held at exit must be released before gameplay.
+- Keep pure game/application modules intact; one integration controller shares
+  existing hardware adapters through the composition root, with no loop changes.
+- Reject malformed paths/extra arguments without changing the active test.
+  Read-only teacher commands remain available during tests.
+- Preserve the approved GPIO, default ordinary mode, question bank and UID/NVS
+  format. Document copy/paste Serial commands and physical verification steps.
+
 ## 2026-10-24 - User RGB wiring update
 
 - Set RGB1/R1 bongkah to R=GPIO16, G=GPIO17, B=GPIO26 and RGB2/R2 bentangan

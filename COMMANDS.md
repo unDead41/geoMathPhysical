@@ -64,3 +64,15 @@ Menu utama: NEXT mula pusingan baharu, HINT cara bermain. Serial `play` boleh me
 Ringkasan: NEXT main semula, HINT menu. Semakan/pendaftaran: NEXT kembali menu atau batal.
 Setiap soalan wajib R1 bongkah kemudian R2 bentangan sepadan; +1 hanya setelah kedua-duanya betul. Masa berjalan ketika menjawab/hint/notis salah, dijeda sepanjang tiga kelipan 900 ms, dan berhenti pada tindakan terakhir. Menu/penyelenggaraan menjeda masa. NEXT/HINT semasa kelipan diabaikan. Rujuk [flow dua kad](docs/GAME_FLOW_RGB.md).
 Serial mengekalkan maklumat teknikal guru; LCD memaparkan arahan murid sahaja.
+
+## Ujian komponen
+
+Taip `test/help` untuk arahan berformat slash seperti `test/rfid/r1`,
+`test/rfid/r2`, `test/rfid/check`, `test/led/r1/red`, `test/led/cycle` dan
+`test/button/all`. `test/status` menunjukkan sesi; `test/stop` atau `stop`
+kembali ke menu. Semasa ujian, permainan/markah/masa dijeda dan tiada UID
+pernah didaftarkan secara automatik. Arahan guru yang mengubah state memerlukan
+keluar ujian dahulu; arahan baca sahaja kekal tersedia.
+
+Rujuk [panduan ujian komponen](docs/COMPONENT_TESTS.md) untuk semua target,
+warna, timing, watch butang dan maksud output RFID.

@@ -1,6 +1,7 @@
 # GeoDecoder contributor guidance
 
 - Read `README.md`, `docs/ARCHITECTURE.md`, `SAMBUNGAN.md`, `COMMANDS.md` and `VERIFICATION.md` before editing firmware.
+- Component tests: read `docs/COMPONENT_TESTS.md` before changing Serial diagnostics. Keep the controller outside pure domain/application, preserve nonblocking output ownership and suppress game actions during tests.
 - Active flow: `docs/GAME_FLOW_RGB.md`. Every question requires R1 solid then matching R2 net; only the pair earns +1. Use the runtime answer stage, not legacy `Question.reader`, to select the pad. Pause the clock during the three 150 ms ON/OFF blink cycles.
 - Firmware source lives in `main/`. `src/main.cpp` is the PlatformIO entry point and includes the same tabs. Keep a single source of application logic.
 - Keep domain and application hardware-independent. Application time/RNG/logging/storage/reader control goes through `AppPorts`, bound once in setup. RFID/buttons emit `InputEvents`; LCD accepts a `LcdFrame`. `config.h` contains board settings only.

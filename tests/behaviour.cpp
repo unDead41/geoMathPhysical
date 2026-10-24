@@ -8,7 +8,7 @@
 #include <stdexcept>
 #include <set>
 
-namespace sim {uint32_t now=0,rng=7;std::array<int,64> pins={};Card cards[2]={};char lcdCells[4][21]={};bool nvsAvailable=true,nvsWriteOk=true,nvsShortWrite=false;}
+namespace sim {uint32_t now=0,rng=7;std::array<int,64> pins={};Card cards[2]={};uint8_t versions[2]={0x92,0x92};char lcdCells[4][21]={};bool nvsAvailable=true,nvsWriteOk=true,nvsShortWrite=false;}
 FakeSerial Serial;
 FakeSPI SPI;
 FakeWire Wire;
@@ -33,6 +33,7 @@ std::map<std::string,std::vector<uint8_t>> fakeNvs;
 #include "nvs_storage.ino"
 #include "app.ino"
 #include "buttons.ino"
+#include "component_tests.ino"
 #include "lcd_display.ino"
 #include "quiz.ino"
 #include "rfid.ino"
@@ -53,6 +54,7 @@ static void advance(uint32_t duration){for(uint32_t i=0;i<duration;++i){++sim::n
 static void command(const char* text){char copy[200];strncpy(copy,text,sizeof(copy));copy[sizeof(copy)-1]=0;serialExecute(copy);}
 static void fixture(){
  sim::nvsAvailable=true;sim::nvsWriteOk=true;sim::nvsShortWrite=false;sim::now=0;sim::rng=7;sim::pins.fill(LOW);memset(sim::cards,0,sizeof(sim::cards));fakeNvs.clear();Serial.output.clear();
+ sim::versions[0]=sim::versions[1]=0x92;
  setup();
  for(uint8_t s=0;s<SHAPE_COUNT;++s)for(uint8_t r=0;r<2;++r){Uid uid={4,{0x04,uint8_t(s+1),uint8_t(r+1),0xA5}};need(registryAssign(r,Shape(s),uid),"test enrol failed");}
  need(registrySetActive(ALL_SHAPES_MASK),"test active set failed");
@@ -384,8 +386,10 @@ static void physical_led_wiring(){
 #endif
 }
 
+#include "component_behaviour.h"
+
 int main(){
- const std::pair<const char*,void(*)()> tests[]={{"physical_led_wiring_all_colours",physical_led_wiring},{"stage_hints_errors_and_colours",stage_hints_and_errors},{"skip_stages_exact_blinks_and_clock",skip_both_stages_and_exact_blinks},{"early_net_requires_removal",early_positioned_net},{"short_blink_button_presses",short_blink_presses},{"menu_result_rgb_cadence",ambient_cadence_and_no_scoring},{"summary_next_resets",summary_next_resets},{"teacher_tools_with_two_cards",teacher_tools_with_two_cards},{"bank_15_and_round_variety",bank},{"menu_copy",menu},{"six_help_pages",help_pages},{"help_blocks_next",help_next},{"hint_toggle_and_timer",hint_toggle},{"lcd_header",header},{"two_cards_and_no_double_award",single_scan},{"net_reader_and_wrong_answers",net_reader},{"skip_notice_zero_points",skip_notice},{"buttons_during_notice",pending_buttons},{"automatic_last_correct_result",finish_correct},{"last_skip_result",finish_skip},{"single_reader_arming",fresh_reader},{"held_card_requires_removal",held_card},{"per_reader_led",leds},{"millis_rollover",clock_rollover},{"minutes_seconds_after_one_hour",long_time},{"nvs_and_filtered_round",saved_tags},{"all_15_question_and_hint_displays",all_copies},{"physical_hint_debounce_and_hold",physical_hint},{"complete_five_question_round",complete_round},{"physical_late_notice_buttons",late_notice_buttons},{"failed_nvs_write_is_transactional",nvs_failed_write},{"unavailable_nvs_rejects_registration",nvs_unavailable},{"duplicate_uid_keeps_mapping",duplicate_mapping},{"corrupt_storage_not_loaded_or_overwritten",corrupt_storage},{"application_pause_resume_clock",paused_application},{"serial_overflow_then_valid_command",serial_overflow_recovery},{"legacy_nvs_byte_image",legacy_nvs_image}};
+ const std::pair<const char*,void(*)()> tests[]={{"component_help_uart_and_lcd",component_help_and_uart},{"component_led_output_ownership",component_led_ownership},{"component_led_cycle_and_blink",component_led_timing},{"component_rfid_selected_reads",component_rfid_watch},{"component_live_rfid_health",component_rfid_health},{"component_button_debounce_watch",component_button_watch},{"component_exit_suppresses_buttons",component_exit_drops_buttons},{"component_invalid_paths_and_command_gates",component_invalid_paths_and_gates},{"component_switching_and_rollover",component_switch_and_rollover},{"physical_led_wiring_all_colours",physical_led_wiring},{"stage_hints_errors_and_colours",stage_hints_and_errors},{"skip_stages_exact_blinks_and_clock",skip_both_stages_and_exact_blinks},{"early_net_requires_removal",early_positioned_net},{"short_blink_button_presses",short_blink_presses},{"menu_result_rgb_cadence",ambient_cadence_and_no_scoring},{"summary_next_resets",summary_next_resets},{"teacher_tools_with_two_cards",teacher_tools_with_two_cards},{"bank_15_and_round_variety",bank},{"menu_copy",menu},{"six_help_pages",help_pages},{"help_blocks_next",help_next},{"hint_toggle_and_timer",hint_toggle},{"lcd_header",header},{"two_cards_and_no_double_award",single_scan},{"net_reader_and_wrong_answers",net_reader},{"skip_notice_zero_points",skip_notice},{"buttons_during_notice",pending_buttons},{"automatic_last_correct_result",finish_correct},{"last_skip_result",finish_skip},{"single_reader_arming",fresh_reader},{"held_card_requires_removal",held_card},{"per_reader_led",leds},{"millis_rollover",clock_rollover},{"minutes_seconds_after_one_hour",long_time},{"nvs_and_filtered_round",saved_tags},{"all_15_question_and_hint_displays",all_copies},{"physical_hint_debounce_and_hold",physical_hint},{"complete_five_question_round",complete_round},{"physical_late_notice_buttons",late_notice_buttons},{"failed_nvs_write_is_transactional",nvs_failed_write},{"unavailable_nvs_rejects_registration",nvs_unavailable},{"duplicate_uid_keeps_mapping",duplicate_mapping},{"corrupt_storage_not_loaded_or_overwritten",corrupt_storage},{"application_pause_resume_clock",paused_application},{"serial_overflow_then_valid_command",serial_overflow_recovery},{"legacy_nvs_byte_image",legacy_nvs_image}};
  unsigned failures=0;for(const auto& test:tests){try{test.second();std::cout<<"PASS "<<test.first<<'\n';}catch(const std::exception& error){++failures;std::cout<<"FAIL "<<test.first<<": "<<error.what()<<'\n';}}
  std::cout<<(sizeof(tests)/sizeof(tests[0])-failures)<<"/"<<sizeof(tests)/sizeof(tests[0])<<" passed\n";return failures?1:0;
 }

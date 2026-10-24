@@ -112,3 +112,19 @@ mengekalkan R1=GPIO25/R2=GPIO26. Mod `esp32dev-rgb` menggunakan RGB1/R1
 R=16, G=17, B=26 dan RGB2/R2 R=13, G=14, B=25, mengikut sambungan pengguna.
 Driver memilih pemetaan mengikut environment tanpa mengubah peraturan permainan.
 Arahan Serial `pins` melaporkan pin yang digunakan oleh environment aktif.
+
+## Component diagnostics
+
+`component_tests.ino` is an outer hardware integration utility with private session
+state and a contract in `hardware/component_tests.h`. It reuses existing RFID,
+button and output adapters; neither domain nor pure application gains a hardware
+dependency. The Serial adapter routes test paths and gates normal mutation
+commands during tests. Composition setup combines diagnostic/game button blocking
+and keeps scanned diagnostic UIDs away from the application scoring handler.
+
+The existing output tick drives nonblocking diagnostic updates and selects test
+LED/LCD output while a session owns it. The main loop remains unchanged. Starting
+calls appStop to pause/cancel capture; stopping also requires stable button release.
+`rfidCheckConnections()` refreshes version registers while RF scanning is stopped;
+UID scans, rather than a version response alone, establish card-reading behaviour.
+See [COMPONENT_TESTS.md](COMPONENT_TESTS.md) for the command contract.

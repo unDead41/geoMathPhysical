@@ -5,6 +5,7 @@
 #include "hardware/rfid.h"
 #include "hardware/buttons.h"
 #include "hardware/lcd.h"
+#include "hardware/component_tests.h"
 #include "question_bank.h"
 #include "config.h"
 #include <cctype>
@@ -58,6 +59,18 @@ void serialExecute(char *line) {
     args[argc++] = token; token = strtok_r(nullptr, " \t\v\f", &save);
   }
   if (!argc) return;
+  if (!strcmp(args[0], "test") || !strncmp(args[0], "test/", 5)) {
+    if (argc != 1) Serial.println(F("[TEST ERROR] Gunakan satu path sahaja. Taip test/help."));
+    else componentTestsCommand(args[0]);
+    return;
+  }
+  if (componentTestsActive()) {
+    if (argc == 1 && !strcmp(args[0], "stop")) componentTestsStop();
+    else if (strcmp(args[0], "help") && strcmp(args[0], "status") && strcmp(args[0], "pins") &&
+             strcmp(args[0], "tags") && strcmp(args[0], "bank") && strcmp(args[0], "current") && strcmp(args[0], "score")) {
+      Serial.println(F("[TEST] Taip test/stop sebelum arahan permainan/pendaftaran.")); return;
+    }
+  }
   if (argc == 1) {
     if (!strcmp(args[0], "help")) { serialPrintHelp(); return; }
     if (!strcmp(args[0], "pins")) { serialPrintPins(); return; }
@@ -143,6 +156,7 @@ void serialPrintHelp() {
   Serial.println(F(
     "\n--- COMMANDS / SEMUA ARAHAN ---\n"
     "help                       : senarai ini\n"
+    "test/help                  : ujian komponen RFID, LED dan butang\n"
     "current                    : jenis aktif + kiraan\n"
     "current bongkah            : sama seperti current\n"
     "current kubus              : alias current bongkah\n"
