@@ -1,6 +1,6 @@
 # GeoDecoder - pakej perkongsian
 
-Versi semasa: **v1.1.1**. Pakej **1.1.1-sharing.1**.
+Versi semasa: **v1.1.1**. Pakej **1.1.1-sharing.2**.
 Sumber firmware: main [`aa6e5d722038a0f229a9521efcc7cda58d62a9bd`](https://github.com/unDead41/geodecoder/commit/aa6e5d722038a0f229a9521efcc7cda58d62a9bd).
 Semua fail `main/`, `src/main.cpp` dan `platformio.ini` sama tepat dengan sumber itu.
 Installer tidak mengubah firmware atau pendaftaran UID.
@@ -16,11 +16,11 @@ Arduino IDE dan Git tidak diperlukan. Build boleh dibuat tanpa board.
    tidak memerlukan akses repo, akaun atau token GitHub. Dependency vendor
    dimuat turun berasingan oleh installer daripada sumber rasmi.
 2. Klik kanan ZIP > **Extract All**. Masuk folder `geodecoder-sharing` yang
-   mengandungi `setup.ps1`, kemudian buka PowerShell di situ.
+   mengandungi `setupGeoDecoder.ps1`, kemudian buka PowerShell di situ.
 3. Jalankan sebagai pengguna biasa:
 
 ```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\setup.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\setupGeoDecoder.ps1
 ```
 
 Installer mengesahkan SHA-256, menyalin ke `%USERPROFILE%\geodecoder-sharing`,
@@ -37,7 +37,7 @@ Dependency pertama memerlukan Internet/ruang cakera dan boleh mengambil masa
 beberapa minit; tiada had masa siap dijanjikan.
 
 ```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\setup.ps1 -Environment esp32dev-rgb -BuildBoth
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\setupGeoDecoder.ps1 -Environment esp32dev-rgb -BuildBoth
 ```
 
 Pilihan: `-Destination "D:\Projek\geodecoder-sharing"`, `-Port COM5` (ganti nombor
@@ -131,7 +131,7 @@ Senarai tepat setiap fail dan SHA-256 berada dalam `package.json`.
 |---|---|
 | `main/`, `src/main.cpp` | Source/header firmware termasuk diagnostik runtime |
 | `platformio.ini`, `platformio.local.ini.example` | Board/library dipin, contoh COM |
-| `setup.ps1`, `geodecoder.ps1`, `scripts/common.ps1` | Installer dan arahan pengguna |
+| `setupGeoDecoder.ps1`, `setup.ps1`, `geodecoder.ps1`, `scripts/common.ps1` | Installer dan arahan pengguna |
 | `.vscode/`, `.gitignore`, `.gitattributes` | Task, cadangan extension, peraturan fail |
 | `README.md`, `SAMBUNGAN.md`, `COMMANDS.md`, `package.json` | Panduan, wayar, Serial, identiti pakej |
 | `print_labels/GeoDecoder_Kad_RFID_A4.pdf` | Kad campuran, 2 halaman |
@@ -151,12 +151,15 @@ LCD sumber versi 4 (24 Oktober 2026).
 
 **Contoh prisma segi tiga ialah simulasi penerangan sahaja.** Firmware v1.1.1 masih menyokong kubus, kuboid, piramid berasaskan segi empat sama, silinder dan kon; jawapan prisma belum tersedia. Rajah prisma dalam panduan tidak menambah bahan kepada tiga PDF kad cetak asal. Gunakan bongkah dan kad bentangan yang guru sediakan; guru perlu menguji bacaan kad RFID di bawah setiap bongkah sebenar. Peraturan butang, R1/R2, lampu, markah dan masa disemak dengan source sharing; gambar ini bukan bukti ujian perkakasan fizikal.
 
-**Catatan installer:** skrip asal masih mencetak “Tutorial A-Z belum disertakan”. Tutorial kini disertakan pada pautan di atas; mesej maklumat lama itu belum dikemas kini oleh chat Sharing. Firmware dan skrip installer tidak diubah untuk tutorial ini.
+**Nama installer utama ialah `setupGeoDecoder.ps1`.** Fail kecil `setup.ps1` dikekalkan sebagai alias supaya arahan dalam PDF sedia ada masih berfungsi. Kedua-duanya menjalankan installer yang sama dan menerima pilihan yang sama. Mesej installer kini menunjukkan tutorial yang disertakan.
 
 Branch sharing mempunyai tree minimum tetapi masih mempunyai sejarah main.
 Beri **ZIP bersih** kepada penerima yang tidak patut menerima sejarah repo.
 Jangan merge sharing ke main. ZIP tiada `.git`, sejarah pembangunan, fixture/
 ujian developer, UID sebenar, token, toolchain, cache, output build atau COM peribadi.
 
-Build/semakan pakej tidak mengesahkan pemasangan Windows sebenar, Upload USB
-atau perkakasan fizikal. Batas ujian sebenar dinyatakan dalam laporan penghantaran.
+Pakej 1.1.1-sharing.2 disemak melalui 16 senario simulasi aliran installer pada
+Linux PowerShell 7.4.13 (mode argumen Legacy); operasi pemasangan Windows
+menggunakan pengganti terkawal. Muat turun sebenar installer Python dan VS Code
+dari URL skrip berjaya. Pemasangan aplikasi dan pengesahan melalui stor sijil
+Windows sebenar, Upload USB serta perkakasan fizikal masih belum diuji.

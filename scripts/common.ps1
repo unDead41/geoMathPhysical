@@ -135,7 +135,7 @@ function Install-GDPackage([string]$Source, [string]$Destination) {
 function Read-GDState([string]$Root) {
     $path = Join-Path $Root '.geodecoder.local.json'
     Assert-GDNoLinks $path
-    if (-not (Test-Path -LiteralPath $path)) { throw 'Jalankan setup.ps1 dahulu untuk menyediakan PlatformIO dan projek ini.' }
+    if (-not (Test-Path -LiteralPath $path)) { throw 'Jalankan setupGeoDecoder.ps1 dahulu untuk menyediakan PlatformIO dan projek ini.' }
     $state = Get-Content -Encoding UTF8 -LiteralPath $path -Raw | ConvertFrom-Json
     if ($state.packageId -ne 'GeoDecoder-sharing') { throw 'Konfigurasi tempatan bukan milik pakej ini.' }
     Assert-GDEnvironment $state.environment
@@ -185,14 +185,14 @@ function Repair-GDPip([string]$Python) {
 }
 
 function Invoke-GDPio($State, [string[]]$Arguments) {
-    if (-not (Test-Path -LiteralPath $State.pioPython -PathType Leaf)) { throw 'Python PlatformIO tiada. Jalankan setup.ps1 semula.' }
+    if (-not (Test-Path -LiteralPath $State.pioPython -PathType Leaf)) { throw 'Python PlatformIO tiada. Jalankan setupGeoDecoder.ps1 semula.' }
     & $State.pioPython -m platformio @Arguments
     if ($LASTEXITCODE -ne 0) { throw "PlatformIO gagal (kod $LASTEXITCODE). Semak mesej di atas; pastikan Internet/COM tersedia, kemudian ulang arahan yang sama." }
 }
 
 function Get-GDDevices($State) {
     $raw = & $State.pioPython -m platformio device list --json-output
-    if ($LASTEXITCODE -ne 0) { throw 'Tidak dapat membaca port. Jalankan setup.ps1 semula dan semak driver USB-UART.' }
+    if ($LASTEXITCODE -ne 0) { throw 'Tidak dapat membaca port. Jalankan setupGeoDecoder.ps1 semula dan semak driver USB-UART.' }
     return @((($raw -join "`n") | ConvertFrom-Json))
 }
 

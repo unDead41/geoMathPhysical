@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "packageId": "GeoDecoder-sharing",
-  "packageVersion": "1.1.1-sharing.1",
+  "packageVersion": "1.1.1-sharing.2",
   "firmwareVersion": "1.1.1",
   "sourceSha": "aa6e5d722038a0f229a9521efcc7cda58d62a9bd",
   "platformioCore": "6.1.18",
@@ -40,7 +40,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "419247e20ff8ebce6307d8fdc6f47335289c8234e1e75d07ce3a1cd3e2c03c78"
+      "sha256": "6f758805f51df8963d8081c0bafc0a9883757d08fbb7f5efe84db453ba86e5a6"
     },
     {
       "path": "SAMBUNGAN.md",
@@ -216,11 +216,15 @@
     },
     {
       "path": "scripts/common.ps1",
-      "sha256": "5a4d5072c1b73f9648295dd1a9642c9122d618bea78df24f569feb7179539fc3"
+      "sha256": "c969236615bf7d23967b3d431a06dc84324ce36b863682c52be5ffe70e3a2d63"
     },
     {
       "path": "setup.ps1",
-      "sha256": "01ad6136aba3ef015ad010b7a163a1752e03f0e6a2a2f3e0074b89f2cbc02aba"
+      "sha256": "671021534517af4bdd5c0bba6f745bc65d431a27d3df113161ce7ab812734623"
+    },
+    {
+      "path": "setupGeoDecoder.ps1",
+      "sha256": "7354886804492da1eef13b009f5cb701191b009383ec8bd259945fa1a440894d"
     },
     {
       "path": "src/main.cpp",
@@ -256,5 +260,10 @@
       "LED R1",
       "LED R2"
     ]
+  },
+  "installer": {
+    "entrypoint": "setupGeoDecoder.ps1",
+    "compatibilityEntrypoint": "setup.ps1",
+    "requires": "Windows 10/11 x64, Windows PowerShell 5.1+"
   }
 }
