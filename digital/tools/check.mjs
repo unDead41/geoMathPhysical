@@ -30,4 +30,7 @@ assert.ok(!/^import /m.test(standalone));assert.ok(!/^export /m.test(standalone)
 const script=standalone.match(/<script type="module">([\s\S]*?)<\/script>/)[1];
 new vm.Script(script); // All imports/exports are inlined by the artifact builder.
 assert.equal(standalone,read('dist/GeoDecoder_Digital_V1.html'));
+assert.equal((standalone.match(/data:audio\/mpeg;base64,/g)||[]).length,2,'Offline HTML must carry both complete tracks');
+assert.ok(standalone.includes('sandbox="allow-scripts allow-popups"'),'Module needs an isolated frame');
+assert.ok(read('artifacts/site-index.html').includes('./assets/audio/menu.mp3'),'Website must load menu audio on demand');
 console.log(`PASS: standalone syntax/assets, ${ids.length} unique IDs, ARIA references, bank fidelity, 10 SVG diagrams, design-token drift and accessibility baselines.`);

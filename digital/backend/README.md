@@ -1,3 +1,5 @@
+> **v2.2.0 email:** Signup baharu menggunakan email sebenar dan pengesahan Auth; login menerima email/username. Jalankan `email_v2_2.sql` untuk database sedia ada, deploy auth/index.ts, kemudian lengkapkan Site URL/redirect dan custom SMTP mengikut `../docs/EMAIL_SETUP.md`. `schema.sql` sudah mengandungi trigger yang sama. `verify_email.sql` serta `verify.sql` menguji dengan rollback. Akaun lama dan kod pemulihannya dikekalkan. Bahagian username-only di bawah menerangkan keluaran terdahulu.
+
 # GeoDecoder V2 backend
 
 Apply `schema.sql` as the Supabase database owner, then run `verify.sql` with the same privileges. The schema is repeatable for this version (`IF NOT EXISTS`, replaceable functions, deterministic bank upsert). Future structural changes should use a migration rather than treating this file as a general upgrade engine. The verification transaction creates five temporary Auth users, exercises real SQL roles and RPCs, and rolls everything back. It requires no pgTAP dependency. PostgreSQL `ASSERT` failures stop the test.

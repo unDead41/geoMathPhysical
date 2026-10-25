@@ -39,6 +39,13 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
   let classId = null;
   let recoveryCode = '';
   let recoveryUsername = '';
+  let authEmail = '';
+  let authOnly = false;
+  let emailCooldownUntil = 0;
+  let emailCooldownTimer = null;
+  let callbackErrorDismissed = false;
+  let knownRecovery = false;
+  let knownCallbackError = '';
   let closeConfirmation = false;
   let pending = '';
   let operation = 0;
@@ -80,12 +87,14 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
     return String(session?.user?.id || session?.profile?.id || session?.user_id || session?.id || session?.access_token || '');
   }
   function signedIn() { return Boolean(cloud.session); }
+  function callbackError() { return callbackErrorDismissed ? '' : String(cloud.callbackError || ''); }
+  function accountAvailable() { return signedIn() && cloud.recoveryRequired !== true && !callbackError() && !authOnly && !recoveryCode; }
   function now() { return Date.now() + serverOffset; }
   function online(value) { const date = stamp(value); return date !== null && now() - date <= ONLINE_MS; }
   function currentClass() { return list(snapshot?.classes).find(item => String(item.id) === String(classId)) || null; }
   function currentRoom() { return snapshot?.room && String(snapshot.room.id) === String(roomId) ? snapshot.room : null; }
   function isTeacher() { return profile?.role === 'teacher'; }
-  function valid(token, identity) { return active && !destroyed && token === epoch && identity === sessionKey(); }
+  function valid(token, identity) { return active && !destroyed && token === epoch && identity === sessionKey() && accountAvailable(); }
   function report(error) { try { onError(error); } catch { /* Host feedback must not break account recovery. */ } }
 
   function announce(text, tone = 'info') {
@@ -104,8 +113,8 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
     return `<button type="submit" class="button ${primary ? 'button-primary' : 'button-outline'} portal-submit" data-block-while-busy data-base-disabled="false"><span>${label}</span>${icon('arrow')}</button>`;
   }
 
-  function field(id, label, {name = id, help = '', type = 'text', autocomplete = 'off', placeholder = '', max = '', inputmode = '', required = true, value = '', password = false, secretLabel = 'kata laluan'} = {}) {
-    return `<div class="portal-field"><label for="${id}">${label}${!required ? '<span class="portal-optional"> (pilihan)</span>' : ''}</label><div class="portal-input-wrap"><input id="${id}" name="${name}" type="${type}" autocomplete="${autocomplete}" autocapitalize="none" spellcheck="${['name', 'display_name'].includes(name)}" ${placeholder ? `placeholder="${esc(placeholder)}"` : ''} ${max ? `maxlength="${max}"` : ''} ${inputmode ? `inputmode="${inputmode}"` : ''} ${required ? 'required' : ''} aria-describedby="${id}-help ${id}-error" value="${esc(value)}" ${password ? 'class="portal-password"' : ''}>${password ? `<button class="portal-password-toggle" type="button" data-portal-action="password" data-input="${id}" data-secret-label="${esc(secretLabel)}" aria-label="Tunjukkan ${esc(secretLabel)}" aria-pressed="false">Tunjuk</button>` : ''}</div><small class="portal-field-help" id="${id}-help">${help}</small><span class="portal-field-error" id="${id}-error" data-error-for="${name}"></span></div>`;
+  function field(id, label, {name = id, help = '', type = 'text', autocomplete = 'off', placeholder = '', min = '', max = '', inputmode = '', required = true, value = '', password = false, secretLabel = 'kata laluan'} = {}) {
+    return `<div class="portal-field"><label for="${id}">${label}${!required ? '<span class="portal-optional"> (pilihan)</span>' : ''}</label><div class="portal-input-wrap"><input id="${id}" name="${name}" type="${type}" autocomplete="${autocomplete}" autocapitalize="none" spellcheck="${['name', 'display_name'].includes(name)}" ${placeholder ? `placeholder="${esc(placeholder)}"` : ''} ${min ? `minlength="${min}"` : ''} ${max ? `maxlength="${max}"` : ''} ${inputmode ? `inputmode="${inputmode}"` : ''} ${required ? 'required' : ''} aria-describedby="${id}-help ${id}-error" value="${esc(value)}" ${password ? 'class="portal-password"' : ''}>${password ? `<button class="portal-password-toggle" type="button" data-portal-action="password" data-input="${id}" data-secret-label="${esc(secretLabel)}" aria-label="Tunjukkan ${esc(secretLabel)}" aria-pressed="false" data-block-while-busy data-base-disabled="false">Tunjuk</button>` : ''}</div><small class="portal-field-help" id="${id}-help">${help}</small><span class="portal-field-error" id="${id}-error" data-error-for="${name}"></span></div>`;
   }
 
   function formError() { return '<p class="portal-form-error" data-form-error role="alert"></p>'; }
@@ -118,12 +127,53 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
     return `<div class="portal-kit" aria-hidden="true"><div class="portal-kit-model">${shapeArt('cube', 'solid', true, 'mint')}<span>R1 <b>Bongkah</b></span></div><span class="portal-kit-link">${icon('arrow')}</span><div class="portal-kit-model portal-kit-net">${shapeArt('cube', 'net', true, 'violet')}<span>R2 <b>Bentangan</b></span></div></div>`;
   }
 
+  function emailCooldownSeconds() { return Math.max(0, Math.ceil((emailCooldownUntil - Date.now()) / 1000)); }
+
   function renderAuth() {
-    const signup = authMode === 'signup';
-    const recover = authMode === 'recover';
-    document.title = `${signup ? 'Daftar akaun' : recover ? 'Pulihkan akaun' : 'Log masuk'} — GeoDecoder Digital`;
+    const modes = ['login', 'signup', 'recover-email', 'recover', 'resend-confirmation', 'confirmation', 'email-sent'];
+    const mode = cloud.recoveryRequired === true ? 'reset-password' : modes.includes(authMode) ? authMode : 'login';
+    const signup = mode === 'signup';
+    const legacy = mode === 'recover';
+    const reset = mode === 'reset-password';
+    const emailRequest = ['recover-email', 'resend-confirmation'].includes(mode);
+    const confirmation = mode === 'confirmation';
+    const sent = confirmation || mode === 'email-sent';
     const available = cloud.ready !== false;
-    return `<div class="portal-auth-layout"><div class="portal-auth-intro"><div class="eyebrow"><span class="tiny-cube"></span> BELAJAR BERSAMA</div><h1 id="portal-title" tabindex="-1">Satu kelas.<br><span>Banyak penemuan.</span></h1><p>Guru sediakan bilik. Pelajar padankan bongkah dan bentangan. Lihat kemajuan kelas semasa permainan berlangsung.</p>${geometryKit()}<div class="portal-auth-facts"><span>${icon('user')} Akaun guru &amp; pelajar</span><span>${icon('lock')} Sertai melalui PIN</span><span>${icon('trophy')} Skor kelas secara langsung</span></div></div><section class="portal-panel portal-auth-card" aria-labelledby="portal-auth-title"><div class="portal-auth-modes" role="group" aria-label="Pilihan akaun"><button type="button" data-portal-action="auth-mode" data-mode="login" aria-pressed="${!signup && !recover}" data-block-while-busy data-base-disabled="false">Log masuk</button><button type="button" data-portal-action="auth-mode" data-mode="signup" aria-pressed="${signup}" data-block-while-busy data-base-disabled="false">Daftar akaun</button></div><p class="card-kicker">${recover ? 'KEMBALI KE AKAUN ANDA' : signup ? 'MULA BELAJAR BERSAMA' : 'SELAMAT DATANG KEMBALI'}</p><h2 id="portal-auth-title">${recover ? 'Pulihkan akaun' : signup ? 'Buka akaun GeoDecoder' : 'Masuk ke ruang kelas'}</h2><p class="portal-muted">${recover ? 'Gunakan kod pemulihan yang anda simpan semasa mendaftar.' : signup ? 'Pilih peranan anda. Nama paparan akan dilihat dalam kelas.' : 'Gunakan nama pengguna dan kata laluan anda.'}</p>${!available ? '<div class="portal-inline-info"><b>Akaun dalam talian belum tersedia.</b><p>Anda masih boleh kembali ke mula dan bermain tanpa akaun.</p></div>' : ''}<form data-portal-form="${authMode}" novalidate ${!available ? 'inert' : ''}>${signup ? `<fieldset class="portal-role-fieldset"><legend>Saya seorang</legend><div class="portal-role-options"><label><input type="radio" name="role" value="student" checked><span>${icon('user')}<b>Pelajar</b><small>Sertai kelas dan main</small></span></label><label><input type="radio" name="role" value="teacher"><span>${icon('bulb')}<b>Guru</b><small>Urus kelas dan bilik</small></span></label></div></fieldset>${field('portal-display-name', 'Nama paparan', {name: 'display_name', autocomplete: 'nickname', max: 60, help: '2–60 aksara. Contoh: nama yang digunakan di kelas.'})}` : ''}${field('portal-username', 'Nama pengguna', {name: 'username', autocomplete: 'username', max: 24, help: signup ? '3–24 aksara: huruf a–z, nombor atau garis bawah (_). Huruf besar ditukar kepada huruf kecil.' : 'Nama pengguna tidak membezakan huruf besar dan kecil.', placeholder: 'nama_pengguna'})}${recover ? field('portal-recovery-code', 'Kod pemulihan', {name: 'recovery_code', type: 'password', password: true, secretLabel: 'kod pemulihan', max: 32, autocomplete: 'off', help: 'Kod 32 aksara yang diberi semasa pendaftaran.'}) : ''}${field('portal-password', recover ? 'Kata laluan baharu' : 'Kata laluan', {name: 'password', type: 'password', autocomplete: signup || recover ? 'new-password' : 'current-password', max: 128, password: true, help: signup || recover ? 'Gunakan 10–128 aksara. Anda boleh menampal kata laluan.' : ''})}${formError()}<div class="portal-auth-submit">${submit(recover ? 'Tetapkan kata laluan' : signup ? 'Daftar akaun' : 'Log masuk')}</div></form><button type="button" class="portal-text-button" data-portal-action="auth-mode" data-mode="${recover ? 'login' : 'recover'}" data-block-while-busy data-base-disabled="false">${recover ? 'Kembali ke log masuk' : 'Terlupa kata laluan?'}</button><p class="portal-account-note">${icon('lock')} Kata laluan dan kod pemulihan jangan dikongsi. Simpan kod pemulihan di tempat yang selamat.</p></section></div>`;
+    const invalidLink = reset ? '' : callbackError();
+    const details = {
+      login: ['SELAMAT DATANG KEMBALI', 'Masuk ke ruang kelas', 'Gunakan email atau nama pengguna dan kata laluan anda.'],
+      signup: ['MULA BELAJAR BERSAMA', 'Buka akaun GeoDecoder', 'Pilih peranan anda. Gunakan email yang boleh anda buka untuk mengesahkan akaun dan memulihkan kata laluan.'],
+      'recover-email': ['KEMBALI KE AKAUN ANDA', 'Terlupa kata laluan?', 'Masukkan email pendaftaran untuk meminta pautan menetapkan semula kata laluan.'],
+      recover: ['UNTUK AKAUN LAMA', 'Pulihkan dengan kod', 'Pilihan ini untuk akaun lama yang didaftarkan tanpa email. Gunakan kod pemulihan yang anda simpan.'],
+      'resend-confirmation': ['SAHKAN EMAIL ANDA', 'Minta pautan pengesahan', 'Masukkan email yang digunakan semasa mendaftar.'],
+      confirmation: ['SEMAK EMAIL ANDA', 'Sahkan email untuk meneruskan', 'Buka pautan pengesahan dalam email sebelum log masuk.'],
+      'email-sent': ['SEMAK EMAIL ANDA', 'Permintaan pemulihan diterima', 'Buka pautan pemulihan dalam email untuk memilih kata laluan baharu.'],
+      'reset-password': ['PAUTAN PEMULIHAN DISAHKAN', 'Tetapkan kata laluan baharu', 'Pilih kata laluan baharu untuk akaun anda. Selepas disimpan, log masuk semula.']
+    }[mode];
+    document.title = `${details[1]} — GeoDecoder Digital`;
+    const modeLink = (label, next, secondary = false) => `<button type="button" class="portal-text-button${secondary ? ' portal-legacy-link' : ''}" data-portal-action="auth-mode" data-mode="${next}" data-block-while-busy data-base-disabled="false">${label}</button>`;
+    let body = '';
+    if (sent) {
+      const kind = confirmation ? 'pengesahan' : 'pemulihan';
+      const remaining = emailCooldownSeconds();
+      body = `<div class="portal-inline-info"><b>Jika email ini berdaftar, pautan ${kind} akan dihantar.</b><p>Semak peti masuk dan folder spam. Penghantaran email mungkin mengambil sedikit masa.</p></div>${authEmail ? `<p class="portal-email-summary"><span>Email yang dimasukkan</span><b>${esc(authEmail)}</b></p>` : ''}<div class="portal-auth-submit">${button(remaining ? `Hantar semula (${remaining}s)` : 'Hantar pautan semula', 'resend-email', {primary: true, disabled: !available || !authEmail, extra: `data-email-cooldown data-resend-kind="${confirmation ? 'resend-confirmation' : 'recover-email'}"`})}</div>${modeLink('Kembali ke log masuk', 'login')}`;
+    } else {
+      let fields = '';
+      if (signup) fields += `<fieldset class="portal-role-fieldset"><legend>Saya seorang</legend><div class="portal-role-options"><label><input type="radio" name="role" value="student" checked><span>${icon('user')}<b>Pelajar</b><small>Sertai kelas dan main</small></span></label><label><input type="radio" name="role" value="teacher"><span>${icon('bulb')}<b>Guru</b><small>Urus kelas dan bilik</small></span></label></div></fieldset>${field('portal-display-name', 'Nama paparan', {name: 'display_name', autocomplete: 'nickname', min: 2, max: 60, help: '2–60 aksara. Contoh: nama yang digunakan di kelas.'})}`;
+      if (!emailRequest && !reset) fields += field('portal-username', mode === 'login' ? 'Email atau nama pengguna' : 'Nama pengguna', {name: 'username', autocomplete: 'username', max: mode === 'login' ? 254 : 24, help: mode === 'login' ? 'Nama pengguna tidak membezakan huruf besar dan kecil.' : '3–24 aksara: huruf a–z, nombor atau garis bawah (_). Huruf besar ditukar kepada huruf kecil.', placeholder: mode === 'login' ? 'nama@contoh.com atau nama_pengguna' : 'nama_pengguna'});
+      if (signup || emailRequest) fields += field('portal-email', 'Email', {name: 'email', type: 'email', autocomplete: 'email', inputmode: 'email', max: 254, value: emailRequest ? authEmail : '', placeholder: 'nama@contoh.com', help: signup ? 'Pautan pengesahan akaun dan pemulihan kata laluan menggunakan email ini.' : 'Gunakan email yang didaftarkan untuk akaun anda.'});
+      if (legacy) fields += field('portal-recovery-code', 'Kod pemulihan', {name: 'recovery_code', type: 'password', password: true, secretLabel: 'kod pemulihan', max: 32, autocomplete: 'off', help: 'Kod 32 aksara yang diberi semasa pendaftaran akaun lama.'});
+      if (!emailRequest) fields += field('portal-password', reset || legacy ? 'Kata laluan baharu' : 'Kata laluan', {name: 'password', type: 'password', autocomplete: signup || legacy || reset ? 'new-password' : 'current-password', min: signup || legacy || reset ? 10 : '', max: 128, password: true, help: signup || legacy || reset ? 'Gunakan 10–128 aksara. Anda boleh menampal kata laluan.' : ''});
+      if (reset) fields += field('portal-password-confirm', 'Sahkan kata laluan baharu', {name: 'password_confirm', type: 'password', autocomplete: 'new-password', min: 10, max: 128, password: true, secretLabel: 'pengesahan kata laluan', help: 'Masukkan semula kata laluan baharu yang sama.'});
+      const submitLabel = reset || legacy ? 'Simpan kata laluan baharu' : signup ? 'Daftar akaun' : mode === 'recover-email' ? 'Hantar pautan pemulihan' : mode === 'resend-confirmation' ? 'Hantar pautan pengesahan' : 'Log masuk';
+      body = `<form data-portal-form="${mode}" novalidate ${!available ? 'inert' : ''}>${fields}${formError()}<div class="portal-auth-submit">${submit(submitLabel)}</div></form>`;
+      if (mode === 'login') body += `<div class="portal-auth-links">${modeLink('Terlupa kata laluan?', 'recover-email')}${modeLink('Belum sahkan email?', 'resend-confirmation', true)}</div>`;
+      else if (mode === 'recover-email') body += `${modeLink('Kembali ke log masuk', 'login')}<div>${modeLink('Akaun lama tanpa email?', 'recover', true)}</div>`;
+      else if (legacy) body += modeLink('Kembali ke pemulihan email', 'recover-email');
+      else if (!reset) body += modeLink('Kembali ke log masuk', 'login');
+    }
+    const note = legacy ? 'Kod pemulihan hanya untuk akaun lama tanpa email. Jangan kongsi kata laluan atau kod anda.' : 'Jangan kongsi kata laluan atau pautan pengesahan dan pemulihan akaun anda.';
+    return `<div class="portal-auth-layout"><div class="portal-auth-intro"><div class="eyebrow"><span class="tiny-cube"></span> BELAJAR BERSAMA</div><h1 id="portal-title" tabindex="-1">Satu kelas.<br><span>Banyak penemuan.</span></h1><p>Guru sediakan bilik. Pelajar padankan bongkah dan bentangan. Lihat kemajuan kelas semasa permainan berlangsung.</p>${geometryKit()}<div class="portal-auth-facts"><span>${icon('user')} Akaun guru &amp; pelajar</span><span>${icon('lock')} Sertai melalui PIN</span><span>${icon('trophy')} Skor kelas secara langsung</span></div></div><section class="portal-panel portal-auth-card" aria-labelledby="portal-auth-title">${!reset ? `<div class="portal-auth-modes" role="group" aria-label="Pilihan akaun"><button type="button" data-portal-action="auth-mode" data-mode="login" aria-pressed="${mode === 'login'}" data-block-while-busy data-base-disabled="false">Log masuk</button><button type="button" data-portal-action="auth-mode" data-mode="signup" aria-pressed="${signup}" data-block-while-busy data-base-disabled="false">Daftar akaun</button></div>` : ''}<p class="card-kicker">${details[0]}</p><h2 id="portal-auth-title" tabindex="-1">${details[1]}</h2><p class="portal-muted">${details[2]}</p>${invalidLink ? `<div class="portal-inline-warning" role="alert"><b>Pautan belum dapat digunakan.</b><p>${esc(invalidLink)}</p><p>Minta pautan baharu melalui email atau kembali ke log masuk.</p>${mode !== 'recover-email' ? modeLink('Minta pautan pemulihan baharu', 'recover-email') : ''}</div>` : ''}${!available ? '<div class="portal-inline-info"><b>Akaun dalam talian belum tersedia.</b><p>Anda masih boleh kembali ke mula dan bermain tanpa akaun.</p></div>' : ''}${body}<p class="portal-account-note">${icon('lock')} ${note}</p></section></div>`;
   }
 
   function renderRecovery() {
@@ -223,7 +273,7 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
   function captureEdits() {
     const fields = new Map();
     for (const input of content.querySelectorAll('input[id]')) {
-      if (!['password', 'hidden'].includes(input.type) && !input.readOnly) fields.set(input.id, {value: input.value, checked: input.checked});
+      if (!['password', 'hidden'].includes(input.type) && !input.classList.contains('portal-password') && !input.readOnly) fields.set(input.id, {value: input.value, checked: input.checked});
     }
     const focused = document.activeElement;
     const focus = content.contains(focused) ? {id: focused.id, action: focused.dataset?.portalAction, keys: Object.fromEntries(['portalAction', 'id', 'target', 'page', 'mode', 'kind', 'input'].map(key => [key, focused.dataset?.[key]])), form: focused.closest?.('form[data-portal-form]')?.dataset.portalForm, type: focused.type, start: focused.selectionStart, end: focused.selectionEnd} : null;
@@ -236,8 +286,9 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
     renderDeferred = false;
     const saved = preserve ? captureEdits() : null;
     if (initializing) content.innerHTML = '<div class="portal-panel portal-loading" aria-busy="true"><span class="portal-spinner" aria-hidden="true"></span><h1 id="portal-title" tabindex="-1">Membuka akaun…</h1></div>';
+    else if (cloud.recoveryRequired === true || callbackError()) content.innerHTML = renderAuth();
     else if (recoveryCode) content.innerHTML = renderRecovery();
-    else if (!signedIn()) content.innerHTML = renderAuth();
+    else if (authOnly || !signedIn()) content.innerHTML = renderAuth();
     else if (!snapshot || !profile) content.innerHTML = '<div class="portal-panel portal-loading" aria-busy="true"><span class="portal-spinner" aria-hidden="true"></span><h1 id="portal-title" tabindex="-1">Memuatkan ruang kelas…</h1><p>Sedang mendapatkan kelas dan permainan anda.</p></div>';
     else content.innerHTML = roomId ? renderRoom() : isTeacher() ? renderTeacher() : renderStudent();
     if (saved && !focus) {
@@ -256,7 +307,23 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
       }
     }
     updateBusy();
-    if (focus) content.querySelector('#portal-title')?.focus({preventScroll: true});
+    if (focus) (content.querySelector('#portal-auth-title') || content.querySelector('#portal-title'))?.focus({preventScroll: true});
+  }
+
+  function updateEmailCooldown() {
+    const remaining = emailCooldownSeconds();
+    for (const control of screen.querySelectorAll('[data-email-cooldown]')) {
+      control.disabled = Boolean(pending) || control.dataset.baseDisabled === 'true' || remaining > 0;
+      const label = control.querySelector('span');
+      if (label) label.textContent = remaining ? `Hantar semula (${remaining}s)` : 'Hantar pautan semula';
+    }
+    if (!remaining || !active || destroyed) { clearInterval(emailCooldownTimer); emailCooldownTimer = null; }
+  }
+
+  function startEmailCooldown() {
+    emailCooldownUntil = Date.now() + 60000;
+    clearInterval(emailCooldownTimer);
+    emailCooldownTimer = setInterval(updateEmailCooldown, 1000);
   }
 
   function updateBusy() {
@@ -268,6 +335,7 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
       if (submitButton) submitButton.setAttribute('aria-busy', String(busy));
     }
     for (const control of screen.querySelectorAll('[data-portal-action]')) if (control.dataset.portalAction === pending) control.setAttribute('aria-busy', 'true'); else control.removeAttribute('aria-busy');
+    updateEmailCooldown();
   }
 
   function updateLiveLabels() {
@@ -308,7 +376,7 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
   }
 
   function startLive() {
-    if (!active || !signedIn() || recoveryCode) return;
+    if (!active || !accountAvailable()) return;
     if (!poll) poll = setInterval(() => { if (!document.hidden && (!roomId || !isTeacher() || connection !== 'live')) refresh({silent: true}); }, POLL_MS);
     if (!tick) tick = setInterval(updateLiveLabels, 1000);
     if (!roomId || !isTeacher()) { if (watchingRoom) stopWatch(); return; }
@@ -355,7 +423,7 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
   }
 
   async function refresh({silent = false} = {}) {
-    if (!active || destroyed || !signedIn() || recoveryCode || initializing) return;
+    if (!active || destroyed || !accountAvailable() || initializing) return;
     if (pending) { refreshAgain = true; return; }
     if (refreshPromise) { refreshAgain = true; return refreshPromise; }
     const token = epoch;
@@ -419,12 +487,19 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
     sessionStop = cloud.onSessionChange(() => {
       if (!active || destroyed || authPending || initializing) return;
       const identity = sessionKey();
-      if (identity === knownSession) return;
+      const recovery = cloud.recoveryRequired === true;
+      const linkError = String(cloud.callbackError || '');
+      if (identity === knownSession && recovery === knownRecovery && linkError === knownCallbackError) return;
       knownSession = identity;
+      knownRecovery = recovery;
+      if (linkError !== knownCallbackError || recovery) callbackErrorDismissed = false;
+      knownCallbackError = linkError;
       clearAccount();
-      announce(signedIn() ? '' : 'Anda telah log keluar. Log masuk untuk membuka kelas anda.');
+      authMode = linkError && !recovery ? 'recover-email' : 'login';
+      authOnly = recovery || Boolean(callbackError());
+      announce(recovery || callbackError() || signedIn() ? '' : 'Anda telah log keluar. Log masuk untuk membuka kelas anda.');
       render({focus: true, preserve: false});
-      if (signedIn()) refresh();
+      if (accountAvailable()) refresh();
     });
   }
 
@@ -436,16 +511,29 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
   function validate(form, values, type) {
     const errors = {};
     const username = values.username?.trim().toLowerCase();
+    const validEmail = value => typeof value === 'string' && value.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
     if (typeof values.username === 'string') {
       values.username = username;
       const input = form.elements.namedItem('username');
       if (input) input.value = username;
     }
-    if (['login', 'signup', 'recover', 'invite'].includes(type) && !/^[a-z0-9_]{3,24}$/.test(username || '')) errors.username = 'Gunakan 3–24 aksara: huruf kecil, nombor atau garis bawah (_).';
-    if (type === 'signup' && (values.display_name.trim().length < 2 || values.display_name.trim().length > 60)) errors.display_name = 'Masukkan nama paparan antara 2 hingga 60 aksara.';
-    if (['signup', 'recover'].includes(type) && (values.password.length < 10 || values.password.length > 128)) errors.password = 'Gunakan kata laluan antara 10 hingga 128 aksara.';
+    if (['signup', 'recover', 'invite'].includes(type) && !/^[a-z0-9_]{3,24}$/.test(username || '')) errors.username = 'Gunakan 3–24 aksara: huruf kecil, nombor atau garis bawah (_).';
+    if (type === 'login' && !/^[a-z0-9_]{3,24}$/.test(username || '') && !validEmail(username)) errors.username = 'Masukkan email yang sah atau nama pengguna 3–24 aksara.';
+    if (['signup', 'recover-email', 'resend-confirmation'].includes(type)) {
+      values.email = String(values.email || '').trim().toLowerCase();
+      const input = form.elements.namedItem('email');
+      if (input) input.value = values.email;
+      if (!validEmail(values.email)) errors.email = 'Masukkan alamat email yang sah, maksimum 254 aksara.';
+    }
+    if (type === 'signup' && (String(values.display_name || '').trim().length < 2 || String(values.display_name || '').trim().length > 60)) errors.display_name = 'Masukkan nama paparan antara 2 hingga 60 aksara.';
+    if (['signup', 'recover', 'reset-password'].includes(type) && (String(values.password || '').length < 10 || String(values.password || '').length > 128)) errors.password = 'Gunakan kata laluan antara 10 hingga 128 aksara.';
     if (type === 'login' && !values.password) errors.password = 'Masukkan kata laluan anda.';
-    if (type === 'recover' && !/^[a-fA-F0-9]{32}$/.test(values.recovery_code.trim())) errors.recovery_code = 'Masukkan kod pemulihan 32 aksara yang anda simpan.';
+    if (type === 'login' && values.password?.length > 128) errors.password = 'Kata laluan mestilah maksimum 128 aksara.';
+    if (type === 'reset-password') {
+      if (String(values.password_confirm || '').length < 10 || String(values.password_confirm || '').length > 128) errors.password_confirm = 'Gunakan pengesahan kata laluan antara 10 hingga 128 aksara.';
+      else if (values.password_confirm !== values.password) errors.password_confirm = 'Pengesahan kata laluan mesti sama dengan kata laluan baharu.';
+    }
+    if (type === 'recover' && !/^[a-fA-F0-9]{32}$/.test(String(values.recovery_code || '').trim())) errors.recovery_code = 'Masukkan kod pemulihan 32 aksara yang anda simpan.';
     if (type === 'join-pin' && !/^\d{6}$/.test(values.pin.trim())) errors.pin = 'Masukkan tepat enam digit PIN daripada guru.';
     if (['create-class', 'create-room'].includes(type) && (!values.name.trim() || values.name.trim().length > 80)) errors.name = 'Masukkan nama antara 1 hingga 80 aksara.';
     for (const [name, message] of Object.entries(errors)) {
@@ -463,35 +551,73 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
   }
 
   async function handleAuth(form, values, type) {
+    if (type === 'reset-password' && cloud.recoveryRequired !== true) {
+      authMode = 'recover-email';
+      authOnly = true;
+      announce('Minta pautan pemulihan yang baharu untuk menetapkan kata laluan.', 'error');
+      render({focus: true, preserve: false});
+      return;
+    }
+    if (cloud.recoveryRequired === true && type !== 'reset-password') return;
     const token = epoch;
     const job = ++operation;
-    pending = type;
+    pending = form ? type : 'resend-email';
     authPending = true;
     updateBusy();
     announce('');
-    const payload = {username: values.username.trim(), password: values.password};
-    if (type === 'signup') Object.assign(payload, {display_name: values.display_name.trim(), role: values.role === 'teacher' ? 'teacher' : 'student'});
+    const emailAction = ['recover-email', 'resend-confirmation'].includes(type);
+    const payload = emailAction ? {email: values.email.trim()} : type === 'reset-password' ? {password: values.password} : {username: values.username.trim(), password: values.password};
+    if (type === 'signup') Object.assign(payload, {display_name: values.display_name.trim(), role: values.role === 'teacher' ? 'teacher' : 'student', email: values.email.trim()});
     if (type === 'recover') payload.recovery_code = values.recovery_code.trim();
     try {
       const result = await cloud.auth(type, payload);
       if (!active || token !== epoch) return;
+      if (emailAction) {
+        authMode = type === 'resend-confirmation' ? 'confirmation' : 'email-sent';
+        authOnly = true;
+        authEmail = payload.email;
+        callbackErrorDismissed = true;
+        form?.reset();
+        startEmailCooldown();
+        render({focus: true, preserve: false});
+        return;
+      }
       clearAccount();
       knownSession = sessionKey();
+      knownRecovery = cloud.recoveryRequired === true;
+      knownCallbackError = String(cloud.callbackError || '');
+      callbackErrorDismissed = true;
+      form?.reset();
+      if (type === 'signup' && result?.confirmation_required) {
+        authMode = 'confirmation';
+        authOnly = true;
+        authEmail = String(result.email || payload.email);
+        startEmailCooldown();
+        render({focus: true, preserve: false});
+        return;
+      }
+      authMode = 'login';
+      authOnly = !signedIn() || type === 'reset-password';
+      authEmail = '';
+      clearInterval(emailCooldownTimer);
+      emailCooldownTimer = null;
+      emailCooldownUntil = 0;
       profile = result?.profile || cloud.session?.profile || null;
       recoveryCode = result?.recovery_code || '';
-      recoveryUsername = payload.username;
-      form.reset();
-      if (!signedIn()) {
-        authMode = 'login';
-        announce(type === 'recover' ? 'Kata laluan telah ditetapkan. Log masuk menggunakan kata laluan baharu.' : 'Akaun sudah didaftarkan. Log masuk untuk meneruskan.', 'success');
-      } else announce(recoveryCode ? '' : 'Anda telah log masuk.', 'success');
+      recoveryUsername = payload.username || '';
+      if (type === 'reset-password' || type === 'recover' && !signedIn()) announce('Kata laluan telah ditetapkan. Log masuk menggunakan kata laluan baharu.', 'success');
+      else if (!signedIn()) announce(type === 'signup' ? 'Akaun sudah didaftarkan. Log masuk untuk meneruskan.' : 'Log masuk belum dapat disahkan. Cuba semula.', type === 'signup' ? 'success' : 'error');
+      else announce(recoveryCode || cloud.recoveryRequired ? '' : 'Anda telah log masuk.', 'success');
       render({focus: true, preserve: false});
-      if (signedIn() && !recoveryCode) await refresh();
+      if (accountAvailable()) await refresh();
     } catch (error) {
       if (!active || token !== epoch) return;
-      form.querySelector('[data-form-error]').textContent = errorText(error);
-      form.querySelector('[data-form-error]').setAttribute('tabindex', '-1');
-      form.querySelector('[data-form-error]').focus({preventScroll: true});
+      const message = form?.isConnected !== false ? form?.querySelector('[data-form-error]') : null;
+      if (message) {
+        message.textContent = errorText(error);
+        message.setAttribute('tabindex', '-1');
+        message.focus({preventScroll: true});
+      } else announce(errorText(error), 'error');
     } finally {
       if (job === operation) { authPending = false; pending = ''; }
       if (active) {
@@ -555,8 +681,8 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
     const values = Object.fromEntries(new FormData(form));
     clearFormErrors(form);
     if (!validate(form, values, type)) return;
-    if (['login', 'signup', 'recover'].includes(type)) return handleAuth(form, values, type);
-    if (!signedIn()) return;
+    if (['login', 'signup', 'recover', 'recover-email', 'resend-confirmation', 'reset-password'].includes(type)) return handleAuth(form, values, type);
+    if (!accountAvailable()) return;
     if (type === 'create-class') return mutate('create_class', {name: values.name.trim()}, {form, success: 'Kelas berjaya dicipta. Kongsi PIN untuk menambah pelajar.', navigateClass: true});
     if (type === 'invite' && currentClass()) return mutate('invite', {class_id: classId, username: values.username.trim()}, {form, success: 'Jemputan telah dihantar. Pelajar perlu menerimanya dalam akaun sendiri.'});
     if (type === 'create-room' && currentClass()) return mutate('create_room', {class_id: classId, name: values.name.trim()}, {form, success: 'Bilik berjaya dicipta. Pelajar boleh masuk dengan PIN bilik.', navigateRoom: true});
@@ -578,7 +704,7 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
   }
 
   function showRoom(id) {
-    if (!active || pending) return;
+    if (!active || pending || !accountAvailable()) return;
     epoch += 1;
     stopWatch();
     roomId = id;
@@ -614,10 +740,21 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
       return;
     }
     if (pending) return;
-    if (action === 'auth-mode') { authMode = control.dataset.mode; announce(''); render({preserve: false}); content.querySelector('#portal-auth-title')?.setAttribute('tabindex', '-1'); content.querySelector('#portal-auth-title')?.focus({preventScroll: true}); return; }
+    if (action === 'auth-mode') {
+      if (cloud.recoveryRequired === true || !['login', 'signup', 'recover-email', 'recover', 'resend-confirmation'].includes(control.dataset.mode)) return;
+      authMode = control.dataset.mode;
+      announce('');
+      render({preserve: false});
+      content.querySelector('#portal-auth-title')?.focus({preventScroll: true});
+      return;
+    }
+    if (action === 'resend-email') {
+      if (!authEmail || emailCooldownSeconds() || cloud.recoveryRequired === true) return;
+      return handleAuth(null, {email: authEmail}, control.dataset.resendKind === 'resend-confirmation' ? 'resend-confirmation' : 'recover-email');
+    }
     if (action === 'refresh') return refresh();
     if (action === 'copy-recovery') return copy(recoveryCode, 'Kod pemulihan telah disalin. Simpan di tempat selamat.');
-    if (action === 'recovery-done') { recoveryCode = ''; recoveryUsername = ''; render({focus: true, preserve: false}); if (signedIn()) refresh(); return; }
+    if (action === 'recovery-done') { recoveryCode = ''; recoveryUsername = ''; render({focus: true, preserve: false}); if (accountAvailable()) refresh(); return; }
     if (action === 'logout') {
       const token = epoch;
       const job = ++operation;
@@ -629,14 +766,18 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
         if (!active || token !== epoch) return;
         clearAccount();
         knownSession = sessionKey();
+        knownRecovery = cloud.recoveryRequired === true;
+        knownCallbackError = String(cloud.callbackError || '');
+        callbackErrorDismissed = true;
         authMode = 'login';
+        authOnly = false;
         announce('Anda telah log keluar.');
         render({focus: true, preserve: false});
       } catch (error) { if (active && token === epoch) announce(errorText(error), 'error'); }
       finally { if (job === operation) { authPending = false; pending = ''; } if (active) updateBusy(); }
       return;
     }
-    if (!signedIn()) return;
+    if (!accountAvailable()) return;
     if (action === 'select-class') {
       classId = control.dataset.id; rosterQuery = ''; rosterPage = roomPage = 1; render({preserve: false});
       const heading = content.querySelector('.portal-class-overview h2');
@@ -677,7 +818,7 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
 
   function compositionStart() { composing = true; }
 
-  function visibility() { if (active && !document.hidden && signedIn() && !recoveryCode) refresh({silent: true}); }
+  function visibility() { if (active && !document.hidden && accountAvailable()) refresh({silent: true}); }
   function keyboard(event) {
     if (event.key === 'Escape' && closeConfirmation) {
       event.preventDefault?.();
@@ -697,7 +838,16 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
 
   async function open(options = {}) {
     if (destroyed) return;
-    if (active) { if (options.roomId) showRoom(options.roomId); else refresh({silent: true}); return; }
+    if (active) {
+      if (cloud.recoveryRequired === true || callbackError()) {
+        stopLive();
+        authOnly = true;
+        if (callbackError() && cloud.recoveryRequired !== true) authMode = 'recover-email';
+        render({focus: true, preserve: false});
+      } else if (options.roomId) showRoom(options.roomId);
+      else refresh({silent: true});
+      return;
+    }
     active = true;
     epoch += 1;
     const token = epoch;
@@ -711,11 +861,19 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
     if (!active || token !== epoch) return;
     initializing = false;
     knownSession = sessionKey();
+    knownRecovery = cloud.recoveryRequired === true;
+    const linkError = String(cloud.callbackError || '');
+    if (linkError !== knownCallbackError || knownRecovery) callbackErrorDismissed = false;
+    knownCallbackError = linkError;
+    if (knownRecovery || callbackError()) {
+      authOnly = true;
+      if (!knownRecovery) authMode = 'recover-email';
+    }
     connectSession();
-    roomId = options.roomId || null;
+    roomId = accountAvailable() ? options.roomId || null : null;
     cloud.setRoom?.(roomId);
     render({focus: true, preserve: false});
-    if (signedIn()) await refresh();
+    if (accountAvailable()) await refresh();
   }
 
   function close() {
@@ -727,6 +885,12 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
     pending = '';
     authPending = false;
     initializing = false;
+    clearInterval(emailCooldownTimer);
+    emailCooldownTimer = null;
+    emailCooldownUntil = 0;
+    authEmail = '';
+    authOnly = false;
+    authMode = 'login';
     screen.hidden = true;
     screen.removeAttribute('aria-busy');
     content.replaceChildren();

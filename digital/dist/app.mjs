@@ -6,6 +6,9 @@ import { shapeArt, icon, brandArt, SHAPE_NAMES, describeShape } from './art.mjs'
 import {ClassroomCloud} from './cloud.mjs';
 import {createPortal} from './portal.mjs';
 import {initTheme} from './theme.mjs';
+import {createMusic} from './music.mjs';
+import moduleHtml from '../vendor/module-v1.1.0.html';
+import {prepareModuleFrame} from './module-frame.mjs';
 
 const $ = id => document.getElementById(id);
 const escapeHtml = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -14,6 +17,19 @@ const now = () => performance.now();
 let storage;
 try { storage = window.localStorage; } catch { storage = {getItem(){throw new Error('Storage unavailable');},setItem(){throw new Error('Storage unavailable');},removeItem(){throw new Error('Storage unavailable');}}; }
 const store = new ScoreStore(storage);
+const music=createMusic({storage,onChange:renderMusicButton});
+function renderMusicButton(state){
+  const button=$('music-button');
+  const label=state.error?'Cuba hidupkan muzik semula':state.enabled?'Matikan muzik latar':'Hidupkan muzik latar';
+  button.innerHTML=icon(state.enabled?'sound':'mute');
+  button.setAttribute('aria-pressed',String(state.enabled));button.setAttribute('aria-label',label);button.title=label;
+  button.dataset.track=state.track;button.dataset.playback=state.status;
+}
+// Playback begins only after a browser-approved user gesture.
+function unlockMusic(event){if(event.isTrusted&&(!music.state.unlocked||music.state.blocked))void music.unlock();}
+document.addEventListener('pointerdown',unlockMusic,{capture:true});
+document.addEventListener('keydown',event=>{if(['Enter',' '].includes(event.key))unlockMusic(event);},{capture:true});
+$('music-button').addEventListener('click',()=>void music.toggle());
 let screen = 'welcome', game = null, selected = null, acceptedSolid = null, acceptedNet = null;
 let player = null, roundId = '', lastResult = null, dialogMode = '', dialogTrigger = null;
 let drag = null, suppressClickUntil = 0, hiddenPause = false, sound = false, audioContext = null;
@@ -67,7 +83,11 @@ function showScreen(next) {
   $('game-screen').hidden = next !== 'game';
   $('result-screen').hidden = next !== 'result';
   $('portal-screen').hidden=next!=='portal';
+  $('module-screen').hidden=next!=='module';
+  if(next!=='module'&&$('module-frame').getAttribute('srcdoc'))$('module-frame').removeAttribute('srcdoc');
+  void music.setScene(next);
   document.title = next==='portal'?'GeoDecoder Digital — Akaun dan kelas':next==='guest'?'GeoDecoder Digital — Main sebagai tetamu':next === 'welcome' ? 'GeoDecoder Digital — Jom main geometri' : next === 'game' ? 'GeoDecoder Digital — Sedang bermain' : 'GeoDecoder Digital — Keputusan pusingan';
+  if(next==='module')document.title='GeoDecoder Digital — Modul pembelajaran';
   window.scrollTo({top:0,behavior:'instant'});
 }
 function uid() { return globalThis.crypto?.randomUUID?.() || `round-${Date.now()}-${Math.random().toString(36).slice(2)}`; }
@@ -323,6 +343,10 @@ $('account-button').addEventListener('click',()=>requestAccounts());
 $('welcome-account-button').addEventListener('click',()=>requestAccounts());
 $('guest-button').addEventListener('click',openGuest);
 $('guest-back-button').addEventListener('click',returnHome);
+$('module-button').addEventListener('click',()=>{
+  showScreen('module');$('module-frame').srcdoc=prepareModuleFrame(moduleHtml);$('module-title').focus({preventScroll:true});
+});
+$('module-back-button').addEventListener('click',returnHome);
 $('online-retry').addEventListener('click',()=>{if(roomPending)sendRoomPending();});
 $('online-room-back').addEventListener('click',()=>openAccounts(roomState?.roomId));
 
@@ -656,3 +680,4 @@ function frame(time){
 }
 store.read();storageStatus();
 requestAnimationFrame(frame);
+if(cloud.hasAuthCallback||cloud.hasRecoveryIntent)void openAccounts();

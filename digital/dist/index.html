@@ -14,10 +14,11 @@
 <body>
   <a class="skip-link" href="#main">Terus ke kandungan</a>
   <header class="site-header">
-    <a href="#" class="brand" id="brand-home" aria-label="GeoDecoder Digital, halaman mula"><span data-brand></span><span>Geo<span class="brand-blue">Decoder</span><small>DIGITAL EDITION <b class="brand-version" id="app-version">V2.1.0</b></small></span></a>
+    <a href="#" class="brand" id="brand-home" aria-label="GeoDecoder Digital, halaman mula"><span data-brand></span><span>Geo<span class="brand-blue">Decoder</span><small>DIGITAL EDITION <b class="brand-version" id="app-version">V2.2.0</b></small></span></a>
     <nav aria-label="Menu utama">
       <button type="button" class="nav-button" id="account-button" aria-label="Akaun dan kelas"><span data-icon="user"></span><span>Akaun &amp; kelas</span></button>
       <button type="button" class="nav-button" id="theme-button" aria-label="Tukar kepada tema gelap" aria-pressed="false"></button>
+      <button type="button" class="nav-button" id="music-button" aria-label="Matikan muzik latar" aria-pressed="true" title="Matikan muzik latar"><span data-icon="sound"></span></button>
       <button class="nav-button motion-button" id="motion-button" aria-label="Jeda animasi" aria-pressed="false" title="Jeda animasi"><span data-icon="pause"></span></button>
       <button class="nav-button" data-action="help" aria-label="Cara main"><span data-icon="help"></span><span>Cara main</span></button>
       <button class="nav-button score-nav" data-action="scores" aria-label="Papan skor"><span data-icon="trophy"></span><span>Papan skor</span></button>
@@ -48,6 +49,7 @@
       <div class="registration-card home-options">
         <div class="account-entry"><span class="card-kicker">BELAJAR BERSAMA KELAS</span><h2>Guru atau pelajar?</h2><p>Log masuk untuk kelas, jemputan PIN dan pertandingan room.</p><button id="welcome-account-button" type="button" class="button button-outline">Buka akaun &amp; kelas <span data-icon="arrow"></span></button></div>
         <div class="guest-entry"><span class="card-kicker">MAIN SENDIRI</span><h2>Teruskan sebagai tetamu.</h2><p>Tidak perlukan akaun. Isi nama panggilan dan kelas untuk mencuba permainan serta menyimpan skor pada peranti ini.</p><button id="guest-button" type="button" class="button button-primary">Play as a Guest <span data-icon="arrow"></span></button><small>Tiada pendaftaran akaun. Boleh dimainkan tanpa Internet.</small></div>
+        <button id="module-button" type="button" class="button button-quiet module-entry"><span data-icon="bulb"></span>Teroka modul pembelajaran<span data-icon="arrow"></span></button>
       </div>
     </section>
 
@@ -68,6 +70,10 @@
     </section>
 
     <section id="portal-screen" hidden></section>
+    <section id="module-screen" class="module-screen" hidden aria-labelledby="module-title">
+      <div class="module-heading"><button id="module-back-button" type="button" class="button button-quiet"><span data-icon="home"></span>Kembali ke Home</button><h1 id="module-title" tabindex="-1">Modul pembelajaran</h1></div>
+      <iframe id="module-frame" title="Modul GeoDecoder: Teroka 3D dan nota pembelajaran" sandbox="allow-scripts allow-popups" referrerpolicy="no-referrer"></iframe>
+    </section>
     <section id="game-screen" class="game-screen" hidden aria-labelledby="question-title">
       <div id="online-game-bar" class="online-game-bar" hidden><span id="online-game-status"></span><button id="online-retry" type="button" class="button button-outline" hidden>Hantar semula</button><button id="online-room-back" type="button" class="button button-outline">Ke room</button></div>
       <div class="session-bar">
