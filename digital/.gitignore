@@ -1,0 +1,4 @@
+.openai/*.zip
+.openai/preview*
+node_modules/
+artifacts/

@@ -1,0 +1,1065 @@
+<!doctype html>
+<html lang="ms">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#215FF0">
+  <meta name="description" content="Main GeoDecoder Digital: seret bongkah 3D ke R1, padankan bentangannya di R2 dan kumpulkan 10 markah.">
+  <title>GeoDecoder Digital — Jom main geometri</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 44'%3E%3Cpath d='m20 2 17 10v20L20 42 3 32V12Z' fill='%23215FF0'/%3E%3Cpath d='m20 2 17 10-17 10L3 12Z' fill='%236EAAFF'/%3E%3C/svg%3E">
+  <style>
+:root{
+  --primary:#215FF0;--primary-dark:#194AC0;--ink:#18334B;--bg:#F3F7FB;--surface:#FFFFFF;--success:#127957;--danger:#B9403E;--accent:#FFCB66;--muted:#526A7D;--border:#D9E4ED;
+  --mint-soft:#EAF7F1;--blue-soft:#EAF1FF;--purple:#8B3DA6;--purple-soft:#F8EDFC;--red-soft:#FFF0EF;--radius:1rem;--radius-lg:1.5rem;
+  --font-display:"Trebuchet MS","Avenir Next",sans-serif;--font-body:"Segoe UI",Arial,sans-serif;--font-mono:"SFMono-Regular",Consolas,monospace;
+  --scroll-thumb:#96ACBF;--scroll-track:#EAF0F6;--scroll-hover:#617E96;--scroll-active:#3C5C76;
+  color-scheme:light;scrollbar-color:var(--scroll-thumb) var(--scroll-track);scrollbar-width:thin;
+}
+*{box-sizing:border-box;scrollbar-color:var(--scroll-thumb) var(--scroll-track);scrollbar-width:thin}
+*::-webkit-scrollbar{width:9px;height:9px}*::-webkit-scrollbar-track{background:var(--scroll-track)}*::-webkit-scrollbar-thumb{background:var(--scroll-thumb);border:2px solid var(--scroll-track);border-radius:8px}*::-webkit-scrollbar-thumb:hover{background:var(--scroll-hover)}*::-webkit-scrollbar-thumb:active{background:var(--scroll-active)}
+html{min-width:320px;scroll-behavior:smooth;scrollbar-gutter:stable}
+body{margin:0;background:var(--bg);font-family:var(--font-body);color:var(--ink);font-size:16px;line-height:1.55}
+[hidden]{display:none!important}
+button,input{font:inherit}button,a,input{-webkit-tap-highlight-color:transparent}button{cursor:pointer}button:disabled{cursor:not-allowed}a{color:inherit}button{color:inherit}button,fieldset{margin:0}button{border:0}fieldset{border:0;padding:0;min-width:0}h1,h2,h3,p{margin:0}h1,h2,h3{font-family:var(--font-display);line-height:1.2}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--primary);outline-offset:4px}input[aria-invalid="true"]{border-color:var(--danger)}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.skip-link{position:fixed;top:-80px;left:20px;background:var(--surface);padding:12px 20px;z-index:100}.skip-link:focus{top:12px}
+.icon{display:inline-block;width:22px;height:22px;vertical-align:middle;flex-shrink:0}.icon-button{width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center;border-radius:12px;background:transparent;border:1px solid var(--border);transition:background .16s,border-color .16s}.icon-button:hover{background:var(--blue-soft);border-color:#B4CDFB}.icon-button:active{background:#D5E4FF}
+.button{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:12px 20px;border:1px solid transparent;border-radius:12px;font-weight:650;font-size:15px;line-height:1.35;text-decoration:none;transition:background .16s,transform .16s,border-color .16s;white-space:normal}.button-primary{background:var(--primary);color:white}.button-primary:hover{background:var(--primary-dark);transform:translateY(-1px)}.button-primary:active{transform:translateY(1px)}.button-outline{border-color:var(--border);background:var(--surface)}.button-outline:hover{background:var(--blue-soft);border-color:#B4CDFB}.button-quiet{background:transparent;color:var(--muted)}.button-quiet:hover{background:#E4EDF7;color:var(--ink)}.button-danger{background:var(--danger);color:white}.button-danger:hover{background:#983230}.button:disabled{opacity:.48;transform:none}.button-hint{background:var(--purple-soft);color:#78358F;padding:11px 16px;border-color:#EAD8F0}.button-hint:hover{background:#EFDEF6}.button-hint[aria-expanded="true"]{background:#EAD2F3}
+.site-header{max-width:1280px;margin:0 auto;height:104px;padding:0 32px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:11px;text-decoration:none;font-family:var(--font-display);font-size:25px;font-weight:800;letter-spacing:-1px;line-height:1.05}.brand-mark{width:35px;height:42px;display:block}.brand-blue{color:var(--primary)}.brand small{font-family:var(--font-body);display:block;font-size:9px;letter-spacing:3px;font-weight:700;margin:7px 0 0 2px;color:var(--muted)}.site-header nav{display:flex;align-items:center;gap:8px}.nav-button{display:flex;align-items:center;gap:8px;padding:11px 15px;background:transparent;border-radius:11px;font-size:14px;font-weight:600}.nav-button:hover{background:#E4EDF7}.score-nav{background:white;border:1px solid var(--border);margin-left:5px}.score-nav .icon{color:#A36C11}.version-badge{font-size:10px;font-weight:750;letter-spacing:.8px;color:var(--muted);background:#E5ECF3;border:1px solid var(--border);padding:4px 8px;border-radius:6px;margin-right:9px}
+main{max-width:1280px;padding:0 32px;margin:0 auto;min-height:calc(100vh - 183px)}main:focus{outline:none}.entry-screen{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(350px,.85fr);align-items:center;gap:64px;padding:31px 0 48px;min-height:calc(100vh - 183px)}.eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:11px;font-weight:750;letter-spacing:1.5px;color:var(--primary)}.tiny-cube{width:9px;height:9px;background:var(--primary);transform:rotate(30deg);border-radius:2px}.intro h1{font-size:clamp(40px,4.1vw,58px);line-height:1.13;letter-spacing:-2.3px;margin:18px 0 20px;font-weight:800}.intro h1>span{color:var(--primary)}.intro-copy{font-size:16px;line-height:1.7;color:var(--muted)}.lab-scene{position:relative;height:322px;max-width:580px;margin-top:16px;isolation:isolate}.scene-grid{position:absolute;inset:32px -10px -4px;background-image:linear-gradient(#DDE8F1 1px,transparent 1px),linear-gradient(90deg,#DDE8F1 1px,transparent 1px);background-size:29px 29px;transform:perspective(500px) rotateX(55deg);mask-image:radial-gradient(ellipse at center,black 10%,transparent 69%);z-index:-1}.scene-note{position:absolute;top:8px;left:220px;color:var(--muted);font-size:12px;display:flex;align-items:center;gap:7px;transform:rotate(-5deg)}.scene-note .icon{width:17px;height:17px}.scene-object{position:absolute;z-index:3}.scene-cube{width:190px;left:38px;top:44px;transform:rotate(-8deg)}.scene-cone{width:90px;left:0;top:23px;transform:rotate(-18deg);opacity:.65}.scene-pyramid{width:97px;right:2px;top:16px;transform:rotate(15deg);opacity:.7}.shape-art{width:100%;height:100%;display:block}.scene-net{position:absolute;width:140px;right:55px;top:96px;padding:8px;background:white;border:1px solid var(--border);border-radius:12px;z-index:3;transform:rotate(9deg);box-shadow:0 9px 18px #2A507016}.scene-pad{position:absolute;bottom:34px;height:96px;width:196px;z-index:1;background:white;border:1px solid #C7D7E5;border-bottom:8px solid #C5D6E4;border-radius:18px;box-shadow:0 14px 15px #254C7010;transform:rotate(-5deg);padding:16px;display:flex;gap:7px;align-items:flex-end;color:var(--primary);overflow:hidden}.scene-pad b{font-family:var(--font-display);font-size:19px}.scene-pad>span:not(.led-dot){font-size:9px;letter-spacing:1px;font-weight:700;margin-bottom:4px}.pad-one{left:27px}.pad-two{right:22px;transform:rotate(6deg);color:var(--success)}.scene-pad .led-dot{position:absolute;right:15px;top:15px;width:8px;height:8px}.scanner-rings{width:64px;height:40px;border:1.5px solid #7AA2EC;border-radius:9px;position:absolute;right:23px;top:15px;transform:rotate(-8deg);opacity:.6}.scanner-rings:after{content:"";position:absolute;inset:6px;border:1.5px solid #7AA2EC;border-radius:5px}.pad-two .scanner-rings{border-color:#51AC8C}.scene-connector{position:absolute;left:47%;bottom:61px;color:#9CB0C2}.scene-connector .icon{width:32px;height:32px}.scene-star{position:absolute;color:#E7A22E;z-index:4}.star-one{left:226px;top:113px;font-size:27px}.star-two{left:41%;bottom:24px;font-size:14px}.scene-score{position:absolute;right:34px;bottom:5px;display:flex;gap:6px;align-items:center;background:#FFF8E7;border:1px solid #F1DDA8;border-radius:11px;padding:9px 12px;transform:rotate(-4deg);z-index:4;color:#825512}.scene-score .icon{width:17px;height:17px}.scene-score b{font-size:17px}.scene-score>span:last-child{font-size:11px;font-weight:600}.entry-facts{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--muted);gap:10px;padding:13px 0 0;border-top:1px solid var(--border);max-width:560px}.entry-facts b{color:var(--ink);font-size:17px;margin-right:4px}.entry-facts i{width:1px;height:18px;background:var(--border)}.fact-icon .icon{width:17px;height:17px;color:#A36C11;margin-right:2px}
+.registration-card{padding:32px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:0 12px 32px #294C6A06}.card-kicker{font-size:10px;font-weight:750;letter-spacing:1.3px;color:var(--muted)}.registration-card h2{font-size:28px;margin:11px 0 9px;letter-spacing:-.8px}.registration-card>p{color:var(--muted);font-size:13px;margin-bottom:25px}.field{margin-bottom:15px}.field label,.category-field legend{display:block;font-weight:650;font-size:13px;margin-bottom:8px}.field input{width:100%;height:49px;padding:0 14px;border:1px solid #CDDCE8;border-radius:10px;background:#FBFCFE;color:var(--ink);font-size:14px;transition:border-color .16s}.field input::placeholder{color:#73889A}.field input:hover{border-color:#A4BBD0}.field input:focus{border-color:var(--primary);background:white}.field-error{display:block;color:var(--danger);font-size:11px;min-height:17px;padding-top:3px}.category-field{margin-bottom:11px}.radio-options{display:flex;gap:10px}.radio-card{position:relative;flex:1;cursor:pointer}.radio-card input{position:absolute;left:13px;top:16px;accent-color:var(--primary);width:15px;height:15px;margin:0}.radio-card>span{display:flex;align-items:center;justify-content:center;gap:7px;border:1px solid #CDDCE8;border-radius:10px;height:49px;padding-left:19px;font-size:13px;font-weight:600;transition:background .16s,border-color .16s}.radio-card .icon{width:16px;height:16px;color:var(--muted)}.radio-card input:checked+span{background:var(--blue-soft);border-color:#8CB3FF;color:var(--primary)}.radio-card input:checked+span .icon{color:var(--primary)}.radio-card input:focus-visible+span{outline:3px solid var(--primary);outline-offset:3px}.radio-card:hover>span{background:var(--blue-soft)}.start-button{width:100%;justify-content:space-between;font-size:14px;margin:3px 0 16px;padding:15px 18px;min-height:51px}.privacy-note{display:flex;gap:8px;font-size:10px;color:var(--muted);line-height:1.65}.privacy-note .icon{width:14px;height:14px;margin-top:2px}
+.site-footer{max-width:1280px;margin:0 auto;min-height:79px;padding:20px 32px;display:flex;align-items:center;justify-content:space-between;gap:16px;color:var(--muted);font-size:11px;border-top:1px solid var(--border)}.site-footer b{font-weight:650}.site-footer>span:last-child{font-size:10px}.storage-warning{margin:20px 0;padding:13px 16px;background:#FFF3D9;border:1px solid #EACD91;color:#745118;border-radius:12px;font-size:13px}
+.game-screen{padding:14px 0 30px}.session-bar{display:flex;align-items:center;gap:24px;margin-bottom:22px;min-height:58px}.player-chip{display:flex;align-items:center;gap:11px;min-width:0;flex:1}.player-avatar{width:43px;height:43px;flex-shrink:0;display:grid;place-items:center;background:#E1EBF9;color:var(--primary);border-radius:12px;font-family:var(--font-display);font-weight:700}.player-chip>span:last-child{min-width:0}.player-chip b{display:block;font-size:14px;overflow-wrap:anywhere}.player-chip small{display:block;color:var(--muted);font-size:11px;margin-top:2px}.session-stats{display:flex;gap:28px}.stat{display:flex;align-items:center;gap:9px;min-width:99px}.stat>.icon{color:var(--muted);width:23px;height:23px}.score-stat>.icon{color:#A36C11}.stat small{display:block;font-size:10px;color:var(--muted);line-height:1.1;margin-bottom:4px}.stat b{font-family:var(--font-mono);font-size:21px;line-height:1.1;font-weight:650}.stat-total{font-family:var(--font-body);font-size:13px;color:var(--muted);font-weight:500}.session-actions{display:flex;gap:7px;border-left:1px solid var(--border);padding-left:24px}.session-actions .icon-button{border-color:transparent;width:39px;height:39px}
+.question-panel{display:flex;align-items:center;gap:28px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px 27px;min-height:158px}.question-side{width:159px;flex-shrink:0;align-self:stretch;display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--border);padding-right:22px}.question-counter{font-size:10px;font-weight:800;letter-spacing:1px;color:var(--primary)}.question-topic{font-size:12px;font-weight:650;margin:5px 0 15px}.progress-dots{display:flex;gap:4px}.progress-dot{height:5px;flex:1;border-radius:4px;background:#E3EBF3}.progress-dot.current{background:var(--primary)}.progress-dot.correct{background:#42A887}.progress-dot.skipped{background:#CC7770}.question-content{flex:1;min-width:0}.question-content h1{font-size:25px;letter-spacing:-.5px;line-height:1.3;margin-bottom:7px;font-weight:750}.question-content h1:focus{outline:none}.question-content p{color:var(--muted);font-size:15px;line-height:1.6}.question-content p:empty{display:none}.formula-line{font-family:var(--font-mono);color:var(--ink);font-size:22px;display:block;margin:3px 0 10px;letter-spacing:-.6px}.formula-key{font-size:11px;color:var(--muted);margin-top:8px}.question-panel>.button{flex-shrink:0;font-size:12px}.question-panel>.button .icon{width:18px;height:18px}.hint-panel{margin-top:10px;padding:14px 20px;background:var(--purple-soft);color:#78358F;border:1px solid #EAD8F0;border-radius:var(--radius);display:flex;align-items:center;gap:12px;font-size:14px}.hint-panel p{flex:1}.hint-panel>span:last-child{font-size:10px;flex-shrink:0}.workbench-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:22px 0 13px}.workbench-heading>div{display:flex;align-items:center;gap:8px}.workbench-heading h2{font-family:var(--font-body);font-size:13px;font-weight:650}.live-indicator{width:7px;height:7px;background:var(--primary);border-radius:50%}.workbench-heading p{font-size:11px;color:var(--muted)}
+.scanners{display:grid;grid-template-columns:minmax(0,1fr) 36px minmax(0,1fr);align-items:center;gap:12px}.scanner{display:flex;flex-direction:column;min-width:0;height:200px;text-align:left;background:var(--surface);border:1.5px solid #8BB3F5;border-bottom:5px solid #B9CFEE;border-radius:18px;padding:0;overflow:hidden;position:relative;transition:border-color .18s,background .18s,box-shadow .18s;isolation:isolate}.scanner:hover{background:#F7FAFF;border-color:var(--primary)}.scanner:active{transform:translateY(1px)}.scanner-locked{border-color:#D5E0EA;border-bottom-color:#CCD9E5;background:#EDF2F7}.scanner-locked:hover{border-color:#BBCEDC;background:#EDF2F7}.scanner-top{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:13px 17px 0;font-size:11px}.scanner-top>b{font-family:var(--font-display);font-size:18px;font-weight:800;display:flex;align-items:center;gap:9px}.scanner-top>b>span{font-family:var(--font-body);font-size:9px;letter-spacing:1px;color:var(--muted);font-weight:700}.scanner-led{font-size:10px;color:var(--muted);display:flex;align-items:center;gap:6px}.led-dot{display:inline-block;flex-shrink:0;width:7px;height:7px;border-radius:50%;background:#CDD8E2;border:1px solid #0000000D;vertical-align:middle}.led-dot.blue{background:#438CFF;box-shadow:0 0 0 3px #438CFF14}.led-dot.green{background:#30A17B;box-shadow:0 0 0 3px #30A17B14}.led-dot.red{background:#D85E55;box-shadow:0 0 0 3px #D85E5514}.led-dot.purple{background:#A15CBA;box-shadow:0 0 0 3px #A15CBA14}.led-dot.off{background:#C5D2DD}.scanner-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;position:relative;min-height:0;padding:5px}.scan-target{width:64px;height:48px;display:grid;place-items:center;position:relative;color:#7FA5D8}.scan-target .icon{width:24px;height:24px}.target-corner{position:absolute;width:12px;height:12px;border-color:#9DBAE0;border-style:solid}.tl{top:0;left:0;border-width:2px 0 0 2px;border-radius:4px 0 0 0}.tr{top:0;right:0;border-width:2px 2px 0 0;border-radius:0 4px 0 0}.bl{bottom:0;left:0;border-width:0 0 2px 2px;border-radius:0 0 0 4px}.br{bottom:0;right:0;border-width:0 2px 2px 0;border-radius:0 0 4px 0}.scanner-placeholder{font-size:11px;color:var(--muted)}.scanner-bottom{font-size:8px;letter-spacing:1.15px;font-weight:650;color:#5578A3;text-align:center;width:100%;background:#EAF2FE;padding:8px 7px;border-top:1px solid #E0EAF6;min-height:30px}.scanner-locked .scanner-bottom{color:#6E8599;background:#E7EDF4;border-top-color:#DDE6EE}.stage-connector{color:#8FA7BD;text-align:center}.scanner.scanner-correct{border-color:#82CBB3;border-bottom-color:#84C6B0;background:#F1FAF5}.scanner-correct .scanner-bottom{background:#E1F2E9;border-top-color:#C9E7D8;color:var(--success)}.scanner.scanner-wrong{border-color:#D9827C;border-bottom-color:#D98580;background:var(--red-soft)}.scanner.scanner-hint{border-color:#C093D1;border-bottom-color:#C093D1;background:#FCF7FE}.scanner.drop-hover{box-shadow:inset 0 0 0 3px var(--primary);background:#E5EFFF}.scanner.drop-invalid{box-shadow:inset 0 0 0 3px var(--danger);background:var(--red-soft)}.scanner.has-selection{box-shadow:inset 0 0 0 2px #ACC6FF}.scanner.filled .scanner-body{flex-direction:row;gap:12px}.scanner.filled .shape-art{width:100px;height:95px}.scanned-label{font-size:12px;font-weight:600;color:var(--success);display:flex;align-items:center;gap:6px}.scanned-label .icon{width:17px;height:17px}.game-feedback{display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;text-align:center;font-size:12px;color:var(--muted);padding:8px 12px;margin:5px 0 9px;border-radius:10px}.game-feedback>.icon{width:16px;height:16px}.game-feedback.success{color:var(--success);background:var(--mint-soft)}.game-feedback.error{color:var(--danger);background:var(--red-soft)}.game-feedback.hint{color:var(--purple);background:var(--purple-soft)}
+.answer-shelves{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px}.shelf{min-width:0}.shelf-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}.shelf-heading h3{font-family:var(--font-body);font-size:13px;font-weight:650;display:flex;align-items:center;gap:8px}.shelf-badge{display:inline-grid;place-items:center;width:25px;height:23px;border-radius:6px;background:#DEE9FB;color:var(--primary);font-size:10px;font-weight:750}.net-badge{background:#E4EAF2;color:#607B91}.shelf-heading>span{font-size:9px;color:var(--muted)}.choices{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px}.choice{position:relative;display:flex;flex-direction:column;justify-content:center;align-items:center;width:100%;min-width:0;min-height:126px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:10px 5px 8px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;transition:transform .16s,border-color .16s,box-shadow .16s;overflow:hidden}.choice>.shape-art{height:83px;pointer-events:none}.choice .choice-id{font-family:var(--font-mono);font-size:10px;font-weight:600;display:inline-flex;gap:5px;align-items:center;justify-content:center;color:var(--muted);width:100%;margin-top:4px}.choice .grip{font-size:10px;opacity:.45;letter-spacing:-2px}.choice:hover{transform:translateY(-3px);border-color:#85B0EC;box-shadow:0 4px 10px #244C7610}.choice:active{cursor:grabbing}.choice[aria-pressed="true"]{border-color:var(--primary);box-shadow:inset 0 0 0 2px var(--primary);background:#F0F5FF}.choice[aria-pressed="true"] .choice-id{color:var(--primary)}.choice.inactive{opacity:.62;cursor:pointer}.choice:disabled{opacity:.55;cursor:not-allowed;transform:none;box-shadow:none}.choice.drag-source{opacity:.35}.net-choice{padding:12px 6px 8px}.net-choice:before{content:"";position:absolute;inset:5px;border:1px solid #EAF0F5;border-radius:8px;pointer-events:none}.drag-ghost{position:fixed;z-index:10000;width:104px;height:113px;background:white;border:2px solid var(--primary);border-radius:14px;box-shadow:0 10px 30px #18334B33;pointer-events:none;display:flex;align-items:center;justify-content:center;padding:8px;transform:translate(-50%,-65%) rotate(-5deg)}.drag-ghost .shape-art{height:90px;width:95px}.round-bottom{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-top:17px}.round-bottom>p{display:flex;align-items:center;gap:7px;font-size:9px;color:var(--muted)}.round-bottom .led-dot{width:6px;height:6px;margin-left:9px}.round-bottom .led-dot:first-child{margin-left:0}.round-bottom .button{font-size:11px;padding:8px 12px;min-height:44px}.round-bottom .button .icon{width:16px;height:16px}.round-bottom small{font-size:9px;color:var(--muted);font-weight:400}
+.result-screen{max-width:1000px;margin:0 auto;padding:26px 0 50px}.result-heading{text-align:center;margin-bottom:30px}.result-heading h1{font-size:36px;letter-spacing:-1px;margin:12px 0 10px}.result-heading h1:focus{outline:none}.result-heading p{color:var(--muted);font-size:14px;overflow-wrap:anywhere}.result-layout{display:grid;grid-template-columns:1.3fr 1fr;gap:24px;align-items:start}.result-main{padding:30px;background:white;border:1px solid var(--border);border-radius:var(--radius-lg);text-align:center}.result-medal{display:flex;align-items:center;justify-content:center;gap:23px;position:relative;width:max-content;max-width:100%;margin:0 auto 14px}.result-medal>.icon{height:75px;width:75px;stroke:#C28B2D;stroke-width:1.2;background:#FFF2D2;padding:12px;border-radius:50%}.result-medal>div{display:flex;align-items:baseline;gap:10px}.result-medal b{font-family:var(--font-display);font-size:84px;line-height:1;color:var(--primary);letter-spacing:-5px}.result-medal>div>span{color:var(--muted);font-size:13px}.medal-spark{position:absolute;top:-15px;right:0;color:#CB9E4C;font-size:26px}.result-level{display:inline-flex;padding:4px 14px;background:#E5F6ED;border-radius:30px;color:var(--success);font-size:11px;font-weight:700}.result-main>p{font-size:12px;color:var(--muted);margin:12px auto 22px;max-width:330px;line-height:1.7}.result-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:20px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:24px}.result-metrics>div{display:flex;align-items:center;flex-direction:column;justify-content:center;gap:4px}.result-metrics .icon{display:none}.result-metrics b{font-family:var(--font-mono);font-size:19px}.result-metrics small{font-size:9px;color:var(--muted)}.result-actions{display:flex;gap:10px;justify-content:center}.result-actions .button{font-size:12px;min-width:130px}.result-side{padding:23px;background:#E9F0F9;border:1px solid var(--border);border-radius:var(--radius-lg)}.mini-title{display:flex;align-items:center;gap:7px;margin-bottom:19px}.mini-title .icon{color:#9B6C23;width:19px;height:19px}.mini-title h2{font-size:16px;flex:1}.mini-title>span:last-child{font-size:8px;letter-spacing:1px;color:var(--muted)}.mini-score{display:flex;align-items:center;gap:11px;padding:12px 0;border-bottom:1px solid #D3DFEC}.mini-score:last-child{border-bottom:0}.mini-score.mine{background:#DAE7FC;border-radius:10px;padding:12px 8px;margin:0 -8px}.mini-rank{width:24px;height:24px;display:grid;place-items:center;border-radius:50%;font-family:var(--font-mono);font-size:11px;background:white;color:var(--muted);flex-shrink:0}.mini-score:first-child .mini-rank{background:var(--accent);color:#6A4816}.mini-player{min-width:0;flex:1}.mini-player b{display:block;font-size:12px;overflow-wrap:anywhere}.mini-player small{display:block;font-size:10px;color:var(--muted)}.mini-points{font-family:var(--font-mono);font-size:16px;font-weight:700;color:var(--primary);text-align:right}.mini-points small{font-size:9px;display:block;color:var(--muted);font-weight:400}.result-side>.button{width:100%;font-size:11px;margin-top:14px}.score-scope{font-size:10px;color:var(--muted);line-height:1.7;margin-top:8px}.review-section{margin-top:40px}.review-section h2{font-size:22px}.review-section>p{font-size:13px;color:var(--muted);margin:7px 0 20px}.review-list{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.review-card{background:white;border:1px solid var(--border);border-radius:14px;padding:12px;text-align:center}.review-card .shape-art{height:77px}.review-pair{display:flex;align-items:center;gap:1px}.review-pair>.shape-art{width:50%;height:70px}.review-card h3{font-size:12px;margin:6px 0}.review-card p{font-size:9px;color:var(--success)}.review-card.skipped p{color:var(--danger)}.review-card>small{font-size:8px;color:var(--muted)}
+dialog{border:1px solid var(--border);border-radius:var(--radius-lg);padding:0;width:min(740px,calc(100% - 32px));max-height:calc(100dvh - 40px);color:var(--ink);background:white;box-shadow:0 24px 80px #173C6333;overflow:auto}dialog::backdrop{background:#16334E66;backdrop-filter:blur(4px)}.dialog-shell{padding:26px}.dialog-header{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:18px}.dialog-header h2{font-size:24px;letter-spacing:-.5px}.dialog-header .icon-button{flex-shrink:0;width:36px;height:36px;border:0}.dialog-copy{color:var(--muted);font-size:14px;line-height:1.8}.dialog-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:24px;flex-wrap:wrap}.dialog-actions .button{font-size:12px}.help-intro{font-size:14px;color:var(--muted);margin-bottom:20px}.help-steps{display:grid;gap:13px}.help-step{display:flex;gap:14px;align-items:center;padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:14px}.help-number{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:var(--primary);color:white;font-family:var(--font-mono);flex-shrink:0;font-size:12px}.help-step h3{font-family:var(--font-body);font-size:14px;margin-bottom:4px}.help-step p{color:var(--muted);font-size:12px}.help-mini-art{display:flex;align-items:center;gap:8px;margin:15px 0}.help-mini-art .shape-art{width:95px;height:80px}.help-mini-art>span{font-size:12px;color:var(--muted)}.help-note{background:#FFF7E8;border:1px solid #F0DDAF;padding:13px 16px;border-radius:12px;font-size:12px;color:#79551E;margin-top:18px}.keyboard-help{padding:13px 0 0;font-size:12px;color:var(--muted)}kbd{border:1px solid #C5D4E1;border-bottom-width:2px;padding:2px 5px;background:#F4F7FB;border-radius:5px;font-size:10px;font-family:var(--font-mono)}.empty-scores{text-align:center;padding:32px 15px}.empty-scores>.icon{width:44px;height:44px;color:#B39859;margin-bottom:13px}.empty-scores h3{font-size:18px;margin-bottom:8px}.empty-scores p{font-size:12px;color:var(--muted)}.score-table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:12px}.score-table{width:100%;border-collapse:collapse;text-align:left;font-size:12px;min-width:480px}.score-table th{font-weight:650;background:var(--bg);padding:10px 12px;color:var(--muted);font-size:10px;white-space:nowrap}.score-table td{padding:12px;border-top:1px solid var(--border);vertical-align:middle}.score-table td:nth-child(1){color:var(--muted);font-family:var(--font-mono)}.score-table td:nth-child(4),.score-table td:nth-child(5){font-family:var(--font-mono);white-space:nowrap}.score-table td:nth-child(2){max-width:160px;overflow-wrap:anywhere}.score-table td b{display:block;font-size:12px}.score-table td small{display:block;color:var(--muted);font-size:10px}.score-table .mine{background:#F0F5FF}.score-info{font-size:11px;color:var(--muted);margin-bottom:15px}.score-toolbar{display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-top:15px}.score-toolbar .button{font-size:11px;min-height:42px;padding:9px 12px}.score-toolbar>span{font-size:10px;color:var(--muted)}.score-delete{color:var(--danger)}.pause-symbol{display:flex;align-items:center;gap:13px;color:var(--primary);font-family:var(--font-mono);font-size:36px;background:var(--blue-soft);border-radius:14px;padding:22px;margin-bottom:20px}.pause-symbol .icon{width:31px;height:31px}.noscript{position:fixed;bottom:20px;left:20px;right:20px;border:2px solid var(--danger);padding:15px;background:white;color:var(--danger);z-index:100}
+@media(min-width:1400px){.entry-screen{gap:88px;padding-top:42px;padding-bottom:60px}.intro h1{font-size:59px}.lab-scene{height:350px}.scene-cube{top:54px;width:210px}.scene-net{top:117px}.scene-note{top:28px}.registration-card{padding:36px}.scene-pad{bottom:40px}.scene-score{bottom:7px}}
+@media(max-width:1100px){.entry-screen{gap:35px;grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr)}.intro h1{font-size:46px}.registration-card{padding:26px}.scene-cube{width:170px;left:13px;top:60px}.scene-cone{width:73px;left:-12px;top:37px}.scene-net{right:21px;width:125px;top:108px}.scene-pad{width:160px}.pad-one{left:4px}.pad-two{right:0}.scene-pyramid{right:-12px;width:78px;top:31px}.scene-note{left:155px;top:22px}.entry-facts{font-size:9px}.entry-facts b{font-size:15px}.question-content h1{font-size:21px}.question-panel{gap:20px;padding:22px}.question-side{width:140px;padding-right:18px}.answer-shelves{gap:20px}.choices{gap:6px}.choice{min-height:114px}.choice>.shape-art{height:70px}.shelf-heading>span{font-size:8px}.scanners{gap:10px;grid-template-columns:minmax(0,1fr) 26px minmax(0,1fr)}}
+@media(max-width:800px){.site-header{height:88px;padding:0 22px}main{padding:0 22px;min-height:calc(100vh - 160px)}.entry-screen{grid-template-columns:1fr;gap:34px;padding:24px 0 45px;max-width:610px;margin:0 auto;min-height:auto}.intro h1{font-size:49px;margin:17px 0}.intro-copy{font-size:15px}.lab-scene{height:315px;max-width:490px;margin:8px auto 0}.scene-cube{width:190px;left:40px;top:48px}.scene-net{right:55px;top:96px;width:135px}.scene-pad{width:185px}.pad-one{left:26px}.pad-two{right:20px}.scene-pyramid{right:7px;width:85px;top:20px}.scene-cone{width:80px;left:0;top:18px}.scene-note{top:5px;left:209px}.entry-facts{max-width:100%;font-size:11px}.registration-card{padding:29px;max-width:100%;width:100%}.registration-card>p{margin-bottom:23px}.field input,.radio-card>span{height:52px}.site-footer{padding:19px 22px;min-height:72px;font-size:10px}.site-footer>span:last-child{display:none}.session-bar{gap:16px;margin-bottom:18px}.session-stats{gap:15px}.stat{min-width:82px;gap:6px}.stat b{font-size:19px}.session-actions{padding-left:8px;gap:3px}.session-actions .icon-button{width:34px;height:36px}.question-panel{flex-wrap:wrap;gap:15px;padding:20px}.question-side{width:100%;padding:0;border:0;flex-direction:row;justify-content:flex-start;align-items:center;gap:14px}.question-topic{margin:0;font-size:11px}.progress-dots{max-width:130px;margin-left:auto;width:130px}.question-content{min-height:60px}.question-panel>.button{font-size:11px;padding:10px;align-self:flex-end}.question-content h1{font-size:22px}.question-content p{font-size:13px}.workbench-heading{align-items:flex-start;flex-direction:column;gap:5px;margin-top:18px}.scanners{grid-template-columns:minmax(0,1fr) 20px minmax(0,1fr);gap:8px}.scanner{height:185px}.scanner-top{padding:12px 13px 0;align-items:flex-start}.scanner-top>b{flex-direction:column;gap:0;align-items:flex-start}.scanner-top>b>span{font-size:8px}.scanner-led{font-size:8px;margin-top:4px;gap:4px}.scanner-bottom{font-size:7px;letter-spacing:.6px}.scanner-body{gap:6px}.scanner-placeholder{font-size:10px}.answer-shelves{gap:24px;grid-template-columns:1fr}.choices{gap:10px}.choice{min-height:130px}.choice>.shape-art{height:90px}.shelf-heading h3{font-size:13px}.shelf-heading>span{font-size:10px}.result-layout{grid-template-columns:1fr}.review-list{grid-template-columns:repeat(5,minmax(0,1fr))}.result-side{padding:23px}.result-heading h1{font-size:31px}.review-card{padding:9px}.review-card .shape-art{height:58px}.hint-panel{font-size:12px;flex-wrap:wrap;gap:8px}.hint-panel>span:last-child{margin-left:30px;font-size:9px}.hint-panel p{flex-basis:calc(100% - 35px)}.round-bottom{flex-wrap:wrap;gap:9px}.round-bottom>p{font-size:9px}.round-bottom>.button{margin-left:auto}.game-feedback{font-size:11px}.session-stats .stat>.icon{width:18px;height:18px}}
+@media(max-width:520px){.site-header{padding:0 16px;height:81px}.brand{font-size:21px;gap:8px}.brand small{font-size:7px;letter-spacing:2.5px;margin-top:6px}.brand-mark{width:28px;height:34px}.site-header nav{gap:2px}.version-badge{display:none}.nav-button{padding:10px;gap:5px;min-height:42px;font-size:11px}.nav-button>.icon{width:18px;height:18px}.score-nav{margin-left:0}.score-nav>span:last-child{display:none}.nav-button .icon{width:18px;height:18px}main{padding:0 16px}.entry-screen{padding-top:22px;gap:26px}.eyebrow{font-size:9px;letter-spacing:1.3px}.intro h1{font-size:41px;letter-spacing:-1.8px;line-height:1.12}.intro-copy{font-size:13px;line-height:1.75}.desktop-only{display:none}.lab-scene{height:270px;margin-top:12px}.scene-cube{width:154px;left:11px;top:40px}.scene-net{width:106px;right:23px;top:84px;padding:5px}.scene-cone{width:59px;left:-12px;top:10px}.scene-pyramid{width:69px;right:-7px;top:17px}.scene-pad{width:140px;height:85px;bottom:32px;padding:12px}.pad-one{left:5px}.pad-two{right:1px}.scene-pad b{font-size:16px}.scene-pad>span:not(.led-dot){font-size:7px}.scanner-rings{width:47px;height:31px;right:16px;top:14px}.scene-connector{left:45%;bottom:57px}.scene-connector .icon{width:22px}.scene-note{font-size:9px;left:142px;top:5px}.scene-note .icon{width:14px}.star-one{left:47%;font-size:19px;top:90px}.scene-score{right:8px;padding:7px 9px;bottom:4px}.scene-score b{font-size:14px}.scene-score>span:last-child{font-size:9px}.entry-facts{font-size:9px;gap:6px;padding-top:12px}.entry-facts b{font-size:13px}.entry-facts i{height:22px}.entry-facts .fact-icon{display:none}.registration-card{padding:23px}.registration-card h2{font-size:26px}.registration-card>p{font-size:12px}.privacy-note{font-size:10px}.site-footer{padding:18px 16px;gap:10px;font-size:9px}.session-bar{flex-wrap:wrap;gap:13px;margin-bottom:16px}.player-chip{flex-basis:calc(100% - 130px);order:0}.player-chip b{font-size:12px}.player-chip small{font-size:10px}.player-avatar{width:36px;height:36px;font-size:13px}.session-actions{order:1;border:0;padding:0;margin-left:auto}.session-stats{order:2;width:100%;justify-content:space-between;padding:11px 15px;background:#EAF0F8;border-radius:12px}.stat{min-width:0;gap:8px}.stat small{font-size:9px}.stat b{font-size:20px}.stat>.icon{width:20px!important;height:20px!important}.question-panel{padding:17px;gap:13px;border-radius:18px}.question-counter{font-size:9px;white-space:nowrap}.question-topic{display:none}.progress-dots{width:120px}.question-content{width:100%;flex:auto;min-height:55px}.question-content h1{font-size:21px}.question-panel>.button{align-self:auto;width:100%;min-height:40px;padding:9px;margin-top:3px}.formula-line{font-size:21px}.question-content p{font-size:13px}.hint-panel{padding:12px}.workbench-heading h2{font-size:12px}.workbench-heading p{font-size:10px}.scanners{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}.stage-connector{display:none}.scanner{height:177px;border-radius:14px}.scanner-top{padding:11px 10px 0;flex-wrap:wrap;gap:4px}.scanner-top>b{flex-direction:row;gap:5px;align-items:center;font-size:17px}.scanner-top>b>span{font-size:7px;letter-spacing:.4px}.scanner-led{width:100%;font-size:8px;margin-top:0}.scanner-body{padding:4px}.scanner-placeholder{font-size:9px;text-align:center;padding:0 3px}.scan-target{width:52px;height:39px}.scan-target .icon{width:20px;height:20px}.scanner-bottom{font-size:6px;padding:7px 4px;letter-spacing:.4px;min-height:26px}.scanner.filled .scanner-body{flex-direction:column;gap:0}.scanner.filled .shape-art{height:64px;width:80px}.scanned-label{font-size:9px}.scanned-label .icon{width:13px;height:13px}.game-feedback{font-size:10px;min-height:48px;line-height:1.6;align-items:flex-start}.game-feedback>.icon{margin-top:2px;width:14px;height:14px}.choices{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.choice{min-height:119px}.choice>.shape-art{height:80px}.shelf-heading>span{font-size:8px}.shelf-heading h3{font-size:12px;gap:6px}.round-bottom{margin-top:12px}.round-bottom>p{font-size:8px;gap:5px}.round-bottom .led-dot{margin-left:4px}.round-bottom .button{width:100%;background:white;border-color:var(--border);margin-top:4px;font-size:12px;min-height:45px}.round-bottom .button small{font-size:10px}.result-screen{padding-top:20px}.result-heading{margin-bottom:22px}.result-heading h1{font-size:27px;letter-spacing:-.6px}.result-heading p{font-size:12px}.result-main{padding:25px 19px}.result-medal{gap:14px}.result-medal>.icon{height:62px;width:62px}.result-medal b{font-size:73px}.result-medal>div{gap:8px}.result-medal>div>span{font-size:11px}.result-metrics{gap:7px}.result-metrics b{font-size:17px}.result-metrics small{font-size:8px}.result-actions{gap:8px}.result-actions .button{min-width:0;flex:1;font-size:11px;padding:12px 9px}.review-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.review-pair>.shape-art{height:70px}.review-section h2{font-size:19px}.review-section>p{font-size:12px}.dialog-shell{padding:20px}.dialog-header h2{font-size:21px}.help-step{padding:13px;gap:10px}.help-step p{font-size:11px}.help-step h3{font-size:12px}.help-intro{font-size:12px}.help-number{width:25px;height:25px;font-size:10px}.dialog-actions .button{flex:1;min-width:110px;font-size:11px}.score-toolbar{align-items:stretch}.score-toolbar .button{flex:1}.score-toolbar>span{width:100%;order:-1}.dialog-copy{font-size:12px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}.choice:hover,.button:hover{transform:none!important}}
+@media(forced-colors:active){*{scrollbar-color:auto}.led-dot{border:2px solid CanvasText}.choice[aria-pressed="true"]{outline:3px solid Highlight}.scanner{border:2px solid CanvasText}.progress-dot{background:CanvasText}.progress-dot.current{background:Highlight}}
+@media print{.site-header nav,.session-actions,.result-actions,.site-footer,.review-section,.game-screen,.entry-screen,dialog{display:none!important}.result-layout{display:block}.result-main,.result-side{break-inside:avoid}.result-side{margin-top:20px}}
+
+</style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Terus ke kandungan</a>
+  <header class="site-header">
+    <a href="#" class="brand" id="brand-home" aria-label="GeoDecoder Digital, halaman mula"><span data-brand></span><span>Geo<span class="brand-blue">Decoder</span><small>DIGITAL EDITION</small></span></a>
+    <nav aria-label="Menu utama">
+      <span class="version-badge">V1.0</span>
+      <button class="nav-button" data-action="help"><span data-icon="help"></span><span>Cara main</span></button>
+      <button class="nav-button score-nav" data-action="scores" aria-label="Papan skor"><span data-icon="trophy"></span><span>Papan skor</span></button>
+    </nav>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section id="welcome" class="entry-screen" aria-labelledby="welcome-title">
+      <div class="intro">
+        <div class="eyebrow"><span class="tiny-cube"></span> MAKMAL GEOMETRI ANDA</div>
+        <h1 id="welcome-title">Kenali bentuk.<br><span>Temui padanannya.</span></h1>
+        <p class="intro-copy">Bongkah 3D, kad bentangan dan dua pengimbas.<br class="desktop-only"> Pengalaman GeoDecoder, kini boleh dimainkan di skrin.</p>
+        <div class="lab-scene" aria-label="Ilustrasi bongkah dan bentangan di atas dua pengimbas digital" role="img">
+          <div class="scene-grid"></div>
+          <div class="scene-note"><span data-icon="cursor"></span> Seret. Imbas. Padankan.</div>
+          <div class="scene-object scene-cube" data-art="cube"></div>
+          <div class="scene-object scene-cone" data-art="cone"></div>
+          <div class="scene-object scene-pyramid" data-art="pyramid"></div>
+          <div class="scene-net" data-art="cube" data-kind="net"></div>
+          <div class="scene-pad pad-one"><span class="led-dot blue"></span><b>R1</b><span>BONGKAH</span><div class="scanner-rings"></div></div>
+          <div class="scene-pad pad-two"><span class="led-dot green"></span><b>R2</b><span>BENTANGAN</span><div class="scanner-rings"></div></div>
+          <span class="scene-connector" data-icon="arrow"></span>
+          <span class="scene-star star-one">✦</span><span class="scene-star star-two">✦</span>
+          <div class="scene-score"><span data-icon="spark"></span><b>+1</b><span>Pasangan tepat!</span></div>
+        </div>
+        <div class="entry-facts"><span><b>5</b> jenis bongkah</span><i></i><span><b>10</b> soalan setiap pusingan</span><i></i><span><span class="fact-icon" data-icon="trophy"></span> Cabar skor sendiri</span></div>
+      </div>
+      <div class="registration-card">
+        <span class="card-kicker">SEDIA UNTUK MENCUBA?</span>
+        <h2>Jom kenalkan diri.</h2>
+        <p>Isi maklumat anda sebelum mula bermain.</p>
+        <form id="player-form" novalidate>
+          <div class="field"><label for="player-name">Nama pemain</label><input id="player-name" name="name" type="text" maxlength="60" autocomplete="off" placeholder="Contoh: Aisyah" aria-describedby="name-error"><span class="field-error" id="name-error"></span></div>
+          <fieldset class="category-field"><legend>Saya seorang</legend><div class="radio-options"><label class="radio-card"><input type="radio" name="category" value="Murid" checked><span><span data-icon="user"></span>Murid</span></label><label class="radio-card"><input type="radio" name="category" value="Pelajar"><span><span data-icon="user"></span>Pelajar</span></label></div><span class="field-error" id="category-error"></span></fieldset>
+          <div class="field"><label for="player-class">Kelas</label><input id="player-class" name="className" type="text" maxlength="40" autocomplete="off" placeholder="Contoh: 1 Bestari" aria-describedby="className-error"><span class="field-error" id="className-error"></span></div>
+          <button type="submit" class="button button-primary start-button">Mulakan permainan <span data-icon="arrow"></span></button>
+          <p class="privacy-note"><span data-icon="lock"></span><span>Nama dan skor disimpan dalam pelayar ini sahaja. Anda boleh gunakan nama panggilan.</span></p>
+        </form>
+      </div>
+    </section>
+
+    <section id="game-screen" class="game-screen" hidden aria-labelledby="question-title">
+      <div class="session-bar">
+        <div class="player-chip"><span class="player-avatar" id="player-initial">A</span><span><b id="player-display"></b><small id="player-meta"></small></span></div>
+        <div class="session-stats"><div class="stat score-stat"><span data-icon="trophy"></span><span><small>Markah</small><b><span id="score-value">0</span><span class="stat-total"> / 10</span></b></span></div><div class="stat time-stat"><span data-icon="clock"></span><span><small>Masa</small><b id="time-value">00:00</b></span></div></div>
+        <div class="session-actions"><button id="sound-button" class="icon-button" aria-label="Hidupkan bunyi" aria-pressed="false" title="Hidupkan bunyi"><span data-icon="mute"></span></button><button class="icon-button" id="pause-button" aria-label="Jeda permainan" title="Jeda permainan"><span data-icon="pause"></span></button><button class="icon-button leave-button" data-action="home" aria-label="Kembali ke mula" title="Kembali ke mula"><span data-icon="home"></span></button></div>
+      </div>
+
+      <div class="question-panel">
+        <div class="question-side"><span class="question-counter" id="question-counter">SOALAN 01 / 10</span><span class="question-topic" id="question-topic">Kenali bongkah</span><div class="progress-dots" id="progress-dots" aria-label="Kemajuan soalan"></div></div>
+        <div class="question-content"><h1 id="question-title" tabindex="-1"></h1><p id="question-detail"></p><div id="formula-key" class="formula-key" hidden></div></div>
+        <button id="hint-button" class="button button-hint" aria-expanded="false" aria-controls="hint-panel"><span data-icon="bulb"></span> <span id="hint-label">Beri petunjuk</span></button>
+      </div>
+      <div id="hint-panel" class="hint-panel" hidden><span data-icon="bulb"></span><p id="hint-text"></p><span>Tiada potongan markah</span></div>
+
+      <div class="workbench-heading"><div><span class="live-indicator"></span><h2 id="stage-instruction">Pilih bongkah yang betul</h2></div><p>Seret ke pengimbas, atau klik kad kemudian klik pengimbas.</p></div>
+      <div class="scanners">
+        <button class="scanner" id="r1" data-target="r1" aria-label="Pengimbas R1, imbas bongkah" type="button">
+          <span class="scanner-top"><b>R1 <span>BONGKAH 3D</span></b><span class="scanner-led"><span class="led-dot blue" id="led-r1"></span><span id="status-r1">Sedia diimbas</span></span></span>
+          <span class="scanner-body" id="scanner-body-r1"><span class="scan-target"><span class="target-corner tl"></span><span class="target-corner tr"></span><span class="target-corner bl"></span><span class="target-corner br"></span><span data-icon="cursor"></span></span><span class="scanner-placeholder">Letak bongkah di sini</span></span>
+          <span class="scanner-bottom" id="scanner-bottom-r1">LANGKAH 1 · PILIH BONGKAH</span>
+        </button>
+        <div class="stage-connector" aria-hidden="true"><span data-icon="arrow"></span></div>
+        <button class="scanner scanner-locked" id="r2" data-target="r2" aria-disabled="true" aria-label="Pengimbas R2, jawab R1 dahulu" type="button">
+          <span class="scanner-top"><b>R2 <span>BENTANGAN 2D</span></b><span class="scanner-led"><span class="led-dot off" id="led-r2"></span><span id="status-r2">Jawab R1 dahulu</span></span></span>
+          <span class="scanner-body" id="scanner-body-r2"><span class="scan-target"><span class="target-corner tl"></span><span class="target-corner tr"></span><span class="target-corner bl"></span><span class="target-corner br"></span><span data-icon="lock"></span></span><span class="scanner-placeholder">Kemudian letak bentangan</span></span>
+          <span class="scanner-bottom" id="scanner-bottom-r2">LANGKAH 2 · PADANKAN BENTANGAN</span>
+        </button>
+      </div>
+      <div class="game-feedback" id="game-status" role="status" aria-live="polite"><span data-icon="cursor"></span><span id="feedback-text">Baca soalan, kemudian pilih satu bongkah untuk R1.</span></div>
+
+      <div class="answer-shelves">
+        <section class="shelf" aria-labelledby="solid-shelf-title"><div class="shelf-heading"><h3 id="solid-shelf-title"><span class="shelf-badge">R1</span> Koleksi bongkah</h3><span>5 pilihan · seret atau klik</span></div><div class="choices" id="solid-choices"></div></section>
+        <section class="shelf" aria-labelledby="net-shelf-title"><div class="shelf-heading"><h3 id="net-shelf-title"><span class="shelf-badge net-badge">R2</span> Kad bentangan</h3><span>5 pilihan · kad tanpa nama</span></div><div class="choices" id="net-choices"></div></section>
+      </div>
+      <div class="round-bottom"><p><span class="led-dot blue"></span> Sedia <span class="led-dot green"></span> Betul <span class="led-dot red"></span> Cuba lagi <span class="led-dot purple"></span> Petunjuk</p><button id="skip-button" class="button button-quiet"><span data-icon="skip"></span> Langkau soalan <small>+0 markah</small></button></div>
+    </section>
+
+    <section id="result-screen" class="result-screen" hidden aria-labelledby="result-title">
+      <div class="result-heading"><span class="eyebrow">PUSINGAN SELESAI</span><h1 id="result-title" tabindex="-1">Bagus, teruskan meneroka!</h1><p id="result-player"></p></div>
+      <div class="result-layout"><div class="result-main"><div class="result-medal"><span data-icon="trophy"></span><div><b id="result-score">10</b><span>/ 10 markah</span></div><span class="medal-spark">✦</span></div><div class="result-level" id="result-level">Pakar padanan</div><p id="result-message"></p><div class="result-metrics"><div><span data-icon="clock"></span><b id="result-time"></b><small>Masa bermain</small></div><div><b id="result-first"></b><small>Betul cubaan pertama</small></div><div><b id="result-mistakes"></b><small>Cubaan salah</small></div><div><b id="result-hints"></b><small>Soalan guna petunjuk</small></div></div><div class="result-actions"><button class="button button-primary" id="replay-button"><span data-icon="refresh"></span> Main lagi</button><button class="button button-outline" data-action="home">Tukar pemain</button></div></div><div class="result-side"><div class="mini-title"><span data-icon="trophy"></span><h2>Papan skor</h2><span>PERANTI INI</span></div><div id="result-leaderboard"></div><button class="button button-quiet" data-action="scores">Lihat semua skor <span data-icon="arrow"></span></button><p class="score-scope">Skor lebih tinggi dahulu, kemudian cubaan salah lebih sedikit dan masa lebih pantas.</p></div></div>
+      <div class="review-section"><h2>Lihat semula pusingan anda</h2><p>Kenali pasangan yang telah dijawab atau dilangkau.</p><div class="review-list" id="review-list"></div></div>
+    </section>
+
+    <div class="storage-warning" id="storage-warning" hidden role="status">Simpanan pelayar tidak tersedia. Anda masih boleh bermain; skor sesi ini boleh dieksport sebelum halaman ditutup.</div>
+  </main>
+  <footer class="site-footer"><span>GeoDecoder <b>Digital V1</b></span><span>Belajar bentuk. Bina kefahaman.</span><span>Serasi tetikus, sentuhan &amp; papan kekunci</span></footer>
+  <div id="announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+  <dialog id="app-dialog" aria-labelledby="dialog-title"><div class="dialog-shell"><div class="dialog-header"><h2 id="dialog-title"></h2><button class="icon-button" id="dialog-close" aria-label="Tutup tetingkap"><span data-icon="close"></span></button></div><div id="dialog-content"></div></div></dialog>
+  <noscript><div class="noscript">Hidupkan JavaScript dalam pelayar untuk bermain GeoDecoder Digital.</div></noscript>
+  <script type="module">
+// Generated from the verified firmware bank; see docs/SOURCE.md.
+const QUESTIONS = [
+  {
+    "id": "P1",
+    "shape": "pyramid",
+    "lines": [
+      "Bongkah apakah ini?",
+      "Tapak persegi dengan",
+      "4 muka segi tiga."
+    ],
+    "prompt": "Bongkah apakah ini? Tapak persegi dengan 4 muka segi tiga.",
+    "hint": "Muka sisi akan bertemu pada puncak apabila dilipat."
+  },
+  {
+    "id": "P2",
+    "shape": "pyramid",
+    "lines": [
+      "V=a^2*t/3; t=tinggi",
+      "a=sisi tapak persegi",
+      "Bongkah apakah ini?"
+    ],
+    "prompt": "V=a^2*t/3; t=tinggi a=sisi tapak persegi Bongkah apakah ini?",
+    "hint": "a^2 ialah luas tapak. Fikir bentuk muka sisi bongkah."
+  },
+  {
+    "id": "P3",
+    "shape": "pyramid",
+    "lines": [
+      "Pilih bentangan bagi",
+      "1 segi empat sama",
+      "dan 4 segi tiga."
+    ],
+    "prompt": "Pilih bentangan bagi 1 segi empat sama dan 4 segi tiga.",
+    "hint": "Lipat sisinya di sisi petak hingga bertemu di 1 puncak."
+  },
+  {
+    "id": "S1",
+    "shape": "cylinder",
+    "lines": [
+      "Tin minuman ada dua",
+      "tapak bulatan sama.",
+      "Bongkah apakah ini?"
+    ],
+    "prompt": "Tin minuman ada dua tapak bulatan sama. Bongkah apakah ini?",
+    "hint": "2 tapak bulat sama saiz disambung oleh sisi melengkung"
+  },
+  {
+    "id": "S2",
+    "shape": "cylinder",
+    "lines": [
+      "V=pi*j^2*t",
+      "L=2*pi*j*(j+t)",
+      "Bongkah apakah ini?"
+    ],
+    "prompt": "V=pi*j^2*t L=2*pi*j*(j+t) Bongkah apakah ini?",
+    "hint": "j=jejari dan t=tinggi. Tapak atas dan bawah sama saiz."
+  },
+  {
+    "id": "S3",
+    "shape": "cylinder",
+    "lines": [
+      "Pilih bentangan:",
+      "2 bulatan sama saiz,",
+      "1 segi empat tepat."
+    ],
+    "prompt": "Pilih bentangan: 2 bulatan sama saiz, 1 segi empat tepat.",
+    "hint": "Lengkungkan segi empat itu; dua bulatan jadi tapak."
+  },
+  {
+    "id": "K1",
+    "shape": "cube",
+    "lines": [
+      "Enam muka berbentuk",
+      "segi empat sama.",
+      "Bongkah apakah ini?"
+    ],
+    "prompt": "Enam muka berbentuk segi empat sama. Bongkah apakah ini?",
+    "hint": "12 rusuk sama panjang. Setiap muka sama bentuk dan saiz"
+  },
+  {
+    "id": "K2",
+    "shape": "cube",
+    "lines": [
+      "V=a^3; L=6*a^2",
+      "a=panjang rusuk",
+      "Bongkah apakah ini?"
+    ],
+    "prompt": "V=a^3; L=6*a^2 a=panjang rusuk Bongkah apakah ini?",
+    "hint": "Panjang, lebar serta tinggi sama bagi bongkah ini."
+  },
+  {
+    "id": "K3",
+    "shape": "cube",
+    "lines": [
+      "Pilih bentangan:",
+      "6 segi empat sama,",
+      "semuanya sama saiz."
+    ],
+    "prompt": "Pilih bentangan: 6 segi empat sama, semuanya sama saiz.",
+    "hint": "Bayangkan muka dilipat jadi kotak tanpa muka bertindih"
+  },
+  {
+    "id": "C1",
+    "shape": "cone",
+    "lines": [
+      "V=pi*j^2*t/3",
+      "j=jejari; t=tinggi.",
+      "Bongkah apakah ini?"
+    ],
+    "prompt": "V=pi*j^2*t/3 j=jejari; t=tinggi. Bongkah apakah ini?",
+    "hint": "Lihat tapaknya yang bulat. Sisinya mengecil ke puncak."
+  },
+  {
+    "id": "C2",
+    "shape": "cone",
+    "lines": [
+      "L=pi*j*(j+s)",
+      "j=jejari; s=tinggi",
+      "sendeng. Bentuk apa?"
+    ],
+    "prompt": "L=pi*j*(j+s) j=jejari; s=tinggi sendeng. Bentuk apa?",
+    "hint": "Tinggi sendeng diukur ikut sisi dari tapak ke puncak"
+  },
+  {
+    "id": "C3",
+    "shape": "cone",
+    "lines": [
+      "Pilih bentangan yang",
+      "ada 1 sektor bulatan",
+      "dan 1 bulatan."
+    ],
+    "prompt": "Pilih bentangan yang ada 1 sektor bulatan dan 1 bulatan.",
+    "hint": "Rapatkan sisi lurus pada sektor. Bulatan jadi tapak."
+  },
+  {
+    "id": "B1",
+    "shape": "cuboid",
+    "lines": [
+      "Kotak ini mempunyai",
+      "3 ukuran berbeza.",
+      "Bongkah apakah ini?"
+    ],
+    "prompt": "Kotak ini mempunyai 3 ukuran berbeza. Bongkah apakah ini?",
+    "hint": "Lihat panjang, lebar serta tinggi. Muka berhadapan sama"
+  },
+  {
+    "id": "B2",
+    "shape": "cuboid",
+    "lines": [
+      "V=p*l*t; p,l,t ialah",
+      "3 ukuran berbeza.",
+      "Bongkah apakah ini?"
+    ],
+    "prompt": "V=p*l*t; p,l,t ialah 3 ukuran berbeza. Bongkah apakah ini?",
+    "hint": "p=panjang, l=lebar, t=tinggi. Lihat kotak kasut."
+  },
+  {
+    "id": "B3",
+    "shape": "cuboid",
+    "lines": [
+      "Kotak: 6cm x 4cm",
+      "dengan tinggi 3cm.",
+      "Pilih bentangannya."
+    ],
+    "prompt": "Kotak: 6cm x 4cm dengan tinggi 3cm. Pilih bentangannya.",
+    "hint": "Padankan muka yang sama saiz, lalu lipat menjadi kotak."
+  }
+];
+
+
+const VERSION = '1.0.0';
+const SHAPES = ['cube', 'cuboid', 'pyramid', 'cylinder', 'cone'];
+const ROUND_SIZE = 10;
+const BLINK_MS = 900;
+const WRONG_MS = 1200;
+
+function shuffle(items, rng = Math.random) {
+  const result = [...items];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
+function buildRound(bank, rng = Math.random) {
+  const selected = SHAPES.flatMap(shape => shuffle(bank.filter(q => q.shape === shape), rng).slice(0, 2));
+  if (selected.length !== ROUND_SIZE || new Set(selected.map(q => q.id)).size !== ROUND_SIZE) {
+    throw new Error('Bank mesti mempunyai sekurang-kurangnya dua soalan unik bagi setiap bongkah.');
+  }
+  return shuffle(selected, rng);
+}
+
+function validatePlayer(input) {
+  const player = {name: String(input.name ?? '').trim().replace(/\s+/g, ' '), category: input.category, className: String(input.className ?? '').trim().replace(/\s+/g, ' ')};
+  const errors = {};
+  if (player.name.length < 2 || player.name.length > 60) errors.name = 'Masukkan nama antara 2 hingga 60 aksara.';
+  if (!['Murid', 'Pelajar'].includes(player.category)) errors.category = 'Pilih Murid atau Pelajar.';
+  if (!player.className || player.className.length > 40) errors.className = 'Masukkan kelas, maksimum 40 aksara.';
+  return {player, errors, valid: Object.keys(errors).length === 0};
+}
+
+function formatTime(ms) {
+  const seconds = Math.floor(Math.max(0, ms) / 1000);
+  return `${String(Math.floor(seconds / 60)).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
+}
+
+class Game {
+  constructor(bank, player, now = 0, rng = Math.random) {
+    this.round = buildRound(bank, rng);
+    this.player = {...player};
+    this.index = 0;
+    this.score = 0;
+    this.mistakes = 0;
+    this.hints = 0;
+    this.skipped = 0;
+    this.stage = 'solid';
+    this.status = 'running';
+    this.hintOpen = false;
+    this.hintUsed = false;
+    this.wrongOnQuestion = false;
+    this.firstTry = 0;
+    this.elapsed = 0;
+    this.segmentStart = now;
+    this.paused = false;
+    this.pauseStart = 0;
+    this.transitionAt = 0;
+    this.wrongUntil = 0;
+    this.wrongReader = null;
+    this.lastOutcome = null;
+    this.answers = [];
+    this.solidOrder = shuffle(SHAPES, rng);
+    this.netOrder = shuffle(SHAPES, rng);
+    this.rng = rng;
+  }
+
+  get question() { return this.round[this.index]; }
+  time(now) { return this.elapsed + (this.status === 'running' && !this.paused ? Math.max(0, now - this.segmentStart) : 0); }
+  get interactive() { return this.status === 'running' && !this.paused; }
+
+  scan(kind, shape, target, now) {
+    if (!this.interactive) return {type: 'blocked'};
+    const activeTarget = this.stage === 'solid' ? 'r1' : 'r2';
+    if (target !== activeTarget) return {type: 'stage', target: activeTarget};
+    if (kind !== this.stage || !SHAPES.includes(shape)) return {type: 'kind', kind: this.stage};
+    if (shape !== this.question.shape) {
+      this.mistakes++;
+      this.wrongOnQuestion = true;
+      this.wrongUntil = now + WRONG_MS;
+      this.wrongReader = activeTarget;
+      return {type: 'wrong', target: activeTarget};
+    }
+    this.wrongUntil = 0;
+    this.wrongReader = null;
+    if (this.stage === 'solid') {
+      this.stage = 'net';
+      this.hintOpen = false;
+      return {type: 'solid'};
+    }
+    this.score++;
+    if (!this.wrongOnQuestion) this.firstTry++;
+    this.beginFeedback('correct', now);
+    return {type: 'correct'};
+  }
+
+  beginFeedback(outcome, now) {
+    this.elapsed = this.time(now);
+    this.status = 'feedback';
+    this.lastOutcome = outcome;
+    this.transitionAt = now + BLINK_MS;
+    this.hintOpen = false;
+    this.wrongUntil = 0;
+    this.answers.push({id: this.question.id, shape: this.question.shape, outcome, hint: this.hintUsed, firstTry: outcome === 'correct' && !this.wrongOnQuestion});
+  }
+
+  skip(now) {
+    if (!this.interactive) return false;
+    this.skipped++;
+    this.beginFeedback('skipped', now);
+    return true;
+  }
+
+  toggleHint() {
+    if (!this.interactive) return false;
+    this.hintOpen = !this.hintOpen;
+    if (!this.hintUsed) { this.hints++; this.hintUsed = true; }
+    return true;
+  }
+
+  update(now) {
+    if (this.paused || this.status !== 'feedback' || now < this.transitionAt) return false;
+    if (this.index === this.round.length - 1) {
+      this.status = 'finished';
+      return true;
+    }
+    this.index++;
+    this.stage = 'solid';
+    this.status = 'running';
+    this.segmentStart = now;
+    this.hintUsed = false;
+    this.hintOpen = false;
+    this.wrongOnQuestion = false;
+    this.wrongReader = null;
+    this.solidOrder = shuffle(SHAPES, this.rng);
+    this.netOrder = shuffle(SHAPES, this.rng);
+    return true;
+  }
+
+  pause(now) {
+    if (this.paused || this.status === 'finished') return;
+    this.elapsed = this.time(now);
+    this.paused = true;
+    this.pauseStart = now;
+  }
+  resume(now) {
+    if (!this.paused) return;
+    const gap = Math.max(0, now - this.pauseStart);
+    if (this.status === 'feedback') this.transitionAt += gap;
+    if (this.wrongUntil) this.wrongUntil += gap;
+    this.segmentStart = now;
+    this.paused = false;
+  }
+
+  led(reader, now) {
+    if (this.status === 'feedback') {
+      const clock = this.paused ? this.pauseStart : now;
+      const on = Math.floor(Math.max(0, clock - (this.transitionAt - BLINK_MS)) / 150) % 2 === 0;
+      return on ? (this.lastOutcome === 'correct' ? 'green' : 'red') : 'off';
+    }
+    if (reader === 'r1' && this.stage === 'net') return 'green';
+    if (reader !== (this.stage === 'solid' ? 'r1' : 'r2')) return 'off';
+    if (this.wrongReader === reader && now < this.wrongUntil) return 'red';
+    return this.hintOpen ? 'purple' : 'blue';
+  }
+
+  result(id, completedAt = Date.now()) {
+    if (this.status !== 'finished') return null;
+    return {id, version: VERSION, player: {...this.player}, score: this.score, total: ROUND_SIZE, mistakes: this.mistakes, hints: this.hints, skipped: this.skipped, firstTry: this.firstTry, elapsed: Math.round(this.elapsed), completedAt};
+  }
+}
+
+
+const SCORE_KEY = 'geodecoder.digital.v1.scores';
+const MAX_SCORES = 50;
+
+function validRecord(r) {
+  return !!r && typeof r.id === 'string' && r.id.length < 120 && r.version === '1.0.0' &&
+    !!r.player && typeof r.player.name === 'string' && r.player.name.length >= 2 && r.player.name.length <= 60 &&
+    ['Murid', 'Pelajar'].includes(r.player.category) && typeof r.player.className === 'string' && r.player.className.length > 0 && r.player.className.length <= 40 &&
+    r.total === 10 && Number.isInteger(r.score) && r.score >= 0 && r.score <= 10 &&
+    ['mistakes', 'hints', 'skipped', 'firstTry'].every(k => Number.isInteger(r[k]) && r[k] >= 0) &&
+    r.hints <= 10 && r.skipped <= 10 && r.score + r.skipped === 10 && r.firstTry <= r.score &&
+    Number.isFinite(r.elapsed) && r.elapsed >= 0 && Number.isFinite(r.completedAt) && r.completedAt > 0;
+}
+
+function rankScores(scores) {
+  return [...new Map(scores.filter(validRecord).map(r => [r.id, r])).values()]
+    .sort((a,b) => b.score - a.score || a.mistakes - b.mistakes || a.elapsed - b.elapsed || a.completedAt - b.completedAt)
+    .slice(0, MAX_SCORES);
+}
+
+class ScoreStore {
+  constructor(storage) { this.storage = storage; this.memory = []; this.failed = false; }
+  read() {
+    try {
+      const text = this.storage.getItem(SCORE_KEY);
+      const data = text ? JSON.parse(text) : [];
+      if (!Array.isArray(data)) throw new Error('Invalid records');
+      return rankScores([...data, ...this.memory]);
+    } catch {
+      this.failed = true;
+      return rankScores(this.memory);
+    }
+  }
+  save(record) {
+    if (!validRecord(record)) throw new Error('Invalid score');
+    const scores = rankScores([...this.read(), record]);
+    this.memory = scores;
+    try { this.storage.setItem(SCORE_KEY, JSON.stringify(scores)); this.failed = false; }
+    catch { this.failed = true; }
+    return scores;
+  }
+  clear() {
+    this.memory = [];
+    try { this.storage.removeItem(SCORE_KEY); this.failed = false; return true; }
+    catch { this.failed = true; return false; }
+  }
+}
+
+function csvScores(scores) {
+  const field = value => {
+    let v = String(value);
+    if (/^\s*[=+@\-\t\r]/.test(v)) v = "'" + v;
+    return '"' + v.replaceAll('"', '""') + '"';
+  };
+  const header = ['Kedudukan','Nama','Kategori','Kelas','Markah','Jumlah','Kesilapan','Hint','Langkau','Cubaan pertama','Masa (saat)','Tarikh (Malaysia)'];
+  const rows = rankScores(scores).map((r, i) => [i+1,r.player.name,r.player.category,r.player.className,r.score,r.total,r.mistakes,r.hints,r.skipped,r.firstTry,(r.elapsed / 1000).toFixed(3),new Date(r.completedAt).toLocaleString('ms-MY',{timeZone:'Asia/Kuala_Lumpur'})]);
+  return '\uFEFF' + [header,...rows].map(row => row.map(field).join(',')).join('\r\n');
+}
+
+
+const SHAPE_NAMES = {cube:'Kubus',cuboid:'Kuboid',pyramid:'Piramid',cylinder:'Silinder',cone:'Kon'};
+
+const descriptions = {
+  solid: {
+    cube:'Bongkah dengan muka segi empat sama dan semua rusuk sama panjang.',
+    cuboid:'Bongkah seperti kotak, dengan panjang, lebar dan tinggi yang berbeza.',
+    pyramid:'Bongkah bertapak segi empat sama; muka segi tiga bertemu pada satu puncak.',
+    cylinder:'Bongkah dengan dua tapak bulatan sama saiz dan satu sisi melengkung.',
+    cone:'Bongkah dengan satu tapak bulatan dan sisi melengkung yang bertemu pada puncak.'
+  },
+  net: {
+    cube:'Bentangan enam segi empat sama sama saiz, membentuk salib dengan empat petak sebaris.',
+    cuboid:'Bentangan enam segi empat tepat: tiga pasang muka berhadapan dengan ukuran berbeza.',
+    pyramid:'Bentangan satu segi empat sama, dengan satu segi tiga pada setiap empat sisinya.',
+    cylinder:'Bentangan satu segi empat tepat dan dua bulatan sama saiz pada sisi bertentangan.',
+    cone:'Bentangan satu sektor bulatan dan satu bulatan; panjang lengkok sektor sepadan lilitan tapak.'
+  }
+};
+
+function describeShape(shape, kind) { return descriptions[kind][shape]; }
+
+function icon(name, cls='') {
+  const paths = {
+    arrow:'<path d="M4 12h15m-6-6 6 6-6 6"/>',
+    chevron:'<path d="m9 5 7 7-7 7"/>',
+    check:'<path d="m5 12 4 4L19 6"/>',
+    close:'<path d="m6 6 12 12M6 18 18 6"/>',
+    help:'<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 4.4 1.6c-1 .7-1.9 1-1.9 2.4m0 3h.01"/>',
+    trophy:'<path d="M8 3h8v6a4 4 0 0 1-8 0V3Zm4 10v6m-4 2h8M8 5H4v2a5 5 0 0 0 5 5m7-7h4v2a5 5 0 0 1-5 5"/>',
+    clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+    bulb:'<path d="M8 15a6 6 0 1 1 8 0l-1 2H9l-1-2Zm1 5h6m-5 2h4M12 3v1"/>',
+    skip:'<path d="m5 5 10 7L5 19V5Zm14 0v14"/>',
+    sound:'<path d="M11 4 5 9H2v6h3l6 5V4Zm4 4a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/>',
+    mute:'<path d="M11 4 5 9H2v6h3l6 5V4Zm5 5 6 6m0-6-6 6"/>',
+    pause:'<path d="M8 5v14M16 5v14"/>',
+    home:'<path d="m3 10 9-7 9 7v10H3V10Zm6 10v-7h6v7"/>',
+    download:'<path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/>',
+    trash:'<path d="M3 6h18M9 6V3h6v3M6 6l1 15h10l1-15M10 10v7m4-7v7"/>',
+    cursor:'<path d="m5 3 14 10-7 1-3 7L5 3Z"/>',
+    lock:'<rect x="5" y="10" width="14" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 5v2"/>',
+    refresh:'<path d="M20 7v5h-5M4 17v-5h5m-4-4a8 8 0 0 1 13-3l2 3M4 16l2 3a8 8 0 0 0 13-3"/>',
+    user:'<circle cx="12" cy="7" r="4"/><path d="M4 21v-3a8 8 0 0 1 16 0v3"/>',
+    spark:'<path d="m12 2 2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5L12 2Z"/>'
+  };
+  return `<svg class="icon ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name]||paths.spark}</svg>`;
+}
+
+function shapeArt(shape, kind='solid', decorative=false) {
+  const common='stroke="#236D69" stroke-width="2.2" stroke-linejoin="round"';
+  let content='';
+  if(kind==='solid') {
+    const models={
+      cube:`<path d="M100 22 152 50 100 78 48 50Z" fill="#C3F1DC"/><path d="M48 50 100 78 100 138 48 110Z" fill="#58BBA5"/><path d="M100 78 152 50 152 110 100 138Z" fill="#8AD6BA"/><path d="M100 22 152 50 152 110 100 138 48 110 48 50Z M48 50 100 78 152 50M100 78v60" fill="none" ${common}/>` ,
+      cuboid:`<path d="M34 58 94 25 166 64 106 97Z" fill="#C3F1DC"/><path d="M34 58 106 97 106 139 34 100Z" fill="#58BBA5"/><path d="M106 97 166 64 166 106 106 139Z" fill="#8AD6BA"/><path d="M34 58 94 25 166 64 166 106 106 139 34 100Z M34 58 106 97 166 64M106 97v42" fill="none" ${common}/>` ,
+      pyramid:`<path d="M100 18 40 108 100 140 160 108Z" fill="#8AD6BA"/><path d="M100 18 40 108 100 140Z" fill="#58BBA5"/><path d="M100 18 40 108 100 140 160 108Z M100 18v122" fill="none" ${common}/><path d="m40 108 60-30 60 30M100 18v60" fill="none" stroke="#236D69" stroke-width="1.8" stroke-dasharray="5 4" opacity=".55"/>`,
+      cylinder:`<path d="M50 48v65c0 35 100 35 100 0V48Z" fill="#8AD6BA"/><path d="M50 48v65c0 12 12 21 29 24V68Z" fill="#58BBA5" opacity=".75"/><ellipse cx="100" cy="48" rx="50" ry="24" fill="#C3F1DC"/><path d="M50 48v65c0 35 100 35 100 0V48" fill="none" ${common}/><ellipse cx="100" cy="48" rx="50" ry="24" fill="none" ${common}/><path d="M50 113c0-31 100-31 100 0" fill="none" stroke="#236D69" stroke-width="1.5" stroke-dasharray="5 4" opacity=".5"/>`,
+      cone:`<path d="M100 18 44 116c0 36 112 36 112 0Z" fill="#8AD6BA"/><path d="M100 18 44 116c0 14 15 22 36 25Z" fill="#58BBA5"/><path d="M100 18 44 116c0 36 112 36 112 0Z" fill="none" ${common}/><path d="M44 116c0-31 112-31 112 0" fill="none" stroke="#236D69" stroke-width="1.5" stroke-dasharray="5 4" opacity=".55"/>`
+    };
+    content=models[shape]||'';
+  } else {
+    const fill='#D5E6FF',stroke='#366BAD',fold='stroke="#366BAD" stroke-width="1.5" stroke-dasharray="4 3" fill="none"';
+    const nets={
+      cube:`<path d="M51 26h32v32h64v32H83v32H51V90H19V58h32Z" fill="${fill}" stroke="${stroke}" stroke-width="2"/><path d="M51 58h32M51 90h32M51 58v32M83 58v32M115 58v32" ${fold}/>`,
+      cuboid:`<path d="M52 32h48v32h80v24h-80v32H52V88H20V64h32Z" fill="${fill}" stroke="${stroke}" stroke-width="2"/><path d="M52 64h48M52 88h48M52 64v24M100 64v24M132 64v24" ${fold}/>` ,
+      pyramid:`<path d="m100 9 24 43 43 24-43 24-24 43-24-43-43-24 43-24Z" fill="${fill}" stroke="${stroke}" stroke-width="2"/><path d="M76 52h48v48H76Z" ${fold}/>`,
+      cylinder:`<rect x="26" y="53" width="148" height="47" rx="0" fill="${fill}" stroke="${stroke}" stroke-width="2"/><circle cx="100" cy="29.5" r="23.5" fill="${fill}" stroke="${stroke}" stroke-width="2"/><circle cx="100" cy="123.5" r="23.5" fill="${fill}" stroke="${stroke}" stroke-width="2"/>`,
+      cone:`<path d="M95 20 23.55 61.25a82.5 82.5 0 0 0 142.9 0Z" fill="${fill}" stroke="${stroke}" stroke-width="2"/><circle cx="95" cy="130" r="27.5" fill="${fill}" stroke="${stroke}" stroke-width="2"/>`
+    };
+    content=nets[shape]||'';
+  }
+  return `<svg class="shape-art" viewBox="0 0 200 164" ${decorative?'aria-hidden="true"':`role="img" aria-label="${descriptions[kind][shape]}"`}><g>${kind==='solid'?'<ellipse cx="100" cy="148" rx="60" ry="7" fill="#18334B" opacity=".06"/>':''}${content}</g></svg>`;
+}
+
+function brandArt() {
+  return '<svg viewBox="0 0 40 44" class="brand-mark" aria-hidden="true"><path d="m20 2 17 10v20L20 42 3 32V12Z" fill="#215FF0"/><path d="m20 2 17 10-17 10L3 12Z" fill="#6EAAFF"/><path d="M20 22v20L3 32V12Z" fill="#215FF0"/><path d="m20 22 17-10v20L20 42Z" fill="#1847B0"/><path d="m11 17 9 5 9-5M20 22v10" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/></svg>';
+}
+
+
+
+const $ = id => document.getElementById(id);
+const escapeHtml = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pretty = value => escapeHtml(value).replaceAll('pi', 'π').replaceAll('^2','²').replaceAll('^3','³').replaceAll('*',' × ').replaceAll('=', ' = ').replaceAll('6cm', '6 cm').replaceAll('4cm','4 cm').replaceAll('3cm','3 cm').replaceAll(' x ', ' × ');
+const now = () => performance.now();
+let storage;
+try { storage = window.localStorage; } catch { storage = {getItem(){throw new Error('Storage unavailable');},setItem(){throw new Error('Storage unavailable');},removeItem(){throw new Error('Storage unavailable');}}; }
+const store = new ScoreStore(storage);
+let screen = 'welcome', game = null, selected = null, acceptedSolid = null, acceptedNet = null;
+let player = null, roundId = '', lastResult = null, dialogMode = '', dialogTrigger = null;
+let drag = null, suppressClickUntil = 0, hiddenPause = false, sound = false, audioContext = null;
+let scoresExpanded = false, lastClock = '', lastLed = {};
+const dialog = $('app-dialog');
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+function hydrate(root = document) {
+  root.querySelectorAll('[data-icon]').forEach(el => { el.innerHTML = icon(el.dataset.icon); });
+  root.querySelectorAll('[data-brand]').forEach(el => { el.innerHTML = brandArt(); });
+  root.querySelectorAll('[data-art]').forEach(el => { el.innerHTML = shapeArt(el.dataset.art, el.dataset.kind || 'solid', true); });
+}
+hydrate();
+
+function announce(message) { $('announcer').textContent = ''; requestAnimationFrame(() => { $('announcer').textContent = message; }); }
+function setStatus(message, tone = '', symbol = 'cursor') {
+  $('feedback-text').textContent = message;
+  $('game-status').className = `game-feedback ${tone}`;
+  const existing = $('game-status').querySelector('.icon');
+  if (existing) existing.outerHTML = icon(symbol);
+}
+function storageStatus() { $('storage-warning').hidden = !store.failed; }
+function showScreen(next) {
+  screen = next;
+  $('welcome').hidden = next !== 'welcome';
+  $('game-screen').hidden = next !== 'game';
+  $('result-screen').hidden = next !== 'result';
+  document.title = next === 'welcome' ? 'GeoDecoder Digital — Jom main geometri' : next === 'game' ? 'GeoDecoder Digital — Sedang bermain' : 'GeoDecoder Digital — Keputusan pusingan';
+  window.scrollTo({top:0,behavior:'instant'});
+}
+function uid() { return globalThis.crypto?.randomUUID?.() || `round-${Date.now()}-${Math.random().toString(36).slice(2)}`; }
+
+$('player-form').addEventListener('submit', event => {
+  event.preventDefault();
+  if (screen !== 'welcome') return;
+  const form = new FormData(event.currentTarget);
+  const result = validatePlayer({name:form.get('name'),category:form.get('category'),className:form.get('className')});
+  for (const key of ['name','className']) {
+    const field = $(key === 'name' ? 'player-name' : 'player-class');
+    $(key + '-error').textContent = result.errors[key] || '';
+    field.setAttribute('aria-invalid', String(!!result.errors[key]));
+  }
+  $('category-error').textContent = result.errors.category || '';
+  if (!result.valid) {
+    if (result.errors.name) $('player-name').focus();
+    else if (result.errors.category) document.querySelector('input[name="category"]').focus();
+    else $('player-class').focus();
+    announce('Maklumat belum lengkap. ' + Object.values(result.errors).join(' '));
+    return;
+  }
+  player = result.player;
+  startGame();
+});
+for (const [id,key] of [['player-name','name'],['player-class','className']]) {
+  $(id).addEventListener('input', () => { $(id).removeAttribute('aria-invalid'); $(key+'-error').textContent = ''; });
+}
+
+function startGame() {
+  if (!player) return;
+  cancelDrag();
+  game = new Game(QUESTIONS, player, now());
+  roundId = uid(); lastResult = null; lastClock = ''; lastLed = {};
+  $('player-initial').textContent = player.name[0].toLocaleUpperCase('ms-MY');
+  $('player-display').textContent = player.name;
+  $('player-meta').textContent = `${player.category} · ${player.className}`;
+  showScreen('game');
+  renderQuestion();
+  $('question-title').focus({preventScroll:true});
+  announce('Permainan bermula. Sepuluh soalan. Pilih bongkah untuk R1 dahulu.');
+}
+
+function renderQuestion() {
+  acceptedSolid = null; acceptedNet = null; selected = null;
+  const q = game.question;
+  const number = String(game.index+1).padStart(2,'0');
+  $('question-counter').textContent = `SOALAN ${number} / 10`;
+  $('question-topic').textContent = q.id.endsWith('2') || q.id === 'C1' ? 'Cabaran rumus' : q.id.endsWith('3') ? 'Cabaran bentangan' : 'Kenali bongkah';
+  let heading = 'Bongkah apakah ini?', detail = q.prompt;
+  if (/Pilih bentangan/.test(q.prompt) || q.id === 'B3') {
+    heading = 'Bongkah manakah yang sepadan?';
+  } else if (q.prompt.startsWith('V=') || q.prompt.startsWith('L=')) {
+    heading = 'Rumus ini mewakili bongkah apa?';
+  }
+  detail = detail.replace(/Bongkah apakah ini\?/g,'').replace(/Bentuk apa\?/g,'').trim();
+  $('question-title').textContent = heading;
+  if (q.id.endsWith('2') || q.id === 'C1') {
+    const formulaLines = q.lines.filter(line => /^V=|^L=/.test(line));
+    const rest = q.lines.filter(line => !/^V=|^L=/.test(line)).join(' ').replace(/Bongkah apakah ini\?|Bentuk apa\?/g,'').trim();
+    $('question-detail').innerHTML = `<span class="formula-line">${formulaLines.map(pretty).join('<br>')}</span>${pretty(rest)}`;
+  } else $('question-detail').innerHTML = pretty(detail);
+  $('formula-key').hidden = true;
+  if (q.id === 'S2') { $('formula-key').textContent = 'V = isi padu · L = luas permukaan · j = jejari · t = tinggi'; $('formula-key').hidden = false; }
+  $('hint-text').innerHTML = pretty(q.hint);
+  const dots = Array.from({length:10}, (_,i) => {
+    const answer = game.answers[i];
+    const cls = answer ? answer.outcome : i===game.index ? 'current' : '';
+    return `<span class="progress-dot ${cls}" title="Soalan ${i+1}${answer ? answer.outcome === 'correct' ? ': betul' : ': dilangkau' : i===game.index ? ': semasa' : ''}"></span>`;
+  }).join('');
+  $('progress-dots').innerHTML = dots;
+  $('progress-dots').setAttribute('aria-label', `Soalan ${game.index+1} daripada 10. ${game.score} pasangan betul, ${game.skipped} dilangkau.`);
+  renderChoices('solid', game.solidOrder);
+  renderChoices('net', game.netOrder);
+  setStatus('Baca soalan, kemudian pilih satu bongkah untuk R1.');
+  renderState();
+}
+
+function renderChoices(kind, order) {
+  $(kind+'-choices').innerHTML = order.map((shape,i) => {
+    const letter = String.fromCharCode(65+i), label = kind === 'solid' ? 'bongkah' : 'bentangan';
+    return `<button type="button" class="choice ${kind === 'net' ? 'net-choice' : ''}" data-kind="${kind}" data-shape="${shape}" data-letter="${letter}" aria-pressed="false" aria-label="Pilih ${label} ${letter}. ${describeShape(shape,kind)}">${shapeArt(shape,kind,true)}<span class="choice-id"><span class="grip" aria-hidden="true">⠿</span>${kind === 'solid' ? 'Bongkah' : 'Kad'} ${letter}</span></button>`;
+  }).join('');
+}
+
+const emptyScanner = target => `<span class="scan-target"><span class="target-corner tl"></span><span class="target-corner tr"></span><span class="target-corner bl"></span><span class="target-corner br"></span>${icon(target === 'r2' && game.stage === 'solid' ? 'lock':'cursor')}</span><span class="scanner-placeholder">${target==='r1'?'Letak bongkah di sini':game.stage==='solid'?'Kemudian letak bentangan':'Letak kad bentangan di sini'}</span>`;
+
+function renderState() {
+  if (!game) return;
+  const busy = !game.interactive;
+  const active = game.stage === 'solid' ? 'r1' : 'r2';
+  $('score-value').textContent = game.score;
+  $('hint-button').disabled = busy;
+  $('skip-button').disabled = busy;
+  $('pause-button').disabled = game.status === 'feedback';
+  $('hint-button').setAttribute('aria-expanded',String(game.hintOpen));
+  $('hint-label').textContent = game.hintOpen ? 'Tutup petunjuk' : 'Beri petunjuk';
+  $('hint-panel').hidden = !game.hintOpen;
+  $('stage-instruction').textContent = game.status==='feedback' ? game.lastOutcome==='correct'?'Pasangan tepat! +1 markah':'Soalan dilangkau. +0 markah' : game.stage==='solid'?'Pilih bongkah yang betul':'Bagus! Kini padankan bentangannya';
+  document.querySelectorAll('.choice').forEach(button => {
+    const isSelected = selected && button.dataset.kind === selected.kind && button.dataset.shape === selected.shape;
+    button.setAttribute('aria-pressed', String(!!isSelected));
+    button.classList.toggle('inactive',button.dataset.kind !== game.stage);
+    button.disabled = busy;
+  });
+  for (const target of ['r1','r2']) {
+    const pad=$(target), accepted=target==='r1'?acceptedSolid:acceptedNet, kind=target==='r1'?'solid':'net';
+    const blocked = busy || active !== target;
+    pad.disabled = blocked;
+    pad.setAttribute('aria-disabled',String(blocked));
+    pad.classList.toggle('scanner-locked',target==='r2' && game.stage==='solid' && game.status !== 'feedback');
+    pad.classList.toggle('filled',!!accepted);
+    pad.classList.toggle('has-selection',!!selected && active===target && !busy);
+    const body = accepted ? `${shapeArt(accepted,kind,true)}<span class="scanned-label">${icon('check')}${target==='r1'?'Bongkah diterima':'Bentangan diterima'}</span>` : emptyScanner(target);
+    if ($('scanner-body-'+target).innerHTML !== body) $('scanner-body-'+target).innerHTML = body;
+    const led=game.led(target,now());
+    const status = game.status==='feedback' ? game.lastOutcome==='correct'?'+1 markah':'Dilangkau' : led==='red'?'Cuba lagi':accepted ? 'Imbasan betul' : target==='r2' && game.stage==='solid' ? 'Jawab R1 dahulu' : game.hintOpen ? 'Petunjuk dibuka' : 'Sedia diimbas';
+    $('status-'+target).textContent = status;
+    pad.setAttribute('aria-label', `Pengimbas ${target.toUpperCase()}, ${target==='r1'?'bongkah':'bentangan'}. ${status}.${selected && active===target ? ' Klik atau tekan Enter untuk imbas pilihan.' : ''}`);
+  }
+  renderLeds(now());
+}
+
+function renderLeds(time) {
+  for (const target of ['r1','r2']) {
+    let color = game.led(target,time);
+    if (reducedMotion.matches && game.status==='feedback') color = game.lastOutcome==='correct'?'green':'red';
+    if (lastLed[target] === color) continue;
+    lastLed[target] = color;
+    $('led-'+target).className = 'led-dot '+color;
+    $(target).classList.toggle('scanner-correct',color==='green');
+    $(target).classList.toggle('scanner-wrong',color==='red');
+    $(target).classList.toggle('scanner-hint',color==='purple');
+    $('status-'+target).textContent = game.status==='feedback' ? game.lastOutcome==='correct'?'+1 markah':'Dilangkau' : color==='red'?'Cuba lagi':target==='r1'&&game.stage==='net'?'Imbasan betul':target==='r2'&&game.stage==='solid'?'Jawab R1 dahulu':game.hintOpen?'Petunjuk dibuka':'Sedia diimbas';
+    $(target).setAttribute('aria-label',`Pengimbas ${target.toUpperCase()}, ${target==='r1'?'bongkah':'bentangan'}. ${$('status-'+target).textContent}.`);
+  }
+}
+
+function choose(button) {
+  if (!game?.interactive) return;
+  const {kind,shape,letter} = button.dataset;
+  if (kind !== game.stage) {
+    setStatus(game.stage === 'solid' ? 'Mulakan dengan bongkah di R1. Kad bentangan digunakan selepas itu.' : 'Bongkah R1 sudah betul. Pilih satu kad bentangan untuk R2.');
+    return;
+  }
+  selected = {kind,shape,letter};
+  const target = kind==='solid'?'R1':'R2';
+  setStatus(`${kind==='solid'?'Bongkah':'Kad'} ${letter} dipilih. Klik pengimbas ${target} untuk mengimbas.`, '', 'cursor');
+  renderState();
+}
+
+function scan(choice,target) {
+  if (!game?.interactive) return;
+  if (!choice) { setStatus(`Pilih ${game.stage==='solid'?'bongkah':'kad bentangan'} dahulu, kemudian klik pengimbas ${target.toUpperCase()}.`); return; }
+  const result = game.scan(choice.kind,choice.shape,target,now());
+  if (result.type==='blocked') return;
+  if (result.type==='stage') { setStatus(result.target==='r1'?'R1 dahulu. Imbas bongkah sebelum kad bentangan.':'Bongkah R1 sudah betul. Padankan kad bentangan di R2.'); return; }
+  if (result.type==='kind') { setStatus(game.stage==='solid'?'R1 hanya menerima bongkah 3D.':'R2 hanya menerima kad bentangan.'); return; }
+  selected=null;
+  if (result.type==='wrong') {
+    setStatus(target==='r1'?'Belum tepat. Lihat sifat dalam soalan dan cuba bongkah lain.':'Bentangan belum sepadan. Bongkah R1 kekal betul; cuba kad bentangan lain.','error','refresh');
+    tone('wrong');
+  } else if (result.type==='solid') {
+    acceptedSolid=choice.shape;
+    setStatus('Bongkah betul! Sekarang seret kad bentangannya ke R2.','success','check');
+    tone('solid');
+  } else if (result.type==='correct') {
+    acceptedNet=choice.shape;
+    setStatus('Pasangan tepat! +1 markah. Bersedia untuk soalan seterusnya.','success','check');
+    tone('correct');
+  }
+  renderState();
+}
+
+document.addEventListener('click', event => {
+  const button=event.target.closest('.choice');
+  if (button) {
+    if (event.detail && now()<suppressClickUntil) { event.preventDefault(); return; }
+    choose(button);
+    return;
+  }
+  const pad=event.target.closest('.scanner');
+  if (pad) { scan(selected,pad.dataset.target); return; }
+  const action=event.target.closest('[data-action]')?.dataset.action;
+  if (action==='help') openHelp();
+  if (action==='scores') { scoresExpanded=false; openScores(); }
+  if (action==='home') requestHome();
+});
+$('brand-home').addEventListener('click',event=>{event.preventDefault();requestHome();});
+$('hint-button').addEventListener('click',()=>{
+  if(game?.toggleHint()){
+    setStatus(game.hintOpen?'Petunjuk dibuka. Baca petunjuk dan teruskan memilih.':'Petunjuk ditutup. Teruskan menjawab.',game.hintOpen?'hint':'','bulb');
+    renderState();
+  }
+});
+$('skip-button').addEventListener('click',()=>{
+  if(game?.skip(now())){ cancelDrag(); selected=null;setStatus('Soalan dilangkau. Tiada markah untuk soalan ini.','','skip');renderState();tone('skip'); }
+});
+$('pause-button').addEventListener('click',()=>openPause());
+$('replay-button').addEventListener('click',()=>startGame());
+
+// One Pointer Events path for mouse, pen and touch, with a click/keyboard alternative.
+document.addEventListener('pointerdown',event=>{
+  const button=event.target.closest('.choice');
+  if(!button || !game?.interactive || !event.isPrimary || event.button!==0 || dialog.open) return;
+  drag={pointerId:event.pointerId,source:button,choice:{kind:button.dataset.kind,shape:button.dataset.shape,letter:button.dataset.letter},startX:event.clientX,startY:event.clientY,x:event.clientX,y:event.clientY,started:false,ghost:null};
+  button.setPointerCapture(event.pointerId);
+});
+document.addEventListener('pointermove',event=>{
+  if(!drag || drag.pointerId!==event.pointerId) return;
+  drag.x=event.clientX;drag.y=event.clientY;
+  if(!drag.started && Math.hypot(drag.x-drag.startX,drag.y-drag.startY)>7){
+    drag.started=true;
+    selected=null;
+    drag.ghost=document.createElement('div');
+    drag.ghost.className='drag-ghost';drag.ghost.setAttribute('aria-hidden','true');
+    drag.ghost.innerHTML=shapeArt(drag.choice.shape,drag.choice.kind,true);
+    document.body.append(drag.ghost);drag.source.classList.add('drag-source');
+  }
+  if(drag.started){event.preventDefault();moveDrag();}
+},{passive:false});
+document.addEventListener('pointerup',event=>{
+  if(!drag || event.pointerId!==drag.pointerId) return;
+  const saved=drag;
+  const target=document.elementFromPoint(event.clientX,event.clientY)?.closest('.scanner');
+  if(saved.started){
+    suppressClickUntil=now()+400;
+    cancelDrag();
+    if(target) scan(saved.choice,target.dataset.target);
+    else { selected=saved.choice;renderState();setStatus('Pilihan belum diimbas. Seret ke pengimbas yang aktif, atau klik pengimbas.'); }
+  }else cancelDrag();
+});
+document.addEventListener('pointercancel',()=>cancelDrag());
+window.addEventListener('blur',()=>cancelDrag());
+function moveDrag(){
+  if(!drag?.started)return;
+  drag.ghost.style.left=drag.x+'px';drag.ghost.style.top=drag.y+'px';
+  document.querySelectorAll('.scanner').forEach(pad=>pad.classList.remove('drop-hover','drop-invalid'));
+  const target=document.elementFromPoint(drag.x,drag.y)?.closest('.scanner');
+  if(target){ const valid=target.dataset.target===(game.stage==='solid'?'r1':'r2') && drag.choice.kind===game.stage;target.classList.add(valid?'drop-hover':'drop-invalid'); }
+}
+function cancelDrag(){
+  if(drag){
+    drag.ghost?.remove();drag.source.classList.remove('drag-source');
+    if(drag.source.hasPointerCapture?.(drag.pointerId))drag.source.releasePointerCapture(drag.pointerId);
+    drag=null;
+  }
+  document.querySelectorAll('.scanner').forEach(pad=>pad.classList.remove('drop-hover','drop-invalid'));
+}
+
+function openDialog(mode,title,content){
+  cancelDrag();
+  if(!dialog.open)dialogTrigger=document.activeElement;
+  if(game && screen==='game')game.pause(now());
+  dialogMode=mode;
+  $('dialog-title').textContent=title;
+  $('dialog-content').innerHTML=content;
+  if(!dialog.open)dialog.showModal();
+  const first=$('dialog-content').querySelector('[data-autofocus]');
+  (first || $('dialog-close')).focus({preventScroll:true});
+}
+function closeDialog(){ if(dialog.open)dialog.close(); }
+$('dialog-close').addEventListener('click',closeDialog);
+dialog.addEventListener('close',()=>{
+  dialogMode='';
+  if(game && screen==='game') { game.resume(now());renderState(); }
+  if(dialogTrigger?.isConnected)dialogTrigger.focus({preventScroll:true});
+  dialogTrigger=null;
+});
+dialog.addEventListener('cancel',()=>{ /* Native dialog closes with Escape and restores play through close. */ });
+dialog.addEventListener('click',event=>{
+  const action=event.target.closest('[data-dialog-action]')?.dataset.dialogAction;
+  if(action==='close')closeDialog();
+  if(action==='home'){ game=null;selected=null;acceptedSolid=null;acceptedNet=null;dialogTrigger=null;closeDialog();showScreen('welcome');$('player-name').focus({preventScroll:true}); }
+  if(action==='request-home')requestHome();
+  if(action==='export')downloadScores();
+  if(action==='show-all'){scoresExpanded=true;openScores();}
+  if(action==='erase')openErase();
+  if(action==='confirm-erase'){
+    const cleared=store.clear();storageStatus();
+    openScores(cleared?'Semua skor dalam pelayar ini telah dipadam.':'Skor tersimpan tidak dapat dipadam. Semak kebenaran storan pelayar dan cuba lagi.');
+    if(screen==='result')renderMiniScores();
+  }
+  if(action==='back-scores')openScores();
+});
+
+function openHelp(){
+  openDialog('help','Cara main GeoDecoder',`<p class="help-intro">Satu soalan, dua padanan. Sasarkan <b>10 daripada 10 markah</b>.</p><div class="help-steps"><div class="help-step"><span class="help-number">1</span><div><h3>Baca soalan dan pilih bongkah</h3><p>Seret satu bongkah 3D ke pengimbas R1 yang berwarna biru.</p></div></div><div class="help-step"><span class="help-number">2</span><div><h3>Padankan kad bentangannya</h3><p>Selepas R1 hijau, seret kad bentangan yang sepadan ke R2.</p></div></div><div class="help-step"><span class="help-number">3</span><div><h3>Kumpulkan satu markah</h3><p>Pasangan betul memberi +1. Kedua-dua pengimbas berkelip hijau sebelum soalan seterusnya.</p></div></div></div><div class="help-mini-art">${shapeArt('cube','solid',true)}<span>R1 ${icon('arrow')} R2</span>${shapeArt('cube','net',true)}</div><p class="keyboard-help">Tanpa menyeret: <b>klik / sentuh kad</b>, kemudian <b>klik pengimbas</b>. Papan kekunci: <kbd>Tab</kbd> untuk bergerak, <kbd>Enter</kbd> atau <kbd>Space</kbd> untuk memilih dan mengimbas.</p><p class="help-note"><b>Salah? Cuba lagi.</b> Tiada potongan markah. Petunjuk juga percuma. Langkau memberi +0 untuk soalan itu. Jam dijeda semasa tetingkap ini dibuka.</p><div class="dialog-actions"><button class="button button-primary" data-dialog-action="close" data-autofocus>${screen==='game'?'Sambung permainan':'Saya faham'} ${icon('arrow')}</button></div>`);
+}
+
+function openPause(automatic=false){
+  if(!game || screen!=='game')return;
+  game.pause(now());
+  openDialog('pause','Permainan dijeda',`<div class="pause-symbol">${icon('pause')} ${formatTime(game.time(now()))}</div><p class="dialog-copy">${automatic?'Permainan dijeda semasa anda meninggalkan tab ini.':'Berehat seketika. Masa dan soalan anda dikekalkan.'} Tekan sambung apabila sudah bersedia.</p><div class="dialog-actions"><button class="button button-outline" data-dialog-action="request-home">Tamatkan pusingan</button><button class="button button-primary" data-dialog-action="close" data-autofocus>Sambung permainan ${icon('arrow')}</button></div>`);
+}
+
+function requestHome(){
+  if(screen==='game' && game && game.status!=='finished'){
+    openDialog('leave','Tamatkan pusingan ini?',`<p class="dialog-copy">Anda sedang bermain soalan <b>${game.index+1} daripada 10</b>. Jika kembali ke mula, kemajuan pusingan ini dilepaskan dan skor pusingan ini tidak disimpan.</p><div class="dialog-actions"><button class="button button-outline" data-dialog-action="close" data-autofocus>Terus bermain</button><button class="button button-danger" data-dialog-action="home">Tamatkan pusingan</button></div>`);
+  }else{ game=null;selected=null;showScreen('welcome');$('player-name').focus({preventScroll:true}); }
+}
+
+function miniScoresMarkup(scores){
+  if(!scores.length)return `<div class="empty-scores">${icon('trophy')}<h3>Skor pertama menanti</h3><p>Lengkapkan satu pusingan untuk menyimpan skor.</p></div>`;
+  return scores.slice(0,5).map((r,i)=>`<div class="mini-score ${r.id===lastResult?.id?'mine':''}"><span class="mini-rank">${i+1}</span><span class="mini-player"><b>${escapeHtml(r.player.name)}${r.id===lastResult?.id?' · Anda':''}</b><small>${escapeHtml(r.player.className)} · ${r.mistakes} cubaan salah</small></span><span class="mini-points">${r.score}<small>${formatTime(r.elapsed)}</small></span></div>`).join('');
+}
+function renderMiniScores(){ $('result-leaderboard').innerHTML=miniScoresMarkup(store.read());storageStatus(); }
+
+function openScores(message=''){
+  const scores=store.read();storageStatus();
+  const visible=scoresExpanded?scores:scores.slice(0,10);
+  const table=scores.length?`<div class="score-table-wrap"><table class="score-table"><caption class="sr-only">Skor terbaik dalam pelayar ini</caption><thead><tr><th scope="col">#</th><th scope="col">Pemain</th><th scope="col">Kelas</th><th scope="col">Markah</th><th scope="col">Salah / Masa</th></tr></thead><tbody>${visible.map((r,i)=>`<tr class="${r.id===lastResult?.id?'mine':''}"><td>${i+1}</td><td><b>${escapeHtml(r.player.name)}</b><small>${escapeHtml(r.player.category)}</small></td><td>${escapeHtml(r.player.className)}</td><td><b>${r.score} / 10</b></td><td>${r.mistakes} salah<small>${formatTime(r.elapsed)}</small></td></tr>`).join('')}</tbody></table></div>`:`<div class="empty-scores">${icon('trophy')}<h3>Belum ada skor</h3><p>Lengkapkan 10 soalan untuk merekodkan skor pertama.</p></div>`;
+  openDialog('scores','Papan skor',`<p class="score-info">${store.failed?'Skor sesi ini sahaja; simpanan pelayar tidak tersedia.':'Rekod dalam pelayar ini sahaja. Maksimum 50 skor terbaik.'} Skor tertinggi dahulu, kemudian cubaan salah paling sedikit dan masa terpantas.</p>${message?`<p class="help-note" role="status">${escapeHtml(message)}</p>`:''}${table}<div class="score-toolbar"><span>${visible.length} daripada ${scores.length} rekod</span>${scores.length>10&&!scoresExpanded?'<button class="button button-outline" data-dialog-action="show-all">Lihat semua skor</button>':''}<button class="button button-outline" data-dialog-action="export" ${!scores.length?'disabled':''}>${icon('download')} Eksport CSV</button><button class="button button-quiet score-delete" data-dialog-action="erase" ${!scores.length?'disabled':''}>${icon('trash')} Padam skor</button></div><div class="dialog-actions"><button class="button button-primary" data-dialog-action="close">${screen==='game'?'Sambung permainan':'Tutup papan skor'}</button></div>`);
+}
+
+function openErase(){
+  openDialog('erase','Padam semua skor?',`<p class="dialog-copy">Semua rekod nama, kelas dan keputusan dalam papan skor pelayar ini akan dipadam. Muat turun CSV dahulu jika mahu menyimpannya.</p><div class="dialog-actions"><button class="button button-outline" data-dialog-action="back-scores" data-autofocus>Kekalkan skor</button><button class="button button-danger" data-dialog-action="confirm-erase">Padam semua skor</button></div>`);
+}
+function downloadScores(){
+  const scores=store.read();if(!scores.length)return;
+  const blob=new Blob([csvScores(scores)],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download='GeoDecoder_Digital_Skor.csv';document.body.append(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+  announce('Fail CSV papan skor telah disediakan.');
+}
+
+function finishGame(){
+  cancelDrag();selected=null;
+  lastResult=game.result(roundId);
+  store.save(lastResult);storageStatus();
+  const r=lastResult;
+  $('result-title').textContent=r.score===10?'Hebat! Semua pasangan tepat.':r.score>=7?'Bagus, anda semakin mahir!':'Teruskan mencuba, teruskan belajar.';
+  $('result-player').textContent=`${r.player.name} · ${r.player.category} · ${r.player.className}`;
+  $('result-score').textContent=r.score;
+  $('result-level').textContent=r.score===10?'Pakar padanan':r.score>=7?'Penjelajah geometri':'Peneroka bentuk';
+  const rank=store.read().findIndex(s=>s.id===r.id)+1;
+  $('result-message').textContent=`${r.score} pasangan betul, ${r.skipped} soalan dilangkau.${rank>0?` Kedudukan #${rank} dalam papan skor pelayar ini.`:''} Cuba lagi untuk mengurangkan cubaan salah atau memperbaiki masa.`;
+  $('result-time').textContent=formatTime(r.elapsed);
+  $('result-first').textContent=`${r.firstTry} / 10`;
+  $('result-mistakes').textContent=r.mistakes;
+  $('result-hints').textContent=r.hints;
+  $('review-list').innerHTML=game.answers.map((answer,i)=>`<article class="review-card ${answer.outcome==='skipped'?'skipped':''}"><small>SOALAN ${i+1}</small><div class="review-pair">${shapeArt(answer.shape,'solid',true)}${shapeArt(answer.shape,'net',true)}</div><h3>${SHAPE_NAMES[answer.shape]}</h3><p>${answer.outcome==='correct'?'✓ Pasangan betul':'↷ Dilangkau'}</p></article>`).join('');
+  renderMiniScores();
+  showScreen('result');
+  $('result-title').focus({preventScroll:true});
+  announce(`Pusingan selesai. ${r.score} daripada 10 markah. Masa ${formatTime(r.elapsed)}.`);
+}
+
+function tone(kind){
+  if(!sound)return;
+  try{
+    audioContext ||= new (window.AudioContext||window.webkitAudioContext)();
+    if(audioContext.state==='suspended')audioContext.resume().catch(()=>{});
+    const notes=kind==='correct'?[523,659,784]:kind==='solid'?[523,659]:kind==='wrong'?[196,165]:[330];
+    notes.forEach((frequency,i)=>{
+      const oscillator=audioContext.createOscillator(),gain=audioContext.createGain();
+      const t=audioContext.currentTime+i*.09;
+      oscillator.type='sine';oscillator.frequency.value=frequency;
+      gain.gain.setValueAtTime(0,t);gain.gain.linearRampToValueAtTime(.065,t+.01);gain.gain.exponentialRampToValueAtTime(.001,t+.16);
+      oscillator.connect(gain);gain.connect(audioContext.destination);oscillator.start(t);oscillator.stop(t+.17);
+    });
+  }catch{sound=false;updateSound();announce('Bunyi tidak tersedia dalam pelayar ini. Permainan boleh diteruskan.');}
+}
+function updateSound(){
+  $('sound-button').innerHTML=icon(sound?'sound':'mute');
+  $('sound-button').setAttribute('aria-pressed',String(sound));
+  $('sound-button').setAttribute('aria-label',sound?'Matikan bunyi':'Hidupkan bunyi');
+  $('sound-button').title=sound?'Matikan bunyi':'Hidupkan bunyi';
+}
+$('sound-button').addEventListener('click',()=>{sound=!sound;updateSound();if(sound)tone('solid');});
+
+document.addEventListener('visibilitychange',()=>{
+  if(!game || screen!=='game')return;
+  if(document.hidden && !game.paused){game.pause(now());hiddenPause=true;cancelDrag();}
+  else if(!document.hidden && hiddenPause){hiddenPause=false;if(!dialog.open)openPause(true);}
+});
+document.addEventListener('keydown',event=>{
+  if(event.key!=='Escape')return;
+  if(drag?.started){event.preventDefault();cancelDrag();return;}
+  if(!dialog.open && screen==='game' && game?.interactive){event.preventDefault();openPause();}
+});
+window.addEventListener('storage',event=>{
+  if(event.key===SCORE_KEY || event.key===null){store.memory=[];if(dialogMode==='scores')openScores();if(screen==='result')renderMiniScores();}
+});
+
+function frame(time){
+  if(game && screen==='game'){
+    if(game.update(time)){
+      if(game.status==='finished')finishGame();
+      else{lastLed={};renderQuestion();announce(`Soalan ${game.index+1} daripada 10. Pilih bongkah untuk R1.`);}
+    }
+    const clock=formatTime(game.time(time));
+    if(clock!==lastClock){$('time-value').textContent=clock;lastClock=clock;}
+    renderLeds(time);
+  }
+  if(drag?.started){
+    const step=drag.y<90?-10:drag.y>window.innerHeight-65?10:0;
+    if(step){window.scrollBy(0,step);moveDrag();}
+  }
+  requestAnimationFrame(frame);
+}
+store.read();storageStatus();
+requestAnimationFrame(frame);
+
+</script>
+</body>
+</html>
