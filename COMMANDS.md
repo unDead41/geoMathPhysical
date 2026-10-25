@@ -133,12 +133,12 @@ READY ialah respons register; imbas kad sebenar untuk mengesahkan bacaan antena.
 Banner ini juga muncul semasa boot dan pada permulaan output `status`:
 
 ```text
-[FIRMWARE] GeoDecoder v1.1.1 | ESP32 | env=esp32dev-rgb
+[FIRMWARE] GeoDecoder v1.1.3 | ESP32 | env=esp32dev-rgb
 ```
 
-`env=esp32dev` menandakan LED biasa. Semak versi dengan README GitHub pada
+Build pengguna tunggal ialah RGB. Semak versi dengan README GitHub pada
 commit yang diupload. Jika Monitor dibuka selepas boot, taip `version`.
-Dalam Project Tasks branch sharing, padanan nama ialah `esp32dev-sharing`
-(LED biasa) dan `esp32dev-sharing-rgb` (RGB); label Serial firmware v1.1.1 kekal seperti di atas.
+Dalam Project Tasks branch sharing, satu environment `esp32dev-sharing-rgb`
+ialah default; firmware berkongsi label hardware Serial `env=esp32dev-rgb` dengan main.
 Rujukan sumber dan versi terdapat dalam README.md dan package.json.
 

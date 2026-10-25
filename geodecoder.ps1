@@ -10,23 +10,17 @@ $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'scripts/common.ps1')
 try {
     $state = Read-GDState $PSScriptRoot
-    if ($state.environment -in @('esp32dev','esp32dev-rgb')) {
+    if ($state.environment -ne (Resolve-GDEnvironment $state.environment)) {
         $state = Write-GDLocalConfig -Root $PSScriptRoot -Python $state.pioPython -Environment $state.environment -Port $state.port
     }
     if (-not $Environment) { $Environment = $state.environment }
     $Environment = Resolve-GDEnvironment $Environment
     Assert-GDPort $Port
     if ($Action -eq 'Configure') {
-        if (-not $PSBoundParameters.ContainsKey('Environment') -and -not $NoPrompt) {
-            $answer = Read-Host "Environment: 1=RGB, 2=LED biasa (Enter kekalkan $Environment)"
-            if ($answer -eq '1') { $Environment = 'esp32dev-sharing-rgb' }
-            elseif ($answer -eq '2') { $Environment = 'esp32dev-sharing' }
-            elseif ($answer) { throw 'Pilih 1, 2 atau Enter.' }
-        }
         $devices = @(Get-GDDevices $state)
         $Port = Select-GDPort -Devices $devices -Requested $Port -NoPrompt:$NoPrompt
         Write-GDLocalConfig -Root $PSScriptRoot -Python $state.pioPython -Environment $Environment -Port $Port | Out-Null
-        Write-Host "Disimpan: $Environment | COM: $Port. Muat semula tetingkap VS Code jika menukar environment."
+        Write-Host "Disimpan: satu build RGB | COM: $Port."
     }
     elseif ($Action -eq 'Ports') {
         Invoke-GDPio -State $state -Arguments @('device','list')

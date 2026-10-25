@@ -16,13 +16,13 @@ function Invoke-GDProbe([string]$Exe, [string[]]$Arguments) {
 }
 
 function Resolve-GDEnvironment([string]$Name) {
-    # Keep printed guides and saved settings compatible with the sharing names.
+    # Printed guides and saved names all resolve to the sole RGB build.
     switch ($Name) {
-        'esp32dev' { return 'esp32dev-sharing' }
+        'esp32dev' { return 'esp32dev-sharing-rgb' }
         'esp32dev-rgb' { return 'esp32dev-sharing-rgb' }
-        'esp32dev-sharing' { return 'esp32dev-sharing' }
+        'esp32dev-sharing' { return 'esp32dev-sharing-rgb' }
         'esp32dev-sharing-rgb' { return 'esp32dev-sharing-rgb' }
-        default { throw 'Environment mesti esp32dev-sharing (LED biasa) atau esp32dev-sharing-rgb (RGB).' }
+        default { throw 'Pakej ini menggunakan satu build sahaja: esp32dev-sharing-rgb.' }
     }
 }
 

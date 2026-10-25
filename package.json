@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "packageId": "GeoDecoder-sharing",
-  "packageVersion": "1.1.1-sharing.3",
-  "firmwareVersion": "1.1.1",
-  "sourceSha": "aa6e5d722038a0f229a9521efcc7cda58d62a9bd",
+  "packageVersion": "1.1.3-sharing.1",
+  "firmwareVersion": "1.1.3",
+  "sourceSha": "a059979d97926b82cafd4aa5cf3fe59da04a55bb",
   "platformioCore": "6.1.18",
   "tutorial": {
     "status": "included",
@@ -36,15 +36,15 @@
     },
     {
       "path": "COMMANDS.md",
-      "sha256": "2565f57d21337aca853f09339df90820656ffefec63078c6f327fc122abaa103"
+      "sha256": "a9eabe3e3ac473ae5f9146e9d205e51060e2700769f69858891a7d3dc7fb2127"
     },
     {
       "path": "README.md",
-      "sha256": "1eeaf7cc92eb8e6cf975df719a40f85035aa982baf1020b984018903b7e33655"
+      "sha256": "d0df5b7dcae9df7df8dc157f635b1944768adc0afd7edc5bfdbf4205e6ca9f34"
     },
     {
       "path": "SAMBUNGAN.md",
-      "sha256": "cf0b83030ef44b1f3a5f790e32d1f4f46d2d8ef1cf8eb638321dd5fca155e48d"
+      "sha256": "970158169f7053115ccc92d69dceed5f3f9862eaf39775152ac219e499ed370a"
     },
     {
       "path": "docs/lcd/GeoDecoder_15_Contoh_LCD_Soalan_dan_Hint.pdf",
@@ -52,7 +52,7 @@
     },
     {
       "path": "geodecoder.ps1",
-      "sha256": "c02b26de030a5ba149b6b4b740f2b3813afbeca0172b9646389b2aefaff59c58"
+      "sha256": "7f96e81c44d96df3004a1cddcadc32890585a0a1499b2e3306d891bfb5692926"
     },
     {
       "path": "main/app.ino",
@@ -92,7 +92,7 @@
     },
     {
       "path": "main/config.h",
-      "sha256": "2daaf123f70db9363a7bead782f7852243527fef93bfdba13133e06f42f12bdc"
+      "sha256": "4c6c534135414cf7d3e5a81d689d7b46db53b2afad9beb186fae54642f0d7f10"
     },
     {
       "path": "main/domain/quiz_engine.h",
@@ -116,7 +116,7 @@
     },
     {
       "path": "main/firmware_version.h",
-      "sha256": "67554f68e320d82269913b3f0a2af9356decbcf29958767f58943645ea518873"
+      "sha256": "b72a191fa61a4ae02c3d8591fd1852858f898c56e452b8c17784a698a7c9d4a2"
     },
     {
       "path": "main/hardware/buttons.h",
@@ -196,7 +196,7 @@
     },
     {
       "path": "platformio.ini",
-      "sha256": "084aed60648d51a0820265022179e49ec42d8687936174064fea7eaee3df3e45"
+      "sha256": "a52340b1c0801939d4d9e499f15261fa6949f8e5f1137f0ea7320cc8b109df49"
     },
     {
       "path": "platformio.local.ini.example",
@@ -216,7 +216,7 @@
     },
     {
       "path": "scripts/common.ps1",
-      "sha256": "b6c85cdf180bb83615097792e9d3f18d323bd2ab0d4ef430b9014fa6f74e2818"
+      "sha256": "d84e2f8d4960d716a4f0679605d8ca1330567d371aff7eedd717f60518ddf2fd"
     },
     {
       "path": "setup.ps1",
@@ -224,7 +224,7 @@
     },
     {
       "path": "setupGeoDecoder.ps1",
-      "sha256": "a800f0ce296b057f8e3936ccd675d3334b3b26da67e7292640566fb048090485"
+      "sha256": "2bea2e8b6d062a7405402262153f3a01bd90cd00ed9f16b6ad780d75265df36f"
     },
     {
       "path": "src/main.cpp",

@@ -69,7 +69,7 @@ Jika modul active HIGH:
 Apabila kedua-dua butang dilepaskan, arahan status sepatutnya menunjukkan RELEASED.
 Jika kekal PRESSED, sahkan polariti modul dan sambungan S / VCC / GND sebelum bermain.
 
-## Dua RGB - boleh dipasang kemudian
+## Dua RGB - pemasangan untuk satu build pengguna
 
 | Saluran | RGB1 / R1 bongkah | RGB2 / R2 bentangan |
 |---|---|---|
@@ -81,10 +81,9 @@ Pemetaan RGB ini mengikut sambungan pengguna: RGB1 B=25, G=14, R=13;
 RGB2 B=26, G=17, R=16. RGB1 ialah petunjuk bongkah/R1 dan RGB2 bentangan/R2.
 GPIO32/33 dikhaskan untuk butang.
 
-Pemasangan LED biasa asal berasingan: LED R1 pada GPIO25 dan LED R2 pada GPIO26.
-Environment `esp32dev-sharing` mengekalkan pin itu melalui `LED_PINS`; `esp32dev-sharing-rgb`
-menggunakan `RGB_PINS` R/G/B dalam jadual di atas. GPIO25/26 ialah saluran B
-dalam pemasangan RGB, jadi pin LED biasa tidak lagi diambil daripada saluran R.
+Satu environment `esp32dev-sharing-rgb` menggunakan `RGB_PINS` R/G/B dalam
+jadual di atas. GPIO25/26 ialah saluran B untuk R1/R2. Tiada pilihan LED biasa
+dalam pakej pengguna ini.
 
 Untuk setiap saluran: GPIO -> resistor 330 Ohm -> kaki R/G/B.
 Jumlah enam resistor, satu bagi setiap saluran.
@@ -94,10 +93,9 @@ Default **common cathode**: kaki common ke GND; RGB_COMMON_ANODE = false.
 Jika **common anode**: kaki common ke 3V3 dan RGB_COMMON_ANODE = true.
 Jangan sambung common anode terus ke 5 V dengan sambungan GPIO ini.
 
-Dalam VS Code, pilih **Project Tasks > esp32dev-sharing-rgb > General > Build / Upload** apabila
-kedua-dua RGB sudah dipasang. Environment ini menetapkan
-`GEODECODER_RGB_ENABLED=1`. Jika menggunakan Arduino IDE, ubah default macro
-tersebut dalam `main/config.h`.
+Dalam VS Code, terus klik **Build / Upload** di bar bawah PlatformIO.
+Environment default tunggal `esp32dev-sharing-rgb` menetapkan
+`GEODECODER_RGB_ENABLED=1`; default dalam `main/config.h` juga RGB.
 
 Menu/cara main dan keputusan menggunakan pasangan warna rawak yang sentiasa
 berlainan antara R1/R2. Setiap LED juga bertukar daripada warna sebelumnya.

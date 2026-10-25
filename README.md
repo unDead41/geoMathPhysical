@@ -1,7 +1,7 @@
 # GeoDecoder - pakej perkongsian
 
-Versi semasa: **v1.1.1**. Pakej **1.1.1-sharing.3**.
-Sumber firmware: main [`aa6e5d722038a0f229a9521efcc7cda58d62a9bd`](https://github.com/unDead41/geodecoder/commit/aa6e5d722038a0f229a9521efcc7cda58d62a9bd).
+Versi semasa: **v1.1.3**. Pakej **1.1.3-sharing.1**.
+Sumber firmware: main [`a059979d97926b82cafd4aa5cf3fe59da04a55bb`](https://github.com/unDead41/geodecoder/commit/a059979d97926b82cafd4aa5cf3fe59da04a55bb).
 Semua fail `main/` dan `src/main.cpp` sama tepat dengan sumber itu.
 `platformio.ini` menggunakan nama environment khusus sharing; board, pin dan dependency kekal sama.
 Installer tidak mengubah firmware atau pendaftaran UID.
@@ -26,10 +26,10 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\setupGeoDecoder.ps1
 
 Installer mengesahkan SHA-256, menyalin ke `%USERPROFILE%\geodecoder-sharing`,
 menyediakan Python jika perlu, PlatformIO Core **6.1.18** dalam virtualenv
-berasingan, VS Code User Setup dan extension PlatformIO IDE; memilih
- environment/COM, Build, kemudian membuka workspace yang betul.
-Pilih **1/Enter = RGB**, **2 = LED biasa**. Tanpa board, Build boleh selesai;
-pilih COM kemudian. **Tiada Upload automatik.**
+berasingan, VS Code User Setup dan extension PlatformIO IDE; memilih COM,
+Build RGB, kemudian membuka workspace yang betul. **Satu build sahaja**:
+`esp32dev-sharing-rgb`, ditetapkan secara automatik tanpa soalan jenis LED.
+Tanpa board, Build boleh selesai; pilih COM kemudian. **Tiada Upload automatik.**
 
 Pemasangan menggunakan installer rasmi Python/VS Code dan terma vendor
 masing-masing. Tiada perubahan execution policy kekal atau tetapan VS Code global
@@ -37,12 +37,8 @@ oleh skrip. Group Policy organisasi mungkin memerlukan bantuan pentadbir.
 Dependency pertama memerlukan Internet/ruang cakera dan boleh mengambil masa
 beberapa minit; tiada had masa siap dijanjikan.
 
-```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\setupGeoDecoder.ps1 -Environment esp32dev-sharing-rgb -BuildBoth
-```
-
 Pilihan: `-Destination "D:\Projek\geodecoder-sharing"`, `-Port COM5` (ganti nombor
-sebenar), `-NoPrompt` (pilihan tersimpan atau RGB kali pertama), `-NoOpen`.
+sebenar), `-NoPrompt` (COM tersimpan/dikesan atau sambung tanpa board), `-NoOpen`.
 Jalankan semula arahan sama jika terganggu. Fail sama digunakan semula;
 suntingan sumber dan fail peribadi tidak ditindih. Untuk sumber disunting atau
 pakej baharu, pilih destinasi baharu. Folder projek Git/peribadi ditolak.
@@ -63,16 +59,15 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\geodecoder.ps1 -Action
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\geodecoder.ps1 -Action Monitor
 ```
 
-`Configure` memilih environment dan COM; muat semula VS Code selepas menukar
-environment. `-Environment` atau `-Port` pada Build/Upload/Monitor mengatasi
-pilihan tersimpan untuk arahan itu sahaja. Jika beberapa port USB wujud, pilih
+`Configure` memilih COM sahaja; RGB ditetapkan secara automatik.
+`-Port` pada Build/Upload/Monitor mengatasi pilihan tersimpan untuk arahan itu
+sahaja. Jika beberapa port USB wujud, pilih
 port board melalui **Device Manager > Ports**. Satu port USB yang dikesan belum
 membuktikan ia ESP32 sasaran. Upload hanya berlaku atas arahan Upload.
 
 | Environment | Perkakasan | Pin |
 |---|---|---|
-| `esp32dev-sharing` | Dua LED biasa | R1=25, R2=26 |
-| `esp32dev-sharing-rgb` | Dua RGB empat kaki | R1 R/G/B=13/14/25; R2=16/17/26 |
+| `esp32dev-sharing-rgb` (default tunggal) | Dua RGB empat kaki | R1 R/G/B=13/14/25; R2=16/17/26 |
 
 `platformio.ini` asal: `espressif32@6.12.0`, board `esp32dev`, framework Arduino,
 Arduino ESP32 2.0.17 yang dipilih platform, `MFRC522@1.4.12`, `hd44780@1.3.2`.
@@ -81,22 +76,23 @@ Installer menghasilkan `platformio.local.ini` pada PC ini. Gunakan Configure
 untuk mengubah fail yang diurus installer; fail COM manual tidak ditindih.
 PlatformIO Project Tasks > environment > General > Build/Upload/Monitor juga tersedia.
 
-Nama ini khusus untuk branch `sharing`. **Default** masih dipaparkan sebagai
-kumpulan automatik PlatformIO; ia mengikut `default_envs`. Untuk RGB, pilih
-**esp32dev-sharing-rgb**. Installer memilih RGB secara lalai; checkout Git tanpa
-konfigurasi tempatan mengekalkan LED biasa sebagai default asal.
+Nama ini khusus untuk branch `sharing`. Terus klik **Build / Upload** di bar
+bawah PlatformIO. **Default** ialah kumpulan automatik yang menggunakan build
+RGB tunggal yang sama; tiada konfigurasi kedua untuk dipilih. Checkout Git
+dan pemasangan ZIP sama-sama default kepada RGB.
 
-Arahan PowerShell dalam PDF yang menggunakan `-Environment esp32dev` atau
-`-Environment esp32dev-rgb` masih diterima dan dipadankan kepada nama sharing.
-CLI PlatformIO terus (`pio run -e ...`) mesti menggunakan nama baharu di atas.
+Pilihan `-Environment` lama dalam arahan PowerShell masih diterima, tetapi
+semua nama lama dipadankan kepada build RGB tunggal. `-BuildBoth` lama turut
+diterima dan membina RGB sekali sahaja. Langkau langkah memilih LED dalam PDF.
+CLI PlatformIO terus boleh menggunakan `pio run`, `pio run -t upload` dan
+`pio device monitor`, tanpa `-e` atau pemilihan environment.
 Tetapan lama yang diurus installer ditukar apabila menjalankan `geodecoder.ps1`
 atau setup semula, sambil mengekalkan COM. Fail INI yang disunting pengguna
 dilindungi; jika menetapkan `default_envs` secara manual, tukar nama environment
 pada baris itu sendiri dan kekalkan tetapan COM/pin yang diperlukan.
 
-Firmware v1.1.1 masih mencetak label asal `env=esp32dev` atau
-`env=esp32dev-rgb` pada Serial Monitor. Ini sepadan dengan LED biasa atau RGB
-dalam jadual; perubahan nama tugas ini tidak mengubah source firmware.
+Serial Monitor mencetak `GeoDecoder v1.1.3 | ESP32 | env=esp32dev-rgb`.
+Label hardware Serial sama dengan main; nama tugas sharing dibezakan di atas.
 
 ## Langkah fizikal
 
@@ -167,7 +163,7 @@ LCD sumber versi 4 (24 Oktober 2026).
 
 **[Buka cara bermain GeoDecoder untuk murid](tutorial/GeoDecoder_Cara_Bermain_Murid.pdf)** — 21 halaman A4 melintang, tanpa nombor halaman. Gambar simulasi menunjukkan bongkah 3D sebenar dengan kad RFID di bawahnya untuk R1 dan kad RFID yang ditampal cetakan bentangan untuk R2. Label LED R1/LED R2, butang NEXT/HINT, petunjuk ungu, jawapan salah/betul, langkau, skor, masa dan bermain semula diterangkan melalui gambar. Bahasa mudah untuk murid Tingkatan 1; istilah matematik dirujuk kepada KSSM Matematik Tingkatan 2, DSKP SP 6.1.1 dan 6.2.1.
 
-**Contoh prisma segi tiga ialah simulasi penerangan sahaja.** Firmware v1.1.1 masih menyokong kubus, kuboid, piramid berasaskan segi empat sama, silinder dan kon; jawapan prisma belum tersedia. Rajah prisma dalam panduan tidak menambah bahan kepada tiga PDF kad cetak asal. Gunakan bongkah dan kad bentangan yang guru sediakan; guru perlu menguji bacaan kad RFID di bawah setiap bongkah sebenar. Peraturan butang, R1/R2, lampu, markah dan masa disemak dengan source sharing; gambar ini bukan bukti ujian perkakasan fizikal.
+**Contoh prisma segi tiga ialah simulasi penerangan sahaja.** Firmware v1.1.3 masih menyokong kubus, kuboid, piramid berasaskan segi empat sama, silinder dan kon; jawapan prisma belum tersedia. Rajah prisma dalam panduan tidak menambah bahan kepada tiga PDF kad cetak asal. Gunakan bongkah dan kad bentangan yang guru sediakan; guru perlu menguji bacaan kad RFID di bawah setiap bongkah sebenar. Peraturan butang, R1/R2, lampu, markah dan masa disemak dengan source sharing; gambar ini bukan bukti ujian perkakasan fizikal.
 
 **Nama installer utama ialah `setupGeoDecoder.ps1`.** Fail kecil `setup.ps1` dikekalkan sebagai alias supaya arahan dalam PDF sedia ada masih berfungsi. Kedua-duanya menjalankan installer yang sama dan menerima pilihan yang sama. Mesej installer kini menunjukkan tutorial yang disertakan.
 
@@ -176,15 +172,8 @@ Beri **ZIP bersih** kepada penerima yang tidak patut menerima sejarah repo.
 Jangan merge sharing ke main. ZIP tiada `.git`, sejarah pembangunan, fixture/
 ujian developer, UID sebenar, token, toolchain, cache, output build atau COM peribadi.
 
-Pakej 1.1.1-sharing.2 disemak melalui 16 senario simulasi aliran installer pada
-Linux PowerShell 7.4.13 (mode argumen Legacy); operasi pemasangan Windows
-menggunakan pengganti terkawal. Muat turun sebenar installer Python dan VS Code
-dari URL skrip berjaya. Pemasangan aplikasi dan pengesahan melalui stor sijil
+Pakej **1.1.3-sharing.1** menggunakan satu build RGB dan firmware yang sama
+dengan main v1.1.3. Semua enam PDF dikekalkan. Semakan native/ESP32, aliran
+installer dan keserasian tetapan lama dijalankan secara berasingan; simulasi
+Linux mengganti operasi Windows yang tidak tersedia. Pemasangan aplikasi pada
 Windows sebenar, Upload USB serta perkakasan fizikal masih belum diuji.
-
-Pakej **1.1.1-sharing.3** menamakan semula dua environment PlatformIO,
-mengekalkan alias PowerShell lama dan menukar tetapan installer lama dengan
-perlindungan suntingan pengguna. Semua enam PDF dan source firmware dikekalkan.
-Build ESP32 bagi kedua-dua nama baharu berjaya. Semakan keserasian/configuration
-11/11 dan simulasi installer 17/17 lulus pada Linux PowerShell; proses Windows
-dan panggilan USB dalam simulasi diganti secara terkawal, bukan ujian board fizikal.
