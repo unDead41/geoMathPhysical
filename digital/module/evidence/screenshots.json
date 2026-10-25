@@ -1,0 +1,195 @@
+{
+  "count": 21,
+  "capture": "Cua browser screenshot API; saved via local QA workbench",
+  "screenshots": [
+    {
+      "path": "screenshots/cone-closed-final.png",
+      "bytes": 159220,
+      "sha256": "41def4374f9bbb2264ac799c5600c3c136bce90a1576bff06ba53179e75d8018",
+      "width": 1353,
+      "height": 1747,
+      "format": "JPEG",
+      "source": "actual Chrome browser screenshot; unmodified bytes"
+    },
+    {
+      "path": "screenshots/cone-half-final.png",
+      "bytes": 166765,
+      "sha256": "ff3d0a48f7a0955d6859435ace830de6766a43991491988df70b0b11728ab74d",
+      "width": 1353,
+      "height": 1747,
+      "format": "JPEG",
+      "source": "actual Chrome browser screenshot; unmodified bytes"
+    },
+    {
+      "path": "screenshots/cone-net-final.png",
+      "bytes": 164441,
+      "sha256": "7816cb49a1f1a101db811369e8788883a93bc8147bc548f0fb6427d280489c9d",
+      "width": 1353,
+      "height": 1764,
+      "format": "JPEG",
+      "source": "actual Chrome browser screenshot; unmodified bytes"
+    },
+    {
+      "path": "screenshots/cone-views.png",
+      "bytes": 168551,
+      "sha256": "fb8119fa2875184ed6b068e29cae2a94e62bbfbfc76028ed819aab69336176a3",
+      "width": 1353,
+      "height": 1860,
+      "format": "JPEG",
+      "source": "actual Chrome browser screenshot; unmodified bytes"
+    },
+    {
+      "path": "screenshots/cube-net-final.png",
+      "bytes": 154926,
+      "sha256": "c7024a3f59983bdf094e273d2e4123dc12a43238e7e65790c44fc1520adce974",
+      "width": 1353,
+      "height": 1628,
+      "format": "JPEG",
+      "source": "actual Chrome browser screenshot; unmodified bytes"
+    },
+    {
+      "path": "screenshots/cube-views.png",
+      "bytes": 165580,
+      "sha256": "0b2d9b9418143c3bdff16545907975e74b7ea1e71523332d6b79ffd7a44de180",
+      "width": 1353,
+      "height": 1860,
+      "format": "JPEG",
+      "source": "actual Chrome browser screenshot; unmodified bytes"
+    },
+    {
+      "path": "screenshots/cuboid-closed-final.png",
+      "bytes": 156450,
+      "sha256": "cf1cb6d23840c67fe9c5f255cc4a617ad2092a833b3f1bde51222bfa186f14e6",
+      "width": 1353,
+      "height": 1644,
+      "format": "JPEG",
+      "source": "actual Chrome browser screenshot; unmodified bytes"
+    },
+    {
+      "path": "screenshots/cuboid-net-final.png",
+      "bytes": 162812,
+      "sha256": "69a92f3af47ea9655a901a61802e70a1a507080d1ef9a10bed1e7d3561f9916d",
+      "width": 1353,
+      "height": 1661,
+      "format": "JPEG",
+      "source": "actual Chrome browser screenshot; unmodified bytes"
+    },
+    {
+      "path": "screenshots/cuboid-views.png",
+      "bytes": 167621,
+      "sha256": "81c6513f88b9bdc85841f8dd406209bb02cdcc9f3333dde8590ff63473b7e147",
+      "width": 1353,
+      "height": 1860,
+      "format": "JPEG",
+      "source": "actual Chrome browser screenshot; unmodified bytes"
+    },
+    {
+      "path": "screenshots/cylinder-closed-final.png",
+      "bytes": 164001,
+      "sha256": "f1d3d03bb6f33dc9e25cffc6f03b6aebddecbe08c8c4b2dacb5907d7c18302be",
+      "width": 1353,
+      "height": 1784,
+      "format": "JPEG",
+      "source": "actual Chrome browser screenshot; unmodified bytes"
+    },
+    {
+      "path": "screenshots/cylinder-half-final.png",
+      "bytes": 171147,
+      "sha256": "b0e1979647040adec6827dda4fdeea9b7150d91ac427a971408fe385a55881e8",
+      "width": 1353,
+      "height": 1784,
+      "format": "JPEG",
+      "source": "actual Chrome browser screenshot; unmodified bytes"
+    },
+    {
+      "path": "screenshots/cylinder-net-final.png",
+      "bytes": 172380,
+      "sha256": "818d8b547b8acaf7a6edaefe438332679855f8b35e5e9b523698bd12f3d441ac",
+      "width": 1353,
+      "height": 1784,
+      "format": "JPEG",
+      "source": "actual Chrome browser screenshot; unmodified bytes"
+    },
+    {
+      "path": "screenshots/cylinder-views.png",
+      "bytes": 174248,
+      "sha256": "f31a0a7634e86aa08765dbce34f98b18bc6645992aefa6ce7a8835a102b305fd",
+      "width": 1353,
+      "height": 1860,
+      "format": "JPEG",
+      "source": "actual Chrome browser screenshot; unmodified bytes"
+    },
+    {
+      "path": "screenshots/desktop-cube-final.png",
+      "bytes": 153806,
+      "sha256": "1ea655b7bc61259286d0b976a47dc3c4a15e4648129607efecb4ec9e80d7f876",
+      "width": 1353,
+      "height": 1628,
+      "format": "JPEG",
+      "source": "actual Chrome browser screenshot; unmodified bytes"
+    },
+    {
+      "path": "screenshots/phone-320-views-crop.png",
+      "bytes": 40137,
+      "sha256": "d530bb15f9cf68c7ad505987ba87019b2a28203cd9df5e42cd23f8a131b1f778",
+      "width": 322,
+      "height": 846,
+      "format": "JPEG",
+      "source": "actual Chrome browser screenshot; unmodified bytes"
+    },
+    {
+      "path": "screenshots/phone-390-controls.png",
+      "bytes": 86199,
+      "sha256": "18a16a23d5801b80a325d417214b5480ed40500322614b421ed5017f2bcf5e09",
+      "width": 1348,
+      "height": 1266,
+      "format": "JPEG",
+      "source": "actual Chrome browser screenshot; unmodified bytes"
+    },
+    {
+      "path": "screenshots/phone-390-views-crop.png",
+      "bytes": 45633,
+      "sha256": "353fba4e9e8f09b126cab9c2fc21cf552d3e3cd3f111e536355cd5a579dcbf36",
+      "width": 392,
+      "height": 846,
+      "format": "JPEG",
+      "source": "actual Chrome browser screenshot; unmodified bytes"
+    },
+    {
+      "path": "screenshots/pyramid-closed-final.png",
+      "bytes": 157049,
+      "sha256": "aaebb4e6ecde6e15809fc882c2a6121c13f4d8ab2ff79c0c5be95dbdb3f42891",
+      "width": 1353,
+      "height": 1668,
+      "format": "JPEG",
+      "source": "actual Chrome browser screenshot; unmodified bytes"
+    },
+    {
+      "path": "screenshots/pyramid-net-final.png",
+      "bytes": 160643,
+      "sha256": "a3c67035b68132a5602ed0a032434f19dc192d4dd8fd1b6da63cb6910b71745d",
+      "width": 1353,
+      "height": 1668,
+      "format": "JPEG",
+      "source": "actual Chrome browser screenshot; unmodified bytes"
+    },
+    {
+      "path": "screenshots/pyramid-views.png",
+      "bytes": 169653,
+      "sha256": "1c4532b878aeb39b3490e4fe8e51836f492b2e0225d78fd062d258d6da8311b1",
+      "width": 1353,
+      "height": 1860,
+      "format": "JPEG",
+      "source": "actual Chrome browser screenshot; unmodified bytes"
+    },
+    {
+      "path": "screenshots/tablet-768-views.png",
+      "bytes": 96061,
+      "sha256": "6eb9c26f8c3fa0ce109358626bb425027131d204ceab60d40c6a743154d8708d",
+      "width": 1348,
+      "height": 1382,
+      "format": "JPEG",
+      "source": "actual Chrome browser screenshot; unmodified bytes"
+    }
+  ]
+}

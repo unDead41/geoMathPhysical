@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="ms">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#215FF0">
+  <meta name="description" content="Teroka lima bongkah GeoDecoder: putar model 3D, buka bentangan dan bandingkan enam pandangan 2D. Modul pembelajaran offline berpandukan KSSM.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src data:; connect-src 'none'; font-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>GeoDecoder — Modul pembelajaran bongkah</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 44'%3E%3Cpath d='m20 2 17 10v20L20 42 3 32V12Z' fill='%23215FF0'/%3E%3Cpath d='m20 2 17 10-17 10L3 12Z' fill='%236EAAFF'/%3E%3C/svg%3E">
+  <style>
+:root{
+  --primary:#215FF0;--primary-dark:#194AC0;--ink:#18334B;--bg:#F3F7FB;--surface:#FFFFFF;--success:#127957;--danger:#B9403E;--accent:#FFCB66;--muted:#526A7D;--border:#D9E4ED;
+  --blue-soft:#EAF1FF;--mint-soft:#EAF7F1;--radius:1rem;--radius-lg:1.5rem;
+  --font-display:"Trebuchet MS","Avenir Next",sans-serif;--font-body:"Segoe UI",Arial,sans-serif;--font-mono:"SFMono-Regular",Consolas,monospace;
+  --scroll-thumb:#96ACBF;--scroll-track:#EAF0F6;--scroll-hover:#617E96;--scroll-active:#3C5C76;
+  color-scheme:light;scrollbar-color:var(--scroll-thumb) var(--scroll-track);scrollbar-width:thin;
+}
+*{box-sizing:border-box;scrollbar-color:var(--scroll-thumb) var(--scroll-track);scrollbar-width:thin}
+*::-webkit-scrollbar{width:9px;height:9px}*::-webkit-scrollbar-track{background:var(--scroll-track)}*::-webkit-scrollbar-thumb{background:var(--scroll-thumb);border:2px solid var(--scroll-track);border-radius:8px}*::-webkit-scrollbar-thumb:hover{background:var(--scroll-hover)}*::-webkit-scrollbar-thumb:active{background:var(--scroll-active)}
+html{min-width:320px;scrollbar-gutter:stable;scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:15px;line-height:1.55}button,input{font:inherit}button,a,input,summary{-webkit-tap-highlight-color:transparent}button{cursor:pointer;color:inherit}button:disabled{cursor:not-allowed;opacity:.45}a{color:var(--primary)}button,fieldset{margin:0}button{border:0}h1,h2,h3,p{margin:0}h1,h2,h3{font-family:var(--font-display);line-height:1.2}button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible,canvas:focus-visible{outline:3px solid var(--primary);outline-offset:4px}
+/* The hidden attribute must take precedence over layout utilities. */
+[hidden]{display:none!important}.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;clip:rect(0,0,0,0);overflow:hidden;white-space:nowrap}.skip{position:fixed;top:-80px;left:16px;background:var(--surface);padding:12px;z-index:20}.skip:focus{top:8px}
+.site-header{display:flex;align-items:center;gap:14px;max-width:1320px;padding:24px 32px 18px;margin:auto;border-bottom:1px solid var(--border)}.brand{display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none;font-family:var(--font-display);font-weight:750;font-size:22px;line-height:1.15}.brand>svg{width:34px;height:38px}.brand-blue{color:var(--primary)}.brand small{display:block;font-family:var(--font-body);font-size:9px;letter-spacing:1.7px;margin-top:5px}.version{align-self:flex-start;margin-top:2px;border:1px solid var(--border);background:var(--surface);padding:3px 8px;border-radius:6px;font-family:var(--font-mono);font-size:11px}.header-meta{display:flex;gap:24px;align-items:center;margin-left:auto;font-size:12px;font-weight:600}.offline{display:flex;align-items:center;gap:7px;color:var(--success)}.offline i{width:6px;height:6px;border-radius:50%;background:var(--success)}.help-link{text-decoration:none;min-height:44px;display:flex;align-items:center;gap:8px}.help-link:hover{text-decoration:underline}
+main{max-width:1320px;margin:auto;padding:30px 32px 0}.intro{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:25px}.eyebrow{font-size:10px;font-weight:750;letter-spacing:1.65px;color:var(--muted)}h1{font-size:clamp(27px,3vw,39px);letter-spacing:-1.4px;margin:8px 0}h1 span{color:var(--primary)}.intro>div>p:last-child{font-size:14px;color:var(--muted)}.self-paced{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--muted)}.self-paced svg{width:23px;height:23px;fill:none;stroke:var(--muted);stroke-width:1.5}
+.shape-picker{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-bottom:20px}.shape-choice{min-width:0;display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:13px;min-height:66px;padding:10px 17px;text-align:left;font-weight:700;transition:transform .18s,border-color .18s,box-shadow .18s}.shape-choice>svg{width:42px;height:42px;flex-shrink:0}.shape-choice .shape-name{flex:1}.shape-choice .choice-dot{height:6px;width:6px;border-radius:50%;background:transparent;flex-shrink:0}.shape-choice[aria-pressed="true"]{border-color:var(--primary);background:var(--blue-soft);box-shadow:inset 0 0 0 1px var(--primary)}.shape-choice[aria-pressed="true"] .choice-dot{background:var(--primary)}.shape-choice:hover{transform:translateY(-2px);border-color:var(--primary)}.shape-choice:active{transform:translateY(0)}
+.learning-layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:start}.workspace{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;min-width:0}.workspace-top{padding:22px 22px 18px;display:flex;align-items:center;justify-content:space-between;gap:16px}.mini-label{font-size:9px;letter-spacing:1.4px;font-weight:700;color:var(--muted)}.workspace-top h2{font-size:25px;margin-top:3px}.mode-switch{display:flex;border:1px solid var(--border);border-radius:10px;background:var(--bg);padding:4px;gap:3px}.mode-switch button{min-height:40px;border-radius:7px;font-size:12px;font-weight:650;padding:8px 12px;background:transparent;transition:background .16s}.mode-switch button:hover{background:#DEE9FC}.mode-switch button[aria-pressed="true"]{background:var(--surface);box-shadow:0 1px 4px #18334b14;color:var(--primary)}
+.stage{margin:0 12px;background-color:#F1F6FC;background-image:radial-gradient(#B6CBE180 .8px,transparent .8px);background-size:19px 19px;border:1px solid #E3ECF6;border-radius:17px;position:relative}.stage-top{position:absolute;top:14px;left:16px;right:14px;display:flex;justify-content:space-between;align-items:center;gap:12px;pointer-events:none;z-index:2}.stage-label{font-size:11px;color:var(--muted);font-weight:650;background:var(--surface);border:1px solid #E1EAF4;border-radius:7px;padding:5px 9px;max-width:55%}.stage-tools{display:flex;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:10px;pointer-events:auto}.icon-button{width:37px;min-height:38px;background:transparent;font-size:21px;border-radius:9px;display:grid;place-items:center;transition:background .15s}.icon-button:hover{background:var(--blue-soft)}.icon-button svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.stage-tools output{font-size:10px;min-width:35px;text-align:center;font-family:var(--font-mono)}.stage-tools #reset{border-left:1px solid var(--border);border-radius:0 9px 9px 0}
+#model-canvas{display:block;width:100%;height:420px;touch-action:none;cursor:grab;margin-top:39px}#model-canvas:active{cursor:grabbing}.canvas-help{position:absolute;bottom:58px;left:85px;right:85px;text-align:center;font-size:10px;color:var(--muted);pointer-events:none}.canvas-help span{display:block;font-size:9px;opacity:.8;margin-top:2px}.stage-bottom{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-top:1px solid #D9E5F2;background:#FFFFFF9C;gap:8px;border-radius:0 0 16px 16px;min-height:52px}.toggle{display:flex;gap:8px;align-items:center;font-size:11px;min-height:32px;cursor:pointer}.toggle input{width:16px;height:16px;accent-color:var(--primary);cursor:pointer}.rotate-toggle{display:flex;align-items:center;gap:5px;background:transparent;min-height:32px;border-radius:6px;font-size:11px;padding:3px 6px;color:var(--muted)}.rotate-toggle:hover{background:var(--blue-soft);color:var(--primary)}.rotate-toggle svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round}.rotate-toggle[aria-pressed="true"]{color:var(--primary)}
+.animation-panel{padding:21px 23px 17px}.timeline-label{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:650;margin-bottom:9px;gap:12px}.timeline-label label span{margin:0 6px;color:var(--primary)}.timeline-label output{font-family:var(--font-mono);font-size:10px;font-weight:400;color:var(--muted)}input[type="range"]{width:100%;height:24px;accent-color:var(--primary);cursor:pointer;display:block;margin:0}.animation-actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}.button{display:flex;align-items:center;justify-content:center;gap:7px;min-height:44px;border:1px solid var(--border);background:var(--surface);border-radius:10px;font-size:12px;font-weight:650;padding:9px 13px;transition:background .16s,transform .16s}.button:hover{background:var(--blue-soft);border-color:#B7CFFA;transform:translateY(-1px)}.button:active{transform:translateY(1px)}.button.primary{background:var(--primary);border-color:var(--primary);color:white;min-width:138px}.button.primary:hover{background:var(--primary-dark)}.button svg{width:16px;height:16px;stroke:currentColor;fill:currentColor;stroke-width:1.4}.button.replay{margin-left:auto}.button.replay>span{font-size:18px;line-height:1}.animation-caption{font-size:11px;color:var(--muted);margin-top:12px;min-height:34px;line-height:1.6}.motion-note{font-size:11px;line-height:1.5;padding:12px 22px;color:var(--muted);background:var(--mint-soft)}
+.face-key{padding:18px 23px 21px;border-top:1px solid var(--border)}.face-key-title{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:11px}.face-key-title span{color:var(--muted);font-size:10px}.face-legend{display:flex;flex-wrap:wrap;gap:7px;margin-top:11px}.face-chip{display:flex;align-items:center;gap:6px;font-size:10px;background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:6px 8px;min-height:33px;transition:background .16s}.face-chip:hover{background:var(--blue-soft)}.face-chip[aria-pressed="true"]{border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary);background:var(--blue-soft)}.face-number{display:grid;place-items:center;width:19px;height:19px;border-radius:5px;font-weight:700;border:1px solid #18334B30;color:var(--ink)}#face-description{font-size:10px;color:var(--muted);margin-top:9px;min-height:16px}
+.learning-notes{display:flex;flex-direction:column;gap:14px}.notes-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px}.notes-card h2{font-size:25px;margin-top:7px}.shape-tag{color:var(--muted);font-size:12px;margin-top:7px}.properties{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin:18px 0 15px;padding:13px 0;gap:8px}.property>b{display:block;font-size:24px;font-family:var(--font-display);line-height:1.1}.property>span{font-size:10px;color:var(--muted);display:block;margin-top:5px}.property>small{display:block;color:var(--muted);font-size:9px;min-height:14px}.body-copy{font-size:12px;color:var(--muted);line-height:1.75}.edge-note{font-size:10px;line-height:1.6;border-left:2px solid var(--primary);padding-left:9px;margin-top:12px;color:var(--muted)}.notes-card h3{font-size:17px;line-height:1.4;margin:8px 0 10px}.text-button{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;min-height:42px;background:transparent;color:var(--primary);font-size:11px;font-weight:700;padding:8px 0;text-align:left;border-radius:5px}.text-button:hover{background:var(--blue-soft);padding-left:7px;padding-right:7px}.observation{display:flex;gap:9px;margin:9px 0 3px;padding:12px 0 0;border-top:1px solid var(--border);font-size:11px;line-height:1.7;color:var(--muted)}.observation>span{font-size:20px;color:#A56E18;line-height:1.5}.think-card{background:#FDFCF8;border-color:#E8E1CF}.think-options{display:flex;flex-direction:column;gap:7px}.think-options button{display:flex;align-items:center;gap:8px;min-height:42px;border:1px solid #E0DECE;background:var(--surface);border-radius:8px;padding:8px 10px;text-align:left;font-size:11px;transition:background .15s}.think-options button:hover{background:#FBF4DB}.think-options button[aria-pressed="true"]{border-color:var(--primary);background:var(--blue-soft)}.think-feedback{margin-top:11px;font-size:10px;line-height:1.7;color:var(--muted);min-height:34px}.think-feedback.correct{color:var(--success)}
+.views-panel{padding:19px 23px}.views-panel>p{font-size:11px;color:var(--muted);line-height:1.7}.views-panel>p b{color:var(--ink)}.view-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:14px 0}.view-choice{min-width:0;display:flex;flex-direction:column;align-items:center;border:1px solid var(--border);background:var(--bg);border-radius:10px;padding:4px 5px 9px;font-size:11px;transition:border-color .16s,background .16s}.view-choice canvas{display:block;width:100%;height:90px;pointer-events:none}.view-choice:hover{border-color:var(--primary);background:var(--blue-soft)}.view-choice[aria-pressed="true"]{border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary);background:var(--blue-soft)}.view-choice small{font-size:8px;color:var(--muted);min-height:25px;margin-top:2px;padding:0 3px;line-height:1.4}.view-description{min-height:38px}
+.guide{margin:36px 0 18px;border-top:1px solid var(--border);padding-top:28px}.guide h2{font-size:23px;margin-top:6px}.guide-columns{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px;margin:22px 0}.guide-columns article{position:relative;padding-left:43px}.guide-icon{position:absolute;left:0;top:0;width:30px;height:32px;display:grid;place-items:center;color:var(--primary);background:var(--blue-soft);border:1px solid #D0DFFC;border-radius:8px;font-size:12px;font-weight:750}.guide-columns h3{font-size:13px;margin:3px 0 8px}.guide-columns p{font-size:11px;line-height:1.8;color:var(--muted)}details{border-top:1px solid var(--border);padding:15px 0}summary{cursor:pointer;font-size:11px;font-weight:650;min-height:30px;align-content:center}summary:hover{color:var(--primary)}.curriculum-copy{max-width:830px;padding:9px 0 4px;font-size:11px;line-height:1.8;color:var(--muted)}.curriculum-copy p+p{margin-top:10px}footer{max-width:1320px;margin:auto;padding:18px 32px 26px;border-top:1px solid var(--border);font-size:10px;color:var(--muted);display:flex;justify-content:space-between;gap:18px}.noscript{padding:20px;background:#FFF0EF;color:var(--danger)}
+@media(min-width:1400px){#model-canvas{height:468px}}
+@media(max-width:1050px){.learning-layout{grid-template-columns:minmax(0,1fr) 260px}.notes-card{padding:18px}.workspace-top{padding:18px}.workspace-top h2{font-size:22px}.mode-switch button{font-size:10px;padding:7px 9px}.button{font-size:11px;padding:9px 10px}.button.primary{min-width:127px}.shape-choice{padding:9px 12px;gap:8px}.shape-choice>svg{width:32px;height:32px}.shape-choice .choice-dot{display:none}.animation-panel{padding-left:18px;padding-right:18px}}
+@media(max-width:850px){.site-header{padding:20px 20px 17px}main{padding:25px 20px 0}.learning-layout{grid-template-columns:1fr}.learning-notes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}.think-card{grid-column:1/-1}.think-options{display:grid;grid-template-columns:1fr 1fr}.self-paced{display:none}.workspace-top h2{font-size:25px}.mode-switch button{font-size:12px}.shape-choice{font-size:12px;padding:10px}.shape-choice>svg{width:28px;height:28px}.shape-picker{gap:7px}.shape-choice{gap:7px}#model-canvas{height:400px}.guide-columns{gap:18px}footer{padding-left:20px;padding-right:20px}.button{font-size:12px}.button.primary{min-width:140px}.button.replay{margin-left:auto}}
+@media(max-width:540px){.site-header{padding:16px 14px 14px;gap:8px}.brand{font-size:19px;gap:7px}.brand>svg{width:28px;height:32px}.brand small{font-size:7px;letter-spacing:1.1px}.version{font-size:9px;padding:2px 5px}.header-meta{gap:6px;font-size:10px}.offline{display:none}.help-link{min-height:36px}main{padding:23px 14px 0}.intro{margin-bottom:20px}h1{letter-spacing:-.9px;font-size:30px}.intro>div>p:last-child{font-size:12px;max-width:290px;line-height:1.6}.eyebrow{font-size:9px}.shape-picker{gap:5px;margin-bottom:14px}.shape-choice{display:flex;flex-direction:column;justify-content:center;padding:7px 2px;gap:3px;min-height:65px;border-radius:10px;font-size:10px}.shape-choice>svg{width:28px;height:28px}.shape-choice .shape-name{flex:0}.workspace{border-radius:18px}.workspace-top{padding:16px 13px 14px;gap:8px;align-items:flex-end}.workspace-top h2{font-size:21px}.mini-label{font-size:7px;letter-spacing:.8px}.mode-switch{padding:3px;gap:1px;border-radius:8px}.mode-switch button{font-size:9px;padding:6px 7px;min-height:35px;border-radius:5px}.stage{margin:0 7px;border-radius:12px}.stage-top{top:10px;left:9px;right:9px;gap:6px}.stage-label{font-size:9px;padding:4px 6px;max-width:52%}.icon-button{width:29px;min-height:33px;font-size:18px}.icon-button svg{width:15px;height:15px}.stage-tools output{font-size:8px;min-width:29px}#model-canvas{height:310px;margin-top:35px}.canvas-help{left:57px;right:30px;bottom:55px;font-size:8px}.canvas-help span{font-size:7px}.stage-bottom{padding:8px 9px;min-height:46px;border-radius:0 0 11px 11px}.toggle{font-size:9px;gap:5px}.toggle input{width:15px;height:15px}.rotate-toggle{font-size:9px;gap:4px;padding:3px}.rotate-toggle svg{width:13px;height:13px}.animation-panel{padding:17px 14px 13px}.timeline-label{font-size:11px}.timeline-label output{font-size:9px}.animation-actions{gap:6px;display:grid;grid-template-columns:1fr 1fr}.button{font-size:11px;min-height:42px;padding:8px 7px}.button.primary{min-width:0}.button.replay{margin:0}.animation-caption{font-size:10px;min-height:48px;line-height:1.65}.face-key{padding:15px 14px}.face-key-title{align-items:start}.face-key-title b{font-size:10px}.face-key-title span{font-size:8px}.face-legend{gap:5px}.face-chip{font-size:9px;padding:5px 7px;min-height:34px}.face-number{width:17px;height:17px;font-size:9px}#face-description{font-size:9px;min-height:28px}.learning-notes{display:flex;gap:12px}.notes-card{padding:20px}.notes-card h2{font-size:25px}.body-copy{font-size:13px}.shape-tag{font-size:12px}.property>span{font-size:11px}.property>small{font-size:10px}.property>b{font-size:26px}.notes-card h3{font-size:18px}.text-button{font-size:12px;min-height:44px}.observation{font-size:12px}.think-options{display:flex}.think-options button{font-size:12px;min-height:44px}.think-feedback{font-size:11px}.views-panel{padding:17px 14px}.view-grid{gap:7px}.view-choice canvas{height:74px}.view-choice{font-size:10px}.view-choice small{font-size:8px;min-height:28px}.view-description{font-size:10px}.guide{margin-top:28px}.guide h2{font-size:21px;max-width:280px}.guide-columns{grid-template-columns:1fr;gap:19px}.guide-columns p{font-size:12px}.guide-columns h3{font-size:14px}.guide-columns article{padding-left:43px}.curriculum-copy{font-size:11px}summary{font-size:11px}footer{padding:18px 14px 24px;flex-direction:column;gap:6px;font-size:9px}.motion-note{font-size:10px;padding:10px 14px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}/* Educational movement occurs only after an explicit Play action. */*,*::before,*::after{animation:none!important;transition:none!important}.shape-choice:hover,.button:hover{transform:none}}
+@media(forced-colors:active){*{scrollbar-color:auto}.shape-choice[aria-pressed="true"],.face-chip[aria-pressed="true"],.view-choice[aria-pressed="true"]{outline:2px solid Highlight}.stage{border:1px solid CanvasText}.offline i{background:CanvasText}}
+/* Picker diagrams are rendered from the same geometry as the main model. */
+.shape-choice>canvas{width:42px;height:42px;flex-shrink:0;pointer-events:none}
+@media(max-width:1050px){.shape-choice>canvas{width:32px;height:32px}}
+@media(max-width:850px){.shape-choice>canvas{width:28px;height:28px}}
+
+</style>
+</head>
+<body>
+  <a class="skip" href="#main">Terus ke modul</a>
+  <header class="site-header">
+    <a href="#main" class="brand" aria-label="GeoDecoder Digital, modul pembelajaran"><svg viewBox="0 0 40 44" aria-hidden="true"><path d="m20 2 17 10v20L20 42 3 32V12Z" fill="#215FF0"/><path d="m20 2 17 10-17 10L3 12Z" fill="#6EAAFF"/><path d="m20 22 17-10v20L20 42Z" fill="#1847B0"/><path d="m11 17 9 5 9-5M20 22v10" stroke="white" stroke-width="2" fill="none"/></svg><span>Geo<span class="brand-blue">Decoder</span><small>DIGITAL · MODUL PEMBELAJARAN</small></span></a>
+    <span id="version" class="version">V1.0.0</span>
+    <div class="header-meta"><span class="offline"><i></i>Tanpa Internet</span><a href="#panduan" class="help-link">Panduan <span aria-hidden="true">↗</span></a></div>
+  </header>
+  <main id="main">
+    <div class="intro"><div><p class="eyebrow">MAKMAL BONGKAH · KSSM</p><h1>Lihat. Buka. <span>Fahami.</span></h1><p>Teroka hubungan antara bongkah 3D, bentangan dan pandangan 2D.</p></div><span class="self-paced"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 5 9 3 9-3v14l-9 3-9-3V5Zm9 3v14"/></svg>Belajar ikut rentak sendiri</span></div>
+    <nav id="shape-picker" class="shape-picker" aria-label="Pilih bongkah"></nav>
+    <div class="learning-layout">
+      <section class="workspace" aria-labelledby="model-title">
+        <div class="workspace-top"><div><span class="mini-label">RUANG PENEROKAAN</span><h2 id="model-title">Kubus</h2></div><div class="mode-switch" role="group" aria-label="Jenis penerokaan"><button id="mode-model" aria-pressed="true">Model &amp; bentangan</button><button id="mode-views" aria-pressed="false">Pandangan 2D</button></div></div>
+        <div id="stage" class="stage">
+          <div class="stage-top"><span id="stage-label" class="stage-label">Bongkah 3D</span><div class="stage-tools"><button id="zoom-out" class="icon-button" aria-label="Zum keluar" title="Zum keluar">−</button><output id="zoom-level" aria-live="off">100%</output><button id="zoom-in" class="icon-button" aria-label="Zum masuk" title="Zum masuk">+</button><button id="reset" class="icon-button" aria-label="Kedudukan asal" title="Kedudukan asal"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5m-4-4a8 8 0 0 1 13-3l2 3M4 16l2 3a8 8 0 0 0 13-3"/></svg></button></div></div>
+          <canvas id="model-canvas" tabindex="0" role="img" aria-label="Model interaktif kubus" aria-describedby="canvas-help">Model bongkah boleh diteroka menggunakan kawalan di bawah. Penerangan muka tersedia di sebelah model.</canvas>
+          <p id="canvas-help" class="canvas-help">Seret untuk putar · Cubit atau roda tetikus untuk zum<span>Anak panah: putar · + / −: zum · Home: asal</span></p>
+          <div class="stage-bottom"><label class="toggle"><input id="labels" type="checkbox"><span>Label pada model</span></label><button id="auto-rotate" class="rotate-toggle" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5m-4-4a8 8 0 0 1 13-3l2 3M4 16l2 3a8 8 0 0 0 13-3"/></svg><span>Hentikan putaran</span></button></div>
+        </div>
+        <p id="reduced-note" class="motion-note" hidden>Gerakan dikurangkan: putaran automatik dimatikan. Peluncur mengawal bentangan secara terus; animasi hanya bergerak apabila anda menekan Main.</p>
+        <div id="animation-panel" class="animation-panel">
+          <div class="timeline-label"><label for="progress">Bongkah <span aria-hidden="true">⟷</span> Bentangan</label><output id="progress-value" for="progress">0% terbuka</output></div>
+          <input id="progress" type="range" min="0" max="1000" step="1" value="0" aria-valuetext="Bongkah tertutup, 0 peratus terbuka">
+          <div class="animation-actions"><button id="play" class="button primary"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7V5Z"/></svg><span>Main animasi</span></button><button id="open-net" class="button">Buka bentangan</button><button id="close-net" class="button">Cantum semula</button><button id="replay" class="button replay"><span aria-hidden="true">↻</span> Ulang</button></div>
+          <p id="animation-caption" class="animation-caption">Muka kekal bersambung pada rusuk. Warna yang sama menandakan muka yang sama.</p>
+        </div>
+        <div id="views-panel" class="views-panel" hidden><p><b>Pandangan 2D bukan bentangan.</b> Lihat bongkah yang masih tertutup dari satu arah. Tiada kesan perspektif.</p><div id="view-grid" class="view-grid" role="group" aria-label="Enam pandangan ortografik"></div><p id="view-description" class="view-description"></p></div>
+        <div class="face-key"><div class="face-key-title"><b>Jejaki permukaan</b><span>Klik model atau pilih label.</span></div><div id="face-legend" class="face-legend" role="group" aria-label="Pilih muka atau permukaan"></div><p id="face-description" aria-live="polite">Pilih permukaan untuk melihatnya pada model.</p></div>
+      </section>
+      <aside class="learning-notes" aria-labelledby="notes-title">
+        <section class="notes-card"><p class="eyebrow">KENALI BONGKAH</p><h2 id="notes-title">Kubus</h2><p id="shape-tag" class="shape-tag"></p><div id="properties" class="properties"></div><p id="shape-intro" class="body-copy"></p><p id="edge-note" class="edge-note" hidden>Rusuk melengkung ialah sempadan antara permukaan rata dengan permukaan melengkung.</p></section>
+        <section class="notes-card explore-card"><p class="eyebrow">CUBA SENDIRI</p><h3>Dari bongkah ke bentangan</h3><p id="net-explanation" class="body-copy"></p><button id="guided-net" class="text-button">Buka dan perhatikan <span aria-hidden="true">↗</span></button><div class="observation"><span aria-hidden="true">✧</span><p id="observation"></p></div><button id="guided-view" class="text-button">Bandingkan pandangan <span aria-hidden="true">↗</span></button></section>
+        <section class="notes-card think-card" aria-labelledby="think-title"><p class="eyebrow">CUBA FIKIR · TANPA MARKAH</p><h3 id="think-title"></h3><div id="think-options" class="think-options" role="group" aria-label="Pilihan pemahaman"></div><p id="think-feedback" class="think-feedback" role="status">Pilih satu jawapan untuk melihat penerangan.</p></section>
+      </aside>
+    </div>
+    <section id="panduan" class="guide" aria-labelledby="guide-title"><div><p class="eyebrow">PANDUAN RINGKAS</p><h2 id="guide-title">Satu bongkah. Tiga cara memahami.</h2></div><div class="guide-columns"><article><span class="guide-icon" aria-hidden="true">3D</span><h3>Model bongkah</h3><p>Putar dan zum untuk melihat permukaan, rusuk dan bucu. Klik muka untuk menjejakinya.</p></article><article><span class="guide-icon" aria-hidden="true">↗</span><h3>Bentangan</h3><p>Buka seluruh permukaan menjadi bentuk rata. Cantum semula untuk memahami sambungannya.</p></article><article><span class="guide-icon" aria-hidden="true">2D</span><h3>Pandangan ortografik</h3><p>Lihat bongkah dari atas, bawah, depan, belakang, kiri atau kanan. Bongkah kekal tertutup.</p></article></div>
+      <details id="curriculum"><summary>Rujukan KSSM / DSKP dan skop pembelajaran</summary><div class="curriculum-copy"><p><b>Tingkatan 2:</b> SP 6.1.1 (sifat geometri bongkah) dan SP 6.2.1 (bentangan dan model). Modul ini menyediakan penerokaan lima bongkah projek; ia bukan liputan penuh kedua-dua standard.</p><p><b>Pengayaan Tingkatan 3:</b> SP 7.1.1–7.1.2 (unjuran ortogon). Enam pandangan membantu membezakan objek dengan unjurannya; modul belum mengajar lukisan pelan/dongakan mengikut skala.</p><p>Bahasa dipermudah supaya murid Tingkatan 1 boleh mengikuti aktiviti. Contoh ini menggunakan bongkah tegak. Silinder dan kon mempunyai permukaan melengkung; istilah “muka” digunakan untuk permukaan rata.</p><p><a href="https://bpk.moe.gov.my/kurikulum/kssm/kssm-tingkatan-2/341-dskp-kssm-matematik-tingkatan-2/file" target="_blank" rel="noreferrer">DSKP Matematik Tingkatan 2 · BPK, KPM</a><br><a href="https://sman.pahang.edu.my/system/documents/attachments/000/000/168/original/002_DSKP_KSSM_MATEMATIK_TINGKATAN_3.pdf?1544929347=" target="_blank" rel="noreferrer">DSKP Matematik Tingkatan 3 · salinan dokumen KPM</a></p><p>Semua aktiviti berfungsi tanpa Internet. Pautan rujukan memerlukan Internet.</p></div></details>
+    </section>
+  </main>
+  <footer><span>GeoDecoder Digital · Belajar melalui penerokaan.</span><span>Model ilustrasi · Ukuran relatif sepadan</span></footer>
+  <div id="announcer" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+  <noscript><p class="noscript">Hidupkan JavaScript dalam pelayar untuk memutar model dan membuka bentangan. Semua penerangan ringkas tersedia selepas JavaScript dihidupkan.</p></noscript>
+  <script>
+'use strict';
+(()=>{
+/** Exact rigid panels and continuous isometric developments. No rendering dependency. */
+const TAU = Math.PI * 2;
+const clamp01 = v => Math.max(0, Math.min(1, v));
+const ease = v => { const t = clamp01(v); return t * t * (3 - 2 * t); };
+const VIEWS = {
+  front: {name:'Depan', yaw:0, pitch:0}, back:{name:'Belakang',yaw:Math.PI,pitch:0},
+  left:{name:'Kiri',yaw:-Math.PI/2,pitch:0}, right:{name:'Kanan',yaw:Math.PI/2,pitch:0},
+  top:{name:'Atas',yaw:0,pitch:Math.PI/2}, bottom:{name:'Bawah',yaw:0,pitch:-Math.PI/2}
+};
+const VIEW_ORDER = ['top','bottom','front','back','left','right'];
+const FACE_COLORS = ['#64CBB8','#94BDF7','#F2A1C2','#BCADF0','#FFD17D','#FFAD8F'];
+const DIMENSIONS = {
+  cube:{w:2,h:2,d:2},cuboid:{w:3,h:1.5,d:2},pyramid:{a:2.4,h:2.6},
+  cylinder:{r:1,h:2.5},cone:{r:1,h:2.4,l:2.6}
+};
+function rx([x,y,z],a) { return [x,y*Math.cos(a)-z*Math.sin(a),y*Math.sin(a)+z*Math.cos(a)]; }
+function ry([x,y,z],a) { return [x*Math.cos(a)+z*Math.sin(a),y,-x*Math.sin(a)+z*Math.cos(a)]; }
+function rz([x,y,z],a) { return [x*Math.cos(a)-y*Math.sin(a),x*Math.sin(a)+y*Math.cos(a),z]; }
+const add3 = (a,b) => a.map((v,i)=>v+b[i]);
+const sub3 = (a,b) => a.map((v,i)=>v-b[i]);
+const length3 = a => Math.hypot(...a);
+const cross3 = (a,b) => [a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+function viewPoint(v,yaw,pitch) { const a=ry(v,-yaw); return rx(a,pitch); }
+function panel(id,name,vertices,color=FACE_COLORS[id],extra={}) {
+  return {id,name,vertices,color,outline:true,...extra};
+}
+function boxMesh(shape,t) {
+  const {w,h,d}=DIMENSIONS[shape], theta=(1-t)*Math.PI/2;
+  const right=v=>add3([w/2,0,0],ry(v,theta));
+  const faces=[
+    panel(0,'Depan',[[-w/2,-h/2,0],[w/2,-h/2,0],[w/2,h/2,0],[-w/2,h/2,0]]),
+    panel(1,'Kanan',[[0,-h/2,0],[d,-h/2,0],[d,h/2,0],[0,h/2,0]].map(right)),
+    panel(2,'Belakang',[[0,-h/2,0],[w,-h/2,0],[w,h/2,0],[0,h/2,0]].map(v=>right(add3([d,0,0],ry(v,theta))))),
+    panel(3,'Kiri',[[-d,-h/2,0],[0,-h/2,0],[0,h/2,0],[-d,h/2,0]].map(v=>add3([-w/2,0,0],ry(v,-theta)))),
+    panel(4,'Atas',[[-w/2,0,0],[w/2,0,0],[w/2,d,0],[-w/2,d,0]].map(v=>add3([0,h/2,0],rx(v,-theta)))),
+    panel(5,'Bawah',[[-w/2,-d,0],[w/2,-d,0],[w/2,0,0],[-w/2,0,0]].map(v=>add3([0,-h/2,0],rx(v,theta))))
+  ];
+  return faces;
+}
+function pyramidMesh(t) {
+  const {a,h}=DIMENSIONS.pyramid, b=a/2, angle=Math.atan2(h,-b)*t;
+  const base=[[-b,0,-b],[b,0,-b],[b,0,b],[-b,0,b]], tip=[0,h,0];
+  const hinge=(verts,origin,rot,ang)=>verts.map(v=>add3(origin,rot(sub3(v,origin),ang)));
+  const faces=[panel(0,'Tapak',base),
+    panel(1,'Sisi depan',hinge([base[3],base[2],tip],[0,0,b],rx,angle)),
+    panel(2,'Sisi kanan',hinge([base[2],base[1],tip],[b,0,0],rz,-angle)),
+    panel(3,'Sisi belakang',hinge([base[1],base[0],tip],[0,0,-b],rx,-angle)),
+    panel(4,'Sisi kiri',hinge([base[0],base[3],tip],[-b,0,0],rz,angle))];
+  return faces.map(f=>({...f,vertices:f.vertices.map(v=>rx(v,-t*Math.PI/2))}));
+}
+/** u is material arc length. |dP/du| = 1 for every opening; no stretching. */
+function cylinderPoint(u,y,t) {
+  const {r}=DIMENSIONS.cylinder, developed=ease((t-.2)/.8), k=(1-developed)/r;
+  if(Math.abs(k)<1e-6) return [u,y,-k*u*u/2];
+  return [Math.sin(k*u)/k,y,-2*Math.sin(k*u/2)**2/k];
+}
+function cylinderMesh(t,n) {
+  const {r,h}=DIMENSIONS.cylinder, faces=[];
+  for(let i=0;i<n;i++) {
+    const u0=-Math.PI*r+TAU*r*i/n,u1=-Math.PI*r+TAU*r*(i+1)/n;
+    faces.push(panel(0,'Permukaan melengkung',[cylinderPoint(u0,-h/2,t),cylinderPoint(u1,-h/2,t),cylinderPoint(u1,h/2,t),cylinderPoint(u0,h/2,t)],FACE_COLORS[0],{
+      outline:false, rim:[[0,1],[2,3]], cut:t>.02?(i===0?[[0,3]]:i===n-1?[[1,2]]:null):null, label:i===Math.floor(n/2)-1?'1':null
+    }));
+  }
+  for(const [id,sign] of [[1,1],[2,-1]]) {
+    const vertices=Array.from({length:n},(_,i)=>add3([0,sign*h/2,0],rx([r*Math.sin(TAU*i/n),0,r*(Math.cos(TAU*i/n)-1)],sign*ease(t/.2)*Math.PI/2)));
+    faces.push(panel(id,sign===1?'Tapak atas':'Tapak bawah',vertices,FACE_COLORS[id],{label:String(id+1)}));
+  }
+  return faces;
+}
+/** beta is the material sector angle; metric ds²+s² dβ² at ALL frames. */
+function conePoint(s,beta,t) {
+  const {r,l}=DIMENSIONS.cone, start=Math.asin(r/l), developed=ease((t-.22)/.78);
+  const alpha=start+(Math.PI/2-start)*developed,a=Math.sin(alpha),q=Math.cos(alpha),phi=beta/a;
+  const p=[s*a*Math.sin(phi),-s*(q*q+a*a*Math.cos(phi)),s*a*q*(Math.cos(phi)-1)];
+  return rx(p,-start*(1-developed));
+}
+function coneMesh(t,n) {
+  const {r,l}=DIMENSIONS.cone, start=Math.asin(r/l), developed=ease((t-.22)/.78), sector=TAU*r/l,faces=[];
+  for(let i=0;i<n;i++) {
+    const b0=-sector/2+sector*i/n,b1=-sector/2+sector*(i+1)/n;
+    faces.push(panel(0,'Permukaan melengkung',[[0,0,0],conePoint(l,b0,t),conePoint(l,b1,t)],FACE_COLORS[0],{
+      outline:false,rim:[[1,2]],cut:t>.02?(i===0?[[0,1]]:i===n-1?[[0,2]]:null):null,label:i===Math.floor(n/2)-1?'1':null
+    }));
+  }
+  const disk=Array.from({length:n},(_,i)=>{
+    const phi=TAU*i/n;
+    let p=[r*Math.sin(phi),r*(1-Math.cos(phi))*Math.sin(start),-r*(1-Math.cos(phi))*Math.cos(start)];
+    p=rx(p,-(Math.PI/2+start)*ease(t/.22));
+    return rx(add3([0,-l,0],p),-start*(1-developed));
+  });
+  faces.push(panel(1,'Tapak bulatan',disk,FACE_COLORS[1],{label:'2'}));
+  return faces;
+}
+function buildMesh(shape,progress=0,segments=128) {
+  const t=clamp01(progress),n=Math.max(24,Math.round(segments));
+  if(shape==='cube'||shape==='cuboid')return boxMesh(shape,t);
+  if(shape==='pyramid')return pyramidMesh(t);
+  if(shape==='cylinder')return cylinderMesh(t,n);
+  if(shape==='cone')return coneMesh(t,n);
+  throw new RangeError('Bongkah tidak diketahui: '+shape);
+}
+function meshBounds(mesh) {
+  const v=mesh.flatMap(f=>f.vertices),min=[0,1,2].map(i=>Math.min(...v.map(p=>p[i]))),max=[0,1,2].map(i=>Math.max(...v.map(p=>p[i])));
+  const center=min.map((x,i)=>(x+max[i])/2),radius=Math.max(...v.map(p=>length3(sub3(p,center))));
+  return {min,max,center,radius};
+}
+function faceCenter(f) {return f.vertices.reduce((sum,p)=>add3(sum,p),[0,0,0]).map(v=>v/f.vertices.length);}
+
+
+const MODULE_VERSION='1.0.0';
+const MODEL_ORDER=['cube','cuboid','pyramid','cylinder','cone'];
+const MODEL_DATA={
+  cube:{name:'Kubus',tag:'Enam muka, semuanya sama.',flat:6,curved:0,edges:12,vertices:8,
+    intro:'Kubus mempunyai 6 muka segi empat sama. Semua muka sama bentuk dan sama saiz. Kesemua 12 rusuknya sama panjang.',
+    net:'Enam segi empat sama bercantum pada rusuk. Jejaki muka berwarna yang sama semasa bentangan dibuka dan dicantum semula.',
+    observe:'Cari dua muka yang berhadapan. Muka itu tidak berkongsi rusuk.',
+    labels:['Depan','Kanan','Belakang','Kiri','Atas','Bawah'],views:['Segi empat sama','Segi empat sama','Segi empat sama','Segi empat sama','Segi empat sama','Segi empat sama'],
+    question:'Adakah pandangan atas menunjukkan semua 6 muka kubus?',options:['Tidak, hanya rupa dari atas.','Ya, semua muka dibuka.'],answer:0,
+    feedback:'Pandangan atas hanya melihat bongkah dari satu arah. Bentangan membuka kesemua 6 muka pada satu satah.'},
+  cuboid:{name:'Kuboid',tag:'Tiga pasang muka yang sepadan.',flat:6,curved:0,edges:12,vertices:8,
+    intro:'Kuboid mempunyai 6 muka segi empat tepat. Muka berhadapan sama bentuk dan sama saiz. Contoh ini mewakili kotak 6 cm × 4 cm × 3 cm dalam bank GeoDecoder.',
+    net:'Bentangan ini mempunyai tiga pasang segi empat tepat: 6 × 4, 6 × 3 dan 4 × 3. Sisi yang dicantum mesti sama panjang.',
+    observe:'Bandingkan muka atas, depan dan kanan. Ukuran yang berbeza menghasilkan rupa yang berbeza.',
+    labels:['Depan','Kanan','Belakang','Kiri','Atas','Bawah'],views:['Segi empat tepat · 6 × 4','Segi empat tepat · 6 × 4','Segi empat tepat · 6 × 3','Segi empat tepat · 6 × 3','Segi empat tepat · 4 × 3','Segi empat tepat · 4 × 3'],
+    question:'Adakah semua 6 muka kuboid contoh ini sama saiz?',options:['Ya, semua sama saiz.','Tidak, ada 3 pasang saiz.'],answer:1,
+    feedback:'Panjang, lebar dan tinggi contoh ini berbeza. Ada 3 pasang muka berhadapan yang sama saiz, bukan 6 muka yang semuanya sama saiz.'},
+  pyramid:{name:'Piramid',tag:'Tapak segi empat sama, satu puncak.',flat:5,curved:0,edges:8,vertices:5,
+    intro:'Piramid dalam GeoDecoder ialah piramid tegak bertapak segi empat sama. Empat muka segi tiga bertemu pada satu puncak. Puncak ialah salah satu daripada 5 bucu.',
+    net:'Satu segi empat sama menjadi tapak. Empat segi tiga kekal bersambung pada sisi tapak dan bertemu semula pada puncak apabila dilipat.',
+    observe:'Dari atas, tapak kelihatan segi empat sama dengan garisan rusuk menuju ke puncak. Dari depan, rupanya segi tiga.',
+    labels:['Tapak','Sisi depan','Sisi kanan','Sisi belakang','Sisi kiri'],views:['Segi empat sama + rusuk','Segi empat sama','Segi tiga','Segi tiga','Segi tiga','Segi tiga'],
+    question:'Apakah bentuk tapak piramid yang digunakan dalam GeoDecoder?',options:['Segi tiga.','Segi empat sama.'],answer:1,
+    feedback:'Tapaknya segi empat sama. Empat muka sisinya berbentuk segi tiga. Piramid lain boleh mempunyai bentuk tapak yang berbeza.'},
+  cylinder:{name:'Silinder',tag:'Dua tapak bulatan, satu permukaan melengkung.',flat:2,curved:1,edges:2,vertices:0,
+    intro:'Silinder tegak mempunyai 2 permukaan rata berbentuk bulatan yang sama saiz dan 1 permukaan melengkung. Ada 2 rusuk melengkung dan tiada bucu.',
+    net:'Dua bulatan menjadi tapak. Permukaan melengkung dibuka menjadi segi empat tepat: panjangnya 2πj dan lebarnya t. j ialah jejari; t ialah tinggi silinder.',
+    observe:'Dari atas atau bawah, rupanya bulatan. Dari sisi, rupanya segi empat tepat. Permukaan dibuka secara melengkung, bukan dilipat seperti panel rata.',
+    labels:['Permukaan melengkung','Tapak atas','Tapak bawah'],views:['Bulatan','Bulatan','Segi empat tepat','Segi empat tepat','Segi empat tepat','Segi empat tepat'],
+    question:'Apakah bentuk permukaan melengkung silinder apabila dibuka rata?',options:['Segi empat tepat.','Bulatan.'],answer:0,
+    feedback:'Permukaan melengkung menjadi segi empat tepat. Dua bulatan berasingan ialah tapak atas dan tapak bawah.',curvedEdges:true},
+  cone:{name:'Kon',tag:'Satu tapak bulatan, satu puncak.',flat:1,curved:1,edges:1,vertices:1,
+    intro:'Kon tegak mempunyai 1 permukaan rata berbentuk bulatan dan 1 permukaan melengkung. Ada 1 rusuk melengkung dan 1 bucu pada puncak.',
+    net:'Permukaan melengkung dibuka menjadi sektor bulatan. Jejari sektor ialah tinggi sendeng s. Panjang lengkoknya sama dengan lilitan tapak, 2πj.',
+    observe:'Sektor bulatan bukan segi tiga. Lengkoknya melengkung dan panjangnya sepadan dengan lilitan tapak. θ = 360° × j/s.',
+    labels:['Permukaan melengkung','Tapak bulatan'],views:['Bulatan + titik puncak','Bulatan','Segi tiga','Segi tiga','Segi tiga','Segi tiga'],
+    question:'Apakah bentuk permukaan melengkung kon apabila dibuka rata?',options:['Segi tiga.','Sektor bulatan.'],answer:1,
+    feedback:'Permukaan itu menjadi sektor bulatan, bukan segi tiga. Lengkok sektor menutup tepat sekeliling tapak bulatan apabila dicantum.',curvedEdges:true}
+};
+
+
+function shade(hex,amount) {
+  const c=hex.slice(1).match(/../g).map(v=>parseInt(v,16));
+  return 'rgb('+c.map(v=>Math.round(Math.max(0,Math.min(255,v*amount)))).join(',')+')';
+}
+function trace(ctx,pts) {ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.closePath();}
+function polygonContains(pts,x,y) {
+  let inside=false;
+  for(let i=0,j=pts.length-1;i<pts.length;j=i++) if((pts[i][1]>y)!==(pts[j][1]>y)&&x<(pts[j][0]-pts[i][0])*(y-pts[i][1])/(pts[j][1]-pts[i][1])+pts[i][0])inside=!inside;
+  return inside;
+}
+function drawBadge(ctx,p,text) {
+  ctx.beginPath();ctx.arc(p[0],p[1],13,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,.94)';ctx.fill();ctx.strokeStyle='rgba(24,51,75,.3)';ctx.lineWidth=1;ctx.stroke();
+  ctx.font='bold 12px "Segoe UI",sans-serif';ctx.fillStyle='#18334B';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(text,p[0],p[1]+.5);
+}
+class ModelRenderer {
+  constructor(canvas) {this.canvas=canvas;this.ctx=canvas.getContext('2d');this.hitFaces=[];this.meshKey='';this.mesh=null;}
+  draw({shape,progress=0,yaw=.55,pitch=.35,zoom=1,labels=false,selected=null,mini=false}) {
+    const ctx=this.ctx;if(!ctx)return;
+    const box=this.canvas.getBoundingClientRect(),w=box.width,h=box.height;
+    if(w<=0||h<=0)return;
+    const dpr=Math.min(2,window.devicePixelRatio||1),cw=Math.round(w*dpr),ch=Math.round(h*dpr);
+    if(this.canvas.width!==cw||this.canvas.height!==ch){this.canvas.width=cw;this.canvas.height=ch;}
+    ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
+    const key=shape+':'+progress+':'+mini;
+    if(key!==this.meshKey){this.mesh=buildMesh(shape,progress,mini?64:144);this.bounds=meshBounds(this.mesh);this.meshKey=key;}
+    const {center,radius}=this.bounds;
+    const scale=Math.min(w,h)/(2*radius)*(mini?.79:.78)*zoom;
+    const project=p=>{const v=viewPoint(sub3(p,center),yaw,pitch);return [w/2+v[0]*scale,h/2-v[1]*scale,v[2]];};
+    if(!mini) {
+      const gradient=ctx.createRadialGradient(w/2,h*.72,0,w/2,h*.72,w*.3);
+      gradient.addColorStop(0,'rgba(35,74,110,.08)');gradient.addColorStop(1,'rgba(35,74,110,0)');
+      ctx.save();ctx.translate(0,h*.62);ctx.scale(1,.18);ctx.fillStyle=gradient;ctx.fillRect(0,-h*.5,w,h);ctx.restore();
+    }
+    const projected=this.mesh.map(f=>{
+      const pts=f.vertices.map(project),normal=cross3(sub3(f.vertices[1],f.vertices[0]),sub3(f.vertices[2],f.vertices[0]));
+      const nLen=length3(normal)||1,n=normal.map(v=>v/nLen),vNormal=viewPoint(n,yaw,pitch);
+      // Double-sided paper. Rear side is lit consistently when a face opens.
+      const sign=vNormal[2]>=0?1:-1,light=(n[0]*-.35+n[1]*.65+n[2]*.68)*sign;
+      return {f,pts,depth:pts.reduce((s,p)=>s+p[2],0)/pts.length,brightness:.82+.2*Math.max(-.45,light),vNormal};
+    }).sort((a,b)=>a.depth-b.depth);
+    this.hitFaces=[];const curveLabels=[];
+    for(const {f,pts,brightness,vNormal} of projected) {
+      if(Math.abs(vNormal[2])<.00001)continue;
+      trace(ctx,pts);ctx.fillStyle=shade(f.color,brightness);ctx.fill();
+      if(!f.outline) {ctx.strokeStyle=ctx.fillStyle;ctx.lineWidth=.65;ctx.stroke();}
+      if(f.outline) {ctx.strokeStyle=selected===f.id?'#215FF0':'rgba(24,51,75,.67)';ctx.lineWidth=selected===f.id?3:mini?1:1.45;ctx.stroke();}
+      if(f.rim) {
+        ctx.beginPath();for(const [a,b] of f.rim){ctx.moveTo(...pts[a].slice(0,2));ctx.lineTo(...pts[b].slice(0,2));}
+        ctx.strokeStyle=selected===f.id?'#215FF0':'rgba(24,51,75,.6)';ctx.lineWidth=selected===f.id?2.7:mini?.9:1.25;ctx.stroke();
+      }
+      if(f.cut) {ctx.beginPath();for(const [a,b] of f.cut){ctx.moveTo(...pts[a].slice(0,2));ctx.lineTo(...pts[b].slice(0,2));}ctx.strokeStyle='#526A7D';ctx.setLineDash([4,3]);ctx.lineWidth=1;ctx.stroke();ctx.setLineDash([]);}
+      this.hitFaces.push({id:f.id,pts});
+      if(labels&&!mini&&(f.label||f.outline)&&Math.abs(vNormal[2])>.17) {
+        const p=project(faceCenter(f)),text=f.label||String(f.id+1);
+        if(f.outline)drawBadge(ctx,p,text);
+        else if(vNormal[2]>.17)curveLabels.push({id:f.id,p,text});
+      }
+    }
+    // Draw curved-surface badges after all strips; keep real face occlusion.
+    for(const {id,p,text} of curveLabels)if(this.pick(p[0],p[1])===id)drawBadge(ctx,p,text);
+    // The tip projects to the centre in the top view of a closed cone.
+    if(shape==='cone'&&progress===0&&Math.abs(pitch-Math.PI/2)<.001) {
+      const p=project([0,0,0]);ctx.fillStyle='#18334B';ctx.beginPath();ctx.arc(p[0],p[1],mini?1.8:3,0,Math.PI*2);ctx.fill();
+    }
+    if(!mini) this.drawCompass(ctx,w,h,yaw,pitch);
+  }
+  pick(x,y) {for(const f of [...this.hitFaces].reverse())if(polygonContains(f.pts,x,y))return f.id;return null;}
+  drawCompass(ctx,w,h,yaw,pitch) {
+    const x=45,y=h-44;
+    ctx.font='10px "Segoe UI",sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+    for(const [dir,name,color] of [[[1,0,0],'Kanan','#2C6BC5'],[[0,1,0],'Atas','#237E6C'],[[0,0,1],'Depan','#A84C78']]) {
+      const p=viewPoint(dir,yaw,pitch),end=[x+p[0]*26,y-p[1]*26];ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(...end);ctx.strokeStyle=color;ctx.lineWidth=1.6;ctx.stroke();ctx.fillStyle=color;ctx.fillText(name,end[0]+p[0]*10,end[1]-p[1]*10);
+    }
+  }
+}
+
+
+const el=id=>document.getElementById(id);
+const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+const initial=MODEL_ORDER.includes(location.hash.slice(1))?location.hash.slice(1):'cube';
+const state={shape:initial,progress:0,yaw:.55,pitch:.35,zoom:1,mode:'model',view:'front',auto:!reduced.matches,labels:false,selected:null,playing:false,direction:1,kind:'cycle',hold:0,camera:null,manualOrbit:false,pausedAnimation:null};
+const mainRenderer=new ModelRenderer(el('model-canvas'));
+const navRenderers=new Map(),viewRenderers=new Map();
+let raf=0,lastFrame=0,dirty=true,lastPercent=-1;
+function element(tag,attrs={},text='') {
+  const node=document.createElement(tag);
+  for(const [name,value] of Object.entries(attrs))node.setAttribute(name,String(value));
+  if(text)node.textContent=text;
+  return node;
+}
+function announce(text) {el('announcer').textContent=text;}
+function wake() {dirty=true;if(!raf&&!document.hidden)raf=requestAnimationFrame(frame);}
+function stopAnimation() {state.playing=false;state.hold=0;state.pausedAnimation=null;}
+function setAuto(value) {state.auto=Boolean(value)&&state.mode==='model';if(state.auto){stopAnimation();state.camera=null;}refreshControls();wake();}
+function alignCamera(yaw,pitch) {
+  if(reduced.matches){state.yaw=yaw;state.pitch=pitch;state.camera=null;}
+  else {
+    const delta=((yaw-state.yaw+Math.PI*3)%(Math.PI*2)+Math.PI*2)%(Math.PI*2)-Math.PI;
+    state.camera={time:performance.now(),fromYaw:state.yaw,fromPitch:state.pitch,toYaw:state.yaw+delta,toPitch:pitch};
+  }
+  wake();
+}
+function refreshControls() {
+  el('auto-rotate').setAttribute('aria-pressed',String(state.auto));
+  el('auto-rotate').disabled=state.mode==='views';
+  el('auto-rotate').querySelector('span').textContent=state.auto?'Hentikan putaran':'Putaran automatik';
+  el('play').querySelector('span').textContent=state.playing?'Jeda animasi':'Main animasi';
+  el('play').setAttribute('aria-label',state.playing?'Jeda animasi':'Main animasi');
+  el('play').querySelector('path').setAttribute('d',state.playing?'M8 5v14M16 5v14':'m8 5 11 7-11 7V5Z');
+  el('open-net').disabled=state.progress>=1&&!state.playing;
+  el('close-net').disabled=state.progress<=0&&!state.playing;
+  el('labels').checked=state.labels;
+  el('zoom-level').textContent=Math.round(state.zoom*100)+'%';
+  el('zoom-in').disabled=state.zoom>=2.2;
+  el('zoom-out').disabled=state.zoom<=.6;
+  el('reduced-note').hidden=!reduced.matches;
+  const percent=Math.round(state.progress*100);
+  if(percent!==lastPercent){
+    el('progress').value=String(Math.round(state.progress*1000));
+    el('progress-value').textContent=percent+'% terbuka';
+    el('progress').setAttribute('aria-valuetext',percent===0?'Bongkah tertutup, 0 peratus terbuka':percent===100?'Bentangan rata, 100 peratus terbuka':percent+' peratus terbuka');
+    lastPercent=percent;
+  }
+  el('stage-label').textContent=state.mode==='views'?(state.progress>0?'Mencantum untuk pandangan':`Pandangan ${VIEWS[state.view].name.toLowerCase()} · Ortografik`):state.progress===0?'Bongkah 3D':state.progress===1?'Bentangan rata':state.playing?(state.direction>0?'Membuka bentangan…':'Mencantum bongkah…'):'Bentangan separa terbuka';
+  const canvas=el('model-canvas');
+  canvas.setAttribute('aria-label',MODEL_DATA[state.shape].name+', '+el('stage-label').textContent+'. '+(state.mode==='views'?'Pilih arah pada kad pandangan.':'Gunakan anak panah untuk putar dan tambah atau tolak untuk zum.'));
+  el('canvas-help').firstChild.textContent=state.mode==='views'?'Pilih arah di bawah · Cubit atau roda tetikus untuk zum':'Seret untuk putar · Cubit atau roda tetikus untuk zum';
+}
+function renderLegend() {
+  el('face-legend').replaceChildren(...MODEL_DATA[state.shape].labels.map((name,id)=>{
+    const button=element('button',{class:'face-chip',type:'button','aria-pressed':String(state.selected===id),'data-face':id});
+    const number=element('span',{class:'face-number','aria-hidden':'true'},String(id+1));number.style.backgroundColor=FACE_COLORS[id];
+    button.append(number,document.createTextNode(name));button.addEventListener('click',()=>selectFace(id));return button;
+  }));
+}
+function selectFace(id) {
+  state.selected=state.selected===id?null:id;state.labels=true;state.auto=false;
+  renderLegend();refreshControls();
+  el('face-description').textContent=state.selected===null?'Pilih permukaan untuk melihatnya pada model.':`Permukaan ${id+1}: ${MODEL_DATA[state.shape].labels[id]}. Jika terlindung, putar bongkah untuk mencarinya.`;
+  announce(el('face-description').textContent);wake();
+}
+function renderViews() {
+  el('view-grid').replaceChildren();viewRenderers.clear();
+  VIEW_ORDER.forEach((key,i)=>{
+    const view=VIEWS[key],button=element('button',{class:'view-choice','data-view':key,'aria-pressed':String(state.view===key),'aria-label':'Pandangan '+view.name.toLowerCase()}),canvas=element('canvas',{'aria-hidden':'true'});
+    button.append(canvas,element('b',{},view.name),element('small',{},MODEL_DATA[state.shape].views[i]));
+    button.addEventListener('click',()=>selectView(key));el('view-grid').append(button);viewRenderers.set(key,new ModelRenderer(canvas));
+  });
+  drawViews();updateViewDescription();
+}
+function drawViews() {if(state.mode==='views')for(const [key,renderer] of viewRenderers)renderer.draw({shape:state.shape,...VIEWS[key],mini:true});}
+function updateViewDescription() {
+  const i=VIEW_ORDER.indexOf(state.view);
+  el('view-description').textContent=VIEWS[state.view].name+': '+MODEL_DATA[state.shape].views[i]+'. Warna menunjukkan permukaan yang dilihat; warna tidak mengubah bentuk unjuran.';
+}
+function selectView(key) {
+  state.view=key;state.auto=false;state.manualOrbit=false;
+  if(state.progress>0){state.playing=true;state.direction=-1;state.kind='view-close';}
+  else alignCamera(VIEWS[key].yaw,VIEWS[key].pitch);
+  for(const button of el('view-grid').querySelectorAll('button'))button.setAttribute('aria-pressed',String(button.dataset.view===key));
+  updateViewDescription();refreshControls();announce(`Pandangan ${VIEWS[key].name.toLowerCase()} dipilih. ${MODEL_DATA[state.shape].views[VIEW_ORDER.indexOf(key)]}.`);wake();
+}
+function switchMode(mode) {
+  if(state.mode===mode)return;
+  stopAnimation();state.mode=mode;state.auto=false;state.manualOrbit=false;
+  el('mode-model').setAttribute('aria-pressed',String(mode==='model'));el('mode-views').setAttribute('aria-pressed',String(mode==='views'));
+  el('animation-panel').hidden=mode!=='model';el('views-panel').hidden=mode!=='views';
+  if(mode==='views'){drawViews();selectView(state.view);}
+  else alignCamera(.55,.35);
+  refreshControls();announce(mode==='views'?'Pandangan 2D: bongkah kekal tertutup, dilihat dari satu arah.':'Model dan bentangan. Seret untuk memutar bongkah.');wake();
+}
+function renderContent() {
+  const data=MODEL_DATA[state.shape];
+  document.title=data.name+' — Modul GeoDecoder';
+  el('model-title').textContent=data.name;el('notes-title').textContent=data.name;el('shape-tag').textContent=data.tag;
+  el('shape-intro').textContent=data.intro;el('net-explanation').textContent=data.net;el('observation').textContent=data.observe;
+  el('edge-note').hidden=!data.curvedEdges;
+  const stats=[[data.flat+data.curved,data.curved?'permukaan':'muka rata',data.curved?`${data.flat} rata + ${data.curved} melengkung`:'semuanya rata'],[data.edges,'rusuk',data.curvedEdges?'melengkung':'lurus'],[data.vertices,'bucu',state.shape==='cone'?'puncak':state.shape==='pyramid'?'termasuk puncak':'']];
+  el('properties').replaceChildren(...stats.map(([count,label,detail])=>{const box=element('div',{class:'property'});box.append(element('b',{},String(count)),element('span',{},label),element('small',{},detail));return box;}));
+  el('think-title').textContent=data.question;el('think-feedback').textContent='Pilih satu jawapan untuk melihat penerangan.';el('think-feedback').className='think-feedback';
+  el('think-options').replaceChildren(...data.options.map((text,i)=>{
+    const button=element('button',{'aria-pressed':'false','data-answer':i},text);
+    button.addEventListener('click',()=>{
+      for(const b of el('think-options').children)b.setAttribute('aria-pressed',String(b===button));
+      el('think-feedback').textContent=(i===data.answer?'Tepat! ':'Perhatikan semula. ')+data.feedback;
+      el('think-feedback').className='think-feedback'+(i===data.answer?' correct':'');
+    });return button;
+  }));
+  el('animation-caption').textContent=data.curved?'Tapak dibuka dahulu. '+(state.shape==='cone'?'Permukaan melengkung dibuka menjadi sektor bulatan; panjang lengkok kekal sepadan dengan lilitan tapak.':'Permukaan melengkung dibuka menjadi segi empat tepat; panjangnya kekal sama dengan lilitan tapak.'):'Muka kekal bersambung pada rusuk. Warna yang sama menandakan muka yang sama.';
+  el('face-description').textContent='Pilih permukaan untuk melihatnya pada model.';
+  for(const button of el('shape-picker').children)button.setAttribute('aria-pressed',String(button.dataset.shape===state.shape));
+  renderLegend();renderViews();refreshControls();
+}
+function selectShape(shape) {
+  stopAnimation();state.shape=shape;state.progress=0;state.zoom=1;state.selected=null;state.camera=null;state.manualOrbit=false;state.yaw=.55;state.pitch=.35;
+  state.auto=false;lastPercent=-1;
+  try{history.replaceState(null,'','#'+shape);}catch{/* Some file-origin policies restrict history; learning still works. */}
+  renderContent();if(state.mode==='views')selectView(state.view);
+  announce(MODEL_DATA[shape].name+' dipilih. '+MODEL_DATA[shape].tag);wake();
+}
+function beginAnimation(target=null) {
+  if(state.mode!=='model')switchMode('model');
+  state.auto=false;state.playing=true;state.hold=0;state.manualOrbit=false;state.pausedAnimation=null;
+  state.kind=target===null?'cycle':'target';state.direction=target===null?(state.progress>=1?-1:1):(target>state.progress?1:-1);
+  if(target!==null&&state.progress===target)stopAnimation();
+  alignCamera(.48,.28);refreshControls();announce(state.direction>0?'Membuka bentangan.':'Mencantum semula bongkah.');wake();
+}
+function resetCamera() {
+  stopAnimation();state.auto=false;state.zoom=1;state.manualOrbit=false;
+  const view=state.mode==='views'?VIEWS[state.view]:state.progress===1?{yaw:0,pitch:0}:{yaw:.55,pitch:.35};
+  alignCamera(view.yaw,view.pitch);refreshControls();announce('Kedudukan dan zum dikembalikan kepada asal.');wake();
+}
+function zoomBy(amount) {state.zoom=Math.max(.6,Math.min(2.2,Math.round((state.zoom+amount)*1000)/1000));refreshControls();wake();}
+function drawMain() {
+  mainRenderer.draw(state);
+  const canvas=el('model-canvas');
+  for(const key of ['shape','progress','yaw','pitch','zoom','mode','playing','auto'])canvas.dataset[key]=String(state[key]);
+  canvas.dataset.reducedMotion=String(reduced.matches);
+}
+function frame(time) {
+  raf=0;const dt=lastFrame?Math.max(0,time-lastFrame):0;lastFrame=time;
+  if(document.hidden){lastFrame=0;return;}
+  if(state.camera){
+    const c=state.camera,t=clamp01((time-c.time)/700),e=ease(t);
+    state.yaw=c.fromYaw+(c.toYaw-c.fromYaw)*e;state.pitch=c.fromPitch+(c.toPitch-c.fromPitch)*e;
+    if(t===1){state.yaw=c.toYaw;state.pitch=c.toPitch;state.camera=null;}
+    dirty=true;
+  }
+  if(state.playing){
+    if(state.hold>0){state.hold=Math.max(0,state.hold-dt);if(state.hold===0&&!state.manualOrbit)alignCamera(.48,.28);}
+    else {
+      state.progress=clamp01(state.progress+state.direction*dt/5800);
+      if((state.direction>0&&state.progress===1)||(state.direction<0&&state.progress===0)){
+        if(state.mode==='model'&&!state.manualOrbit)alignCamera(state.progress===1?0:.55,state.progress===1?0:.35);
+        if(state.kind==='cycle'&&state.direction>0){state.direction=-1;state.hold=1000;}
+        else {stopAnimation();if(state.kind==='view-close')alignCamera(VIEWS[state.view].yaw,VIEWS[state.view].pitch);}
+      }
+      dirty=true;refreshControls();
+    }
+  }
+  if(state.auto){state.yaw=(state.yaw+Math.min(dt,80)*.00011)%(Math.PI*2);dirty=true;}
+  if(dirty){drawMain();dirty=false;}
+  if(state.auto||state.playing||state.camera){if(!raf)raf=requestAnimationFrame(frame);}else lastFrame=0;
+}
+for(const shape of MODEL_ORDER){
+  const button=element('button',{class:'shape-choice','data-shape':shape,'aria-pressed':String(shape===state.shape)}),canvas=element('canvas',{'aria-hidden':'true'});
+  button.append(canvas,element('span',{class:'shape-name'},MODEL_DATA[shape].name),element('span',{class:'choice-dot','aria-hidden':'true'}));
+  button.addEventListener('click',()=>selectShape(shape));el('shape-picker').append(button);navRenderers.set(shape,new ModelRenderer(canvas));
+}
+el('version').textContent='V'+MODULE_VERSION;
+el('mode-model').addEventListener('click',()=>switchMode('model'));el('mode-views').addEventListener('click',()=>switchMode('views'));
+el('open-net').addEventListener('click',()=>beginAnimation(1));el('close-net').addEventListener('click',()=>beginAnimation(0));
+el('play').addEventListener('click',()=>{
+  if(state.playing){const saved={direction:state.direction,kind:state.kind,hold:state.hold};stopAnimation();state.pausedAnimation=saved;refreshControls();announce('Animasi dijeda.');wake();}
+  else if(state.pausedAnimation){const saved=state.pausedAnimation;state.pausedAnimation=null;state.playing=true;state.direction=saved.direction;state.kind=saved.kind;state.hold=saved.hold;refreshControls();announce('Animasi disambung.');wake();}
+  else beginAnimation();
+});
+el('replay').addEventListener('click',()=>{state.progress=0;lastPercent=-1;beginAnimation();});
+el('guided-net').addEventListener('click',()=>{beginAnimation(1);el('stage').scrollIntoView({behavior:reduced.matches?'instant':'smooth',block:'center'});});
+el('guided-view').addEventListener('click',()=>{switchMode('views');selectView(state.view==='top'?'front':'top');el('views-panel').scrollIntoView({behavior:reduced.matches?'instant':'smooth',block:'nearest'});});
+el('auto-rotate').addEventListener('click',()=>setAuto(!state.auto));
+el('labels').addEventListener('change',()=>{state.labels=el('labels').checked;wake();});
+el('zoom-in').addEventListener('click',()=>zoomBy(.15));el('zoom-out').addEventListener('click',()=>zoomBy(-.15));el('reset').addEventListener('click',resetCamera);
+el('progress').addEventListener('input',()=>{
+  stopAnimation();state.auto=false;state.progress=Number(el('progress').value)/1000;
+  if(!state.manualOrbit)alignCamera(state.progress===1?0:state.progress===0?.55:.48,state.progress===1?0:state.progress===0?.35:.28);
+  lastPercent=-1;refreshControls();wake();
+});
+const pointers=new Map();let dragStart=null,wasPinch=false,pinchDistance=0,pinchZoom=1,moved=false;
+const canvas=el('model-canvas');
+canvas.addEventListener('pointerdown',event=>{
+  if(event.pointerType==='mouse'&&event.button!==0)return;
+  canvas.setPointerCapture(event.pointerId);pointers.set(event.pointerId,{x:event.clientX,y:event.clientY});
+  dragStart={x:event.clientX,y:event.clientY};moved=false;
+  if(pointers.size===2){const [a,b]=[...pointers.values()];pinchDistance=Math.hypot(a.x-b.x,a.y-b.y);pinchZoom=state.zoom;wasPinch=true;}
+  else wasPinch=false;
+  state.auto=false;state.camera=null;refreshControls();
+});
+canvas.addEventListener('pointermove',event=>{
+  if(!pointers.has(event.pointerId))return;
+  const before=pointers.get(event.pointerId);pointers.set(event.pointerId,{x:event.clientX,y:event.clientY});
+  if(pointers.size===2){const [a,b]=[...pointers.values()];state.zoom=Math.max(.6,Math.min(2.2,pinchZoom*Math.hypot(a.x-b.x,a.y-b.y)/(pinchDistance||1)));moved=true;}
+  else {
+    const dx=event.clientX-before.x,dy=event.clientY-before.y;
+    if(dragStart&&Math.hypot(event.clientX-dragStart.x,event.clientY-dragStart.y)>4)moved=true;
+    if(moved){
+      if(state.mode==='views')switchMode('model');
+      state.camera=null;state.manualOrbit=true;state.yaw+=dx*.009;state.pitch=Math.max(-Math.PI/2,Math.min(Math.PI/2,state.pitch+dy*.009));
+    }
+  }
+  refreshControls();wake();
+});
+function releasePointer(event) {
+  if(!pointers.has(event.pointerId))return;
+  if(event.type==='pointerup'&&!moved&&!wasPinch&&pointers.size===1){const box=canvas.getBoundingClientRect(),face=mainRenderer.pick(event.clientX-box.left,event.clientY-box.top);if(face!==null)selectFace(face);}
+  pointers.delete(event.pointerId);if(canvas.hasPointerCapture(event.pointerId))canvas.releasePointerCapture(event.pointerId);
+  if(pointers.size===0){wasPinch=false;dragStart=null;}
+}
+canvas.addEventListener('pointerup',releasePointer);canvas.addEventListener('pointercancel',releasePointer);canvas.addEventListener('lostpointercapture',event=>pointers.delete(event.pointerId));
+canvas.addEventListener('wheel',event=>{event.preventDefault();zoomBy(event.deltaY<0?.08:-.08);},{passive:false});
+canvas.addEventListener('keydown',event=>{
+  if(event.isComposing)return;
+  if(event.key==='Home'){event.preventDefault();resetCamera();return;}
+  if(['+','=','-','_'].includes(event.key)){event.preventDefault();zoomBy(event.key==='-'||event.key==='_'?-.1:.1);return;}
+  if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key))return;
+  event.preventDefault();state.auto=false;
+  if(state.mode==='views')switchMode('model');
+  state.camera=null;state.manualOrbit=true;
+  if(event.key==='ArrowLeft')state.yaw-=.13;if(event.key==='ArrowRight')state.yaw+=.13;
+  if(event.key==='ArrowUp')state.pitch=Math.min(Math.PI/2,state.pitch+.13);if(event.key==='ArrowDown')state.pitch=Math.max(-Math.PI/2,state.pitch-.13);
+  refreshControls();wake();
+});
+reduced.addEventListener('change',()=>{state.auto=false;stopAnimation();state.camera=null;refreshControls();wake();});
+document.addEventListener('visibilitychange',()=>{if(document.hidden){stopAnimation();state.auto=false;state.camera=null;if(raf)cancelAnimationFrame(raf);raf=0;lastFrame=0;refreshControls();}else wake();});
+function redrawSmallModels(){for(const [shape,r] of navRenderers)r.draw({shape,yaw:.55,pitch:.35,mini:true});drawViews();wake();}
+if(typeof ResizeObserver!=='undefined'){const resize=new ResizeObserver(redrawSmallModels);resize.observe(el('shape-picker'));resize.observe(el('stage'));}else window.addEventListener('resize',redrawSmallModels);
+renderContent();redrawSmallModels();wake();
+
+})();
+</script>
+</body>
+</html>
