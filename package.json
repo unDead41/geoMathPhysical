@@ -40,7 +40,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "24bbe0313537be9b3e0e8c89c5d7f39bb88cdd3d26980c467361a25ad3c57748"
+      "sha256": "419247e20ff8ebce6307d8fdc6f47335289c8234e1e75d07ce3a1cd3e2c03c78"
     },
     {
       "path": "SAMBUNGAN.md",
@@ -228,7 +228,7 @@
     },
     {
       "path": "tutorial/GeoDecoder_Cara_Bermain_Murid.pdf",
-      "sha256": "c1df5672b54ac814108ec950005f8b378eea3a1d53e43bffad1ef6b999f6bcde"
+      "sha256": "5775fe4a2043580367c658e8547526bebb337e71a40b75fb9bcbd9a087601781"
     },
     {
       "path": "tutorial/GeoDecoder_Panduan_A-Z.pdf",
@@ -238,14 +238,23 @@
   "playerGuide": {
     "status": "included",
     "path": "tutorial/GeoDecoder_Cara_Bermain_Murid.pdf",
-    "pages": 20,
+    "pages": 21,
     "edition": "2026-10-25",
     "printedPageNumbers": false,
     "firmwareVersion": "1.1.1",
-    "sourceSharingSha": "2e4dfdaa3097bd936ab62879b99d2a8c1ea4ec8a",
+    "sourceSharingSha": "1201e902c6ecec483ffc2ff1d0f4de52c37fc532",
     "example": "prisma segi tiga",
     "exampleOnly": true,
     "exampleSupportedByFirmware": false,
-    "curriculum": "KSSM Matematik Tingkatan 2, DSKP SP 6.1.1 dan 6.2.1"
+    "curriculum": "KSSM Matematik Tingkatan 2, DSKP SP 6.1.1 dan 6.2.1",
+    "editionRevision": 2,
+    "answerFormat": {
+      "r1": "Bongkah 3D fizikal dengan kad RFID di bawahnya",
+      "r2": "Kad RFID ditampal cetakan bentangan"
+    },
+    "ledLabels": [
+      "LED R1",
+      "LED R2"
+    ]
   }
 }
