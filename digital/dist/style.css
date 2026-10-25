@@ -32,6 +32,13 @@ dialog{border:1px solid var(--border);border-radius:var(--radius-lg);padding:0;w
 @media(forced-colors:active){*{scrollbar-color:auto}.led-dot{border:2px solid CanvasText}.choice[aria-pressed="true"]{outline:3px solid Highlight}.scanner{border:2px solid CanvasText}.progress-dot{background:CanvasText}.progress-dot.current{background:Highlight}}
 @media print{.site-header nav,.session-actions,.result-actions,.site-footer,.review-section,.game-screen,.entry-screen,dialog{display:none!important}.result-layout{display:block}.result-main,.result-side{break-inside:avoid}.result-side{margin-top:20px}}
 
+/* Quiz and reinforcement practice share the same accessible form and game UI. */
+.field select{font:inherit;width:100%;min-height:49px;padding:0 12px;border:1px solid #CDDCE8;border-radius:10px;background:#FBFCFE;color:var(--ink);font-size:13px}
+.field select:focus-visible{outline:3px solid var(--primary);outline-offset:4px}
+.field .mode-description{margin-top:8px;font-size:11px;line-height:1.6;color:var(--muted)}
+.player-chip .session-mode{color:var(--primary);font-weight:650;white-space:normal}
+.practice-result-note{padding:12px 14px;margin-top:12px;background:var(--blue-soft);border:1px solid var(--border);border-radius:10px;font-size:12px;line-height:1.6;color:var(--ink)}
+
 /* Rich text uses the same local renderer in both languages. */
 .geometry-term{font-weight:700;color:var(--ink)}
 .hint-panel .geometry-term{color:inherit}

@@ -1,6 +1,6 @@
 # GeoDecoder Digital V1
 
-Versi digital: **v1.3.0**. Branch: **digital-richText**.
+Versi digital: **v1.4.0**. Branch: **digital-richText**.
 
 ## Cuba terus — satu fail HTML
 
@@ -8,10 +8,11 @@ Muat turun `GeoDecoder_Digital_V1.html`, kemudian buka dengan Chrome atau Edge.
 Semua JavaScript, CSS, soalan dan ilustrasi terkandung dalam satu fail; tiada
 pemasangan atau sambungan Internet diperlukan untuk bermain.
 
-1. Masukkan nama, pilih Murid/Pelajar dan isi kelas.
+1. Masukkan nama, pilih Murid/Pelajar, isi kelas dan pilih mod permainan.
 2. Seret bongkah ke R1. Selepas R1 betul, seret kad bentangan ke R2.
-3. Pasangan betul mendapat +1. Satu pusingan mempunyai 10 soalan unik,
-   dua bagi setiap bongkah daripada bank 15 soalan.
+3. Pasangan betul mendapat +1. **Kuiz** mempunyai 10 soalan unik, dua bagi
+   setiap bongkah. **Latihan Pengukuhan** meliputi semua 15 soalan tanpa ulangan,
+   tiga bagi setiap bongkah, dengan markah maksimum 15.
 4. **Satu percubaan setiap soalan.** Salah pada R1 atau R2 menamatkan soalan
    dengan +0. Lihat pasangan yang betul dan penerangannya, kemudian teruskan.
 5. Lihat analisis mengikut bongkah, R1/R2 dan jenis soalan di akhir permainan.
@@ -40,7 +41,12 @@ Permainan yang belum lengkap tidak masuk papan skor. Reload kembali ke borang.
 Analisis membezakan salah, langkau, petunjuk dan tahap belum dicuba. Salah R1
 tidak dikira sebagai salah R2. Peratus R1/R2 hanya menggunakan imbasan sebenar;
 kiraan pasangan/topik menggunakan soalan yang diberi. Kiraan dan denominator
-dipaparkan bersama cadangan latihan dan semakan semua sepuluh soalan.
+dipaparkan bersama cadangan latihan dan semakan semua soalan sesi (10 atau 15).
+
+Keputusan Latihan Pengukuhan dipaparkan bersama analitik /15 pada akhir sesi.
+Keputusan latihan tidak dimasukkan ke papan skor kuiz 10 soalan. **Ulang latihan**
+memulakan semula semua 15 soalan dalam susunan rawak. Pilihan mod boleh diubah
+pada borang mula. Lihat [kontrak dan bukti latihan](docs/PRACTICE.md).
 
 Papan skor menyimpan sehingga 50 keputusan terbaik dalam pelayar/peranti yang
 sama. Susunan: markah → soalan salah lebih sedikit → masa lebih pantas.

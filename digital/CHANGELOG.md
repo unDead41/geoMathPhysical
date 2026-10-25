@@ -1,5 +1,15 @@
 # GeoDecoder Digital changelog
 
+## v1.4.0 — 26 Oktober 2026 (branch digital-richText)
+
+- Mod Latihan Pengukuhan memainkan semua 15 soalan sekali setiap sesi,
+  tiga bagi setiap bongkah, menggunakan bank dan enjin permainan yang sama.
+- Pemilih mod BM/BI, kemajuan/markah /15, analitik, 15 rekod semakan dan ulang
+  latihan. Hint, rich text, satu percubaan dan semakan jawapan dikekalkan.
+- Kuiz 10 soalan kekal sebagai lalai. Keputusan latihan tidak masuk kedudukan
+  kuiz; skor lama dan peraturan storan kuiz kekal serasi.
+- HTML digital dan root page dibina semula untuk penggunaan offline.
+
 ## v1.3.0 — 26 Oktober 2026 (branch digital-richText)
 
 - Rich text BM/BI untuk soalan, petunjuk, kunci rumus, semakan jawapan dan senarai

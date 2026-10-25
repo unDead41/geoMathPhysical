@@ -19,8 +19,10 @@ test('language changes still work when browser preference storage is denied',()=
 });
 test('both languages cover identical keys and interpolate without leaking key names',()=>{
   assert.deepEqual(Object.keys(MESSAGES.ms).sort(),Object.keys(MESSAGES.en).sort());
-  assert.equal(translate('en','question.counter',{number:'03'}),'QUESTION 03 / 10');
-  assert.equal(translate('ms','question.counter',{number:'03'}),'SOALAN 03 / 10');
+  assert.equal(translate('en','question.counter',{number:'03',total:10}),'QUESTION 03 / 10');
+  assert.equal(translate('ms','question.counter',{number:'03',total:10}),'SOALAN 03 / 10');
+  assert.equal(translate('en','question.counter',{number:'15',total:15}),'QUESTION 15 / 15');
+  assert.equal(translate('ms','question.counter',{number:'15',total:15}),'SOALAN 15 / 15');
   for(const locale of ['ms','en'])for(const [key,value] of Object.entries(MESSAGES[locale]))assert.ok(typeof value==='string'&&value.trim(),`${locale}:${key}`);
 });
 test('all 15 translated questions preserve IDs, answer shapes, numbers and formula symbols without mutating source',()=>{
@@ -35,6 +37,12 @@ test('all 15 translated questions preserve IDs, answer shapes, numbers and formu
     assert.deepEqual(en.prompt.match(/\d+/g),q.prompt.match(/\d+/g),q.id);
   }
   assert.equal(JSON.stringify(QUESTIONS),before);
+});
+test('practice accessibility progress and transitions announce the true fifteen-question total',()=>{
+  for(const language of ['ms','en'])for(const key of ['question.progress','round.next','round.single','leave.count']){
+    const speech=translate(language,key,{number:15,total:15,score:10,mistakes:3,skipped:2});
+    assert.ok(speech.includes(language==='ms'?'15 daripada 15':'15 of 15'),`${language}:${key}:${speech}`);
+  }
 });
 test('descriptions distinguish a pyramid apex and a cone curved surface',()=>{
   assert.match(SHAPE_COPY.en.pyramid.solid,/apex/);assert.match(SHAPE_COPY.en.cone.solid,/curved surface/);

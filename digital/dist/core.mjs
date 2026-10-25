@@ -1,7 +1,8 @@
-export const VERSION = '1.3.0';
+export const VERSION = '1.4.0';
 export const RULESET = 'single-attempt-v1';
 export const SHAPES = ['cube', 'cuboid', 'pyramid', 'cylinder', 'cone'];
 export const ROUND_SIZE = 10;
+export const PRACTICE_SIZE = 15;
 export const BLINK_MS = 900;
 export const WRONG_MS = 1200;
 export const REVIEW_MS = 1800;
@@ -49,7 +50,14 @@ export function analyseAnswers(answers) {
   return {byShape,byTopic,byStage,weakShapes,weakTopics,weakStage};
 }
 
-export function buildRound(bank, rng = Math.random) {
+export function buildRound(bank, rng = Math.random, mode = 'quiz') {
+  if(mode!=='quiz'&&mode!=='practice')throw new Error('Unknown play mode');
+  if(mode==='practice'){
+    if(bank.length!==PRACTICE_SIZE||new Set(bank.map(q=>q.id)).size!==PRACTICE_SIZE||SHAPES.some(shape=>bank.filter(q=>q.shape===shape).length!==3)){
+      throw new Error('Practice requires all 15 unique bank questions, three per shape');
+    }
+    return shuffle(bank,rng);
+  }
   const selected = SHAPES.flatMap(shape => shuffle(bank.filter(q => q.shape === shape), rng).slice(0, 2));
   if (selected.length !== ROUND_SIZE || new Set(selected.map(q => q.id)).size !== ROUND_SIZE) {
     throw new Error('Bank mesti mempunyai sekurang-kurangnya dua soalan unik bagi setiap bongkah.');
@@ -72,8 +80,9 @@ export function formatTime(ms) {
 }
 
 export class Game {
-  constructor(bank, player, now = 0, rng = Math.random) {
-    this.round = buildRound(bank, rng);
+  constructor(bank, player, now = 0, rng = Math.random, options = {}) {
+    this.mode = options.mode ?? 'quiz';
+    this.round = buildRound(bank, rng, this.mode);
     this.player = {...player};
     this.index = 0;
     this.score = 0;
@@ -104,6 +113,7 @@ export class Game {
   }
 
   get question() { return this.round[this.index]; }
+  get total() { return this.round.length; }
   time(now) { return this.elapsed + (this.status === 'running' && !this.paused ? Math.max(0, now - this.segmentStart) : 0); }
   get interactive() { return this.status === 'running' && !this.paused; }
 
@@ -223,6 +233,6 @@ export class Game {
 
   result(id, completedAt = Date.now()) {
     if (this.status !== 'finished') return null;
-    return {id,version:VERSION,ruleset:RULESET,player:{...this.player},score:this.score,total:ROUND_SIZE,mistakes:this.mistakes,hints:this.hints,skipped:this.skipped,firstTry:this.firstTry,elapsed:Math.round(this.elapsed),completedAt,answers:this.answers.map(answer=>({...answer,attempts:{...answer.attempts}}))};
+    return {id,version:VERSION,ruleset:RULESET,mode:this.mode,player:{...this.player},score:this.score,total:this.total,mistakes:this.mistakes,hints:this.hints,skipped:this.skipped,firstTry:this.firstTry,elapsed:Math.round(this.elapsed),completedAt,answers:this.answers.map(answer=>({...answer,attempts:{...answer.attempts}}))};
   }
 }

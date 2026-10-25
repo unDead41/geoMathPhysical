@@ -1,6 +1,6 @@
 # GeoDecoder Digital — publication branch
 
-> Calon rich text: **digital-richText / v1.3.0**, berasaskan
+> Calon rich text dan Latihan Pengukuhan: **digital-richText / v1.4.0**, berasaskan
 > `main-digital` pada `71db77c0206de664e50fa57ff57e1825af13f938`.
 > Root `index.html` pada branch calon telah dibina semula daripada HTML digital.
 > Rekod persediaan v1.2.0 di bawah kekal sebagai sejarah branch penerbitan;

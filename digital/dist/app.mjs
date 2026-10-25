@@ -1,7 +1,7 @@
 import {createI18n, translate, localizeQuestion, shapeName} from './i18n.mjs';
 import {escapeHtml, formatRichText} from './format.mjs';
 import { QUESTIONS } from './questions.mjs';
-import { Game, VERSION, formatTime, validatePlayer, questionTopic, analyseAnswers } from './core.mjs';
+import { Game, VERSION, ROUND_SIZE, PRACTICE_SIZE, SHAPES, formatTime, validatePlayer, questionTopic, analyseAnswers } from './core.mjs';
 import { nextVisualPlan } from './visuals.mjs';
 import { ScoreStore, csvScores, SCORE_KEY, LEGACY_SCORE_KEY } from './storage.mjs';
 import { shapeArt, icon, brandArt, describeShape } from './art.mjs';
@@ -15,7 +15,7 @@ const store = new ScoreStore(storage);
 const locale = createI18n(storage);
 const t = (key,params) => translate(locale.language,key,params);
 let screen = 'welcome', game = null, selected = null, acceptedSolid = null, acceptedNet = null;
-let player = null, roundId = '', lastResult = null, dialogMode = '', dialogTrigger = null;
+let player = null, playMode = 'quiz', roundId = '', lastResult = null, dialogMode = '', dialogTrigger = null;
 let drag = null, suppressClickUntil = 0, hiddenPause = false, sound = false, audioContext = null;
 let scoresExpanded = false, lastClock = '', lastLed = {}, visualPlan = null, motionPaused = false;
 const dialog = $('app-dialog');
@@ -73,6 +73,16 @@ function updateTitle(next=screen) {
 }
 function uid() { return globalThis.crypto?.randomUUID?.() || `round-${Date.now()}-${Math.random().toString(36).slice(2)}`; }
 
+const modeTitle=mode=>t(mode==='practice'?'mode.practiceTitle':'mode.quizTitle');
+const selectedTotal=()=>$('play-mode').value==='practice'?PRACTICE_SIZE:ROUND_SIZE;
+function updateModeChoice(){
+  const practice=$('play-mode').value==='practice';
+  $('entry-question-count').textContent=selectedTotal();
+  $('mode-description').textContent=t(practice?'mode.practiceNote':'mode.quizNote');
+  $('start-label').textContent=t(practice?'mode.startPractice':'Mulakan permainan');
+}
+$('play-mode').addEventListener('change',updateModeChoice);
+
 $('player-form').addEventListener('submit', event => {
   event.preventDefault();
   if (screen !== 'welcome') return;
@@ -93,6 +103,7 @@ $('player-form').addEventListener('submit', event => {
     return;
   }
   player = result.player;
+  playMode=$('play-mode').value;
   startGame();
 });
 for (const [id,key] of [['player-name','name'],['player-class','className']]) {
@@ -102,7 +113,7 @@ for (const [id,key] of [['player-name','name'],['player-class','className']]) {
 function startGame() {
   if (!player) return;
   cancelDrag();
-  game = new Game(QUESTIONS, player, now());
+  game = new Game(QUESTIONS, player, now(),Math.random,{mode:playMode});
   roundId = uid(); lastResult = null; lastClock = ''; lastLed = {}; visualPlan=null;
   $('player-initial').textContent = player.name[0].toLocaleUpperCase('ms-MY');
   $('player-display').textContent = player.name;
@@ -110,7 +121,7 @@ function startGame() {
   showScreen('game');
   renderQuestion();
   $('question-title').focus({preventScroll:true});
-  announce(t("Permainan bermula. Sepuluh soalan, satu percubaan setiap soalan. Pilih bongkah untuk R1 dahulu."));
+  announce(t("mode.startAnnouncement",{mode:modeTitle(game.mode),total:game.total}));
 }
 
 function renderQuestion() {
@@ -128,7 +139,7 @@ function renderQuestion() {
 function renderQuestionContent() {
   const q = localizeQuestion(game.question, locale.language);
   const number = String(game.index+1).padStart(2,'0');
-  $('question-counter').textContent = t("question.counter",{number});
+  $('question-counter').textContent = t("question.counter",{number,total:game.total});
   $('question-topic').textContent = t(TOPIC_NAMES[questionTopic(q)]);
   let heading = t("Bongkah apakah ini?"), detail = q.prompt;
   if (q.id.endsWith('3')) {
@@ -147,13 +158,13 @@ function renderQuestionContent() {
   $('formula-key').hidden = true;
   if (q.id === 'S2') { $('formula-key').innerHTML = pretty(t("V = isi padu · L = luas permukaan · j = jejari · t = tinggi")); $('formula-key').hidden = false; }
   $('hint-text').innerHTML = pretty(q.hint);
-  const dots = Array.from({length:10}, (_,i) => {
+  const dots = Array.from({length:game.total}, (_,i) => {
     const answer = game.answers[i];
     const cls = answer ? answer.outcome : i===game.index ? 'current' : '';
     return `<span class="progress-dot ${cls}" title="${t("question.dot",{number:i+1,state:answer?t(answer.outcome==='correct'?"question.correct":answer.outcome==='wrong'?"question.wrong":"question.skipped"):i===game.index?t("question.current"):''})}"></span>`;
   }).join('');
   $('progress-dots').innerHTML = dots;
-  $('progress-dots').setAttribute('aria-label', t("question.progress",{number:game.index+1,score:game.score,skipped:game.skipped,mistakes:game.mistakes}));
+  $('progress-dots').setAttribute('aria-label', t("question.progress",{number:game.index+1,total:game.total,score:game.score,skipped:game.skipped,mistakes:game.mistakes}));
 
 }
 
@@ -168,6 +179,8 @@ const emptyScanner = target => `<span class="scan-target"><span class="target-co
 
 function renderState() {
   if (!game) return;
+  $('session-mode').textContent=modeTitle(game.mode);
+  $('score-total').textContent=' / '+game.total;
   const busy = !game.interactive;
   const active = game.stage === 'solid' ? 'r1' : 'r2';
   $('score-value').textContent = game.score;
@@ -177,7 +190,7 @@ function renderState() {
   $('hint-button').setAttribute('aria-expanded',String(game.hintOpen));
   $('hint-label').textContent = game.hintOpen ? t("Tutup petunjuk") : t("Beri petunjuk");
   $('hint-panel').hidden = !game.hintOpen;
-  $('progress-dots').setAttribute('aria-label',t("question.progress",{number:game.index+1,score:game.score,mistakes:game.mistakes,skipped:game.skipped}));
+  $('progress-dots').setAttribute('aria-label',t("question.progress",{number:game.index+1,total:game.total,score:game.score,mistakes:game.mistakes,skipped:game.skipped}));
   $('progress-dots').querySelectorAll('.progress-dot').forEach((dot,index)=>{
     const answer=game.answers[index];
     if(answer){dot.className='progress-dot '+answer.outcome;dot.title=t("question.dot",{number:index+1,state:t(answer.outcome==='correct'?"question.correct":answer.outcome==='wrong'?"question.wrong":"question.skipped")});}
@@ -292,7 +305,7 @@ function renderCorrection(){
     $('correction-pair').innerHTML=`<div class="correct-model">${shapeArt(q.shape,'solid',false,visualPlan.solid[q.shape],locale.language)}<span>R1 · ${shapeName(q.shape,locale.language)}</span></div><span class="correct-link" aria-hidden="true">${icon('arrow')}</span><div class="correct-net">${shapeArt(q.shape,'net',false,visualPlan.net[q.shape],locale.language)}<span>${t('R2 · Bentangannya')}</span></div>`;
   }
   if(!refreshingLanguage)$('continue-button').disabled=!game.reviewReady(now());
-  $('continue-button').innerHTML=$('continue-button').disabled?t('Perhatikan jawapan…'):t(game.index===9?'Lihat analisis':'Soalan seterusnya')+' '+icon('arrow');
+  $('continue-button').innerHTML=$('continue-button').disabled?t('Perhatikan jawapan…'):t(game.index===game.total-1?'Lihat analisis':'Soalan seterusnya')+' '+icon('arrow');
 }
 
 document.addEventListener('click', event => {
@@ -321,7 +334,7 @@ $('skip-button').addEventListener('click',()=>{
 });
 $('continue-button').addEventListener('click',()=>{
   if(!game?.continueReview(now()))return;
-  if(game.status==='finished')finishGame();else{lastLed={};renderQuestion();$('question-title').focus({preventScroll:true});announce(t("round.single",{number:game.index+1}));}
+  if(game.status==='finished')finishGame();else{lastLed={};renderQuestion();$('question-title').focus({preventScroll:true});announce(t("round.single",{number:game.index+1,total:game.total}));}
 });
 $('pause-button').addEventListener('click',()=>openPause());
 $('replay-button').addEventListener('click',()=>startGame());
@@ -415,7 +428,8 @@ dialog.addEventListener('click',event=>{
 });
 
 function openHelp(){
-  openDialog('help',t("Cara main GeoDecoder"),`<p class="help-intro">${t("Satu soalan, dua padanan,")} <b>${t("satu percubaan")}</b>${t(". Sasarkan")} <b>${t("10 daripada 10 markah")}</b>.</p><div class="help-steps"><div class="help-step"><span class="help-number">1</span><div><h3>${t("Baca soalan dan pilih bongkah")}</h3><p>${t("Seret satu bongkah 3D ke pengimbas R1 yang berwarna biru.")}</p></div></div><div class="help-step"><span class="help-number">2</span><div><h3>${t("Padankan kad bentangannya")}</h3><p>${t("Selepas R1 hijau, seret kad bentangan yang sepadan ke R2. Bentuk menentukan jawapan; warna dan kedudukan berubah setiap soalan.")}</p></div></div><div class="help-step"><span class="help-number">3</span><div><h3>${t("Semak dan belajar")}</h3><p>${t("Pasangan betul memberi +1. Salah pada R1 atau R2 menamatkan soalan dengan +0. Lihat jawapan betul, kemudian tekan soalan seterusnya.")}</p></div></div></div><div class="help-mini-art">${shapeArt('cube','solid',true)}<span>R1 ${icon('arrow')} R2</span>${shapeArt('cube','net',true)}</div><p class="keyboard-help">${t("Tanpa menyeret:")} <b>${t("klik / sentuh kad")}</b>, ${t("kemudian")} <b>${t("klik pengimbas")}</b>. ${t("Papan kekunci:")} <kbd>Tab</kbd> ${t("untuk bergerak,")} <kbd>Enter</kbd> ${t("atau")} <kbd>Space</kbd> ${t("untuk memilih dan mengimbas.")}</p><p class="help-note"><b>${t("Fikir dahulu sebelum mengimbas.")}</b> ${t("Memilih kad sahaja belum menggunakan percubaan. Petunjuk percuma. Langkau memberi +0 dan turut menunjukkan jawapan. Analisis akhir membantu anda memilih perkara yang perlu dilatih lagi. Jam dijeda semasa semakan dan tetingkap ini dibuka.")}</p><div class="dialog-actions"><button class="button button-primary" data-dialog-action="close" data-autofocus>${screen==='game'?t("Sambung permainan"):t("Saya faham")} ${icon('arrow')}</button></div>`);
+  const total=game&&screen!=='welcome'?game.total:selectedTotal();
+  openDialog('help',t("Cara main GeoDecoder"),`<p class="help-intro">${t("Satu soalan, dua padanan,")} <b>${t("satu percubaan")}</b>${t(". Sasarkan")} <b>${t('mode.target',{total})}</b>.</p><div class="help-steps"><div class="help-step"><span class="help-number">1</span><div><h3>${t("Baca soalan dan pilih bongkah")}</h3><p>${t("Seret satu bongkah 3D ke pengimbas R1 yang berwarna biru.")}</p></div></div><div class="help-step"><span class="help-number">2</span><div><h3>${t("Padankan kad bentangannya")}</h3><p>${t("Selepas R1 hijau, seret kad bentangan yang sepadan ke R2. Bentuk menentukan jawapan; warna dan kedudukan berubah setiap soalan.")}</p></div></div><div class="help-step"><span class="help-number">3</span><div><h3>${t("Semak dan belajar")}</h3><p>${t("Pasangan betul memberi +1. Salah pada R1 atau R2 menamatkan soalan dengan +0. Lihat jawapan betul, kemudian tekan soalan seterusnya.")}</p></div></div></div><div class="help-mini-art">${shapeArt('cube','solid',true)}<span>R1 ${icon('arrow')} R2</span>${shapeArt('cube','net',true)}</div><p class="keyboard-help">${t("Tanpa menyeret:")} <b>${t("klik / sentuh kad")}</b>, ${t("kemudian")} <b>${t("klik pengimbas")}</b>. ${t("Papan kekunci:")} <kbd>Tab</kbd> ${t("untuk bergerak,")} <kbd>Enter</kbd> ${t("atau")} <kbd>Space</kbd> ${t("untuk memilih dan mengimbas.")}</p><p class="help-note"><b>${t("Fikir dahulu sebelum mengimbas.")}</b> ${t("Memilih kad sahaja belum menggunakan percubaan. Petunjuk percuma. Langkau memberi +0 dan turut menunjukkan jawapan. Analisis akhir membantu anda memilih perkara yang perlu dilatih lagi. Jam dijeda semasa semakan dan tetingkap ini dibuka.")}</p><div class="dialog-actions"><button class="button button-primary" data-dialog-action="close" data-autofocus>${screen==='game'?t("Sambung permainan"):t("Saya faham")} ${icon('arrow')}</button></div>`);
 }
 
 function openPause(automatic=false){
@@ -427,12 +441,12 @@ function openPause(automatic=false){
 
 function requestHome(){
   if(screen==='game' && game && game.status!=='finished'){
-    openDialog('leave',t("Tamatkan pusingan ini?"),`<p class="dialog-copy">${t("leave.progress")} <b>${t("leave.count",{number:game.index+1})}</b>. ${t("Jika kembali ke mula, kemajuan pusingan ini dilepaskan dan skor pusingan ini tidak disimpan.")}</p><div class="dialog-actions"><button class="button button-outline" data-dialog-action="close" data-autofocus>${t("Terus bermain")}</button><button class="button button-danger" data-dialog-action="home">${t("Tamatkan pusingan")}</button></div>`);
+    openDialog('leave',t("Tamatkan pusingan ini?"),`<p class="dialog-copy">${t("leave.progress")} <b>${t("leave.count",{number:game.index+1,total:game.total})}</b>. ${t("Jika kembali ke mula, kemajuan pusingan ini dilepaskan dan skor pusingan ini tidak disimpan.")}</p><div class="dialog-actions"><button class="button button-outline" data-dialog-action="close" data-autofocus>${t("Terus bermain")}</button><button class="button button-danger" data-dialog-action="home">${t("Tamatkan pusingan")}</button></div>`);
   }else{ game=null;selected=null;showScreen('welcome');$('player-name').focus({preventScroll:true}); }
 }
 
 function miniScoresMarkup(scores){
-  if(!scores.length)return `<div class="empty-scores">${icon('trophy')}<h3>${t("Skor pertama menanti")}</h3><p>${t("Lengkapkan satu pusingan untuk menyimpan skor.")}</p></div>`;
+  if(!scores.length)return `<div class="empty-scores">${icon('trophy')}<h3>${t("Skor pertama menanti")}</h3><p>${t("Lengkapkan 10 soalan untuk merekodkan skor pertama.")}</p></div>`;
   return scores.slice(0,5).map((r,i)=>`<div class="mini-score ${r.id===lastResult?.id?'mine':''}"><span class="mini-rank">${i+1}</span><span class="mini-player"><b>${escapeHtml(r.player.name)}${r.id===lastResult?.id?t("score.mine"):''}</b><small>${escapeHtml(r.player.className)} · ${t("score.wrong",{count:r.mistakes})}</small></span><span class="mini-points">${r.score}<small>${formatTime(r.elapsed)}</small></span></div>`).join('');
 }
 function renderMiniScores(){ $('result-leaderboard').innerHTML=miniScoresMarkup(store.read());storageStatus(); }
@@ -461,29 +475,35 @@ function downloadScores(){
 function finishGame(){
   cancelDrag();selected=null;
   lastResult=game.result(roundId);
-  store.save(lastResult);storageStatus();
+  if(lastResult.mode==='quiz')store.save(lastResult);
+  storageStatus();
   renderResult();
   showScreen('result');
   $('result-title').focus({preventScroll:true});
-  announce(t("result.complete",{score:lastResult.score,time:formatTime(lastResult.elapsed)}));
+  announce(t("result.complete",{score:lastResult.score,total:lastResult.total,time:formatTime(lastResult.elapsed)}));
 }
 function renderResult(){
   const r=lastResult;
-  $('result-title').textContent=r.score===10?t("Hebat! Semua pasangan tepat."):r.score>=7?t("Bagus, anda semakin mahir!"):t("Teruskan mencuba, teruskan belajar.");
+  $('result-title').textContent=r.score===r.total?t("Hebat! Semua pasangan tepat."):r.score/r.total>=.7?t("Bagus, anda semakin mahir!"):t("Teruskan mencuba, teruskan belajar.");
   $('result-player').textContent=`${r.player.name} · ${t(r.player.category)} · ${r.player.className}`;
   $('result-score').textContent=r.score;
-  $('result-level').textContent=r.score===10?t("Pakar padanan"):r.score>=7?t("Penjelajah geometri"):t("Peneroka bentuk");
-  const rank=store.read().findIndex(s=>s.id===r.id)+1;
+  $('result-total').textContent=t('mode.points',{total:r.total});
+  $('practice-result-note').hidden=r.mode!=='practice';
+  $('practice-result-note').textContent=t('mode.practiceResult');
+  $('replay-label').textContent=t(r.mode==='practice'?'mode.repeatPractice':'Main lagi');
+  $('analysis-description').textContent=t('mode.analysisScope',{total:r.total,perShape:r.total/SHAPES.length});
+  $('result-level').textContent=r.score===r.total?t("Pakar padanan"):r.score/r.total>=.7?t("Penjelajah geometri"):t("Peneroka bentuk");
+  const rank=r.mode==='practice'?0:store.read().findIndex(s=>s.id===r.id)+1;
   $('result-message').textContent=t("result.summary",{score:r.score,mistakes:r.mistakes,skipped:r.skipped})+(rank>0?t("result.rank",{rank}):'');
   $('result-time').textContent=formatTime(r.elapsed);
-  $('result-first').textContent=`${analyseAnswers(r.answers).byStage[0].correct} / 10`;
+  $('result-first').textContent=`${analyseAnswers(r.answers).byStage[0].correct} / ${r.total}`;
   $('result-mistakes').textContent=r.mistakes;
   $('result-hints').textContent=r.hints;
   renderAnalysis(r);
   $('review-list').innerHTML=r.answers.map((answer,i)=>{
     const q=localizeQuestion(QUESTIONS.find(q=>q.id===answer.id),locale.language);
     const attempts=['solid','net'].map((kind,index)=>`R${index+1}: ${answer.attempts[kind]?shapeName(answer.attempts[kind],locale.language):t("belum diimbas")}`).join(' · ');
-    return `<article class="review-card ${answer.outcome}"><small>${t("question.counter",{number:i+1})} · ${t(TOPIC_NAMES[answer.topic])}</small><p class="review-prompt">${pretty(q.prompt)}</p><div class="review-pair">${shapeArt(answer.shape,'solid',true,'orange')}${shapeArt(answer.shape,'net',true,'violet')}</div><h3>${t("Jawapan:")} ${shapeName(answer.shape,locale.language)}</h3><p class="review-outcome">${answer.outcome==='correct'?t("✓ Pasangan betul · +1"):answer.outcome==='wrong'?t("review.wrong",{target:answer.failedAt==='solid'?'R1':'R2'}):t("↷ Dilangkau · +0")}</p><p class="review-attempt">${attempts}${answer.hint?'<br>'+t("Petunjuk digunakan"):''}</p></article>`;
+    return `<article class="review-card ${answer.outcome}"><small>${t("question.counter",{number:i+1,total:r.total})} · ${t(TOPIC_NAMES[answer.topic])}</small><p class="review-prompt">${pretty(q.prompt)}</p><div class="review-pair">${shapeArt(answer.shape,'solid',true,'orange')}${shapeArt(answer.shape,'net',true,'violet')}</div><h3>${t("Jawapan:")} ${shapeName(answer.shape,locale.language)}</h3><p class="review-outcome">${answer.outcome==='correct'?t("✓ Pasangan betul · +1"):answer.outcome==='wrong'?t("review.wrong",{target:answer.failedAt==='solid'?'R1':'R2'}):t("↷ Dilangkau · +0")}</p><p class="review-attempt">${attempts}${answer.hint?'<br>'+t("Petunjuk digunakan"):''}</p></article>`;
   }).join('');
   renderMiniScores();
 
@@ -497,10 +517,10 @@ function analysisBar(label,correct,total,note='',art=''){
 function renderAnalysis(result){
   const a=analyseAnswers(result.answers),weak=a.weakShapes.filter(row=>row.wrong),advice=[];
   let title,copy;
-  if(result.score===10){title=t('Semua pasangan tepat!');copy=result.hints?t('analysis.hints',{count:result.hints}):t('Anda berjaya mengenal bongkah dan memadankan semua bentangan dalam pusingan ini.');}
-  else if(!result.mistakes){title=t(result.skipped===10?'Cuba menjawab untuk melihat kekuatan anda.':'Padanan yang anda cuba sudah tepat.');copy=t('analysis.skipped',{count:result.skipped});}
+  if(result.score===result.total){title=t('Semua pasangan tepat!');copy=result.hints?t('analysis.hints',{count:result.hints}):t('Anda berjaya mengenal bongkah dan memadankan semua bentangan dalam pusingan ini.');}
+  else if(!result.mistakes){title=t(result.skipped===result.total?'Cuba menjawab untuk melihat kekuatan anda.':'Padanan yang anda cuba sudah tepat.');copy=t('analysis.skipped',{count:result.skipped});}
   else{title=t('analysis.focus',{shapes:weak.map(row=>shapeName(row.id,locale.language)).join(', ')});copy=t('analysis.errors',{wrong:result.mistakes,skipped:result.skipped});}
-  $('analysis-summary').innerHTML=`${icon(result.score===10?'trophy':'bulb')}<div><h3>${title}</h3><p>${copy}</p></div>`;
+  $('analysis-summary').innerHTML=`${icon(result.score===result.total?'trophy':'bulb')}<div><h3>${title}</h3><p>${copy}</p></div>`;
   $('analysis-shapes').innerHTML=a.byShape.map(row=>analysisBar(shapeName(row.id,locale.language),row.correct,row.total,t('analysis.shape',{wrong:row.wrong,skipped:row.skipped,hints:row.hints}),shapeArt(row.id,'solid',true,visualPlan.solid[row.id]))).join('');
   $('analysis-stages').innerHTML=a.byStage.map(row=>analysisBar(t(row.id==='solid'?'R1 · Kenal bongkah':'R2 · Padankan bentangan'),row.correct,row.attempted,t('analysis.stage',{wrong:row.wrong,untried:row.notAttempted}))).join('');
   $('analysis-topics').innerHTML=a.byTopic.map(row=>analysisBar(t(TOPIC_NAMES[row.id]),row.correct,row.total,t('analysis.topic',{wrong:row.wrong,skipped:row.skipped}))).join('');
@@ -553,14 +573,14 @@ function frame(time){
   if(game && screen==='game'){
     if(game.update(time)){
       if(game.status==='finished')finishGame();
-      else{lastLed={};renderQuestion();$('question-title').focus({preventScroll:true});announce(t("round.next",{number:game.index+1}));}
+      else{lastLed={};renderQuestion();$('question-title').focus({preventScroll:true});announce(t("round.next",{number:game.index+1,total:game.total}));}
     }
     const clock=formatTime(game.time(time));
     if(clock!==lastClock){$('time-value').textContent=clock;lastClock=clock;}
     renderLeds(time);
     if(game.reviewing&&game.reviewReady(time)&&$('continue-button').disabled){
       $('continue-button').disabled=false;
-      $('continue-button').innerHTML=(game.index===9?t("Lihat analisis"):t("Soalan seterusnya"))+' '+icon('arrow');
+      $('continue-button').innerHTML=(game.index===game.total-1?t("Lihat analisis"):t("Soalan seterusnya"))+' '+icon('arrow');
     }
   }
   if(drag?.started){
@@ -579,7 +599,7 @@ function applyStaticLanguage(){
     document.querySelectorAll('[data-i18n-'+name+']').forEach(el=>el.setAttribute(name,t(el.getAttribute('data-i18n-'+name))));
   }
   $('language-select').value=locale.language;
-  updateTitle();updateSound();updateMotion();
+  updateTitle();updateSound();updateMotion();updateModeChoice();
 }
 function applyLanguage(){
   const focused=document.activeElement;
