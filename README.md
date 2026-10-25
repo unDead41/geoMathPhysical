@@ -1,301 +1,154 @@
-# GeoDecoder
+# GeoDecoder - pakej perkongsian
 
-Versi semasa: **v1.1.1**.
-Rujukan kemas kini: [SOR versi](docs/SOR_VERSIONING.md) dan [changelog](CHANGELOG.md).
+Versi semasa: **v1.1.1**. Pakej **1.1.1-sharing.1**.
+Sumber firmware: main [`aa6e5d722038a0f229a9521efcc7cda58d62a9bd`](https://github.com/unDead41/geodecoder/commit/aa6e5d722038a0f229a9521efcc7cda58d62a9bd).
+Semua fail `main/`, `src/main.cpp` dan `platformio.ini` sama tepat dengan sumber itu.
+Installer tidak mengubah firmware atau pendaftaran UID.
 
-Kuiz geometri 3D menggunakan ESP32 klasik/WROOM-32, dua pembaca MFRC522,
-LCD I2C 20x4, dua butang dan dua LED biasa atau dua RGB empat kaki.
+Sasaran: Windows 10/11 **x64**, PowerShell 5.1+, Internet, ESP32 klasik
+WROOM-32/32E. Board C3/S3, ARM Windows dan RGB NeoPixel bukan sasaran pakej ini.
+Arduino IDE dan Git tidak diperlukan. Build boleh dibuat tanpa board.
 
-**Aliran kerja utama: VS Code + PlatformIO IDE.** Build, Upload dan Serial
-Monitor tersedia terus dalam VS Code. Arduino IDE tidak diperlukan.
+## Pasang dengan satu arahan
 
-## 1. Buka projek dalam VS Code
-
-Pasang [PlatformIO IDE](https://marketplace.visualstudio.com/items?itemName=platformio.platformio-ide)
-melalui Extensions (`Ctrl+Shift+X`), kemudian tunggu pemasangan selesai.
-
-Clone repo, contohnya melalui terminal VS Code:
+1. Dapatkan `GeoDecoder_Sharing_v1.1.1_s1.zip` daripada pemilik projek.
+   Repo private; ZIP mengandungi semua source projek dan empat PDF. Penerima
+   tidak memerlukan akses repo, akaun atau token GitHub. Dependency vendor
+   dimuat turun berasingan oleh installer daripada sumber rasmi.
+2. Klik kanan ZIP > **Extract All**. Masuk folder `geodecoder-sharing` yang
+   mengandungi `setup.ps1`, kemudian buka PowerShell di situ.
+3. Jalankan sebagai pengguna biasa:
 
 ```powershell
-cd "$env:USERPROFILE\Desktop"
-git clone https://github.com/unDead41/geodecoder.git
-cd geodecoder
-code .
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\setup.ps1
 ```
 
-Untuk repo private, log masuk akaun GitHub sendiri apabila Git meminta.
-Jika tidak menggunakan Git CLI, pilih **Source Control > Clone Repository**,
-masukkan URL repo dan buka folder yang diklon.
+Installer mengesahkan SHA-256, menyalin ke `%USERPROFILE%\geodecoder-sharing`,
+menyediakan Python jika perlu, PlatformIO Core **6.1.18** dalam virtualenv
+berasingan, VS Code User Setup dan extension PlatformIO IDE; memilih
+ environment/COM, Build, kemudian membuka workspace yang betul.
+Pilih **1/Enter = RGB**, **2 = LED biasa**. Tanpa board, Build boleh selesai;
+pilih COM kemudian. **Tiada Upload automatik.**
 
-Buka **folder `geodecoder` yang mengandungi `platformio.ini`**. PlatformIO
-akan memasang platform ESP32 dan library yang ditetapkan secara automatik.
-Pemasangan pertama memerlukan Internet dan mengambil masa lebih lama.
-Jangan cipta projek PlatformIO baharu atau pindahkan hanya satu fail `.ino`.
+Pemasangan menggunakan installer rasmi Python/VS Code dan terma vendor
+masing-masing. Tiada perubahan execution policy kekal atau tetapan VS Code global
+oleh skrip. Group Policy organisasi mungkin memerlukan bantuan pentadbir.
+Dependency pertama memerlukan Internet/ruang cakera dan boleh mengambil masa
+beberapa minit; tiada had masa siap dijanjikan.
 
-## 2. Pilih LED dan Build
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\setup.ps1 -Environment esp32dev-rgb -BuildBoth
+```
 
-Dalam panel PlatformIO > **Project Tasks**, pilih environment yang sepadan:
+Pilihan: `-Destination "D:\Projek\geodecoder-sharing"`, `-Port COM5` (ganti nombor
+sebenar), `-NoPrompt` (pilihan tersimpan atau RGB kali pertama), `-NoOpen`.
+Jalankan semula arahan sama jika terganggu. Fail sama digunakan semula;
+suntingan sumber dan fail peribadi tidak ditindih. Untuk sumber disunting atau
+pakej baharu, pilih destinasi baharu. Folder projek Git/peribadi ditolak.
 
-| Environment | Perkakasan |
+## Build, Upload dan Monitor
+
+Buka `GeoDecoder.local.code-workspace` dalam folder pemasangan. Jika diminta
+Workspace Trust, semak asal ZIP dan pilih Trust jika dipercayai.
+**Terminal > Run Task > GeoDecoder: Build / Upload / Monitor / Configure / Ports**.
+`Ctrl+Shift+B` menjalankan Build. Atau jalankan satu arahan pada satu masa
+melalui PowerShell dalam folder projek:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\geodecoder.ps1 -Action Ports
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\geodecoder.ps1 -Action Configure
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\geodecoder.ps1 -Action Build
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\geodecoder.ps1 -Action Upload
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\geodecoder.ps1 -Action Monitor
+```
+
+`Configure` memilih environment dan COM; muat semula VS Code selepas menukar
+environment. `-Environment` atau `-Port` pada Build/Upload/Monitor mengatasi
+pilihan tersimpan untuk arahan itu sahaja. Jika beberapa port USB wujud, pilih
+port board melalui **Device Manager > Ports**. Satu port USB yang dikesan belum
+membuktikan ia ESP32 sasaran. Upload hanya berlaku atas arahan Upload.
+
+| Environment | Perkakasan | Pin |
+|---|---|---|
+| `esp32dev` | Dua LED biasa | R1=25, R2=26 |
+| `esp32dev-rgb` | Dua RGB empat kaki | R1 R/G/B=13/14/25; R2=16/17/26 |
+
+`platformio.ini` asal: `espressif32@6.12.0`, board `esp32dev`, framework Arduino,
+Arduino ESP32 2.0.17 yang dipilih platform, `MFRC522@1.4.12`, `hd44780@1.3.2`.
+Serial **115200 baud**. Contoh COM: `platformio.local.ini.example`.
+Installer menghasilkan `platformio.local.ini` pada PC ini. Gunakan Configure
+untuk mengubah fail yang diurus installer; fail COM manual tidak ditindih.
+PlatformIO Project Tasks > environment > General > Build/Upload/Monitor juga tersedia.
+
+## Langkah fizikal
+
+Ikut [SAMBUNGAN.md](SAMBUNGAN.md): RC522 3.3 V, LCD 5 V melalui penukar aras I2C,
+GND bersama. RGB default common cathode, butang active LOW. Jika modul berbeza,
+semak polariti dalam `main/config.h` dan Build semula. Jangan ubah pin tanpa
+memadankan wayar. Sambung kabel USB **data**, tutup Monitor lain, kemudian Upload.
+Jika `Connecting...` berulang, tahan **BOOT** sehingga penulisan bermula, kemudian
+lepaskan. Tekan **EN/RESET** selepasnya jika perlu.
+
+Jika COM tiada, cuba kabel/port lain dan semak cip USB-UART pada board.
+Pasang driver pengeluar sepadan sahaja:
+[CP210x Silicon Labs](https://www.silabs.com/developer-tools/usb-to-uart-bridge-vcp-drivers)
+atau [CH340/CH341 WCH](https://www.wch-ic.com/downloads/CH341SER_EXE.html).
+Installer tidak meneka driver bagi board yang belum dikenal pasti.
+Jalankan Configure semula jika COM berubah.
+
+Dalam Monitor, taip satu per satu dengan Enter: `version`, `pins`, `status`,
+`test/rfid/check`. Imbas kad pada kedua-dua pad; READY sahaja ialah respons
+register, belum membuktikan bacaan antena. Kalibrasi: `R1RGB`, `R2RGB`,
+`R1Purple`, `R2Purple`, `test/led/random`, `ButtonTest`, satu arahan setiap kali.
+Keluar dengan `test/stop`. Diagnostik runtime tidak mendaftarkan kad atau
+memberi markah. Semua arahan: [COMMANDS.md](COMMANDS.md), `help`, `test/help`.
+
+## Daftar kad dan main
+
+Jika `tags` menunjukkan pasangan kad lama lengkap, tidak perlu daftar semula.
+Untuk kad baharu: taip `assign r1 kubus`, imbas kad model kubus di R1; taip
+`assign r2 kubus`, imbas bentangan kubus di R2. Ulang satu per satu untuk
+`piramid`, `silinder`, `kon`, `kuboid`. Setiap slot memerlukan kad berlainan.
+Pilih jenis lengkap, misalnya `use kubus piramid silinder`.
+
+Menu: NEXT mula, HINT cara main. Setiap soalan memerlukan **R1 bongkah dahulu,
+kemudian R2 bentangan sepadan**; +1 selepas kedua-duanya betul. Biru menunggu,
+hijau betul, merah salah, ungu hint. Angkat kad sebelum imbasan seterusnya.
+NEXT ketika soalan melangkau; tiga kelipan selepas betul/langkau menjeda masa.
+Keputusan menunjukkan skor dan masa akhir. NEXT main semula; HINT menu.
+
+Setup/Build tidak menyentuh board. Upload biasa mengekalkan UID bagi partition
+asal projek; jangan gunakan Erase Flash. Board dengan partition tersuai perlu
+disemak sebelum Upload. Arahan `unassign` masih tersedia untuk penggunaan guru
+secara sengaja; installer tidak menghantarnya.
+
+## Fail yang dihantar
+
+Senarai tepat setiap fail dan SHA-256 berada dalam `package.json`.
+
+| Lokasi | Kandungan |
 |---|---|
-| `esp32dev` (default) | Dua LED biasa: GPIO25 dan GPIO26 |
-| `esp32dev-rgb` | Dua RGB empat kaki (R/G/B): R1=13/14/25, R2=16/17/26 |
+| `main/`, `src/main.cpp` | Source/header firmware termasuk diagnostik runtime |
+| `platformio.ini`, `platformio.local.ini.example` | Board/library dipin, contoh COM |
+| `setup.ps1`, `geodecoder.ps1`, `scripts/common.ps1` | Installer dan arahan pengguna |
+| `.vscode/`, `.gitignore`, `.gitattributes` | Task, cadangan extension, peraturan fail |
+| `README.md`, `SAMBUNGAN.md`, `COMMANDS.md`, `package.json` | Panduan, wayar, Serial, identiti pakej |
+| `print_labels/GeoDecoder_Kad_RFID_A4.pdf` | Kad campuran, 2 halaman |
+| `print_labels/GeoDecoder_Kad_2D_Kiri_Kanan_A4.pdf` | Bentangan kiri/kanan, 2 halaman |
+| `print_labels/GeoDecoder_Kad_3D_Kiri_Kanan_A4.pdf` | Model kiri/kanan, 2 halaman |
+| `docs/lcd/GeoDecoder_15_Contoh_LCD_Soalan_dan_Hint.pdf` | LCD soalan/hint, tepat 15 halaman |
 
-Pilih **General > Build** di bawah environment itu. Build boleh dijalankan
-tanpa ESP32 disambungkan. Tunggu keputusan `SUCCESS`.
+Kad sumber versi 2 (16 Oktober 2026): tiada nama jawapan atau arahan "ikut LED".
+Cetak **A4, Actual size / 100%**, matikan Fit to page; semak garis 50 mm dahulu.
+LCD sumber versi 4 (24 Oktober 2026).
 
-RGB menggunakan common cathode secara default. Jika common anode ke 3V3,
-ubah `RGB_COMMON_ANODE` kepada `true` dalam `main/config.h`.
+**Tutorial A-Z belum diterima dan belum disertakan.** Lokasi akhir ditetapkan:
+`tutorial/GeoDecoder_Panduan_A-Z.pdf`. Tiada PDF kosong dicipta.
 
-## 3. Upload ke ESP32
+Branch sharing mempunyai tree minimum tetapi masih mempunyai sejarah main.
+Beri **ZIP bersih** kepada penerima yang tidak patut menerima sejarah repo.
+Jangan merge sharing ke main. ZIP tiada `.git`, sejarah pembangunan, fixture/
+ujian developer, UID sebenar, token, toolchain, cache, output build atau COM peribadi.
 
-1. Sambungkan ESP32 klasik/WROOM-32 kepada komputer menggunakan kabel USB data.
-2. Tutup Serial Monitor lain yang sedang menggunakan port tersebut.
-3. Pilih **General > Upload** di bawah environment yang dipilih tadi.
-4. Jika tersekat pada `Connecting...`, tahan **BOOT** sehingga sambungan
-   bermula, kemudian lepaskan. Selepas upload, tekan **EN/RESET** jika perlu.
-5. Jika port tidak dikesan, semak Device Manager untuk nombor COM dan driver
-   USB-UART yang sepadan dengan cip pada board.
-
-Port biasanya dikesan automatik. Jika perlu memilih port sendiri, salin
-`platformio.local.ini.example` sebagai `platformio.local.ini` dan gantikan
-`COM5` dengan port sebenar. Jangan ubah `platformio.ini` untuk COM komputer
-sendiri.
-
-Upload firmware biasa tidak memadam ruang NVS yang menyimpan UID. Elakkan
-**Erase Flash** atau `pio run -t erase` jika mahu mengekalkan pendaftaran kad.
-Namespace `geomath_q2`, key `registry`, ID bongkah dan format simpanan asal
-dikekalkan. Jika board pernah menggunakan susunan partition tersuai, semak
-susunan itu sebelum upload.
-
-## 4. Uji perkakasan dan daftar kad
-
-Buka **General > Monitor** bagi environment yang sama. Kelajuan ditetapkan
-kepada **115200 baud**, dan arahan dihantar selepas menekan Enter.
-
-Taip satu per satu:
-
-```text
-version
-help
-pins
-status
-tags
-current
-check uid 1
-```
-
-Imbas kad di R1 untuk menyemak bacaan. Kemudian:
-
-```text
-check uid 2
-```
-
-Imbas kad di R2. Taip `stop` selepas selesai menyemak.
-Jika UID lama masih ada, tidak perlu mendaftarkannya semula.
-Untuk kad baharu, taip arahan dan imbas satu kad yang betul setiap kali:
-
-```text
-assign r1 kubus
-assign r2 kubus
-```
-
-Ulang secara berasingan untuk `piramid`, `silinder`, `kon` dan `kuboid`.
-R1 ialah kad bongkah; R2 ialah kad bentangan. Setiap slot mesti menggunakan
-UID yang berbeza. Jangan tampal semua arahan `assign` serentak.
-
-Untuk daftar semula, `unassign all` memadam semua tagging R1/R2.
-`unassign kubus`, `unassign piramid`, `unassign silinder`, `unassign kon` atau
-`unassign kuboid` memadam pasangan jenis itu sahaja. `unassign kubu` juga
-diterima sebagai alias kubus. Taip `tags` untuk menyemak slot kosong, kemudian
-daftar kad semula. Arahan ini terus menyimpan perubahan dan membatalkan round
-lama; pilihan jenis aktif dikekalkan. Panduan penuh: [COMMANDS.md](COMMANDS.md).
-
-Jika hanya tiga jenis lengkap, aktifkan hanya jenis itu, contohnya:
-
-```text
-use kubus piramid silinder
-```
-
-Jika kesemua lima pasangan kad sudah lengkap:
-
-```text
-use kubus piramid silinder kon kuboid
-```
-
-LCD dan butang boleh diuji di menu walaupun pendaftaran belum lengkap:
-tekan **HINT** untuk enam halaman cara main. Untuk memulakan kuiz, kedua-dua
-RFID mesti READY dan semua jenis aktif mesti mempunyai UID R1 serta R2.
-
-## 5. Main dan semak keputusan
-
-1. Menu: kedua-dua RGB bertukar warna perlahan setiap 1,000 ms; warna R1/R2
-   sentiasa berlainan dan setiap LED bertukar daripada warna sebelumnya. NEXT memulakan
-   pusingan baharu pada skor 0 dan masa 00:00; HINT membuka cara bermain.
-2. **Setiap soalan memerlukan dua kad: R1 bongkah dahulu, kemudian R2 bentangan
-   yang sepadan.** R1 biru/R2 padam pada permulaan. R1 betul belum mendapat markah;
-   R1 kekal hijau dan R2 menjadi biru. Tahap aktif turut ditulis pada header LCD.
-3. Salah: pembaca aktif merah selama notis, kemudian kembali biru/ungu.
-   Cuba semula pada tahap sama; R1 kekal hijau jika sedang menjawab bentangan.
-4. HINT membuka/menutup petunjuk dan menjadikan pembaca aktif ungu. Masa terus
-   berjalan; imbasan masih diterima dan markah tidak ditolak.
-5. Dua kad betul: **+1 sekali sahaja**, kedua-dua RGB hijau berkelip tiga kali.
-   NEXT melangkau mana-mana tahap: **+0**, kedua-duanya merah berkelip tiga kali.
-6. Setiap kelipan ialah 150 ms ON + 150 ms OFF; jumlah 900 ms. Stopwatch dijeda
-   sepanjang kelipan. Jawapan/NEXT/HINT diabaikan; loop aplikasi terus berjalan.
-7. Soalan seterusnya bermula pada R1 biru/R2 padam dan masa bersambung.
-   Angkat kad sebelum mengimbas semula, termasuk kad yang sudah berada di R2.
-8. Pada tindakan akhir, masa dibekukan dahulu. Selepas tiga kelipan, LCD
-   menunjukkan skor, peratus dan masa akhir; RGB bertukar warna setiap 150 ms
-   dengan warna R1/R2 sentiasa berlainan.
-9. Keputusan: NEXT memulakan pusingan baharu, HINT kembali ke menu perlahan.
-
-Environment default `esp32dev` kekal untuk **LED biasa**. Warna bukan padam
-menjadi LED ON; label tahap/notis LCD menerangkan tindakan. Pada tahap R2,
-R1 kekal ON. Menu/keputusan mempunyai dua LED ON; tiga kelipan tetap digunakan.
-Gunakan `esp32dev-rgb` hanya apabila pemasangan RGB siap.
-Panduan penuh: [flow dua kad dan RGB](docs/GAME_FLOW_RGB.md).
-
-## Uji komponen melalui Serial Monitor
-
-Fungsi daripada branch `testing/components` kini tersedia dalam `main`.
-Ujian terus melalui Serial 115200 baud:
-
-```text
-test/help
-test/rfid/r1
-test/rfid/r2
-R1Red
-R1Green
-R1Yellow
-R1RGB
-R2Red
-R2Green
-R2Yellow
-R2RGB
-ButtonTest
-test/stop
-```
-
-Hantar satu arahan dan uji komponennya sebelum memilih arahan lain. Ujian aktif
-menjeda permainan tanpa menukar pendaftaran kad. `test/stop` kembali ke menu.
-Untuk warna sebenar, Build/Upload `esp32dev-rgb` dengan pin RGB pengguna terkini.
-`R1RGB`/`R2RGB` mengulang semua tujuh warna mengikut turutan setiap 500 ms:
-merah, hijau, biru, kuning, sian, magenta (ungu) dan putih. Gunakan
-`R1Random`/`R2Random` untuk warna rawak pada satu LED. Gunakan `test/led/random`
-untuk kedua-duanya serentak: warna R1/R2 sentiasa berlainan dan setiap LED
-tidak mengulang warna sebelumnya. Warna tunggal kekal menyala.
-`R1Purple`/`R2Purple` menguji ungu yang sama seperti hint permainan.
-`R1Blue`/`R2Blue` menguji saluran biru, `R1Off`/`R2Off` memadam.
-`ButtonTest` memantau kedua-dua butang; `NEXTTest` atau `HINTTest` memilih satu.
-Tekan/lepas kurang 1 saat untuk `SHORT_PRESS`; tahan sekurang-kurangnya 1 saat
-untuk `LONG_PRESS` sekali sahaja. Serial menunjukkan GPIO, tempoh dan kiraan.
-Panduan lengkap dan contoh output: [COMPONENT_TESTS.md](docs/COMPONENT_TESTS.md).
-
-## Arahan terminal PlatformIO
-
-Buka **PlatformIO > Quick Access > Miscellaneous > PlatformIO Core CLI**
-dalam VS Code. Terminal ini menyediakan arahan `pio` walaupun ia tiada
-dalam PATH terminal biasa.
-
-```text
-pio run -e esp32dev
-pio run -e esp32dev -t upload
-pio device monitor -e esp32dev
-```
-
-Untuk dua RGB, gantikan `esp32dev` dengan `esp32dev-rgb` dalam ketiga-tiga
-arahan. `Ctrl+C` menutup Monitor. Untuk melihat port: `pio device list`.
-
-## Semak versi firmware yang diupload
-
-Pada boot/reset ESP32, Serial 115200 baud memaparkan:
-
-```text
-[FIRMWARE] GeoDecoder v1.1.1 | ESP32 | env=esp32dev-rgb
-```
-
-Mod LED biasa memaparkan `env=esp32dev`. Jika Monitor dibuka selepas banner
-berlalu, taip `version`; `status` turut menunjukkan identiti yang sama.
-Arahan ini boleh dibaca semasa bermain atau semasa ujian komponen.
-
-Bandingkan versi itu dengan **Versi semasa** pada README GitHub bagi commit
-yang kamu pull. `git log -1 --oneline` mengenal pasti commit komputer.
-Pull mengemas kini PC; Build dan Upload mengemas kini ESP32. Jika nombor masih
-lama selepas pull, Upload semula environment yang betul. Rujuk [SOR versi](docs/SOR_VERSIONING.md).
-
-## Struktur kod
-
-| Fail/folder | Tujuan |
-|---|---|
-| `platformio.ini` | Board, library, pilihan LED dan Serial Monitor |
-| `src/main.cpp` | Menggabungkan tab asal untuk build PlatformIO |
-| `main/main.ino` | `setup()` dan `loop()` sahaja |
-| `main/config.h` | Tetapan board: GPIO, polariti dan timing peranti |
-| `main/firmware_version.h` | Satu sumber nombor versi firmware |
-| `main/domain/` | Model, peraturan, validasi UID dan engine kuiz bebas Arduino |
-| `main/application/` | API aplikasi, snapshot baca sahaja dan port perkakasan |
-| `main/presentation/` | View LCD daripada snapshot dan kontrak Serial |
-| `main/hardware/` | Kontrak driver dan peristiwa input |
-| `main/question_bank.h` | 15 soalan dan hint bagi lima jenis bongkah |
-| `main/*.ino` | Implementasi modul aplikasi serta adapter RFID/LCD/butang/LED/NVS |
-| `tests/` | Ujian native dengan perkakasan simulasi |
-| `SAMBUNGAN.md` | Jadual wayar asal |
-| `COMMANDS.md` | Senarai penuh arahan Serial |
-| `docs/lcd/` | PDF 15 halaman dan set PNG paparan LCD terkini |
-| `print_labels/` | Tiga PDF kad RFID siap potong tanpa nama jawapan |
-
-Rujuk [panduan architecture](docs/ARCHITECTURE.md) sebelum mengubah modul.
-Engine kuiz menerima masa sebagai nilai; application menerima adapter melalui
-`AppPorts`. RFID/butang menghantar callback dan LCD menerima bingkai siap.
-
-Edit modul dalam `main/`; `src/main.cpp` menggunakan tab yang sama, tanpa
-salinan kedua logik permainan. `main/main.ino` masih boleh dibuka dalam
-Arduino IDE jika diperlukan.
-
-Lihat [semua 15 paparan soalan dan hint semasa](docs/LCD_QUESTION_REVIEW.md),
-[PDF dokumentasi A4](docs/lcd/GeoDecoder_15_Contoh_LCD_Soalan_dan_Hint.pdf)
-dan [set 15 PNG](docs/lcd/GeoDecoder_15_Contoh_LCD_PNG.zip).
-Bahan cetakan terkini disenaraikan dalam [indeks aset](docs/ASSETS.md).
-Kad RFID: [set campuran model dan bentangan](print_labels/GeoDecoder_Kad_RFID_A4.pdf),
-[bentangan 2D kiri/kanan](print_labels/GeoDecoder_Kad_2D_Kiri_Kanan_A4.pdf) dan
-[model 3D kiri/kanan](print_labels/GeoDecoder_Kad_3D_Kiri_Kanan_A4.pdf).
-Cetak kad pada **Actual size / 100%**. Bank runtime berada dalam
-`main/question_bank.h`.
-
-## Pengesahan dan kemas kini
-
-Ujian simulasi memerlukan Python 3 dan G++:
-
-```text
-python tests/run_tests.py
-python tests/run_tests.py --rgb
-python tests/run_tests.py --entrypoint src/main.cpp
-python tests/run_tests.py --entrypoint src/main.cpp --rgb
-python tests/run_tests.py --separate-modules
-python tests/run_tests.py --separate-modules --rgb
-python tools/check_version.py
-```
-
-Setiap arahan `tests/run_tests.py` menyemak keselarasan versi, menjalankan
-11 kes teras/application tanpa Arduino dan 63 kes integrasi firmware.
-Mod `--separate-modules` mengkompil setiap tab secara
-berasingan supaya header serta kebergantungan modul turut disahkan.
-
-Ujian simulasi menyemak logik; ia tidak membuktikan sambungan wayar, bekalan
-kuasa, bacaan antena atau paparan LCD fizikal. Lihat `VERIFICATION.md` untuk
-keputusan semakan import ini dan ujian fizikal yang masih perlu dibuat.
-
-Untuk mengambil kemas kini selepas perubahan sendiri telah di-commit:
-
-```text
-git pull --ff-only
-```
-
-Kemudian Build dan Upload semula melalui environment yang sama.
-
-Rujukan rasmi:
-[PlatformIO untuk VS Code](https://docs.platformio.org/en/latest/integration/ide/vscode.html),
-[ESP32 Dev Module](https://docs.platformio.org/en/latest/boards/espressif32/esp32dev.html).
-
-
+Build/semakan pakej tidak mengesahkan pemasangan Windows sebenar, Upload USB
+atau perkakasan fizikal. Batas ujian sebenar dinyatakan dalam laporan penghantaran.

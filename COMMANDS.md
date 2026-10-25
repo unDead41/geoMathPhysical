@@ -88,7 +88,7 @@ ujian komponen, keluar dengan `test/stop` dahulu sebelum memadam tagging.
 
 Menu utama: NEXT mula pusingan baharu, HINT cara bermain. Serial `play` boleh menyambung pusingan yang dijeda. Soalan: NEXT langkau +0 markah, HINT buka/tutup pembayang.
 Ringkasan: NEXT main semula, HINT menu. Semakan/pendaftaran: NEXT kembali menu atau batal.
-Setiap soalan wajib R1 bongkah kemudian R2 bentangan sepadan; +1 hanya setelah kedua-duanya betul. Masa berjalan ketika menjawab/hint/notis salah, dijeda sepanjang tiga kelipan 900 ms, dan berhenti pada tindakan terakhir. Menu/penyelenggaraan menjeda masa. NEXT/HINT semasa kelipan diabaikan. Rujuk [flow dua kad](docs/GAME_FLOW_RGB.md).
+Setiap soalan wajib R1 bongkah kemudian R2 bentangan sepadan; +1 hanya setelah kedua-duanya betul. Masa berjalan ketika menjawab/hint/notis salah, dijeda sepanjang tiga kelipan 900 ms, dan berhenti pada tindakan terakhir. Menu/penyelenggaraan menjeda masa. NEXT/HINT semasa kelipan diabaikan. Rujuk [panduan permainan](README.md#daftar-kad-dan-main).
 Serial mengekalkan maklumat teknikal guru; LCD memaparkan arahan murid sahaja.
 
 ## Ujian komponen
@@ -124,8 +124,8 @@ kembali ke menu. Semasa ujian, permainan/markah/masa dijeda dan tiada UID
 pernah didaftarkan secara automatik. Arahan guru yang mengubah state memerlukan
 keluar ujian dahulu; arahan baca sahaja kekal tersedia.
 
-Rujuk [panduan ujian komponen](docs/COMPONENT_TESTS.md) untuk semua target,
-warna, timing, watch butang dan maksud output RFID.
+Gunakan `test/help` untuk semua target, warna dan watch butang.
+READY ialah respons register; imbas kad sebenar untuk mengesahkan bacaan antena.
 
 ## Versi yang sedang berjalan
 
@@ -138,5 +138,5 @@ Banner ini juga muncul semasa boot dan pada permulaan output `status`:
 
 `env=esp32dev` menandakan LED biasa. Semak versi dengan README GitHub pada
 commit yang diupload. Jika Monitor dibuka selepas boot, taip `version`.
-Rujukan: [SOR versi](docs/SOR_VERSIONING.md).
+Rujukan sumber dan versi terdapat dalam README.md dan package.json.
 

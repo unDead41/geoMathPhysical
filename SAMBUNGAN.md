@@ -126,7 +126,7 @@ berhenti sepanjang urutan itu. Menu/keputusan tidak menerima jawapan.
 Dalam environment LED biasa, hanya GPIO25/26 dipandu. Semua warna selain
 padam menghasilkan ON. Maka tahap R2 mengekalkan kedua-dua LED ON, dan
 menu/keputusan juga ON; rujuk header R1/R2 dan notis LCD untuk tindakan.
-Timing tiga kelipan dikekalkan. Lihat [flow penuh](docs/GAME_FLOW_RGB.md).
+Timing tiga kelipan dikekalkan. Lihat [panduan permainan](README.md#daftar-kad-dan-main).
 
 RGB dalam kod ini ialah LED biasa empat kaki, bukan WS2812/NeoPixel.
 GPIO16/17 dalam peta ini khusus board WROOM; ia tidak bebas pada sesetengah WROVER/PSRAM.

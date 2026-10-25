@@ -1,0 +1,226 @@
+{
+  "schemaVersion": 1,
+  "packageId": "GeoDecoder-sharing",
+  "packageVersion": "1.1.1-sharing.1",
+  "firmwareVersion": "1.1.1",
+  "sourceSha": "aa6e5d722038a0f229a9521efcc7cda58d62a9bd",
+  "platformioCore": "6.1.18",
+  "tutorial": {
+    "status": "pending",
+    "path": "tutorial/GeoDecoder_Panduan_A-Z.pdf"
+  },
+  "files": [
+    {
+      "path": ".gitattributes",
+      "sha256": "a9fcfd5fca89dcd711ccba807a6d4615b4da7ee02c9486217cef6302775e7032"
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "a9c4f5b845e58b47cab15d47192b24f9dd60891f05d20f4a8866501020c38191"
+    },
+    {
+      "path": ".vscode/extensions.json",
+      "sha256": "f6a0ece78574678673a2006dc1d97320171abcd84226cd56631deb53d1113789"
+    },
+    {
+      "path": ".vscode/settings.json",
+      "sha256": "6cd82a25ff5c9af988ee4178389900b0658c29e9a58818f3eca210a4d2038332"
+    },
+    {
+      "path": ".vscode/tasks.json",
+      "sha256": "b5e59de80fcf9db1a4f82ad3ab898f07b06266e049a1dcf5630c52f1555c4099"
+    },
+    {
+      "path": "COMMANDS.md",
+      "sha256": "88e25175ff5187f4180c10c1e329ac6daadd6e161efa46a5b1e6dd37fe137a23"
+    },
+    {
+      "path": "README.md",
+      "sha256": "432de9d3250c70e30696177b70321135fcec32acdea5c7addcc937a1ebaf0c4f"
+    },
+    {
+      "path": "SAMBUNGAN.md",
+      "sha256": "ea99d8b2822c03e86c263e099822c5a0f7d86eaaee62792207d1d2163d91ff79"
+    },
+    {
+      "path": "docs/lcd/GeoDecoder_15_Contoh_LCD_Soalan_dan_Hint.pdf",
+      "sha256": "8cab7433187baf4d0058fb90f440e5255541036e08af65b5073f72b2414b25c7"
+    },
+    {
+      "path": "geodecoder.ps1",
+      "sha256": "ad55be6da00b1b005846fd5172c298754cf03cc3b994b22519f1c79f82cd92af"
+    },
+    {
+      "path": "main/app.ino",
+      "sha256": "dd8e251edd991ceefd69175ee6c5748208f34c9759177e78e33f6d08c7327ee3"
+    },
+    {
+      "path": "main/app_ports.ino",
+      "sha256": "d357cd297ca629e9d7e3b21ea3f96c7cdf57367d23b3b459c2363f2ab974f26c"
+    },
+    {
+      "path": "main/application/app.h",
+      "sha256": "6e9060a3ff91212f0cf02737f891fae055bf1890acbe8b53b1afe5335820e837"
+    },
+    {
+      "path": "main/application/ports.h",
+      "sha256": "dcf531979ed9bcc793291876852ab3f38c52963e373289d4e346a3d6c47986be"
+    },
+    {
+      "path": "main/application/quiz.h",
+      "sha256": "4e9f4c0ecd4fb9e008184eb42fcd9dbf701b18012770bf4f7edd60adce2e42e3"
+    },
+    {
+      "path": "main/application/registry.h",
+      "sha256": "33a285d459fbb169ce99b830f1b394c07cd7638eeaf6eb963407ac6b229ba83a"
+    },
+    {
+      "path": "main/application/runtime.h",
+      "sha256": "98bab7b7e55d3492177bcb513546aef8f1e630375d4c8ffa75b01013a140a8de"
+    },
+    {
+      "path": "main/buttons.ino",
+      "sha256": "ee1786eaec54bbabe8bdd85a2e3fce60e59e88bffbebf715bcc9f92b05b96290"
+    },
+    {
+      "path": "main/component_tests.ino",
+      "sha256": "aac6480b0adf73800b699cec8d62cd8d9eb73eb5fc94312fb5fbda68f1d1cc28"
+    },
+    {
+      "path": "main/config.h",
+      "sha256": "2daaf123f70db9363a7bead782f7852243527fef93bfdba13133e06f42f12bdc"
+    },
+    {
+      "path": "main/domain/quiz_engine.h",
+      "sha256": "9394f4895a96bbb0a9789cb64c9213f1f767ed5b8aa2e4a3dd469b8e60db7ed5"
+    },
+    {
+      "path": "main/domain/registry.h",
+      "sha256": "ec10fb28ed4fa3fb2fdb38549042b39be3fb6d4ded260a44db186e22a9ac9ff5"
+    },
+    {
+      "path": "main/domain/rgb_random.h",
+      "sha256": "e5c6df623d9240cee03794e2d87829fefe640432b01e2e6b3600dcc69883b195"
+    },
+    {
+      "path": "main/domain/rules.h",
+      "sha256": "a9bd234f440e1b7eafdbddead40a65298c4a2761fd28c198b01437fce6d46d83"
+    },
+    {
+      "path": "main/domain/types.h",
+      "sha256": "b0fdc8ace56527a6edd59aca733d6aa8a7ac365fee043d083a7aa9a94fff0af2"
+    },
+    {
+      "path": "main/firmware_version.h",
+      "sha256": "67554f68e320d82269913b3f0a2af9356decbcf29958767f58943645ea518873"
+    },
+    {
+      "path": "main/hardware/buttons.h",
+      "sha256": "d66f9f10187121026ac676358fd2534271318d8d94bd0ef25deadc74cb421aee"
+    },
+    {
+      "path": "main/hardware/component_tests.h",
+      "sha256": "8faeb0bf9c8fd97da8f4c28332cddad9e797d280cae1dc26c71434c9841fbaa5"
+    },
+    {
+      "path": "main/hardware/inputs.h",
+      "sha256": "e52dde9ff1cc8e88b4bcd4256935dedc2eacd87553c5a5f32a411ff4650b42e7"
+    },
+    {
+      "path": "main/hardware/lcd.h",
+      "sha256": "aaf52065827a782dcafef3224d00a83441223889ddd1f4091459494db91ecf11"
+    },
+    {
+      "path": "main/hardware/rfid.h",
+      "sha256": "2fb31a70d4b3166343799d67d0ed68a462af6276c77209a95bb65f697c379979"
+    },
+    {
+      "path": "main/hardware/rgb.h",
+      "sha256": "825399cd184c7671f5cc22bb1ddbc184a4c4a274d389481902b29154d7832ccd"
+    },
+    {
+      "path": "main/hardware/storage.h",
+      "sha256": "a0cdd3974fb018c2f118b56faf8c14726251f9ed45a5a6f353fcebf17f416bb9"
+    },
+    {
+      "path": "main/lcd_display.ino",
+      "sha256": "cef8078a95566b8455c0496eca9ace5aab47a5278986a8144fa476564939be0e"
+    },
+    {
+      "path": "main/main.ino",
+      "sha256": "cd098a9db33bf3a53689471b1946a4a3d2dc0bb6af29a5fa653c9e2a2705c759"
+    },
+    {
+      "path": "main/nvs_storage.ino",
+      "sha256": "c106bf11532c263b23398ab4d1ce6fb33074c6e3675e26b09cea4217a71b4431"
+    },
+    {
+      "path": "main/presentation/lcd_frame.h",
+      "sha256": "f47e23efdc718eb18638396998f9e0c9ad59b494ca1935a61e241c464c91058b"
+    },
+    {
+      "path": "main/presentation/lcd_view.h",
+      "sha256": "e2b5ec933f8a4eafb627b9c1803c6830d7964b94b70214ee65b6f7a01338dd0d"
+    },
+    {
+      "path": "main/presentation/serial_commands.h",
+      "sha256": "034814387ba96eab220ac7619df2528c5e4054d7d4df87100aa6123e90368319"
+    },
+    {
+      "path": "main/question_bank.h",
+      "sha256": "85d62102e47521e294935fb19370e34e9ff3585c800c9003bd7fb7faa837a117"
+    },
+    {
+      "path": "main/quiz.ino",
+      "sha256": "b0db8b986cf8ed98e67eb380f520be104de45d70b9d7d770513c80794d2a6fa9"
+    },
+    {
+      "path": "main/rfid.ino",
+      "sha256": "a1427792a4dd1399fc7f978a4e39a3bd984749f83a0cb60ac7e6827fd9eff6a4"
+    },
+    {
+      "path": "main/rgb_leds.ino",
+      "sha256": "056de1b6c9f63af73fb6d40dfb95ecacfc9016182dc705b72f68bd946ff6efb6"
+    },
+    {
+      "path": "main/serial_commands.ino",
+      "sha256": "b358e043cd28df088705ce77c3e2fdec8b5a46a76e515068e7a5eb4a4476a8b3"
+    },
+    {
+      "path": "main/tag_registry.ino",
+      "sha256": "83d3de822b3f7b3cea2477436e28bfabcd658ad24fca3f6d609395dc372f933a"
+    },
+    {
+      "path": "platformio.ini",
+      "sha256": "c7e40277d3a0152c0b47ab161d2c040300a97f9ba3578b75848dd208b7e6dfaa"
+    },
+    {
+      "path": "platformio.local.ini.example",
+      "sha256": "a3782b2f61c26cb51c32d4b60e25e8b77cd75ee297d50eb7c5bae60917e885d4"
+    },
+    {
+      "path": "print_labels/GeoDecoder_Kad_2D_Kiri_Kanan_A4.pdf",
+      "sha256": "44aa5f214672141dc0325990dcaa2bd9519033653d428bd941442559dc7846e6"
+    },
+    {
+      "path": "print_labels/GeoDecoder_Kad_3D_Kiri_Kanan_A4.pdf",
+      "sha256": "7e17d6a616cca983107a6c3d84e6bfc4f6511fca75d1e2ca2f64d1bbcae6f88a"
+    },
+    {
+      "path": "print_labels/GeoDecoder_Kad_RFID_A4.pdf",
+      "sha256": "9e2d8d176adf624a1648f4be81d6a3108db1653f57de1ddcf7ed93fb8773300a"
+    },
+    {
+      "path": "scripts/common.ps1",
+      "sha256": "5a4d5072c1b73f9648295dd1a9642c9122d618bea78df24f569feb7179539fc3"
+    },
+    {
+      "path": "setup.ps1",
+      "sha256": "01ad6136aba3ef015ad010b7a163a1752e03f0e6a2a2f3e0074b89f2cbc02aba"
+    },
+    {
+      "path": "src/main.cpp",
+      "sha256": "2f6491b09b2232adb0f7bdf1394e974f673e7d834aaf35d208349ac21c1f82df"
+    }
+  ]
+}
