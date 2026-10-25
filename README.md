@@ -12,7 +12,7 @@ Arduino IDE dan Git tidak diperlukan. Build boleh dibuat tanpa board.
 ## Pasang dengan satu arahan
 
 1. Dapatkan ZIP pakej GeoDecoder sharing terkini daripada pemilik projek.
-   Repo private; ZIP baharu mengandungi kod projek dan lima PDF termasuk tutorial A-Z. Penerima
+   Repo private; ZIP baharu mengandungi kod projek dan enam PDF termasuk tutorial A-Z dan cara bermain murid. Penerima
    tidak memerlukan akses repo, akaun atau token GitHub. Dependency vendor
    dimuat turun berasingan oleh installer daripada sumber rasmi.
 2. Klik kanan ZIP > **Extract All**. Masuk folder `geodecoder-sharing` yang
@@ -138,12 +138,17 @@ Senarai tepat setiap fail dan SHA-256 berada dalam `package.json`.
 | `print_labels/GeoDecoder_Kad_3D_Kiri_Kanan_A4.pdf` | Model kiri/kanan, 2 halaman |
 | `docs/lcd/GeoDecoder_15_Contoh_LCD_Soalan_dan_Hint.pdf` | LCD soalan/hint, tepat 15 halaman |
 | `tutorial/GeoDecoder_Panduan_A-Z.pdf` | Tutorial pengguna lengkap A-Z, 45 halaman |
+| `tutorial/GeoDecoder_Cara_Bermain_Murid.pdf` | Cara bermain bergambar untuk murid, 20 halaman tanpa nombor halaman |
 
 Kad sumber versi 2 (16 Oktober 2026): tiada nama jawapan atau arahan "ikut LED".
 Cetak **A4, Actual size / 100%**, matikan Fit to page; semak garis 50 mm dahulu.
 LCD sumber versi 4 (24 Oktober 2026).
 
 **[Buka tutorial lengkap GeoDecoder A-Z](tutorial/GeoDecoder_Panduan_A-Z.pdf)** — 45 halaman A4 bergambar, edisi 25 Oktober 2026, meliputi firmware v1.1.1 dan installer sharing. Ikut urutan sambungan, setup Windows, Build/Upload, ujian komponen, pendaftaran kad dan satu pusingan permainan.
+
+**[Buka cara bermain GeoDecoder untuk murid](tutorial/GeoDecoder_Cara_Bermain_Murid.pdf)** — 20 halaman A4 melintang, tanpa nombor halaman. Gambar simulasi menunjukkan butang NEXT/HINT, imbasan R1 bongkah kemudian R2 bentangan, petunjuk ungu, jawapan salah/betul, langkau, skor, masa dan bermain semula. Bahasa mudah untuk murid Tingkatan 1; istilah matematik dirujuk kepada KSSM Matematik Tingkatan 2, DSKP SP 6.1.1 dan 6.2.1.
+
+**Contoh prisma segi tiga ialah simulasi penerangan sahaja.** Firmware v1.1.1 masih menyokong kubus, kuboid, piramid berasaskan segi empat sama, silinder dan kon; jawapan prisma belum tersedia. Kad prisma yang dilukis dalam panduan bukan tambahan kepada tiga PDF kad cetak. Semasa menggunakan kit, pilih kad yang guru sediakan. Peraturan butang, R1/R2, lampu, markah dan masa disemak dengan source sharing; gambar ini bukan bukti ujian perkakasan fizikal.
 
 **Catatan installer:** skrip asal masih mencetak “Tutorial A-Z belum disertakan”. Tutorial kini disertakan pada pautan di atas; mesej maklumat lama itu belum dikemas kini oleh chat Sharing. Firmware dan skrip installer tidak diubah untuk tutorial ini.
 

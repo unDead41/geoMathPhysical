@@ -40,7 +40,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "9223b62facd9b24b5407379cb020df96aa3a3bd2e8a9fd9564d9995ece73c5a9"
+      "sha256": "24bbe0313537be9b3e0e8c89c5d7f39bb88cdd3d26980c467361a25ad3c57748"
     },
     {
       "path": "SAMBUNGAN.md",
@@ -227,8 +227,25 @@
       "sha256": "2f6491b09b2232adb0f7bdf1394e974f673e7d834aaf35d208349ac21c1f82df"
     },
     {
+      "path": "tutorial/GeoDecoder_Cara_Bermain_Murid.pdf",
+      "sha256": "c1df5672b54ac814108ec950005f8b378eea3a1d53e43bffad1ef6b999f6bcde"
+    },
+    {
       "path": "tutorial/GeoDecoder_Panduan_A-Z.pdf",
       "sha256": "953dad3e4b35ac21c4257440221ede2df2b2becdabdb661530d5d45ce3937889"
     }
-  ]
+  ],
+  "playerGuide": {
+    "status": "included",
+    "path": "tutorial/GeoDecoder_Cara_Bermain_Murid.pdf",
+    "pages": 20,
+    "edition": "2026-10-25",
+    "printedPageNumbers": false,
+    "firmwareVersion": "1.1.1",
+    "sourceSharingSha": "2e4dfdaa3097bd936ab62879b99d2a8c1ea4ec8a",
+    "example": "prisma segi tiga",
+    "exampleOnly": true,
+    "exampleSupportedByFirmware": false,
+    "curriculum": "KSSM Matematik Tingkatan 2, DSKP SP 6.1.1 dan 6.2.1"
+  }
 }
