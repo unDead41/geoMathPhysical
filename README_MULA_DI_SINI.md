@@ -36,7 +36,7 @@ Jika dua RGB sudah dipasang, ubah satu baris dalam `config.h`:
 
 `RGB_COMMON_ANODE = false` untuk common ke GND; gunakan `true` jika common anode. Setiap saluran LED memerlukan resistor seperti sambungan asal.
 
-Setiap soalan bermula dengan R1 biru dan R2 padam. Selepas bongkah betul, R1 kekal hijau dan R2 biru untuk bentangan. Ungu menandakan hint dan merah menandakan salah/kad tidak sah. Menu bertukar warna setiap 1,000 ms; keputusan setiap 150 ms. LED biasa memetakan semua warna kepada ON dan menggunakan notis/tahap LCD.
+Setiap soalan bermula dengan R1 biru dan R2 padam. Selepas bongkah betul, R1 kekal hijau dan R2 biru untuk bentangan. Ungu menandakan hint dan merah menandakan salah/kad tidak sah. Menu bertukar warna setiap 1,000 ms; keputusan setiap 150 ms. Dalam putaran rawak, R1/R2 sentiasa berlainan dan setiap LED mengelakkan warna sebelumnya. LED biasa memetakan semua warna kepada ON dan menggunakan notis/tahap LCD.
 
 ## Aktifkan semua lima bongkah
 

@@ -13,6 +13,8 @@
 - Mutable state is owned by its module. Read `appState()`, `quizState()` and `registryState()` as const; use application actions for mutations. Do not restore mutable extern globals or introduce production `const_cast`.
 - LED wiring: ordinary LED_PINS stays R1=25/R2=26; user-authorized RGB_PINS (R/G/B) is R1=13/14/25, R2=16/17/26. Keep these configurations separate.
   The RGB R1/R2 swap was explicitly requested by the user on 25 October 2026.
+  Random RGB pairs must differ between R1/R2 and from each reader's previous colour.
+  Share the bounded selector in domain/rgb_random.h across ambient and component random modes.
   Gameplay hints use MAGENTA (purple, R+B) on the active reader; yellow remains a diagnostic colour.
 - Target: classic ESP32/WROOM-32 (`esp32dev`). Do not silently retarget C3/S3, change GPIO assignments, or enable RGB in the ordinary-LED environment.
 - Preserve persisted `Shape` IDs, `RegistryData`, namespace `geomath_q2`, registry key, magic and storage version unless implementing an explicit migration.

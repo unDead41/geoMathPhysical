@@ -9,6 +9,7 @@ melalui `AppPorts`. `main/main.ino` memasang semua adapter sekali dalam
 
 | Lokasi | Tanggungjawab |
 |---|---|
+| `main/domain/rgb_random.h` | Pemilih warna rawak daripada calon yang mengecualikan warna sebelumnya dan LED pasangan; bebas perkakasan |
 | `main/domain/rules.h` | Bilangan jenis/soalan, masa notis dan polisi kuiz |
 | `main/domain/types.h` | Model nilai, state kuiz dan kontrak byte NVS |
 | `main/domain/quiz_engine.h` | Pemarkahan, hint, skip, peralihan soalan dan jam |
@@ -144,3 +145,10 @@ existing debounced button snapshots. A held input must be released before it
 can start a gesture. These reports do not alter normal application button events,
 and all game actions remain blocked while a component session owns the outputs.
 
+
+Random menu/help/result colours and component diagnostics share the pure
+`pickRandomRgbColor` candidate selector. R1 excludes its own previous colour;
+R2 excludes its own previous colour and the newly selected R1 colour. Each
+reader uses one bounded RNG call over 5..7 candidates; there is no retry loop.
+The component session stores random colours per reader and logs each target.
+Rendering reads these values without making additional RNG calls.

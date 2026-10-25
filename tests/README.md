@@ -16,13 +16,13 @@ python tests/test_version_check.py
 
 The pure runner compiles and links the real domain, LCD view and four application
 tabs using only standard C++11 headers. It supplies typed application ports and
-executes 11 cases: two-card scoring/routing/final freeze, every blink half-step
+executes 12 cases: two-card scoring/routing/final freeze, every blink half-step
 and both skip stages, role/error/hint colours, hint/pause/resume, rollover/reset,
 invalid rounds, UID values, registry validation, filtered/random rounds,
 immutable LCD snapshots, and an application driven entirely by ports.
 
 Each firmware runner first checks release agreement and six checker regressions,
-runs those 11 core cases, then executes 66 behavioural
+runs those 12 core cases, then executes 68 behavioural
 cases with fake electrical/device I/O. Flow regressions drive real input adapters
 for pre-positioned R2, both held cards across questions, short/late/held buttons,
 all 900 blink samples, stopwatch resumption, stage arming, hint colours and
@@ -65,7 +65,7 @@ The fake MFRC522 exposes per-reader VersionReg values only at the electrical
 boundary so the real probe path can be exercised. No component test writes NVS
 or scores a quiz. Every existing game regression remains active.
 
-`calibration_behaviour.h` adds eleven UART/adapter cases for simple per-reader
+`calibration_behaviour.h` adds thirteen UART/adapter cases for simple per-reader
 colour shortcuts, seven-colour random output and 500 ms boundaries, random
 rollover/delayed ticks, malformed shortcuts, short-press durations (200/999 ms),
 the exact 1,000 ms long threshold and non-repeat, independent/simultaneous
@@ -99,3 +99,10 @@ every physical channel and each 499/500 ms boundary. Purple aliases and
 gameplay outputs use the swapped literal wiring. Gameplay tests cover purple
 on both hint stages, green R1 retention, red wrong-answer notices, purple
 restoration, blue on close, unchanged scoring, running time and untouched NVS.
+
+Calculated-random regressions use a fixed injected sampler to check bounded
+selection and reachability of all seven colours without Arduino. Firmware
+cases check different R1/R2 colours and no per-reader repeats over 32 seeds
+in menu, instructions, summary and both all-target random command forms.
+They also verify literal GPIO outputs, cadence edges, per-reader Serial logs,
+rollover, delayed updates and preserved stopwatch/score/NVS.

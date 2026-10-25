@@ -94,7 +94,11 @@ lain; ia tidak mengumpulkan pilihan R1/R2 daripada arahan sebelumnya.
 `R1RGB`/`R2RGB` mengulang merah → hijau → biru → kuning → sian → magenta/ungu
 → putih. Setiap warna muncul sekali dalam satu kitaran 3,500 ms sebelum
 bermula semula. `R1Random`/`R2Random` mengekalkan mod rawak terdahulu, tanpa
-warna sama berturut-turut. Serial menulis `target=R1 colour=yellow` misalnya, supaya warna yang dilihat boleh
+warna sama berturut-turut. `test/led/random` dan `test/led/all/random` memilih
+warna berlainan untuk R1/R2 pada permulaan dan setiap pertukaran 500 ms.
+Output Serial menunjukkan `target=R1 colour=...` serta `target=R2 colour=...`
+secara berasingan supaya setiap LED boleh dibandingkan dengan warna diminta.
+Serial menulis `target=R1 colour=yellow` misalnya, supaya warna yang dilihat boleh
 dibandingkan dengan warna yang diminta. Gunakan warna tunggal untuk menyemak
 satu saluran. Semua pilihan kekal aktif sehingga arahan ujian lain atau `test/stop`.
 
@@ -126,7 +130,7 @@ Jika target ditinggalkan (`test/led/red`), kedua-duanya diuji.
 | `white` | R, G dan B bersama |
 | `off` | Padam dan kekal padam sehingga arahan lain atau test/stop |
 | `cycle` | Merah → hijau → biru → kuning → sian → magenta → putih, 500 ms setiap warna, berulang |
-| `random` | Tujuh warna yang sama dalam susunan rawak, bertukar setiap 500 ms, tanpa warna sama berturut-turut |
+| `random` | Tujuh warna rawak setiap 500 ms; setiap LED mengelak warna sebelumnya dan kedua-dua target sentiasa berlainan |
 | `blink` | Putih 250 ms ON + 250 ms OFF, berulang |
 
 Hanya target dipilih menyala; LED lain padam. Output ujian tidak ditimpa warna

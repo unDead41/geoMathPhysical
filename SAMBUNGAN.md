@@ -99,6 +99,10 @@ kedua-dua RGB sudah dipasang. Environment ini menetapkan
 `GEODECODER_RGB_ENABLED=1`. Jika menggunakan Arduino IDE, ubah default macro
 tersebut dalam `main/config.h`.
 
+Menu/cara main dan keputusan menggunakan pasangan warna rawak yang sentiasa
+berlainan antara R1/R2. Setiap LED juga bertukar daripada warna sebelumnya.
+Ujian `test/led/random` menggunakan polisi sama pada sela 500 ms.
+
 Petunjuk RGB bagi flow dua kad:
 
 | Keadaan | RGB R1 | RGB R2 |

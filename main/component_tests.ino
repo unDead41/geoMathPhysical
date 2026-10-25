@@ -2,6 +2,7 @@
 #include "hardware/rfid.h"
 #include "hardware/buttons.h"
 #include "application/app.h"
+#include "domain/rgb_random.h"
 #include "config.h"
 #include <cstring>
 #include <cstdio>
@@ -13,6 +14,7 @@ struct ComponentSession {
   ComponentMode mode;
   uint8_t selected;
   RgbColor colour;
+  RgbColor randomColours[READER_COUNT];
   ComponentPattern pattern;
   uint32_t startedMs;
   bool lastRaw[2], lastStable[2], buttonReady[2];
@@ -44,6 +46,17 @@ const char *componentTargetName() {
 bool componentSelected(uint8_t index) {
   return index < 2 && (componentSession.selected & (1U << index));
 }
+uint8_t componentRandomIndex(uint8_t count) { return uint8_t(random(count)); }
+void componentPickRandomColours() {
+  for (uint8_t reader = 0; reader < READER_COUNT; ++reader) if (componentSelected(reader))
+    componentSession.randomColours[reader] = pickRandomRgbColor(componentSession.randomColours[reader],
+      reader ? componentSession.randomColours[0] : RgbColor::OFF, componentRandomIndex);
+}
+void componentPrintRandomColours() {
+  for (uint8_t reader = 0; reader < READER_COUNT; ++reader) if (componentSelected(reader))
+    Serial.printf("[TEST LED] target=R%u colour=%s\n", unsigned(reader + 1),
+      componentColourNames[uint8_t(componentSession.randomColours[reader])]);
+}
 void componentError() { Serial.println(F("[TEST ERROR] Arahan ujian tidak sah. Taip test/help.")); }
 void componentHelp() {
   Serial.println(F(
@@ -61,7 +74,7 @@ void componentHelp() {
     "test/led/all/blue          : biru pada kedua-dua RGB\n"
     "test/led/off               : kedua-dua padam sehingga test/stop\n"
     "test/led/cycle             : 7 warna, 500ms setiap warna\n"
-    "test/led/random            : 7 warna rawak, tukar setiap 500ms\n"
+    "test/led/random            : R1/R2 rawak berlainan, tukar setiap 500ms\n"
     "test/led/blink             : putih 250ms ON + 250ms OFF\n"
     "R1Red R1Green R1Blue R1Yellow R1Cyan R1Magenta R1Purple R1White R1Off\n"
     "R2Red R2Green R2Blue R2Yellow R2Cyan R2Magenta R2Purple R2White R2Off\n"
@@ -145,12 +158,11 @@ void componentStartRfid(uint8_t selected, bool check) {
 void componentStartLed(uint8_t selected, ComponentPattern pattern, RgbColor colour) {
   componentEnter(ComponentMode::LED, selected);
   componentSession.pattern = pattern; componentSession.colour = colour;
-  if (pattern == ComponentPattern::RANDOM) componentSession.colour = RgbColor(1 + random(7));
+  if (pattern == ComponentPattern::RANDOM) componentPickRandomColours();
   Serial.printf("[TEST LED] target=%s action=%s. test/stop untuk keluar.\n", componentTargetName(),
     pattern == ComponentPattern::CYCLE ? "cycle" : pattern == ComponentPattern::BLINK ? "blink" :
     pattern == ComponentPattern::RANDOM ? "random" : componentColourNames[uint8_t(colour)]);
-  if (pattern == ComponentPattern::RANDOM)
-    Serial.printf("[TEST LED] target=%s colour=%s\n", componentTargetName(), componentColourNames[uint8_t(componentSession.colour)]);
+  if (pattern == ComponentPattern::RANDOM) componentPrintRandomColours();
   if (!RGB_ENABLED) Serial.println(F("[TEST LED] LED BIASA: warna menjadi ON/OFF; warna RGB memerlukan esp32dev-rgb."));
 }
 void componentStartButtons(uint8_t selected) {
@@ -269,10 +281,8 @@ void componentTestsUpdate() {
     const uint32_t elapsed = uint32_t(now - componentSession.startedMs);
     if (elapsed < COMPONENT_CYCLE_MS) return;
     componentSession.startedMs += (elapsed / COMPONENT_CYCLE_MS) * COMPONENT_CYCLE_MS;
-    // Pick one of the other six non-OFF colours, once per output tick, without a retry loop.
-    const uint8_t previous = uint8_t(componentSession.colour) - 1;
-    componentSession.colour = RgbColor(1 + (previous + 1 + random(6)) % 7);
-    Serial.printf("[TEST LED] target=%s colour=%s\n", componentTargetName(), componentColourNames[uint8_t(componentSession.colour)]);
+    componentPickRandomColours();
+    componentPrintRandomColours();
   } else if (componentSession.mode == ComponentMode::LED && componentSession.pattern != ComponentPattern::STEADY) {
     const bool cycle = componentSession.pattern == ComponentPattern::CYCLE;
     const uint8_t step = uint8_t((uint32_t(now - componentSession.startedMs) /
@@ -293,6 +303,7 @@ RgbColor componentTestsReaderColor(uint8_t reader) {
         return componentPalette[(uint32_t(millis() - componentSession.startedMs) / COMPONENT_CYCLE_MS) % 7U];
       if (componentSession.pattern == ComponentPattern::BLINK)
         return (uint32_t(millis() - componentSession.startedMs) / COMPONENT_BLINK_MS) % 2U ? RgbColor::OFF : RgbColor::WHITE;
+      if (componentSession.pattern == ComponentPattern::RANDOM) return componentSession.randomColours[reader];
       return componentSession.colour;
     case ComponentMode::NONE: return RgbColor::OFF;
   }

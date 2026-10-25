@@ -422,6 +422,8 @@ int main(){
  {"calibration_purple_aliases",calibration_purple_aliases},
  {"game_rgb_outputs_and_purple_hints",game_rgb_outputs_and_purple_hints},
  {"calibration_random_colours_and_isolation",calibration_random_leds},
+ {"calculated_ambient_pairs",calculated_ambient_pairs},
+ {"calculated_diagnostic_pairs",calculated_diagnostic_pairs},
  {"calibration_random_rollover_and_delayed_tick",calibration_random_rollover},
  {"calibration_invalid_shortcuts",calibration_invalid_shortcuts},
  {"calibration_button_short_press",calibration_button_short_press},

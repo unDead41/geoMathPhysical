@@ -1,5 +1,17 @@
 # Changelog
 
+## v1.1.1 - 2026-10-25
+
+- Select different simultaneous R1/R2 colours in every random RGB mode: menu,
+  instructions, final results and test/led/random (including all/random).
+- Preserve per-reader no-repeat behaviour and all seven non-OFF colours. Draw
+  directly from allowed candidates, without retries, using a shared pure helper.
+- Store and print diagnostic random colours separately for R1/R2; preserve
+  1,000/150/500 ms timing, single-reader random commands, ordered colour tests,
+  purple gameplay hints, the approved GPIO mapping and saved card data.
+- Add bounded-sampler and multi-seed pair/output regressions, update current
+  guides and verification. Pull main, Upload esp32dev-rgb and confirm v1.1.1.
+
 ## v1.1.0 - 2026-10-25
 
 - Test every digital RGB colour in order with R1RGB/R2RGB: red, green, blue,

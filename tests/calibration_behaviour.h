@@ -107,8 +107,15 @@ static void calibration_random_leds() {
         colour == RgbColor::CYAN || colour == RgbColor::WHITE;
       const bool blue = colour == RgbColor::BLUE || colour == RgbColor::CYAN ||
         colour == RgbColor::MAGENTA || colour == RgbColor::WHITE;
+      const RgbColor other = target == 2 ? componentTestsReaderColor(1) : RgbColor::OFF;
+      const bool otherRed = other == RgbColor::RED || other == RgbColor::YELLOW ||
+        other == RgbColor::MAGENTA || other == RgbColor::WHITE;
+      const bool otherGreen = other == RgbColor::GREEN || other == RgbColor::YELLOW ||
+        other == RgbColor::CYAN || other == RgbColor::WHITE;
+      const bool otherBlue = other == RgbColor::BLUE || other == RgbColor::CYAN ||
+        other == RgbColor::MAGENTA || other == RgbColor::WHITE;
       componentOutputs(target != 1 && red, target != 1 && green, target != 1 && blue,
-                       target != 0 && red, target != 0 && green, target != 0 && blue);
+                       target == 1 ? red : otherRed, target == 1 ? green : otherGreen, target == 1 ? blue : otherBlue);
       need(Serial.output.find("colour=") != std::string::npos, "random colour not labelled for calibration");
       seen.insert(unsigned(colour)); previous = colour;
     }
@@ -118,6 +125,74 @@ static void calibration_random_leds() {
          quizElapsedMs() == paused && quizState().score == 0 && fakeNvs == saved,
          "random RGB mode allowed buttons, score, clock or NVS changes");
     componentSerial("test/led/off"); advance(1001); componentOutputs(false,false,false,false,false,false);
+  }
+}
+
+static void distinctPairOutputs(RgbColor first, RgbColor second) {
+  need(unsigned(first) >= 1 && unsigned(first) <= 7 && unsigned(second) >= 1 && unsigned(second) <= 7,
+       "random colour is OFF or outside the palette");
+  need(first != second, "random R1 and R2 displayed the same colour");
+  const bool channels[8][3] = {{false,false,false},{false,false,true},{false,true,false},
+    {true,false,false},{true,true,false},{false,true,true},{true,false,true},{true,true,true}};
+  componentOutputs(channels[unsigned(first)][0],channels[unsigned(first)][1],channels[unsigned(first)][2],
+                   channels[unsigned(second)][0],channels[unsigned(second)][1],channels[unsigned(second)][2]);
+}
+
+static void calculated_ambient_pairs() {
+  for (unsigned seed = 0; seed < 32; ++seed) {
+    fixture(); sim::rng = seed; const auto saved = fakeNvs;
+    rgbUpdate(); distinctPairOutputs(appReaderColor(0),appReaderColor(1));
+    for (unsigned phase = 0; phase < 3; ++phase) {
+      const unsigned interval = phase == 2 ? 150 : 1000;
+      if (phase == 1) appHintButton(); // The instructions use the same slow palette.
+      if (phase == 2) {
+        appStop(); start(); testQuiz().index = testQuiz().length - 1; appNextButton(); advance(900);
+      }
+      const uint32_t frozen = quizElapsedMs();
+      rgbUpdate(); distinctPairOutputs(appReaderColor(0),appReaderColor(1));
+      for (unsigned tick = 0; tick < 100; ++tick) {
+        const RgbColor first = appReaderColor(0), second = appReaderColor(1);
+        sim::now += interval - 1; loop();
+        need(appReaderColor(0) == first && appReaderColor(1) == second, "distinct random pair changed early");
+        ++sim::now; loop();
+        distinctPairOutputs(appReaderColor(0),appReaderColor(1));
+        need(appReaderColor(0) != first && appReaderColor(1) != second, "ambient pair repeated a reader colour");
+      }
+      need(quizElapsedMs() == frozen && quizState().score == 0 && fakeNvs == saved,
+           "distinct ambient colours changed time, score or saved cards");
+    }
+    appHintButton(); rgbUpdate(); distinctPairOutputs(appReaderColor(0),appReaderColor(1));
+  }
+}
+
+static void calculated_diagnostic_pairs() {
+  const char *commands[] = {"test/led/random", "test/led/all/random"};
+  for (const char *name : commands) for (unsigned seed = 0; seed < 32; ++seed) {
+    fixture(); start(); sim::rng = seed; const auto saved = fakeNvs; const uint32_t paused = quizElapsedMs();
+    componentSerial(name); rgbUpdate();
+    distinctPairOutputs(componentTestsReaderColor(0),componentTestsReaderColor(1));
+    for (unsigned tick = 0; tick < 100; ++tick) {
+      const RgbColor first = componentTestsReaderColor(0), second = componentTestsReaderColor(1);
+      Serial.output.clear(); sim::now += 499; loop();
+      need(componentTestsReaderColor(0) == first && componentTestsReaderColor(1) == second && Serial.output.empty(),
+           "diagnostic pair changed or logged before 500ms");
+      ++sim::now; loop();
+      distinctPairOutputs(componentTestsReaderColor(0),componentTestsReaderColor(1));
+      need(componentTestsReaderColor(0) != first && componentTestsReaderColor(1) != second,
+           "diagnostic pair repeated one reader's colour");
+      need(Serial.output.find("target=R1 colour=") != std::string::npos &&
+           Serial.output.find("target=R2 colour=") != std::string::npos, "distinct random outputs lack per-reader labels");
+    }
+    sim::now = UINT32_MAX - 200; componentSerial(name); rgbUpdate();
+    const RgbColor first = componentTestsReaderColor(0), second = componentTestsReaderColor(1);
+    sim::now += 500; loop();
+    distinctPairOutputs(componentTestsReaderColor(0),componentTestsReaderColor(1));
+    need(componentTestsReaderColor(0) != first && componentTestsReaderColor(1) != second,
+         "random pair stalled across millis rollover");
+    sim::now += 5000; loop(); distinctPairOutputs(componentTestsReaderColor(0),componentTestsReaderColor(1));
+    Serial.output.clear(); loop(); need(Serial.output.empty(), "late loop caused random catch-up logging");
+    need(quizElapsedMs() == paused && quizState().score == 0 && fakeNvs == saved,
+         "distinct random diagnostics changed time, score or NVS");
   }
 }
 

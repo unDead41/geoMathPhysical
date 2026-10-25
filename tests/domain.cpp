@@ -240,6 +240,37 @@ static void injectedApplication() {
   appStop(); now = 9000;
   need(quizElapsedMs() == 850, "injected clock included transition or menu time");
 }
+// Even a sampler that keeps returning one index must not collide or need retries.
+namespace colourPolicyTest {
+uint8_t draw = 0, calls = 0;
+uint8_t fixedPick(uint8_t count) {
+  need(count >= 5 && count <= 7, "random colour sampler received an invalid candidate count");
+  ++calls;
+  return draw % count;
+}
+}
+static void boundedDistinctAmbientColours() {
+  using namespace portsTest;
+  appBindPorts({clock, colourPolicyTest::fixedPick, log, {open, length, read, write},
+                setMode, fresh, online, enabled});
+  quizBegin(); appStop();
+  std::set<unsigned> seen;
+  for (uint8_t draw = 0; draw < 7; ++draw) {
+    colourPolicyTest::draw = draw;
+    for (unsigned step = 0; step < 50; ++step) {
+      const RgbColor first = appReaderColor(0), second = appReaderColor(1);
+      colourPolicyTest::calls = 0; now += 1000; appUpdate();
+      const RgbColor nextFirst = appReaderColor(0), nextSecond = appReaderColor(1);
+      need(nextFirst != RgbColor::OFF && nextSecond != RgbColor::OFF && nextFirst != nextSecond,
+           "random R1/R2 colours collide with a fixed sampler");
+      need(nextFirst != first && nextSecond != second, "random LED repeated its preceding colour");
+      need(colourPolicyTest::calls == 2, "random pair must use exactly two bounded draws, with no retry loop");
+      need(quizElapsedMs() == 0 && quizState().score == 0, "ambient colour selection changed quiz time or score");
+      seen.insert(unsigned(nextFirst)); seen.insert(unsigned(nextSecond));
+    }
+  }
+  need(seen.size() == 7, "candidate exclusions made a palette colour unreachable");
+}
 int main() {
   const std::pair<const char *, void(*)()> tests[] = {
     {"two_card_routing_award_and_final_freeze", scoring},
@@ -247,7 +278,8 @@ int main() {
     {"clock_rollover_and_new_round", rolloverAndReset}, {"invalid_round_keeps_current_state", invalidRound},
     {"uid_value_validation", uidValues}, {"persisted_registry_validation", registryValues},
     {"random_round_coverage_and_filtering", randomRounds}, {"lcd_from_immutable_snapshot", lcdSnapshots},
-    {"application_runs_only_with_injected_ports", injectedApplication}
+    {"application_runs_only_with_injected_ports", injectedApplication},
+    {"bounded_distinct_random_colours", boundedDistinctAmbientColours}
   };
   unsigned failures = 0;
   for (const auto &test : tests) {

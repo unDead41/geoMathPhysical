@@ -107,7 +107,10 @@ Arahan ringkas untuk kalibrasi (satu arahan setiap baris):
 
 `Purple` ialah alias `Magenta` (merah + biru), sama seperti warna hint permainan.
 Huruf besar/kecil tidak penting. Warna rawak bertukar kepada warna berbeza setiap
-langkah. `test/led/r1/random`, `test/led/r2/random` dan `test/led/random`
+langkah. `test/led/random` atau `test/led/all/random` memainkan kedua-dua RGB
+serentak dengan warna R1/R2 sentiasa berlainan. Setiap warna turut mengelakkan
+warna sebelumnya pada LED yang sama; Serial melabel warna R1 dan R2 secara
+berasingan. `test/led/r1/random`, `test/led/r2/random` dan `test/led/random`
 menyediakan versi slash. `ButtonTest` ialah alias `test/button/all`.
 `SHORT_PRESS` dilapor apabila dilepaskan sebelum 1,000 ms; `LONG_PRESS` sekali
 apabila tahan mencapai 1,000 ms, diikuti tempoh akhir ketika dilepaskan.
@@ -130,7 +133,7 @@ warna, timing, watch butang dan maksud output RFID.
 Banner ini juga muncul semasa boot dan pada permulaan output `status`:
 
 ```text
-[FIRMWARE] GeoDecoder v1.1.0 | ESP32 | env=esp32dev-rgb
+[FIRMWARE] GeoDecoder v1.1.1 | ESP32 | env=esp32dev-rgb
 ```
 
 `env=esp32dev` menandakan LED biasa. Semak versi dengan README GitHub pada

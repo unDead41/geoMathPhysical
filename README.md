@@ -1,6 +1,6 @@
 # GeoDecoder
 
-Versi semasa: **v1.1.0**.
+Versi semasa: **v1.1.1**.
 Rujukan kemas kini: [SOR versi](docs/SOR_VERSIONING.md) dan [changelog](CHANGELOG.md).
 
 Kuiz geometri 3D menggunakan ESP32 klasik/WROOM-32, dua pembaca MFRC522,
@@ -129,7 +129,8 @@ RFID mesti READY dan semua jenis aktif mesti mempunyai UID R1 serta R2.
 
 ## 5. Main dan semak keputusan
 
-1. Menu: kedua-dua RGB bertukar warna perlahan setiap 1,000 ms. NEXT memulakan
+1. Menu: kedua-dua RGB bertukar warna perlahan setiap 1,000 ms; warna R1/R2
+   sentiasa berlainan dan setiap LED bertukar daripada warna sebelumnya. NEXT memulakan
    pusingan baharu pada skor 0 dan masa 00:00; HINT membuka cara bermain.
 2. **Setiap soalan memerlukan dua kad: R1 bongkah dahulu, kemudian R2 bentangan
    yang sepadan.** R1 biru/R2 padam pada permulaan. R1 betul belum mendapat markah;
@@ -145,7 +146,8 @@ RFID mesti READY dan semua jenis aktif mesti mempunyai UID R1 serta R2.
 7. Soalan seterusnya bermula pada R1 biru/R2 padam dan masa bersambung.
    Angkat kad sebelum mengimbas semula, termasuk kad yang sudah berada di R2.
 8. Pada tindakan akhir, masa dibekukan dahulu. Selepas tiga kelipan, LCD
-   menunjukkan skor, peratus dan masa akhir; RGB bertukar warna setiap 150 ms.
+   menunjukkan skor, peratus dan masa akhir; RGB bertukar warna setiap 150 ms
+   dengan warna R1/R2 sentiasa berlainan.
 9. Keputusan: NEXT memulakan pusingan baharu, HINT kembali ke menu perlahan.
 
 Environment default `esp32dev` kekal untuk **LED biasa**. Warna bukan padam
@@ -180,7 +182,9 @@ menjeda permainan tanpa menukar pendaftaran kad. `test/stop` kembali ke menu.
 Untuk warna sebenar, Build/Upload `esp32dev-rgb` dengan pin RGB pengguna terkini.
 `R1RGB`/`R2RGB` mengulang semua tujuh warna mengikut turutan setiap 500 ms:
 merah, hijau, biru, kuning, sian, magenta (ungu) dan putih. Gunakan
-`R1Random`/`R2Random` untuk warna rawak. Warna tunggal kekal menyala.
+`R1Random`/`R2Random` untuk warna rawak pada satu LED. Gunakan `test/led/random`
+untuk kedua-duanya serentak: warna R1/R2 sentiasa berlainan dan setiap LED
+tidak mengulang warna sebelumnya. Warna tunggal kekal menyala.
 `R1Purple`/`R2Purple` menguji ungu yang sama seperti hint permainan.
 `R1Blue`/`R2Blue` menguji saluran biru, `R1Off`/`R2Off` memadam.
 `ButtonTest` memantau kedua-dua butang; `NEXTTest` atau `HINTTest` memilih satu.
@@ -208,7 +212,7 @@ arahan. `Ctrl+C` menutup Monitor. Untuk melihat port: `pio device list`.
 Pada boot/reset ESP32, Serial 115200 baud memaparkan:
 
 ```text
-[FIRMWARE] GeoDecoder v1.1.0 | ESP32 | env=esp32dev-rgb
+[FIRMWARE] GeoDecoder v1.1.1 | ESP32 | env=esp32dev-rgb
 ```
 
 Mod LED biasa memaparkan `env=esp32dev`. Jika Monitor dibuka selepas banner

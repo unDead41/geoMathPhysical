@@ -1,78 +1,78 @@
-# GeoDecoder v1.1.0 verification - 25 October 2026
+# GeoDecoder v1.1.1 verification - 25 October 2026
 
-Inspected main: `b0992bfcbb68effd3b979d3bbee2a28c99d71e55` (v1.0.0).
-Publication target: `main`. This release combines the user's complete-colour
-calibration request, purple gameplay hints and the physical RGB R1/R2 swap.
+Inspected main: `3fcef581b66c1582661f07e201c840ee84c085fa` (v1.1.0).
+Publication target: `main`.
 
-## Resulting behaviour
+## Calculated random RGB pairs
 
-- R1RGB/R2RGB cycle red, green, blue, yellow, cyan, magenta and white in order,
-  500 ms per colour, repeating every 3,500 ms. R1Random/R2Random retain the
-  previous random pattern; slash commands remain available.
-- R1Purple/R2Purple and test/led/target/purple select MAGENTA (red + blue).
-  Fixed colour commands, including all seven colours and OFF, are listed in help.
-- Gameplay hints use the same purple on the active reader. During R2 hints,
-  R1 stays green. Wrong answers turn only the active reader red, then restore
-  purple if the hint is open; closing a hint restores blue. Hint time continues
-  and scoring still requires the matching R1/R2 pair exactly once.
-- Physical RGB mapping is now R1 R/G/B=13/14/25 and R2=16/17/26, as requested.
-  LED-only GPIO25/26 remains the default, with the same ON/OFF behaviour.
-- Firmware, README and the latest changelog agree on v1.1.0. LCD instructions,
-  Serial help, contributor guidance and current wiring/flow guides agree.
+Menu, instructions, final results and both all-target random test commands now
+select different simultaneous R1/R2 colours, including the first random frame.
+Each reader also avoids its preceding colour. All seven non-OFF colours remain
+available. Menu/help remain 1,000 ms, results 150 ms and random diagnostics 500 ms.
 
-## Native checks
+The shared pure `domain/rgb_random.h` selector builds the allowed candidate
+list before drawing. R1 excludes its previous colour; R2 excludes its previous
+colour and the newly selected R1 colour. Each reader uses one bounded draw from
+5..7 candidates, with no retry loop. Diagnostics store and log a colour per
+reader; rendering does not draw new random values.
 
-The existing pure core and real-firmware integration suites remain active.
-New expectations were observed failing against the original code before the
-implementation. Three added integration cases exercise complete ordered colour
-cycles and 499/500 ms boundaries on both targets, purple aliases, and gameplay
-outputs including purple hints on both answer stages, error restoration,
-R1 green retention, clock/scoring and NVS isolation. Existing literal-wiring
-and hint-colour cases were updated for the user's changed requirements.
+The original implementation selected ambient readers independently and used
+one shared diagnostic colour for both targets. New tests were observed failing
+against that baseline before implementation. A first candidate ordering exposed
+a deterministic fake-RNG palette-coverage failure; ordering candidates relative
+to the previous colour preserves the old single-reader traversal and resolves
+it while retaining all candidate exclusions. The complete final suite passes.
+
+## Native verification
 
 | Runner flags (`python tests/run_tests.py`) | Pure core/application/view | Firmware integration |
 |---|---|---|
-| no flags (Arduino tabs) | 11/11 passed | 66/66 passed |
-| --rgb | 11/11 passed | 66/66 passed |
-| --entrypoint src/main.cpp | 11/11 passed | 66/66 passed |
-| --entrypoint src/main.cpp --rgb | 11/11 passed | 66/66 passed |
-| --separate-modules | 11/11 passed | 66/66 passed |
-| --separate-modules --rgb | 11/11 passed | 66/66 passed |
+| no flags (Arduino tabs) | 12/12 passed | 68/68 passed |
+| --rgb | 12/12 passed | 68/68 passed |
+| --entrypoint src/main.cpp | 12/12 passed | 68/68 passed |
+| --entrypoint src/main.cpp --rgb | 12/12 passed | 68/68 passed |
+| --separate-modules | 12/12 passed | 68/68 passed |
+| --separate-modules --rgb | 12/12 passed | 68/68 passed |
 
-Each runner also passed the six release-checker regressions and firmware/README/
-changelog consistency. `python tools/check_version.py --previous-version v1.0.0`
-passes. C++11 warnings-as-errors, AddressSanitizer and UBSan remain enabled;
-LeakSanitizer remains disabled in this managed runtime. `git diff --check` passes.
+Each path also passes the six version-checker regressions. The additional pure
+case uses seven fixed sampler choices to check different pairs, per-reader
+no-repeat, palette reachability and exactly two bounded draws per pair.
+Two new firmware cases exercise 32 seeds, 100 ticks per mode and both all-target
+random command spellings. They check initial pairs, menu/help/result transitions,
+999/1,000 ms, 149/150 ms and 499/500 ms edges, literal GPIO channel outputs,
+per-reader Serial labels, millis rollover, delayed-loop logging and unchanged
+stopwatch/score/NVS. Existing single-reader random and full ordered-cycle tests
+remain active.
 
-## ESP32 compilation
+C++11 warnings-as-errors, AddressSanitizer and UBSan remain enabled; LeakSanitizer
+is disabled for this managed runtime. `git diff --check` and
+`python tools/check_version.py --previous-version v1.1.0` pass.
 
-`pio run -e esp32dev -e esp32dev-rgb -j 4` completed with exit code 0.
-Both environments SUCCESS; the compile log contains no compiler warnings/errors.
+## ESP32 builds
+
+`pio run -e esp32dev -e esp32dev-rgb -j 4` completed with exit code 0; both
+configurations SUCCESS and no compiler warning/error in the build log.
 
 | Environment | Static RAM | Flash |
 |---|---:|---:|
-| esp32dev | 22,812 / 327,680 | 338,641 / 1,310,720 |
-| esp32dev-rgb | 22,812 / 327,680 | 338,693 / 1,310,720 |
+| esp32dev | 22,812 / 327,680 | 338,933 / 1,310,720 |
+| esp32dev-rgb | 22,812 / 327,680 | 338,985 / 1,310,720 |
 
 PlatformIO Core 6.1.18, Espressif32 6.12.0, Arduino ESP32 2.0.17,
-MFRC522 1.4.12 and hd44780 1.3.2. Toolchains and libraries were installed into
-an isolated temporary cache. An initial SCons package download failed checksum
-validation; PlatformIO retried another mirror and installed the validated package.
-Checksum validation was not disabled. This dependency-download retry was resolved
-before the successful builds above; no unresolved firmware/test failure remains.
+MFRC522 1.4.12 and hd44780 1.3.2, using the existing isolated cache.
 
-## Preserved contracts and physical checks
+## Physical checks and preserved behaviour
 
-The question bank, persisted UID/NVS format, shape IDs, RFID/button/LCD pins,
-setup/loop and PlatformIO environment definitions are unchanged. The RGB map
-is the explicit user-requested wiring change. No blocking delay was introduced.
+No USB upload or physical ESP32/RFID/LCD/button/RGB test was performed here.
+After pulling, Upload esp32dev-rgb and confirm v1.1.1 with `version`. Use
+`test/led/random` to inspect both LED colours simultaneously, then `test/stop`
+to return to the menu and inspect the slower different-colour pairs.
 
-No USB upload or physical ESP32, RFID, LCD, button or RGB LED test was performed
-here. Native GPIO assertions and successful cross-compilation cannot establish
-the colour or wiring on the user's board. After pulling, Build/Upload
-esp32dev-rgb, confirm `GeoDecoder v1.1.0 | ESP32 | env=esp32dev-rgb` with
-`version`, and use `pins` to check the new reader mapping. Test fixed colours
-and both hint stages on the installed hardware.
+The ordinary-LED default and GPIO mapping remain unchanged. Purple gameplay
+hints, fixed/ordered colour tests, three synchronous feedback blinks, two-card
+scoring, stopwatch, question bank, shape IDs, saved UID/NVS, setup/loop and
+PlatformIO environment definitions are preserved. In ordinary-LED mode all
+non-OFF colours still map to ON; the different-colour display requires RGB.
 
-The previous release's verification is preserved in
-[the v1.0.0 archive](docs/archive/VERIFICATION_2026-10-25-version-1.0.0.md).
+Earlier evidence is preserved in
+[the v1.1.0 archive](docs/archive/VERIFICATION_2026-10-25-version-1.1.0.md).

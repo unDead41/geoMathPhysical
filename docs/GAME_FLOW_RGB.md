@@ -19,9 +19,11 @@ soalan yang sama. Ini menggantikan peraturan lama satu kad setiap soalan.
 | NEXT melangkau mana-mana tahap | Merah berkelip bersama | Merah berkelip bersama | +0; masa dijeda |
 | Keputusan akhir | Warna rawak pantas | Warna rawak pantas | Masa akhir beku; tukar warna setiap 150 ms |
 
-Warna rawak dipilih secara berasingan bagi dua RGB daripada biru, hijau,
-merah, kuning, sian, magenta dan putih. Setiap kemas kini memilih warna lain
-daripada warna sebelumnya. Putaran warna tidak membaca kad atau memberi markah.
+Warna rawak dipilih daripada biru, hijau, merah, kuning, sian, magenta dan
+putih. R1 dan R2 sentiasa berlainan, termasuk warna pertama selepas masuk
+menu atau keputusan. Setiap LED turut mengelakkan warna sebelumnya. Pemilih
+mengecualikan warna yang tidak dibenarkan sebelum membuat cabutan, tanpa
+gelung cuba semula. Putaran warna tidak membaca kad atau memberi markah.
 
 ## Menu dan pusingan baharu
 

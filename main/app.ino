@@ -2,6 +2,7 @@
 #include "application/ports.h"
 #include "application/quiz.h"
 #include "application/registry.h"
+#include "domain/rgb_random.h"
 
 namespace {
 AppState state = {AppMode::STOPPED, -1, Shape::NONE, 0, false, 0};
@@ -11,12 +12,10 @@ RgbColor ambientColors[READER_COUNT] = {};
 uint32_t ambientStartedMs = 0;
 
 void pickAmbientColors() {
-  // Non-off colours, always different from the preceding colour on each reader.
+  // Each reader changes colour; R2 also excludes the newly selected R1 colour.
   for (uint8_t r = 0; r < READER_COUNT; ++r) {
-    const uint8_t previous = uint8_t(ambientColors[r]);
-    uint8_t value = uint8_t(appPorts().randomIndex(previous ? 6 : 7) + 1);
-    if (previous && value >= previous) ++value;
-    ambientColors[r] = RgbColor(value);
+    ambientColors[r] = pickRandomRgbColor(ambientColors[r],
+      r ? ambientColors[0] : RgbColor::OFF, appPorts().randomIndex);
   }
 }
 void updateAmbientColors() {
