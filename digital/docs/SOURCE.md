@@ -9,7 +9,7 @@
 - Aliran: docs/GAME_FLOW_RGB.md; architecture: docs/ARCHITECTURE.md.
 - AGENTS.md, SOR_VERSIONING.md, README.md dan bank semasa dibaca sebelum pembangunan.
 
-Versi digital semasa ialah aplikasi web berasingan v2.0.0. Firmware/main/sharing tidak diubah.
+Versi digital semasa ialah aplikasi web berasingan v2.1.0. Firmware/main/sharing tidak diubah.
 Pengguna meminta 10 markah; versi digital memilih dua soalan unik bagi setiap lima
 bongkah daripada bank 15 soalan. Susunan soalan dan pilihan diacak. Ini perbezaan
 sengaja daripada pusingan firmware 5 soalan. R1→R2, +1 bagi pasangan betul,

@@ -1,15 +1,23 @@
 # GeoDecoder Digital V2 — pengesahan
 
-Keluaran **2.0.0**, semakan 25 Oktober 2026 UTC / 26 Oktober MYT. Branch: `digitalize` sahaja. Asas: `55a79849d5007ec53a9b877cd20877c9bf15aa8d`. Firmware/main tidak diubah. Rekod semakan keluaran sebelumnya dikekalkan dalam `VERIFICATION_V1_1.md`.
+Keluaran **2.1.0**, semakan 25 Oktober 2026 UTC / 26 Oktober MYT. Branch: `digitalize` sahaja. Asas: `55a79849d5007ec53a9b877cd20877c9bf15aa8d`. Firmware/main tidak diubah. Rekod semakan keluaran sebelumnya dikekalkan dalam `VERIFICATION_V1_1.md`.
 
 ## Automatik tempatan
 
-- `npm test`: **43/43 PASS**, termasuk semua 35 ujian permainan/storan V1.1, lima ujian Edge Auth dan tiga regresi sambungan cloud.
+- `npm test`: **47/47 PASS**, termasuk semua 35 ujian permainan/storan V1.1, lima ujian Edge Auth, tiga regresi sambungan cloud dan empat regresi validasi akaun portal.
 - Permainan: 500 seed sepuluh soalan unik/dua setiap bongkah; 500 urutan perubahan posisi/palet; 100 pusingan sempurna; salah R1/R2, langkau, petunjuk, timing/feedback, analisis dan storan/CSV.
 - Auth: validasi username/peranan/password/recovery, SHA256, CORS/method/config, penolakan input sebelum network dan regresi respons identity JSON null semasa pendaftaran baharu.
 - Cloud: heartbeat akaun lama tidak mengisi cache akaun baharu; respons room lama tidak menimpa room semasa; log keluar membersihkan cache dan mengabaikan respons lewat.
 - `npm run build`: PASS, SDK/CSS/JavaScript dibundel dalam HTML tunggal. `GeoDecoder_Digital_V1.html` dan `GeoDecoder_Digital_V2.html` ialah kandungan keluaran yang sama.
-- `npm run check`: PASS; sintaks bundle, aset sebaris, **88 ID unik**, sasaran ARIA, bank firmware, sepuluh ilustrasi SVG, token reka bentuk dan baseline aksesibiliti.
+- `npm run check`: PASS; sintaks bundle, aset sebaris, **92 ID unik**, sasaran ARIA, bank firmware, sepuluh ilustrasi SVG, token reka bentuk dan baseline aksesibiliti.
+
+## Pembaikan pendaftaran yang disertakan dalam V2.1.0
+
+- Bukti screenshot pengguna: username dengan huruf besar ditolak di borang; kata laluan juga belum memenuhi minimum 10 aksara. Validasi frontend berlaku sebelum permintaan akaun dihantar.
+- Punca: regex frontend hanya menerima huruf kecil tetapi belum menormalkan input; Edge Auth sudah menggunakan trim + lowercase.
+- Test-first: empat kes dijalankan pada validator borang sebenar; tiga gagal pada kod V2.0.0, kemudian keempat-empatnya lulus selepas pembaikan. Signup/login/recover/invite kini menormalkan username sebelum validasi dan penghantaran serta memaparkan username yang dinormalkan.
+- Kata laluan tidak dipotong, ditukar case atau dilonggarkan. Kata laluan pendek masih ditandakan; username sah tidak lagi menerima ralat palsu bersama ralat password. Karakter/username terlalu pendek atau panjang kekal ditolak.
+- Ujian automatik menggunakan input sintetik dan shim DOM kecil; tiada kata laluan pengguna dibaca atau diminta.
 
 ## Database hosted sebenar
 
@@ -51,6 +59,14 @@ UI portal disemak menggunakan fixture cloud **simulasi berlabel QA**, manakala o
 - Integrasi portal → room → permainan menggunakan kod app sebenar dengan adapter QA: ralat sambungan menyekat input dan memaparkan Hantar semula; retry berjaya, langkau membuka semakan, terus membawa ke soalan baharu dan petunjuk soalan baharu kekal tertutup.
 - Jeda room memaklumkan masa server terus dikira. Keluar ke room dan sambung percubaan yang sedang dalam semakan mengembalikan semakan serta butang **Soalan seterusnya** yang aktif.
 - Review kod membaiki respons lama selepas keluar/masuk percubaan sama, cache akaun lama, snapshot room lama, pemulihan review/feedback selepas replay event dan butang PIN yang luput.
+
+## Home dan Guest V2.1.0 — pelayar sebenar
+
+- Sebelum perubahan: tiada butang Play as a Guest dan borang nama/kelas kelihatan terus di Home. Selepas perubahan: tepat satu butang Guest pada Home; borang pemain tersembunyi sehingga Guest dipilih.
+- Klik Guest membuka skrin berasingan dengan nama, Murid/Pelajar dan kelas, tanpa input username/password. Isi nama sintetik Tetamu QA / kelas 1 Ujian dan tekan Mulakan permainan: soalan pertama, pengimbas dan sepuluh pilihan tersedia tanpa log masuk.
+- Keluar daripada latihan meminta pengesahan dan kembali ke Home; masuk ke Akaun & kelas kemudian keluar juga kembali ke Home dengan fokus pada Guest. Tiada fokus pada field yang sudah tersembunyi.
+- Telefon iframe 390×844: Home dan Guest mempunyai client/scroll width **380/380 px** termasuk gutter 10px. Guest mempunyai **0** input password. Tema gelap diperiksa secara visual; pertukaran kepada tema cerah dan kembali ke Home berjaya.
+- Ujian HTTP akaun tambahan daripada pembaikan pendaftaran: password pendek ditolak 400, signup username huruf besar berjaya 200 dan login huruf kecil berjaya 200. Tiada credential pengguna sebenar digunakan. Akaun sintetik `qa_case_ccb73bad86` masih ada selepas permintaan cleanup dibatalkan; ia tidak mempunyai kelas/room dan bukan data pengguna sebenar.
 
 ## Had dan advisori
 

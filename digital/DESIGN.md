@@ -98,3 +98,7 @@ BM, short specific instructions. No shape names printed on answer cards; use shu
 `dist/portal.css` owns account/class/room layouts and the `html[data-theme="dark"]` overrides; the original light tokens remain the baseline. Dark uses deep blue canvas and lighter panels with bright blue focus, readable grey text and semantic mint/red/violet feedback. Geometry palettes retain their mathematical meaning without global inversion. `dist/theme.mjs` owns preference and header control. Prepaint theme selection prevents an initial light flash.
 
 Teacher entry uses a class sidebar, selected-class PIN/invitation panel, searchable roster and room list. The room screen leads with name, status and PIN, then live/final scores. The student screen leads with PIN join, class membership, invitations and rooms. Panels stack on phones; only wide data tables scroll horizontally inside labelled regions. Empty/loading/error/expired-PIN/closed-room states retain a concrete next action.
+
+## Home and guest entry V2.1
+
+Preserve the supplied Home hero, geometry kit and two-column desktop layout. The right panel contains classroom account access and a prominent **Play as a Guest** action. Guest opens the supplied local-player form in a separate card, max-width 520px, with a visible Back to Home action. Use existing panel, button, text and focus tokens in both themes; no new colour system. On phones, Home stacks and the guest card fits document width.

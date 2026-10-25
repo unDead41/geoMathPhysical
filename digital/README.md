@@ -1,15 +1,24 @@
 # GeoDecoder Digital V2
 
-Versi digital **2.0.0**, branch **digitalize**. Permainan geometri R1 → R2 kini mempunyai akaun guru/pelajar, kelas dan room dengan skor langsung. Firmware v1.1.3 menggunakan versi berasingan.
+Versi digital **2.1.0**, branch **digitalize**. Permainan geometri R1 → R2 kini mempunyai akaun guru/pelajar, kelas dan room dengan skor langsung. Firmware v1.1.3 menggunakan versi berasingan.
 
 ## Cuba satu fail HTML
 
 Muat turun `GeoDecoder_Digital_V2.html` dan buka dengan Chrome atau Edge terkini. Semua kod, CSS, soalan dan ilustrasi telah dibundel. **Akaun dan room memerlukan Internet**; latihan sendiri boleh dimainkan tanpa Internet. `GeoDecoder_Digital_V1.html` dikekalkan sebagai nama fail serasi dan mengandungi keluaran V2 yang sama.
 
+## Home dan mod tetamu
+
+Halaman awal ialah Home dengan ilustrasi GeoDecoder dan dua pilihan:
+
+- **Play as a Guest** membuka borang ringkas nama, Murid/Pelajar dan kelas. Tekan **Mulakan permainan** untuk latihan sendiri. Tiada akaun, username atau kata laluan diperlukan. Nama panggilan diterima; rekod hanya pada pelayar/peranti ini. Mod ini boleh dimainkan tanpa Internet.
+- **Buka akaun & kelas** membuka log masuk/daftar untuk kelas, PIN, room dan keputusan guru. Mod kelas memerlukan Internet.
+
+Borang tetamu mempunyai **Kembali ke Home**. Home tidak memaparkan borang nama/kelas sebelum pemain memilih Guest. Selepas keputusan latihan, pemain boleh main lagi atau kembali ke Home. Header tema cerah/gelap kekal tersedia pada setiap halaman.
+
 ## Guru
 
 1. Tekan **Akaun dan kelas**, pilih **Daftar akaun** dan peranan **Guru**.
-2. Daftar username (3–24 huruf kecil, nombor atau `_`), nama paparan dan kata laluan (10–128 aksara). Simpan kod pemulihan yang ditunjukkan sekali.
+2. Daftar username (3–24 huruf, nombor atau `_`; huruf besar ditukar automatik kepada huruf kecil), nama paparan dan kata laluan (10–128 aksara). Simpan kod pemulihan yang ditunjukkan sekali.
 3. Cipta kelas. Kongsi PIN enam digit atau jemput username pelajar yang sudah berdaftar; pelajar menerima jemputan dalam akaunnya.
 4. Lihat roster kelas, carian nama/username dan status aktif. “Aktif sekarang” bermaksud heartbeat diterima dalam 45 saat terakhir.
 5. Cipta bilik, kongsi PIN bilik dan tekan **Mulakan permainan**. Guru memantau soalan semasa, markah, masa menjawab serta keputusan akhir dalam papan skor.

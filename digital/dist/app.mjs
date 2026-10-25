@@ -20,7 +20,7 @@ let drag = null, suppressClickUntil = 0, hiddenPause = false, sound = false, aud
 let scoresExpanded = false, lastClock = '', lastLed = {}, visualPlan = null, motionPaused = false;
 let roomState=null,roomReceivedAt=0,roomPending=null,roomSending=false,roomPolling=null,roomEpoch=0,roomInFlight=null;
 const cloud=new ClassroomCloud();
-const portal=createPortal({cloud,onPlay:openRoomGame,onExit:()=>{game=null;roomState=null;resetRoomRequests();showScreen('welcome');},onError:()=>{}});
+const portal=createPortal({cloud,onPlay:openRoomGame,onExit:returnHome,onError:()=>{}});
 const dialog = $('app-dialog');
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const TOPIC_NAMES = {properties:'Sifat bongkah',formula:'Rumus',net:'Bentangan'};
@@ -63,17 +63,18 @@ function showScreen(next) {
   if(next!=='portal')portal.close();
   screen = next;
   $('welcome').hidden = next !== 'welcome';
+  $('guest-screen').hidden = next !== 'guest';
   $('game-screen').hidden = next !== 'game';
   $('result-screen').hidden = next !== 'result';
   $('portal-screen').hidden=next!=='portal';
-  document.title = next==='portal'?'GeoDecoder Digital — Akaun dan kelas':next === 'welcome' ? 'GeoDecoder Digital — Jom main geometri' : next === 'game' ? 'GeoDecoder Digital — Sedang bermain' : 'GeoDecoder Digital — Keputusan pusingan';
+  document.title = next==='portal'?'GeoDecoder Digital — Akaun dan kelas':next==='guest'?'GeoDecoder Digital — Main sebagai tetamu':next === 'welcome' ? 'GeoDecoder Digital — Jom main geometri' : next === 'game' ? 'GeoDecoder Digital — Sedang bermain' : 'GeoDecoder Digital — Keputusan pusingan';
   window.scrollTo({top:0,behavior:'instant'});
 }
 function uid() { return globalThis.crypto?.randomUUID?.() || `round-${Date.now()}-${Math.random().toString(36).slice(2)}`; }
 
 $('player-form').addEventListener('submit', event => {
   event.preventDefault();
-  if (screen !== 'welcome') return;
+  if (screen !== 'guest') return;
   const form = new FormData(event.currentTarget);
   const result = validatePlayer({name:form.get('name'),category:form.get('category'),className:form.get('className')});
   for (const key of ['name','className']) {
@@ -320,11 +321,22 @@ $('pause-button').addEventListener('click',()=>openPause());
 $('replay-button').addEventListener('click',()=>roomState?openAccounts(roomState.roomId):startGame());
 $('account-button').addEventListener('click',()=>requestAccounts());
 $('welcome-account-button').addEventListener('click',()=>requestAccounts());
+$('guest-button').addEventListener('click',openGuest);
+$('guest-back-button').addEventListener('click',returnHome);
 $('online-retry').addEventListener('click',()=>{if(roomPending)sendRoomPending();});
 $('online-room-back').addEventListener('click',()=>openAccounts(roomState?.roomId));
 
 function stopRoomPolling(){if(roomPolling)clearInterval(roomPolling);roomPolling=null;}
 function resetRoomRequests(){roomEpoch++;roomPending=null;roomSending=false;roomInFlight=null;stopRoomPolling();}
+function returnHome(){
+  cancelDrag();resetRoomRequests();game=null;roomState=null;selected=null;acceptedSolid=null;acceptedNet=null;cloud.setRoom(null);
+  dialogTrigger=null;if(dialog.open)closeDialog();
+  showScreen('welcome');$('guest-button').focus({preventScroll:true});
+}
+function openGuest(){
+  cancelDrag();resetRoomRequests();game=null;roomState=null;selected=null;cloud.setRoom(null);
+  showScreen('guest');$('player-name').focus({preventScroll:true});
+}
 function displayedGameTime(time=now()){return roomState?roomState.elapsed+(roomState.status==='running'?Math.max(0,time-roomReceivedAt):0):game.time(time);}
 async function openAccounts(roomId=null){
   cancelDrag();resetRoomRequests();
@@ -475,7 +487,7 @@ dialog.addEventListener('click',event=>{
   const action=event.target.closest('[data-dialog-action]')?.dataset.dialogAction;
   if(action==='close')closeDialog();
   if(action==='open-portal')openAccounts();
-  if(action==='home'){ game=null;selected=null;acceptedSolid=null;acceptedNet=null;dialogTrigger=null;closeDialog();showScreen('welcome');$('player-name').focus({preventScroll:true}); }
+  if(action==='home')returnHome();
   if(action==='request-home')requestHome();
   if(action==='export')downloadScores();
   if(action==='show-all'){scoresExpanded=true;openScores();}
@@ -499,10 +511,10 @@ function openPause(automatic=false){
 }
 
 function requestHome(){
-  if(roomState){openAccounts(roomState.roomId);return;}
+  if(roomState&&screen==='game'){openAccounts(roomState.roomId);return;}
   if(screen==='game' && game && game.status!=='finished'){
     openDialog('leave','Tamatkan pusingan ini?',`<p class="dialog-copy">Anda sedang bermain soalan <b>${game.index+1} daripada 10</b>. Jika kembali ke mula, kemajuan pusingan ini dilepaskan dan skor pusingan ini tidak disimpan.</p><div class="dialog-actions"><button class="button button-outline" data-dialog-action="close" data-autofocus>Terus bermain</button><button class="button button-danger" data-dialog-action="home">Tamatkan pusingan</button></div>`);
-  }else{ game=null;selected=null;showScreen('welcome');$('player-name').focus({preventScroll:true}); }
+  }else returnHome();
 }
 
 function miniScoresMarkup(scores){

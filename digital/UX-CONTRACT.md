@@ -13,6 +13,10 @@ Business sources: user request (25 October 2026), docs/SOURCE.md and docs/UPGRAD
 | Direct manipulation | app.mjs Pointer Events controller | user request | pointer/touch/tap/keyboard | browser drag + keyboard |
 | CRUD | storage.mjs score repository | local-only decision | save/list/export/erase | storage tests, browser persistence |
 
+## Home and guest navigation
+
+Home presents the geometry illustration and two actions: account/classroom access and **Play as a Guest**. It does not display the local player form. Guest opens a separate screen with name, category and class fields, without account credentials. Starting this local practice path requires no Auth session or cloud initialization. Back returns to Home and focuses the Guest action. Leaving an unfinished practice round keeps the existing confirmation. Results link back to Home; replay preserves the current practice player. Portal exit returns to Home. Both themes apply to Home and Guest.
+
 ## Practice behavior
 Entry validates trimmed name and class, category required. Practice creates no account. All five solids and five net cards are available every question; each shelf independently deranged so every shape changes position. Colours change per shape each question, independently across solid/net shelves. Click/tap/Enter selects; click/Enter on the active scanner scans; pointer dragging drops directly. Incorrect type/target is routing feedback and consumes no attempt. R1 correct locks R1 green; matching R2 gives +1 exactly once. A wrong shape at either stage ends the only attempt with +0. Wrong/skipped answers show an animated correct pair plus explanation; inputs/hints/skips remain blocked, time freezes, and Continue becomes available after 1800ms. Success advances after 900ms. Hint counts once per question without mark penalty. No retry on a settled question.
 
