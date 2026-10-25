@@ -1,12 +1,13 @@
 # GeoDecoder Digital V1
 
-Versi digital: **v1.4.0**. Branch: **digital-richText**.
+Versi digital: **v1.5.0**. Branch: **digital-richText**.
 
 ## Cuba terus — satu fail HTML
 
 Muat turun `GeoDecoder_Digital_V1.html`, kemudian buka dengan Chrome atau Edge.
-Semua JavaScript, CSS, soalan dan ilustrasi terkandung dalam satu fail; tiada
-pemasangan atau sambungan Internet diperlukan untuk bermain.
+Semua JavaScript, CSS, soalan dan ilustrasi terkandung dalam satu fail. Kuiz dan
+Latihan Pengukuhan boleh dimainkan tanpa Internet. **Duel memerlukan Internet**
+untuk menghubungkan dua pemain dan mengesahkan keputusan.
 
 1. Masukkan nama, pilih Murid/Pelajar, isi kelas dan pilih mod permainan.
 2. Seret bongkah ke R1. Selepas R1 betul, seret kad bentangan ke R2.
@@ -33,8 +34,31 @@ Tetapan reduced motion peranti juga dihormati.
 
 Betul menjalankan tiga kelipan 150 ms ON/OFF, kemudian meneruskan selepas 900 ms.
 Salah/langkau menunjukkan semakan dan memerlukan butang terus selepas minimum
-1.8 saat. Jam dijeda sepanjang maklum balas/semakan, dialog dan tab tersembunyi.
-Permainan yang belum lengkap tidak masuk papan skor. Reload kembali ke borang.
+1.8 saat. Dalam kuiz/latihan, jam dijeda sepanjang maklum balas/semakan, dialog
+dan tab tersembunyi. Permainan yang belum lengkap tidak masuk papan skor.
+Reload kuiz/latihan kembali ke borang. Jam Duel menggunakan masa pelayan dan
+terus berjalan; sambung semula melalui mod Duel selepas reload.
+
+## Duel — lawan kawan menggunakan PIN
+
+1. Kedua-dua murid buka fail/halaman versi ini, isi borang dan pilih **Duel**.
+2. Pemain pertama pilih **Cipta Duel**, kemudian salin dan kongsi PIN enam digit
+   kepada kawannya. Pemain kedua masukkan PIN itu untuk menyertai.
+3. Kedua-duanya tekan **Sedia**. Kira detik tiga saat memulakan sepuluh soalan
+   yang sama dalam susunan sama, dua soalan bagi setiap bongkah.
+4. Jawab menggunakan R1 kemudian R2. Markah lebih tinggi menang; jika markah
+   sama, pemain yang selesai lebih cepat menang. Keputusan disahkan pelayan.
+
+Setiap pemain boleh memilih BM atau English sendiri. Kemajuan lawan dikemas kini
+sekitar dua saat, ditambah masa rangkaian. Menu, tab tersembunyi dan gangguan
+sambungan tidak menghentikan jam Duel. Had perlawanan 15 minit; PIN lobi sah
+10 minit. Keluar sebelum selesai bermaksud menyerah kalah. Jika sesi masih
+tersimpan dalam tab, masuk semula ke Duel untuk menyambung selepas reload.
+Keputusan Duel tidak dimasukkan ke papan skor kuiz.
+
+Alias dan tindakan Duel dihantar kepada pelayan; kelas/kategori kekal setempat.
+Akses sesi luput selepas 24 jam dan pembersihan data dibuat secara berperingkat
+apabila pelayan menerima permintaan. Lihat [kontrak, bukti dan had ujian Duel](docs/DUEL.md).
 
 ## Analisis dan skor
 
@@ -54,7 +78,7 @@ Skor V1.0.0 dengan retry dikekalkan dalam kumpulan berasingan dan tidak masuk
 kedudukan satu percubaan. Eksport CSV merangkumi papan skor semasa. Padam skor
 meminta pengesahan dan memadam kedua-dua kumpulan.
 
-Nama dan keputusan kekal setempat; tiada akaun, API atau penyegerakan peranti.
+Dalam kuiz/latihan, nama dan keputusan kekal setempat tanpa akaun atau API.
 Sekiranya localStorage tidak tersedia, notis dipaparkan dan skor kekal sementara
 dalam sesi. Polisi storan fail tempatan boleh berbeza antara pelayar.
 
@@ -76,7 +100,9 @@ merekodkan skop perubahan; `docs/VERIFICATION.md` merekodkan hasil semakan.
 Versi digital berasingan daripada firmware v1.1.3. Modul pembelajaran penuh
 bongkah→bentangan akan dikerjakan berasingan pada `digitalize-module`.
 
-Keluaran ini ialah HTML untuk dicuba dahulu; tiada laman web diterbitkan.
+Keluaran ini menyediakan HTML; backend Duel sudah aktif. GitHub Pages belum
+diaktifkan untuk repository private ini. Branch penerbitan `main-digital`
+belum menerima perubahan Duel daripada `digital-richText`.
 
 ## Bahasa Melayu / English
 

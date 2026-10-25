@@ -1,6 +1,6 @@
 {
   "name": "geodecoder-digital",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,6 +9,7 @@
     "standalone": "node tools/standalone.mjs",
     "test:browser": "node tests/browser.mjs",
     "test:rich-text": "node tests/rich-text.browser.mjs",
-    "test:practice": "node tests/practice.browser.mjs"
+    "test:practice": "node tests/practice.browser.mjs",
+    "test:duel": "node tests/duel.browser.mjs"
   }
 }

@@ -1,5 +1,18 @@
 # GeoDecoder Digital changelog
 
+## v1.5.0 — 26 Oktober 2026 (branch digital-richText)
+
+- Duel dua pemain dengan PIN enam digit, lobi sedia/kira detik, sepuluh soalan
+  sama dan kemajuan lawan daripada pelayan. Markah/masa/keputusan disahkan pelayan.
+- Backend Supabase berasingan untuk duel, token sesi persendirian, retry idempoten,
+  pemulihan sambungan, had masa dan keputusan seri/menyerah kalah.
+- BM/BI, rich text dan mod kuiz/latihan offline dikekalkan. Keputusan duel tidak
+  masuk papan skor kuiz. Tiada perubahan firmware atau sistem kelas/akaun.
+- Backend Duel sudah aktif; buka HTML versi ini pada kedua-dua peranti dengan
+  Internet, kongsi PIN dan tekan Sedia. `main-digital` belum dikemas kini.
+- Bukti ujian dua pelayar sebenar, perlumbaan join, keputusan 10–9, menyerah
+  kalah, pemulihan R1 dan retry tanpa gandaan markah direkodkan dalam `docs/DUEL.md`.
+
 ## v1.4.0 — 26 Oktober 2026 (branch digital-richText)
 
 - Mod Latihan Pengukuhan memainkan semua 15 soalan sekali setiap sesi,

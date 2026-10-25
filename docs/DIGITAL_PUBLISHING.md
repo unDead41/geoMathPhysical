@@ -1,10 +1,12 @@
 # GeoDecoder Digital — publication branch
 
-> Calon rich text dan Latihan Pengukuhan: **digital-richText / v1.4.0**, berasaskan
+> Calon rich text, Latihan Pengukuhan dan Duel: **digital-richText / v1.5.0**, berasaskan
 > `main-digital` pada `71db77c0206de664e50fa57ff57e1825af13f938`.
 > Root `index.html` pada branch calon telah dibina semula daripada HTML digital.
 > Rekod persediaan v1.2.0 di bawah kekal sebagai sejarah branch penerbitan;
-> kerja rich text ini hanya diterbitkan ke `digital-richText`.
+> kerja ini hanya diterbitkan ke `digital-richText`. Backend Duel sudah aktif;
+> halaman `main-digital` belum dikemas kini atau diterbitkan. Lihat
+> `digital/docs/DUEL.md` untuk bukti dan had perlawanan dalam talian.
 
 Branch penerbitan: **main-digital**.
 Tarikh persediaan: **26 Oktober 2026 (Malaysia)**.

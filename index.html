@@ -42,6 +42,42 @@ dialog{border:1px solid var(--border);border-radius:var(--radius-lg);padding:0;w
 @media(forced-colors:active){*{scrollbar-color:auto}.led-dot{border:2px solid CanvasText}.choice[aria-pressed="true"]{outline:3px solid Highlight}.scanner{border:2px solid CanvasText}.progress-dot{background:CanvasText}.progress-dot.current{background:Highlight}}
 @media print{.site-header nav,.session-actions,.result-actions,.site-footer,.review-section,.game-screen,.entry-screen,dialog{display:none!important}.result-layout{display:block}.result-main,.result-side{break-inside:avoid}.result-side{margin-top:20px}}
 
+/* Shared-server two-player Duel uses the existing geometry palette. */
+.duel-screen{max-width:960px;margin:0 auto;padding:32px 0 45px}
+.duel-heading h1{font-size:36px;letter-spacing:-1px;margin:12px 0}
+.duel-heading>p{max-width:650px;font-size:14px;line-height:1.7;color:var(--muted)}
+.duel-connection{font-size:12px;font-weight:650;color:var(--primary);min-height:20px;margin:20px 0 8px}
+.duel-message{font-size:13px;color:var(--danger);line-height:1.6;margin:10px 0}
+.duel-message:empty{display:none}
+.duel-entry{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.duel-card,.duel-room{min-width:0;background:var(--surface);border:1px solid var(--border);border-radius:22px;padding:26px}
+.duel-card h2{font-size:23px;margin-bottom:12px}.duel-card>p,.duel-room>p{color:var(--muted);font-size:13px;line-height:1.7;margin-bottom:20px}
+.duel-card>.button{margin-top:14px}.duel-card .field{margin:16px 0}
+.duel-pin-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.duel-pin-row label{width:100%;font-size:12px;color:var(--muted);font-weight:650}
+.duel-pin-row input{font:700 36px var(--font-mono);letter-spacing:8px;max-width:100%;width:250px;min-width:0;background:var(--blue-soft);color:var(--primary);padding:13px 16px;border:1px solid var(--border);border-radius:12px}
+.duel-players{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;margin:18px 0}
+.duel-player{min-width:0;border:1px solid var(--border);border-radius:14px;padding:16px;background:var(--bg)}
+.duel-player.self{border-color:#B6CFFD;background:var(--blue-soft)}
+.duel-player>small{display:block;font-size:10px;font-weight:650;color:var(--muted);margin-bottom:6px}
+.duel-player>strong{display:block;font-size:15px;overflow-wrap:anywhere;line-height:1.4}
+.duel-player>div:not(.duel-track){display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:10px}
+.duel-player b{font-family:var(--font-mono);font-size:20px}
+.duel-player span,.duel-player>p{font-size:11px;color:var(--muted);line-height:1.6}
+.duel-player.waiting{border-style:dashed}.duel-player.waiting p{margin-top:10px}
+.duel-track{height:5px;background:#DCE5F3;border-radius:10px;overflow:hidden;margin-top:10px}
+.duel-track>span{display:block;height:100%;background:var(--primary);transition:width .2s}
+.duel-countdown{font-size:18px!important;font-weight:700;color:var(--primary)!important;line-height:1.6}
+.duel-footer{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}
+.duel-rules{font-size:11px;color:var(--muted);line-height:1.7;margin-top:10px}
+.duel-live{border:1px solid #BDD1F5;background:var(--surface);padding:14px 18px;border-radius:18px;margin:0 0 18px}
+.duel-live-heading{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--primary)}
+.duel-live-heading>span:last-child{margin-left:auto}.duel-live .duel-players{margin:12px 0 6px}
+.duel-live .duel-player{padding:10px 13px}.duel-live .duel-player strong{font-size:13px}
+.duel-live .button{margin-top:12px}.duel-result{padding:24px;background:var(--surface);border:2px solid #BDD1F5;border-radius:22px;margin:0 0 26px}
+.duel-result h2{font-size:29px;margin:10px 0}.duel-result p{font-size:13px;line-height:1.6;color:var(--muted)}
+@media(max-width:600px){.duel-entry{grid-template-columns:minmax(0,1fr)}.duel-heading h1{font-size:28px}.duel-card,.duel-room,.duel-result{padding:18px}.duel-players{gap:8px}.duel-player{padding:12px}.duel-player strong{font-size:13px}.duel-player b{font-size:18px}.duel-live{padding:12px}.duel-live .duel-player{padding:9px}.duel-live-heading>span:last-child{margin-left:0}.duel-result h2{font-size:24px}}
+
 /* Quiz and reinforcement practice share the same accessible form and game UI. */
 .field select{font:inherit;width:100%;min-height:49px;padding:0 12px;border:1px solid #CDDCE8;border-radius:10px;background:#FBFCFE;color:var(--ink);font-size:13px}
 .field select:focus-visible{outline:3px solid var(--primary);outline-offset:4px}
@@ -184,7 +220,7 @@ select:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
 <body>
   <a class="skip-link" href="#main" data-i18n="Terus ke kandungan">Terus ke kandungan</a>
   <header class="site-header">
-    <a href="#" class="brand" id="brand-home" aria-label="GeoDecoder Digital, halaman mula" data-i18n-aria-label="GeoDecoder Digital, halaman mula"><span data-brand></span><span>Geo<span class="brand-blue">Decoder</span><small><span data-i18n="DIGITAL EDITION">DIGITAL EDITION</span> <b class="brand-version" id="app-version">V1.4.0</b></small></span></a>
+    <a href="#" class="brand" id="brand-home" aria-label="GeoDecoder Digital, halaman mula" data-i18n-aria-label="GeoDecoder Digital, halaman mula"><span data-brand></span><span>Geo<span class="brand-blue">Decoder</span><small><span data-i18n="DIGITAL EDITION">DIGITAL EDITION</span> <b class="brand-version" id="app-version">V1.5.0</b></small></span></a>
     <nav aria-label="Menu utama" data-i18n-aria-label="Menu utama">
       <label class="language-control" id="language-control"><span data-i18n="language.label">Bahasa</span><select id="language-select" aria-label="Bahasa / Language"><option value="ms" lang="ms">Bahasa Melayu</option><option value="en" lang="en">English</option></select></label><button class="nav-button motion-button" id="motion-button" aria-label="Jeda animasi" aria-pressed="false" title="Jeda animasi" data-i18n-aria-label="Jeda animasi" data-i18n-title="Jeda animasi"><span data-icon="pause"></span></button>
       <button class="nav-button" data-action="help" aria-label="Cara main" data-i18n-aria-label="Cara main"><span data-icon="help"></span><span data-i18n="Cara main">Cara main</span></button>
@@ -221,11 +257,23 @@ select:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
           <div class="field"><label for="player-name" data-i18n="Nama pemain">Nama pemain</label><input id="player-name" name="name" type="text" maxlength="60" autocomplete="off" placeholder="Contoh: Aisyah" aria-describedby="name-error" data-i18n-placeholder="Contoh: Aisyah"><span class="field-error" id="name-error"></span></div>
           <fieldset class="category-field"><legend data-i18n="Saya seorang">Saya seorang</legend><div class="radio-options"><label class="radio-card"><input type="radio" name="category" value="Murid" checked><span><span data-icon="user"></span><span data-i18n="Murid">Murid</span></span></label><label class="radio-card"><input type="radio" name="category" value="Pelajar"><span><span data-icon="user"></span><span data-i18n="Pelajar">Pelajar</span></span></label></div><span class="field-error" id="category-error"></span></fieldset>
           <div class="field"><label for="player-class" data-i18n="Kelas">Kelas</label><input id="player-class" name="className" type="text" maxlength="40" autocomplete="off" placeholder="Contoh: 1 Bestari" aria-describedby="className-error" data-i18n-placeholder="Contoh: 1 Bestari"><span class="field-error" id="className-error"></span></div>
-          <div class="field mode-field"><label for="play-mode" data-i18n="mode.label">Mod permainan</label><select id="play-mode" name="mode" aria-describedby="mode-description"><option value="quiz" data-i18n="mode.quiz">Kuiz — 10 soalan</option><option value="practice" data-i18n="mode.practice">Latihan Pengukuhan · 15</option></select><p id="mode-description" class="mode-description"></p></div>
+          <div class="field mode-field"><label for="play-mode" data-i18n="mode.label">Mod permainan</label><select id="play-mode" name="mode" aria-describedby="mode-description"><option value="quiz" data-i18n="mode.quiz">Kuiz — 10 soalan</option><option value="practice" data-i18n="mode.practice">Latihan Pengukuhan · 15</option><option value="duel" data-i18n="duel.mode">Duel · 2 pemain</option></select><p id="mode-description" class="mode-description"></p></div>
           <button type="submit" class="button button-primary start-button"><span id="start-label">Mulakan permainan</span> <span data-icon="arrow"></span></button>
-          <p class="privacy-note"><span data-icon="lock"></span><span data-i18n="Nama dan skor disimpan dalam pelayar ini sahaja. Anda boleh gunakan nama panggilan.">Nama dan skor disimpan dalam pelayar ini sahaja. Anda boleh gunakan nama panggilan.</span></p>
+          <p class="privacy-note"><span data-icon="lock"></span><span id="privacy-note-text">Nama dan skor disimpan dalam pelayar ini sahaja. Anda boleh gunakan nama panggilan.</span></p>
         </form>
       </div>
+    </section>
+
+    <section id="duel-screen" class="duel-screen" hidden aria-labelledby="duel-title">
+      <div class="duel-heading"><span class="eyebrow">GEODECODER DUEL</span><h1 id="duel-title" tabindex="-1" data-i18n="duel.title">Duel bersama kawan</h1><p data-i18n="duel.modeNote"></p></div>
+      <p id="duel-connection" class="duel-connection" role="status"></p><p id="duel-message" class="duel-message" role="status"></p>
+      <div id="duel-entry" class="duel-entry">
+        <div class="duel-card"><h2 data-i18n="duel.create">Cipta PIN</h2><p data-i18n="duel.share"></p><button class="button button-primary" id="duel-create" type="button" data-i18n="duel.create">Cipta PIN</button></div>
+        <form id="duel-join-form" class="duel-card" novalidate><h2 data-i18n="duel.join">Masuk bilik</h2><div class="field"><label for="duel-pin" data-i18n="duel.pinLabel">PIN enam digit</label><input id="duel-pin" aria-describedby="duel-message" type="text" inputmode="numeric" autocomplete="off" maxlength="6" pattern="[0-9]{6}" required data-i18n-placeholder="duel.pinPlaceholder" placeholder="Contoh: 123456"></div><button class="button button-primary" id="duel-join" type="submit" data-i18n="duel.join">Masuk bilik</button></form>
+      </div>
+      <div id="duel-room" class="duel-room" hidden><div class="duel-pin-row"><label for="duel-room-code" data-i18n="duel.pinLabel">PIN enam digit</label><input id="duel-room-code" readonly aria-label="PIN enam digit" data-i18n-aria-label="duel.pinLabel"><button id="duel-copy" class="button button-outline" type="button" data-i18n="duel.copy">Salin PIN</button></div><p data-i18n="duel.share"></p><div id="duel-lobby-players" class="duel-players"></div><p id="duel-countdown" class="duel-countdown" role="status"></p><button id="duel-ready" class="button button-primary" type="button" data-i18n="duel.ready">Saya sedia</button></div>
+      <div class="duel-footer"><button id="duel-retry" class="button button-outline" type="button" data-i18n="duel.retry" hidden>Sambung semula</button><button id="duel-new-room" class="button button-outline" type="button" data-i18n="duel.new" hidden>Duel baharu</button><button id="duel-home" class="button button-quiet" type="button" data-i18n="Kembali ke mula">Kembali ke mula</button></div>
+      <p class="duel-rules" data-i18n="duel.rules"></p><p class="duel-rules" data-i18n="duel.clockNote"></p>
     </section>
 
     <section id="game-screen" class="game-screen" hidden aria-labelledby="question-title">
@@ -235,6 +283,7 @@ select:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
         <div class="session-actions"><button id="sound-button" class="icon-button" aria-label="Hidupkan bunyi" aria-pressed="false" title="Hidupkan bunyi" data-i18n-aria-label="Hidupkan bunyi" data-i18n-title="Hidupkan bunyi"><span data-icon="mute"></span></button><button class="icon-button" id="pause-button" aria-label="Jeda permainan" title="Jeda permainan" data-i18n-aria-label="Jeda permainan" data-i18n-title="Jeda permainan"><span data-icon="pause"></span></button><button class="icon-button leave-button" data-action="home" aria-label="Kembali ke mula" title="Kembali ke mula" data-i18n-aria-label="Kembali ke mula" data-i18n-title="Kembali ke mula"><span data-icon="home"></span></button></div>
       </div>
 
+      <section id="duel-live" class="duel-live" hidden aria-label="Duel"><div class="duel-live-heading"><b>GEODECODER DUEL</b><span id="duel-live-code"></span><span id="duel-live-connection"></span></div><div id="duel-live-players" class="duel-players"></div><p id="duel-live-note" class="duel-rules"></p><button id="duel-live-retry" class="button button-outline" type="button" data-i18n="duel.retry" hidden>Sambung semula</button></section>
       <div class="question-panel">
         <div class="question-side"><span class="question-counter" id="question-counter" data-i18n="SOALAN 01 / 10">SOALAN 01 / 10</span><span class="question-topic" id="question-topic" data-i18n="Kenali bongkah">Kenali bongkah</span><div class="progress-dots" id="progress-dots" aria-label="Kemajuan soalan" data-i18n-aria-label="Kemajuan soalan"></div></div>
         <div class="question-content"><h1 id="question-title" tabindex="-1"></h1><p id="question-detail"></p><div id="formula-key" class="formula-key" hidden></div></div>
@@ -272,6 +321,7 @@ select:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
     </section>
 
     <section id="result-screen" class="result-screen" hidden aria-labelledby="result-title">
+      <section id="duel-result" class="duel-result" hidden aria-live="polite"><div id="duel-result-content"></div><button id="duel-result-retry" class="button button-outline" type="button" data-i18n="duel.retry" hidden>Sambung semula</button></section>
       <div class="result-heading"><span class="eyebrow" data-i18n="PUSINGAN SELESAI">PUSINGAN SELESAI</span><h1 id="result-title" tabindex="-1" data-i18n="Bagus, teruskan meneroka!">Bagus, teruskan meneroka!</h1><p id="result-player"></p></div>
       <div class="result-layout"><div class="result-main"><div class="result-medal"><span data-icon="trophy"></span><div><b id="result-score">10</b><span id="result-total">/ 10 markah</span></div><span class="medal-spark">✦</span></div><div class="result-level" id="result-level" data-i18n="Pakar padanan">Pakar padanan</div><p id="result-message"></p><p id="practice-result-note" class="practice-result-note" hidden></p><div class="result-metrics"><div><span data-icon="clock"></span><b id="result-time"></b><small data-i18n="Masa bermain">Masa bermain</small></div><div><b id="result-first"></b><small data-i18n="Bongkah R1 betul">Bongkah R1 betul</small></div><div><b id="result-mistakes"></b><small data-i18n="Soalan salah">Soalan salah</small></div><div><b id="result-hints"></b><small data-i18n="Soalan guna petunjuk">Soalan guna petunjuk</small></div></div><div class="result-actions"><button class="button button-primary" id="replay-button"><span data-icon="refresh"></span> <span id="replay-label">Main lagi</span></button><button class="button button-outline" data-action="home" data-i18n="Tukar pemain">Tukar pemain</button></div></div><div class="result-side"><div class="mini-title"><span data-icon="trophy"></span><h2 data-i18n="mode.quizBoard">Papan skor kuiz · 10 soalan</h2><span data-i18n="PERANTI INI">PERANTI INI</span></div><div id="result-leaderboard"></div><button class="button button-quiet" data-action="scores"><span data-i18n="Lihat semua skor">Lihat semua skor</span> <span data-icon="arrow"></span></button><p class="score-scope" data-i18n="Satu percubaan. Skor lebih tinggi dahulu, kemudian soalan salah lebih sedikit dan masa lebih pantas.">Satu percubaan. Skor lebih tinggi dahulu, kemudian soalan salah lebih sedikit dan masa lebih pantas.</p></div></div>
       <section class="analysis-section" aria-labelledby="analysis-title"><div class="analysis-heading"><span class="eyebrow" data-i18n="KENALI KEKUATAN ANDA">KENALI KEKUATAN ANDA</span><h2 id="analysis-title" data-i18n="Apa yang perlu dilatih lagi?">Apa yang perlu dilatih lagi?</h2><p id="analysis-description">Analisis berdasarkan 10 soalan pusingan ini. Dua soalan bagi setiap bongkah.</p></div><div id="analysis-summary" class="analysis-summary"></div><div class="analysis-grid"><section class="analysis-card"><h3 data-i18n="Padanan mengikut bongkah">Padanan mengikut bongkah</h3><p data-i18n="Pasangan betul daripada soalan yang diberi.">Pasangan betul daripada soalan yang diberi.</p><div id="analysis-shapes"></div></section><section class="analysis-card"><h3 data-i18n="Bongkah atau bentangan?">Bongkah atau bentangan?</h3><p data-i18n="Ketepatan daripada imbasan yang benar-benar dicuba.">Ketepatan daripada imbasan yang benar-benar dicuba.</p><div id="analysis-stages"></div><h3 class="topic-heading" data-i18n="Jenis soalan">Jenis soalan</h3><div id="analysis-topics"></div></section></div><div id="analysis-advice" class="analysis-advice"></div></section>
@@ -455,7 +505,7 @@ const QUESTIONS = [
 ];
 
 
-const VERSION = '1.4.0';
+const VERSION = '1.5.0';
 const RULESET = 'single-attempt-v1';
 const SHAPES = ['cube', 'cuboid', 'pyramid', 'cylinder', 'cone'];
 const ROUND_SIZE = 10;
@@ -507,7 +557,13 @@ function analyseAnswers(answers) {
   return {byShape,byTopic,byStage,weakShapes,weakTopics,weakStage};
 }
 
-function buildRound(bank, rng = Math.random, mode = 'quiz') {
+function buildRound(bank, rng = Math.random, mode = 'quiz', questionIds) {
+  if(mode==='duel'){
+    if(!Array.isArray(questionIds)||questionIds.length!==ROUND_SIZE||new Set(questionIds).size!==ROUND_SIZE)throw new Error('Invalid duel round');
+    const round=questionIds.map(id=>bank.find(q=>q.id===id));
+    if(round.some(q=>!q)||SHAPES.some(shape=>round.filter(q=>q.shape===shape).length!==2))throw new Error('Invalid duel questions');
+    return round;
+  }
   if(mode!=='quiz'&&mode!=='practice')throw new Error('Unknown play mode');
   if(mode==='practice'){
     if(bank.length!==PRACTICE_SIZE||new Set(bank.map(q=>q.id)).size!==PRACTICE_SIZE||SHAPES.some(shape=>bank.filter(q=>q.shape===shape).length!==3)){
@@ -539,7 +595,7 @@ function formatTime(ms) {
 class Game {
   constructor(bank, player, now = 0, rng = Math.random, options = {}) {
     this.mode = options.mode ?? 'quiz';
-    this.round = buildRound(bank, rng, this.mode);
+    this.round = buildRound(bank, rng, this.mode, options.questionIds);
     this.player = {...player};
     this.index = 0;
     this.score = 0;
@@ -571,8 +627,37 @@ class Game {
 
   get question() { return this.round[this.index]; }
   get total() { return this.round.length; }
+  static fromDuelSnapshot(bank,player,snapshot,now=0,rng=Math.random){
+    const g=new Game(bank,player,now,rng,{mode:'duel',questionIds:snapshot.room?.questionIds}),m=snapshot.me;
+    if(snapshot.room.total!==ROUND_SIZE||!m||!Number.isInteger(m.answered)||m.answered<0||m.answered>g.total||!Array.isArray(m.answers)||m.answers.length!==m.answered||!Number.isFinite(m.elapsed)||m.elapsed<0)throw new Error('Invalid duel checkpoint');
+    let correct=0,wrong=0,skipped=0,hints=0;
+    const answers=m.answers.map((a,i)=>{
+      const q=g.round[i];
+      if(a.id!==q.id||a.shape!==q.shape||a.topic!==questionTopic(q)||!['correct','wrong','skipped'].includes(a.outcome)||typeof a.hint!=='boolean'||!Number.isFinite(a.elapsed)||a.elapsed<0||!a.attempts||['solid','net'].some(kind=>a.attempts[kind]!==null&&!SHAPES.includes(a.attempts[kind])))throw new Error('Invalid duel answer');
+      if(a.outcome==='correct'&&(a.attempts.solid!==q.shape||a.attempts.net!==q.shape))throw new Error('Invalid duel match');
+      correct+=a.outcome==='correct'?1:0;wrong+=a.outcome==='wrong'?1:0;skipped+=a.outcome==='skipped'?1:0;hints+=a.hint?1:0;
+      return {...a,attempts:{...a.attempts},firstTry:a.outcome==='correct'};
+    });
+    if(m.score!==correct||m.mistakes!==wrong||m.skipped!==skipped||m.hints!==hints+(m.answered<g.total&&m.hintUsed?1:0)||!['solid','net'].includes(m.stage)||!m.attempts)throw new Error('Invalid duel totals');
+    if(m.answered<g.total&&(m.attempts.net!==null||(m.stage==='net'?m.attempts.solid!==g.round[m.answered].shape:m.attempts.solid!==null)))throw new Error('Invalid duel stage');
+    g.index=Math.min(m.answered,g.total-1);g.stage=m.stage;g.status=m.answered===g.total?'finished':'running';
+    g.answers=answers;g.score=correct;g.firstTry=correct;g.mistakes=wrong;g.skipped=skipped;g.hints=m.hints;g.hintUsed=!!m.hintUsed;
+    g.attempts={...m.attempts};g.elapsed=m.elapsed;g.questionStartElapsed=m.elapsed;g.lastOutcome=answers.at(-1)?.outcome||null;
+    return g;
+  }
   time(now) { return this.elapsed + (this.status === 'running' && !this.paused ? Math.max(0, now - this.segmentStart) : 0); }
   get interactive() { return this.status === 'running' && !this.paused; }
+  applyDuelAcknowledgement(action,payload,now){
+    if(this.mode!=='duel'||this.status!=='running')return action==='scan'?{type:'blocked'}:false;
+    const wasPaused=this.paused;
+    if(wasPaused){this.paused=false;this.segmentStart=now;}
+    try{
+      if(action==='scan')return this.scan(payload.kind,payload.shape,payload.target,now);
+      if(action==='hint')return this.toggleHint();
+      if(action==='skip')return this.skip(now);
+      return false;
+    }finally{if(wasPaused){this.paused=true;this.pauseStart=now;}}
+  }
 
   scan(kind, shape, target, now) {
     if (!this.interactive) return {type: 'blocked'};
@@ -1576,6 +1661,69 @@ const QUESTION_BM_COPY = {
   C1: {hint:'Lihat tapaknya yang bulat. Permukaan melengkungnya mengecil ke puncak.'},
   C2: {hint:'Tinggi sendeng diukur dari tepi tapak ke puncak di sepanjang garis lurus pada permukaan melengkung.'}
 };
+const duelMessages = {
+  'duel.mode':['Duel · 2 pemain','Duel · 2 players'],
+  'duel.title':['Duel bersama kawan','Duel with a friend'],
+  'duel.pageTitle':['GeoDecoder Digital — Duel','GeoDecoder Digital — Duel'],
+  'duel.modeNote':['Cipta PIN enam digit atau masukkan PIN kawan. Dua pemain menjawab 10 soalan yang sama. Internet diperlukan.','Create a six-digit PIN or enter your friend’s PIN. Two players answer the same 10 questions. Internet required.'],
+  'duel.privacy':['Nama panggilan anda dikongsi dengan pelayan dan kawan dalam bilik. Kelas dan kategori kekal pada peranti ini.','Your nickname is shared with the server and your friend in the room. Class and category stay on this device.'],
+  'duel.open':['Buka Duel','Open Duel'],
+  'duel.create':['Cipta PIN','Create PIN'],
+  'duel.join':['Masuk bilik','Join room'],
+  'duel.pinLabel':['PIN enam digit','Six-digit PIN'],
+  'duel.pinPlaceholder':['Contoh: 123456','Example: 123456'],
+  'duel.share':['Kongsi PIN ini dengan seorang kawan. PIN lobi sah selama 10 minit.','Share this PIN with one friend. The lobby PIN is valid for 10 minutes.'],
+  'duel.copy':['Salin PIN','Copy PIN'],
+  'duel.copied':['PIN disalin. Hantar kepada kawan anda.','PIN copied. Send it to your friend.'],
+  'duel.copySelected':['PIN dipilih. Gunakan arahan Salin pada peranti anda.','PIN selected. Use Copy on your device.'],
+  'duel.ready':['Saya sedia','I’m ready'],
+  'duel.isReady':['Sedia','Ready'],
+  'duel.notReady':['Belum sedia','Not ready'],
+  'duel.waitFriend':['Menunggu kawan memasukkan PIN…','Waiting for your friend to enter the PIN…'],
+  'duel.waitReady':['Kedua-dua pemain perlu menekan Sedia.','Both players need to press Ready.'],
+  'duel.countdown':['Duel bermula dalam {seconds}…','Duel starts in {seconds}…'],
+  'duel.live':['Duel sedang berlangsung','Duel in progress'],
+  'duel.you':['Anda','You'],
+  'duel.friend':['Kawan','Friend'],
+  'duel.progress':['{answered} / 10 soalan selesai','{answered} / 10 questions completed'],
+  'duel.connected':['Disambungkan','Connected'],
+  'duel.connecting':['Menghubungkan…','Connecting…'],
+  'duel.offline':['Sambungan terputus. Kemajuan diterima pelayan dikekalkan.','Connection lost. Progress received by the server is kept.'],
+  'duel.retry':['Sambung semula','Reconnect'],
+  'duel.leave':['Keluar Duel','Leave Duel'],
+  'duel.leaveTitle':['Keluar daripada duel ini?','Leave this duel?'],
+  'duel.leaveCopy':['Jika anda belum selesai, keluar semasa duel menyerahkan kemenangan kepada lawan.','If you have not finished, leaving an active duel gives your opponent the win.'],
+  'duel.confirmLeave':['Keluar dan sahkan','Confirm leave'],
+  'duel.rules':['Markah lebih tinggi menang. Jika markah sama, masa lebih pantas menang. Had duel 15 minit.','Higher score wins. If scores tie, the faster time wins. Duel limit: 15 minutes.'],
+  'duel.clockNote':['Masa duel terus berjalan semasa menu dibuka, tab tersembunyi atau sambungan terputus.','The duel clock keeps running while menus are open, the tab is hidden or the connection is lost.'],
+  'duel.helpNote':['Memilih kad sahaja belum menggunakan percubaan. Petunjuk percuma; langkau memberi sifar markah. Masa duel terus berjalan sepanjang menu, semakan dan gangguan sambungan.','Selecting a card does not use an attempt. Hints are free; skipping earns zero points. The duel clock keeps running during menus, reviews and connection problems.'],
+  'duel.menu':['Menu Duel','Duel menu'],
+  'duel.waitFinish':['Menunggu keputusan lawan…','Waiting for your opponent’s result…'],
+  'duel.youWin':['Anda menang!','You win!'],
+  'duel.youLose':['Kawan anda menang.','Your friend wins.'],
+  'duel.draw':['Duel seri!','The duel is a draw!'],
+  'duel.byScore':['Ditentukan oleh markah akhir.','Decided by the final score.'],
+  'duel.byTime':['Markah sama; ditentukan oleh masa pelayan hingga jawapan terakhir.','Scores are tied; decided by server time to the last answer.'],
+  'duel.byForfeit':['Seorang pemain telah menyerah kalah.','A player has forfeited.'],
+  'duel.byDeadline':['Had masa tamat. Jawapan yang belum dibuat mendapat sifar markah.','Time is up. Unanswered questions receive zero points.'],
+  'duel.resultScope':['Keputusan duel disahkan pelayan dan tidak masuk papan skor kuiz.','Duel results are confirmed by the server and do not enter the quiz leaderboard.'],
+  'duel.new':['Duel baharu','New duel'],
+  'duel.closed':['Bilik ditutup atau PIN tamat tempoh. Cipta PIN baharu untuk bermain lagi.','The room is closed or the PIN has expired. Create a new PIN to play again.'],
+  'duel.presenceAway':['Belum menerima kemas kini kawan. Masa duel masih berjalan.','No recent update from your friend. The duel clock is still running.'],
+  'duel.error':['Sambungan belum berjaya. Cuba sambung semula.','Could not connect. Try reconnecting.'],
+  'duel.error.invalid_request':['Semak maklumat dan PIN enam digit anda.','Check your details and six-digit PIN.'],
+  'duel.error.invalid_token':['Sesi duel tidak sah. Buka semula lobi Duel.','This duel session is invalid. Reopen the Duel lobby.'],
+  'duel.error.room_unavailable':['PIN tidak ditemui atau bilik sudah ditutup.','The PIN was not found or the room is closed.'],
+  'duel.error.room_full':['Bilik ini sudah mempunyai dua pemain.','This room already has two players.'],
+  'duel.error.room_expired':['PIN tamat tempoh. Minta kawan mencipta PIN baharu.','The PIN has expired. Ask your friend to create a new PIN.'],
+  'duel.error.not_started':['Tunggu sehingga kira detik tamat.','Wait until the countdown ends.'],
+  'duel.error.not_ready':['Tunggu animasi atau semakan jawapan selesai.','Wait for the animation or answer review to finish.'],
+  'duel.error.rate_limited':['Terlalu banyak permintaan. Tunggu sebentar sebelum mencuba lagi.','Too many requests. Wait a moment before trying again.'],
+  'duel.error.sequence_conflict':['Kemajuan berubah pada peranti ini. Sambung semula untuk menyelaraskannya.','Progress changed on this device. Reconnect to sync it.'],
+  'duel.error.question_mismatch':['Soalan sedang diselaraskan. Tekan Sambung semula.','The question needs to sync. Press Reconnect.'],
+  'duel.syncing':['Mengesahkan dengan pelayan…','Confirming with the server…']
+};
+for(const [key,[ms,en]] of Object.entries(duelMessages)){MESSAGES.ms[key]=ms;MESSAGES.en[key]=en;}
 const practiceMessages = {
   'mode.label':['Mod permainan','Play mode'],
   'mode.quiz':['Kuiz — 10 soalan','Quiz — 10 questions'],
@@ -1882,6 +2030,106 @@ function formatRichText(value,language='ms'){
 }
 
 
+// Public endpoint only. Privileged keys and score validation remain on the server.
+const DUEL_ENDPOINT='https://fkrlwzxvyufndavlpzbp.supabase.co/functions/v1/geodecoder-duel';
+// Publishable project identifier, not a privileged key or player credential.
+const DUEL_PUBLIC_KEY="sb_publishable_IxeJeTwOUh2zy-vnCvWRLQ_DDA4SqOd";
+const DUEL_SESSION_KEY='geodecoder.digital.duel.v1.session';
+function formatDuelTime(ms){const value=Number.isFinite(ms)?Math.max(0,Math.floor(ms)):0;return formatTime(value)+'.'+String(value%1000).padStart(3,'0');}
+function makeDuelToken(){return Array.from(crypto.getRandomValues(new Uint8Array(32)),value=>value.toString(16).padStart(2,'0')).join('');}
+function duelVerdict(snapshot){
+  if(snapshot?.room.status!=='complete')return 'duel.waitFinish';
+  return !snapshot.room.winnerId?'duel.draw':snapshot.room.winnerId===snapshot.me.id?'duel.youWin':'duel.youLose';
+}
+class DuelClient{
+  constructor({storage=null,endpoint=DUEL_ENDPOINT,onChange=()=>{},requestTimeoutMs=25000}={}){
+    this.storage=storage;this.endpoint=endpoint;this.onChange=onChange;
+    this.requestTimeoutMs=requestTimeoutMs;
+    this.session=null;this.snapshot=null;this.connected=false;this.error='';this.busy=false;this.timer=null;this.polling=false;this.generation=0;this.receivedAt=0;this.lastClock=0;
+    try{const value=JSON.parse(storage?.getItem(DUEL_SESSION_KEY)||'null');if(value&&/^[a-f0-9]{64}$/.test(value.token)&&(!value.roomId||/^[\da-f-]{36}$/.test(value.roomId)))this.session=value;}catch{/* A denied session store does not block online play. */}
+  }
+  get hasSession(){return !!this.session;}
+  get pending(){return !!this.session?.pending;}
+  save(){try{if(this.session)this.storage?.setItem(DUEL_SESSION_KEY,JSON.stringify(this.session));else this.storage?.removeItem(DUEL_SESSION_KEY);}catch{/* Keep the live session in memory. */}}
+  notify(){this.onChange(this.snapshot);}
+  clock(){const value=(this.snapshot?.serverNow||0)+Math.max(0,performance.now()-this.receivedAt);this.lastClock=Math.max(this.lastClock,value);return this.lastClock;}
+  elapsed(){const s=this.snapshot;return s?.me.finishedAt?s.me.elapsed:Math.max(0,this.clock()-(s?.room.startsAt||this.clock()));}
+  accept(snapshot){
+    if(!snapshot?.ok||!snapshot.room?.id||!snapshot.me?.id||!Number.isFinite(snapshot.serverNow))throw Object.assign(new Error('invalid_response'),{code:'invalid_response'});
+    if(this.snapshot&&(snapshot.me.seq<this.snapshot.me.seq||snapshot.serverNow<this.snapshot.serverNow))return;
+    this.snapshot=snapshot;this.receivedAt=performance.now();this.connected=true;this.error='';
+    this.session.roomId=snapshot.room.id;this.save();this.notify();
+  }
+  async request(body){
+    const generation=this.generation,controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),this.requestTimeoutMs);
+    try{
+      const response=await fetch(this.endpoint,{method:'POST',headers:{'Content-Type':'application/json',apikey:DUEL_PUBLIC_KEY},body:JSON.stringify(body),signal:controller.signal,credentials:'omit',cache:'no-store'});
+      const data=await response.json();
+      if(generation!==this.generation)throw Object.assign(new Error('stale_request'),{code:'stale_request'});
+      if(!response.ok||!data.ok)throw Object.assign(new Error(data.error||'server_error'),{code:data.error||'server_error'});
+      this.accept(data);return data;
+    }catch(error){
+      const code=typeof error.code==='string'&&error.name!=='AbortError'&&error.name!=='TimeoutError'?error.code:'network_error';
+      if(generation===this.generation){this.connected=false;this.error=code;this.notify();}
+      throw Object.assign(new Error(code,{cause:error}),{code});
+    }finally{clearTimeout(timeout);}
+  }
+  async mutate(body){
+    if(this.busy)throw Object.assign(new Error('busy'),{code:'busy'});
+    this.busy=true;this.session.pending=body;this.save();
+    try{
+      let result;
+      for(let attempt=0;attempt<2;attempt++){
+        try{result=await this.request(body);break;}catch(error){if(!['network_error','server_error'].includes(error.code)||attempt===1)throw error;await new Promise(r=>setTimeout(r,300));}
+      }
+      this.session.pending=null;this.save();return result;
+    }catch(error){
+      if(!['network_error','server_error'].includes(error.code)){this.session.pending=null;this.save();}
+      throw error;
+    }finally{this.busy=false;this.notify();}
+  }
+  create(name){
+    if(this.session?.roomId)throw Object.assign(new Error('active_room'),{code:'active_room'});
+    this.session=this.session||{token:makeDuelToken(),roomId:null,pending:null};
+    return this.mutate(this.session.pending||{action:'create',token:this.session.token,name});
+  }
+  join(name,code){
+    if(this.session?.roomId)throw Object.assign(new Error('active_room'),{code:'active_room'});
+    this.session=this.session||{token:makeDuelToken(),roomId:null,pending:null};
+    return this.mutate(this.session.pending||{action:'join',token:this.session.token,name,code});
+  }
+  async resume(){
+    if(!this.session)return null;
+    if(this.session.pending)return this.mutate(this.session.pending);
+    return this.refresh();
+  }
+  async refresh(){
+    if(!this.session?.roomId)return null;
+    const result=await this.request({action:'state',roomId:this.session.roomId,token:this.session.token});
+    if(this.session.pending?.seq<=result.me.seq){this.session.pending=null;this.save();this.notify();}
+    return result;
+  }
+  act(action,details={}){
+    if(this.pending)throw Object.assign(new Error('pending_action'),{code:'pending_action'});
+    if(!this.snapshot)throw Object.assign(new Error('not_connected'),{code:'not_connected'});
+    const body={action,roomId:this.session.roomId,token:this.session.token,seq:this.snapshot.me.seq+1};
+    for(const key of ['questionIndex','kind','shape','target'])if(details[key]!==undefined)body[key]=details[key];
+    return this.mutate(body);
+  }
+  startPolling(){
+    if(this.polling)return;this.polling=true;
+    const poll=async()=>{
+      if(!this.polling)return;
+      try{await this.refresh();}catch{/* Status is visible; retry without clearing the session. */}
+      if(this.polling)this.timer=setTimeout(poll,this.connected?2000:5000);
+    };
+    this.timer=setTimeout(poll,2000);
+  }
+  stopPolling(){this.polling=false;clearTimeout(this.timer);this.timer=null;}
+  forget(){this.stopPolling();this.generation++;this.session=null;this.snapshot=null;this.connected=false;this.error='';this.lastClock=0;this.save();this.notify();}
+}
+
+
 
 const $ = id => document.getElementById(id);
 const pretty = value => formatRichText(value,locale.language);
@@ -1898,6 +2146,9 @@ let scoresExpanded = false, lastClock = '', lastLed = {}, visualPlan = null, mot
 const dialog = $('app-dialog');
 const languageControl=$('language-control'), languageHome=languageControl.parentElement;
 let refreshingLanguage=false, lastStatus=null, validationErrors=null, scoreNotice='', automaticPause=false;
+let duelBusy=false,duelNeedsRestore=false,duelAppliedSeq=-1,duelNoticeKey='',duelInputsBlocked=null;
+let duelSessionStorage;try{duelSessionStorage=window.sessionStorage;}catch{duelSessionStorage=null;}
+const duelClient=new DuelClient({storage:duelSessionStorage,onChange:()=>onDuelSnapshot()});
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const TOPIC_NAMES = {properties:'Sifat bongkah',formula:'Rumus',net:'Bentangan'};
 const SHAPE_NOTES = {
@@ -1942,23 +2193,138 @@ function showScreen(next) {
   $('welcome').hidden = next !== 'welcome';
   $('game-screen').hidden = next !== 'game';
   $('result-screen').hidden = next !== 'result';
+  $('duel-screen').hidden = next !== 'duel';
   updateTitle(next);
   window.scrollTo({top:0,behavior:'instant'});
 }
 function updateTitle(next=screen) {
+  if(next==='duel'){document.title=t('duel.pageTitle');return;}
   document.title = next === 'welcome' ? t("GeoDecoder Digital — Jom main geometri") : next === 'game' ? t("GeoDecoder Digital — Sedang bermain") : t("GeoDecoder Digital — Keputusan pusingan");
 }
 function uid() { return globalThis.crypto?.randomUUID?.() || `round-${Date.now()}-${Math.random().toString(36).slice(2)}`; }
 
-const modeTitle=mode=>t(mode==='practice'?'mode.practiceTitle':'mode.quizTitle');
+const modeTitle=mode=>t(mode==='duel'?'duel.title':mode==='practice'?'mode.practiceTitle':'mode.quizTitle');
 const selectedTotal=()=>$('play-mode').value==='practice'?PRACTICE_SIZE:ROUND_SIZE;
 function updateModeChoice(){
   const practice=$('play-mode').value==='practice';
+  const duel=$('play-mode').value==='duel';
   $('entry-question-count').textContent=selectedTotal();
-  $('mode-description').textContent=t(practice?'mode.practiceNote':'mode.quizNote');
-  $('start-label').textContent=t(practice?'mode.startPractice':'Mulakan permainan');
+  $('mode-description').textContent=t(duel?'duel.modeNote':practice?'mode.practiceNote':'mode.quizNote');
+  $('start-label').textContent=t(duel?'duel.open':practice?'mode.startPractice':'Mulakan permainan');
+  $('privacy-note-text').textContent=t(duel?'duel.privacy':'Nama dan skor disimpan dalam pelayar ini sahaja. Anda boleh gunakan nama panggilan.');
 }
 $('play-mode').addEventListener('change',updateModeChoice);
+
+function duelErrorKey(){const key='duel.error.'+duelClient.error;return t(key)?key:'duel.error';}
+function duelMarkup(id,html){if($(id).innerHTML!==html)$(id).innerHTML=html;}
+function duelPlayersMarkup(snapshot,final=false){
+  return [snapshot.me,snapshot.opponent].map((p,index)=>{
+    if(!p)return `<div class="duel-player waiting"><strong>${t('duel.friend')}</strong><p>${t('duel.waitFriend')}</p></div>`;
+    const progress=Math.max(0,Math.min(10,p.answered||0));
+    const status=snapshot.room.status==='waiting'?(p.ready?t('duel.isReady'):t('duel.notReady')):t('duel.progress',{answered:progress});
+    return `<div class="duel-player ${index===0?'self':''}"><small>${t(index===0?'duel.you':'duel.friend')}</small><strong>${escapeHtml(p.name)}</strong><div><b>${p.score} / 10</b><span>${final&&p.finishedAt?formatDuelTime(p.elapsed):status}</span></div><div class="duel-track" aria-hidden="true"><span style="width:${progress*10}%"></span></div></div>`;
+  }).join('');
+}
+function renderDuelViews(){
+  const s=duelClient.snapshot,closed=s&&['complete','cancelled','expired'].includes(s.room.status);
+  $('duel-entry').hidden=!!s;
+  $('duel-room').hidden=!s;
+  $('duel-create').disabled=duelBusy||duelClient.pending;
+  $('duel-join').disabled=duelBusy||duelClient.pending;
+  $('duel-pin').disabled=duelBusy;
+  $('duel-ready').disabled=duelBusy||!duelClient.connected||duelClient.pending||!s||s.room.status!=='waiting'||s.me.ready;
+  $('duel-ready').textContent=t(s?.me.ready?'duel.isReady':'duel.ready');
+  const reconnect=duelClient.hasSession&&(!duelClient.connected||duelClient.pending);
+  for(const id of ['duel-retry','duel-live-retry','duel-result-retry']){$(id).hidden=!reconnect;$(id).disabled=duelBusy;}
+  $('duel-new-room').hidden=!(closed||['invalid_token','room_expired','room_unavailable'].includes(duelClient.error));
+  const connection=duelBusy?t('duel.connecting'):duelClient.connected?t('duel.connected'):['invalid_token','room_expired'].includes(duelClient.error)?t('duel.closed'):duelClient.session?.roomId?t('duel.offline'):'';
+  $('duel-connection').textContent=connection;$('duel-live-connection').textContent=connection;
+  $('duel-message').textContent=duelClient.error?t(duelErrorKey()):duelNoticeKey?t(duelNoticeKey):'';
+  const leaveError=$('dialog-content').querySelector('.duel-leave-error');if(leaveError)leaveError.textContent=duelClient.error?t(duelErrorKey()):'';
+  $('duel-live').hidden=game?.mode!=='duel';
+  $('duel-result').hidden=screen!=='result'||lastResult?.mode!=='duel'||!s;
+  if(s){
+    $('duel-room-code').value=s.room.code;
+    $('duel-live-code').textContent='PIN '+s.room.code;
+    duelMarkup('duel-lobby-players',duelPlayersMarkup(s));duelMarkup('duel-live-players',duelPlayersMarkup(s));
+    $('duel-live-note').textContent=s.opponent&&!s.opponent.finishedAt&&duelClient.clock()-s.opponent.lastSeenAt>15000?t('duel.presenceAway'):t('duel.clockNote');
+    const reason={score:'duel.byScore',time:'duel.byTime',forfeit:'duel.byForfeit',deadline:'duel.byDeadline'}[s.room.reason];
+    duelMarkup('duel-result-content',`<span class="eyebrow">GEODECODER DUEL</span><h2>${t(duelVerdict(s))}</h2>${reason?`<p>${t(reason)}</p>`:''}<div class="duel-players">${duelPlayersMarkup(s,true)}</div><p>${t('duel.resultScope')}</p>`);
+    if(closed&&s.room.status!=='complete')$('duel-countdown').textContent=t('duel.closed');
+    else if(s.room.status==='waiting')$('duel-countdown').textContent=t(s.opponent?'duel.waitReady':'duel.waitFriend');
+  }
+}
+async function duelTask(task){
+  if(duelBusy)return null;
+  duelBusy=true;duelNoticeKey='';renderDuelViews();if(game&&screen==='game')renderState();
+  try{return await task();}
+  catch{duelNeedsRestore=true;if(game&&screen==='game')setStatus(duelErrorKey(),'error','close');return null;}
+  finally{duelBusy=false;renderDuelViews();if(game&&screen==='game')renderState();}
+}
+function restoreDuelGame(){
+  const s=duelClient.snapshot;if(!s||!game||game.mode!=='duel')return;
+  try{
+    const paused=game.paused||dialog.open||document.hidden;
+    game=Game.fromDuelSnapshot(QUESTIONS,player,s,now());duelAppliedSeq=s.me.seq;duelNeedsRestore=false;
+    if(game.status==='finished'){finishGame();return;}
+    if(paused)game.pause(now());
+    lastLed={};renderQuestion();if(game.stage==='net'){acceptedSolid=game.question.shape;renderState();}
+  }catch{duelClient.connected=false;duelClient.error='invalid_response';renderDuelViews();renderState();}
+}
+function onDuelSnapshot(){
+  renderDuelViews();
+  const s=duelClient.snapshot;
+  if(s&&['complete','cancelled','expired'].includes(s.room.status))duelClient.stopPolling();
+  if(s&&game?.mode==='duel'&&screen==='game'&&!duelBusy&&duelClient.connected&&!duelClient.busy&&(duelNeedsRestore||s.me.seq>duelAppliedSeq))restoreDuelGame();
+}
+function tickDuel(){
+  if(playMode!=='duel'||!duelClient.snapshot)return;
+  const s=duelClient.snapshot;
+  if(screen==='duel'&&s.room.startsAt&&['countdown','playing','complete'].includes(s.room.status)){
+    const remaining=s.room.status==='complete'?0:Math.max(0,Math.ceil((s.room.startsAt-duelClient.clock())/1000));
+    const message=remaining?t('duel.countdown',{seconds:remaining}):t('duel.live');
+    if($('duel-countdown').textContent!==message)$('duel-countdown').textContent=message;
+    if(!remaining&&!duelBusy&&duelClient.connected){startGame();return;}
+  }
+  if(screen==='game'&&game?.mode==='duel'&&!duelBusy){
+    if(s.room.status==='complete'&&game.answers.length<game.total){restoreDuelGame();return;}
+    const blocked=duelBusy||!duelClient.connected||duelClient.pending||duelClient.clock()<(s.me.nextReadyAt||s.room.startsAt||0);
+    if(blocked!==duelInputsBlocked){duelInputsBlocked=blocked;renderState();}
+  }
+}
+async function openDuelLobby(){
+  game=null;lastResult=null;duelNoticeKey='';showScreen('duel');renderDuelViews();$('duel-title').focus({preventScroll:true});
+  if(duelClient.hasSession){await duelTask(()=>duelClient.resume());duelClient.startPolling();}
+}
+async function reconnectDuel(){
+  const result=await duelTask(()=>duelClient.resume());
+  if(result){duelClient.startPolling();if(screen==='game')restoreDuelGame();}
+}
+async function leaveDuel(newRoom=false){
+  if(duelBusy)return;
+  if(duelClient.snapshot&&!['invalid_token','room_expired'].includes(duelClient.error)&&!['complete','cancelled','expired'].includes(duelClient.snapshot.room.status)){
+    if(duelClient.pending&&!(await duelTask(()=>duelClient.resume())))return;
+    if(!(await duelTask(()=>duelClient.act('leave'))))return;
+  }
+  game=null;lastResult=null;selected=null;duelNeedsRestore=false;duelAppliedSeq=-1;duelClient.forget();closeDialog();
+  if(newRoom){showScreen('duel');renderDuelViews();}else{showScreen('welcome');$('player-name').focus({preventScroll:true});}
+}
+$('duel-create').addEventListener('click',async()=>{if(await duelTask(()=>duelClient.create(player.name)))duelClient.startPolling();});
+$('duel-join-form').addEventListener('submit',async event=>{
+  event.preventDefault();
+  if(!/^[0-9]{6}$/.test($('duel-pin').value)){duelClient.error='invalid_request';$('duel-pin').setAttribute('aria-invalid','true');renderDuelViews();$('duel-pin').focus();return;}
+  if(await duelTask(()=>duelClient.join(player.name,$('duel-pin').value)))duelClient.startPolling();
+});
+$('duel-pin').addEventListener('input',()=>{$('duel-pin').value=$('duel-pin').value.replace(/[^0-9]/g,'').slice(0,6);$('duel-pin').removeAttribute('aria-invalid');if(duelClient.error==='invalid_request'){duelClient.error='';renderDuelViews();}});
+$('duel-ready').addEventListener('click',()=>duelTask(()=>duelClient.act('ready')));
+$('duel-copy').addEventListener('click',async()=>{
+  try{await navigator.clipboard.writeText($('duel-room-code').value);duelNoticeKey='duel.copied';}
+  catch{$('duel-room-code').focus();$('duel-room-code').select();duelNoticeKey='duel.copySelected';}
+  renderDuelViews();
+});
+for(const id of ['duel-retry','duel-live-retry','duel-result-retry'])$(id).addEventListener('click',reconnectDuel);
+$('duel-new-room').addEventListener('click',()=>leaveDuel(true));
+$('duel-home').addEventListener('click',requestHome);
 
 $('player-form').addEventListener('submit', event => {
   event.preventDefault();
@@ -1981,7 +2347,7 @@ $('player-form').addEventListener('submit', event => {
   }
   player = result.player;
   playMode=$('play-mode').value;
-  startGame();
+  if(playMode==='duel')openDuelLobby();else startGame();
 });
 for (const [id,key] of [['player-name','name'],['player-class','className']]) {
   $(id).addEventListener('input', () => { $(id).removeAttribute('aria-invalid'); $(key+'-error').textContent = '';if(validationErrors)delete validationErrors[key]; });
@@ -1990,13 +2356,17 @@ for (const [id,key] of [['player-name','name'],['player-class','className']]) {
 function startGame() {
   if (!player) return;
   cancelDrag();
-  game = new Game(QUESTIONS, player, now(),Math.random,{mode:playMode});
-  roundId = uid(); lastResult = null; lastClock = ''; lastLed = {}; visualPlan=null;
+  game = playMode==='duel'?Game.fromDuelSnapshot(QUESTIONS,{...player,name:duelClient.snapshot.me.name},duelClient.snapshot,now()):new Game(QUESTIONS, player, now(),Math.random,{mode:playMode});
+  if(playMode==='duel'){player={...player,name:duelClient.snapshot.me.name};duelAppliedSeq=duelClient.snapshot.me.seq;}
+  roundId = playMode==='duel'?'duel:'+duelClient.snapshot.room.id+':'+duelClient.snapshot.me.id:uid(); lastResult = null; lastClock = ''; lastLed = {}; visualPlan=null;
   $('player-initial').textContent = player.name[0].toLocaleUpperCase('ms-MY');
   $('player-display').textContent = player.name;
   $('player-meta').textContent = `${t(player.category)} · ${player.className}`;
   showScreen('game');
+  if(game.status==='finished'){finishGame();return;}
   renderQuestion();
+  if(game.mode==='duel'&&game.stage==='net'){acceptedSolid=game.question.shape;renderState();}
+  renderDuelViews();
   $('question-title').focus({preventScroll:true});
   announce(t("mode.startAnnouncement",{mode:modeTitle(game.mode),total:game.total}));
 }
@@ -2058,12 +2428,14 @@ function renderState() {
   if (!game) return;
   $('session-mode').textContent=modeTitle(game.mode);
   $('score-total').textContent=' / '+game.total;
-  const busy = !game.interactive;
+  const busy = !game.interactive || (game.mode==='duel'&&(duelBusy||!duelClient.connected||duelClient.pending||duelClient.clock()<(duelClient.snapshot?.me.nextReadyAt||duelClient.snapshot?.room.startsAt||0)));
   const active = game.stage === 'solid' ? 'r1' : 'r2';
   $('score-value').textContent = game.score;
   $('hint-button').disabled = busy;
   $('skip-button').disabled = busy;
   $('pause-button').disabled = game.status === 'feedback';
+  $('pause-button').setAttribute('aria-label',game.mode==='duel'?t('duel.menu'):t('Jeda permainan'));
+  $('pause-button').title=game.mode==='duel'?t('duel.menu'):t('Jeda permainan');
   $('hint-button').setAttribute('aria-expanded',String(game.hintOpen));
   $('hint-label').textContent = game.hintOpen ? t("Tutup petunjuk") : t("Beri petunjuk");
   $('hint-panel').hidden = !game.hintOpen;
@@ -2133,10 +2505,16 @@ function choose(button) {
   renderState();
 }
 
-function scan(choice,target) {
+async function scan(choice,target) {
   if (!game?.interactive) return;
   if (!choice) { setStatus("choice.first",'','cursor',{kind:game.stage==='solid'?"bongkah":"kad bentangan",target:target.toUpperCase()}); return; }
-  const result = game.scan(choice.kind,choice.shape,target,now());
+  if(game.mode==='duel'){
+    if(duelBusy||!duelClient.connected||duelClient.pending)return;
+    const ack=await duelTask(()=>duelClient.act('scan',{questionIndex:game.index,kind:choice.kind,shape:choice.shape,target}));
+    if(!ack)return;duelAppliedSeq=ack.me.seq;
+    if(ack.room.status==='complete'&&ack.actionResult?.type!=='correct'&&ack.actionResult?.type!=='wrong'){restoreDuelGame();return;}
+  }
+  const result = game.mode==='duel'?game.applyDuelAcknowledgement('scan',{kind:choice.kind,shape:choice.shape,target},now()):game.scan(choice.kind,choice.shape,target,now());
   if (result.type==='blocked') return;
   if (result.type==='stage') { setStatus(result.target==='r1'?"R1 dahulu. Imbas bongkah sebelum kad bentangan.":"Bongkah R1 sudah betul. Padankan kad bentangan di R2."); return; }
   if (result.type==='kind') { setStatus(game.stage==='solid'?"R1 hanya menerima bongkah 3D.":"R2 hanya menerima kad bentangan."); return; }
@@ -2200,21 +2578,27 @@ document.addEventListener('click', event => {
   if (action==='home') requestHome();
 });
 $('brand-home').addEventListener('click',event=>{event.preventDefault();requestHome();});
-$('hint-button').addEventListener('click',()=>{
-  if(game?.toggleHint()){
+$('hint-button').addEventListener('click',async()=>{
+  if(game?.mode==='duel'&&!game.hintUsed){
+    const ack=await duelTask(()=>duelClient.act('hint',{questionIndex:game.index}));if(!ack)return;duelAppliedSeq=ack.me.seq;
+  }
+  if(game&&(game.mode==='duel'?game.applyDuelAcknowledgement('hint',{},now()):game.toggleHint())){
     setStatus(game.hintOpen?"Petunjuk dibuka. Baca petunjuk dan teruskan memilih.":"Petunjuk ditutup. Teruskan menjawab.",game.hintOpen?'hint':'','bulb');
     renderState();
   }
 });
-$('skip-button').addEventListener('click',()=>{
-  if(game?.skip(now())){ cancelDrag(); selected=null;setStatus("Soalan dilangkau, +0 markah. Lihat jawapan sebelum meneruskan.",'','skip');showCorrection();renderState();tone('skip'); }
+$('skip-button').addEventListener('click',async()=>{
+  if(game?.mode==='duel'){
+    const ack=await duelTask(()=>duelClient.act('skip',{questionIndex:game.index}));if(!ack)return;duelAppliedSeq=ack.me.seq;
+  }
+  if(game&&(game.mode==='duel'?game.applyDuelAcknowledgement('skip',{},now()):game.skip(now()))){ cancelDrag(); selected=null;setStatus("Soalan dilangkau, +0 markah. Lihat jawapan sebelum meneruskan.",'','skip');showCorrection();renderState();tone('skip'); }
 });
 $('continue-button').addEventListener('click',()=>{
   if(!game?.continueReview(now()))return;
   if(game.status==='finished')finishGame();else{lastLed={};renderQuestion();$('question-title').focus({preventScroll:true});announce(t("round.single",{number:game.index+1,total:game.total}));}
 });
 $('pause-button').addEventListener('click',()=>openPause());
-$('replay-button').addEventListener('click',()=>startGame());
+$('replay-button').addEventListener('click',()=>{if(playMode==='duel')leaveDuel(true);else startGame();});
 
 // One Pointer Events path for mouse, pen and touch, with a click/keyboard alternative.
 document.addEventListener('pointerdown',event=>{
@@ -2293,6 +2677,7 @@ dialog.addEventListener('click',event=>{
   if(action==='close')closeDialog();
   if(action==='home'){ game=null;selected=null;acceptedSolid=null;acceptedNet=null;dialogTrigger=null;closeDialog();showScreen('welcome');$('player-name').focus({preventScroll:true}); }
   if(action==='request-home')requestHome();
+  if(action==='duel-leave')leaveDuel();
   if(action==='export')downloadScores();
   if(action==='show-all'){scoresExpanded=true;openScores();}
   if(action==='erase')openErase();
@@ -2306,17 +2691,23 @@ dialog.addEventListener('click',event=>{
 
 function openHelp(){
   const total=game&&screen!=='welcome'?game.total:selectedTotal();
-  openDialog('help',t("Cara main GeoDecoder"),`<p class="help-intro">${t("Satu soalan, dua padanan,")} <b>${t("satu percubaan")}</b>${t(". Sasarkan")} <b>${t('mode.target',{total})}</b>.</p><div class="help-steps"><div class="help-step"><span class="help-number">1</span><div><h3>${t("Baca soalan dan pilih bongkah")}</h3><p>${t("Seret satu bongkah 3D ke pengimbas R1 yang berwarna biru.")}</p></div></div><div class="help-step"><span class="help-number">2</span><div><h3>${t("Padankan kad bentangannya")}</h3><p>${t("Selepas R1 hijau, seret kad bentangan yang sepadan ke R2. Bentuk menentukan jawapan; warna dan kedudukan berubah setiap soalan.")}</p></div></div><div class="help-step"><span class="help-number">3</span><div><h3>${t("Semak dan belajar")}</h3><p>${t("Pasangan betul memberi +1. Salah pada R1 atau R2 menamatkan soalan dengan +0. Lihat jawapan betul, kemudian tekan soalan seterusnya.")}</p></div></div></div><div class="help-mini-art">${shapeArt('cube','solid',true)}<span>R1 ${icon('arrow')} R2</span>${shapeArt('cube','net',true)}</div><p class="keyboard-help">${t("Tanpa menyeret:")} <b>${t("klik / sentuh kad")}</b>, ${t("kemudian")} <b>${t("klik pengimbas")}</b>. ${t("Papan kekunci:")} <kbd>Tab</kbd> ${t("untuk bergerak,")} <kbd>Enter</kbd> ${t("atau")} <kbd>Space</kbd> ${t("untuk memilih dan mengimbas.")}</p><p class="help-note"><b>${t("Fikir dahulu sebelum mengimbas.")}</b> ${t("Memilih kad sahaja belum menggunakan percubaan. Petunjuk percuma. Langkau memberi +0 dan turut menunjukkan jawapan. Analisis akhir membantu anda memilih perkara yang perlu dilatih lagi. Jam dijeda semasa semakan dan tetingkap ini dibuka.")}</p><div class="dialog-actions"><button class="button button-primary" data-dialog-action="close" data-autofocus>${screen==='game'?t("Sambung permainan"):t("Saya faham")} ${icon('arrow')}</button></div>`);
+  openDialog('help',t("Cara main GeoDecoder"),`<p class="help-intro">${t("Satu soalan, dua padanan,")} <b>${t("satu percubaan")}</b>${t(". Sasarkan")} <b>${t('mode.target',{total})}</b>.</p><div class="help-steps"><div class="help-step"><span class="help-number">1</span><div><h3>${t("Baca soalan dan pilih bongkah")}</h3><p>${t("Seret satu bongkah 3D ke pengimbas R1 yang berwarna biru.")}</p></div></div><div class="help-step"><span class="help-number">2</span><div><h3>${t("Padankan kad bentangannya")}</h3><p>${t("Selepas R1 hijau, seret kad bentangan yang sepadan ke R2. Bentuk menentukan jawapan; warna dan kedudukan berubah setiap soalan.")}</p></div></div><div class="help-step"><span class="help-number">3</span><div><h3>${t("Semak dan belajar")}</h3><p>${t("Pasangan betul memberi +1. Salah pada R1 atau R2 menamatkan soalan dengan +0. Lihat jawapan betul, kemudian tekan soalan seterusnya.")}</p></div></div></div><div class="help-mini-art">${shapeArt('cube','solid',true)}<span>R1 ${icon('arrow')} R2</span>${shapeArt('cube','net',true)}</div><p class="keyboard-help">${t("Tanpa menyeret:")} <b>${t("klik / sentuh kad")}</b>, ${t("kemudian")} <b>${t("klik pengimbas")}</b>. ${t("Papan kekunci:")} <kbd>Tab</kbd> ${t("untuk bergerak,")} <kbd>Enter</kbd> ${t("atau")} <kbd>Space</kbd> ${t("untuk memilih dan mengimbas.")}</p><p class="help-note"><b>${t("Fikir dahulu sebelum mengimbas.")}</b> ${t((screen==='welcome'?$('play-mode').value==='duel':playMode==='duel')?'duel.helpNote':"Memilih kad sahaja belum menggunakan percubaan. Petunjuk percuma. Langkau memberi +0 dan turut menunjukkan jawapan. Analisis akhir membantu anda memilih perkara yang perlu dilatih lagi. Jam dijeda semasa semakan dan tetingkap ini dibuka.")}</p><div class="dialog-actions"><button class="button button-primary" data-dialog-action="close" data-autofocus>${screen==='game'?t("Sambung permainan"):t("Saya faham")} ${icon('arrow')}</button></div>`);
 }
 
 function openPause(automatic=false){
   if(!refreshingLanguage)automaticPause=automatic;
   if(!game || screen!=='game')return;
   if(!refreshingLanguage)game.pause(now());
-  openDialog('pause',t("Permainan dijeda"),`<div class="pause-symbol">${icon('pause')} ${formatTime(game.time(now()))}</div><p class="dialog-copy">${automatic?t("Permainan dijeda semasa anda meninggalkan tab ini."):t("Berehat seketika. Masa dan soalan anda dikekalkan.")} ${t("Tekan sambung apabila sudah bersedia.")}</p><div class="dialog-actions"><button class="button button-outline" data-dialog-action="request-home">${t("Tamatkan pusingan")}</button><button class="button button-primary" data-dialog-action="close" data-autofocus>${t("Sambung permainan")} ${icon('arrow')}</button></div>`);
+  openDialog('pause',t(game.mode==='duel'?'duel.menu':"Permainan dijeda"),`<div class="pause-symbol">${icon('pause')} ${formatTime(game.mode==='duel'?duelClient.elapsed():game.time(now()))}</div><p class="dialog-copy">${game.mode==='duel'?t('duel.clockNote'):automatic?t("Permainan dijeda semasa anda meninggalkan tab ini."):t("Berehat seketika. Masa dan soalan anda dikekalkan.")} ${t("Tekan sambung apabila sudah bersedia.")}</p><div class="dialog-actions"><button class="button button-outline" data-dialog-action="request-home">${t("Tamatkan pusingan")}</button><button class="button button-primary" data-dialog-action="close" data-autofocus>${t("Sambung permainan")} ${icon('arrow')}</button></div>`);
 }
 
 function requestHome(){
+  if(playMode==='duel'&&['duel','game','result'].includes(screen)){
+    if(duelClient.snapshot&&!duelClient.snapshot.me.finishedAt&&['waiting','countdown','playing'].includes(duelClient.snapshot.room.status)){
+      openDialog('duel-leave',t('duel.leaveTitle'),`<p class="dialog-copy">${t('duel.leaveCopy')}</p><p class="duel-leave-error" role="status"></p><div class="dialog-actions"><button class="button button-outline" data-dialog-action="close" data-autofocus>${t('Terus bermain')}</button><button class="button button-danger" data-dialog-action="duel-leave">${t('duel.confirmLeave')}</button></div>`);
+    }else leaveDuel();
+    return;
+  }
   if(screen==='game' && game && game.status!=='finished'){
     openDialog('leave',t("Tamatkan pusingan ini?"),`<p class="dialog-copy">${t("leave.progress")} <b>${t("leave.count",{number:game.index+1,total:game.total})}</b>. ${t("Jika kembali ke mula, kemajuan pusingan ini dilepaskan dan skor pusingan ini tidak disimpan.")}</p><div class="dialog-actions"><button class="button button-outline" data-dialog-action="close" data-autofocus>${t("Terus bermain")}</button><button class="button button-danger" data-dialog-action="home">${t("Tamatkan pusingan")}</button></div>`);
   }else{ game=null;selected=null;showScreen('welcome');$('player-name').focus({preventScroll:true}); }
@@ -2351,11 +2742,16 @@ function downloadScores(){
 
 function finishGame(){
   cancelDrag();selected=null;
+  if(game.mode==='duel'){
+    game=Game.fromDuelSnapshot(QUESTIONS,player,duelClient.snapshot,now());
+    if(dialog.open)closeDialog();
+  }
   lastResult=game.result(roundId);
   if(lastResult.mode==='quiz')store.save(lastResult);
   storageStatus();
   renderResult();
   showScreen('result');
+  renderDuelViews();
   $('result-title').focus({preventScroll:true});
   announce(t("result.complete",{score:lastResult.score,total:lastResult.total,time:formatTime(lastResult.elapsed)}));
 }
@@ -2365,12 +2761,12 @@ function renderResult(){
   $('result-player').textContent=`${r.player.name} · ${t(r.player.category)} · ${r.player.className}`;
   $('result-score').textContent=r.score;
   $('result-total').textContent=t('mode.points',{total:r.total});
-  $('practice-result-note').hidden=r.mode!=='practice';
-  $('practice-result-note').textContent=t('mode.practiceResult');
-  $('replay-label').textContent=t(r.mode==='practice'?'mode.repeatPractice':'Main lagi');
+  $('practice-result-note').hidden=r.mode==='quiz';
+  $('practice-result-note').textContent=t(r.mode==='duel'?'duel.resultScope':'mode.practiceResult');
+  $('replay-label').textContent=t(r.mode==='duel'?'duel.new':r.mode==='practice'?'mode.repeatPractice':'Main lagi');
   $('analysis-description').textContent=t('mode.analysisScope',{total:r.total,perShape:r.total/SHAPES.length});
   $('result-level').textContent=r.score===r.total?t("Pakar padanan"):r.score/r.total>=.7?t("Penjelajah geometri"):t("Peneroka bentuk");
-  const rank=r.mode==='practice'?0:store.read().findIndex(s=>s.id===r.id)+1;
+  const rank=r.mode==='quiz'?store.read().findIndex(s=>s.id===r.id)+1:0;
   $('result-message').textContent=t("result.summary",{score:r.score,mistakes:r.mistakes,skipped:r.skipped})+(rank>0?t("result.rank",{rank}):'');
   $('result-time').textContent=formatTime(r.elapsed);
   $('result-first').textContent=`${analyseAnswers(r.answers).byStage[0].correct} / ${r.total}`;
@@ -2383,6 +2779,7 @@ function renderResult(){
     return `<article class="review-card ${answer.outcome}"><small>${t("question.counter",{number:i+1,total:r.total})} · ${t(TOPIC_NAMES[answer.topic])}</small><p class="review-prompt">${pretty(q.prompt)}</p><div class="review-pair">${shapeArt(answer.shape,'solid',true,'orange')}${shapeArt(answer.shape,'net',true,'violet')}</div><h3>${t("Jawapan:")} ${shapeName(answer.shape,locale.language)}</h3><p class="review-outcome">${answer.outcome==='correct'?t("✓ Pasangan betul · +1"):answer.outcome==='wrong'?t("review.wrong",{target:answer.failedAt==='solid'?'R1':'R2'}):t("↷ Dilangkau · +0")}</p><p class="review-attempt">${attempts}${answer.hint?'<br>'+t("Petunjuk digunakan"):''}</p></article>`;
   }).join('');
   renderMiniScores();
+  renderDuelViews();
 
 }
 
@@ -2447,12 +2844,13 @@ window.addEventListener('storage',event=>{
 });
 
 function frame(time){
+  tickDuel();
   if(game && screen==='game'){
     if(game.update(time)){
       if(game.status==='finished')finishGame();
       else{lastLed={};renderQuestion();$('question-title').focus({preventScroll:true});announce(t("round.next",{number:game.index+1,total:game.total}));}
     }
-    const clock=formatTime(game.time(time));
+    const clock=formatTime(game.mode==='duel'?duelClient.elapsed():game.time(time));
     if(clock!==lastClock){$('time-value').textContent=clock;lastClock=clock;}
     renderLeds(time);
     if(game.reviewing&&game.reviewReady(time)&&$('continue-button').disabled){
@@ -2476,7 +2874,7 @@ function applyStaticLanguage(){
     document.querySelectorAll('[data-i18n-'+name+']').forEach(el=>el.setAttribute(name,t(el.getAttribute('data-i18n-'+name))));
   }
   $('language-select').value=locale.language;
-  updateTitle();updateSound();updateMotion();updateModeChoice();
+  updateTitle();updateSound();updateMotion();updateModeChoice();renderDuelViews();
 }
 function applyLanguage(){
   const focused=document.activeElement;
@@ -2509,6 +2907,7 @@ function applyLanguage(){
       else if(dialogMode==='leave')requestHome();
       else if(dialogMode==='scores')openScores(scoreNotice);
       else if(dialogMode==='erase')openErase();
+      else if(dialogMode==='duel-leave')requestHome();
     }
     storageStatus();
   }finally{refreshingLanguage=false;}

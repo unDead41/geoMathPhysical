@@ -1,0 +1,3 @@
+[functions.geodecoder-duel]
+verify_jwt = true
+entrypoint = "./functions/geodecoder-duel/index.ts"

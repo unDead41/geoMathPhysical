@@ -12,6 +12,7 @@ Business sources: user request (25 October 2026), docs/SOURCE.md and docs/UPGRAD
 | Dialog | app.mjs openDialog/closeDialog, native dialog | this contract | help/pause/scores/leave/erase | Escape/focus/browser |
 | Direct manipulation | app.mjs Pointer Events controller | user request | pointer/touch/tap/keyboard | browser drag + keyboard |
 | CRUD | storage.mjs score repository | local-only decision | save/list/export/erase | storage tests, browser persistence |
+| Duel | duel.mjs + geodecoder-duel Edge/RPC | docs/DUEL.md | create/join/ready/play/result/resume | two real browser contexts, SQL/Edge tests |
 
 ## Shared behavior
 
@@ -31,3 +32,31 @@ Storage failure leaves play working with a persistent message and session-only s
 Final learning analysis: two questions per shape in quiz, three in practice; correctness, wrong, skipped, hints, real stage attempts, and topic categories derived from actual prompt content. Unreached R2 is not a wrong R2; no attempts means no percentage. Hint use does not make an answer wrong. Explain weakness only from actual wrong answers; skipped-only rounds prompt the player to attempt questions. Show denominators, suggested practice and all question/choice/correct-answer records (10 in quiz, 15 in practice).
 
 Dialogs remember trigger focus, use native showModal inertness and Escape, pause active play and restore after close. Leave requires confirmation; default focus on continue. Keyboard arrows not overridden. Reduced motion removes decorative motion/flashing. Labels + text accompany colour. Non-drag equivalent is always printed. At narrow widths use document scrolling and keep every action available.
+
+## Duel exceptions (v1.5.0)
+
+The solo clock, reload, persistence and no-network rules above apply to quiz and
+practice. Duel shares the same rendering, question bank, single-attempt R1→R2
+rules and corrections, with these explicit differences:
+
+- Two players join by a generated six-digit PIN. Both ready starts a common
+  three-second server countdown. The server chooses ten identical question IDs
+  in one order, two per shape; each player controls their language independently.
+- The server validates scans, score, hints, sequence and question stage. A retry
+  repeats the same operation sequence. Delayed acknowledgement must update the
+  accepted action even when a dialog is open, preserving dialog state.
+- The server wall clock continues during corrections, menus, hidden tabs and
+  disconnection. UI interaction can pause behind a dialog; match time cannot.
+  Higher score wins, then earlier server finish time. Match deadline: 15 minutes.
+- A sessionStorage token allows reload to recover the same room, accepted R1,
+  answers and score. Quiz/practice still restart on reload. Denied sessionStorage
+  allows the current Duel to work in memory, without promising reload recovery.
+- Alias and gameplay state go to the Duel service. Class/category remain local.
+  No Duel result enters the quiz board or its CSV. Opening quiz/practice sends
+  no Duel requests. Lobbies support two players and PINs expire after ten minutes.
+- Leaving an incomplete match forfeits. Leaving a waiting lobby cancels it.
+  Leaving after completing all questions cannot forfeit. Forfeit/deadline settle
+  remaining answers as skipped so final analysis still contains ten records.
+
+The full API, deployed boundaries, evidence and retention limits are in
+`docs/DUEL.md`; this does not alter the separate classroom/account contract.

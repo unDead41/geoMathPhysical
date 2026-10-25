@@ -32,6 +32,42 @@ dialog{border:1px solid var(--border);border-radius:var(--radius-lg);padding:0;w
 @media(forced-colors:active){*{scrollbar-color:auto}.led-dot{border:2px solid CanvasText}.choice[aria-pressed="true"]{outline:3px solid Highlight}.scanner{border:2px solid CanvasText}.progress-dot{background:CanvasText}.progress-dot.current{background:Highlight}}
 @media print{.site-header nav,.session-actions,.result-actions,.site-footer,.review-section,.game-screen,.entry-screen,dialog{display:none!important}.result-layout{display:block}.result-main,.result-side{break-inside:avoid}.result-side{margin-top:20px}}
 
+/* Shared-server two-player Duel uses the existing geometry palette. */
+.duel-screen{max-width:960px;margin:0 auto;padding:32px 0 45px}
+.duel-heading h1{font-size:36px;letter-spacing:-1px;margin:12px 0}
+.duel-heading>p{max-width:650px;font-size:14px;line-height:1.7;color:var(--muted)}
+.duel-connection{font-size:12px;font-weight:650;color:var(--primary);min-height:20px;margin:20px 0 8px}
+.duel-message{font-size:13px;color:var(--danger);line-height:1.6;margin:10px 0}
+.duel-message:empty{display:none}
+.duel-entry{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.duel-card,.duel-room{min-width:0;background:var(--surface);border:1px solid var(--border);border-radius:22px;padding:26px}
+.duel-card h2{font-size:23px;margin-bottom:12px}.duel-card>p,.duel-room>p{color:var(--muted);font-size:13px;line-height:1.7;margin-bottom:20px}
+.duel-card>.button{margin-top:14px}.duel-card .field{margin:16px 0}
+.duel-pin-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.duel-pin-row label{width:100%;font-size:12px;color:var(--muted);font-weight:650}
+.duel-pin-row input{font:700 36px var(--font-mono);letter-spacing:8px;max-width:100%;width:250px;min-width:0;background:var(--blue-soft);color:var(--primary);padding:13px 16px;border:1px solid var(--border);border-radius:12px}
+.duel-players{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;margin:18px 0}
+.duel-player{min-width:0;border:1px solid var(--border);border-radius:14px;padding:16px;background:var(--bg)}
+.duel-player.self{border-color:#B6CFFD;background:var(--blue-soft)}
+.duel-player>small{display:block;font-size:10px;font-weight:650;color:var(--muted);margin-bottom:6px}
+.duel-player>strong{display:block;font-size:15px;overflow-wrap:anywhere;line-height:1.4}
+.duel-player>div:not(.duel-track){display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:10px}
+.duel-player b{font-family:var(--font-mono);font-size:20px}
+.duel-player span,.duel-player>p{font-size:11px;color:var(--muted);line-height:1.6}
+.duel-player.waiting{border-style:dashed}.duel-player.waiting p{margin-top:10px}
+.duel-track{height:5px;background:#DCE5F3;border-radius:10px;overflow:hidden;margin-top:10px}
+.duel-track>span{display:block;height:100%;background:var(--primary);transition:width .2s}
+.duel-countdown{font-size:18px!important;font-weight:700;color:var(--primary)!important;line-height:1.6}
+.duel-footer{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}
+.duel-rules{font-size:11px;color:var(--muted);line-height:1.7;margin-top:10px}
+.duel-live{border:1px solid #BDD1F5;background:var(--surface);padding:14px 18px;border-radius:18px;margin:0 0 18px}
+.duel-live-heading{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--primary)}
+.duel-live-heading>span:last-child{margin-left:auto}.duel-live .duel-players{margin:12px 0 6px}
+.duel-live .duel-player{padding:10px 13px}.duel-live .duel-player strong{font-size:13px}
+.duel-live .button{margin-top:12px}.duel-result{padding:24px;background:var(--surface);border:2px solid #BDD1F5;border-radius:22px;margin:0 0 26px}
+.duel-result h2{font-size:29px;margin:10px 0}.duel-result p{font-size:13px;line-height:1.6;color:var(--muted)}
+@media(max-width:600px){.duel-entry{grid-template-columns:minmax(0,1fr)}.duel-heading h1{font-size:28px}.duel-card,.duel-room,.duel-result{padding:18px}.duel-players{gap:8px}.duel-player{padding:12px}.duel-player strong{font-size:13px}.duel-player b{font-size:18px}.duel-live{padding:12px}.duel-live .duel-player{padding:9px}.duel-live-heading>span:last-child{margin-left:0}.duel-result h2{font-size:24px}}
+
 /* Quiz and reinforcement practice share the same accessible form and game UI. */
 .field select{font:inherit;width:100%;min-height:49px;padding:0 12px;border:1px solid #CDDCE8;border-radius:10px;background:#FBFCFE;color:var(--ink);font-size:13px}
 .field select:focus-visible{outline:3px solid var(--primary);outline-offset:4px}

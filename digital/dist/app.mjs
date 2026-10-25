@@ -1,5 +1,6 @@
 import {createI18n, translate, localizeQuestion, shapeName} from './i18n.mjs';
 import {escapeHtml, formatRichText} from './format.mjs';
+import {DuelClient,duelVerdict,formatDuelTime} from './duel.mjs';
 import { QUESTIONS } from './questions.mjs';
 import { Game, VERSION, ROUND_SIZE, PRACTICE_SIZE, SHAPES, formatTime, validatePlayer, questionTopic, analyseAnswers } from './core.mjs';
 import { nextVisualPlan } from './visuals.mjs';
@@ -21,6 +22,9 @@ let scoresExpanded = false, lastClock = '', lastLed = {}, visualPlan = null, mot
 const dialog = $('app-dialog');
 const languageControl=$('language-control'), languageHome=languageControl.parentElement;
 let refreshingLanguage=false, lastStatus=null, validationErrors=null, scoreNotice='', automaticPause=false;
+let duelBusy=false,duelNeedsRestore=false,duelAppliedSeq=-1,duelNoticeKey='',duelInputsBlocked=null;
+let duelSessionStorage;try{duelSessionStorage=window.sessionStorage;}catch{duelSessionStorage=null;}
+const duelClient=new DuelClient({storage:duelSessionStorage,onChange:()=>onDuelSnapshot()});
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const TOPIC_NAMES = {properties:'Sifat bongkah',formula:'Rumus',net:'Bentangan'};
 const SHAPE_NOTES = {
@@ -65,23 +69,138 @@ function showScreen(next) {
   $('welcome').hidden = next !== 'welcome';
   $('game-screen').hidden = next !== 'game';
   $('result-screen').hidden = next !== 'result';
+  $('duel-screen').hidden = next !== 'duel';
   updateTitle(next);
   window.scrollTo({top:0,behavior:'instant'});
 }
 function updateTitle(next=screen) {
+  if(next==='duel'){document.title=t('duel.pageTitle');return;}
   document.title = next === 'welcome' ? t("GeoDecoder Digital — Jom main geometri") : next === 'game' ? t("GeoDecoder Digital — Sedang bermain") : t("GeoDecoder Digital — Keputusan pusingan");
 }
 function uid() { return globalThis.crypto?.randomUUID?.() || `round-${Date.now()}-${Math.random().toString(36).slice(2)}`; }
 
-const modeTitle=mode=>t(mode==='practice'?'mode.practiceTitle':'mode.quizTitle');
+const modeTitle=mode=>t(mode==='duel'?'duel.title':mode==='practice'?'mode.practiceTitle':'mode.quizTitle');
 const selectedTotal=()=>$('play-mode').value==='practice'?PRACTICE_SIZE:ROUND_SIZE;
 function updateModeChoice(){
   const practice=$('play-mode').value==='practice';
+  const duel=$('play-mode').value==='duel';
   $('entry-question-count').textContent=selectedTotal();
-  $('mode-description').textContent=t(practice?'mode.practiceNote':'mode.quizNote');
-  $('start-label').textContent=t(practice?'mode.startPractice':'Mulakan permainan');
+  $('mode-description').textContent=t(duel?'duel.modeNote':practice?'mode.practiceNote':'mode.quizNote');
+  $('start-label').textContent=t(duel?'duel.open':practice?'mode.startPractice':'Mulakan permainan');
+  $('privacy-note-text').textContent=t(duel?'duel.privacy':'Nama dan skor disimpan dalam pelayar ini sahaja. Anda boleh gunakan nama panggilan.');
 }
 $('play-mode').addEventListener('change',updateModeChoice);
+
+function duelErrorKey(){const key='duel.error.'+duelClient.error;return t(key)?key:'duel.error';}
+function duelMarkup(id,html){if($(id).innerHTML!==html)$(id).innerHTML=html;}
+function duelPlayersMarkup(snapshot,final=false){
+  return [snapshot.me,snapshot.opponent].map((p,index)=>{
+    if(!p)return `<div class="duel-player waiting"><strong>${t('duel.friend')}</strong><p>${t('duel.waitFriend')}</p></div>`;
+    const progress=Math.max(0,Math.min(10,p.answered||0));
+    const status=snapshot.room.status==='waiting'?(p.ready?t('duel.isReady'):t('duel.notReady')):t('duel.progress',{answered:progress});
+    return `<div class="duel-player ${index===0?'self':''}"><small>${t(index===0?'duel.you':'duel.friend')}</small><strong>${escapeHtml(p.name)}</strong><div><b>${p.score} / 10</b><span>${final&&p.finishedAt?formatDuelTime(p.elapsed):status}</span></div><div class="duel-track" aria-hidden="true"><span style="width:${progress*10}%"></span></div></div>`;
+  }).join('');
+}
+function renderDuelViews(){
+  const s=duelClient.snapshot,closed=s&&['complete','cancelled','expired'].includes(s.room.status);
+  $('duel-entry').hidden=!!s;
+  $('duel-room').hidden=!s;
+  $('duel-create').disabled=duelBusy||duelClient.pending;
+  $('duel-join').disabled=duelBusy||duelClient.pending;
+  $('duel-pin').disabled=duelBusy;
+  $('duel-ready').disabled=duelBusy||!duelClient.connected||duelClient.pending||!s||s.room.status!=='waiting'||s.me.ready;
+  $('duel-ready').textContent=t(s?.me.ready?'duel.isReady':'duel.ready');
+  const reconnect=duelClient.hasSession&&(!duelClient.connected||duelClient.pending);
+  for(const id of ['duel-retry','duel-live-retry','duel-result-retry']){$(id).hidden=!reconnect;$(id).disabled=duelBusy;}
+  $('duel-new-room').hidden=!(closed||['invalid_token','room_expired','room_unavailable'].includes(duelClient.error));
+  const connection=duelBusy?t('duel.connecting'):duelClient.connected?t('duel.connected'):['invalid_token','room_expired'].includes(duelClient.error)?t('duel.closed'):duelClient.session?.roomId?t('duel.offline'):'';
+  $('duel-connection').textContent=connection;$('duel-live-connection').textContent=connection;
+  $('duel-message').textContent=duelClient.error?t(duelErrorKey()):duelNoticeKey?t(duelNoticeKey):'';
+  const leaveError=$('dialog-content').querySelector('.duel-leave-error');if(leaveError)leaveError.textContent=duelClient.error?t(duelErrorKey()):'';
+  $('duel-live').hidden=game?.mode!=='duel';
+  $('duel-result').hidden=screen!=='result'||lastResult?.mode!=='duel'||!s;
+  if(s){
+    $('duel-room-code').value=s.room.code;
+    $('duel-live-code').textContent='PIN '+s.room.code;
+    duelMarkup('duel-lobby-players',duelPlayersMarkup(s));duelMarkup('duel-live-players',duelPlayersMarkup(s));
+    $('duel-live-note').textContent=s.opponent&&!s.opponent.finishedAt&&duelClient.clock()-s.opponent.lastSeenAt>15000?t('duel.presenceAway'):t('duel.clockNote');
+    const reason={score:'duel.byScore',time:'duel.byTime',forfeit:'duel.byForfeit',deadline:'duel.byDeadline'}[s.room.reason];
+    duelMarkup('duel-result-content',`<span class="eyebrow">GEODECODER DUEL</span><h2>${t(duelVerdict(s))}</h2>${reason?`<p>${t(reason)}</p>`:''}<div class="duel-players">${duelPlayersMarkup(s,true)}</div><p>${t('duel.resultScope')}</p>`);
+    if(closed&&s.room.status!=='complete')$('duel-countdown').textContent=t('duel.closed');
+    else if(s.room.status==='waiting')$('duel-countdown').textContent=t(s.opponent?'duel.waitReady':'duel.waitFriend');
+  }
+}
+async function duelTask(task){
+  if(duelBusy)return null;
+  duelBusy=true;duelNoticeKey='';renderDuelViews();if(game&&screen==='game')renderState();
+  try{return await task();}
+  catch{duelNeedsRestore=true;if(game&&screen==='game')setStatus(duelErrorKey(),'error','close');return null;}
+  finally{duelBusy=false;renderDuelViews();if(game&&screen==='game')renderState();}
+}
+function restoreDuelGame(){
+  const s=duelClient.snapshot;if(!s||!game||game.mode!=='duel')return;
+  try{
+    const paused=game.paused||dialog.open||document.hidden;
+    game=Game.fromDuelSnapshot(QUESTIONS,player,s,now());duelAppliedSeq=s.me.seq;duelNeedsRestore=false;
+    if(game.status==='finished'){finishGame();return;}
+    if(paused)game.pause(now());
+    lastLed={};renderQuestion();if(game.stage==='net'){acceptedSolid=game.question.shape;renderState();}
+  }catch{duelClient.connected=false;duelClient.error='invalid_response';renderDuelViews();renderState();}
+}
+function onDuelSnapshot(){
+  renderDuelViews();
+  const s=duelClient.snapshot;
+  if(s&&['complete','cancelled','expired'].includes(s.room.status))duelClient.stopPolling();
+  if(s&&game?.mode==='duel'&&screen==='game'&&!duelBusy&&duelClient.connected&&!duelClient.busy&&(duelNeedsRestore||s.me.seq>duelAppliedSeq))restoreDuelGame();
+}
+function tickDuel(){
+  if(playMode!=='duel'||!duelClient.snapshot)return;
+  const s=duelClient.snapshot;
+  if(screen==='duel'&&s.room.startsAt&&['countdown','playing','complete'].includes(s.room.status)){
+    const remaining=s.room.status==='complete'?0:Math.max(0,Math.ceil((s.room.startsAt-duelClient.clock())/1000));
+    const message=remaining?t('duel.countdown',{seconds:remaining}):t('duel.live');
+    if($('duel-countdown').textContent!==message)$('duel-countdown').textContent=message;
+    if(!remaining&&!duelBusy&&duelClient.connected){startGame();return;}
+  }
+  if(screen==='game'&&game?.mode==='duel'&&!duelBusy){
+    if(s.room.status==='complete'&&game.answers.length<game.total){restoreDuelGame();return;}
+    const blocked=duelBusy||!duelClient.connected||duelClient.pending||duelClient.clock()<(s.me.nextReadyAt||s.room.startsAt||0);
+    if(blocked!==duelInputsBlocked){duelInputsBlocked=blocked;renderState();}
+  }
+}
+async function openDuelLobby(){
+  game=null;lastResult=null;duelNoticeKey='';showScreen('duel');renderDuelViews();$('duel-title').focus({preventScroll:true});
+  if(duelClient.hasSession){await duelTask(()=>duelClient.resume());duelClient.startPolling();}
+}
+async function reconnectDuel(){
+  const result=await duelTask(()=>duelClient.resume());
+  if(result){duelClient.startPolling();if(screen==='game')restoreDuelGame();}
+}
+async function leaveDuel(newRoom=false){
+  if(duelBusy)return;
+  if(duelClient.snapshot&&!['invalid_token','room_expired'].includes(duelClient.error)&&!['complete','cancelled','expired'].includes(duelClient.snapshot.room.status)){
+    if(duelClient.pending&&!(await duelTask(()=>duelClient.resume())))return;
+    if(!(await duelTask(()=>duelClient.act('leave'))))return;
+  }
+  game=null;lastResult=null;selected=null;duelNeedsRestore=false;duelAppliedSeq=-1;duelClient.forget();closeDialog();
+  if(newRoom){showScreen('duel');renderDuelViews();}else{showScreen('welcome');$('player-name').focus({preventScroll:true});}
+}
+$('duel-create').addEventListener('click',async()=>{if(await duelTask(()=>duelClient.create(player.name)))duelClient.startPolling();});
+$('duel-join-form').addEventListener('submit',async event=>{
+  event.preventDefault();
+  if(!/^[0-9]{6}$/.test($('duel-pin').value)){duelClient.error='invalid_request';$('duel-pin').setAttribute('aria-invalid','true');renderDuelViews();$('duel-pin').focus();return;}
+  if(await duelTask(()=>duelClient.join(player.name,$('duel-pin').value)))duelClient.startPolling();
+});
+$('duel-pin').addEventListener('input',()=>{$('duel-pin').value=$('duel-pin').value.replace(/[^0-9]/g,'').slice(0,6);$('duel-pin').removeAttribute('aria-invalid');if(duelClient.error==='invalid_request'){duelClient.error='';renderDuelViews();}});
+$('duel-ready').addEventListener('click',()=>duelTask(()=>duelClient.act('ready')));
+$('duel-copy').addEventListener('click',async()=>{
+  try{await navigator.clipboard.writeText($('duel-room-code').value);duelNoticeKey='duel.copied';}
+  catch{$('duel-room-code').focus();$('duel-room-code').select();duelNoticeKey='duel.copySelected';}
+  renderDuelViews();
+});
+for(const id of ['duel-retry','duel-live-retry','duel-result-retry'])$(id).addEventListener('click',reconnectDuel);
+$('duel-new-room').addEventListener('click',()=>leaveDuel(true));
+$('duel-home').addEventListener('click',requestHome);
 
 $('player-form').addEventListener('submit', event => {
   event.preventDefault();
@@ -104,7 +223,7 @@ $('player-form').addEventListener('submit', event => {
   }
   player = result.player;
   playMode=$('play-mode').value;
-  startGame();
+  if(playMode==='duel')openDuelLobby();else startGame();
 });
 for (const [id,key] of [['player-name','name'],['player-class','className']]) {
   $(id).addEventListener('input', () => { $(id).removeAttribute('aria-invalid'); $(key+'-error').textContent = '';if(validationErrors)delete validationErrors[key]; });
@@ -113,13 +232,17 @@ for (const [id,key] of [['player-name','name'],['player-class','className']]) {
 function startGame() {
   if (!player) return;
   cancelDrag();
-  game = new Game(QUESTIONS, player, now(),Math.random,{mode:playMode});
-  roundId = uid(); lastResult = null; lastClock = ''; lastLed = {}; visualPlan=null;
+  game = playMode==='duel'?Game.fromDuelSnapshot(QUESTIONS,{...player,name:duelClient.snapshot.me.name},duelClient.snapshot,now()):new Game(QUESTIONS, player, now(),Math.random,{mode:playMode});
+  if(playMode==='duel'){player={...player,name:duelClient.snapshot.me.name};duelAppliedSeq=duelClient.snapshot.me.seq;}
+  roundId = playMode==='duel'?'duel:'+duelClient.snapshot.room.id+':'+duelClient.snapshot.me.id:uid(); lastResult = null; lastClock = ''; lastLed = {}; visualPlan=null;
   $('player-initial').textContent = player.name[0].toLocaleUpperCase('ms-MY');
   $('player-display').textContent = player.name;
   $('player-meta').textContent = `${t(player.category)} · ${player.className}`;
   showScreen('game');
+  if(game.status==='finished'){finishGame();return;}
   renderQuestion();
+  if(game.mode==='duel'&&game.stage==='net'){acceptedSolid=game.question.shape;renderState();}
+  renderDuelViews();
   $('question-title').focus({preventScroll:true});
   announce(t("mode.startAnnouncement",{mode:modeTitle(game.mode),total:game.total}));
 }
@@ -181,12 +304,14 @@ function renderState() {
   if (!game) return;
   $('session-mode').textContent=modeTitle(game.mode);
   $('score-total').textContent=' / '+game.total;
-  const busy = !game.interactive;
+  const busy = !game.interactive || (game.mode==='duel'&&(duelBusy||!duelClient.connected||duelClient.pending||duelClient.clock()<(duelClient.snapshot?.me.nextReadyAt||duelClient.snapshot?.room.startsAt||0)));
   const active = game.stage === 'solid' ? 'r1' : 'r2';
   $('score-value').textContent = game.score;
   $('hint-button').disabled = busy;
   $('skip-button').disabled = busy;
   $('pause-button').disabled = game.status === 'feedback';
+  $('pause-button').setAttribute('aria-label',game.mode==='duel'?t('duel.menu'):t('Jeda permainan'));
+  $('pause-button').title=game.mode==='duel'?t('duel.menu'):t('Jeda permainan');
   $('hint-button').setAttribute('aria-expanded',String(game.hintOpen));
   $('hint-label').textContent = game.hintOpen ? t("Tutup petunjuk") : t("Beri petunjuk");
   $('hint-panel').hidden = !game.hintOpen;
@@ -256,10 +381,16 @@ function choose(button) {
   renderState();
 }
 
-function scan(choice,target) {
+async function scan(choice,target) {
   if (!game?.interactive) return;
   if (!choice) { setStatus("choice.first",'','cursor',{kind:game.stage==='solid'?"bongkah":"kad bentangan",target:target.toUpperCase()}); return; }
-  const result = game.scan(choice.kind,choice.shape,target,now());
+  if(game.mode==='duel'){
+    if(duelBusy||!duelClient.connected||duelClient.pending)return;
+    const ack=await duelTask(()=>duelClient.act('scan',{questionIndex:game.index,kind:choice.kind,shape:choice.shape,target}));
+    if(!ack)return;duelAppliedSeq=ack.me.seq;
+    if(ack.room.status==='complete'&&ack.actionResult?.type!=='correct'&&ack.actionResult?.type!=='wrong'){restoreDuelGame();return;}
+  }
+  const result = game.mode==='duel'?game.applyDuelAcknowledgement('scan',{kind:choice.kind,shape:choice.shape,target},now()):game.scan(choice.kind,choice.shape,target,now());
   if (result.type==='blocked') return;
   if (result.type==='stage') { setStatus(result.target==='r1'?"R1 dahulu. Imbas bongkah sebelum kad bentangan.":"Bongkah R1 sudah betul. Padankan kad bentangan di R2."); return; }
   if (result.type==='kind') { setStatus(game.stage==='solid'?"R1 hanya menerima bongkah 3D.":"R2 hanya menerima kad bentangan."); return; }
@@ -323,21 +454,27 @@ document.addEventListener('click', event => {
   if (action==='home') requestHome();
 });
 $('brand-home').addEventListener('click',event=>{event.preventDefault();requestHome();});
-$('hint-button').addEventListener('click',()=>{
-  if(game?.toggleHint()){
+$('hint-button').addEventListener('click',async()=>{
+  if(game?.mode==='duel'&&!game.hintUsed){
+    const ack=await duelTask(()=>duelClient.act('hint',{questionIndex:game.index}));if(!ack)return;duelAppliedSeq=ack.me.seq;
+  }
+  if(game&&(game.mode==='duel'?game.applyDuelAcknowledgement('hint',{},now()):game.toggleHint())){
     setStatus(game.hintOpen?"Petunjuk dibuka. Baca petunjuk dan teruskan memilih.":"Petunjuk ditutup. Teruskan menjawab.",game.hintOpen?'hint':'','bulb');
     renderState();
   }
 });
-$('skip-button').addEventListener('click',()=>{
-  if(game?.skip(now())){ cancelDrag(); selected=null;setStatus("Soalan dilangkau, +0 markah. Lihat jawapan sebelum meneruskan.",'','skip');showCorrection();renderState();tone('skip'); }
+$('skip-button').addEventListener('click',async()=>{
+  if(game?.mode==='duel'){
+    const ack=await duelTask(()=>duelClient.act('skip',{questionIndex:game.index}));if(!ack)return;duelAppliedSeq=ack.me.seq;
+  }
+  if(game&&(game.mode==='duel'?game.applyDuelAcknowledgement('skip',{},now()):game.skip(now()))){ cancelDrag(); selected=null;setStatus("Soalan dilangkau, +0 markah. Lihat jawapan sebelum meneruskan.",'','skip');showCorrection();renderState();tone('skip'); }
 });
 $('continue-button').addEventListener('click',()=>{
   if(!game?.continueReview(now()))return;
   if(game.status==='finished')finishGame();else{lastLed={};renderQuestion();$('question-title').focus({preventScroll:true});announce(t("round.single",{number:game.index+1,total:game.total}));}
 });
 $('pause-button').addEventListener('click',()=>openPause());
-$('replay-button').addEventListener('click',()=>startGame());
+$('replay-button').addEventListener('click',()=>{if(playMode==='duel')leaveDuel(true);else startGame();});
 
 // One Pointer Events path for mouse, pen and touch, with a click/keyboard alternative.
 document.addEventListener('pointerdown',event=>{
@@ -416,6 +553,7 @@ dialog.addEventListener('click',event=>{
   if(action==='close')closeDialog();
   if(action==='home'){ game=null;selected=null;acceptedSolid=null;acceptedNet=null;dialogTrigger=null;closeDialog();showScreen('welcome');$('player-name').focus({preventScroll:true}); }
   if(action==='request-home')requestHome();
+  if(action==='duel-leave')leaveDuel();
   if(action==='export')downloadScores();
   if(action==='show-all'){scoresExpanded=true;openScores();}
   if(action==='erase')openErase();
@@ -429,17 +567,23 @@ dialog.addEventListener('click',event=>{
 
 function openHelp(){
   const total=game&&screen!=='welcome'?game.total:selectedTotal();
-  openDialog('help',t("Cara main GeoDecoder"),`<p class="help-intro">${t("Satu soalan, dua padanan,")} <b>${t("satu percubaan")}</b>${t(". Sasarkan")} <b>${t('mode.target',{total})}</b>.</p><div class="help-steps"><div class="help-step"><span class="help-number">1</span><div><h3>${t("Baca soalan dan pilih bongkah")}</h3><p>${t("Seret satu bongkah 3D ke pengimbas R1 yang berwarna biru.")}</p></div></div><div class="help-step"><span class="help-number">2</span><div><h3>${t("Padankan kad bentangannya")}</h3><p>${t("Selepas R1 hijau, seret kad bentangan yang sepadan ke R2. Bentuk menentukan jawapan; warna dan kedudukan berubah setiap soalan.")}</p></div></div><div class="help-step"><span class="help-number">3</span><div><h3>${t("Semak dan belajar")}</h3><p>${t("Pasangan betul memberi +1. Salah pada R1 atau R2 menamatkan soalan dengan +0. Lihat jawapan betul, kemudian tekan soalan seterusnya.")}</p></div></div></div><div class="help-mini-art">${shapeArt('cube','solid',true)}<span>R1 ${icon('arrow')} R2</span>${shapeArt('cube','net',true)}</div><p class="keyboard-help">${t("Tanpa menyeret:")} <b>${t("klik / sentuh kad")}</b>, ${t("kemudian")} <b>${t("klik pengimbas")}</b>. ${t("Papan kekunci:")} <kbd>Tab</kbd> ${t("untuk bergerak,")} <kbd>Enter</kbd> ${t("atau")} <kbd>Space</kbd> ${t("untuk memilih dan mengimbas.")}</p><p class="help-note"><b>${t("Fikir dahulu sebelum mengimbas.")}</b> ${t("Memilih kad sahaja belum menggunakan percubaan. Petunjuk percuma. Langkau memberi +0 dan turut menunjukkan jawapan. Analisis akhir membantu anda memilih perkara yang perlu dilatih lagi. Jam dijeda semasa semakan dan tetingkap ini dibuka.")}</p><div class="dialog-actions"><button class="button button-primary" data-dialog-action="close" data-autofocus>${screen==='game'?t("Sambung permainan"):t("Saya faham")} ${icon('arrow')}</button></div>`);
+  openDialog('help',t("Cara main GeoDecoder"),`<p class="help-intro">${t("Satu soalan, dua padanan,")} <b>${t("satu percubaan")}</b>${t(". Sasarkan")} <b>${t('mode.target',{total})}</b>.</p><div class="help-steps"><div class="help-step"><span class="help-number">1</span><div><h3>${t("Baca soalan dan pilih bongkah")}</h3><p>${t("Seret satu bongkah 3D ke pengimbas R1 yang berwarna biru.")}</p></div></div><div class="help-step"><span class="help-number">2</span><div><h3>${t("Padankan kad bentangannya")}</h3><p>${t("Selepas R1 hijau, seret kad bentangan yang sepadan ke R2. Bentuk menentukan jawapan; warna dan kedudukan berubah setiap soalan.")}</p></div></div><div class="help-step"><span class="help-number">3</span><div><h3>${t("Semak dan belajar")}</h3><p>${t("Pasangan betul memberi +1. Salah pada R1 atau R2 menamatkan soalan dengan +0. Lihat jawapan betul, kemudian tekan soalan seterusnya.")}</p></div></div></div><div class="help-mini-art">${shapeArt('cube','solid',true)}<span>R1 ${icon('arrow')} R2</span>${shapeArt('cube','net',true)}</div><p class="keyboard-help">${t("Tanpa menyeret:")} <b>${t("klik / sentuh kad")}</b>, ${t("kemudian")} <b>${t("klik pengimbas")}</b>. ${t("Papan kekunci:")} <kbd>Tab</kbd> ${t("untuk bergerak,")} <kbd>Enter</kbd> ${t("atau")} <kbd>Space</kbd> ${t("untuk memilih dan mengimbas.")}</p><p class="help-note"><b>${t("Fikir dahulu sebelum mengimbas.")}</b> ${t((screen==='welcome'?$('play-mode').value==='duel':playMode==='duel')?'duel.helpNote':"Memilih kad sahaja belum menggunakan percubaan. Petunjuk percuma. Langkau memberi +0 dan turut menunjukkan jawapan. Analisis akhir membantu anda memilih perkara yang perlu dilatih lagi. Jam dijeda semasa semakan dan tetingkap ini dibuka.")}</p><div class="dialog-actions"><button class="button button-primary" data-dialog-action="close" data-autofocus>${screen==='game'?t("Sambung permainan"):t("Saya faham")} ${icon('arrow')}</button></div>`);
 }
 
 function openPause(automatic=false){
   if(!refreshingLanguage)automaticPause=automatic;
   if(!game || screen!=='game')return;
   if(!refreshingLanguage)game.pause(now());
-  openDialog('pause',t("Permainan dijeda"),`<div class="pause-symbol">${icon('pause')} ${formatTime(game.time(now()))}</div><p class="dialog-copy">${automatic?t("Permainan dijeda semasa anda meninggalkan tab ini."):t("Berehat seketika. Masa dan soalan anda dikekalkan.")} ${t("Tekan sambung apabila sudah bersedia.")}</p><div class="dialog-actions"><button class="button button-outline" data-dialog-action="request-home">${t("Tamatkan pusingan")}</button><button class="button button-primary" data-dialog-action="close" data-autofocus>${t("Sambung permainan")} ${icon('arrow')}</button></div>`);
+  openDialog('pause',t(game.mode==='duel'?'duel.menu':"Permainan dijeda"),`<div class="pause-symbol">${icon('pause')} ${formatTime(game.mode==='duel'?duelClient.elapsed():game.time(now()))}</div><p class="dialog-copy">${game.mode==='duel'?t('duel.clockNote'):automatic?t("Permainan dijeda semasa anda meninggalkan tab ini."):t("Berehat seketika. Masa dan soalan anda dikekalkan.")} ${t("Tekan sambung apabila sudah bersedia.")}</p><div class="dialog-actions"><button class="button button-outline" data-dialog-action="request-home">${t("Tamatkan pusingan")}</button><button class="button button-primary" data-dialog-action="close" data-autofocus>${t("Sambung permainan")} ${icon('arrow')}</button></div>`);
 }
 
 function requestHome(){
+  if(playMode==='duel'&&['duel','game','result'].includes(screen)){
+    if(duelClient.snapshot&&!duelClient.snapshot.me.finishedAt&&['waiting','countdown','playing'].includes(duelClient.snapshot.room.status)){
+      openDialog('duel-leave',t('duel.leaveTitle'),`<p class="dialog-copy">${t('duel.leaveCopy')}</p><p class="duel-leave-error" role="status"></p><div class="dialog-actions"><button class="button button-outline" data-dialog-action="close" data-autofocus>${t('Terus bermain')}</button><button class="button button-danger" data-dialog-action="duel-leave">${t('duel.confirmLeave')}</button></div>`);
+    }else leaveDuel();
+    return;
+  }
   if(screen==='game' && game && game.status!=='finished'){
     openDialog('leave',t("Tamatkan pusingan ini?"),`<p class="dialog-copy">${t("leave.progress")} <b>${t("leave.count",{number:game.index+1,total:game.total})}</b>. ${t("Jika kembali ke mula, kemajuan pusingan ini dilepaskan dan skor pusingan ini tidak disimpan.")}</p><div class="dialog-actions"><button class="button button-outline" data-dialog-action="close" data-autofocus>${t("Terus bermain")}</button><button class="button button-danger" data-dialog-action="home">${t("Tamatkan pusingan")}</button></div>`);
   }else{ game=null;selected=null;showScreen('welcome');$('player-name').focus({preventScroll:true}); }
@@ -474,11 +618,16 @@ function downloadScores(){
 
 function finishGame(){
   cancelDrag();selected=null;
+  if(game.mode==='duel'){
+    game=Game.fromDuelSnapshot(QUESTIONS,player,duelClient.snapshot,now());
+    if(dialog.open)closeDialog();
+  }
   lastResult=game.result(roundId);
   if(lastResult.mode==='quiz')store.save(lastResult);
   storageStatus();
   renderResult();
   showScreen('result');
+  renderDuelViews();
   $('result-title').focus({preventScroll:true});
   announce(t("result.complete",{score:lastResult.score,total:lastResult.total,time:formatTime(lastResult.elapsed)}));
 }
@@ -488,12 +637,12 @@ function renderResult(){
   $('result-player').textContent=`${r.player.name} · ${t(r.player.category)} · ${r.player.className}`;
   $('result-score').textContent=r.score;
   $('result-total').textContent=t('mode.points',{total:r.total});
-  $('practice-result-note').hidden=r.mode!=='practice';
-  $('practice-result-note').textContent=t('mode.practiceResult');
-  $('replay-label').textContent=t(r.mode==='practice'?'mode.repeatPractice':'Main lagi');
+  $('practice-result-note').hidden=r.mode==='quiz';
+  $('practice-result-note').textContent=t(r.mode==='duel'?'duel.resultScope':'mode.practiceResult');
+  $('replay-label').textContent=t(r.mode==='duel'?'duel.new':r.mode==='practice'?'mode.repeatPractice':'Main lagi');
   $('analysis-description').textContent=t('mode.analysisScope',{total:r.total,perShape:r.total/SHAPES.length});
   $('result-level').textContent=r.score===r.total?t("Pakar padanan"):r.score/r.total>=.7?t("Penjelajah geometri"):t("Peneroka bentuk");
-  const rank=r.mode==='practice'?0:store.read().findIndex(s=>s.id===r.id)+1;
+  const rank=r.mode==='quiz'?store.read().findIndex(s=>s.id===r.id)+1:0;
   $('result-message').textContent=t("result.summary",{score:r.score,mistakes:r.mistakes,skipped:r.skipped})+(rank>0?t("result.rank",{rank}):'');
   $('result-time').textContent=formatTime(r.elapsed);
   $('result-first').textContent=`${analyseAnswers(r.answers).byStage[0].correct} / ${r.total}`;
@@ -506,6 +655,7 @@ function renderResult(){
     return `<article class="review-card ${answer.outcome}"><small>${t("question.counter",{number:i+1,total:r.total})} · ${t(TOPIC_NAMES[answer.topic])}</small><p class="review-prompt">${pretty(q.prompt)}</p><div class="review-pair">${shapeArt(answer.shape,'solid',true,'orange')}${shapeArt(answer.shape,'net',true,'violet')}</div><h3>${t("Jawapan:")} ${shapeName(answer.shape,locale.language)}</h3><p class="review-outcome">${answer.outcome==='correct'?t("✓ Pasangan betul · +1"):answer.outcome==='wrong'?t("review.wrong",{target:answer.failedAt==='solid'?'R1':'R2'}):t("↷ Dilangkau · +0")}</p><p class="review-attempt">${attempts}${answer.hint?'<br>'+t("Petunjuk digunakan"):''}</p></article>`;
   }).join('');
   renderMiniScores();
+  renderDuelViews();
 
 }
 
@@ -570,12 +720,13 @@ window.addEventListener('storage',event=>{
 });
 
 function frame(time){
+  tickDuel();
   if(game && screen==='game'){
     if(game.update(time)){
       if(game.status==='finished')finishGame();
       else{lastLed={};renderQuestion();$('question-title').focus({preventScroll:true});announce(t("round.next",{number:game.index+1,total:game.total}));}
     }
-    const clock=formatTime(game.time(time));
+    const clock=formatTime(game.mode==='duel'?duelClient.elapsed():game.time(time));
     if(clock!==lastClock){$('time-value').textContent=clock;lastClock=clock;}
     renderLeds(time);
     if(game.reviewing&&game.reviewReady(time)&&$('continue-button').disabled){
@@ -599,7 +750,7 @@ function applyStaticLanguage(){
     document.querySelectorAll('[data-i18n-'+name+']').forEach(el=>el.setAttribute(name,t(el.getAttribute('data-i18n-'+name))));
   }
   $('language-select').value=locale.language;
-  updateTitle();updateSound();updateMotion();updateModeChoice();
+  updateTitle();updateSound();updateMotion();updateModeChoice();renderDuelViews();
 }
 function applyLanguage(){
   const focused=document.activeElement;
@@ -632,6 +783,7 @@ function applyLanguage(){
       else if(dialogMode==='leave')requestHome();
       else if(dialogMode==='scores')openScores(scoreNotice);
       else if(dialogMode==='erase')openErase();
+      else if(dialogMode==='duel-leave')requestHome();
     }
     storageStatus();
   }finally{refreshingLanguage=false;}
