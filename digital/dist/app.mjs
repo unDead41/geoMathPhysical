@@ -21,12 +21,12 @@ const music=createMusic({storage,onChange:renderMusicButton});
 function renderMusicButton(state){
   const button=$('music-button');
   const label=state.error?'Cuba hidupkan muzik semula':state.enabled?'Matikan muzik latar':'Hidupkan muzik latar';
-  button.innerHTML=icon(state.enabled?'sound':'mute');
+  if(button.dataset.musicEnabled!==String(state.enabled)){button.innerHTML=icon(state.enabled?'sound':'mute');button.dataset.musicEnabled=String(state.enabled);}
   button.setAttribute('aria-pressed',String(state.enabled));button.setAttribute('aria-label',label);button.title=label;
   button.dataset.track=state.track;button.dataset.playback=state.status;
 }
 // Playback begins only after a browser-approved user gesture.
-function unlockMusic(event){if(event.isTrusted&&(!music.state.unlocked||music.state.blocked))void music.unlock();}
+function unlockMusic(event){if(event.target?.closest?.('#music-button'))return;if(event.isTrusted&&(!music.state.unlocked||music.state.blocked))void music.unlock();}
 document.addEventListener('pointerdown',unlockMusic,{capture:true});
 document.addEventListener('keydown',event=>{if(['Enter',' '].includes(event.key))unlockMusic(event);},{capture:true});
 $('music-button').addEventListener('click',()=>void music.toggle());
