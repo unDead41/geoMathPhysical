@@ -1,4 +1,24 @@
 // Local KSSM BM/English presentation data. No network translation. See docs/DWI_LANGUAGE.md.
+// Presentation emphasis follows DWI_GLOSSARY.md; these strings never select an answer.
+export const RICH_TERMS = {
+  ms: ['segi empat sama','segi empat tepat','sektor bulatan','segi tiga',
+    'permukaan melengkung','permukaan rata','muka sisi','luas permukaan','luas tapak',
+    'tinggi sendeng','isi padu','bentangan','bulatan','bucu','puncak','tepi','muka',
+    'jejari','panjang','lebar','tinggi','tapak'],
+  en: ['sector of a circle','curved surface','flat surface','triangular faces',
+    'square faces','circular bases','square base','surface area','base area',
+    'slant height','side faces','rectangles','rectangle','triangles','triangle',
+    'squares','square','circles','circle','vertices','vertex','edges','edge',
+    'faces','face','apex','radius','length','width','height','volume','bases','base','nets','net']
+};
+export const MATH_SPEECH = {
+  ms: {equals:'sama dengan',times:'darab',plus:'tambah',minus:'tolak',squared:'kuasa dua',
+    cubed:'kuasa tiga',power:'kuasa',open:'buka kurungan',close:'tutup kurungan',
+    fraction:'pecahan pengangka',denominator:'penyebut',endFraction:'tamat pecahan'},
+  en: {equals:'equals',times:'times',plus:'plus',minus:'minus',squared:'squared',
+    cubed:'cubed',power:'to the power of',open:'open bracket',close:'close bracket',
+    fraction:'fraction numerator',denominator:'denominator',endFraction:'end fraction'}
+};
 export const MESSAGES = {
   "ms": {
     "Terus ke kandungan": "Terus ke kandungan",

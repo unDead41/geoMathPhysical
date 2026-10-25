@@ -1,5 +1,15 @@
 # GeoDecoder Digital changelog
 
+## v1.3.0 — 26 Oktober 2026 (branch digital-richText)
+
+- Rich text BM/BI untuk soalan, petunjuk, kunci rumus, semakan jawapan dan senarai
+  soalan selepas permainan. Istilah utama mengikuti glosari sedia ada.
+- MathML setempat untuk pecahan, kuasa, π/× dan kurungan, bersama label bacaan
+  matematik mengikut bahasa. Unit ukuran menggunakan jarak yang konsisten.
+- Renderer menyokong tebal/italik/baris baharu, meng-escape HTML dan kekal offline.
+- Peraturan satu percubaan, ID/nilai/jawapan soalan, skor, masa, kad dan analitik
+  dikekalkan. Root `index.html` dibina daripada HTML digital yang sama.
+
 ## v1.2.0 — 25 Oktober 2026 (branch digital-dwi)
 
 - BM/English lengkap untuk UI, 15 soalan/hint, semakan jawapan, animasi, analitik kelemahan, keputusan, skor lama dan CSV.

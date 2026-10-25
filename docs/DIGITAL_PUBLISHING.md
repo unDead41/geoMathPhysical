@@ -1,5 +1,11 @@
 # GeoDecoder Digital — publication branch
 
+> Calon rich text: **digital-richText / v1.3.0**, berasaskan
+> `main-digital` pada `71db77c0206de664e50fa57ff57e1825af13f938`.
+> Root `index.html` pada branch calon telah dibina semula daripada HTML digital.
+> Rekod persediaan v1.2.0 di bawah kekal sebagai sejarah branch penerbitan;
+> kerja rich text ini hanya diterbitkan ke `digital-richText`.
+
 Branch penerbitan: **main-digital**.
 Tarikh persediaan: **26 Oktober 2026 (Malaysia)**.
 Versi aplikasi digital: **v1.2.0**. Firmware rujukan kekal **v1.1.3**.

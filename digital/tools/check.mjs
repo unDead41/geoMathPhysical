@@ -47,4 +47,5 @@ const script=standalone.match(/<script type="module">([\s\S]*?)<\/script>/)[1];
 new vm.Script(script); // All imports/exports are inlined by the artifact builder.
 assert.equal(standalone,read('dist/GeoDecoder_Digital_V1.html'));
 assert.equal(standalone,read('GeoDecoder_Digital_V1.html'),'Published HTML differs from source build');
+if(fs.existsSync(path.join(root,'../index.html')))assert.equal(standalone,read('../index.html'),'Root page differs from source build');
 console.log(`PASS: standalone syntax/assets, ${ids.length} unique IDs, ARIA references, bank fidelity, 10 SVG diagrams, design-token drift and accessibility baselines.`);

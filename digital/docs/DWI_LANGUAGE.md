@@ -71,6 +71,12 @@ paparan. R1/R2 yang belum dicuba tidak dicipta sebagai rekod percubaan.
 
 ## Kontrak untuk `digitalize-module`
 
+Rich text v1.3.0: `formatRichText(text, language)` dan
+`formatMathText(text, language)` dieksport oleh `dist/format.mjs`. Kedua-duanya
+menghasilkan HTML terkawal; hantar teks asal sekali sahaja, bukan HTML yang
+sudah diformat. Istilah penegasan dan bacaan matematik berada dalam
+`RICH_TERMS` / `MATH_SPEECH` di kamus pusat. Lihat [kontrak lengkap](RICH_TEXT.md).
+
 Import fungsi di atas; gunakan locale tunggal aplikasi. Kunci `view.top`,
 `view.bottom`, `view.front`, `view.back`, `view.left`, `view.right`, `view.plan`,
 `view.frontElevation`, `view.sideElevation`, `animation.unfold`, `animation.fold`,

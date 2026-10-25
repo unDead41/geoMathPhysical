@@ -1,6 +1,6 @@
 # GeoDecoder Digital V1
 
-Versi digital: **v1.2.0**. Branch: **digital-dwi**.
+Versi digital: **v1.3.0**. Branch: **digital-richText**.
 
 ## Cuba terus — satu fail HTML
 
@@ -77,3 +77,12 @@ Keluaran ini ialah HTML untuk dicuba dahulu; tiada laman web diterbitkan.
 Pilih bahasa di kepala halaman atau dialog. Soalan, padanan diterima, warna, susunan, percubaan, jam dan data analitik tidak berubah. Semua terjemahan turut berada dalam HTML offline.
 
 Lihat [glosari](docs/DWI_GLOSSARY.md), [kontrak bahasa dan sumber](docs/DWI_LANGUAGE.md), [bukti BM/BI](docs/DWI_VERIFICATION.md) dan [changelog](CHANGELOG.md). Ujian pelayar: `npm run test:browser` dengan Playwright berasingan; pilihan lokasi melalui `PLAYWRIGHT_MODULE_PATH` dan `PLAYWRIGHT_CHROMIUM_PATH`.
+
+## Rich text dan rumus
+
+Rumus menggunakan pecahan dan kuasa berstruktur, simbol π/× dan label bacaan
+matematik BM/BI. Istilah geometri penting ditebalkan dalam soalan, petunjuk dan
+penerangan semakan. Ukuran mempunyai jarak unit yang konsisten. Kandungan juga
+menyokong `**tebal**`, `_italik_` dan baris baharu melalui renderer setempat.
+Semua ini berada dalam HTML offline. Lihat [kontrak dan pengesahan rich text](docs/RICH_TEXT.md).
+Jalankan `npm run test:rich-text` untuk ujian paparan rumus sebenar.

@@ -32,6 +32,22 @@ dialog{border:1px solid var(--border);border-radius:var(--radius-lg);padding:0;w
 @media(forced-colors:active){*{scrollbar-color:auto}.led-dot{border:2px solid CanvasText}.choice[aria-pressed="true"]{outline:3px solid Highlight}.scanner{border:2px solid CanvasText}.progress-dot{background:CanvasText}.progress-dot.current{background:Highlight}}
 @media print{.site-header nav,.session-actions,.result-actions,.site-footer,.review-section,.game-screen,.entry-screen,dialog{display:none!important}.result-layout{display:block}.result-main,.result-side{break-inside:avoid}.result-side{margin-top:20px}}
 
+/* Rich text uses the same local renderer in both languages. */
+.geometry-term{font-weight:700;color:var(--ink)}
+.hint-panel .geometry-term{color:inherit}
+.measurement{white-space:nowrap}
+.math-expression{display:inline-block;vertical-align:middle;white-space:nowrap;color:var(--ink);line-height:1.7;margin:.12em .08em}
+.math-expression math{font-size:1.08em}
+.formula-line math,.review-prompt math{math-style:normal}
+.formula-line{display:flex;flex-wrap:wrap;align-items:center;gap:.35em 1em;font-family:var(--font-body);letter-spacing:normal;line-height:1.7}
+.formula-line>span{display:block;max-width:100%}
+.formula-line .math-expression{margin:0}
+#question-detail,#hint-text,#formula-key,#correction-explanation,.review-prompt{overflow-wrap:anywhere}
+.review-prompt{line-height:1.8}
+.review-prompt .math-expression{margin:.18em .08em}
+@media(max-width:600px){.review-list{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:520px){.formula-line{font-size:19px;gap:.25em .75em}.hint-panel{align-items:flex-start}.hint-panel p{min-width:0;line-height:1.7}}
+
 /* The animated geometry kit: controls and card hit areas stay still. */
 .lab-scene{overflow:clip}
 .brand-version{font-family:var(--font-mono);font-size:9px;letter-spacing:.2px;color:var(--primary);margin-left:6px;white-space:nowrap}

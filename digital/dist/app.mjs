@@ -1,5 +1,5 @@
 import {createI18n, translate, localizeQuestion, shapeName} from './i18n.mjs';
-import {escapeHtml, formatMathText} from './format.mjs';
+import {escapeHtml, formatRichText} from './format.mjs';
 import { QUESTIONS } from './questions.mjs';
 import { Game, VERSION, formatTime, validatePlayer, questionTopic, analyseAnswers } from './core.mjs';
 import { nextVisualPlan } from './visuals.mjs';
@@ -7,7 +7,7 @@ import { ScoreStore, csvScores, SCORE_KEY, LEGACY_SCORE_KEY } from './storage.mj
 import { shapeArt, icon, brandArt, describeShape } from './art.mjs';
 
 const $ = id => document.getElementById(id);
-const pretty = formatMathText;
+const pretty = value => formatRichText(value,locale.language);
 const now = () => performance.now();
 let storage;
 try { storage = window.localStorage; } catch { storage = {getItem(){throw new Error('Storage unavailable');},setItem(){throw new Error('Storage unavailable');},removeItem(){throw new Error('Storage unavailable');}}; }
@@ -139,12 +139,13 @@ function renderQuestionContent() {
   detail = detail.replace(/Bongkah apakah ini\?|Bentuk apa\?|Which solid is this\?|Which shape is it\?/g,'').trim();
   $('question-title').textContent = heading;
   if (questionTopic(q)==='formula') {
-    const formulaLines = q.lines.filter(line => /^V=|^L=/.test(line));
-    const rest = q.lines.filter(line => !/^V=|^L=/.test(line)).join(' ').replace(/Bongkah apakah ini\?|Bentuk apa\?|Which solid is this\?|Which shape is it\?/g,'').trim();
-    $('question-detail').innerHTML = `<span class="formula-line">${formulaLines.map(pretty).join('<br>')}</span>${pretty(rest)}`;
+    const parts=q.lines.flatMap(line=>line.split(';')).map(part=>part.trim());
+    const formulaLines = parts.filter(line => /^(?:V|L)=/.test(line));
+    const rest = parts.filter(line => !/^(?:V|L)=/.test(line)).join(' ').replace(/Bongkah apakah ini\?|Bentuk apa\?|Which solid is this\?|Which shape is it\?/g,'').trim().replace(/ (?=[a-z]=)/g,' · ');
+    $('question-detail').innerHTML = `<span class="formula-line">${formulaLines.map(line=>`<span>${pretty(line)}</span>`).join('')}</span>${pretty(rest)}`;
   } else $('question-detail').innerHTML = pretty(detail);
   $('formula-key').hidden = true;
-  if (q.id === 'S2') { $('formula-key').textContent = t("V = isi padu · L = luas permukaan · j = jejari · t = tinggi"); $('formula-key').hidden = false; }
+  if (q.id === 'S2') { $('formula-key').innerHTML = pretty(t("V = isi padu · L = luas permukaan · j = jejari · t = tinggi")); $('formula-key').hidden = false; }
   $('hint-text').innerHTML = pretty(q.hint);
   const dots = Array.from({length:10}, (_,i) => {
     const answer = game.answers[i];
@@ -280,7 +281,7 @@ function renderCorrection(){
   $('correction-outcome').textContent=t(answer.outcome==='wrong'?'PERCUBAAN TAMAT · +0 MARKAH':'DILANGKAU · +0 MARKAH');
   $('correction-title').textContent=t('Jawapan betul:')+' '+shapeName(q.shape,locale.language);
   $('correction-attempt').textContent=answer.failedAt?t('correction.attempt',{target:answer.failedAt==='solid'?'R1':'R2',shape:shapeName(answer.attempts[answer.failedAt],locale.language),note:answer.failedAt==='net'?t('Bongkah R1 anda sudah betul.'):''}):t('Soalan ini dilangkau. Lihat pasangan yang sepadan.');
-  $('correction-explanation').textContent=t(SHAPE_NOTES[q.shape]);
+  $('correction-explanation').innerHTML=pretty(t(SHAPE_NOTES[q.shape]));
   if(refreshingLanguage){
     const model=$('correction-pair').querySelector('.correct-model'),net=$('correction-pair').querySelector('.correct-net');
     model.querySelector('span').textContent='R1 · '+shapeName(q.shape,locale.language);
