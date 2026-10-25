@@ -70,7 +70,7 @@ UI portal disemak menggunakan fixture cloud **simulasi berlabel QA**, manakala o
 
 ## Had dan advisori
 
-- Pelan Supabase Free mempunyai kuota dan projek boleh dijeda selepas tidak aktif; tiada pelan berbayar dipilih. Frontend dihantar sebagai HTML; tiada deployment laman awam baharu.
+- Pelan Supabase Free mempunyai kuota dan projek boleh dijeda selepas tidak aktif; tiada pelan berbayar dipilih. Frontend tersedia sebagai HTML dan melalui GitHub Pages di https://undead41.github.io/geodecoder-digital/ . Rekod penerbitan berada dalam `GITHUB_PAGES.md`.
 - Security advisor: 12 maklumat `rls_enabled_no_policy` pada jadual **private** yang sengaja deny-all untuk akses terus; tiada polisi longgar ditambah. Akses sah melalui RPC terkawal. Rujukan: https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy .
 - Satu amaran `auth_leaked_password_protection`: pemeriksaan password bocor terbina Supabase tidak aktif kerana ciri ini memerlukan Pro. Keluaran menggunakan validasi 10–128 aksara, rate limit dan Auth hashing, tanpa menaik taraf pelan. Rujukan: https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection .
 - Tiada ujian beban ratusan sambungan, peranti sentuhan fizikal atau semua versi Safari/Edge. Masa paparan ialah anggaran antara respons server; keputusan server adalah muktamad.
