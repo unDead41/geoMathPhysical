@@ -133,7 +133,7 @@ warna, timing, watch butang dan maksud output RFID.
 Banner ini juga muncul semasa boot dan pada permulaan output `status`:
 
 ```text
-[FIRMWARE] GeoDecoder v1.1.1 | ESP32 | env=esp32dev-rgb
+[FIRMWARE] GeoDecoder v1.1.2 | ESP32 | env=esp32dev-rgb
 ```
 
 `env=esp32dev` menandakan LED biasa. Semak versi dengan README GitHub pada

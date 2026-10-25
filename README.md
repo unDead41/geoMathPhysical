@@ -1,6 +1,6 @@
 # GeoDecoder
 
-Versi semasa: **v1.1.1**.
+Versi semasa: **v1.1.2**.
 Rujukan kemas kini: [SOR versi](docs/SOR_VERSIONING.md) dan [changelog](CHANGELOG.md).
 
 Kuiz geometri 3D menggunakan ESP32 klasik/WROOM-32, dua pembaca MFRC522,
@@ -8,6 +8,30 @@ LCD I2C 20x4, dua butang dan dua LED biasa atau dua RGB empat kaki.
 
 **Aliran kerja utama: VS Code + PlatformIO IDE.** Build, Upload dan Serial
 Monitor tersedia terus dalam VS Code. Arduino IDE tidak diperlukan.
+
+## Panduan PDF
+
+- [Panduan lengkap A-Z](tutorial/GeoDecoder_Panduan_A-Z.pdf): 45 halaman
+  bergambar untuk sambungan, persediaan komputer, ujian, pendaftaran RFID
+  dan penggunaan GeoDecoder.
+- [Cara bermain untuk murid](tutorial/GeoDecoder_Cara_Bermain_Murid.pdf):
+  21 halaman bergambar tanpa nombor halaman, menggunakan bahasa mudah dan
+  istilah matematik berpandukan KSSM/DSKP.
+
+Kedua-dua PDF ialah salinan tepat daripada `sharing` pada commit
+[`de86754`](https://github.com/unDead41/geodecoder/commit/de86754fb042e12c9254eb883621febf6f055a31).
+Panduan disemak terhadap firmware v1.1.1 dan serasi dengan v1.1.2, yang
+menambah dokumentasi ini serta menaikkan label versi mengikut SOR.
+
+Bahagian installer A-Z menggunakan `setup.ps1` dalam pakej
+[`sharing`](https://github.com/unDead41/geodecoder/tree/sharing).
+Dapatkan installer bersama ZIP branch itu. Untuk folder `main`, ikut
+langkah VS Code + PlatformIO di bawah.
+
+Cara bermain murid menunjukkan bongkah 3D dengan kad RFID di bawahnya untuk
+R1, serta kad RFID yang ditampal cetakan bentangan untuk R2. Contoh prisma
+segi tiga ialah simulasi penerangan; bank firmware masih menggunakan lima
+jenis bongkah asal. Guru perlu menguji bacaan RFID pada bongkah sebenar.
 
 ## 1. Buka projek dalam VS Code
 
@@ -212,7 +236,7 @@ arahan. `Ctrl+C` menutup Monitor. Untuk melihat port: `pio device list`.
 Pada boot/reset ESP32, Serial 115200 baud memaparkan:
 
 ```text
-[FIRMWARE] GeoDecoder v1.1.1 | ESP32 | env=esp32dev-rgb
+[FIRMWARE] GeoDecoder v1.1.2 | ESP32 | env=esp32dev-rgb
 ```
 
 Mod LED biasa memaparkan `env=esp32dev`. Jika Monitor dibuka selepas banner
@@ -244,6 +268,7 @@ lama selepas pull, Upload semula environment yang betul. Rujuk [SOR versi](docs/
 | `COMMANDS.md` | Senarai penuh arahan Serial |
 | `docs/lcd/` | PDF 15 halaman dan set PNG paparan LCD terkini |
 | `print_labels/` | Tiga PDF kad RFID siap potong tanpa nama jawapan |
+| `tutorial/` | PDF panduan A-Z dan cara bermain murid bergambar |
 
 Rujuk [panduan architecture](docs/ARCHITECTURE.md) sebelum mengubah modul.
 Engine kuiz menerima masa sebagai nilai; application menerima adapter melalui

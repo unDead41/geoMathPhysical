@@ -32,6 +32,19 @@ Semakan penggantian ini mengesahkan semua 90 baris soalan dan hint dalam PDF
 sepadan dengan `main/question_bank.h` pada commit `797a21f`. Setiap halaman
 menggunakan reka letak tetap dan petunjuk simbol yang sama.
 
+## Panduan pengguna dan murid
+
+| Fail | Kandungan | Halaman |
+|---|---|---:|
+| [Panduan A-Z](../tutorial/GeoDecoder_Panduan_A-Z.pdf) | Sambungan, komputer baharu, installer sharing, Build/Upload, ujian, pendaftaran dan penggunaan | 45 |
+| [Cara bermain murid](../tutorial/GeoDecoder_Cara_Bermain_Murid.pdf) | Aliran bergambar dengan bongkah 3D/RFID di R1 dan kad bentangan di R2; tanpa nombor halaman | 21 |
+
+Edisi 25 Oktober 2026, disalin tepat daripada `sharing` commit
+`de86754fb042e12c9254eb883621febf6f055a31`. PDF disemak terhadap v1.1.1
+dan serasi dengan v1.1.2. Installer yang diterangkan dalam panduan A-Z
+dibekalkan bersama pakej sharing. Contoh prisma segi tiga dalam panduan
+murid dilabel sebagai simulasi; firmware belum menyokong jawapan prisma.
+
 ## Semakan aset
 
 - Semua PDF dibuka semula dan bilangan/saiz halaman disahkan.

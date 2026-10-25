@@ -1,5 +1,19 @@
 # Changelog
 
+## v1.1.2 - 2026-10-25
+
+- Publish the reviewed A-Z setup guide (45 pages) and pupil gameplay guide
+  (21 pages, no printed page numbers) as exact PDF copies from sharing
+  commit de86754fb042e12c9254eb883621febf6f055a31.
+- Link both guides from README and the asset index. Clarify that the A-Z
+  installer steps use the sharing package and that the triangular-prism
+  gameplay example is a teaching simulation, not a supported firmware answer.
+- Illustrate R1 physical solids with RFID cards underneath, R2 printed-net
+  cards, explicit LED R1/R2 labels and the ordered gameplay flow.
+- Advance the runtime version label for this documentation release under
+  the project SOR. Pull main to read the PDFs; Build and Upload the selected
+  environment to identify the ESP32 as v1.1.2.
+
 ## v1.1.1 - 2026-10-25
 
 - Select different simultaneous R1/R2 colours in every random RGB mode: menu,
