@@ -19,7 +19,7 @@ Selepas main dikemas kini, pilih environment di PlatformIO Project Tasks:
 | Environment | Pemasangan |
 |---|---|
 | `esp32dev` (default) | LED biasa R1=GPIO25, R2=GPIO26; hanya ON/OFF |
-| `esp32dev-rgb` | RGB1 R/G/B=16/17/26; RGB2 R/G/B=13/14/25 |
+| `esp32dev-rgb` | RGB1 R/G/B=13/14/25; RGB2 R/G/B=16/17/26 |
 
 Pilih **Build**, kemudian **Upload**, kemudian **Monitor**, kelajuan **115200 baud**.
 Hantar satu arahan setiap baris dengan Enter/Newline. Selepas firmware ini diupload,
@@ -81,15 +81,20 @@ Arahan ringkas terus dalam Serial Monitor:
 | `R1Green` | `R2Green` | Hijau kekal |
 | `R1Blue` | `R2Blue` | Biru kekal |
 | `R1Yellow` | `R2Yellow` | Kuning kekal; saluran R dan G bersama |
-| `R1RGB` | `R2RGB` | Semua tujuh warna dalam susunan rawak, bertukar setiap 500 ms |
+| `R1Cyan` | `R2Cyan` | Sian kekal; saluran G dan B bersama |
+| `R1Magenta` / `R1Purple` | `R2Magenta` / `R2Purple` | Ungu/magenta kekal; saluran R dan B bersama, sama seperti hint |
+| `R1White` | `R2White` | Putih kekal; ketiga-tiga saluran bersama |
+| `R1RGB` | `R2RGB` | Semua tujuh warna mengikut turutan, bertukar setiap 500 ms |
+| `R1Random` | `R2Random` | Warna rawak setiap 500 ms |
 | `R1Off` | `R2Off` | Padam; target lain juga padam |
 
 Hantar satu arahan, periksa warna fizikal, kemudian hantar yang seterusnya.
-Suffix `Cyan`, `Magenta` dan `White` juga boleh digunakan. Huruf besar/kecil
-diterima, misalnya `r1red`. Setiap arahan memilih satu target dan memadam target
+Huruf besar/kecil diterima, misalnya `r1red`. Setiap arahan memilih satu target dan memadam target
 lain; ia tidak mengumpulkan pilihan R1/R2 daripada arahan sebelumnya.
-`R1RGB`/`R2RGB` tidak mengulang warna yang sama secara berturut-turut. Serial
-menulis `target=R1 colour=yellow` misalnya, supaya warna yang dilihat boleh
+`R1RGB`/`R2RGB` mengulang merah → hijau → biru → kuning → sian → magenta/ungu
+→ putih. Setiap warna muncul sekali dalam satu kitaran 3,500 ms sebelum
+bermula semula. `R1Random`/`R2Random` mengekalkan mod rawak terdahulu, tanpa
+warna sama berturut-turut. Serial menulis `target=R1 colour=yellow` misalnya, supaya warna yang dilihat boleh
 dibandingkan dengan warna yang diminta. Gunakan warna tunggal untuk menyemak
 satu saluran. Semua pilihan kekal aktif sehingga arahan ujian lain atau `test/stop`.
 
@@ -117,6 +122,7 @@ Jika target ditinggalkan (`test/led/red`), kedua-duanya diuji.
 | `yellow` | R dan G bersama |
 | `cyan` | G dan B bersama |
 | `magenta` | R dan B bersama |
+| `purple` | Alias `magenta`; ungu yang sama seperti hint permainan |
 | `white` | R, G dan B bersama |
 | `off` | Padam dan kekal padam sehingga arahan lain atau test/stop |
 | `cycle` | Merah → hijau → biru → kuning → sian → magenta → putih, 500 ms setiap warna, berulang |

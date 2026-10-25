@@ -1,6 +1,6 @@
 # GeoDecoder
 
-Versi semasa: **v1.0.0**.
+Versi semasa: **v1.1.0**.
 Rujukan kemas kini: [SOR versi](docs/SOR_VERSIONING.md) dan [changelog](CHANGELOG.md).
 
 Kuiz geometri 3D menggunakan ESP32 klasik/WROOM-32, dua pembaca MFRC522,
@@ -39,7 +39,7 @@ Dalam panel PlatformIO > **Project Tasks**, pilih environment yang sepadan:
 | Environment | Perkakasan |
 |---|---|
 | `esp32dev` (default) | Dua LED biasa: GPIO25 dan GPIO26 |
-| `esp32dev-rgb` | Dua RGB empat kaki (R/G/B): R1=16/17/26, R2=13/14/25 |
+| `esp32dev-rgb` | Dua RGB empat kaki (R/G/B): R1=13/14/25, R2=16/17/26 |
 
 Pilih **General > Build** di bawah environment itu. Build boleh dijalankan
 tanpa ESP32 disambungkan. Tunggu keputusan `SUCCESS`.
@@ -134,9 +134,9 @@ RFID mesti READY dan semua jenis aktif mesti mempunyai UID R1 serta R2.
 2. **Setiap soalan memerlukan dua kad: R1 bongkah dahulu, kemudian R2 bentangan
    yang sepadan.** R1 biru/R2 padam pada permulaan. R1 betul belum mendapat markah;
    R1 kekal hijau dan R2 menjadi biru. Tahap aktif turut ditulis pada header LCD.
-3. Salah: pembaca aktif merah selama notis, kemudian kembali biru/kuning.
+3. Salah: pembaca aktif merah selama notis, kemudian kembali biru/ungu.
    Cuba semula pada tahap sama; R1 kekal hijau jika sedang menjawab bentangan.
-4. HINT membuka/menutup petunjuk dan menjadikan pembaca aktif kuning. Masa terus
+4. HINT membuka/menutup petunjuk dan menjadikan pembaca aktif ungu. Masa terus
    berjalan; imbasan masih diterima dan markah tidak ditolak.
 5. Dua kad betul: **+1 sekali sahaja**, kedua-dua RGB hijau berkelip tiga kali.
    NEXT melangkau mana-mana tahap: **+0**, kedua-duanya merah berkelip tiga kali.
@@ -178,8 +178,11 @@ test/stop
 Hantar satu arahan dan uji komponennya sebelum memilih arahan lain. Ujian aktif
 menjeda permainan tanpa menukar pendaftaran kad. `test/stop` kembali ke menu.
 Untuk warna sebenar, Build/Upload `esp32dev-rgb` dengan pin RGB pengguna terkini.
-`R1RGB`/`R2RGB` memainkan tujuh warna rawak, bertukar setiap 500 ms; warna tunggal
-kekal menyala. `R1Blue`/`R2Blue` menguji saluran biru, `R1Off`/`R2Off` memadam.
+`R1RGB`/`R2RGB` mengulang semua tujuh warna mengikut turutan setiap 500 ms:
+merah, hijau, biru, kuning, sian, magenta (ungu) dan putih. Gunakan
+`R1Random`/`R2Random` untuk warna rawak. Warna tunggal kekal menyala.
+`R1Purple`/`R2Purple` menguji ungu yang sama seperti hint permainan.
+`R1Blue`/`R2Blue` menguji saluran biru, `R1Off`/`R2Off` memadam.
 `ButtonTest` memantau kedua-dua butang; `NEXTTest` atau `HINTTest` memilih satu.
 Tekan/lepas kurang 1 saat untuk `SHORT_PRESS`; tahan sekurang-kurangnya 1 saat
 untuk `LONG_PRESS` sekali sahaja. Serial menunjukkan GPIO, tempoh dan kiraan.
@@ -205,7 +208,7 @@ arahan. `Ctrl+C` menutup Monitor. Untuk melihat port: `pio device list`.
 Pada boot/reset ESP32, Serial 115200 baud memaparkan:
 
 ```text
-[FIRMWARE] GeoDecoder v1.0.0 | ESP32 | env=esp32dev-rgb
+[FIRMWARE] GeoDecoder v1.1.0 | ESP32 | env=esp32dev-rgb
 ```
 
 Mod LED biasa memaparkan `env=esp32dev`. Jika Monitor dibuka selepas banner

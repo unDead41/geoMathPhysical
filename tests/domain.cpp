@@ -98,8 +98,7 @@ static void stageRetry() {
   need(game.readerColor(0) == RgbColor::BLUE, "error did not return to blue");
   game.toggleHint();
   const RgbColor hintColour = game.readerColor(0);
-  need(hintColour != RgbColor::BLUE && hintColour != RgbColor::RED && hintColour != RgbColor::OFF,
-       "hint must use a distinct yellow colour");
+  need(hintColour == RgbColor::MAGENTA, "hint must use purple (red+blue), never yellow");
   game.submit(0, Shape::CUBE, 0, 1500); game.update(2700);
   need(game.readerColor(0) == hintColour && game.data().showHint, "error lost open hint colour");
   game.submit(0, Shape::PYRAMID, 0, 3000);

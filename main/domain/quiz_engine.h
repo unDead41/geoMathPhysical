@@ -120,7 +120,7 @@ class QuizEngine {
     if (reader != activeReader()) return RgbColor::OFF;
     if (data_.feedback == Feedback::WRONG || data_.feedback == Feedback::UNKNOWN_UID ||
         data_.feedback == Feedback::WRONG_PAD) return RgbColor::RED;
-    return data_.showHint ? RgbColor::YELLOW : RgbColor::BLUE;
+    return data_.showHint ? RgbColor::MAGENTA : RgbColor::BLUE;
   }
  private:
   void clearCurrent() {

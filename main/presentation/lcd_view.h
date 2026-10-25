@@ -18,7 +18,7 @@ struct LcdViewState {
 const char *const LCD_INSTRUCTIONS[INSTRUCTION_PAGE_COUNT][2] = {
   {"R1: Kad bongkah dulu", "R2: Bentangan sama"},
   {"Biru: Sedia imbas", "Hijau: Tahap betul"},
-  {"HINT:Petunjuk kuning", "HINT lagi: Soalan"},
+  {"HINT:Petunjuk ungu", "HINT lagi: Soalan"},
   {"Merah: Cuba semula", "NEXT: Langkau (+0)"},
   {"Dua betul:+1 markah", "3 kelip: Masa dijeda"},
   {"Menu:Warna perlahan", "Tamat: Warna pantas"}

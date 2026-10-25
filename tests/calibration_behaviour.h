@@ -2,6 +2,71 @@
 // A wrong alias target/colour, timer edge or duplicate gesture must fail here.
 #include "hardware/component_tests.h"
 
+// A random shortcut or a missing palette entry must fail the complete cycle.
+static void calibration_complete_rgb_cycles() {
+  const char *commands[] = {"R1RGB", "R2RGB"};
+  const RgbColor colours[] = {RgbColor::RED, RgbColor::GREEN, RgbColor::BLUE,
+    RgbColor::YELLOW, RgbColor::CYAN, RgbColor::MAGENTA, RgbColor::WHITE};
+  const char *names[] = {"red", "green", "blue", "yellow", "cyan", "magenta", "white"};
+  const bool channels[7][3] = {{true,false,false},{false,true,false},{false,false,true},
+    {true,true,false},{false,true,true},{true,false,true},{true,true,true}};
+  for (unsigned target = 0; target < 2; ++target) {
+    fixture(); start(); const auto saved = fakeNvs; const uint32_t paused = quizElapsedMs();
+    componentSerial(commands[target]); rgbUpdate();
+    for (unsigned frame = 0; frame < 15; ++frame) {
+      const unsigned c = frame % 7;
+      if (frame) {
+        Serial.output.clear(); advance(499);
+        need(componentTestsReaderColor(target) == colours[(frame - 1) % 7] && Serial.output.empty(),
+             "complete colour cycle moved or logged before 500ms");
+        advance(1);
+      }
+      need(componentTestsActive() && componentTestsReaderColor(target) == colours[c],
+           "RGB shortcut skipped or repeated a colour before completing all seven");
+      componentOutputs(target == 0 && channels[c][0], target == 0 && channels[c][1], target == 0 && channels[c][2],
+                       target == 1 && channels[c][0], target == 1 && channels[c][1], target == 1 && channels[c][2]);
+      const std::string label = std::string("target=") + (target ? "R2" : "R1") + " colour=" + names[c];
+      need(Serial.output.find(label) != std::string::npos, "cycle log does not match physical output");
+    }
+    need(appState().mode == AppMode::STOPPED && quizState().score == 0 &&
+         quizElapsedMs() == paused && fakeNvs == saved, "complete RGB cycle changed game or NVS");
+    componentSerial("test/led/off"); rgbUpdate(); componentOutputs(false,false,false,false,false,false);
+  }
+}
+
+static void calibration_purple_aliases() {
+  const char *commands[] = {"R1Purple", "R2Purple", "test/led/r1/purple", "test/led/r2/purple"};
+  for (unsigned i = 0; i < 4; ++i) {
+    fixture(); componentSerial(commands[i]); advance(501);
+    const unsigned target = i % 2;
+    need(componentTestsActive() && componentTestsReaderColor(target) == RgbColor::MAGENTA,
+         "purple alias does not select the red+blue colour");
+    componentOutputs(!target,false,!target,target,false,target);
+  }
+}
+
+// Exercises gameplay output ownership on the swapped physical LEDs, not a test mode.
+static void game_rgb_outputs_and_purple_hints() {
+  fixture(); start(); select("P1"); const auto saved = fakeNvs; const uint32_t before = quizElapsedMs();
+  rgbUpdate(); componentOutputs(false,false,true,false,false,false);
+  command("hint"); rgbUpdate(); componentOutputs(true,false,true,false,false,false);
+  advance(100); need(quizElapsedMs() == before + 100, "purple hint paused gameplay time");
+  command("hint"); rgbUpdate(); componentOutputs(false,false,true,false,false,false);
+  command("hint"); quizOnScan(0,tag(Shape::CUBE,0)); rgbUpdate();
+  componentOutputs(true,false,false,false,false,false);
+  advance(1200); componentOutputs(true,false,true,false,false,false);
+  quizOnScan(0,tag(Shape::PYRAMID,0)); rgbUpdate();
+  componentOutputs(false,true,false,false,false,true);
+  command("hint"); rgbUpdate(); componentOutputs(false,true,false,true,false,true);
+  quizOnScan(1,tag(Shape::CUBE,1)); rgbUpdate(); componentOutputs(false,true,false,true,false,false);
+  advance(1200); componentOutputs(false,true,false,true,false,true);
+  command("hint"); rgbUpdate(); componentOutputs(false,true,false,false,false,true);
+  command("hint"); quizOnScan(1,tag(Shape::PYRAMID,1)); rgbUpdate();
+  componentOutputs(false,true,false,false,true,false);
+  need(!componentTestsActive() && quizState().score == 1 && quizState().hintsUsed == 1 && fakeNvs == saved,
+       "purple game flow entered diagnostics, changed NVS or altered scoring");
+}
+
 static void calibration_led_shortcuts() {
   fixture(); start(); const auto saved = fakeNvs; const uint32_t paused = quizElapsedMs();
   const char *names[2][8] = {
@@ -22,7 +87,7 @@ static void calibration_led_shortcuts() {
 }
 
 static void calibration_random_leds() {
-  const char *commands[] = {"R1RGB", "R2RGB", "test/led/all/random"};
+  const char *commands[] = {"R1Random", "R2Random", "test/led/all/random"};
   for (unsigned target = 0; target < 3; ++target) {
     fixture(); start(); const auto saved = fakeNvs; const uint32_t paused = quizElapsedMs();
     componentSerial(commands[target]); rgbUpdate();
@@ -57,7 +122,7 @@ static void calibration_random_leds() {
 }
 
 static void calibration_random_rollover() {
-  fixture(); sim::now = UINT32_MAX - 200; componentSerial("R2RGB"); rgbUpdate();
+  fixture(); sim::now = UINT32_MAX - 200; componentSerial("R2Random"); rgbUpdate();
   const RgbColor before = componentTestsReaderColor(1);
   advance(499); need(componentTestsReaderColor(1) == before, "RGB rollover changed colour early");
   advance(1); need(componentTestsReaderColor(1) != before, "RGB rollover stalled colour rotation");

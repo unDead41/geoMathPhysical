@@ -73,12 +73,12 @@ Jika kekal PRESSED, sahkan polariti modul dan sambungan S / VCC / GND sebelum be
 
 | Saluran | RGB1 / R1 bongkah | RGB2 / R2 bentangan |
 |---|---|---|
-| R | GPIO16 | GPIO13 |
-| G | GPIO17 | GPIO14 |
-| B | GPIO26 | GPIO25 |
+| R | GPIO13 | GPIO16 |
+| G | GPIO14 | GPIO17 |
+| B | GPIO25 | GPIO26 |
 
-Pemetaan RGB ini mengikut sambungan pengguna: RGB1 B=26, G=17, R=16;
-RGB2 B=25, G=14, R=13. RGB1 ialah petunjuk bongkah/R1 dan RGB2 bentangan/R2.
+Pemetaan RGB ini mengikut sambungan pengguna: RGB1 B=25, G=14, R=13;
+RGB2 B=26, G=17, R=16. RGB1 ialah petunjuk bongkah/R1 dan RGB2 bentangan/R2.
 GPIO32/33 dikhaskan untuk butang.
 
 Pemasangan LED biasa asal berasingan: LED R1 pada GPIO25 dan LED R2 pada GPIO26.
@@ -105,17 +105,17 @@ Petunjuk RGB bagi flow dua kad:
 |---|---|---|
 | Menu / cara main | Warna rawak setiap 1,000 ms | Warna rawak setiap 1,000 ms |
 | Menunggu bongkah | Biru | Padam |
-| Hint bongkah | Kuning | Padam |
+| Hint bongkah | Ungu | Padam |
 | Bongkah salah / UID tidak sah | Merah sementara | Padam |
 | Bongkah betul; menunggu bentangan | Hijau kekal | Biru |
-| Hint bentangan | Hijau kekal | Kuning |
+| Hint bentangan | Hijau kekal | Ungu |
 | Bentangan salah / UID tidak sah | Hijau kekal | Merah sementara |
 | Kedua-dua kad betul | Hijau berkelip 3 kali bersama | Hijau berkelip 3 kali bersama |
 | Langkau pada mana-mana tahap | Merah berkelip 3 kali bersama | Merah berkelip 3 kali bersama |
 | Semakan UID / pendaftaran | Biru jika pembaca ini aktif | Biru jika pembaca ini aktif |
 | Keputusan akhir | Warna rawak setiap 150 ms | Warna rawak setiap 150 ms |
 
-Notis salah ialah 1,200 ms, kemudian pembaca aktif kembali biru/kuning.
+Notis salah ialah 1,200 ms, kemudian pembaca aktif kembali biru/ungu.
 Kelipan ialah 150 ms ON + 150 ms OFF, tiga kali, jumlah 900 ms; stopwatch
 berhenti sepanjang urutan itu. Menu/keputusan tidak menerima jawapan.
 

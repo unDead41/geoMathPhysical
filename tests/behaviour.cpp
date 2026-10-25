@@ -160,13 +160,13 @@ static void held_card(){
 static void leds(){
  fixture();start();select("C3");rgbUpdate();
 #if GEODECODER_RGB_ENABLED
- need(sim::pins[26]==HIGH&&sim::pins[25]==LOW,"R1 blue/R2 off missing at question start");
+ need(sim::pins[25]==HIGH&&sim::pins[26]==LOW,"R1 blue/R2 off missing at question start");
 #else
  need(sim::pins[25]==HIGH&&sim::pins[26]==LOW,"ordinary LEDs must start with R1 only");
 #endif
  quizOnScan(0,tag(Shape::CONE,0));rgbUpdate();
 #if GEODECODER_RGB_ENABLED
- need(sim::pins[17]==HIGH&&sim::pins[16]==LOW&&sim::pins[26]==LOW&&sim::pins[25]==HIGH,"R1 green/R2 blue missing");
+ need(sim::pins[14]==HIGH&&sim::pins[13]==LOW&&sim::pins[25]==LOW&&sim::pins[26]==HIGH,"R1 green/R2 blue missing");
 #else
  need(sim::pins[25]==HIGH&&sim::pins[26]==HIGH,"ordinary LEDs must hold R1 on while R2 waits");
 #endif
@@ -271,18 +271,18 @@ static void legacy_nvs_image(){
 
 static void stage_hints_and_errors(){
  fixture();start();select("P1");appHintButton();rgbUpdate();
- need(appReaderColor(0)==RgbColor::YELLOW&&appReaderColor(1)==RgbColor::OFF,"solid hint colours wrong");
+ need(appReaderColor(0)==RgbColor::MAGENTA&&appReaderColor(1)==RgbColor::OFF,"solid hint colours wrong");
 #if GEODECODER_RGB_ENABLED
- need(sim::pins[16]==HIGH&&sim::pins[17]==HIGH&&sim::pins[26]==LOW,"yellow is not red+green");
+ need(sim::pins[13]==HIGH&&sim::pins[14]==LOW&&sim::pins[25]==HIGH,"purple is not red+blue on R1");
 #endif
  quizOnScan(0,tag(Shape::CUBE,0));need(appReaderColor(0)==RgbColor::RED,"solid error not red");
- advance(1200);need(appReaderColor(0)==RgbColor::YELLOW&&testQuiz().showHint,"solid error lost hint");
+ advance(1200);need(appReaderColor(0)==RgbColor::MAGENTA&&testQuiz().showHint,"solid error lost hint");
  quizOnScan(0,tag(Shape::PYRAMID,0));lcdUpdate();
  need(!testQuiz().showHint&&appReaderColor(0)==RgbColor::GREEN&&appReaderColor(1)==RgbColor::BLUE,"solid success kept hint or lost green");
  need(std::string(sim::lcdCells[0]).find("R2")!=std::string::npos,"LCD does not identify active R2");
- appHintButton();need(appReaderColor(0)==RgbColor::GREEN&&appReaderColor(1)==RgbColor::YELLOW,"net hint changed R1");
+ appHintButton();need(appReaderColor(0)==RgbColor::GREEN&&appReaderColor(1)==RgbColor::MAGENTA,"net hint changed R1");
  quizOnScan(1,tag(Shape::CUBE,1));need(appReaderColor(0)==RgbColor::GREEN&&appReaderColor(1)==RgbColor::RED,"net error changed R1");
- advance(1200);need(appReaderColor(0)==RgbColor::GREEN&&appReaderColor(1)==RgbColor::YELLOW,"net error restore lost stage/hint");
+ advance(1200);need(appReaderColor(0)==RgbColor::GREEN&&appReaderColor(1)==RgbColor::MAGENTA,"net error restore lost stage/hint");
  appHintButton();need(appReaderColor(1)==RgbColor::BLUE,"close net hint did not restore blue");
  quizOnScan(1,tag(Shape::CUBE,1));advance(1200);need(appReaderColor(1)==RgbColor::BLUE,"closed hint error did not restore blue");
  appHintButton();quizOnScan(1,tag(Shape::PYRAMID,1));
@@ -378,7 +378,7 @@ static void physical_led_wiring(){
  const RgbColor colours[]={RgbColor::OFF,RgbColor::RED,RgbColor::GREEN,RgbColor::BLUE,
    RgbColor::YELLOW,RgbColor::CYAN,RgbColor::MAGENTA,RgbColor::WHITE};
 #if GEODECODER_RGB_ENABLED
- const uint8_t physicalPins[2][3]={{16,17,26},{13,14,25}};
+ const uint8_t physicalPins[2][3]={{13,14,25},{16,17,26}};
  const bool channels[8][3]={{false,false,false},{true,false,false},{false,true,false},{false,false,true},
    {true,true,false},{false,true,true},{true,false,true},{true,true,true}};
  for(unsigned r=0;r<2;++r)for(unsigned colour=0;colour<8;++colour){
@@ -389,8 +389,8 @@ static void physical_led_wiring(){
   rgbWriteReader(r,RgbColor::OFF);
  }
  Serial.output.clear();command("pins");
- need(Serial.output.find("RGB1 R/G/B=16/17/26")!=std::string::npos&&
-      Serial.output.find("RGB2 R/G/B=13/14/25")!=std::string::npos,"Serial pins guide has stale RGB wiring");
+ need(Serial.output.find("RGB1 R/G/B=13/14/25")!=std::string::npos&&
+      Serial.output.find("RGB2 R/G/B=16/17/26")!=std::string::npos,"Serial pins guide has stale RGB wiring");
 #else
  const auto before=sim::pins;
  for(unsigned r=0;r<2;++r)for(unsigned colour=0;colour<8;++colour){
@@ -418,6 +418,9 @@ int main(){
  {"version_uart_preserves_game",version_uart_preserves_game},
  {"version_diagnostics_and_arguments",version_diagnostics_and_arguments},
  {"calibration_simple_rgb_commands",calibration_led_shortcuts},
+ {"calibration_complete_rgb_cycles",calibration_complete_rgb_cycles},
+ {"calibration_purple_aliases",calibration_purple_aliases},
+ {"game_rgb_outputs_and_purple_hints",game_rgb_outputs_and_purple_hints},
  {"calibration_random_colours_and_isolation",calibration_random_leds},
  {"calibration_random_rollover_and_delayed_tick",calibration_random_rollover},
  {"calibration_invalid_shortcuts",calibration_invalid_shortcuts},

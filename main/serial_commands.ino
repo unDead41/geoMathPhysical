@@ -174,7 +174,8 @@ void serialPrintHelp() {
     "help                       : senarai ini\n"
     "version                    : versi firmware + environment yang diupload\n"
     "test/help                  : ujian komponen RFID, LED dan butang\n"
-    "R1Red/R1Green/R1Yellow/R1RGB : uji warna RGB1 (R2 juga diterima)\n"
+    "R1Red/R1Green/R1Blue/R1Yellow/R1Cyan/R1Magenta/R1Purple/R1White/R1Off\n"
+    "R1RGB: turutan semua warna; R1Random: rawak (R2 juga diterima).\n"
     "ButtonTest/NEXTTest/HINTTest: uji SHORT_PRESS dan LONG_PRESS >=1s\n"
     "current                    : jenis aktif + kiraan\n"
     "current bongkah            : sama seperti current\n"
@@ -213,7 +214,7 @@ void serialPrintHelp() {
     "Panduan: HINT maju hingga tamat lalu kembali menu.\n"
     "Kuiz: B1=langkau (+0); B2=buka/tutup hint. R1 bongkah -> R2 bentangan.\n"
     "Dua kad sepadan=+1 sekali. Tiga kelipan 150ms ON/OFF; masa dijeda.\n"
-    "Biru=imbas, kuning=hint, merah=salah, hijau=tahap betul. Angkat kad.\n"
+    "Biru=imbas, ungu=hint, merah=salah, hijau=tahap betul. Angkat kad.\n"
     "Markah akhir: B1=main semula; B2=menu. Imbas/daftar: B1=menu/batal.\n"));
 }
 

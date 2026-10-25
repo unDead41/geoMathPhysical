@@ -97,15 +97,16 @@ Arahan ringkas untuk kalibrasi (satu arahan setiap baris):
 
 | Arahan | Hasil |
 |---|---|
-| `R1Red`, `R1Green`, `R1Blue`, `R1Yellow` | Warna pilihan kekal pada RGB1; RGB2 padam |
-| `R2Red`, `R2Green`, `R2Blue`, `R2Yellow` | Warna pilihan kekal pada RGB2; RGB1 padam |
-| `R1RGB`, `R2RGB` | Tujuh warna rawak pada target, 500 ms setiap warna; berterusan |
+| `R1Red`, `R1Green`, `R1Blue`, `R1Yellow`, `R1Cyan`, `R1Magenta`, `R1Purple`, `R1White` | Warna pilihan kekal pada RGB1; RGB2 padam |
+| `R2Red`, `R2Green`, `R2Blue`, `R2Yellow`, `R2Cyan`, `R2Magenta`, `R2Purple`, `R2White` | Warna pilihan kekal pada RGB2; RGB1 padam |
+| `R1RGB`, `R2RGB` | Turutan merah → hijau → biru → kuning → sian → magenta/ungu → putih; 500 ms setiap warna, ulang setiap 3,500 ms |
+| `R1Random`, `R2Random` | Warna rawak pada target, 500 ms setiap warna; berterusan |
 | `R1Off`, `R2Off` | Kedua-dua output padam kerana target diminta OFF dan target lain sentiasa padam |
 | `ButtonTest` | Pantau short/long press NEXT dan HINT |
 | `NEXTTest`, `HINTTest` | Pantau satu butang sahaja |
 
-Suffix `Cyan`, `Magenta`, `White` juga diterima untuk kedua-dua RGB. Huruf
-besar/kecil tidak penting. Warna rawak bertukar kepada warna berbeza setiap
+`Purple` ialah alias `Magenta` (merah + biru), sama seperti warna hint permainan.
+Huruf besar/kecil tidak penting. Warna rawak bertukar kepada warna berbeza setiap
 langkah. `test/led/r1/random`, `test/led/r2/random` dan `test/led/random`
 menyediakan versi slash. `ButtonTest` ialah alias `test/button/all`.
 `SHORT_PRESS` dilapor apabila dilepaskan sebelum 1,000 ms; `LONG_PRESS` sekali
@@ -129,7 +130,7 @@ warna, timing, watch butang dan maksud output RFID.
 Banner ini juga muncul semasa boot dan pada permulaan output `status`:
 
 ```text
-[FIRMWARE] GeoDecoder v1.0.0 | ESP32 | env=esp32dev-rgb
+[FIRMWARE] GeoDecoder v1.1.0 | ESP32 | env=esp32dev-rgb
 ```
 
 `env=esp32dev` menandakan LED biasa. Semak versi dengan README GitHub pada

@@ -22,7 +22,7 @@ invalid rounds, UID values, registry validation, filtered/random rounds,
 immutable LCD snapshots, and an application driven entirely by ports.
 
 Each firmware runner first checks release agreement and six checker regressions,
-runs those 11 core cases, then executes 63 behavioural
+runs those 11 core cases, then executes 66 behavioural
 cases with fake electrical/device I/O. Flow regressions drive real input adapters
 for pre-positioned R2, both held cards across questions, short/late/held buttons,
 all 900 blink samples, stopwatch resumption, stage arming, hint colours and
@@ -53,7 +53,7 @@ RFID/LCD checks. Latest actual results: `../VERIFICATION.md`.
 
 
 The physical-wiring case drives every OFF/primary/combined colour through the
-real output adapter, checks the user's literal R1=16/17/26 and R2=13/14/25
+real output adapter, checks the user's literal R1=13/14/25 and R2=16/17/26
 R/G/B pin wiring, and verifies the Serial `pins` guide. Ordinary mode checks
 that only the original GPIO25/26 outputs change for every logical colour.
 
@@ -65,7 +65,7 @@ The fake MFRC522 exposes per-reader VersionReg values only at the electrical
 boundary so the real probe path can be exercised. No component test writes NVS
 or scores a quiz. Every existing game regression remains active.
 
-`calibration_behaviour.h` adds eight UART/adapter cases for simple per-reader
+`calibration_behaviour.h` adds eleven UART/adapter cases for simple per-reader
 colour shortcuts, seven-colour random output and 500 ms boundaries, random
 rollover/delayed ticks, malformed shortcuts, short-press durations (200/999 ms),
 the exact 1,000 ms long threshold and non-repeat, independent/simultaneous
@@ -93,3 +93,9 @@ environment; release agreement is checked separately against the header/docs.
 matching values, README/changelog disagreements, malformed/zero-padded versions,
 non-increasing releases and numeric ordering across multi-digit components.
 
+
+The complete-cycle case checks two full R1RGB/R2RGB cycles plus wraparound,
+every physical channel and each 499/500 ms boundary. Purple aliases and
+gameplay outputs use the swapped literal wiring. Gameplay tests cover purple
+on both hint stages, green R1 retention, red wrong-answer notices, purple
+restoration, blue on close, unchanged scoring, running time and untouched NVS.

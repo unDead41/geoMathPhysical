@@ -6,8 +6,8 @@ static void componentSerial(const char *line) {
 }
 static void componentOutputs(bool r1, bool g1, bool b1, bool r2, bool g2, bool b2) {
 #if GEODECODER_RGB_ENABLED
-  need(sim::pins[16] == int(r1) && sim::pins[17] == int(g1) && sim::pins[26] == int(b1) &&
-       sim::pins[13] == int(r2) && sim::pins[14] == int(g2) && sim::pins[25] == int(b2),
+  need(sim::pins[13] == int(r1) && sim::pins[14] == int(g1) && sim::pins[25] == int(b1) &&
+       sim::pins[16] == int(r2) && sim::pins[17] == int(g2) && sim::pins[26] == int(b2),
        "diagnostic output is wrong or overridden by the game");
 #else
   need(sim::pins[25] == int(r1 || g1 || b1) && sim::pins[26] == int(r2 || g2 || b2),

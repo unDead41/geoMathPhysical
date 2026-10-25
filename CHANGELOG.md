@@ -1,5 +1,18 @@
 # Changelog
 
+## v1.1.0 - 2026-10-25
+
+- Test every digital RGB colour in order with R1RGB/R2RGB: red, green, blue,
+  yellow, cyan, magenta and white, 500 ms per colour, repeating.
+- Add R1Random/R2Random for the previous random pattern and R1Purple/R2Purple
+  as aliases for magenta (red + blue). List every fixed colour in Serial help.
+- Use purple for gameplay hints on the active reader, preserving R1 green
+  during R2 hints and restoring purple after wrong-answer notices.
+- Swap physical RGB outputs as requested: R1 R/G/B=13/14/25 and R2=16/17/26.
+  Keep ordinary LEDs, RFID readers, buttons and saved UID/NVS unchanged.
+- Update firmware identity, LCD instructions, wiring and calibration guides.
+  Pull main and Build/Upload esp32dev-rgb, then confirm v1.1.0 with version.
+
 ## v1.0.0 - 2026-10-25
 
 - First formally numbered GeoDecoder release; previous dated entries describe

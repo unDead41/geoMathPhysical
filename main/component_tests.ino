@@ -63,10 +63,12 @@ void componentHelp() {
     "test/led/cycle             : 7 warna, 500ms setiap warna\n"
     "test/led/random            : 7 warna rawak, tukar setiap 500ms\n"
     "test/led/blink             : putih 250ms ON + 250ms OFF\n"
-    "R1Red R1Green R1Blue R1Yellow R1RGB R1Off\n"
-    "R2Red R2Green R2Blue R2Yellow R2RGB R2Off\n"
-    "R1RGB/R2RGB = warna rawak; Cyan/Magenta/White juga diterima.\n"
-    "Warna: red green blue yellow cyan magenta white off.\n"
+    "R1Red R1Green R1Blue R1Yellow R1Cyan R1Magenta R1Purple R1White R1Off\n"
+    "R2Red R2Green R2Blue R2Yellow R2Cyan R2Magenta R2Purple R2White R2Off\n"
+    "R1RGB/R2RGB = semua 7 warna mengikut turutan, 500ms setiap warna.\n"
+    "R1Random/R2Random = warna rawak, 500ms setiap warna.\n"
+    "Warna: red green blue yellow cyan magenta/purple white off.\n"
+    "Purple = ungu (merah+biru), sama seperti Magenta; warna hint permainan.\n"
     "Target LED: r1, r2, all; jika ditinggalkan, kedua-duanya.\n"
     "test/button/status         : status raw + debounce sekali\n"
     "test/button/all            : pantau NEXT dan HINT\n"
@@ -126,6 +128,7 @@ void componentEnter(ComponentMode mode, uint8_t selected) {
   }
 }
 bool componentParseColour(const char *text, RgbColor &out) {
+  if (!strcmp(text, "purple")) { out = RgbColor::MAGENTA; return true; }
   for (uint8_t i = 0; i < sizeof(componentColourNames) / sizeof(componentColourNames[0]); ++i) {
     if (!strcmp(text, componentColourNames[i])) { out = RgbColor(i); return true; }
   }
@@ -179,7 +182,8 @@ bool componentTestsShortcut(const char *name) {
   const uint8_t selected = !strncmp(name, "r1", 2) ? 1 : !strncmp(name, "r2", 2) ? 2 : 0;
   if (!selected) return false;
   const char *action = name + 2; RgbColor colour = RgbColor::OFF;
-  if (!strcmp(action, "rgb")) { componentStartLed(selected, ComponentPattern::RANDOM, colour); return true; }
+  if (!strcmp(action, "rgb")) { componentStartLed(selected, ComponentPattern::CYCLE, colour); return true; }
+  if (!strcmp(action, "random")) { componentStartLed(selected, ComponentPattern::RANDOM, colour); return true; }
   if (componentParseColour(action, colour)) { componentStartLed(selected, ComponentPattern::STEADY, colour); return true; }
   return false;
 }

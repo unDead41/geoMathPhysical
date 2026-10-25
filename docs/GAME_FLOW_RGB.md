@@ -10,10 +10,10 @@ soalan yang sama. Ini menggantikan peraturan lama satu kad setiap soalan.
 |---|---|---|---|
 | Menu atau enam halaman cara main | Warna rawak perlahan | Warna rawak perlahan | Masa berhenti; tukar warna setiap 1,000 ms |
 | Mula soalan; menunggu bongkah | Biru | Padam | Masa berjalan |
-| Hint bongkah dibuka | Kuning | Padam | Masa berjalan; tiada potongan markah |
+| Hint bongkah dibuka | Ungu | Padam | Masa berjalan; tiada potongan markah |
 | Bongkah salah / kad tidak sah | Merah | Padam | Cuba semula R1; tiada markah |
 | Bongkah betul; menunggu bentangan | Hijau kekal | Biru | Belum mendapat markah; masa berjalan |
-| Hint bentangan dibuka | Hijau kekal | Kuning | Masa berjalan |
+| Hint bentangan dibuka | Hijau kekal | Ungu | Masa berjalan |
 | Bentangan salah / kad tidak sah | Hijau kekal | Merah | Cuba semula R2 sahaja |
 | Kedua-duanya betul | Hijau berkelip bersama | Hijau berkelip bersama | +1 sekali sahaja; masa dijeda |
 | NEXT melangkau mana-mana tahap | Merah berkelip bersama | Merah berkelip bersama | +0; masa dijeda |
@@ -42,13 +42,13 @@ menyasarkan bentangan, kini dijawab melalui kedua-dua tahap R1 kemudian R2.
 
 1. R1 biru dan R2 padam. Baca soalan dan imbas kad bongkah di R1.
 2. Jika salah, R1 merah selama notis 1,200 ms. Kemudian kembali biru, atau
-   kuning jika hint masih dibuka. Soalan dan tahap kekal; angkat kad dan cuba lagi.
+   ungu jika hint masih dibuka. Soalan dan tahap kekal; angkat kad dan cuba lagi.
 3. Jika betul, R1 kekal hijau dan R2 menjadi biru. Hint yang sedang dibuka
    ditutup. Soalan sama; **tiada markah diberikan pada tahap ini**.
 4. Pilih kad bentangan sepadan dan imbas di R2. R2 belum menerima jawapan
    sebelum tahap R1 selesai. Kad yang sudah berada di R2 perlu diangkat dahulu.
 5. Jika bentangan salah, R2 merah selama notis 1,200 ms; R1 kekal hijau.
-   Cuba semula bentangan sahaja. R2 kemudian kembali biru/kuning mengikut hint.
+   Cuba semula bentangan sahaja. R2 kemudian kembali biru/ungu mengikut hint.
 6. Apabila bentangan betul, tambah satu markah sekali sahaja dan jalankan
    urutan hijau di bawah. Input berulang tidak boleh menambah markah lagi.
 
@@ -57,8 +57,11 @@ walaupun jenis bongkahnya betul. UID dan pendaftaran asal kekal digunakan.
 
 ## Hint
 
+Ungu menggunakan saluran merah + biru (`RgbColor::MAGENTA`), sama seperti
+`R1Purple`/`R2Purple` dalam ujian komponen. Kuning tidak digunakan untuk hint.
+
 HINT membuka petunjuk bank bagi soalan semasa; HINT sekali lagi kembali kepada
-soalan. Hanya pembaca yang menunggu jawapan menjadi kuning. Murid boleh mengimbas
+soalan. Hanya pembaca yang menunggu jawapan menjadi ungu. Murid boleh mengimbas
 ketika hint dibuka. Masa terus berjalan dan hint tidak menolak markah. Statistik
 hint dikira sekali bagi setiap soalan walaupun dibuka pada kedua-dua tahap.
 
@@ -122,8 +125,8 @@ rujuk [SAMBUNGAN.md](../SAMBUNGAN.md). Pemetaan pemasangan RGB pengguna terkini:
 
 | LED | R | G | B |
 |---|---:|---:|---:|
-| RGB1 / R1 bongkah | 16 | 17 | 26 |
-| RGB2 / R2 bentangan | 13 | 14 | 25 |
+| RGB1 / R1 bongkah | 13 | 14 | 25 |
+| RGB2 / R2 bentangan | 16 | 17 | 26 |
 
 Pin LED biasa kekal R1=25/R2=26, berasingan daripada susunan RGB di atas.
 Tiada pertukaran board atau format NVS.
