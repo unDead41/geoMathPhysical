@@ -48,3 +48,17 @@ ialah topik DSKP Tingkatan 2; jangan menamakannya standard Tingkatan 1.
 - Contoh dan ayat nota ialah penulisan asal. DSKP dirujuk semula pada
   26 Oktober 2026 untuk skop Bab 6. Standard 6.3.2 (sfera), sfera dalam isi padu
   dan prisma lain tidak diajar dalam modul lima bongkah ini.
+
+## Makmal v1.2.0
+
+- SP 6.2.1: murid membina susunan muka kubus dan memeriksa lipatannya. Variasi
+  grid disahkan secara geometri. Skop bina sendiri ialah kubus; bentangan lima
+  bongkah kekal tersedia dalam makmal luas dan Teroka 3D.
+- SP 6.3.1: luas setiap permukaan dipilih, dijumlah dan dihubungkan dengan rumus;
+  ukuran di makmal mengubah mesh sebenar. Rumus piramid terhad tapak segi empat sama.
+- SP 6.4.1–6.4.2: lapisan kiub unit dan tiga pemindahan ideal kon/piramid kepada
+  silinder/prisma dengan luas tapak dan tinggi sama. Ini visualisasi hubungan,
+  bukan pembuktian eksperimen bendalir fizikal.
+- SP 6.3.3 dan 6.4.3: gabungan penuh kubus+piramid serta silinder+kon; dua muka
+  bersama dikecualikan untuk luas luar dan dua isi padu ditambah. Aktiviti tidak
+  meliputi semua masalah gabungan atau semua standard Bab 6.

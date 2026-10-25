@@ -2,6 +2,7 @@ import {VIEWS,VIEW_ORDER,FACE_COLORS,clamp01,ease} from './geometry.mjs';
 import {MODULE_VERSION,MODEL_ORDER,MODEL_DATA} from './content.mjs';
 import {ModelRenderer} from './renderer.mjs';
 import {LearningNotes} from './notes.mjs';
+import {LearningLabs} from './labs.mjs';
 const el=id=>document.getElementById(id);
 const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
 const initial=MODEL_ORDER.includes(location.hash.slice(1))?location.hash.slice(1):'cube';
@@ -178,14 +179,17 @@ for(const shape of MODEL_ORDER){
 function switchLearningView(view) {
   if(state.learningView===view)return;
   stopAnimation();state.auto=false;state.camera=null;
+  if(state.learningView==='labs')learningLabs.close();
   if(raf)cancelAnimationFrame(raf);raf=0;lastFrame=0;state.learningView=view;
   refreshControls();drawMain();
-  el('explore-panel').hidden=view!=='explore';el('study-panel').hidden=view!=='notes';
-  el('learn-explore').setAttribute('aria-pressed',String(view==='explore'));el('learn-notes').setAttribute('aria-pressed',String(view==='notes'));
+  el('explore-panel').hidden=view!=='explore';el('study-panel').hidden=view!=='notes';el('labs-panel').hidden=view!=='labs';el('shape-picker').hidden=view==='labs';
+  el('learn-explore').setAttribute('aria-pressed',String(view==='explore'));el('learn-notes').setAttribute('aria-pressed',String(view==='notes'));el('learn-labs').setAttribute('aria-pressed',String(view==='labs'));
   document.title=(view==='notes'?'Nota ':'')+MODEL_DATA[state.shape].name+' — Modul GeoDecoder';
-  if(view==='notes'){learningNotes.render(state.shape);el('study-title').focus({preventScroll:true});announce('Nota '+MODEL_DATA[state.shape].name.toLowerCase()+' dibuka.');}
+  if(view==='labs'){learningLabs.open();el('labs-title').focus({preventScroll:true});document.title='Makmal Interaktif — Modul GeoDecoder';}
+  else if(view==='notes'){learningNotes.render(state.shape);el('study-title').focus({preventScroll:true});announce('Nota '+MODEL_DATA[state.shape].name.toLowerCase()+' dibuka.');}
   else {redrawSmallModels();el('model-title').focus({preventScroll:true});announce('Teroka 3D '+MODEL_DATA[state.shape].name.toLowerCase()+'.');}
 }
+const learningLabs=new LearningLabs({announce,prefersReduced:()=>reduced.matches});
 const learningNotes=new LearningNotes({announce,prefersReduced:()=>reduced.matches,onExplore:mode=>{
   switchLearningView('explore');
   if(mode==='net')beginAnimation(1);
@@ -194,6 +198,7 @@ const learningNotes=new LearningNotes({announce,prefersReduced:()=>reduced.match
   el('stage').scrollIntoView({behavior:reduced.matches?'instant':'smooth',block:'center'});
 }});
 el('learn-explore').addEventListener('click',()=>switchLearningView('explore'));el('learn-notes').addEventListener('click',()=>switchLearningView('notes'));
+el('learn-labs').addEventListener('click',()=>switchLearningView('labs'));
 el('version').textContent='V'+MODULE_VERSION;
 el('mode-model').addEventListener('click',()=>switchMode('model'));el('mode-views').addEventListener('click',()=>switchMode('views'));
 el('open-net').addEventListener('click',()=>beginAnimation(1));el('close-net').addEventListener('click',()=>beginAnimation(0));
@@ -257,7 +262,7 @@ canvas.addEventListener('keydown',event=>{
   if(event.key==='ArrowUp')state.pitch=Math.min(Math.PI/2,state.pitch+.13);if(event.key==='ArrowDown')state.pitch=Math.max(-Math.PI/2,state.pitch-.13);
   refreshControls();wake();
 });
-reduced.addEventListener('change',()=>{state.auto=false;stopAnimation();state.camera=null;refreshControls();wake();});
+reduced.addEventListener('change',()=>{if(learningLabs.ready)learningLabs.stop();state.auto=false;stopAnimation();state.camera=null;refreshControls();wake();});
 document.addEventListener('visibilitychange',()=>{if(document.hidden){stopAnimation();state.auto=false;state.camera=null;if(raf)cancelAnimationFrame(raf);raf=0;lastFrame=0;refreshControls();}else wake();});
 function redrawSmallModels(){for(const [shape,r] of navRenderers)r.draw({shape,yaw:.55,pitch:.35,mini:true});drawViews();wake();}
 if(typeof ResizeObserver!=='undefined'){const resize=new ResizeObserver(redrawSmallModels);resize.observe(el('shape-picker'));resize.observe(el('stage'));}else window.addEventListener('resize',redrawSmallModels);

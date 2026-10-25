@@ -1,6 +1,6 @@
 # Modul Pembelajaran GeoDecoder Digital V1
 
-Versi modul: **v1.1.0**. Branch kerja: **digitalize-module**.
+Versi modul: **v1.2.0**. Branch kerja: **digitalize-module**.
 
 ## Cuba terus
 
@@ -35,6 +35,34 @@ untuk bergerak semula. Reduced motion mematikan putaran awal dan peralihan kamer
 animasi pendidikan hanya dimainkan selepas arahan Main/Buka/Cantum daripada murid.
 Peluncur sentiasa membolehkan pemerhatian bingkai demi bingkai.
 
+## Makmal interaktif v1.2.0
+
+Pilih **Makmal interaktif**, kemudian pilih aktiviti 01–04:
+
+1. **Bina bentangan:** grid 6 × 6, tepat enam muka kubus. Tekan petak, seret muka,
+   atau pilih muka dan gunakan butang arah. Lipat/buka, jeda/sambung dan peluncur
+   memaparkan muka yang tegar. Mesej membezakan tidak cukup muka, sambungan
+   terputus dan pertindihan. Susunan dengan sambungan berlebihan menandakan
+   potongan tambahan dengan garis putus-putus dalam pratonton.
+2. **Isi padu:** susun kiub unit, tambah satu lapisan atau penuhkan kuboid.
+   Ukuran integer 1–6 cm (maksimum 216 kiub). Pilih kon/piramid untuk tiga
+   pemindahan isi kepada silinder/prisma yang mempunyai tapak dan tinggi sama.
+   Isi semula sumber antara tuangan. Ukuran perbandingan 1–8 cm.
+3. **Terbitkan rumus:** semua lima bongkah, ukuran 1–10 cm, bentangan berukuran
+   sebenar, pemilihan setiap permukaan dan jumlah luas. Rumus muncul selepas
+   semua permukaan dipilih. Bulatan menggunakan nilai π penuh, ditandai anggaran
+   pada paparan; pengiraan tidak membundarkan bahagian sebelum menjumlahkan.
+4. **Gabungan:** kubus+piramid dan silinder+kon dengan tapak bersama sepadan.
+   Cantum/pisah secara berterusan, ubah ukuran dan pilih permukaan luar.
+   Kedua-dua permukaan yang bercantum dikecualikan; isi padu ditambah.
+
+Semua makmal menggunakan satu kamera yang boleh diseret, butang arah, zum dan
+kedudukan asal. Butang yang memulakan animasi memfokuskan model. Menukar makmal,
+keluar bahagian atau menyembunyikan tab menghentikan animasi. Pemindahan cecair
+ialah simulasi aras/isi padu ideal, bukan simulasi aliran bendalir fizikal.
+
+Pengesahan v1.2.0: [laporan makmal](docs/LABS_V1_2.md).
+
 ## Kandungan dan matematik
 
 Sifat dan bentangan menyokong DSKP Matematik Tingkatan 2 SP 6.1.1 dan 6.2.1.
@@ -58,6 +86,8 @@ bukan pertukaran gambar atau panel poligon berengsel.
 | `src/renderer.mjs` | Lukisan Canvas 2D bagi model 3D, cahaya dan pemilihan permukaan |
 | `src/content.mjs` | Satu sumber versi modul dan penerangan BM |
 | `src/lessons.mjs` | Nota, contoh asal, rumus dan pengiraan ukuran yang disahkan |
+| `src/lab-geometry.mjs` | Validasi bentangan, bingkai engsel, bahagian luas, isi dan gabungan |
+| `src/labs.mjs` | Empat aktiviti, kamera bersama, seretan dan kitar hayat animasi |
 | `src/notes.mjs` | Paparan nota, rajah SVG, input ukuran, maklum balas dan navigasi |
 | `src/app.mjs` | Kawalan input, animasi, pandangan dan aktiviti pembelajaran |
 | `src/index.html`, `src/style.css` | Antara muka dan identiti visual |
@@ -78,7 +108,8 @@ npm run check
 Build semula sebelum ujian aplikasi kerana ia menjalankan skrip HTML keluaran sebenar.
 Untuk sumber modular, gunakan pelayan statik pada folder `src/`. Pengguna akhir
 hanya memerlukan fail HTML keluaran. Kod kuiz, skor, analitik dan firmware tidak diubah.
-Versi modul bebas daripada permainan Digital v1.1.0 dan firmware v1.1.3; nombor
+Versi modul bebas daripada permainan Digital dan firmware v1.1.3; asas permainan
+branch modul ialah v1.1.0, sementara rujukan remote terkini direkod dalam SOURCE.md. Nombor
 modul ialah cadangan branch, bukan pengumuman keluaran main.
 
 ## Had sebenar

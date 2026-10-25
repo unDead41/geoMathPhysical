@@ -1,1 +1,29 @@
-{"profile":"product-admin","sourceRoots":["src"],"locale":"ms-MY","canonicalMap":"UX-CONTRACT.md","requiredCapabilities":["Scrollbar","Toast"],"requiredCommands":["build","test","check"],"commands":{"build":"npm run build","test":"npm test","check":"npm run check"},"evidence":{"failurePaths":"tests/app.test.mjs","browser":"docs/VERIFICATION.md"}}
+{
+  "profile": "product-admin",
+  "sourceRoots": [
+    "src"
+  ],
+  "locale": "ms-MY",
+  "canonicalMap": "UX-CONTRACT.md",
+  "requiredCapabilities": [
+    "Scrollbar",
+    "Toast"
+  ],
+  "requiredCommands": [
+    "build",
+    "test",
+    "check"
+  ],
+  "commands": {
+    "build": "npm run build",
+    "test": "npm test",
+    "check": "npm run check"
+  },
+  "evidence": {
+    "failurePaths": "tests/app.test.mjs",
+    "browser": "docs/VERIFICATION.md"
+  },
+  "ownership": {
+    "Select/Listbox": "native"
+  }
+}

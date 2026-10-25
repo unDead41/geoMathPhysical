@@ -15,23 +15,31 @@ function drawBadge(ctx,p,text) {
 }
 export class ModelRenderer {
   constructor(canvas) {this.canvas=canvas;this.ctx=canvas.getContext('2d');this.hitFaces=[];this.meshKey='';this.mesh=null;}
-  draw({shape,progress=0,yaw=.55,pitch=.35,zoom=1,labels=false,selected=null,mini=false}) {
+  draw({shape,progress=0,yaw=.55,pitch=.35,zoom=1,labels=false,selected=null,mini=false,mesh:customMesh=null}) {
     const ctx=this.ctx;if(!ctx)return;
     const box=this.canvas.getBoundingClientRect(),w=box.width,h=box.height;
     if(w<=0||h<=0)return;
     const dpr=Math.min(2,window.devicePixelRatio||1),cw=Math.round(w*dpr),ch=Math.round(h*dpr);
     if(this.canvas.width!==cw||this.canvas.height!==ch){this.canvas.width=cw;this.canvas.height=ch;}
     ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
+    if(customMesh&&customMesh.length===0){this.hitFaces=[];return;}
     const key=shape+':'+progress+':'+mini;
-    if(key!==this.meshKey){this.mesh=buildMesh(shape,progress,mini?64:144);this.bounds=meshBounds(this.mesh);this.meshKey=key;}
+    if(customMesh){this.mesh=customMesh;this.bounds=meshBounds(customMesh);this.meshKey='';}
+    else if(key!==this.meshKey){this.mesh=buildMesh(shape,progress,mini?64:144);this.bounds=meshBounds(this.mesh);this.meshKey=key;}
     const {center,radius}=this.bounds;
-    const scale=Math.min(w,h)/(2*radius)*(mini?.79:.78)*zoom;
-    const project=p=>{const v=viewPoint(sub3(p,center),yaw,pitch);return [w/2+v[0]*scale,h/2-v[1]*scale,v[2]];};
+    let scale=Math.min(w,h)/(2*radius)*(mini?.79:.78)*zoom,offsetX=0,offsetY=0;
+    if(customMesh){
+      const vs=this.mesh.flatMap(f=>f.vertices).map(p=>viewPoint(sub3(p,center),yaw,pitch));
+      const minX=Math.min(...vs.map(p=>p[0])),maxX=Math.max(...vs.map(p=>p[0])),minY=Math.min(...vs.map(p=>p[1])),maxY=Math.max(...vs.map(p=>p[1]));
+      scale=Math.min(w/(maxX-minX||1),h/(maxY-minY||1))*.76*zoom;offsetX=(minX+maxX)/2;offsetY=(minY+maxY)/2;
+    }
+    const project=p=>{const v=viewPoint(sub3(p,center),yaw,pitch);return [w/2+(v[0]-offsetX)*scale,h/2-(v[1]-offsetY)*scale,v[2]];};
     if(!mini) {
       const gradient=ctx.createRadialGradient(w/2,h*.72,0,w/2,h*.72,w*.3);
       gradient.addColorStop(0,'rgba(35,74,110,.08)');gradient.addColorStop(1,'rgba(35,74,110,0)');
       ctx.save();ctx.translate(0,h*.62);ctx.scale(1,.18);ctx.fillStyle=gradient;ctx.fillRect(0,-h*.5,w,h);ctx.restore();
     }
+    const activeFace=id=>Array.isArray(selected)?selected.includes(id):selected===id;
     const projected=this.mesh.map(f=>{
       const pts=f.vertices.map(project),normal=cross3(sub3(f.vertices[1],f.vertices[0]),sub3(f.vertices[2],f.vertices[0]));
       const nLen=length3(normal)||1,n=normal.map(v=>v/nLen),vNormal=viewPoint(n,yaw,pitch);
@@ -42,14 +50,14 @@ export class ModelRenderer {
     this.hitFaces=[];const curveLabels=[];
     for(const {f,pts,brightness,vNormal} of projected) {
       if(Math.abs(vNormal[2])<.00001)continue;
-      trace(ctx,pts);ctx.fillStyle=shade(f.color,brightness);ctx.fill();
-      if(!f.outline) {ctx.strokeStyle=ctx.fillStyle;ctx.lineWidth=.65;ctx.stroke();}
-      if(f.outline) {ctx.strokeStyle=selected===f.id?'#215FF0':'rgba(24,51,75,.67)';ctx.lineWidth=selected===f.id?3:mini?1:1.45;ctx.stroke();}
+      trace(ctx,pts);ctx.fillStyle=shade(f.color,brightness);if(!f.wire)ctx.fill();
+      if(!f.outline&&!f.wire) {ctx.strokeStyle=ctx.fillStyle;ctx.lineWidth=.65;ctx.stroke();}
+      if(f.outline) {ctx.strokeStyle=f.warning?'#B9403E':activeFace(f.id)?'#215FF0':'rgba(24,51,75,.67)';ctx.lineWidth=activeFace(f.id)?3:mini?1:1.45;ctx.stroke();}
       if(f.rim) {
         ctx.beginPath();for(const [a,b] of f.rim){ctx.moveTo(...pts[a].slice(0,2));ctx.lineTo(...pts[b].slice(0,2));}
-        ctx.strokeStyle=selected===f.id?'#215FF0':'rgba(24,51,75,.6)';ctx.lineWidth=selected===f.id?2.7:mini?.9:1.25;ctx.stroke();
+        ctx.strokeStyle=activeFace(f.id)?'#215FF0':'rgba(24,51,75,.6)';ctx.lineWidth=activeFace(f.id)?2.7:mini?.9:1.25;ctx.stroke();
       }
-      if(f.cut) {ctx.beginPath();for(const [a,b] of f.cut){ctx.moveTo(...pts[a].slice(0,2));ctx.lineTo(...pts[b].slice(0,2));}ctx.strokeStyle='#526A7D';ctx.setLineDash([4,3]);ctx.lineWidth=1;ctx.stroke();ctx.setLineDash([]);}
+      if(f.cut) {ctx.beginPath();for(const [a,b] of f.cut){ctx.moveTo(...pts[a].slice(0,2));ctx.lineTo(...pts[b].slice(0,2));}if(f.cutUnderlay){ctx.strokeStyle='#F3F7FB';ctx.lineWidth=3.5;ctx.stroke();}ctx.strokeStyle='#526A7D';ctx.setLineDash([4,3]);ctx.lineWidth=1;ctx.stroke();ctx.setLineDash([]);}
       this.hitFaces.push({id:f.id,pts});
       if(labels&&!mini&&(f.label||f.outline)&&Math.abs(vNormal[2])>.17) {
         const p=project(faceCenter(f)),text=f.label||String(f.id+1);

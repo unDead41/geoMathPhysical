@@ -107,3 +107,18 @@ section explains t/s/radius or half-base and must never be presented as a net.
 Canonical owners: notes.mjs for note interactions; lessons.mjs for instructional
 data and numerical calculation; app.mjs for the shared shape/motion state.
 All current source remains offline and dependency-free.
+
+## Makmal interaktif v1.2.0
+
+Extend the existing section navigation with Makmal interaktif and four numbered
+activity choices. Reuse native buttons/ranges/selects, existing face colours, the
+shared ModelRenderer and system fonts. The learning context is lightweight and
+offline; Select/Listbox ownership is native. Browser/OS popup geometry is accepted
+for the small fixed choice sets. Do not remove native select chrome.
+
+One wide sticky stage and one activity-control column become a natural stacked
+document below 760px. The 6×6 builder grid is capped at 330px. The shared custom
+scene fits projected extents uniformly, making two-container comparisons legible
+without distorting dimensions. Model focus moves into view on explicit playback.
+Native arrows/select provide alternatives to grid drag and 3D orbit. New focus
+is restored when a chosen cell/surface is rebuilt.

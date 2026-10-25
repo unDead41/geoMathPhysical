@@ -51,3 +51,22 @@ kemas kini hanya di digital/module/. Modul tidak digabung semula dari branch lai
 Nota asal menambah Bab 6.3/6.4 berdasarkan dokumen KPM yang dipautkan dalam
 CURRICULUM.md. Semakan PDF meliputi halaman cetak 52–53 (halaman PDF 64–65).
 Tiada kandungan buku teks atau ilustrasi pihak ketiga disalin.
+
+## Sambungan empat makmal v1.2.0 — 26 Oktober 2026
+
+Branch sedia ada disambung pada 92c12c3a07ec250c03a73decaf52a654fc26d502,
+tree 5cb8156ce9bb4d0f75b5d247e3e1242eaf6e4ac9 (modul v1.1.0).
+Main disemak: a059979d97926b82cafd4aa5cf3fe59da04a55bb, firmware v1.1.3.
+Digitalize kini 8c36d3a572ca53231747b5adc952f9c0dca6d012, permainan v2.0.0
+(seperti digital/dist/core.mjs sebenar); itu bukan asas baharu bagi sambungan ini.
+Modul meneruskan branch sendiri, tanpa mengimport perubahan kuiz/backend.
+
+Versi modul v1.2.0 ialah MINOR serasi. Pengguna memilih aktiviti cadangan 1–4:
+bina bentangan kubus, makmal isi padu, terbitkan rumus luas permukaan, dan bongkah
+gabungan. Sumber geometri sedia ada diberi parameter ukuran pilihan; laluan lama
+kekal default dan semua ujian geometri asal diluluskan semula. Renderer ditambah
+mesh tersuai, bekas bergaris, pemilihan beberapa muka dan fit ortografik seragam.
+Semua perubahan kekal di digital/module/. Main/sharing/digitalize tidak diubah.
+
+Semakan sebelum push: digitalize bergerak kepada b0000bf8f9b969c5596f75e3af70c8dfc3fc1631 sementara kerja makmal berjalan. Branch modul masih pada asas 92c12c3a07ec250c03a73decaf52a654fc26d502 dan disambung tanpa mengubah branch permainan.
+Versi digitalize pada semakan b0000bf8f9b969c5596f75e3af70c8dfc3fc1631 ialah v2.1.0, disahkan daripada core.mjs.

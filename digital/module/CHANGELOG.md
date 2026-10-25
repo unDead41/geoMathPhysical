@@ -2,6 +2,21 @@
 
 Versi modul berasingan daripada permainan Digital dan firmware ESP32.
 
+## v1.2.0 — 26 Oktober 2026
+
+- Tambah empat Makmal interaktif: bina bentangan kubus sendiri, kiub unit dan
+  perbandingan tiga tuangan, terbitkan rumus lima bongkah, serta dua bongkah gabungan.
+- Grid menyokong seretan dan alternatif butang; validasi membezakan enam muka,
+  sambungan sisi dan pertindihan. Lipatan tegar diuji pada semua 35 heksomino
+  bebas, dengan tepat 11 bentangan kubus sah. Sambungan yang dipotong dalam
+  pratonton susunan berkitar ditandakan secara jelas.
+- Tambah ukuran sebenar tanpa mengubah dimensi canonical model terdahulu,
+  bekas bergaris dan paras isi yang mengekalkan isi padu pada bingkai pertengahan.
+- Pemilihan permukaan menjejak luas dan rumus; gabungan mengecualikan dua muka
+  dalaman. Nilai penuh digunakan sebelum pembundaran.
+- Kamera, zum, pause/resume, penghentian tab tersembunyi, fokus dan telefon
+  disemak. 100 ujian automatik lulus; lihat docs/LABS_V1_2.md.
+
 ## v1.1.0 — 26 Oktober 2026
 
 - Tambah Nota pembelajaran untuk lima bongkah: sifat, bentangan, luas permukaan,

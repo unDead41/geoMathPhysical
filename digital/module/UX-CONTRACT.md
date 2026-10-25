@@ -60,3 +60,30 @@ Input salah memaparkan ralat bersebelahan, aria-invalid dan kosong pada output.
 Tiada jawapan lama digunakan. Submit memfokus input salah. Ukuran sah diproses
 pada setiap input; hasil dibundarkan untuk paparan sahaja, nilai sangat kecil
 menggunakan < 0.01 cm³. Rajah ukuran tidak menukar bentuk umum model 3D.
+
+## Makmal interaktif v1.2.0
+
+| Capability | Canonical owner | Source of truth | Allowed variants | Verification |
+|---|---|---|---|---|
+| Select/Listbox | native | fixed lab choices in src/index.html; ownership in premium-ui.json | browser/OS-owned popup | real browser selection + keyboard |
+| Lab geometry | src/lab-geometry.mjs | user-approved activities 1–4, DSKP mapping | cube net, unit cubes, matched-base transfer/union | tests/labs.test.mjs |
+| Lab interaction | LearningLabs in src/labs.mjs | four approved activity descriptions | native buttons, range, cell drag and direction alternatives | shipped script + browser |
+
+Labs own one independent cancellable rAF controller. Entering notes/exploration
+closes the lab controller before the other section becomes active. Choosing a
+lab, changing dimensions/type or editing a net cancels pending motion as needed.
+Pause retains the target; resume continues to it. Background and reduced-motion
+preference changes stop motion without an automatic restart. Only deliberate
+playback moves a lab scene. Progress sliders offer direct frame inspection.
+
+Cube net construction supports six squares in a 6×6 grid. Additional cyclic
+joins are explicitly marked as cuts in the preview; only five hinge connections
+are retained. It never silently tears a fully connected sheet. Cube classification
+uses six distinct final normals, not shape-name guessing. All 35 free hexominoes
+are checked in tests. Volume transfer uses equal bases and perpendicular heights.
+Composite choices are exact full matching-base unions, not arbitrary booleans.
+
+All quantities are in cm/cm²/cm³. Lab circular values use Math.PI; notes retain
+their independent selectable π convention. Display rounds only after calculation.
+Wrong exterior choices produce explanation and allow retry, with no score or data
+collection. Shapes/dimensions change the lab mesh only; quiz/model defaults remain.

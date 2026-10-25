@@ -24,8 +24,8 @@ export function viewPoint(v,yaw,pitch) { const a=ry(v,-yaw); return rx(a,pitch);
 function panel(id,name,vertices,color=FACE_COLORS[id],extra={}) {
   return {id,name,vertices,color,outline:true,...extra};
 }
-function boxMesh(shape,t) {
-  const {w,h,d}=DIMENSIONS[shape], theta=(1-t)*Math.PI/2;
+function boxMesh(shape,t,dimensions=DIMENSIONS[shape]) {
+  const {w,h,d}=dimensions, theta=(1-t)*Math.PI/2;
   const right=v=>add3([w/2,0,0],ry(v,theta));
   const faces=[
     panel(0,'Depan',[[-w/2,-h/2,0],[w/2,-h/2,0],[w/2,h/2,0],[-w/2,h/2,0]]),
@@ -37,8 +37,8 @@ function boxMesh(shape,t) {
   ];
   return faces;
 }
-function pyramidMesh(t) {
-  const {a,h}=DIMENSIONS.pyramid, b=a/2, angle=Math.atan2(h,-b)*t;
+function pyramidMesh(t,dimensions=DIMENSIONS.pyramid) {
+  const {a,h}=dimensions, b=a/2, angle=Math.atan2(h,-b)*t;
   const base=[[-b,0,-b],[b,0,-b],[b,0,b],[-b,0,b]], tip=[0,h,0];
   const hinge=(verts,origin,rot,ang)=>verts.map(v=>add3(origin,rot(sub3(v,origin),ang)));
   const faces=[panel(0,'Tapak',base),
@@ -49,16 +49,16 @@ function pyramidMesh(t) {
   return faces.map(f=>({...f,vertices:f.vertices.map(v=>rx(v,-t*Math.PI/2))}));
 }
 /** u is material arc length. |dP/du| = 1 for every opening; no stretching. */
-export function cylinderPoint(u,y,t) {
-  const {r}=DIMENSIONS.cylinder, developed=ease((t-.2)/.8), k=(1-developed)/r;
+export function cylinderPoint(u,y,t,dimensions=DIMENSIONS.cylinder) {
+  const {r}=dimensions, developed=ease((t-.2)/.8), k=(1-developed)/r;
   if(Math.abs(k)<1e-6) return [u,y,-k*u*u/2];
   return [Math.sin(k*u)/k,y,-2*Math.sin(k*u/2)**2/k];
 }
-function cylinderMesh(t,n) {
-  const {r,h}=DIMENSIONS.cylinder, faces=[];
+function cylinderMesh(t,n,dimensions=DIMENSIONS.cylinder) {
+  const {r,h}=dimensions, faces=[];
   for(let i=0;i<n;i++) {
     const u0=-Math.PI*r+TAU*r*i/n,u1=-Math.PI*r+TAU*r*(i+1)/n;
-    faces.push(panel(0,'Permukaan melengkung',[cylinderPoint(u0,-h/2,t),cylinderPoint(u1,-h/2,t),cylinderPoint(u1,h/2,t),cylinderPoint(u0,h/2,t)],FACE_COLORS[0],{
+    faces.push(panel(0,'Permukaan melengkung',[cylinderPoint(u0,-h/2,t,dimensions),cylinderPoint(u1,-h/2,t,dimensions),cylinderPoint(u1,h/2,t,dimensions),cylinderPoint(u0,h/2,t,dimensions)],FACE_COLORS[0],{
       outline:false, rim:[[0,1],[2,3]], cut:t>.02?(i===0?[[0,3]]:i===n-1?[[1,2]]:null):null, label:i===Math.floor(n/2)-1?'1':null
     }));
   }
@@ -69,17 +69,17 @@ function cylinderMesh(t,n) {
   return faces;
 }
 /** beta is the material sector angle; metric ds²+s² dβ² at ALL frames. */
-export function conePoint(s,beta,t) {
-  const {r,l}=DIMENSIONS.cone, start=Math.asin(r/l), developed=ease((t-.22)/.78);
+export function conePoint(s,beta,t,dimensions=DIMENSIONS.cone) {
+  const {r,l}=dimensions, start=Math.asin(r/l), developed=ease((t-.22)/.78);
   const alpha=start+(Math.PI/2-start)*developed,a=Math.sin(alpha),q=Math.cos(alpha),phi=beta/a;
   const p=[s*a*Math.sin(phi),-s*(q*q+a*a*Math.cos(phi)),s*a*q*(Math.cos(phi)-1)];
   return rx(p,-start*(1-developed));
 }
-function coneMesh(t,n) {
-  const {r,l}=DIMENSIONS.cone, start=Math.asin(r/l), developed=ease((t-.22)/.78), sector=TAU*r/l,faces=[];
+function coneMesh(t,n,dimensions=DIMENSIONS.cone) {
+  const {r,l}=dimensions, start=Math.asin(r/l), developed=ease((t-.22)/.78), sector=TAU*r/l,faces=[];
   for(let i=0;i<n;i++) {
     const b0=-sector/2+sector*i/n,b1=-sector/2+sector*(i+1)/n;
-    faces.push(panel(0,'Permukaan melengkung',[[0,0,0],conePoint(l,b0,t),conePoint(l,b1,t)],FACE_COLORS[0],{
+    faces.push(panel(0,'Permukaan melengkung',[[0,0,0],conePoint(l,b0,t,dimensions),conePoint(l,b1,t,dimensions)],FACE_COLORS[0],{
       outline:false,rim:[[1,2]],cut:t>.02?(i===0?[[0,1]]:i===n-1?[[0,2]]:null):null,label:i===Math.floor(n/2)-1?'1':null
     }));
   }
@@ -92,12 +92,12 @@ function coneMesh(t,n) {
   faces.push(panel(1,'Tapak bulatan',disk,FACE_COLORS[1],{label:'2'}));
   return faces;
 }
-export function buildMesh(shape,progress=0,segments=128) {
+export function buildMesh(shape,progress=0,segments=128,dimensions=undefined) {
   const t=clamp01(progress),n=Math.max(24,Math.round(segments));
-  if(shape==='cube'||shape==='cuboid')return boxMesh(shape,t);
-  if(shape==='pyramid')return pyramidMesh(t);
-  if(shape==='cylinder')return cylinderMesh(t,n);
-  if(shape==='cone')return coneMesh(t,n);
+  if(shape==='cube'||shape==='cuboid')return boxMesh(shape,t,dimensions);
+  if(shape==='pyramid')return pyramidMesh(t,dimensions);
+  if(shape==='cylinder')return cylinderMesh(t,n,dimensions);
+  if(shape==='cone')return coneMesh(t,n,dimensions);
   throw new RangeError('Bongkah tidak diketahui: '+shape);
 }
 export function meshBounds(mesh) {

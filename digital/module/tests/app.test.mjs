@@ -19,8 +19,8 @@ class NodePort {
 function app(reduce=true){
  const html=fs.readFileSync(new URL('../GeoDecoder_Modul_V1.html',import.meta.url),'utf8'),code=html.match(/<script>([\s\S]*?)<\/script>/)[1],nodes={};
  for(const m of html.matchAll(/id="([^"]+)"/g))nodes[m[1]]=new NodePort();
- let clock=0,id=0,queue=new Map();const media={matches:reduce,addEventListener(k,fn){this.change=fn;}};
- const doc={hidden:false,events:{},getElementById:id=>nodes[id]??null,createElement:tag=>new NodePort(tag),createElementNS:(_,tag)=>new NodePort(tag),createTextNode:text=>({textContent:text}),addEventListener(k,fn){this.events[k]=fn;}};
+ let clock=0,id=0,queue=new Map();const media={matches:reduce,addEventListener(k,fn){const old=this.change;this.change=old?()=>{old();fn();}:fn;}};
+ const doc={hidden:false,events:{},getElementById:id=>nodes[id]??null,createElement:tag=>new NodePort(tag),createElementNS:(_,tag)=>new NodePort(tag),createTextNode:text=>({textContent:text}),addEventListener(k,fn){const old=this.events[k];this.events[k]=old?()=>{old();fn();}:fn;}};
  const context={document:doc,window:{matchMedia:()=>media},location:{hash:''},history:{replaceState(){}},performance:{now:()=>clock},ResizeObserver:class{observe(){}},requestAnimationFrame:fn=>{queue.set(++id,fn);return id;},cancelAnimationFrame:k=>queue.delete(k),console};
  vm.runInNewContext(code,context,{timeout:2000});
  const tick=(ms=16)=>{clock+=ms;const work=[...queue.values()];queue.clear();for(const fn of work)fn(clock);};
@@ -92,4 +92,47 @@ test('notes actions open the matching net and orthographic view using existing c
 });
 test('small positive volumes are never displayed as a zero-volume solid',()=>{
  const a=app();a.click('learn-notes');a.nodes['measure-a'].value='0.1';a.nodes['measure-a'].emit('input');assert.equal(a.nodes['calculated-volume'].textContent,'< 0.01 cm³');assert.equal(a.nodes['measure-a'].getAttribute('aria-invalid'),'false');assert.match(a.nodes['calculation-status'].textContent,/positif/);
+});
+test('lab navigation stops exploration motion and hides the unrelated shape picker',()=>{
+ const a=app(false);a.click('learn-labs');assert.equal(a.nodes['labs-panel'].hidden,false);assert.equal(a.nodes['shape-picker'].hidden,true);assert.equal(a.state().auto,'false');assert.equal(a.pending(),0);a.click('learn-explore');a.tick();assert.equal(a.nodes['shape-picker'].hidden,false);assert.equal(a.pending(),0);
+});
+test('cube builder folds a valid layout, shows overlap and handles an empty grid',()=>{
+ const a=app();a.click('learn-labs');a.click('net-fold');a.advance(5000);assert.equal(a.nodes['labs-canvas'].dataset.progress,'1');assert.equal(a.nodes['labs-canvas'].dataset.valid,'true');
+ a.nodes['net-example'].value='overlap';a.nodes['net-example'].emit('change');a.click('net-fold');a.advance(5000);assert.equal(a.nodes['labs-canvas'].dataset.valid,'false');assert.match(a.nodes['net-feedback'].textContent,/bertindih/);
+ a.click('net-clear');assert.equal(a.nodes['net-fold'].disabled,true);assert.match(a.nodes['net-count'].textContent,/0/);
+});
+test('builder directional alternative moves a chosen face without adding or losing squares',()=>{
+ const a=app();a.click('learn-labs');a.click('net-left');assert.equal(a.nodes['net-count'].textContent,'6 / 6 muka');assert.equal(a.nodes['net-grid'].children.find(n=>n.dataset.cell==='0,0').getAttribute('aria-pressed'),'true');
+});
+test('unit-volume lab adds cubes, layers and fills exactly the displayed capacity',()=>{
+ const a=app();a.click('learn-labs');a.click('lab-volume');a.click('unit-layer');assert.equal(a.nodes['labs-canvas'].dataset.units,'6');a.click('unit-one');assert.equal(a.nodes['labs-canvas'].dataset.units,'7');a.click('unit-fill');assert.equal(a.nodes['labs-canvas'].dataset.units,'18');a.click('unit-empty');assert.equal(a.nodes['labs-canvas'].dataset.units,'0');
+});
+test('three explicit transfers fill the matching receiver, with refill and a bounded final state',()=>{
+ const a=app();a.click('learn-labs');a.click('lab-volume');a.nodes['volume-kind'].value='cone';a.nodes['volume-kind'].emit('change');
+ for(let n=1;n<=3;n++){a.click('pour-one');a.advance(3500);assert.equal(a.nodes['labs-canvas'].dataset.pours,String(n));if(n<3)a.click('pour-refill');}
+ assert.equal(a.nodes['pour-one'].disabled,true);assert.match(a.nodes['pour-result'].textContent,/3.*3/);a.click('pour-reset');assert.equal(a.nodes['labs-canvas'].dataset.pours,'0');
+});
+test('surface lab derives the total only after all real surfaces are selected',()=>{
+ const a=app();a.click('learn-labs');a.click('lab-area');assert.match(a.nodes['area-count'].textContent,/0.*6/);a.click('area-all');assert.match(a.nodes['area-count'].textContent,/6.*6/);assert.match(a.nodes['area-total'].textContent,/96/);
+ a.nodes['area-shape'].value='cylinder';a.nodes['area-shape'].emit('change');assert.match(a.nodes['area-count'].textContent,/0.*3/);a.click('area-all');assert.match(a.nodes['area-total'].textContent,/747.7/);
+});
+test('composite lab checks exposed groups and excludes joined faces',()=>{
+ const a=app();a.click('learn-labs');a.click('lab-composite');a.click('comp-join');a.advance(2400);assert.equal(a.nodes['labs-canvas'].dataset.joined,'1');assert.match(a.nodes['comp-area'].textContent,/240/);assert.match(a.nodes['comp-volume'].textContent,/264/);
+ for(const key of ['side','bottom','roofSide'])a.nodes['comp-groups'].children.find(n=>n.dataset.group===key).emit('click');a.click('comp-check');assert.match(a.nodes['comp-feedback'].textContent,/Tepat/);
+ a.nodes['comp-groups'].children.find(n=>n.dataset.group==='joinLower').emit('click');a.click('comp-check');assert.match(a.nodes['comp-feedback'].textContent,/bercantum/);
+});
+test('switching lab, opening notes and hiding the page cancel pending lab frames',()=>{
+ const a=app();a.click('learn-labs');a.click('net-fold');a.advance(1000);assert.ok(a.pending()>0);a.click('lab-volume');assert.equal(a.pending(),0);a.click('lab-area');a.click('area-open');a.advance(1000);a.click('learn-notes');assert.equal(a.pending(),0);a.click('learn-labs');a.click('area-open');a.advance(300);a.doc.hidden=true;a.doc.events.visibilitychange();assert.equal(a.pending(),0);a.doc.hidden=false;a.doc.events.visibilitychange();assert.equal(a.pending(),0);
+});
+test('lab pause holds progress, resume reaches its target and reduced-motion changes stop motion',()=>{
+ const a=app();a.click('learn-labs');a.click('net-fold');a.advance(1100);a.click('lab-pause');const before=a.nodes['labs-canvas'].dataset.progress;a.advance(1500);assert.equal(a.nodes['labs-canvas'].dataset.progress,before);a.click('lab-pause');a.advance(5000);assert.equal(a.nodes['labs-canvas'].dataset.progress,'1');a.click('net-flat');a.advance(500);a.media.change();assert.equal(a.pending(),0);
+});
+test('editing a grid cell keeps keyboard focus on the replacement cell',()=>{const a=app();a.click('learn-labs');a.nodes['net-grid'].children.find(n=>n.dataset.cell==='5,5').emit('click');a.click('net-clear');a.nodes['net-grid'].children.find(n=>n.dataset.cell==='0,0').emit('click');assert.equal(a.nodes['net-grid'].children.find(n=>n.dataset.cell==='0,0').focused,true);});
+test('toggling surface and composite buttons preserves their keyboard focus',()=>{const a=app();a.click('learn-labs');a.click('lab-area');a.nodes['area-pieces'].children[0].emit('click');assert.equal(a.nodes['area-pieces'].children[0].focused,true);a.click('lab-composite');a.nodes['comp-groups'].children[0].emit('click');assert.equal(a.nodes['comp-groups'].children[0].focused,true);});
+test('every literal action button has a real shipped-script binding after lazy sections are opened',()=>{
+ const a=app();a.click('learn-notes');a.click('learn-labs');const html=fs.readFileSync(new URL('../src/index.html',import.meta.url),'utf8');
+ for(const m of html.matchAll(/<button\b([^>]*)>/g)){const attrs=m[1],id=attrs.match(/\bid="([^"]+)"/)?.[1];if(!id||/type="submit"/.test(attrs))continue;assert.ok(a.nodes[id].events.click?.length>0,id+' has no action binding');}
+});
+test('direct lab slider input keeps the new user value before cancelling playback',()=>{
+ const a=app();a.click('learn-labs');for(const [kind,action,value] of [['net','net-fold','370'],['area','area-open','620'],['composite','comp-join','110']]){a.click('lab-'+kind);a.click(action);a.advance(700);a.nodes['lab-progress'].value=value;a.nodes['lab-progress'].emit('input');assert.equal(Number(a.nodes['labs-canvas'].dataset.progress),Number(value)/1000,kind+' slider was overwritten');assert.equal(a.pending(),0);assert.equal(a.nodes['lab-progress'].value,value);}
 });

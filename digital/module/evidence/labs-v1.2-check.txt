@@ -1,0 +1,5 @@
+
+> geodecoder-module@1.2.0 check
+> node tools/check.mjs
+
+PASS: standalone syntax, no runtime network/storage/dependencies, IDs, reduced motion, version, event lifecycle and design tokens

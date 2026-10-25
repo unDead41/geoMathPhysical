@@ -1,6 +1,7 @@
 # Pengesahan Modul GeoDecoder
 
-Kemas kini semasa: **v1.1.0**, nota dan aktiviti ukuran; **67/67** ujian lulus.
+Kemas kini semasa: **v1.2.0**, empat makmal interaktif; **100/100** ujian lulus.
+Lihat [laporan makmal v1.2.0](LABS_V1_2.md). Rekod nota v1.1.0: 67/67 lulus.
 Lihat [laporan tambahan v1.1.0](NOTES_V1_1.md) dan manifest screenshot baharu.
 Bahagian di bawah ialah laporan sejarah v1.0.0, bukan ujian nota v1.1.0.
 
