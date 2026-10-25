@@ -1,49 +1,71 @@
-# GeoDecoder Digital v1.0.0 — pengesahan
+# GeoDecoder Digital v1.1.0 — pengesahan
 
-Tarikh: 25 Oktober 2026, Malaysia. Sumber firmware main v1.1.3:
-`a059979d97926b82cafd4aa5cf3fe59da04a55bb`. Branch destinasi `digitalize`.
+Tarikh rujukan Malaysia: 25 Oktober 2026. Destinasi: `digitalize` sahaja.
+Main firmware v1.1.3: `a059979d97926b82cafd4aa5cf3fe59da04a55bb`.
+Asas digital: `cd47ebd7dbcbab709b9f61a2122f7492f2b74113`.
 
 ## Automatik
 
-- `npm test`: **25/25 PASS**.
-- 500 seed: sepuluh ID unik, dua soalan bagi setiap lima bongkah.
-- 100 pusingan lengkap melalui engine sebenar: 10/10, satu markah bagi
-  pasangan, masa terakhir dibekukan, tiada gandaan markah daripada input berulang.
-- R2 sebelum R1, peranan kad salah, retry R1/R2, hint ungu, skip selepas R1,
-  pause/resume, enam langkah 150 ms dan had 900 ms diuji.
-- Storan: persist/reload, ID idempotent, ranking, 50 rekod, data rosak,
-  storage exception, penggabungan rekod dua instance, erase dan CSV selamat diuji.
-- `npm run standalone`: menghasilkan HTML tunggal, semua kod/soalan/SVG/CSS sebaris.
-- `npm run check`: syntax HTML inline JavaScript, 65 ID unik, rujukan ARIA,
-  kesetiaan bank, 10 rajah SVG dan palet DESIGN.md/CSS semuanya PASS.
-- Auditor frontend strict: **0 errors, 0 warnings**; `premium-audit.json`.
+- `npm test`: **35/35 PASS**.
+- 500 seed pemilihan: 10 soalan unik, dua bagi setiap lima bongkah.
+- 500 pusingan × sembilan pertukaran: setiap pilihan R1/R2 bertukar kedudukan.
+- 500 urutan × 10 soalan: setiap bongkah bertukar warna; lima warna unik setiap
+  rak; warna R1/R2 bagi jawapan yang sama berbeza. Fallback RNG diuji.
+- Salah R1/R2 menamatkan satu percubaan dan mengunci input; tiada retry/markah
+  berganda. Semakan tidak meneruskan sendiri, minimum 1800 ms, pause/resume
+  mengekalkan tempoh. Betul meneruskan selepas 900 ms.
+- 100 pusingan sempurna melalui enjin sebenar: 10/10, masa beku selepas tamat.
+  Pusingan campuran membezakan betul, salah dan langkau.
+- Analisis: R2 belum dicuba tidak dikira salah; petunjuk tidak mengurangkan
+  ketepatan; topik berdasarkan kandungan bank, termasuk kedua-dua rumus kon.
+- Storan: keputusan enjin dengan jawapan salah sah dan butiran setiap soalan
+  kekal selepas repository reload. Skor retry lama berasingan, tidak dipadam
+  semasa save baharu dan tidak masuk ranking. Erase kedua-dua kumpulan diuji
+  dengan storan palsu. Ruleset mengekalkan keserasian apabila versi app naik.
+- Ranking/idempotence/50 rekod/JSON rosak/storage exception/CSV BOM, quote dan
+  formula injection turut diuji.
+- `npm run standalone` dan `npm run check`: **PASS**. JavaScript sebaris sah,
+  80 ID unik, sasaran ARIA lengkap, bank sepadan dan semua rajah SVG tersedia.
+- Audit UI strict: **0 errors, 0 warnings**, `premium-audit.json`.
+- Lint DESIGN.md: **0 errors**, enam amaran token yang dipetakan melalui CSS
+  tetapi belum dirujuk dalam objek komponen frontmatter. Tiada token runtime
+  berubah; pemeriksa token CSS/Design lulus.
 
-## Pelayar sebenar
+## Pelayar sebenar — Chrome
 
-Chrome melalui pratonton fail HTML tunggal yang sama:
+HTML tunggal yang sama diuji melalui preview HTTP:
 
-- Borang kosong memaparkan ralat inline dan fokus nama; borang sah membuka game.
-- Drag bongkah salah mengekalkan R1; drag piramid betul membuka R2 tanpa markah;
-  drag bentangan sepadan memberi +1.
-- Pusingan sepuluh soalan diselesaikan menggunakan Enter pada pilihan/pengimbas.
-  Keputusan sebenar: 10/10, 9 jawapan cubaan pertama, 1 cubaan salah R2,
-  1 soalan menggunakan hint, semakan sepuluh pasangan dan papan skor.
-- Panduan modal dijeda; Escape menutupnya dan memulangkan fokus.
-- Papan skor menunjukkan keputusan sebenar selepas reload. Eksport CSV
-  menghasilkan event download. Dialog padam diperiksa dan dibatalkan.
-- Paparan 390x844 menggunakan iframe viewport: borang, permainan, skip,
-  tetingkap pause dan susun atur skrin kecil diperiksa. Lebar kandungan game
-  sama dengan lebar viewport (380 CSS px selepas gutter); tiada overflow sisi.
-- Label akses Papan skor pada mod ikon sahaja dibetulkan selepas pemeriksaan.
+- Borang kosong memberi ralat inline dan fokus nama.
+- R1 salah: 0 markah, semua jawapan/hint/skip terkunci, pasangan sebenar
+  dan penerangan dipaparkan; butang terus tersedia selepas tempoh semakan.
+- Selepas meneruskan, DOM mengesahkan semua sepuluh pilihan berpindah tempat
+  dan setiap bongkah/bentangan bertukar palet.
+- R1 betul dan R2 salah melalui Enter: R1 kekal diterima, R2 salah, 0 markah.
+- Seretan tetikus sebenar ke R1 dan R2 berjaya dan memberi satu markah.
+- Satu pusingan lengkap: **7/10**, dua salah (satu R1, satu R2), satu langkau,
+  dua soalan menggunakan hint. Analisis sepadan: R1 8/9, R2 7/8; Kubus/Silinder
+  masing-masing 1/2, Kuboid/Piramid 2/2, Kon satu betul dan satu langkau.
+- Skor 7/10 kekal selepas reload; skor retry V1 lama kelihatan dalam disclosure
+  berasingan dan tidak mengatasi ranking mod baharu.
+- Iframe viewport 390×844: borang, permainan, semakan, pause/resume, kawalan
+  jeda animasi dan keputusan diperiksa. Hiasan perspective grid yang melimpah
+  telah diklip pada scene. Lebar scroll/client selepas pembetulan **380/380**
+  CSS px (gutter 10 px), termasuk keputusan dan analisis.
+- Pusingan telefon yang melangkau semua soalan: **0/10**, sepuluh langkau,
+  sifar salah; R1/R2 menunjukkan Belum dicuba, tanpa peratus ketepatan palsu.
+- Kawalan Jeda animasi menukar label kepada Sambung animasi dan kelas runtime;
+  penyingkiran gerakan melalui prefers-reduced-motion turut disemak dalam CSS.
 
 ## Had sebenar
 
-Bukan ujian perkakasan ESP32. Tidak menguji pelayar fizikal Windows/iOS/Android,
-atau sentuhan jari sebenar; sokongan sentuhan menggunakan Pointer Events.
-Fail HTML diperiksa sebagai satu sumber penuh melalui HTTP pada Chrome;
-semua dependency telah diinline, tetapi polisi localStorage bagi file://
-bergantung pada pelayar. Fallback memori dan notis kegagalan disediakan.
-Rekod setempat, bukan papan skor internet dan bukan sistem penilaian peperiksaan.
-Tiada rekod ujian atau data peribadi dibenamkan dalam artifak HTML.
-
-Versi semasa ialah preview HTML V1, seperti diminta. Tiada laman web diterbitkan.
+- Bukan ujian peranti sentuhan fizikal atau ujian semua versi Chrome/Edge/Safari.
+- Pembukaan terus protokol file:// disekat oleh polisi pelayar kawalan; tidak
+  dicuba melalui jalan pintas. HTML tidak mempunyai dependency luaran atau
+  import/fetch runtime, tetapi polisi localStorage fail bergantung pada pelayar.
+- Penjana CSV lulus ujian. Klik mencetuskan event download, namun perolehan fail
+  oleh pelayar kawalan mengembalikan Download failed. Muat turun CSV lengkap
+  belum disahkan dalam pelayar ini; punca aplikasi tidak dibuktikan.
+- Tiga kelipan LED diuji melalui enjin; tiada video/rakaman kadar bingkai dibuat.
+- Tiada backend, akaun, analitik luaran atau data ujian dibenamkan dalam HTML.
+  Modul penuh animasi membuka geometri bukan sebahagian keluaran ini.
+- Tiada website deployment, perubahan firmware, push main atau sharing.

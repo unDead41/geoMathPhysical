@@ -12,10 +12,10 @@
 <body>
   <a class="skip-link" href="#main">Terus ke kandungan</a>
   <header class="site-header">
-    <a href="#" class="brand" id="brand-home" aria-label="GeoDecoder Digital, halaman mula"><span data-brand></span><span>Geo<span class="brand-blue">Decoder</span><small>DIGITAL EDITION</small></span></a>
+    <a href="#" class="brand" id="brand-home" aria-label="GeoDecoder Digital, halaman mula"><span data-brand></span><span>Geo<span class="brand-blue">Decoder</span><small>DIGITAL EDITION <b class="brand-version" id="app-version">V1.1.0</b></small></span></a>
     <nav aria-label="Menu utama">
-      <span class="version-badge">V1.0</span>
-      <button class="nav-button" data-action="help"><span data-icon="help"></span><span>Cara main</span></button>
+      <button class="nav-button motion-button" id="motion-button" aria-label="Jeda animasi" aria-pressed="false" title="Jeda animasi"><span data-icon="pause"></span></button>
+      <button class="nav-button" data-action="help" aria-label="Cara main"><span data-icon="help"></span><span>Cara main</span></button>
       <button class="nav-button score-nav" data-action="scores" aria-label="Papan skor"><span data-icon="trophy"></span><span>Papan skor</span></button>
     </nav>
   </header>
@@ -30,9 +30,9 @@
           <div class="scene-grid"></div>
           <div class="scene-note"><span data-icon="cursor"></span> Seret. Imbas. Padankan.</div>
           <div class="scene-object scene-cube" data-art="cube"></div>
-          <div class="scene-object scene-cone" data-art="cone"></div>
-          <div class="scene-object scene-pyramid" data-art="pyramid"></div>
-          <div class="scene-net" data-art="cube" data-kind="net"></div>
+          <div class="scene-object scene-cone" data-art="cone" data-tone="orange"></div>
+          <div class="scene-object scene-pyramid" data-art="pyramid" data-tone="violet"></div>
+          <div class="scene-net" data-art="cube" data-kind="net" data-tone="pink"></div>
           <div class="scene-pad pad-one"><span class="led-dot blue"></span><b>R1</b><span>BONGKAH</span><div class="scanner-rings"></div></div>
           <div class="scene-pad pad-two"><span class="led-dot green"></span><b>R2</b><span>BENTANGAN</span><div class="scanner-rings"></div></div>
           <span class="scene-connector" data-icon="arrow"></span>
@@ -44,7 +44,7 @@
       <div class="registration-card">
         <span class="card-kicker">SEDIA UNTUK MENCUBA?</span>
         <h2>Jom kenalkan diri.</h2>
-        <p>Isi maklumat anda sebelum mula bermain.</p>
+        <p>Isi maklumat anda. Setiap soalan ada satu percubaan.</p>
         <form id="player-form" novalidate>
           <div class="field"><label for="player-name">Nama pemain</label><input id="player-name" name="name" type="text" maxlength="60" autocomplete="off" placeholder="Contoh: Aisyah" aria-describedby="name-error"><span class="field-error" id="name-error"></span></div>
           <fieldset class="category-field"><legend>Saya seorang</legend><div class="radio-options"><label class="radio-card"><input type="radio" name="category" value="Murid" checked><span><span data-icon="user"></span>Murid</span></label><label class="radio-card"><input type="radio" name="category" value="Pelajar"><span><span data-icon="user"></span>Pelajar</span></label></div><span class="field-error" id="category-error"></span></fieldset>
@@ -85,17 +85,24 @@
       </div>
       <div class="game-feedback" id="game-status" role="status" aria-live="polite"><span data-icon="cursor"></span><span id="feedback-text">Baca soalan, kemudian pilih satu bongkah untuk R1.</span></div>
 
+      <section class="correction-panel" id="correction-panel" hidden aria-labelledby="correction-title">
+        <div class="correction-copy"><span class="card-kicker" id="correction-outcome">JAWAPAN SEBENAR</span><h2 id="correction-title" tabindex="-1"></h2><p id="correction-attempt"></p><p id="correction-explanation"></p></div>
+        <div class="correction-pair" id="correction-pair"></div>
+        <div class="correction-actions"><span>Fahami padanannya dahulu. Masa dijeda.</span><button class="button button-primary" id="continue-button" disabled>Perhatikan jawapan…</button></div>
+      </section>
+
       <div class="answer-shelves">
         <section class="shelf" aria-labelledby="solid-shelf-title"><div class="shelf-heading"><h3 id="solid-shelf-title"><span class="shelf-badge">R1</span> Koleksi bongkah</h3><span>5 pilihan · seret atau klik</span></div><div class="choices" id="solid-choices"></div></section>
         <section class="shelf" aria-labelledby="net-shelf-title"><div class="shelf-heading"><h3 id="net-shelf-title"><span class="shelf-badge net-badge">R2</span> Kad bentangan</h3><span>5 pilihan · kad tanpa nama</span></div><div class="choices" id="net-choices"></div></section>
       </div>
-      <div class="round-bottom"><p><span class="led-dot blue"></span> Sedia <span class="led-dot green"></span> Betul <span class="led-dot red"></span> Cuba lagi <span class="led-dot purple"></span> Petunjuk</p><button id="skip-button" class="button button-quiet"><span data-icon="skip"></span> Langkau soalan <small>+0 markah</small></button></div>
+      <div class="round-bottom"><p><span class="led-dot blue"></span> Sedia <span class="led-dot green"></span> Betul <span class="led-dot red"></span> Salah <span class="led-dot purple"></span> Petunjuk</p><button id="skip-button" class="button button-quiet"><span data-icon="skip"></span> Langkau soalan <small>+0 markah</small></button></div>
     </section>
 
     <section id="result-screen" class="result-screen" hidden aria-labelledby="result-title">
       <div class="result-heading"><span class="eyebrow">PUSINGAN SELESAI</span><h1 id="result-title" tabindex="-1">Bagus, teruskan meneroka!</h1><p id="result-player"></p></div>
-      <div class="result-layout"><div class="result-main"><div class="result-medal"><span data-icon="trophy"></span><div><b id="result-score">10</b><span>/ 10 markah</span></div><span class="medal-spark">✦</span></div><div class="result-level" id="result-level">Pakar padanan</div><p id="result-message"></p><div class="result-metrics"><div><span data-icon="clock"></span><b id="result-time"></b><small>Masa bermain</small></div><div><b id="result-first"></b><small>Betul cubaan pertama</small></div><div><b id="result-mistakes"></b><small>Cubaan salah</small></div><div><b id="result-hints"></b><small>Soalan guna petunjuk</small></div></div><div class="result-actions"><button class="button button-primary" id="replay-button"><span data-icon="refresh"></span> Main lagi</button><button class="button button-outline" data-action="home">Tukar pemain</button></div></div><div class="result-side"><div class="mini-title"><span data-icon="trophy"></span><h2>Papan skor</h2><span>PERANTI INI</span></div><div id="result-leaderboard"></div><button class="button button-quiet" data-action="scores">Lihat semua skor <span data-icon="arrow"></span></button><p class="score-scope">Skor lebih tinggi dahulu, kemudian cubaan salah lebih sedikit dan masa lebih pantas.</p></div></div>
-      <div class="review-section"><h2>Lihat semula pusingan anda</h2><p>Kenali pasangan yang telah dijawab atau dilangkau.</p><div class="review-list" id="review-list"></div></div>
+      <div class="result-layout"><div class="result-main"><div class="result-medal"><span data-icon="trophy"></span><div><b id="result-score">10</b><span>/ 10 markah</span></div><span class="medal-spark">✦</span></div><div class="result-level" id="result-level">Pakar padanan</div><p id="result-message"></p><div class="result-metrics"><div><span data-icon="clock"></span><b id="result-time"></b><small>Masa bermain</small></div><div><b id="result-first"></b><small>Bongkah R1 betul</small></div><div><b id="result-mistakes"></b><small>Soalan salah</small></div><div><b id="result-hints"></b><small>Soalan guna petunjuk</small></div></div><div class="result-actions"><button class="button button-primary" id="replay-button"><span data-icon="refresh"></span> Main lagi</button><button class="button button-outline" data-action="home">Tukar pemain</button></div></div><div class="result-side"><div class="mini-title"><span data-icon="trophy"></span><h2>Papan skor</h2><span>PERANTI INI</span></div><div id="result-leaderboard"></div><button class="button button-quiet" data-action="scores">Lihat semua skor <span data-icon="arrow"></span></button><p class="score-scope">Satu percubaan. Skor lebih tinggi dahulu, kemudian soalan salah lebih sedikit dan masa lebih pantas.</p></div></div>
+      <section class="analysis-section" aria-labelledby="analysis-title"><div class="analysis-heading"><span class="eyebrow">KENALI KEKUATAN ANDA</span><h2 id="analysis-title">Apa yang perlu dilatih lagi?</h2><p>Analisis berdasarkan 10 soalan pusingan ini. Dua soalan bagi setiap bongkah.</p></div><div id="analysis-summary" class="analysis-summary"></div><div class="analysis-grid"><section class="analysis-card"><h3>Padanan mengikut bongkah</h3><p>Pasangan betul daripada soalan yang diberi.</p><div id="analysis-shapes"></div></section><section class="analysis-card"><h3>Bongkah atau bentangan?</h3><p>Ketepatan daripada imbasan yang benar-benar dicuba.</p><div id="analysis-stages"></div><h3 class="topic-heading">Jenis soalan</h3><div id="analysis-topics"></div></section></div><div id="analysis-advice" class="analysis-advice"></div></section>
+      <div class="review-section"><h2>Lihat semula pusingan anda</h2><p>Semak pilihan anda, jawapan betul dan soalan yang dilangkau.</p><div class="review-list" id="review-list"></div></div>
     </section>
 
     <div class="storage-warning" id="storage-warning" hidden role="status">Simpanan pelayar tidak tersedia. Anda masih boleh bermain; skor sesi ini boleh dieksport sebelum halaman ditutup.</div>

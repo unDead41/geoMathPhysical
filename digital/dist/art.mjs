@@ -1,3 +1,4 @@
+import { PALETTES } from './visuals.mjs';
 export const SHAPE_NAMES = {cube:'Kubus',cuboid:'Kuboid',pyramid:'Piramid',cylinder:'Silinder',cone:'Kon'};
 
 const descriptions = {
@@ -45,7 +46,7 @@ export function icon(name, cls='') {
   return `<svg class="icon ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name]||paths.spark}</svg>`;
 }
 
-export function shapeArt(shape, kind='solid', decorative=false) {
+export function shapeArt(shape, kind='solid', decorative=false, tone='mint') {
   const common='stroke="#236D69" stroke-width="2.2" stroke-linejoin="round"';
   let content='';
   if(kind==='solid') {
@@ -68,7 +69,9 @@ export function shapeArt(shape, kind='solid', decorative=false) {
     };
     content=nets[shape]||'';
   }
-  return `<svg class="shape-art" viewBox="0 0 200 164" ${decorative?'aria-hidden="true"':`role="img" aria-label="${descriptions[kind][shape]}"`}><g>${kind==='solid'?'<ellipse cx="100" cy="148" rx="60" ry="7" fill="#18334B" opacity=".06"/>':''}${content}</g></svg>`;
+  const key = Object.hasOwn(PALETTES,tone) ? tone : 'mint', palette = PALETTES[key];
+  content = content.replaceAll('#C3F1DC',palette.light).replaceAll('#8AD6BA',palette.mid).replaceAll('#58BBA5',palette.dark).replaceAll('#236D69',palette.stroke).replaceAll('#D5E6FF',palette.light).replaceAll('#366BAD',palette.stroke);
+  return `<svg class="shape-art" data-tone="${key}" viewBox="0 0 200 164" ${decorative?'aria-hidden="true"':`role="img" aria-label="${descriptions[kind][shape]}"`}><g>${kind==='solid'?'<ellipse cx="100" cy="148" rx="60" ry="7" fill="#18334B" opacity=".06"/>':''}${content}</g></svg>`;
 }
 
 export function brandArt() {

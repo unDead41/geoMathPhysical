@@ -1,24 +1,34 @@
-export const SCORE_KEY = 'geodecoder.digital.v1.scores';
+import {RULESET} from './core.mjs';
+export const LEGACY_SCORE_KEY = 'geodecoder.digital.v1.scores';
+export const SCORE_KEY = 'geodecoder.digital.single-attempt.v1.scores';
 export const MAX_SCORES = 50;
 
-export function validRecord(r) {
-  return !!r && typeof r.id === 'string' && r.id.length < 120 && r.version === '1.0.0' &&
+export function validRecord(r, legacy=false) {
+  return !!r && typeof r.id === 'string' && r.id.length < 120 &&
+    (legacy ? r.version==='1.0.0' : typeof r.version==='string' && /^\d+\.\d+\.\d+$/.test(r.version) && r.ruleset===RULESET) &&
     !!r.player && typeof r.player.name === 'string' && r.player.name.length >= 2 && r.player.name.length <= 60 &&
     ['Murid', 'Pelajar'].includes(r.player.category) && typeof r.player.className === 'string' && r.player.className.length > 0 && r.player.className.length <= 40 &&
     r.total === 10 && Number.isInteger(r.score) && r.score >= 0 && r.score <= 10 &&
     ['mistakes', 'hints', 'skipped', 'firstTry'].every(k => Number.isInteger(r[k]) && r[k] >= 0) &&
-    r.hints <= 10 && r.skipped <= 10 && r.score + r.skipped === 10 && r.firstTry <= r.score &&
+    r.hints <= 10 && r.skipped <= 10 &&
+    (legacy ? r.score+r.skipped===10 && r.firstTry<=r.score : r.mistakes<=10 && r.score+r.mistakes+r.skipped===10 && r.firstTry===r.score) &&
     Number.isFinite(r.elapsed) && r.elapsed >= 0 && Number.isFinite(r.completedAt) && r.completedAt > 0;
 }
 
 export function rankScores(scores) {
-  return [...new Map(scores.filter(validRecord).map(r => [r.id, r])).values()]
+  return [...new Map(scores.filter(r=>validRecord(r)).map(r => [r.id, r])).values()]
     .sort((a,b) => b.score - a.score || a.mistakes - b.mistakes || a.elapsed - b.elapsed || a.completedAt - b.completedAt)
     .slice(0, MAX_SCORES);
 }
 
 export class ScoreStore {
   constructor(storage) { this.storage = storage; this.memory = []; this.failed = false; }
+  readLegacy() {
+    try {
+      const rows=JSON.parse(this.storage.getItem(LEGACY_SCORE_KEY)||'[]');
+      return Array.isArray(rows)?rows.filter(r=>validRecord(r,true)).slice(0,MAX_SCORES):[];
+    } catch { return []; }
+  }
   read() {
     try {
       const text = this.storage.getItem(SCORE_KEY);
@@ -40,7 +50,7 @@ export class ScoreStore {
   }
   clear() {
     this.memory = [];
-    try { this.storage.removeItem(SCORE_KEY); this.failed = false; return true; }
+    try { this.storage.removeItem(SCORE_KEY); this.storage.removeItem(LEGACY_SCORE_KEY); this.failed = false; return true; }
     catch { this.failed = true; return false; }
   }
 }
