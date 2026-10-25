@@ -1,78 +1,74 @@
-# GeoDecoder v1.1.1 verification - 25 October 2026
+# GeoDecoder v1.1.3 verification - 25 October 2026
 
-Inspected main: `3fcef581b66c1582661f07e201c840ee84c085fa` (v1.1.0).
-Publication target: `main`.
+Inspected main: `1f45d142b1cb59d976dbf52eb6581cc8dfcf0e0b` (v1.1.2).
+Inspected sharing: `fa12e37861906c7d4e958ad0060eb6cae449f34c` (1.1.1-sharing.3).
+Publication targets: `main` v1.1.3 and reduced `sharing` package 1.1.3-sharing.1.
 
-## Calculated random RGB pairs
+## One user build
 
-Menu, instructions, final results and both all-target random test commands now
-select different simultaneous R1/R2 colours, including the first random frame.
-Each reader also avoids its preceding colour. All seven non-OFF colours remain
-available. Menu/help remain 1,000 ms, results 150 ms and random diagnostics 500 ms.
+Main exposes exactly one default environment, `esp32dev-rgb`; sharing exposes
+exactly one, `esp32dev-sharing-rgb`. Both retain board ID `esp32dev`, pinned
+platform/libraries and the existing RGB GPIO mapping. `pio run` builds each
+project directly without `-e`. Build, Upload and Monitor use that default.
+PlatformIO's Default group refers to the same sole environment.
 
-The shared pure `domain/rgb_random.h` selector builds the allowed candidate
-list before drawing. R1 excludes its previous colour; R2 excludes its previous
-colour and the newly selected R1 colour. Each reader uses one bounded draw from
-5..7 candidates, with no retry loop. Diagnostics store and log a colour per
-reader; rendering does not draw new random values.
+The header default is RGB. The sharing installer and Configure have no LED
+selection prompt. Old script environment names all map to RGB; the old
+BuildBoth switch submits one build only. Managed legacy state/INI settings
+migrate to RGB with COM preserved. User-edited local configuration is protected.
 
-The original implementation selected ambient readers independently and used
-one shared diagnostic colour for both targets. New tests were observed failing
-against that baseline before implementation. A first candidate ordering exposed
-a deterministic fake-RNG palette-coverage failure; ordering candidates relative
-to the previous colour preserves the old single-reader traversal and resolves
-it while retaining all candidate exclusions. The complete final suite passes.
+## Native firmware verification
 
-## Native verification
+| Runner flags (`python tests/run_tests.py`) | Version regressions | Pure core/application/view | Firmware integration |
+|---|---:|---:|---:|
+| `--entrypoint src/main.cpp --rgb` | 6/6 | 12/12 | 68/68 |
+| `--separate-modules --rgb` | 6/6 | 12/12 | 68/68 |
+| `--entrypoint src/main.cpp` (developer LED compatibility) | 6/6 | 12/12 | 68/68 |
 
-| Runner flags (`python tests/run_tests.py`) | Pure core/application/view | Firmware integration |
-|---|---|---|
-| no flags (Arduino tabs) | 12/12 passed | 68/68 passed |
-| --rgb | 12/12 passed | 68/68 passed |
-| --entrypoint src/main.cpp | 12/12 passed | 68/68 passed |
-| --entrypoint src/main.cpp --rgb | 12/12 passed | 68/68 passed |
-| --separate-modules | 12/12 passed | 68/68 passed |
-| --separate-modules --rgb | 12/12 passed | 68/68 passed |
+All paths completed with exit code 0, C++11 warnings-as-errors, AddressSanitizer
+and UBSan; LeakSanitizer is disabled for the managed runtime. The last row
+checks retained internal compatibility, not a second published build.
+`python tools/check_version.py --previous-version v1.1.2` passes.
 
-Each path also passes the six version-checker regressions. The additional pure
-case uses seven fixed sampler choices to check different pairs, per-reader
-no-repeat, palette reachability and exactly two bounded draws per pair.
-Two new firmware cases exercise 32 seeds, 100 ticks per mode and both all-target
-random command spellings. They check initial pairs, menu/help/result transitions,
-999/1,000 ms, 149/150 ms and 499/500 ms edges, literal GPIO channel outputs,
-per-reader Serial labels, millis rollover, delayed-loop logging and unchanged
-stopwatch/score/NVS. Existing single-reader random and full ordered-cycle tests
-remain active.
+## ESP32 compilation
 
-C++11 warnings-as-errors, AddressSanitizer and UBSan remain enabled; LeakSanitizer
-is disabled for this managed runtime. `git diff --check` and
-`python tools/check_version.py --previous-version v1.1.0` pass.
+`pio run` without an environment option completed with SUCCESS for both branch
+snapshots. PlatformIO project-config output independently confirms one named
+environment, one matching default, board `esp32dev` and RGB enabled in each.
 
-## ESP32 builds
+Toolchain: PlatformIO Core 6.1.18, Espressif32 6.12.0, Arduino ESP32 2.0.17,
+MFRC522 1.4.12 and hd44780 1.3.2, using existing verified dependency caches.
 
-`pio run -e esp32dev -e esp32dev-rgb -j 4` completed with exit code 0; both
-configurations SUCCESS and no compiler warning/error in the build log.
+## Sharing installer and local configuration
 
-| Environment | Static RAM | Flash |
-|---|---:|---:|
-| esp32dev | 22,812 / 327,680 | 338,933 / 1,310,720 |
-| esp32dev-rgb | 22,812 / 327,680 | 338,985 / 1,310,720 |
+- 17/17 installer orchestration cases pass on Linux PowerShell 7.4.13 in
+  Legacy native argument mode. The fresh-install case passes without an
+  Environment option and with prompting enabled; any unexpected Read-Host
+  would fail the case. The legacy BuildBoth option submits just one RGB build.
+- 14/14 compatibility checks pass: four scripts parse, full package integrity,
+  all four saved environment names, old/new command overrides, actual CLI
+  Build/Upload/Monitor argument dispatch to a capture process, COM preservation,
+  Configure without an environment prompt, edited-INI protection and invalid
+  environment rejection.
+- Missing/existing dependencies, reruns, failure/recovery, multiple COM ports,
+  Unicode/spaces/ampersands and calibration preservation remain covered by the
+  installer simulation. Windows OS/process/download/signature boundaries use
+  explicit controlled substitutes; Upload/Monitor processes are capture stubs.
 
-PlatformIO Core 6.1.18, Espressif32 6.12.0, Arduino ESP32 2.0.17,
-MFRC522 1.4.12 and hd44780 1.3.2, using the existing isolated cache.
+Verification fixtures, local COM/configuration, dependencies and build outputs
+are not included in either published tree. Sharing keeps its reduced file list.
 
-## Physical checks and preserved behaviour
+## Scope and physical limits
 
-No USB upload or physical ESP32/RFID/LCD/button/RGB test was performed here.
-After pulling, Upload esp32dev-rgb and confirm v1.1.1 with `version`. Use
-`test/led/random` to inspect both LED colours simultaneously, then `test/stop`
-to return to the menu and inspect the slower different-colour pairs.
+No actual Windows application installation, USB upload or physical
+ESP32/RFID/LCD/button/RGB test was performed. After pulling and reloading VS Code,
+click Upload and use `version` to confirm v1.1.3 on the board.
 
-The ordinary-LED default and GPIO mapping remain unchanged. Purple gameplay
-hints, fixed/ordered colour tests, three synchronous feedback blinks, two-card
-scoring, stopwatch, question bank, shape IDs, saved UID/NVS, setup/loop and
-PlatformIO environment definitions are preserved. In ordinary-LED mode all
-non-OFF colours still map to ON; the different-colour display requires RGB.
+Gameplay, question bank, GPIO values, UID/NVS schema/namespace, partition layout
+and all six PDFs are preserved. Main and sharing use identical firmware source;
+sharing records its exact source main commit in package.json and README.
+Existing PDF screenshots/environment choices describe the older edition;
+the current README directs users to skip LED selection and use the sole RGB build.
 
-Earlier evidence is preserved in
-[the v1.1.0 archive](docs/archive/VERIFICATION_2026-10-25-version-1.1.0.md).
+Previous RGB-pair verification is retained in
+[the v1.1.1 archive](docs/archive/VERIFICATION_2026-10-25-version-1.1.1.md).

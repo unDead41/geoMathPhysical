@@ -66,7 +66,7 @@ Semakan semasa kompilasi menghalang perubahan ABI tanpa migrasi yang disengajaka
 Adapter menggunakan namespace `geomath_q2`, key `registry`, magic
 `0x474D5132` dan versi storan `1`. Write gagal tidak mengesahkan data RAM baharu.
 
-`esp32dev` menggunakan LED biasa; `esp32dev-rgb` mengaktifkan RGB empat kaki.
+Satu build default `esp32dev-rgb` mengaktifkan RGB empat kaki; board ID kekal `esp32dev`.
 Semua pin asal, bank soalan/hint, format UID dan arahan guru dikekalkan.
 Flow terkini memerlukan R1 bongkah kemudian R2 bentangan bagi setiap soalan.
 
@@ -113,8 +113,8 @@ Panduan terkini: [GAME_FLOW_RGB.md](GAME_FLOW_RGB.md).
 
 ## Pin LED biasa dan pemasangan RGB
 
-`config.h` mengasingkan `LED_PINS` daripada `RGB_PINS`. Mod `esp32dev`
-mengekalkan R1=GPIO25/R2=GPIO26. Mod `esp32dev-rgb` menggunakan RGB1/R1
+`config.h` mengasingkan `LED_PINS` daripada `RGB_PINS`. Laluan LED biasa
+R1=GPIO25/R2=GPIO26 dikekalkan untuk semakan native sahaja. Build `esp32dev-rgb` menggunakan RGB1/R1
 R=13, G=14, B=25 dan RGB2/R2 R=16, G=17, B=26, mengikut sambungan pengguna.
 Driver memilih pemetaan mengikut environment tanpa mengubah peraturan permainan.
 Arahan Serial `pins` melaporkan pin yang digunakan oleh environment aktif.

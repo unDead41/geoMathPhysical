@@ -1,5 +1,18 @@
 # Changelog
 
+## v1.1.3 - 2026-10-25
+
+- Provide one default RGB build in main (`esp32dev-rgb`) and sharing
+  (`esp32dev-sharing-rgb`); remove the ordinary-LED environment from Project Tasks.
+- Build, Upload and Monitor use RGB directly. The sharing installer and Configure
+  no longer ask users to select an LED environment; legacy script options still
+  resolve to the single RGB build and managed settings retain the selected COM.
+- Make RGB the firmware header default, update current setup/wiring/versioning
+  guidance, and preserve GPIO, gameplay, saved UID/NVS and all six PDF guides.
+- Pull the chosen branch, reload VS Code, then use the PlatformIO Build/Upload
+  buttons. Confirm v1.1.3 with `version`. Older manual `default_envs` overrides
+  must point to the sole RGB environment; preserve personal COM/calibration.
+
 ## v1.1.2 - 2026-10-25
 
 - Publish the reviewed A-Z setup guide (45 pages) and pupil gameplay guide

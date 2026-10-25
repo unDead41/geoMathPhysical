@@ -2,6 +2,10 @@
 
 Run from the repository root with Python 3 and G++:
 
+The published PlatformIO project exposes one RGB environment and `pio run`
+builds it directly. Runs below without `--rgb` exercise retained developer-only
+ordinary-LED compatibility; they do not add a second user environment.
+
 ```text
 python tests/run_domain_tests.py
 python tests/run_tests.py

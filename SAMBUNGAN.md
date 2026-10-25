@@ -69,7 +69,7 @@ Jika modul active HIGH:
 Apabila kedua-dua butang dilepaskan, arahan status sepatutnya menunjukkan RELEASED.
 Jika kekal PRESSED, sahkan polariti modul dan sambungan S / VCC / GND sebelum bermain.
 
-## Dua RGB - boleh dipasang kemudian
+## Dua RGB - pemasangan untuk satu build pengguna
 
 | Saluran | RGB1 / R1 bongkah | RGB2 / R2 bentangan |
 |---|---|---|
@@ -81,10 +81,9 @@ Pemetaan RGB ini mengikut sambungan pengguna: RGB1 B=25, G=14, R=13;
 RGB2 B=26, G=17, R=16. RGB1 ialah petunjuk bongkah/R1 dan RGB2 bentangan/R2.
 GPIO32/33 dikhaskan untuk butang.
 
-Pemasangan LED biasa asal berasingan: LED R1 pada GPIO25 dan LED R2 pada GPIO26.
-Environment `esp32dev` mengekalkan pin itu melalui `LED_PINS`; `esp32dev-rgb`
-menggunakan `RGB_PINS` R/G/B dalam jadual di atas. GPIO25/26 ialah saluran B
-dalam pemasangan RGB, jadi pin LED biasa tidak lagi diambil daripada saluran R.
+Satu environment `esp32dev-rgb` menggunakan `RGB_PINS` R/G/B dalam jadual
+di atas. GPIO25/26 ialah saluran B untuk R1/R2. `LED_PINS` lama hanya
+dikekalkan untuk semakan keserasian developer dan bukan pilihan build pengguna.
 
 Untuk setiap saluran: GPIO -> resistor 330 Ohm -> kaki R/G/B.
 Jumlah enam resistor, satu bagi setiap saluran.
@@ -94,10 +93,9 @@ Default **common cathode**: kaki common ke GND; RGB_COMMON_ANODE = false.
 Jika **common anode**: kaki common ke 3V3 dan RGB_COMMON_ANODE = true.
 Jangan sambung common anode terus ke 5 V dengan sambungan GPIO ini.
 
-Dalam VS Code, pilih **Project Tasks > esp32dev-rgb > Build / Upload** apabila
-kedua-dua RGB sudah dipasang. Environment ini menetapkan
-`GEODECODER_RGB_ENABLED=1`. Jika menggunakan Arduino IDE, ubah default macro
-tersebut dalam `main/config.h`.
+Dalam VS Code, terus klik **Build / Upload** di bar bawah PlatformIO.
+Environment default tunggal `esp32dev-rgb` menetapkan `GEODECODER_RGB_ENABLED=1`.
+Default dalam `main/config.h` juga RGB; tiada pilihan jenis LED semasa setup.
 
 Menu/cara main dan keputusan menggunakan pasangan warna rawak yang sentiasa
 berlainan antara R1/R2. Setiap LED juga bertukar daripada warna sebelumnya.
@@ -123,10 +121,7 @@ Notis salah ialah 1,200 ms, kemudian pembaca aktif kembali biru/ungu.
 Kelipan ialah 150 ms ON + 150 ms OFF, tiga kali, jumlah 900 ms; stopwatch
 berhenti sepanjang urutan itu. Menu/keputusan tidak menerima jawapan.
 
-Dalam environment LED biasa, hanya GPIO25/26 dipandu. Semua warna selain
-padam menghasilkan ON. Maka tahap R2 mengekalkan kedua-dua LED ON, dan
-menu/keputusan juga ON; rujuk header R1/R2 dan notis LCD untuk tindakan.
-Timing tiga kelipan dikekalkan. Lihat [flow penuh](docs/GAME_FLOW_RGB.md).
+Semua petunjuk di atas menggunakan dua RGB. Lihat [flow penuh](docs/GAME_FLOW_RGB.md).
 
 RGB dalam kod ini ialah LED biasa empat kaki, bukan WS2812/NeoPixel.
 GPIO16/17 dalam peta ini khusus board WROOM; ia tidak bebas pada sesetengah WROVER/PSRAM.

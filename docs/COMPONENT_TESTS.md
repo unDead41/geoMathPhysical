@@ -14,12 +14,9 @@ git switch main
 git pull --ff-only origin main
 ```
 
-Selepas main dikemas kini, pilih environment di PlatformIO Project Tasks:
-
-| Environment | Pemasangan |
-|---|---|
-| `esp32dev` (default) | LED biasa R1=GPIO25, R2=GPIO26; hanya ON/OFF |
-| `esp32dev-rgb` | RGB1 R/G/B=13/14/25; RGB2 R/G/B=16/17/26 |
+Selepas main dikemas kini, terus Build/Upload menggunakan butang PlatformIO.
+Hanya `esp32dev-rgb` diterbitkan dan ditetapkan sebagai default: RGB1 R/G/B=13/14/25,
+RGB2 R/G/B=16/17/26. Pengguna tidak perlu memilih environment.
 
 Pilih **Build**, kemudian **Upload**, kemudian **Monitor**, kelajuan **115200 baud**.
 Hantar satu arahan setiap baris dengan Enter/Newline. Selepas firmware ini diupload,
@@ -135,8 +132,7 @@ Jika target ditinggalkan (`test/led/red`), kedua-duanya diuji.
 
 Hanya target dipilih menyala; LED lain padam. Output ujian tidak ditimpa warna
 menu. Serial menyebut warna yang sedang diminta supaya warna fizikal boleh
-dibandingkan. Dalam mod LED biasa, semua warna selain OFF menjadi ON dan mesej
-menerangkannya. Pilih `esp32dev-rgb` untuk benar-benar memeriksa warna.
+dibandingkan. Build default RGB terus menunjukkan semua warna sebenar.
 
 ## Butang
 

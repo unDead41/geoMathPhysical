@@ -28,8 +28,8 @@ constexpr uint8_t LED_PINS[2] = {25, 26}; // R1=bongkah, R2=bentangan.
 // RGB1/R1: B=25, G=14, R=13. RGB2/R2: B=26, G=17, R=16.
 constexpr uint8_t RGB_PINS[2][3] = {{13, 14, 25}, {16, 17, 26}};
 #ifndef GEODECODER_RGB_ENABLED
-// 0 = dua LED biasa GPIO25/26; 1 = dua RGB mengikut jadual pin di atas.
-#define GEODECODER_RGB_ENABLED 0
+// Build pengguna sentiasa RGB. Nilai 0 hanya untuk semakan keserasian developer.
+#define GEODECODER_RGB_ENABLED 1
 #endif
 constexpr bool RGB_ENABLED = GEODECODER_RGB_ENABLED != 0;
 constexpr bool RGB_COMMON_ANODE = false; // Common pin ke GND; jika true ke 3V3.

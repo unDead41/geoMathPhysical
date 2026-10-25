@@ -109,20 +109,14 @@ Putaran rawak pantas setiap 150 ms berterusan sepanjang paparan keputusan;
 stopwatch kekal berhenti. NEXT memulakan pusingan baharu pada 0 dan 00:00,
 R1 biru/R2 padam. HINT kembali ke menu dengan putaran perlahan 1,000 ms.
 
-## LCD dan mod LED biasa
+## LCD dan build RGB tunggal
 
 LCD kekal 20x4. Baris atas menambah tahap aktif tanpa mengurangkan tiga baris
 soalan/hint, contohnya `Q1/5 R1 00:14   S0/5` kemudian
 `Q1/5 R2 00:18   S0/5`. Isi bank tidak diubah oleh kerja flow ini.
 
-Environment **esp32dev** kekal default untuk LED biasa GPIO25/26. Dalam mod ini,
-semua warna selain padam dipetakan kepada LED ON: R1 sahaja pada tahap pertama,
-kedua-duanya ON pada tahap bentangan, dan tiga kelipan ON/OFF pada tamat/langkau.
-Di menu/keputusan kedua-dua LED biasa kekal ON kerana tiada saluran warna;
-label R1/R2 serta notis LCD menerangkan tindakan. Pin G/B tidak digunakan.
-
-Apabila pemasangan RGB empat kaki siap, Build/Upload environment
-**esp32dev-rgb** dalam VS Code + PlatformIO. Polariti sedia ada kekal;
+Satu environment **esp32dev-rgb** ialah default dalam VS Code + PlatformIO.
+Terus klik Build/Upload; tiada pemilihan jenis LED diperlukan. Polariti sedia ada kekal;
 rujuk [SAMBUNGAN.md](../SAMBUNGAN.md). Pemetaan pemasangan RGB pengguna terkini:
 
 | LED | R | G | B |
@@ -130,7 +124,7 @@ rujuk [SAMBUNGAN.md](../SAMBUNGAN.md). Pemetaan pemasangan RGB pengguna terkini:
 | RGB1 / R1 bongkah | 13 | 14 | 25 |
 | RGB2 / R2 bentangan | 16 | 17 | 26 |
 
-Pin LED biasa kekal R1=25/R2=26, berasingan daripada susunan RGB di atas.
+Pin LED biasa lama R1=25/R2=26 hanya untuk semakan keserasian developer.
 Tiada pertukaran board atau format NVS.
 
 ## Fungsi guru

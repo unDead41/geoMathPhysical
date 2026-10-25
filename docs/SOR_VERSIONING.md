@@ -88,7 +88,9 @@ Pada boot/reset, selepas Serial 115200 bermula, firmware menunjukkan contohnya:
 [FIRMWARE] GeoDecoder v1.0.0 | ESP32 | env=esp32dev-rgb
 ```
 
-Build LED biasa menunjukkan `env=esp32dev`. `version` mencetak identiti sama
+Mulai v1.1.3, hanya build RGB diterbitkan: `esp32dev-rgb` dalam main dan
+`esp32dev-sharing-rgb` dalam sharing; kedua-duanya memaparkan label hardware
+Serial `env=esp32dev-rgb` yang sama. `version` mencetak identiti sama
 tanpa menukar permainan, timer, reader, ujian komponen atau UID. `status` turut
 mencetaknya. Arahan baca ini tersedia semasa kuiz dan ujian komponen.
 
@@ -100,7 +102,8 @@ permulaan semula. LCD murid tidak perlu memaparkan maklumat developer ini.
 
 1. PC: `git branch --show-current` dan `git log -1 --oneline` menunjukkan sumber
    yang sedang dibuka. Bandingkan versi README pada commit itu dengan GitHub.
-2. Build dan Upload environment yang betul: `esp32dev` atau `esp32dev-rgb`.
+2. Terus Build dan Upload; satu environment RGB ditetapkan sebagai default.
+   Jangan tambah semula pilihan LED/environment pada pemasangan pengguna.
 3. Buka Monitor 115200, taip `version` dan bandingkan nombor serta environment.
 4. `git pull` mengemas kini fail PC. ESP32 menerima versi baharu selepas Build
    dan Upload; nombor lama selepas pull biasanya bermaksud board masih menjalankan
@@ -109,8 +112,8 @@ permulaan semula. LCD murid tidak perlu memaparkan maklumat developer ini.
 
 Versi yang sama tidak membuktikan semua pengubahsuaian tempatan identik.
 Nyatakan SHA, branch dan perubahan belum commit semasa audit. Untuk memadankan
-keluaran rasmi, gunakan commit keluaran yang bersih; kedua-dua environment berkongsi
-versi yang sama dan dibezakan oleh label environment.
+keluaran rasmi, gunakan commit keluaran yang bersih; pakej sharing menyatakan
+SHA main sumbernya dan menggunakan firmware bernombor sama.
 
 ## 7. Pengesahan sebelum diterbitkan
 
@@ -118,8 +121,10 @@ versi yang sama dan dibezakan oleh label environment.
 - Jalankan ujian yang diwajibkan AGENTS.md untuk skop perubahan. Dokumen/aset
   sahaja tidak memerlukan keseluruhan ujian firmware; checker tetap wajib.
 - Jika firmware berubah, uji entry PlatformIO dan environment terkesan; jalankan
-  mod modul berasingan apabila header/modul berubah. Build kedua-duanya bagi
-  perubahan versi/Serial yang dikongsi oleh LED biasa dan RGB.
+  mod modul berasingan apabila header/modul berubah. Build default tunggal pada
+  setiap branch yang diubah dan semak versi firmware sama dalam main/sharing.
+  Semakan native LED biasa boleh dikekalkan sebagai keserasian developer;
+  ia bukan environment kedua untuk pengguna.
 - Perubahan label versi tidak memadam atau mendaftar semula UID/NVS. Kekalkan
   kontrak data dan pin yang telah diluluskan.
 - Rekod simulasi, kompilasi ESP32, upload USB dan ujian fizikal secara berasingan.

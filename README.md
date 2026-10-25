@@ -1,10 +1,10 @@
 # GeoDecoder
 
-Versi semasa: **v1.1.2**.
+Versi semasa: **v1.1.3**.
 Rujukan kemas kini: [SOR versi](docs/SOR_VERSIONING.md) dan [changelog](CHANGELOG.md).
 
 Kuiz geometri 3D menggunakan ESP32 klasik/WROOM-32, dua pembaca MFRC522,
-LCD I2C 20x4, dua butang dan dua LED biasa atau dua RGB empat kaki.
+LCD I2C 20x4, dua butang dan dua RGB empat kaki.
 
 **Aliran kerja utama: VS Code + PlatformIO IDE.** Build, Upload dan Serial
 Monitor tersedia terus dalam VS Code. Arduino IDE tidak diperlukan.
@@ -20,8 +20,8 @@ Monitor tersedia terus dalam VS Code. Arduino IDE tidak diperlukan.
 
 Kedua-dua PDF ialah salinan tepat daripada `sharing` pada commit
 [`de86754`](https://github.com/unDead41/geodecoder/commit/de86754fb042e12c9254eb883621febf6f055a31).
-Panduan disemak terhadap firmware v1.1.1 dan serasi dengan v1.1.2, yang
-menambah dokumentasi ini serta menaikkan label versi mengikut SOR.
+Panduan disemak terhadap firmware v1.1.1. Mulai v1.1.3, Build sentiasa RGB:
+langkau langkah memilih LED/environment dalam PDF dan terus Build/Upload.
 
 Bahagian installer A-Z menggunakan `setup.ps1` dalam pakej
 [`sharing`](https://github.com/unDead41/geodecoder/tree/sharing).
@@ -56,17 +56,17 @@ akan memasang platform ESP32 dan library yang ditetapkan secara automatik.
 Pemasangan pertama memerlukan Internet dan mengambil masa lebih lama.
 Jangan cipta projek PlatformIO baharu atau pindahkan hanya satu fail `.ino`.
 
-## 2. Pilih LED dan Build
+## 2. Terus Build
 
-Dalam panel PlatformIO > **Project Tasks**, pilih environment yang sepadan:
+Projek mempunyai **satu environment sahaja, `esp32dev-rgb`, dan ia default**.
+Klik tanda **Build** di bar bawah PlatformIO atau **Project Tasks > esp32dev-rgb >
+General > Build**. Build boleh dijalankan tanpa ESP32 disambungkan. Tunggu `SUCCESS`.
+Kumpulan Default dan `esp32dev-rgb` menjalankan konfigurasi RGB yang sama;
+pengguna tidak perlu memilih jenis LED.
 
-| Environment | Perkakasan |
-|---|---|
-| `esp32dev` (default) | Dua LED biasa: GPIO25 dan GPIO26 |
-| `esp32dev-rgb` | Dua RGB empat kaki (R/G/B): R1=13/14/25, R2=16/17/26 |
-
-Pilih **General > Build** di bawah environment itu. Build boleh dijalankan
-tanpa ESP32 disambungkan. Tunggu keputusan `SUCCESS`.
+Pin RGB R/G/B: **R1=13/14/25, R2=16/17/26**. Jika fail tempatan
+`platformio.local.ini` lama menetapkan `default_envs = esp32dev`, buang baris
+override itu atau tukar kepada `esp32dev-rgb`; kekalkan tetapan COM sendiri.
 
 RGB menggunakan common cathode secara default. Jika common anode ke 3V3,
 ubah `RGB_COMMON_ANODE` kepada `true` dalam `main/config.h`.
@@ -75,7 +75,7 @@ ubah `RGB_COMMON_ANODE` kepada `true` dalam `main/config.h`.
 
 1. Sambungkan ESP32 klasik/WROOM-32 kepada komputer menggunakan kabel USB data.
 2. Tutup Serial Monitor lain yang sedang menggunakan port tersebut.
-3. Pilih **General > Upload** di bawah environment yang dipilih tadi.
+3. Klik **Upload** di bar bawah PlatformIO atau **Project Tasks > esp32dev-rgb > General > Upload**.
 4. Jika tersekat pada `Connecting...`, tahan **BOOT** sehingga sambungan
    bermula, kemudian lepaskan. Selepas upload, tekan **EN/RESET** jika perlu.
 5. Jika port tidak dikesan, semak Device Manager untuk nombor COM dan driver
@@ -94,7 +94,7 @@ susunan itu sebelum upload.
 
 ## 4. Uji perkakasan dan daftar kad
 
-Buka **General > Monitor** bagi environment yang sama. Kelajuan ditetapkan
+Buka **Monitor** di bar bawah PlatformIO atau **Project Tasks > esp32dev-rgb > General > Monitor**. Kelajuan ditetapkan
 kepada **115200 baud**, dan arahan dihantar selepas menekan Enter.
 
 Taip satu per satu:
@@ -174,10 +174,7 @@ RFID mesti READY dan semua jenis aktif mesti mempunyai UID R1 serta R2.
    dengan warna R1/R2 sentiasa berlainan.
 9. Keputusan: NEXT memulakan pusingan baharu, HINT kembali ke menu perlahan.
 
-Environment default `esp32dev` kekal untuk **LED biasa**. Warna bukan padam
-menjadi LED ON; label tahap/notis LCD menerangkan tindakan. Pada tahap R2,
-R1 kekal ON. Menu/keputusan mempunyai dua LED ON; tiga kelipan tetap digunakan.
-Gunakan `esp32dev-rgb` hanya apabila pemasangan RGB siap.
+Satu build RGB mengendalikan semua warna dan petunjuk R1/R2 di atas.
 Panduan penuh: [flow dua kad dan RGB](docs/GAME_FLOW_RGB.md).
 
 ## Uji komponen melalui Serial Monitor
@@ -223,24 +220,24 @@ dalam VS Code. Terminal ini menyediakan arahan `pio` walaupun ia tiada
 dalam PATH terminal biasa.
 
 ```text
-pio run -e esp32dev
-pio run -e esp32dev -t upload
-pio device monitor -e esp32dev
+pio run
+pio run -t upload
+pio device monitor
 ```
 
-Untuk dua RGB, gantikan `esp32dev` dengan `esp32dev-rgb` dalam ketiga-tiga
-arahan. `Ctrl+C` menutup Monitor. Untuk melihat port: `pio device list`.
+Ketiga-tiga arahan terus menggunakan satu build RGB. `Ctrl+C` menutup Monitor.
+Untuk melihat port: `pio device list`.
 
 ## Semak versi firmware yang diupload
 
 Pada boot/reset ESP32, Serial 115200 baud memaparkan:
 
 ```text
-[FIRMWARE] GeoDecoder v1.1.2 | ESP32 | env=esp32dev-rgb
+[FIRMWARE] GeoDecoder v1.1.3 | ESP32 | env=esp32dev-rgb
 ```
 
-Mod LED biasa memaparkan `env=esp32dev`. Jika Monitor dibuka selepas banner
-berlalu, taip `version`; `status` turut menunjukkan identiti yang sama.
+Jika Monitor dibuka selepas banner berlalu, taip `version`; `status` turut
+menunjukkan identiti yang sama.
 Arahan ini boleh dibaca semasa bermain atau semasa ujian komponen.
 
 Bandingkan versi itu dengan **Versi semasa** pada README GitHub bagi commit
