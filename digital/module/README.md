@@ -1,6 +1,6 @@
 # Modul Pembelajaran GeoDecoder Digital V1
 
-Versi modul: **v1.0.0**. Branch kerja: **digitalize-module**.
+Versi modul: **v1.1.0**. Branch kerja: **digitalize-module**.
 
 ## Cuba terus
 
@@ -19,6 +19,15 @@ Pautan DSKP ialah rujukan pilihan; aktiviti tidak memerlukannya.
 - **Pandangan 2D** menutup semula bongkah, menghentikan putaran dan menyediakan
   atas, bawah, depan, belakang, kiri dan kanan. Semua unjuran ialah ortografik.
 - **Cuba fikir** memberi penerangan tanpa markah atau penyimpanan keputusan.
+- Pilih **Nota pembelajaran** untuk sifat, bentangan, luas permukaan dan isi padu
+  bagi bongkah yang dipilih. Butang 6.1–6.4 membawa terus kepada bahagian nota.
+- Buka **Contoh berpandu** untuk soalan dan empat langkah penyelesaian.
+- **Cuba ukuran sendiri** menerima ukuran dalam cm (0.1–1000), termasuk koma
+  perpuluhan. Rajah ukuran, tinggi sendeng, jumlah luas dan isi padu dikira semula.
+  Silinder/kon menyediakan pilihan π ≈ 22/7, π ≈ 3.142 atau nilai π penuh.
+- Nota turut mengandungi rumus ringkas, penukaran unit, kesilapan lazim dan satu
+  contoh bongkah gabungan. Tindakan pada nota membuka model/bentangan/pandangan
+  bongkah yang sama. Membaca nota menghentikan gerakan 3D di belakangnya.
 
 Putaran automatik bermula perlahan apabila reduced motion tidak aktif. Ia boleh
 dihentikan. Tab tersembunyi menghentikan gerakan dan memerlukan tindakan baharu
@@ -29,6 +38,8 @@ Peluncur sentiasa membolehkan pemerhatian bingkai demi bingkai.
 ## Kandungan dan matematik
 
 Sifat dan bentangan menyokong DSKP Matematik Tingkatan 2 SP 6.1.1 dan 6.2.1.
+Nota v1.1.0 menambah luas permukaan (6.3.1), contoh gabungan dan unit (6.3.3),
+serta isi padu (6.4.1–6.4.3) untuk lima bongkah projek.
 Pandangan ortografik ialah pengayaan Tingkatan 3 SP 7.1.1–7.1.2; bahasa dipermudah
 pada aras Tingkatan 1. Modul ini bukan liputan keseluruhan DSKP atau pentaksiran TP.
 Rujuk [pemetaan kurikulum](docs/CURRICULUM.md) dan [geometri](docs/GEOMETRY.md).
@@ -46,6 +57,8 @@ bukan pertukaran gambar atau panel poligon berengsel.
 | `src/geometry.mjs` | Geometri, lipatan tegar, pembangunan permukaan dan kamera ortografik |
 | `src/renderer.mjs` | Lukisan Canvas 2D bagi model 3D, cahaya dan pemilihan permukaan |
 | `src/content.mjs` | Satu sumber versi modul dan penerangan BM |
+| `src/lessons.mjs` | Nota, contoh asal, rumus dan pengiraan ukuran yang disahkan |
+| `src/notes.mjs` | Paparan nota, rajah SVG, input ukuran, maklum balas dan navigasi |
 | `src/app.mjs` | Kawalan input, animasi, pandangan dan aktiviti pembelajaran |
 | `src/index.html`, `src/style.css` | Antara muka dan identiti visual |
 | `tools/build.mjs` | Menggabungkan sumber menjadi HTML mandiri |
@@ -81,6 +94,9 @@ terlindung dan latihan lukisan pelan/dongakan mengikut skala belum disediakan.
 Paparan Canvas mempunyai penerangan teks dan kawalan setara; ia bukan model
 sentuhan atau pengganti penuh penerangan guru untuk murid bermasalah penglihatan.
 Lihat [pengesahan](docs/VERIFICATION.md) untuk beza ujian sebenar dan simulasi.
+Pengesahan tambahan v1.1.0 direkodkan dalam [NOTES_V1_1.md](docs/NOTES_V1_1.md).
+Pengiraan menerima bongkah tegak tertutup sahaja. Rajah kalkulator mengikut
+ukuran aktiviti; ukuran ini tidak mengubah model 3D ilustrasi.
 
 
 QA pilihan: `npm run qa` membuka workbench tempatan pada port 4173. Laluan

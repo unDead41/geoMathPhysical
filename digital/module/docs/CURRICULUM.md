@@ -8,6 +8,10 @@ semula. Tidak mendakwa modul diluluskan KPM atau meliputi keseluruhan DSKP.
 |---|---|---|
 | Tingkatan 2, SP 6.1.1, muka surat cetak 52 / PDF 64 | Putar lima bongkah; banding permukaan rata/melengkung, rusuk dan bucu | Hanya bongkah tegak dalam projek; tidak meliputi prisma lain atau sfera |
 | Tingkatan 2, SP 6.2.1, halaman sama | Buka, jeda, jejaki muka, cantum; kenal sektor kon dan segi empat tepat silinder | Satu bentangan sah setiap bongkah; belum melukis sendiri atau meneroka semua bentangan |
+| Tingkatan 2, SP 6.3.1, muka surat cetak 52 / PDF 64 | Nota menghubungkan luas setiap bahagian bentangan dengan rumus luas permukaan; lima contoh berpandu dan pengiraan ukuran | Bongkah tegak tertutup; bukan derivasi semua jenis prisma |
+| Tingkatan 2, SP 6.3.3, muka surat cetak 53 / PDF 65 | Kotak kubus berbumbung piramid: abaikan kedua-dua muka yang bercantum; penukaran unit persegi | Satu contoh asal; belum merangkumi semua jenis masalah gabungan |
+| Tingkatan 2, SP 6.4.1–6.4.2, muka surat cetak 53 / PDF 65 | Nota luas tapak × tinggi, hubungan satu pertiga piramid/kon dengan prisma/silinder, contoh berpandu dan aktiviti mengubah ukuran | Hubungan diterangkan; tiada simulasi menuang atau pembuktian penuh rumus |
+| Tingkatan 2, SP 6.4.3, halaman sama | Contoh tambah isi padu kubus dan piramid, cm³ kepada mL/L, panduan cm³/m³ | Masalah dan unit terpilih; tiada pentaksiran TP |
 | Tingkatan 3, SP 7.1.1–7.1.2, muka surat cetak 58 | Enam arah kamera ortografik dan perbandingan unjuran dengan objek | Pengayaan pengenalan; bukan latihan lukisan formal atau penskoran TP |
 
 Bahasa BM dipermudah pada aras Tingkatan 1. Kandungan sifat/bentangan itu sendiri
@@ -37,3 +41,10 @@ ialah topik DSKP Tingkatan 2; jangan menamakannya standard Tingkatan 1.
 - Bentangan memaparkan seluruh permukaan pada satu satah.
 - Aktiviti Cuba fikir memberi maklum balas dan peluang mencuba semula; ia tidak
   mengubah atau merekod skor/analitik kuiz GeoDecoder.
+- L ialah luas permukaan; l huruf kecil ialah lebar. t sentiasa tinggi tegak;
+  s ialah tinggi sendeng. j ialah jejari, bukannya diameter.
+- Rumus piramid menggunakan tapak segi empat sama dan puncak di atas pusat tapak.
+  s = √(t² + (a/2)²). Untuk kon tegak, s = √(t² + j²).
+- Contoh dan ayat nota ialah penulisan asal. DSKP dirujuk semula pada
+  26 Oktober 2026 untuk skop Bab 6. Standard 6.3.2 (sfera), sfera dalam isi padu
+  dan prisma lain tidak diajar dalam modul lima bongkah ini.

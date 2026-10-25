@@ -1,10 +1,11 @@
 import {VIEWS,VIEW_ORDER,FACE_COLORS,clamp01,ease} from './geometry.mjs';
 import {MODULE_VERSION,MODEL_ORDER,MODEL_DATA} from './content.mjs';
 import {ModelRenderer} from './renderer.mjs';
+import {LearningNotes} from './notes.mjs';
 const el=id=>document.getElementById(id);
 const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
 const initial=MODEL_ORDER.includes(location.hash.slice(1))?location.hash.slice(1):'cube';
-const state={shape:initial,progress:0,yaw:.55,pitch:.35,zoom:1,mode:'model',view:'front',auto:!reduced.matches,labels:false,selected:null,playing:false,direction:1,kind:'cycle',hold:0,camera:null,manualOrbit:false,pausedAnimation:null};
+const state={shape:initial,learningView:'explore',progress:0,yaw:.55,pitch:.35,zoom:1,mode:'model',view:'front',auto:!reduced.matches,labels:false,selected:null,playing:false,direction:1,kind:'cycle',hold:0,camera:null,manualOrbit:false,pausedAnimation:null};
 const mainRenderer=new ModelRenderer(el('model-canvas'));
 const navRenderers=new Map(),viewRenderers=new Map();
 let raf=0,lastFrame=0,dirty=true,lastPercent=-1;
@@ -15,7 +16,7 @@ function element(tag,attrs={},text='') {
   return node;
 }
 function announce(text) {el('announcer').textContent=text;}
-function wake() {dirty=true;if(!raf&&!document.hidden)raf=requestAnimationFrame(frame);}
+function wake() {dirty=true;if(!raf&&!document.hidden&&state.learningView==='explore')raf=requestAnimationFrame(frame);}
 function stopAnimation() {state.playing=false;state.hold=0;state.pausedAnimation=null;}
 function setAuto(value) {state.auto=Boolean(value)&&state.mode==='model';if(state.auto){stopAnimation();state.camera=null;}refreshControls();wake();}
 function alignCamera(yaw,pitch) {
@@ -97,7 +98,7 @@ function switchMode(mode) {
 }
 function renderContent() {
   const data=MODEL_DATA[state.shape];
-  document.title=data.name+' — Modul GeoDecoder';
+  document.title=(state.learningView==='notes'?'Nota ':'')+data.name+' — Modul GeoDecoder';
   el('model-title').textContent=data.name;el('notes-title').textContent=data.name;el('shape-tag').textContent=data.tag;
   el('shape-intro').textContent=data.intro;el('net-explanation').textContent=data.net;el('observation').textContent=data.observe;
   el('edge-note').hidden=!data.curvedEdges;
@@ -116,12 +117,13 @@ function renderContent() {
   el('face-description').textContent='Pilih permukaan untuk melihatnya pada model.';
   for(const button of el('shape-picker').children)button.setAttribute('aria-pressed',String(button.dataset.shape===state.shape));
   renderLegend();renderViews();refreshControls();
+  if(state.learningView==='notes')learningNotes.render(state.shape);
 }
 function selectShape(shape) {
   stopAnimation();state.shape=shape;state.progress=0;state.zoom=1;state.selected=null;state.camera=null;state.manualOrbit=false;state.yaw=.55;state.pitch=.35;
   state.auto=false;lastPercent=-1;
   try{history.replaceState(null,'','#'+shape);}catch{/* Some file-origin policies restrict history; learning still works. */}
-  renderContent();if(state.mode==='views')selectView(state.view);
+  renderContent();if(state.mode==='views'&&state.learningView==='explore')selectView(state.view);
   announce(MODEL_DATA[shape].name+' dipilih. '+MODEL_DATA[shape].tag);wake();
 }
 function beginAnimation(target=null) {
@@ -140,12 +142,12 @@ function zoomBy(amount) {state.zoom=Math.max(.6,Math.min(2.2,Math.round((state.z
 function drawMain() {
   mainRenderer.draw(state);
   const canvas=el('model-canvas');
-  for(const key of ['shape','progress','yaw','pitch','zoom','mode','playing','auto'])canvas.dataset[key]=String(state[key]);
+  for(const key of ['shape','learningView','progress','yaw','pitch','zoom','mode','playing','auto'])canvas.dataset[key]=String(state[key]);
   canvas.dataset.reducedMotion=String(reduced.matches);
 }
 function frame(time) {
   raf=0;const dt=lastFrame?Math.max(0,time-lastFrame):0;lastFrame=time;
-  if(document.hidden){lastFrame=0;return;}
+  if(document.hidden||state.learningView!=='explore'){lastFrame=0;return;}
   if(state.camera){
     const c=state.camera,t=clamp01((time-c.time)/700),e=ease(t);
     state.yaw=c.fromYaw+(c.toYaw-c.fromYaw)*e;state.pitch=c.fromPitch+(c.toPitch-c.fromPitch)*e;
@@ -173,6 +175,25 @@ for(const shape of MODEL_ORDER){
   button.append(canvas,element('span',{class:'shape-name'},MODEL_DATA[shape].name),element('span',{class:'choice-dot','aria-hidden':'true'}));
   button.addEventListener('click',()=>selectShape(shape));el('shape-picker').append(button);navRenderers.set(shape,new ModelRenderer(canvas));
 }
+function switchLearningView(view) {
+  if(state.learningView===view)return;
+  stopAnimation();state.auto=false;state.camera=null;
+  if(raf)cancelAnimationFrame(raf);raf=0;lastFrame=0;state.learningView=view;
+  refreshControls();drawMain();
+  el('explore-panel').hidden=view!=='explore';el('study-panel').hidden=view!=='notes';
+  el('learn-explore').setAttribute('aria-pressed',String(view==='explore'));el('learn-notes').setAttribute('aria-pressed',String(view==='notes'));
+  document.title=(view==='notes'?'Nota ':'')+MODEL_DATA[state.shape].name+' — Modul GeoDecoder';
+  if(view==='notes'){learningNotes.render(state.shape);el('study-title').focus({preventScroll:true});announce('Nota '+MODEL_DATA[state.shape].name.toLowerCase()+' dibuka.');}
+  else {redrawSmallModels();el('model-title').focus({preventScroll:true});announce('Teroka 3D '+MODEL_DATA[state.shape].name.toLowerCase()+'.');}
+}
+const learningNotes=new LearningNotes({announce,prefersReduced:()=>reduced.matches,onExplore:mode=>{
+  switchLearningView('explore');
+  if(mode==='net')beginAnimation(1);
+  else if(mode==='views'){switchMode('views');selectView('top');}
+  else switchMode('model');
+  el('stage').scrollIntoView({behavior:reduced.matches?'instant':'smooth',block:'center'});
+}});
+el('learn-explore').addEventListener('click',()=>switchLearningView('explore'));el('learn-notes').addEventListener('click',()=>switchLearningView('notes'));
 el('version').textContent='V'+MODULE_VERSION;
 el('mode-model').addEventListener('click',()=>switchMode('model'));el('mode-views').addEventListener('click',()=>switchMode('views'));
 el('open-net').addEventListener('click',()=>beginAnimation(1));el('close-net').addEventListener('click',()=>beginAnimation(0));

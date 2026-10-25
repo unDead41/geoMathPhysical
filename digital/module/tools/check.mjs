@@ -4,7 +4,7 @@ assert.ok(!/<script[^>]+src=|<link[^>]+rel="stylesheet"|@import|@font-face|\bfet
 assert.ok(!/^import |^export /m.test(html));
 const script=html.match(/<script>([\s\S]*?)<\/script>/)[1];new vm.Script(script);
 const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);assert.equal(new Set(ids).size,ids.length,'Duplicate IDs');
-for(const match of html.matchAll(/\bel\('([^']+)'\)/g))assert.ok(ids.includes(match[1]),'Missing DOM target '+match[1]);
+for(const match of html.matchAll(/\b(?:el|noteEl)\('([^']+)'\)/g))assert.ok(ids.includes(match[1]),'Missing DOM target '+match[1]);
 assert.ok(html.includes("connect-src 'none'"));assert.ok(html.includes('prefers-reduced-motion:reduce'));assert.ok(html.includes('canvas.addEventListener(\'pointercancel\''));assert.ok(html.includes('visibilitychange'));
 assert.equal(JSON.parse(fs.readFileSync(path.join(root,'package.json'),'utf8')).version,MODULE_VERSION);
 assert.ok(html.includes('V'+MODULE_VERSION));

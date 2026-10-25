@@ -1,4 +1,10 @@
-# Pengesahan Modul GeoDecoder v1.0.0
+# Pengesahan Modul GeoDecoder
+
+Kemas kini semasa: **v1.1.0**, nota dan aktiviti ukuran; **67/67** ujian lulus.
+Lihat [laporan tambahan v1.1.0](NOTES_V1_1.md) dan manifest screenshot baharu.
+Bahagian di bawah ialah laporan sejarah v1.0.0, bukan ujian nota v1.1.0.
+
+## Rekod v1.0.0
 
 Keputusan akhir: **45/45 ujian automatik lulus dan 21 screenshot sebenar disimpan**.
 Laporan membezakan geometri/unit, simulasi DOM, pelayar sebenar dan peranti fizikal.

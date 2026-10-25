@@ -89,3 +89,21 @@ continues in a hidden tab. The game DESIGN.md/UX behavior is unchanged.
 - Don't use perspective distortion for the six orthographic choices.
 - Don't present a net as a view, a sector as a triangle or curved surfaces as hinges.
 - Don't add accounts, marks or telemetry to free learning.
+
+## Nota pembelajaran v1.1.0
+
+Use the shared shape picker with two clear learning choices, Teroka 3D and
+Nota pembelajaran. Notes use a readable main column and a compact formula
+reference on desktop. Keep chapter jump controls visible at the note entrance;
+stack content naturally on narrow screens. Tables scroll within their own
+labelled keyboard-focusable region. Do not give the whole page horizontal scroll.
+
+Reuse existing typography and navy/blue/mint tokens. Surface-area formulas are
+blue and volume formulas green, with explicit labels and squared/cubed units.
+Use native details for original worked examples. The measurement activity has
+real labelled fields, inline errors, reset and unit-bearing outputs. The SVG
+section explains t/s/radius or half-base and must never be presented as a net.
+
+Canonical owners: notes.mjs for note interactions; lessons.mjs for instructional
+data and numerical calculation; app.mjs for the shared shape/motion state.
+All current source remains offline and dependency-free.

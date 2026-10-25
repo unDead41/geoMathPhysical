@@ -33,3 +33,21 @@ PATCH untuk pembaikan. Modul mempunyai saluran versi bebas seperti aplikasi
 Digital sedia ada. Tidak menaikkan header firmware untuk branch modul.
 Jika kelak digabung ke main, pemilik integrasi wajib menyemak main terkini,
 menetapkan versi main seterusnya dan menjalankan checker repo.
+
+## Sambungan nota v1.1.0 — 26 Oktober 2026
+
+Branch sedia ada disambung pada 3dde97e6c203012cf9e92c6e5cb86f9820f2ad97,
+tree 6ff431238a15984855e4a212ce13e46fefadc024 (modul v1.0.0).
+Ref digitalize masih 55a79849d5007ec53a9b877cd20877c9bf15aa8d, permainan v1.1.0.
+Main disemak semula sebelum penerbitan: a059979d97926b82cafd4aa5cf3fe59da04a55bb,
+firmware v1.1.3. Sharing pada semakan ialah
+01b549a26861ef5f093d4c2c630700de37008d6b.
+
+Versi modul dinaikkan MINOR kepada v1.1.0 untuk fungsi nota serasi. Sumber nombor
+kekal src/content.mjs; package, badge, README dan CHANGELOG modul diselaraskan.
+Sumber geometri, renderer, bank soalan dan permainan tidak diubah. Semua fail
+kemas kini hanya di digital/module/. Modul tidak digabung semula dari branch lain.
+
+Nota asal menambah Bab 6.3/6.4 berdasarkan dokumen KPM yang dipautkan dalam
+CURRICULUM.md. Semakan PDF meliputi halaman cetak 52–53 (halaman PDF 64–65).
+Tiada kandungan buku teks atau ilustrasi pihak ketiga disalin.

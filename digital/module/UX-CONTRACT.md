@@ -39,3 +39,24 @@ No loading, data failures, CRUD, login or external request states exist in the
 module. Runtime CSP denies network connections. External DSKP anchors are optional
 navigation and explicitly described as requiring Internet. Safe textContent/DOM
 construction is used for dynamic instructional copy.
+
+## Nota pembelajaran (v1.1.0)
+
+LearningNotes dalam src/notes.mjs memiliki paparan nota dan input pengiraan.
+LESSON_DATA dan calculateMeasures dalam src/lessons.mjs menjadi sumber kandungan
+dan matematik. Semua lima pilihan bongkah dikongsi dengan Teroka 3D.
+
+Membuka nota menghentikan playback, putaran dan camera tween, membatalkan rAF,
+serta mengekalkan kemajuan model. Kembali ke Teroka tidak menyambung gerakan
+secara automatik. Input nota bagi bongkah semasa kekal ketika beralih bahagian;
+menukar bongkah menggunakan nombor contoh bongkah baharu. Nilai π pilihan kekal.
+Reset ukuran mengembalikan nombor contoh sahaja.
+
+Native details membuka contoh. Butang lompat memfokuskan heading dan menatal
+dengan reduced motion. Nota → bentangan menggunakan progress controller sedia
+ada; nota → pandangan menutup bongkah dan memilih atas. Tiada route fetch.
+
+Input salah memaparkan ralat bersebelahan, aria-invalid dan kosong pada output.
+Tiada jawapan lama digunakan. Submit memfokus input salah. Ukuran sah diproses
+pada setiap input; hasil dibundarkan untuk paparan sahaja, nilai sangat kecil
+menggunakan < 0.01 cm³. Rajah ukuran tidak menukar bentuk umum model 3D.
