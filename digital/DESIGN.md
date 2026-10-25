@@ -43,7 +43,7 @@ components:
 A real classroom geometry kit translated into a bright digital workbench. The signature is the two scanner pads: R1 takes a solid, R2 takes its net. Exact SVG models serve learning and are never decorative AI geometry.
 
 ### Product context and register
-Malaysian Murid/Pelajar, readable at Tingkatan 1 level, using mouse, keyboard or touchscreen. All product language is BM. Sessions are self-paced, ten questions, local high scores. Product register throughout registration, game and scoreboard. Avoid dashboards, neon arcade treatments and tiny LCD-only text.
+Malaysian Murid/Pelajar, readable at Tingkatan 1 level, using mouse, keyboard or touchscreen. All product language is BM. Practice sessions are self-paced, ten questions, local high scores; classroom accounts add teacher rosters and live rooms. Product register throughout registration, game and scoreboard. Keep classroom screens readable and avoid neon arcade treatments and tiny LCD-only text.
 
 ### Token ownership/runtime mapping
 Model B: `dist/style.css :root` owns runtime tokens. This document mirrors the accepted palette. Primary→--primary→buttons/focus; ink→--ink→text; background→--bg→body; surface→--surface→panels; success→--success→correct; danger→--danger→wrong; accent→--accent→milestone; muted→--muted→secondary text; border→--border→all controls. Type→--font-display/--font-body/--font-mono. Corners→--radius/--radius-lg. `tools/check.mjs` checks exact drift for palette.
@@ -92,3 +92,9 @@ BM, short specific instructions. No shape names printed on answer cards; use shu
 - Do require R1 before R2 and grant one mark for a pair.
 - Don't give the answer through matching card positions or colours.
 - Don't rely on dragging, colour or sound alone.
+
+## V2 classroom and themes
+
+`dist/portal.css` owns account/class/room layouts and the `html[data-theme="dark"]` overrides; the original light tokens remain the baseline. Dark uses deep blue canvas and lighter panels with bright blue focus, readable grey text and semantic mint/red/violet feedback. Geometry palettes retain their mathematical meaning without global inversion. `dist/theme.mjs` owns preference and header control. Prepaint theme selection prevents an initial light flash.
+
+Teacher entry uses a class sidebar, selected-class PIN/invitation panel, searchable roster and room list. The room screen leads with name, status and PIN, then live/final scores. The student screen leads with PIN join, class membership, invitations and rooms. Panels stack on phones; only wide data tables scroll horizontally inside labelled regions. Empty/loading/error/expired-PIN/closed-room states retain a concrete next action.

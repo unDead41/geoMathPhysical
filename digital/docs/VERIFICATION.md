@@ -1,71 +1,62 @@
-# GeoDecoder Digital v1.1.0 — pengesahan
+# GeoDecoder Digital V2 — pengesahan
 
-Tarikh rujukan Malaysia: 25 Oktober 2026. Destinasi: `digitalize` sahaja.
-Main firmware v1.1.3: `a059979d97926b82cafd4aa5cf3fe59da04a55bb`.
-Asas digital: `cd47ebd7dbcbab709b9f61a2122f7492f2b74113`.
+Keluaran **2.0.0**, semakan 25 Oktober 2026 UTC / 26 Oktober MYT. Branch: `digitalize` sahaja. Asas: `55a79849d5007ec53a9b877cd20877c9bf15aa8d`. Firmware/main tidak diubah. Rekod semakan keluaran sebelumnya dikekalkan dalam `VERIFICATION_V1_1.md`.
 
-## Automatik
+## Automatik tempatan
 
-- `npm test`: **35/35 PASS**.
-- 500 seed pemilihan: 10 soalan unik, dua bagi setiap lima bongkah.
-- 500 pusingan × sembilan pertukaran: setiap pilihan R1/R2 bertukar kedudukan.
-- 500 urutan × 10 soalan: setiap bongkah bertukar warna; lima warna unik setiap
-  rak; warna R1/R2 bagi jawapan yang sama berbeza. Fallback RNG diuji.
-- Salah R1/R2 menamatkan satu percubaan dan mengunci input; tiada retry/markah
-  berganda. Semakan tidak meneruskan sendiri, minimum 1800 ms, pause/resume
-  mengekalkan tempoh. Betul meneruskan selepas 900 ms.
-- 100 pusingan sempurna melalui enjin sebenar: 10/10, masa beku selepas tamat.
-  Pusingan campuran membezakan betul, salah dan langkau.
-- Analisis: R2 belum dicuba tidak dikira salah; petunjuk tidak mengurangkan
-  ketepatan; topik berdasarkan kandungan bank, termasuk kedua-dua rumus kon.
-- Storan: keputusan enjin dengan jawapan salah sah dan butiran setiap soalan
-  kekal selepas repository reload. Skor retry lama berasingan, tidak dipadam
-  semasa save baharu dan tidak masuk ranking. Erase kedua-dua kumpulan diuji
-  dengan storan palsu. Ruleset mengekalkan keserasian apabila versi app naik.
-- Ranking/idempotence/50 rekod/JSON rosak/storage exception/CSV BOM, quote dan
-  formula injection turut diuji.
-- `npm run standalone` dan `npm run check`: **PASS**. JavaScript sebaris sah,
-  80 ID unik, sasaran ARIA lengkap, bank sepadan dan semua rajah SVG tersedia.
-- Audit UI strict: **0 errors, 0 warnings**, `premium-audit.json`.
-- Lint DESIGN.md: **0 errors**, enam amaran token yang dipetakan melalui CSS
-  tetapi belum dirujuk dalam objek komponen frontmatter. Tiada token runtime
-  berubah; pemeriksa token CSS/Design lulus.
+- `npm test`: **43/43 PASS**, termasuk semua 35 ujian permainan/storan V1.1, lima ujian Edge Auth dan tiga regresi sambungan cloud.
+- Permainan: 500 seed sepuluh soalan unik/dua setiap bongkah; 500 urutan perubahan posisi/palet; 100 pusingan sempurna; salah R1/R2, langkau, petunjuk, timing/feedback, analisis dan storan/CSV.
+- Auth: validasi username/peranan/password/recovery, SHA256, CORS/method/config, penolakan input sebelum network dan regresi respons identity JSON null semasa pendaftaran baharu.
+- Cloud: heartbeat akaun lama tidak mengisi cache akaun baharu; respons room lama tidak menimpa room semasa; log keluar membersihkan cache dan mengabaikan respons lewat.
+- `npm run build`: PASS, SDK/CSS/JavaScript dibundel dalam HTML tunggal. `GeoDecoder_Digital_V1.html` dan `GeoDecoder_Digital_V2.html` ialah kandungan keluaran yang sama.
+- `npm run check`: PASS; sintaks bundle, aset sebaris, **88 ID unik**, sasaran ARIA, bank firmware, sepuluh ilustrasi SVG, token reka bentuk dan baseline aksesibiliti.
 
-## Pelayar sebenar — Chrome
+## Database hosted sebenar
 
-HTML tunggal yang sama diuji melalui preview HTTP:
+`backend/verify.sql` dijalankan pada projek **fkrlwzxvyufndavlpzbp** selepas migrasi terakhir: **PASS**, keseluruhan transaksi rollback. Ujian mencipta lima pengguna Auth sementara dan menggunakan role SQL `service_role`, `authenticated`, `anon` sebenar. Skop:
 
-- Borang kosong memberi ralat inline dan fokus nama.
-- R1 salah: 0 markah, semua jawapan/hint/skip terkunci, pasangan sebenar
-  dan penerangan dipaparkan; butang terus tersedia selepas tempoh semakan.
-- Selepas meneruskan, DOM mengesahkan semua sepuluh pilihan berpindah tempat
-  dan setiap bongkah/bentangan bertukar palet.
-- R1 betul dan R2 salah melalui Enter: R1 kekal diterima, R2 salah, 0 markah.
-- Seretan tetikus sebenar ke R1 dan R2 berjaya dan memberi satu markah.
-- Satu pusingan lengkap: **7/10**, dua salah (satu R1, satu R2), satu langkau,
-  dua soalan menggunakan hint. Analisis sepadan: R1 8/9, R2 7/8; Kubus/Silinder
-  masing-masing 1/2, Kuboid/Piramid 2/2, Kon satu betul dan satu langkau.
-- Skor 7/10 kekal selepas reload; skor retry V1 lama kelihatan dalam disclosure
-  berasingan dan tidak mengatasi ranking mod baharu.
-- Iframe viewport 390×844: borang, permainan, semakan, pause/resume, kawalan
-  jeda animasi dan keputusan diperiksa. Hiasan perspective grid yang melimpah
-  telah diklip pada scene. Lebar scroll/client selepas pembetulan **380/380**
-  CSS px (gutter 10 px), termasuk keputusan dan analisis.
-- Pusingan telefon yang melangkau semua soalan: **0/10**, sepuluh langkau,
-  sifar salah; R1/R2 menunjukkan Belum dicuba, tanpa peratus ketepatan palsu.
-- Kawalan Jeda animasi menukar label kepada Sambung animasi dan kelas runtime;
-  penyingkiran gerakan melalui prefers-reduced-motion turut disemak dalam CSS.
+- Provisioning servis sahaja, role immutable dan penolakan role palsu dalam user_metadata.
+- Pengasingan dua guru, roster guru sendiri, larangan pelajar mencipta kelas, bank jawapan peribadi dan RLS leaderboard.
+- Jemputan username/terima, PIN kelas/room, enam digit, putaran/luput, pengekalan kiraan cubaan PIN salah dan rate limit.
+- `is_member` membezakan peserta room daripada ahli kelas yang belum masuk; peserta sahaja boleh melihat keputusan room tertutup.
+- Sepuluh ID sama untuk semua peserta, unik dan dua setiap bongkah; satu percubaan yang disambung semula.
+- Salah R1 dan R2, tahap/jenis pengimbas, semakan 1800 ms, maklum balas 900 ms, petunjuk sekali, langkau dan tamat **7/10** yang mengekalkan sepuluh jawapan.
+- Masa dikira server, maklum balas dikecualikan, markah/masa client diabaikan, direct update/insert skor disekat.
+- UUID tindakan sama tidak menambah markah/salah; payload berbeza dengan UUID sama ditolak. Penutupan mengekalkan keputusan lengkap/separa tanpa mereka jawapan.
 
-## Had sebenar
+## HTTP/Auth/Realtime hosted sebenar
 
-- Bukan ujian peranti sentuhan fizikal atau ujian semua versi Chrome/Edge/Safari.
-- Pembukaan terus protokol file:// disekat oleh polisi pelayar kawalan; tidak
-  dicuba melalui jalan pintas. HTML tidak mempunyai dependency luaran atau
-  import/fetch runtime, tetapi polisi localStorage fail bergantung pada pelayar.
-- Penjana CSV lulus ujian. Klik mencetuskan event download, namun perolehan fail
-  oleh pelayar kawalan mengembalikan Download failed. Muat turun CSV lengkap
-  belum disahkan dalam pelayar ini; punca aplikasi tidak dibuktikan.
-- Tiga kelipan LED diuji melalui enjin; tiada video/rakaman kadar bingkai dibuat.
-- Tiada backend, akaun, analitik luaran atau data ujian dibenamkan dalam HTML.
-  Modul penuh animasi membuka geometri bukan sebahagian keluaran ini.
-- Tiada website deployment, perubahan firmware, push main atau sharing.
+Ujian opt-in `tools/verify-cloud.mjs` menggunakan tiga akaun sintetik baharu dan SDK sebenar, tanpa token/service key dibenamkan ke produk: **8 kelompok PASS**. Ujian susulan Auth sebenar menambah kelompok kesembilan.
+
+1. Username signup menghasilkan sesi Supabase Auth dan kod pemulihan.
+2. Guru mencipta kelas miliknya dan menerima PIN enam digit.
+3. Jemputan username diterima oleh pelajar yang dituju.
+4. Pelajar masuk dengan PIN room dan guru memulakan permainan.
+5. Guru luar serta pelajar tidak memperoleh keistimewaan yang tidak dibenarkan.
+6. Satu percubaan, event UUID idempotent dan **kemas kini `public.room_progress` benar-benar diterima melalui WebSocket guru** selepas jawapan pelajar.
+7. Skor/masa server, penolakan cubaan mengubah skor terus dan leaderboard guru sepadan.
+8. Guru menutup room dan keputusan separa pelajar kekal.
+9. Login, username pendua, kod pemulihan salah, reset dengan kod betul, penolakan kata laluan lama dan login kata laluan baharu.
+
+Akaun/kelas/bilik sintetik dibersihkan berdasarkan UUID yang direkodkan selepas semakan; fail password/token sementara tidak dicommit. Laporan tidak membawa password, recovery code atau session token.
+
+## Semakan pelayar Chrome
+
+UI portal disemak menggunakan fixture cloud **simulasi berlabel QA**, manakala operasi hosted di atas diuji berasingan melalui HTTP/SDK sebenar. Tiada dakwaan bahawa proses login pengguna sebenar diuji melalui pelayar.
+
+- Dashboard guru: kelas 24 pelajar, PIN dengan sifar hadapan, butang putar PIN, status aktif/tidak aktif, carian username yang menghasilkan seorang pelajar dan pagination 20 rekod.
+- Room: skor selesai/masih menjawab/menunggu, markah semasa/akhir, masa, ranking, fallback refresh 15 saat serta pengesahan tutup dengan butang kekalkan room.
+- Tema cerah dan gelap diperiksa secara visual pada dashboard/room; pilihan tema kekal selepas navigasi.
+- Iframe **390×844** memaparkan dashboard guru/pelajar. Ukuran lebar dokumen **380/380 client/scroll px**, termasuk gutter 10 px: tiada page overflow. Jadual lebar menggunakan scroll region dalaman.
+- Integrasi portal → room → permainan menggunakan kod app sebenar dengan adapter QA: ralat sambungan menyekat input dan memaparkan Hantar semula; retry berjaya, langkau membuka semakan, terus membawa ke soalan baharu dan petunjuk soalan baharu kekal tertutup.
+- Jeda room memaklumkan masa server terus dikira. Keluar ke room dan sambung percubaan yang sedang dalam semakan mengembalikan semakan serta butang **Soalan seterusnya** yang aktif.
+- Review kod membaiki respons lama selepas keluar/masuk percubaan sama, cache akaun lama, snapshot room lama, pemulihan review/feedback selepas replay event dan butang PIN yang luput.
+
+## Had dan advisori
+
+- Pelan Supabase Free mempunyai kuota dan projek boleh dijeda selepas tidak aktif; tiada pelan berbayar dipilih. Frontend dihantar sebagai HTML; tiada deployment laman awam baharu.
+- Security advisor: 12 maklumat `rls_enabled_no_policy` pada jadual **private** yang sengaja deny-all untuk akses terus; tiada polisi longgar ditambah. Akses sah melalui RPC terkawal. Rujukan: https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy .
+- Satu amaran `auth_leaked_password_protection`: pemeriksaan password bocor terbina Supabase tidak aktif kerana ciri ini memerlukan Pro. Keluaran menggunakan validasi 10–128 aksara, rate limit dan Auth hashing, tanpa menaik taraf pelan. Rujukan: https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection .
+- Tiada ujian beban ratusan sambungan, peranti sentuhan fizikal atau semua versi Safari/Edge. Masa paparan ialah anggaran antara respons server; keputusan server adalah muktamad.
+- Pembukaan `file://` disekat oleh polisi pelayar kawalan, jadi HTML diuji melalui preview HTTP. Tingkah laku session/localStorage bagi fail tempatan bergantung pada pelayar. Import runtime sudah dibundel; akaun/room tetap memerlukan Internet.
+- Had ujian muat turun CSV dalam pelayar kawalan daripada keluaran terdahulu kekal; generator CSV lulus ujian automatik.

@@ -7,13 +7,17 @@
   <meta name="description" content="Main GeoDecoder Digital: seret bongkah 3D ke R1, padankan bentangannya di R2 dan kumpulkan 10 markah.">
   <title>GeoDecoder Digital — Jom main geometri</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 44'%3E%3Cpath d='m20 2 17 10v20L20 42 3 32V12Z' fill='%23215FF0'/%3E%3Cpath d='m20 2 17 10-17 10L3 12Z' fill='%236EAAFF'/%3E%3C/svg%3E">
+  <script>try{const t=localStorage.getItem('geodecoder.theme.v1');document.documentElement.dataset.theme=(t==='dark'||t==='light')?t:matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}catch{}</script>
   <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./portal.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Terus ke kandungan</a>
   <header class="site-header">
-    <a href="#" class="brand" id="brand-home" aria-label="GeoDecoder Digital, halaman mula"><span data-brand></span><span>Geo<span class="brand-blue">Decoder</span><small>DIGITAL EDITION <b class="brand-version" id="app-version">V1.1.0</b></small></span></a>
+    <a href="#" class="brand" id="brand-home" aria-label="GeoDecoder Digital, halaman mula"><span data-brand></span><span>Geo<span class="brand-blue">Decoder</span><small>DIGITAL EDITION <b class="brand-version" id="app-version">V2.0.0</b></small></span></a>
     <nav aria-label="Menu utama">
+      <button type="button" class="nav-button" id="account-button" aria-label="Akaun dan kelas"><span data-icon="user"></span><span>Akaun &amp; kelas</span></button>
+      <button type="button" class="nav-button" id="theme-button" aria-label="Tukar kepada tema gelap" aria-pressed="false"></button>
       <button class="nav-button motion-button" id="motion-button" aria-label="Jeda animasi" aria-pressed="false" title="Jeda animasi"><span data-icon="pause"></span></button>
       <button class="nav-button" data-action="help" aria-label="Cara main"><span data-icon="help"></span><span>Cara main</span></button>
       <button class="nav-button score-nav" data-action="scores" aria-label="Papan skor"><span data-icon="trophy"></span><span>Papan skor</span></button>
@@ -42,6 +46,7 @@
         <div class="entry-facts"><span><b>5</b> jenis bongkah</span><i></i><span><b>10</b> soalan setiap pusingan</span><i></i><span><span class="fact-icon" data-icon="trophy"></span> Cabar skor sendiri</span></div>
       </div>
       <div class="registration-card">
+        <div class="account-entry"><span class="card-kicker">BELAJAR BERSAMA KELAS</span><h2>Guru atau pelajar?</h2><p>Log masuk untuk kelas, jemputan PIN dan pertandingan room.</p><button id="welcome-account-button" type="button" class="button button-primary">Buka akaun &amp; kelas <span data-icon="arrow"></span></button></div>
         <span class="card-kicker">SEDIA UNTUK MENCUBA?</span>
         <h2>Jom kenalkan diri.</h2>
         <p>Isi maklumat anda. Setiap soalan ada satu percubaan.</p>
@@ -55,7 +60,9 @@
       </div>
     </section>
 
+    <section id="portal-screen" hidden></section>
     <section id="game-screen" class="game-screen" hidden aria-labelledby="question-title">
+      <div id="online-game-bar" class="online-game-bar" hidden><span id="online-game-status"></span><button id="online-retry" type="button" class="button button-outline" hidden>Hantar semula</button><button id="online-room-back" type="button" class="button button-outline">Ke room</button></div>
       <div class="session-bar">
         <div class="player-chip"><span class="player-avatar" id="player-initial">A</span><span><b id="player-display"></b><small id="player-meta"></small></span></div>
         <div class="session-stats"><div class="stat score-stat"><span data-icon="trophy"></span><span><small>Markah</small><b><span id="score-value">0</span><span class="stat-total"> / 10</span></b></span></div><div class="stat time-stat"><span data-icon="clock"></span><span><small>Masa</small><b id="time-value">00:00</b></span></div></div>
@@ -107,10 +114,10 @@
 
     <div class="storage-warning" id="storage-warning" hidden role="status">Simpanan pelayar tidak tersedia. Anda masih boleh bermain; skor sesi ini boleh dieksport sebelum halaman ditutup.</div>
   </main>
-  <footer class="site-footer"><span>GeoDecoder <b>Digital V1</b></span><span>Belajar bentuk. Bina kefahaman.</span><span>Serasi tetikus, sentuhan &amp; papan kekunci</span></footer>
+  <footer class="site-footer"><span>GeoDecoder <b>Digital V2</b></span><span>Belajar bentuk. Bina kefahaman.</span><span>Serasi tetikus, sentuhan &amp; papan kekunci</span></footer>
   <div id="announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
   <dialog id="app-dialog" aria-labelledby="dialog-title"><div class="dialog-shell"><div class="dialog-header"><h2 id="dialog-title"></h2><button class="icon-button" id="dialog-close" aria-label="Tutup tetingkap"><span data-icon="close"></span></button></div><div id="dialog-content"></div></div></dialog>
   <noscript><div class="noscript">Hidupkan JavaScript dalam pelayar untuk bermain GeoDecoder Digital.</div></noscript>
-  <script type="module" src="./app.mjs"></script>
+  <script type="module" src="./app.bundle.js"></script>
 </body>
 </html>
