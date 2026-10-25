@@ -15,3 +15,9 @@ Semakan kod tambahan mengesan borang reset hilang selepas reload. Intent per-tab
 Keluaran public `e92330fd0f8bd9e08d78f4827766e5266d85f939` diterbitkan melalui Pages workflow 40228391375 completed/success. Edge auth v3 ACTIVE, projek ACTIVE_HEALTHY. Smoke check CORS204 dan inputinvalid400 lulus tanpa mencipta akaun. Bacaan semula61fail sumber sepadan dan tiada fail di luar digital/ berubah. HTML live dan audio200, hash sepadan. Guest1markah dan pertukaran menu/map disahkan dalamChrome sebenar. Butang toggle diuji oleh12unitmusic tests; percubaan semakan lanjut browser selepas Panduan terhalang permission iframe extension.
 
 Hotfix semakan browser: pointerdown muzik tidak lagi memulakan audio sebelum butang mute memproses klik. Ikon dikekalkan semasa perubahan status playback supaya sasaran klik tidak dibuang di tengah gesture. Dua ujian regresi baharu lulus; jumlah81/81.
+
+## Semakan akhir v2.2.0
+
+Kod sumber: `390ab00fec1997efe2ad15188f2148ecd5f1b630`. Public: `686a4593d28522f2b7de960c252771f9b654f55c`. Workflow https://github.com/unDead41/geodecoder-digital/actions/runs/40229448318 completed/success. HTML live200/570119bytes/SHA256 `442ab480d7881f2f340a4557913f6805509eb6ff2427daeb5efc50d7b0f3881c` sepadan binaan. Semua62fail sumber sepadan dan repository asal kekal private.
+
+Chrome sebenar pada keluaran akhir: klik pertama Matikan muzik menghasilkan off; Hidupkan muzik menghasilkan playing. Borang login email/username, terlupa kata laluan email-only, dan signup dengan email dipaparkan. Screenshot akhir blank signup disimpan sebagai bukti; tiada credential pengguna dimasukkan. Guest1markah serta menu/map game/module telah disahkan pada penerbitan awal dengan controller muzik yang sama; hotfix akhir membetulkan gesture toggle sahaja. 81/81 ujian dan pemeriksa statik lulus. SMTP serta Site URL/redirect dashboard masih perlu diselesaikan oleh pemilik selepas log masuk; inbox delivery tidak diuji atau didakwa.

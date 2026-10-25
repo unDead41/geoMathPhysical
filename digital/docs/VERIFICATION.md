@@ -1,3 +1,5 @@
+> **Semakan terkini v2.2.0:** 81/81 tests, build/static98ID/ARIA/aset, rolled-back hosted SQL email dan kelas/bilik lulus. Edge authv3 ACTIVE, projek ACTIVE_HEALTHY. Pages final commit686a4593d28522f2b7de960c252771f9b654f55c/workflow40229448318 success. Chrome mengesahkan Guest1markah, muzik menu/map, toggle off/playing, borang signup dan forgotemail. Email delivery sebenar masih memerlukan SMTP dan redirect setup selepas pemilik log masuk. Lihat RELEASE_V2_2.md dan EMAIL_SETUP.md. Rekod terdahulu di bawah dikekalkan sebagai sejarah.
+
 # GeoDecoder Digital V2 — pengesahan
 
 Keluaran **2.1.0**, semakan 25 Oktober 2026 UTC / 26 Oktober MYT. Branch: `digitalize` sahaja. Asas: `55a79849d5007ec53a9b877cd20877c9bf15aa8d`. Firmware/main tidak diubah. Rekod semakan keluaran sebelumnya dikekalkan dalam `VERIFICATION_V1_1.md`.
