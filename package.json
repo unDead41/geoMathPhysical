@@ -6,8 +6,12 @@
   "sourceSha": "aa6e5d722038a0f229a9521efcc7cda58d62a9bd",
   "platformioCore": "6.1.18",
   "tutorial": {
-    "status": "pending",
-    "path": "tutorial/GeoDecoder_Panduan_A-Z.pdf"
+    "status": "included",
+    "path": "tutorial/GeoDecoder_Panduan_A-Z.pdf",
+    "pages": 45,
+    "edition": "2026-10-25",
+    "firmwareVersion": "1.1.1",
+    "sourceSharingSha": "16fa9e8687749718392dccde136e8f8a546dc0de"
   },
   "files": [
     {
@@ -36,7 +40,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "432de9d3250c70e30696177b70321135fcec32acdea5c7addcc937a1ebaf0c4f"
+      "sha256": "9223b62facd9b24b5407379cb020df96aa3a3bd2e8a9fd9564d9995ece73c5a9"
     },
     {
       "path": "SAMBUNGAN.md",
@@ -221,6 +225,10 @@
     {
       "path": "src/main.cpp",
       "sha256": "2f6491b09b2232adb0f7bdf1394e974f673e7d834aaf35d208349ac21c1f82df"
+    },
+    {
+      "path": "tutorial/GeoDecoder_Panduan_A-Z.pdf",
+      "sha256": "953dad3e4b35ac21c4257440221ede2df2b2becdabdb661530d5d45ce3937889"
     }
   ]
 }

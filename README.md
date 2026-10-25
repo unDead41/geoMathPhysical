@@ -11,8 +11,8 @@ Arduino IDE dan Git tidak diperlukan. Build boleh dibuat tanpa board.
 
 ## Pasang dengan satu arahan
 
-1. Dapatkan `GeoDecoder_Sharing_v1.1.1_s1.zip` daripada pemilik projek.
-   Repo private; ZIP mengandungi semua source projek dan empat PDF. Penerima
+1. Dapatkan ZIP pakej GeoDecoder sharing terkini daripada pemilik projek.
+   Repo private; ZIP baharu mengandungi kod projek dan lima PDF termasuk tutorial A-Z. Penerima
    tidak memerlukan akses repo, akaun atau token GitHub. Dependency vendor
    dimuat turun berasingan oleh installer daripada sumber rasmi.
 2. Klik kanan ZIP > **Extract All**. Masuk folder `geodecoder-sharing` yang
@@ -137,13 +137,15 @@ Senarai tepat setiap fail dan SHA-256 berada dalam `package.json`.
 | `print_labels/GeoDecoder_Kad_2D_Kiri_Kanan_A4.pdf` | Bentangan kiri/kanan, 2 halaman |
 | `print_labels/GeoDecoder_Kad_3D_Kiri_Kanan_A4.pdf` | Model kiri/kanan, 2 halaman |
 | `docs/lcd/GeoDecoder_15_Contoh_LCD_Soalan_dan_Hint.pdf` | LCD soalan/hint, tepat 15 halaman |
+| `tutorial/GeoDecoder_Panduan_A-Z.pdf` | Tutorial pengguna lengkap A-Z, 45 halaman |
 
 Kad sumber versi 2 (16 Oktober 2026): tiada nama jawapan atau arahan "ikut LED".
 Cetak **A4, Actual size / 100%**, matikan Fit to page; semak garis 50 mm dahulu.
 LCD sumber versi 4 (24 Oktober 2026).
 
-**Tutorial A-Z belum diterima dan belum disertakan.** Lokasi akhir ditetapkan:
-`tutorial/GeoDecoder_Panduan_A-Z.pdf`. Tiada PDF kosong dicipta.
+**[Buka tutorial lengkap GeoDecoder A-Z](tutorial/GeoDecoder_Panduan_A-Z.pdf)** — 45 halaman A4 bergambar, edisi 25 Oktober 2026, meliputi firmware v1.1.1 dan installer sharing. Ikut urutan sambungan, setup Windows, Build/Upload, ujian komponen, pendaftaran kad dan satu pusingan permainan.
+
+**Catatan installer:** skrip asal masih mencetak “Tutorial A-Z belum disertakan”. Tutorial kini disertakan pada pautan di atas; mesej maklumat lama itu belum dikemas kini oleh chat Sharing. Firmware dan skrip installer tidak diubah untuk tutorial ini.
 
 Branch sharing mempunyai tree minimum tetapi masih mempunyai sejarah main.
 Beri **ZIP bersih** kepada penerima yang tidak patut menerima sejarah repo.
