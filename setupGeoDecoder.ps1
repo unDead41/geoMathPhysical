@@ -2,7 +2,7 @@
 [CmdletBinding()]
 param(
     [string]$Destination = (Join-Path $env:USERPROFILE 'geodecoder-sharing'),
-    [ValidateSet('esp32dev','esp32dev-rgb')][string]$Environment,
+    [ValidateSet('esp32dev-sharing','esp32dev-sharing-rgb','esp32dev','esp32dev-rgb')][string]$Environment,
     [string]$Port,
     [switch]$NoPrompt,
     [switch]$NoOpen,
@@ -78,14 +78,15 @@ try {
     if (-not $Environment) {
         if ($previous) { $Environment = $previous.environment }
         else {
-            $Environment = 'esp32dev-rgb'
+            $Environment = 'esp32dev-sharing-rgb'
             if (-not $NoPrompt) {
                 $choice = Read-Host 'Environment: 1=dua RGB empat kaki, 2=dua LED biasa (Enter=1)'
-                if ($choice -eq '2') { $Environment = 'esp32dev' }
-                elseif ($choice -and $choice -ne '1') { throw 'Pilihan tidak sah. Ulang dengan -Environment esp32dev atau esp32dev-rgb.' }
+                if ($choice -eq '2') { $Environment = 'esp32dev-sharing' }
+                elseif ($choice -and $choice -ne '1') { throw 'Pilihan tidak sah. Ulang dengan -Environment esp32dev-sharing atau esp32dev-sharing-rgb.' }
             }
         }
     }
+    $Environment = Resolve-GDEnvironment $Environment
     if (-not $Port -and $previous) { $Port = $previous.port }
     $tools = Join-Path $env:LOCALAPPDATA 'GeoDecoder/tools'
     $downloads = Join-Path $tools 'downloads'
@@ -145,7 +146,7 @@ try {
     Write-GDAtomicText -Path $workspacePath -Text ($workspace | ConvertTo-Json -Depth 12)
     Write-Host '[5/6] Build firmware menggunakan versi platform/library projek...'
     $buildArgs = @('run','--project-dir',$Destination,'-e',$Environment)
-    if ($BuildBoth) { $other = 'esp32dev'; if ($Environment -eq $other) { $other = 'esp32dev-rgb' }; $buildArgs += @('-e',$other) }
+    if ($BuildBoth) { $other = 'esp32dev-sharing'; if ($Environment -eq $other) { $other = 'esp32dev-sharing-rgb' }; $buildArgs += @('-e',$other) }
     Invoke-GDPio -State $state -Arguments $buildArgs
     Write-Host '[6/6] Projek sedia. Build berjaya; Upload belum dilakukan.'
     Write-Host "Firmware v$($manifest.firmwareVersion) | $Environment | $Destination"

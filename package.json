@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "packageId": "GeoDecoder-sharing",
-  "packageVersion": "1.1.1-sharing.2",
+  "packageVersion": "1.1.1-sharing.3",
   "firmwareVersion": "1.1.1",
   "sourceSha": "aa6e5d722038a0f229a9521efcc7cda58d62a9bd",
   "platformioCore": "6.1.18",
@@ -36,15 +36,15 @@
     },
     {
       "path": "COMMANDS.md",
-      "sha256": "88e25175ff5187f4180c10c1e329ac6daadd6e161efa46a5b1e6dd37fe137a23"
+      "sha256": "2565f57d21337aca853f09339df90820656ffefec63078c6f327fc122abaa103"
     },
     {
       "path": "README.md",
-      "sha256": "6f758805f51df8963d8081c0bafc0a9883757d08fbb7f5efe84db453ba86e5a6"
+      "sha256": "1eeaf7cc92eb8e6cf975df719a40f85035aa982baf1020b984018903b7e33655"
     },
     {
       "path": "SAMBUNGAN.md",
-      "sha256": "ea99d8b2822c03e86c263e099822c5a0f7d86eaaee62792207d1d2163d91ff79"
+      "sha256": "cf0b83030ef44b1f3a5f790e32d1f4f46d2d8ef1cf8eb638321dd5fca155e48d"
     },
     {
       "path": "docs/lcd/GeoDecoder_15_Contoh_LCD_Soalan_dan_Hint.pdf",
@@ -52,7 +52,7 @@
     },
     {
       "path": "geodecoder.ps1",
-      "sha256": "ad55be6da00b1b005846fd5172c298754cf03cc3b994b22519f1c79f82cd92af"
+      "sha256": "c02b26de030a5ba149b6b4b740f2b3813afbeca0172b9646389b2aefaff59c58"
     },
     {
       "path": "main/app.ino",
@@ -196,7 +196,7 @@
     },
     {
       "path": "platformio.ini",
-      "sha256": "c7e40277d3a0152c0b47ab161d2c040300a97f9ba3578b75848dd208b7e6dfaa"
+      "sha256": "084aed60648d51a0820265022179e49ec42d8687936174064fea7eaee3df3e45"
     },
     {
       "path": "platformio.local.ini.example",
@@ -216,15 +216,15 @@
     },
     {
       "path": "scripts/common.ps1",
-      "sha256": "c969236615bf7d23967b3d431a06dc84324ce36b863682c52be5ffe70e3a2d63"
+      "sha256": "b6c85cdf180bb83615097792e9d3f18d323bd2ab0d4ef430b9014fa6f74e2818"
     },
     {
       "path": "setup.ps1",
-      "sha256": "671021534517af4bdd5c0bba6f745bc65d431a27d3df113161ce7ab812734623"
+      "sha256": "379f66a19c0a5cd7b77b9f656599cfe2b290c5cdf61bfccf2c0b4605d60eabc7"
     },
     {
       "path": "setupGeoDecoder.ps1",
-      "sha256": "7354886804492da1eef13b009f5cb701191b009383ec8bd259945fa1a440894d"
+      "sha256": "a800f0ce296b057f8e3936ccd675d3334b3b26da67e7292640566fb048090485"
     },
     {
       "path": "src/main.cpp",

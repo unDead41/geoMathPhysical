@@ -15,10 +15,19 @@ function Invoke-GDProbe([string]$Exe, [string[]]$Arguments) {
     return [pscustomobject]@{exitCode=$code;output=($output -join "`n")}
 }
 
-function Assert-GDEnvironment([string]$Name) {
-    if ($Name -notin @('esp32dev', 'esp32dev-rgb')) {
-        throw 'Environment mesti esp32dev (LED biasa) atau esp32dev-rgb (RGB).'
+function Resolve-GDEnvironment([string]$Name) {
+    # Keep printed guides and saved settings compatible with the sharing names.
+    switch ($Name) {
+        'esp32dev' { return 'esp32dev-sharing' }
+        'esp32dev-rgb' { return 'esp32dev-sharing-rgb' }
+        'esp32dev-sharing' { return 'esp32dev-sharing' }
+        'esp32dev-sharing-rgb' { return 'esp32dev-sharing-rgb' }
+        default { throw 'Environment mesti esp32dev-sharing (LED biasa) atau esp32dev-sharing-rgb (RGB).' }
     }
+}
+
+function Assert-GDEnvironment([string]$Name) {
+    Resolve-GDEnvironment $Name | Out-Null
 }
 
 function Assert-GDPort([string]$Port) {
@@ -144,7 +153,7 @@ function Read-GDState([string]$Root) {
 }
 
 function Write-GDLocalConfig([string]$Root, [string]$Python, [string]$Environment, [string]$Port) {
-    Assert-GDEnvironment $Environment
+    $Environment = Resolve-GDEnvironment $Environment
     Assert-GDPort $Port
     $ini = Join-Path $Root 'platformio.local.ini'
     Assert-GDNoLinks $ini

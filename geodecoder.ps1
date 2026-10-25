@@ -2,7 +2,7 @@
 [CmdletBinding()]
 param(
     [ValidateSet('Build','Upload','Monitor','Ports','Configure')][string]$Action = 'Build',
-    [ValidateSet('esp32dev','esp32dev-rgb')][string]$Environment,
+    [ValidateSet('esp32dev-sharing','esp32dev-sharing-rgb','esp32dev','esp32dev-rgb')][string]$Environment,
     [string]$Port,
     [switch]$NoPrompt
 )
@@ -10,13 +10,17 @@ $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'scripts/common.ps1')
 try {
     $state = Read-GDState $PSScriptRoot
+    if ($state.environment -in @('esp32dev','esp32dev-rgb')) {
+        $state = Write-GDLocalConfig -Root $PSScriptRoot -Python $state.pioPython -Environment $state.environment -Port $state.port
+    }
     if (-not $Environment) { $Environment = $state.environment }
+    $Environment = Resolve-GDEnvironment $Environment
     Assert-GDPort $Port
     if ($Action -eq 'Configure') {
         if (-not $PSBoundParameters.ContainsKey('Environment') -and -not $NoPrompt) {
             $answer = Read-Host "Environment: 1=RGB, 2=LED biasa (Enter kekalkan $Environment)"
-            if ($answer -eq '1') { $Environment = 'esp32dev-rgb' }
-            elseif ($answer -eq '2') { $Environment = 'esp32dev' }
+            if ($answer -eq '1') { $Environment = 'esp32dev-sharing-rgb' }
+            elseif ($answer -eq '2') { $Environment = 'esp32dev-sharing' }
             elseif ($answer) { throw 'Pilih 1, 2 atau Enter.' }
         }
         $devices = @(Get-GDDevices $state)

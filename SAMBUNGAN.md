@@ -82,7 +82,7 @@ RGB2 B=26, G=17, R=16. RGB1 ialah petunjuk bongkah/R1 dan RGB2 bentangan/R2.
 GPIO32/33 dikhaskan untuk butang.
 
 Pemasangan LED biasa asal berasingan: LED R1 pada GPIO25 dan LED R2 pada GPIO26.
-Environment `esp32dev` mengekalkan pin itu melalui `LED_PINS`; `esp32dev-rgb`
+Environment `esp32dev-sharing` mengekalkan pin itu melalui `LED_PINS`; `esp32dev-sharing-rgb`
 menggunakan `RGB_PINS` R/G/B dalam jadual di atas. GPIO25/26 ialah saluran B
 dalam pemasangan RGB, jadi pin LED biasa tidak lagi diambil daripada saluran R.
 
@@ -94,7 +94,7 @@ Default **common cathode**: kaki common ke GND; RGB_COMMON_ANODE = false.
 Jika **common anode**: kaki common ke 3V3 dan RGB_COMMON_ANODE = true.
 Jangan sambung common anode terus ke 5 V dengan sambungan GPIO ini.
 
-Dalam VS Code, pilih **Project Tasks > esp32dev-rgb > Build / Upload** apabila
+Dalam VS Code, pilih **Project Tasks > esp32dev-sharing-rgb > General > Build / Upload** apabila
 kedua-dua RGB sudah dipasang. Environment ini menetapkan
 `GEODECODER_RGB_ENABLED=1`. Jika menggunakan Arduino IDE, ubah default macro
 tersebut dalam `main/config.h`.

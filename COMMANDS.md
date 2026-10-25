@@ -138,5 +138,7 @@ Banner ini juga muncul semasa boot dan pada permulaan output `status`:
 
 `env=esp32dev` menandakan LED biasa. Semak versi dengan README GitHub pada
 commit yang diupload. Jika Monitor dibuka selepas boot, taip `version`.
+Dalam Project Tasks branch sharing, padanan nama ialah `esp32dev-sharing`
+(LED biasa) dan `esp32dev-sharing-rgb` (RGB); label Serial firmware v1.1.1 kekal seperti di atas.
 Rujukan sumber dan versi terdapat dalam README.md dan package.json.
 

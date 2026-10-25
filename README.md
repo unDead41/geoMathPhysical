@@ -1,8 +1,9 @@
 # GeoDecoder - pakej perkongsian
 
-Versi semasa: **v1.1.1**. Pakej **1.1.1-sharing.2**.
+Versi semasa: **v1.1.1**. Pakej **1.1.1-sharing.3**.
 Sumber firmware: main [`aa6e5d722038a0f229a9521efcc7cda58d62a9bd`](https://github.com/unDead41/geodecoder/commit/aa6e5d722038a0f229a9521efcc7cda58d62a9bd).
-Semua fail `main/`, `src/main.cpp` dan `platformio.ini` sama tepat dengan sumber itu.
+Semua fail `main/` dan `src/main.cpp` sama tepat dengan sumber itu.
+`platformio.ini` menggunakan nama environment khusus sharing; board, pin dan dependency kekal sama.
 Installer tidak mengubah firmware atau pendaftaran UID.
 
 Sasaran: Windows 10/11 **x64**, PowerShell 5.1+, Internet, ESP32 klasik
@@ -37,7 +38,7 @@ Dependency pertama memerlukan Internet/ruang cakera dan boleh mengambil masa
 beberapa minit; tiada had masa siap dijanjikan.
 
 ```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\setupGeoDecoder.ps1 -Environment esp32dev-rgb -BuildBoth
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\setupGeoDecoder.ps1 -Environment esp32dev-sharing-rgb -BuildBoth
 ```
 
 Pilihan: `-Destination "D:\Projek\geodecoder-sharing"`, `-Port COM5` (ganti nombor
@@ -70,8 +71,8 @@ membuktikan ia ESP32 sasaran. Upload hanya berlaku atas arahan Upload.
 
 | Environment | Perkakasan | Pin |
 |---|---|---|
-| `esp32dev` | Dua LED biasa | R1=25, R2=26 |
-| `esp32dev-rgb` | Dua RGB empat kaki | R1 R/G/B=13/14/25; R2=16/17/26 |
+| `esp32dev-sharing` | Dua LED biasa | R1=25, R2=26 |
+| `esp32dev-sharing-rgb` | Dua RGB empat kaki | R1 R/G/B=13/14/25; R2=16/17/26 |
 
 `platformio.ini` asal: `espressif32@6.12.0`, board `esp32dev`, framework Arduino,
 Arduino ESP32 2.0.17 yang dipilih platform, `MFRC522@1.4.12`, `hd44780@1.3.2`.
@@ -79,6 +80,23 @@ Serial **115200 baud**. Contoh COM: `platformio.local.ini.example`.
 Installer menghasilkan `platformio.local.ini` pada PC ini. Gunakan Configure
 untuk mengubah fail yang diurus installer; fail COM manual tidak ditindih.
 PlatformIO Project Tasks > environment > General > Build/Upload/Monitor juga tersedia.
+
+Nama ini khusus untuk branch `sharing`. **Default** masih dipaparkan sebagai
+kumpulan automatik PlatformIO; ia mengikut `default_envs`. Untuk RGB, pilih
+**esp32dev-sharing-rgb**. Installer memilih RGB secara lalai; checkout Git tanpa
+konfigurasi tempatan mengekalkan LED biasa sebagai default asal.
+
+Arahan PowerShell dalam PDF yang menggunakan `-Environment esp32dev` atau
+`-Environment esp32dev-rgb` masih diterima dan dipadankan kepada nama sharing.
+CLI PlatformIO terus (`pio run -e ...`) mesti menggunakan nama baharu di atas.
+Tetapan lama yang diurus installer ditukar apabila menjalankan `geodecoder.ps1`
+atau setup semula, sambil mengekalkan COM. Fail INI yang disunting pengguna
+dilindungi; jika menetapkan `default_envs` secara manual, tukar nama environment
+pada baris itu sendiri dan kekalkan tetapan COM/pin yang diperlukan.
+
+Firmware v1.1.1 masih mencetak label asal `env=esp32dev` atau
+`env=esp32dev-rgb` pada Serial Monitor. Ini sepadan dengan LED biasa atau RGB
+dalam jadual; perubahan nama tugas ini tidak mengubah source firmware.
 
 ## Langkah fizikal
 
@@ -163,3 +181,10 @@ Linux PowerShell 7.4.13 (mode argumen Legacy); operasi pemasangan Windows
 menggunakan pengganti terkawal. Muat turun sebenar installer Python dan VS Code
 dari URL skrip berjaya. Pemasangan aplikasi dan pengesahan melalui stor sijil
 Windows sebenar, Upload USB serta perkakasan fizikal masih belum diuji.
+
+Pakej **1.1.1-sharing.3** menamakan semula dua environment PlatformIO,
+mengekalkan alias PowerShell lama dan menukar tetapan installer lama dengan
+perlindungan suntingan pengguna. Semua enam PDF dan source firmware dikekalkan.
+Build ESP32 bagi kedua-dua nama baharu berjaya. Semakan keserasian/configuration
+11/11 dan simulasi installer 17/17 lulus pada Linux PowerShell; proses Windows
+dan panggilan USB dalam simulasi diganti secara terkawal, bukan ujian board fizikal.

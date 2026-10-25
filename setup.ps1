@@ -3,7 +3,7 @@
 [CmdletBinding()]
 param(
     [string]$Destination,
-    [ValidateSet('esp32dev','esp32dev-rgb')][string]$Environment,
+    [ValidateSet('esp32dev-sharing','esp32dev-sharing-rgb','esp32dev','esp32dev-rgb')][string]$Environment,
     [string]$Port,
     [switch]$NoPrompt,
     [switch]$NoOpen,
