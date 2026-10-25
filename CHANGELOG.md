@@ -1,5 +1,18 @@
 # Changelog
 
+## Belum diterbitkan — branch audio ElevenLabs
+
+- Prepare the user's 15 Malay question scripts and 15 hint scripts with fixed
+  runtime IDs, canonical MP3 names, verbatim LCD snapshots and CSV/Markdown mapping.
+- Add an offline export/check tool that rejects bank drift, answer-name leakage,
+  mismatched script exports, invalid filenames and missing required audio.
+- Document the real pin constraints and a proposed nonblocking playback contract;
+  no audio hardware, playback API, GPIO, game flow or UID/NVS data is changed.
+- Audio is awaiting user generation in ElevenLabs. Work is restricted to
+  `codex/question-audio-elevenlabs`, based on main v1.1.3 at a059979.
+  Firmware remains v1.1.3; documentation-only main publication would require
+  a new PATCH selected against main at that time. No main/sharing release here.
+
 ## v1.1.3 - 2026-10-25
 
 - Provide one default RGB build in main (`esp32dev-rgb`) and sharing

@@ -1,0 +1,448 @@
+{
+  "schema_version": 1,
+  "package_revision": 1,
+  "language": "ms-MY",
+  "status": "scripts_prepared_audio_not_generated",
+  "reference": {
+    "repository": "unDead41/geodecoder",
+    "work_branch": "codex/question-audio-elevenlabs",
+    "base_main_sha": "a059979d97926b82cafd4aa5cf3fe59da04a55bb",
+    "main_checked_sha": "a059979d97926b82cafd4aa5cf3fe59da04a55bb",
+    "firmware_version": "v1.1.3",
+    "review_date_malaysia": "2026-10-25",
+    "bank_git_blob": "6e956f0a264bca7d3bd0fb0e0a4c63f8af9214b2",
+    "bank_sha256": "85d62102e47521e294935fb19370e34e9ff3585c800c9003bd7fb7faa837a117"
+  },
+  "generation": {
+    "provider": "ElevenLabs",
+    "operator": "user",
+    "voice_name": null,
+    "voice_id": null,
+    "model": null,
+    "settings": null,
+    "export_format": "mp3",
+    "generated_at": null
+  },
+  "questions": [
+    {
+      "id": "P1",
+      "runtime": {
+        "answer_enum": "PYRAMID",
+        "legacy_reader": 0,
+        "question_lcd": [
+          "Bongkah apakah ini?",
+          "Tapak persegi dengan",
+          "4 muka segi tiga."
+        ],
+        "hint_lcd": [
+          "HINT: Muka sisi akan",
+          "bertemu pada puncak",
+          "apabila dilipat."
+        ],
+        "question_full_text": "Bongkah apakah ini? Tapak persegi dengan 4 muka segi tiga."
+      },
+      "soalan": {
+        "filename": "P1_soalan.mp3",
+        "text": "Tapaknya berbentuk segi empat sama dan mempunyai empat muka berbentuk segi tiga. Bongkah apakah ini?",
+        "status": "awaiting_generation"
+      },
+      "hint": {
+        "filename": "P1_hint.mp3",
+        "text": "Petunjuk: Bayangkan bentangannya dilipat. Muka sisi akan bertemu pada satu puncak.",
+        "status": "awaiting_generation"
+      }
+    },
+    {
+      "id": "P2",
+      "runtime": {
+        "answer_enum": "PYRAMID",
+        "legacy_reader": 0,
+        "question_lcd": [
+          "V=a^2*t/3; t=tinggi",
+          "a=sisi tapak persegi",
+          "Bongkah apakah ini?"
+        ],
+        "hint_lcd": [
+          "HINT: a^2 ialah luas",
+          "tapak. Fikir bentuk",
+          "muka sisi bongkah."
+        ],
+        "question_full_text": "V=a^2*t/3; t=tinggi a=sisi tapak persegi Bongkah apakah ini?"
+      },
+      "soalan": {
+        "filename": "P2_soalan.mp3",
+        "text": "Isi padu sama dengan kuasa dua bagi panjang sisi tapak, didarab dengan tinggi, kemudian dibahagi tiga. Tapaknya berbentuk segi empat sama. Bongkah apakah ini?",
+        "status": "awaiting_generation"
+      },
+      "hint": {
+        "filename": "P2_hint.mp3",
+        "text": "Petunjuk: Kuasa dua bagi panjang sisi tapak ialah luas tapak. Fikirkan bentuk muka sisi bongkah ini.",
+        "status": "awaiting_generation"
+      }
+    },
+    {
+      "id": "P3",
+      "runtime": {
+        "answer_enum": "PYRAMID",
+        "legacy_reader": 1,
+        "question_lcd": [
+          "Pilih bentangan bagi",
+          "1 segi empat sama",
+          "dan 4 segi tiga."
+        ],
+        "hint_lcd": [
+          "HINT: Lipat sisinya",
+          "di sisi petak hingga",
+          "bertemu di 1 puncak."
+        ],
+        "question_full_text": "Pilih bentangan bagi 1 segi empat sama dan 4 segi tiga."
+      },
+      "soalan": {
+        "filename": "P3_soalan.mp3",
+        "text": "Pilih bentangan yang mempunyai satu segi empat sama dan empat segi tiga.",
+        "status": "awaiting_generation"
+      },
+      "hint": {
+        "filename": "P3_hint.mp3",
+        "text": "Petunjuk: Bayangkan kepingan segi tiga dilipat pada sisi segi empat sama sehingga bertemu pada satu puncak.",
+        "status": "awaiting_generation"
+      }
+    },
+    {
+      "id": "C1",
+      "runtime": {
+        "answer_enum": "CONE",
+        "legacy_reader": 0,
+        "question_lcd": [
+          "V=pi*j^2*t/3",
+          "j=jejari; t=tinggi.",
+          "Bongkah apakah ini?"
+        ],
+        "hint_lcd": [
+          "HINT: Lihat tapaknya",
+          "yang bulat. Sisinya",
+          "mengecil ke puncak."
+        ],
+        "question_full_text": "V=pi*j^2*t/3 j=jejari; t=tinggi. Bongkah apakah ini?"
+      },
+      "soalan": {
+        "filename": "C1_soalan.mp3",
+        "text": "Isi padu sama dengan pi darab jejari kuasa dua, darab tinggi, kemudian dibahagi tiga. Bongkah apakah ini?",
+        "status": "awaiting_generation"
+      },
+      "hint": {
+        "filename": "C1_hint.mp3",
+        "text": "Petunjuk: Lihat tapaknya yang berbentuk bulatan. Permukaan sisinya mengecil ke arah puncak.",
+        "status": "awaiting_generation"
+      }
+    },
+    {
+      "id": "C2",
+      "runtime": {
+        "answer_enum": "CONE",
+        "legacy_reader": 0,
+        "question_lcd": [
+          "L=pi*j*(j+s)",
+          "j=jejari; s=tinggi",
+          "sendeng. Bentuk apa?"
+        ],
+        "hint_lcd": [
+          "HINT: Tinggi sendeng",
+          "diukur ikut sisi",
+          "dari tapak ke puncak"
+        ],
+        "question_full_text": "L=pi*j*(j+s) j=jejari; s=tinggi sendeng. Bentuk apa?"
+      },
+      "soalan": {
+        "filename": "C2_soalan.mp3",
+        "text": "Luas permukaan sama dengan pi darab jejari, kemudian didarab dengan hasil tambah jejari dan tinggi sendeng. Bongkah apakah ini?",
+        "status": "awaiting_generation"
+      },
+      "hint": {
+        "filename": "C2_hint.mp3",
+        "text": "Petunjuk: Tinggi sendeng diukur sepanjang sisi, dari tepi tapak ke puncak.",
+        "status": "awaiting_generation"
+      }
+    },
+    {
+      "id": "C3",
+      "runtime": {
+        "answer_enum": "CONE",
+        "legacy_reader": 1,
+        "question_lcd": [
+          "Pilih bentangan yang",
+          "ada 1 sektor bulatan",
+          "dan 1 bulatan."
+        ],
+        "hint_lcd": [
+          "HINT: Rapatkan sisi",
+          "lurus pada sektor.",
+          "Bulatan jadi tapak."
+        ],
+        "question_full_text": "Pilih bentangan yang ada 1 sektor bulatan dan 1 bulatan."
+      },
+      "soalan": {
+        "filename": "C3_soalan.mp3",
+        "text": "Pilih bentangan yang mempunyai satu sektor bulatan dan satu bulatan.",
+        "status": "awaiting_generation"
+      },
+      "hint": {
+        "filename": "C3_hint.mp3",
+        "text": "Petunjuk: Rapatkan kedua-dua sisi lurus pada sektor bulatan. Bulatan itu menjadi tapaknya.",
+        "status": "awaiting_generation"
+      }
+    },
+    {
+      "id": "K1",
+      "runtime": {
+        "answer_enum": "CUBE",
+        "legacy_reader": 0,
+        "question_lcd": [
+          "Enam muka berbentuk",
+          "segi empat sama.",
+          "Bongkah apakah ini?"
+        ],
+        "hint_lcd": [
+          "HINT: 12 rusuk sama",
+          "panjang. Setiap muka",
+          "sama bentuk dan saiz"
+        ],
+        "question_full_text": "Enam muka berbentuk segi empat sama. Bongkah apakah ini?"
+      },
+      "soalan": {
+        "filename": "K1_soalan.mp3",
+        "text": "Bongkah ini mempunyai enam muka berbentuk segi empat sama. Bongkah apakah ini?",
+        "status": "awaiting_generation"
+      },
+      "hint": {
+        "filename": "K1_hint.mp3",
+        "text": "Petunjuk: Terdapat dua belas rusuk yang sama panjang. Setiap muka mempunyai bentuk dan saiz yang sama.",
+        "status": "awaiting_generation"
+      }
+    },
+    {
+      "id": "K2",
+      "runtime": {
+        "answer_enum": "CUBE",
+        "legacy_reader": 0,
+        "question_lcd": [
+          "V=a^3; L=6*a^2",
+          "a=panjang rusuk",
+          "Bongkah apakah ini?"
+        ],
+        "hint_lcd": [
+          "HINT: Panjang, lebar",
+          "serta tinggi sama",
+          "bagi bongkah ini."
+        ],
+        "question_full_text": "V=a^3; L=6*a^2 a=panjang rusuk Bongkah apakah ini?"
+      },
+      "soalan": {
+        "filename": "K2_soalan.mp3",
+        "text": "Isi padu sama dengan panjang rusuk kuasa tiga. Luas permukaan pula sama dengan enam darab panjang rusuk kuasa dua. Bongkah apakah ini?",
+        "status": "awaiting_generation"
+      },
+      "hint": {
+        "filename": "K2_hint.mp3",
+        "text": "Petunjuk: Panjang, lebar dan tinggi bongkah ini adalah sama.",
+        "status": "awaiting_generation"
+      }
+    },
+    {
+      "id": "K3",
+      "runtime": {
+        "answer_enum": "CUBE",
+        "legacy_reader": 1,
+        "question_lcd": [
+          "Pilih bentangan:",
+          "6 segi empat sama,",
+          "semuanya sama saiz."
+        ],
+        "hint_lcd": [
+          "HINT: Bayangkan muka",
+          "dilipat jadi kotak",
+          "tanpa muka bertindih"
+        ],
+        "question_full_text": "Pilih bentangan: 6 segi empat sama, semuanya sama saiz."
+      },
+      "soalan": {
+        "filename": "K3_soalan.mp3",
+        "text": "Pilih bentangan yang mempunyai enam segi empat sama. Semua segi empat sama itu mempunyai saiz yang sama.",
+        "status": "awaiting_generation"
+      },
+      "hint": {
+        "filename": "K3_hint.mp3",
+        "text": "Petunjuk: Bayangkan muka-muka itu dilipat menjadi sebuah kotak tanpa bertindih antara satu sama lain.",
+        "status": "awaiting_generation"
+      }
+    },
+    {
+      "id": "B1",
+      "runtime": {
+        "answer_enum": "CUBOID",
+        "legacy_reader": 0,
+        "question_lcd": [
+          "Kotak ini mempunyai",
+          "3 ukuran berbeza.",
+          "Bongkah apakah ini?"
+        ],
+        "hint_lcd": [
+          "HINT: Lihat panjang,",
+          "lebar serta tinggi.",
+          "Muka berhadapan sama"
+        ],
+        "question_full_text": "Kotak ini mempunyai 3 ukuran berbeza. Bongkah apakah ini?"
+      },
+      "soalan": {
+        "filename": "B1_soalan.mp3",
+        "text": "Sebuah kotak mempunyai tiga ukuran yang berbeza. Bongkah apakah ini?",
+        "status": "awaiting_generation"
+      },
+      "hint": {
+        "filename": "B1_hint.mp3",
+        "text": "Petunjuk: Perhatikan panjang, lebar dan tingginya. Muka yang berhadapan mempunyai bentuk dan saiz yang sama.",
+        "status": "awaiting_generation"
+      }
+    },
+    {
+      "id": "B2",
+      "runtime": {
+        "answer_enum": "CUBOID",
+        "legacy_reader": 0,
+        "question_lcd": [
+          "V=p*l*t; p,l,t ialah",
+          "3 ukuran berbeza.",
+          "Bongkah apakah ini?"
+        ],
+        "hint_lcd": [
+          "HINT: p=panjang,",
+          "l=lebar, t=tinggi.",
+          "Lihat kotak kasut."
+        ],
+        "question_full_text": "V=p*l*t; p,l,t ialah 3 ukuran berbeza. Bongkah apakah ini?"
+      },
+      "soalan": {
+        "filename": "B2_soalan.mp3",
+        "text": "Isi padu sama dengan panjang darab lebar darab tinggi. Ketiga-tiga ukuran ini berbeza. Bongkah apakah ini?",
+        "status": "awaiting_generation"
+      },
+      "hint": {
+        "filename": "B2_hint.mp3",
+        "text": "Petunjuk: Perhatikan ukuran panjang, lebar dan tinggi. Bayangkan sebuah kotak kasut.",
+        "status": "awaiting_generation"
+      }
+    },
+    {
+      "id": "B3",
+      "runtime": {
+        "answer_enum": "CUBOID",
+        "legacy_reader": 1,
+        "question_lcd": [
+          "Kotak: 6cm x 4cm",
+          "dengan tinggi 3cm.",
+          "Pilih bentangannya."
+        ],
+        "hint_lcd": [
+          "HINT: Padankan muka",
+          "yang sama saiz, lalu",
+          "lipat menjadi kotak."
+        ],
+        "question_full_text": "Kotak: 6cm x 4cm dengan tinggi 3cm. Pilih bentangannya."
+      },
+      "soalan": {
+        "filename": "B3_soalan.mp3",
+        "text": "Sebuah kotak berukuran enam sentimeter panjang, empat sentimeter lebar dan tiga sentimeter tinggi. Pilih bentangannya.",
+        "status": "awaiting_generation"
+      },
+      "hint": {
+        "filename": "B3_hint.mp3",
+        "text": "Petunjuk: Padankan muka yang sama saiz, kemudian bayangkan muka-muka itu dilipat menjadi sebuah kotak.",
+        "status": "awaiting_generation"
+      }
+    },
+    {
+      "id": "S1",
+      "runtime": {
+        "answer_enum": "CYLINDER",
+        "legacy_reader": 0,
+        "question_lcd": [
+          "Tin minuman ada dua",
+          "tapak bulatan sama.",
+          "Bongkah apakah ini?"
+        ],
+        "hint_lcd": [
+          "HINT: 2 tapak bulat",
+          "sama saiz disambung",
+          "oleh sisi melengkung"
+        ],
+        "question_full_text": "Tin minuman ada dua tapak bulatan sama. Bongkah apakah ini?"
+      },
+      "soalan": {
+        "filename": "S1_soalan.mp3",
+        "text": "Sebuah tin minuman mempunyai dua tapak berbentuk bulatan yang sama saiz. Bongkah apakah ini?",
+        "status": "awaiting_generation"
+      },
+      "hint": {
+        "filename": "S1_hint.mp3",
+        "text": "Petunjuk: Dua tapak bulatan yang sama saiz disambungkan oleh satu permukaan sisi melengkung.",
+        "status": "awaiting_generation"
+      }
+    },
+    {
+      "id": "S2",
+      "runtime": {
+        "answer_enum": "CYLINDER",
+        "legacy_reader": 0,
+        "question_lcd": [
+          "V=pi*j^2*t",
+          "L=2*pi*j*(j+t)",
+          "Bongkah apakah ini?"
+        ],
+        "hint_lcd": [
+          "HINT: j=jejari dan",
+          "t=tinggi. Tapak atas",
+          "dan bawah sama saiz."
+        ],
+        "question_full_text": "V=pi*j^2*t L=2*pi*j*(j+t) Bongkah apakah ini?"
+      },
+      "soalan": {
+        "filename": "S2_soalan.mp3",
+        "text": "Isi padu sama dengan pi darab jejari kuasa dua, darab tinggi. Luas permukaan pula sama dengan dua darab pi, didarab dengan jejari, kemudian didarab dengan hasil tambah jejari dan tinggi. Bongkah apakah ini?",
+        "status": "awaiting_generation"
+      },
+      "hint": {
+        "filename": "S2_hint.mp3",
+        "text": "Petunjuk: Perhatikan jejari dan tinggi bongkah ini. Tapak atas dan bawah mempunyai saiz yang sama.",
+        "status": "awaiting_generation"
+      }
+    },
+    {
+      "id": "S3",
+      "runtime": {
+        "answer_enum": "CYLINDER",
+        "legacy_reader": 1,
+        "question_lcd": [
+          "Pilih bentangan:",
+          "2 bulatan sama saiz,",
+          "1 segi empat tepat."
+        ],
+        "hint_lcd": [
+          "HINT: Lengkungkan",
+          "segi empat itu; dua",
+          "bulatan jadi tapak."
+        ],
+        "question_full_text": "Pilih bentangan: 2 bulatan sama saiz, 1 segi empat tepat."
+      },
+      "soalan": {
+        "filename": "S3_soalan.mp3",
+        "text": "Pilih bentangan yang mempunyai dua bulatan yang sama saiz dan satu segi empat tepat.",
+        "status": "awaiting_generation"
+      },
+      "hint": {
+        "filename": "S3_hint.mp3",
+        "text": "Petunjuk: Lengkungkan segi empat tepat itu. Dua bulatan menjadi tapaknya.",
+        "status": "awaiting_generation"
+      }
+    }
+  ]
+}

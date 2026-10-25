@@ -9,6 +9,17 @@ LCD I2C 20x4, dua butang dan dua RGB empat kaki.
 **Aliran kerja utama: VS Code + PlatformIO IDE.** Build, Upload dan Serial
 Monitor tersedia terus dalam VS Code. Arduino IDE tidak diperlukan.
 
+## Audio soalan dan hint — persediaan ElevenLabs
+
+Pakej pada branch `codex/question-audio-elevenlabs` menyediakan
+[30 skrip bacaan](docs/audio/SCRIPTS.md),
+[pemetaan LCD kepada skrip dan fail MP3](docs/audio/MAPPING.md), serta
+[panduan penjanaan dan pelan integrasi](docs/audio/README.md).
+Rujukan bank ialah main v1.1.3 (`a059979`). Audio sebenar belum dijana;
+main balik pada ESP32 masih cadangan. Semak pakej dengan
+`python tools/question_audio.py`. Nombor firmware kekal v1.1.3 sehingga
+keluaran main seterusnya ditentukan mengikut SOR.
+
 ## Panduan PDF
 
 - [Panduan lengkap A-Z](tutorial/GeoDecoder_Panduan_A-Z.pdf): 45 halaman
