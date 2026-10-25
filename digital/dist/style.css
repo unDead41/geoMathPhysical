@@ -31,3 +31,23 @@ dialog{border:1px solid var(--border);border-radius:var(--radius-lg);padding:0;w
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}.choice:hover,.button:hover{transform:none!important}}
 @media(forced-colors:active){*{scrollbar-color:auto}.led-dot{border:2px solid CanvasText}.choice[aria-pressed="true"]{outline:3px solid Highlight}.scanner{border:2px solid CanvasText}.progress-dot{background:CanvasText}.progress-dot.current{background:Highlight}}
 @media print{.site-header nav,.session-actions,.result-actions,.site-footer,.review-section,.game-screen,.entry-screen,dialog{display:none!important}.result-layout{display:block}.result-main,.result-side{break-inside:avoid}.result-side{margin-top:20px}}
+
+/* Language control remains the same element when moved into an open dialog. */
+.language-control{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:12px;font-weight:600}
+.language-control select{font:inherit;max-width:150px;min-height:40px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--ink);padding:7px 24px 7px 9px}
+select:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
+.intro h1 .intro-base{color:var(--ink)}
+.site-header nav{flex-wrap:wrap;justify-content:flex-end}
+.dialog-header{flex-wrap:wrap;gap:10px}.dialog-header h2{flex:1;min-width:150px}
+.question-content,.scanner-top>b>span,.scanned-label{overflow-wrap:anywhere}
+.scanner-top{gap:8px}.scanner-led{white-space:normal}
+.review-card h3{overflow-wrap:anywhere}
+@media(max-width:650px){.site-header{align-items:flex-start}.site-header nav{max-width:65%}.language-control>span{display:none}.language-control select{max-width:123px;font-size:11px;padding-left:7px;min-height:36px}.dialog-header .language-control{order:3}.dialog-header h2{min-width:120px}.scanner-bottom{white-space:normal}.entry-facts{flex-wrap:wrap}.shelf-heading{flex-wrap:wrap;gap:6px}}
+
+@media(max-width:650px){
+  .site-header{height:auto;min-height:112px;flex-wrap:wrap;padding-top:14px;padding-bottom:10px;gap:8px;align-items:center}
+  .site-header>.brand{flex:1 1 100%}
+  .site-header nav{max-width:100%;width:100%;justify-content:flex-end;gap:8px;flex-wrap:nowrap}
+  .scene-grid{inset-inline:30px}
+  .language-control select{max-width:150px;min-width:140px}
+}

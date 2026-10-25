@@ -1,1 +1,12 @@
-{"name":"geodecoder-digital","version":"1.0.0","private":true,"type":"module","scripts":{"test":"node --test tests/*.test.mjs","check":"node tools/check.mjs","standalone":"node tools/standalone.mjs"}}
+{
+  "name": "geodecoder-digital",
+  "version": "1.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "check": "node tools/check.mjs",
+    "standalone": "node tools/standalone.mjs",
+    "test:browser": "node tests/browser.mjs"
+  }
+}

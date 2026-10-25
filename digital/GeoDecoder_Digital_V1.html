@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#215FF0">
-  <meta name="description" content="Main GeoDecoder Digital: seret bongkah 3D ke R1, padankan bentangannya di R2 dan kumpulkan 10 markah.">
-  <title>GeoDecoder Digital — Jom main geometri</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 44'%3E%3Cpath d='m20 2 17 10v20L20 42 3 32V12Z' fill='%23215FF0'/%3E%3Cpath d='m20 2 17 10-17 10L3 12Z' fill='%236EAAFF'/%3E%3C/svg%3E">
+  <meta name="description" content="Main GeoDecoder Digital: seret bongkah 3D ke R1, padankan bentangannya di R2 dan kumpulkan 10 markah." data-i18n-content="Main GeoDecoder Digital: seret bongkah 3D ke R1, padankan bentangannya di R2 dan kumpulkan 10 markah.">
+  <title data-i18n="GeoDecoder Digital — Jom main geometri">GeoDecoder Digital — Jom main geometri</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 40 44&#x27;%3E%3Cpath d=&#x27;m20 2 17 10v20L20 42 3 32V12Z&#x27; fill=&#x27;%23215FF0&#x27;/%3E%3Cpath d=&#x27;m20 2 17 10-17 10L3 12Z&#x27; fill=&#x27;%236EAAFF&#x27;/%3E%3C/svg%3E">
   <style>
 :root{
   --primary:#215FF0;--primary-dark:#194AC0;--ink:#18334B;--bg:#F3F7FB;--surface:#FFFFFF;--success:#127957;--danger:#B9403E;--accent:#FFCB66;--muted:#526A7D;--border:#D9E4ED;
@@ -42,50 +42,70 @@ dialog{border:1px solid var(--border);border-radius:var(--radius-lg);padding:0;w
 @media(forced-colors:active){*{scrollbar-color:auto}.led-dot{border:2px solid CanvasText}.choice[aria-pressed="true"]{outline:3px solid Highlight}.scanner{border:2px solid CanvasText}.progress-dot{background:CanvasText}.progress-dot.current{background:Highlight}}
 @media print{.site-header nav,.session-actions,.result-actions,.site-footer,.review-section,.game-screen,.entry-screen,dialog{display:none!important}.result-layout{display:block}.result-main,.result-side{break-inside:avoid}.result-side{margin-top:20px}}
 
+/* Language control remains the same element when moved into an open dialog. */
+.language-control{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:12px;font-weight:600}
+.language-control select{font:inherit;max-width:150px;min-height:40px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--ink);padding:7px 24px 7px 9px}
+select:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
+.intro h1 .intro-base{color:var(--ink)}
+.site-header nav{flex-wrap:wrap;justify-content:flex-end}
+.dialog-header{flex-wrap:wrap;gap:10px}.dialog-header h2{flex:1;min-width:150px}
+.question-content,.scanner-top>b>span,.scanned-label{overflow-wrap:anywhere}
+.scanner-top{gap:8px}.scanner-led{white-space:normal}
+.review-card h3{overflow-wrap:anywhere}
+@media(max-width:650px){.site-header{align-items:flex-start}.site-header nav{max-width:65%}.language-control>span{display:none}.language-control select{max-width:123px;font-size:11px;padding-left:7px;min-height:36px}.dialog-header .language-control{order:3}.dialog-header h2{min-width:120px}.scanner-bottom{white-space:normal}.entry-facts{flex-wrap:wrap}.shelf-heading{flex-wrap:wrap;gap:6px}}
+
+@media(max-width:650px){
+  .site-header{height:auto;min-height:112px;flex-wrap:wrap;padding-top:14px;padding-bottom:10px;gap:8px;align-items:center}
+  .site-header>.brand{flex:1 1 100%}
+  .site-header nav{max-width:100%;width:100%;justify-content:flex-end;gap:8px;flex-wrap:nowrap}
+  .scene-grid{inset-inline:30px}
+  .language-control select{max-width:150px;min-width:140px}
+}
+
 </style>
 </head>
 <body>
-  <a class="skip-link" href="#main">Terus ke kandungan</a>
+  <a class="skip-link" href="#main" data-i18n="Terus ke kandungan">Terus ke kandungan</a>
   <header class="site-header">
-    <a href="#" class="brand" id="brand-home" aria-label="GeoDecoder Digital, halaman mula"><span data-brand></span><span>Geo<span class="brand-blue">Decoder</span><small>DIGITAL EDITION</small></span></a>
-    <nav aria-label="Menu utama">
-      <span class="version-badge">V1.0</span>
-      <button class="nav-button" data-action="help"><span data-icon="help"></span><span>Cara main</span></button>
-      <button class="nav-button score-nav" data-action="scores" aria-label="Papan skor"><span data-icon="trophy"></span><span>Papan skor</span></button>
+    <a href="#" class="brand" id="brand-home" aria-label="GeoDecoder Digital, halaman mula" data-i18n-aria-label="GeoDecoder Digital, halaman mula"><span data-brand></span><span>Geo<span class="brand-blue">Decoder</span><small data-i18n="DIGITAL EDITION">DIGITAL EDITION</small></span></a>
+    <nav aria-label="Menu utama" data-i18n-aria-label="Menu utama">
+      <span class="version-badge">V1.1.0</span><label class="language-control" id="language-control"><span data-i18n="language.label">Bahasa</span><select id="language-select" aria-label="Bahasa / Language"><option value="ms" lang="ms">Bahasa Melayu</option><option value="en" lang="en">English</option></select></label>
+      <button class="nav-button" data-action="help"><span data-icon="help"></span><span data-i18n="Cara main">Cara main</span></button>
+      <button class="nav-button score-nav" data-action="scores" aria-label="Papan skor" data-i18n-aria-label="Papan skor"><span data-icon="trophy"></span><span data-i18n="Papan skor">Papan skor</span></button>
     </nav>
   </header>
 
   <main id="main" tabindex="-1">
     <section id="welcome" class="entry-screen" aria-labelledby="welcome-title">
       <div class="intro">
-        <div class="eyebrow"><span class="tiny-cube"></span> MAKMAL GEOMETRI ANDA</div>
-        <h1 id="welcome-title">Kenali bentuk.<br><span>Temui padanannya.</span></h1>
-        <p class="intro-copy">Bongkah 3D, kad bentangan dan dua pengimbas.<br class="desktop-only"> Pengalaman GeoDecoder, kini boleh dimainkan di skrin.</p>
-        <div class="lab-scene" aria-label="Ilustrasi bongkah dan bentangan di atas dua pengimbas digital" role="img">
+        <div class="eyebrow"><span class="tiny-cube"></span> <span data-i18n="MAKMAL GEOMETRI ANDA">MAKMAL GEOMETRI ANDA</span></div>
+        <h1 id="welcome-title"><span class="intro-base" data-i18n="Kenali bentuk.">Kenali bentuk.</span><br><span data-i18n="Temui padanannya.">Temui padanannya.</span></h1>
+        <p class="intro-copy"><span data-i18n="Bongkah 3D, kad bentangan dan dua pengimbas.">Bongkah 3D, kad bentangan dan dua pengimbas.</span><br class="desktop-only"> <span data-i18n="Pengalaman GeoDecoder, kini boleh dimainkan di skrin.">Pengalaman GeoDecoder, kini boleh dimainkan di skrin.</span></p>
+        <div class="lab-scene" aria-label="Ilustrasi bongkah dan bentangan di atas dua pengimbas digital" role="img" data-i18n-aria-label="Ilustrasi bongkah dan bentangan di atas dua pengimbas digital">
           <div class="scene-grid"></div>
-          <div class="scene-note"><span data-icon="cursor"></span> Seret. Imbas. Padankan.</div>
+          <div class="scene-note"><span data-icon="cursor"></span> <span data-i18n="Seret. Imbas. Padankan.">Seret. Imbas. Padankan.</span></div>
           <div class="scene-object scene-cube" data-art="cube"></div>
           <div class="scene-object scene-cone" data-art="cone"></div>
           <div class="scene-object scene-pyramid" data-art="pyramid"></div>
           <div class="scene-net" data-art="cube" data-kind="net"></div>
-          <div class="scene-pad pad-one"><span class="led-dot blue"></span><b>R1</b><span>BONGKAH</span><div class="scanner-rings"></div></div>
-          <div class="scene-pad pad-two"><span class="led-dot green"></span><b>R2</b><span>BENTANGAN</span><div class="scanner-rings"></div></div>
+          <div class="scene-pad pad-one"><span class="led-dot blue"></span><b>R1</b><span data-i18n="BONGKAH">BONGKAH</span><div class="scanner-rings"></div></div>
+          <div class="scene-pad pad-two"><span class="led-dot green"></span><b>R2</b><span data-i18n="BENTANGAN">BENTANGAN</span><div class="scanner-rings"></div></div>
           <span class="scene-connector" data-icon="arrow"></span>
           <span class="scene-star star-one">✦</span><span class="scene-star star-two">✦</span>
-          <div class="scene-score"><span data-icon="spark"></span><b>+1</b><span>Pasangan tepat!</span></div>
+          <div class="scene-score"><span data-icon="spark"></span><b>+1</b><span data-i18n="Pasangan tepat!">Pasangan tepat!</span></div>
         </div>
-        <div class="entry-facts"><span><b>5</b> jenis bongkah</span><i></i><span><b>10</b> soalan setiap pusingan</span><i></i><span><span class="fact-icon" data-icon="trophy"></span> Cabar skor sendiri</span></div>
+        <div class="entry-facts"><span><b>5</b> <span data-i18n="jenis bongkah">jenis bongkah</span></span><i></i><span><b>10</b> <span data-i18n="soalan setiap pusingan">soalan setiap pusingan</span></span><i></i><span><span class="fact-icon" data-icon="trophy"></span> <span data-i18n="Cabar skor sendiri">Cabar skor sendiri</span></span></div>
       </div>
       <div class="registration-card">
-        <span class="card-kicker">SEDIA UNTUK MENCUBA?</span>
-        <h2>Jom kenalkan diri.</h2>
-        <p>Isi maklumat anda sebelum mula bermain.</p>
+        <span class="card-kicker" data-i18n="SEDIA UNTUK MENCUBA?">SEDIA UNTUK MENCUBA?</span>
+        <h2 data-i18n="Jom kenalkan diri.">Jom kenalkan diri.</h2>
+        <p data-i18n="Isi maklumat anda sebelum mula bermain.">Isi maklumat anda sebelum mula bermain.</p>
         <form id="player-form" novalidate>
-          <div class="field"><label for="player-name">Nama pemain</label><input id="player-name" name="name" type="text" maxlength="60" autocomplete="off" placeholder="Contoh: Aisyah" aria-describedby="name-error"><span class="field-error" id="name-error"></span></div>
-          <fieldset class="category-field"><legend>Saya seorang</legend><div class="radio-options"><label class="radio-card"><input type="radio" name="category" value="Murid" checked><span><span data-icon="user"></span>Murid</span></label><label class="radio-card"><input type="radio" name="category" value="Pelajar"><span><span data-icon="user"></span>Pelajar</span></label></div><span class="field-error" id="category-error"></span></fieldset>
-          <div class="field"><label for="player-class">Kelas</label><input id="player-class" name="className" type="text" maxlength="40" autocomplete="off" placeholder="Contoh: 1 Bestari" aria-describedby="className-error"><span class="field-error" id="className-error"></span></div>
-          <button type="submit" class="button button-primary start-button">Mulakan permainan <span data-icon="arrow"></span></button>
-          <p class="privacy-note"><span data-icon="lock"></span><span>Nama dan skor disimpan dalam pelayar ini sahaja. Anda boleh gunakan nama panggilan.</span></p>
+          <div class="field"><label for="player-name" data-i18n="Nama pemain">Nama pemain</label><input id="player-name" name="name" type="text" maxlength="60" autocomplete="off" placeholder="Contoh: Aisyah" aria-describedby="name-error" data-i18n-placeholder="Contoh: Aisyah"><span class="field-error" id="name-error"></span></div>
+          <fieldset class="category-field"><legend data-i18n="Saya seorang">Saya seorang</legend><div class="radio-options"><label class="radio-card"><input type="radio" name="category" value="Murid" checked><span><span data-icon="user"></span><span data-i18n="Murid">Murid</span></span></label><label class="radio-card"><input type="radio" name="category" value="Pelajar"><span><span data-icon="user"></span><span data-i18n="Pelajar">Pelajar</span></span></label></div><span class="field-error" id="category-error"></span></fieldset>
+          <div class="field"><label for="player-class" data-i18n="Kelas">Kelas</label><input id="player-class" name="className" type="text" maxlength="40" autocomplete="off" placeholder="Contoh: 1 Bestari" aria-describedby="className-error" data-i18n-placeholder="Contoh: 1 Bestari"><span class="field-error" id="className-error"></span></div>
+          <button type="submit" class="button button-primary start-button"><span data-i18n="Mulakan permainan">Mulakan permainan</span> <span data-icon="arrow"></span></button>
+          <p class="privacy-note"><span data-icon="lock"></span><span data-i18n="Nama dan skor disimpan dalam pelayar ini sahaja. Anda boleh gunakan nama panggilan.">Nama dan skor disimpan dalam pelayar ini sahaja. Anda boleh gunakan nama panggilan.</span></p>
         </form>
       </div>
     </section>
@@ -93,52 +113,52 @@ dialog{border:1px solid var(--border);border-radius:var(--radius-lg);padding:0;w
     <section id="game-screen" class="game-screen" hidden aria-labelledby="question-title">
       <div class="session-bar">
         <div class="player-chip"><span class="player-avatar" id="player-initial">A</span><span><b id="player-display"></b><small id="player-meta"></small></span></div>
-        <div class="session-stats"><div class="stat score-stat"><span data-icon="trophy"></span><span><small>Markah</small><b><span id="score-value">0</span><span class="stat-total"> / 10</span></b></span></div><div class="stat time-stat"><span data-icon="clock"></span><span><small>Masa</small><b id="time-value">00:00</b></span></div></div>
-        <div class="session-actions"><button id="sound-button" class="icon-button" aria-label="Hidupkan bunyi" aria-pressed="false" title="Hidupkan bunyi"><span data-icon="mute"></span></button><button class="icon-button" id="pause-button" aria-label="Jeda permainan" title="Jeda permainan"><span data-icon="pause"></span></button><button class="icon-button leave-button" data-action="home" aria-label="Kembali ke mula" title="Kembali ke mula"><span data-icon="home"></span></button></div>
+        <div class="session-stats"><div class="stat score-stat"><span data-icon="trophy"></span><span><small data-i18n="Markah">Markah</small><b><span id="score-value">0</span><span class="stat-total"> / 10</span></b></span></div><div class="stat time-stat"><span data-icon="clock"></span><span><small data-i18n="Masa">Masa</small><b id="time-value">00:00</b></span></div></div>
+        <div class="session-actions"><button id="sound-button" class="icon-button" aria-label="Hidupkan bunyi" aria-pressed="false" title="Hidupkan bunyi" data-i18n-aria-label="Hidupkan bunyi" data-i18n-title="Hidupkan bunyi"><span data-icon="mute"></span></button><button class="icon-button" id="pause-button" aria-label="Jeda permainan" title="Jeda permainan" data-i18n-aria-label="Jeda permainan" data-i18n-title="Jeda permainan"><span data-icon="pause"></span></button><button class="icon-button leave-button" data-action="home" aria-label="Kembali ke mula" title="Kembali ke mula" data-i18n-aria-label="Kembali ke mula" data-i18n-title="Kembali ke mula"><span data-icon="home"></span></button></div>
       </div>
 
       <div class="question-panel">
-        <div class="question-side"><span class="question-counter" id="question-counter">SOALAN 01 / 10</span><span class="question-topic" id="question-topic">Kenali bongkah</span><div class="progress-dots" id="progress-dots" aria-label="Kemajuan soalan"></div></div>
+        <div class="question-side"><span class="question-counter" id="question-counter" data-i18n="SOALAN 01 / 10">SOALAN 01 / 10</span><span class="question-topic" id="question-topic" data-i18n="Kenali bongkah">Kenali bongkah</span><div class="progress-dots" id="progress-dots" aria-label="Kemajuan soalan" data-i18n-aria-label="Kemajuan soalan"></div></div>
         <div class="question-content"><h1 id="question-title" tabindex="-1"></h1><p id="question-detail"></p><div id="formula-key" class="formula-key" hidden></div></div>
-        <button id="hint-button" class="button button-hint" aria-expanded="false" aria-controls="hint-panel"><span data-icon="bulb"></span> <span id="hint-label">Beri petunjuk</span></button>
+        <button id="hint-button" class="button button-hint" aria-expanded="false" aria-controls="hint-panel"><span data-icon="bulb"></span> <span id="hint-label" data-i18n="Beri petunjuk">Beri petunjuk</span></button>
       </div>
-      <div id="hint-panel" class="hint-panel" hidden><span data-icon="bulb"></span><p id="hint-text"></p><span>Tiada potongan markah</span></div>
+      <div id="hint-panel" class="hint-panel" hidden><span data-icon="bulb"></span><p id="hint-text"></p><span data-i18n="Tiada potongan markah">Tiada potongan markah</span></div>
 
-      <div class="workbench-heading"><div><span class="live-indicator"></span><h2 id="stage-instruction">Pilih bongkah yang betul</h2></div><p>Seret ke pengimbas, atau klik kad kemudian klik pengimbas.</p></div>
+      <div class="workbench-heading"><div><span class="live-indicator"></span><h2 id="stage-instruction" data-i18n="Pilih bongkah yang betul">Pilih bongkah yang betul</h2></div><p data-i18n="Seret ke pengimbas, atau klik kad kemudian klik pengimbas.">Seret ke pengimbas, atau klik kad kemudian klik pengimbas.</p></div>
       <div class="scanners">
-        <button class="scanner" id="r1" data-target="r1" aria-label="Pengimbas R1, imbas bongkah" type="button">
-          <span class="scanner-top"><b>R1 <span>BONGKAH 3D</span></b><span class="scanner-led"><span class="led-dot blue" id="led-r1"></span><span id="status-r1">Sedia diimbas</span></span></span>
-          <span class="scanner-body" id="scanner-body-r1"><span class="scan-target"><span class="target-corner tl"></span><span class="target-corner tr"></span><span class="target-corner bl"></span><span class="target-corner br"></span><span data-icon="cursor"></span></span><span class="scanner-placeholder">Letak bongkah di sini</span></span>
-          <span class="scanner-bottom" id="scanner-bottom-r1">LANGKAH 1 · PILIH BONGKAH</span>
+        <button class="scanner" id="r1" data-target="r1" aria-label="Pengimbas R1, imbas bongkah" type="button" data-i18n-aria-label="Pengimbas R1, imbas bongkah">
+          <span class="scanner-top"><b>R1 <span data-i18n="BONGKAH 3D">BONGKAH 3D</span></b><span class="scanner-led"><span class="led-dot blue" id="led-r1"></span><span id="status-r1" data-i18n="Sedia diimbas">Sedia diimbas</span></span></span>
+          <span class="scanner-body" id="scanner-body-r1"><span class="scan-target"><span class="target-corner tl"></span><span class="target-corner tr"></span><span class="target-corner bl"></span><span class="target-corner br"></span><span data-icon="cursor"></span></span><span class="scanner-placeholder" data-i18n="Letak bongkah di sini">Letak bongkah di sini</span></span>
+          <span class="scanner-bottom" id="scanner-bottom-r1" data-i18n="LANGKAH 1 · PILIH BONGKAH">LANGKAH 1 · PILIH BONGKAH</span>
         </button>
         <div class="stage-connector" aria-hidden="true"><span data-icon="arrow"></span></div>
-        <button class="scanner scanner-locked" id="r2" data-target="r2" aria-disabled="true" aria-label="Pengimbas R2, jawab R1 dahulu" type="button">
-          <span class="scanner-top"><b>R2 <span>BENTANGAN 2D</span></b><span class="scanner-led"><span class="led-dot off" id="led-r2"></span><span id="status-r2">Jawab R1 dahulu</span></span></span>
-          <span class="scanner-body" id="scanner-body-r2"><span class="scan-target"><span class="target-corner tl"></span><span class="target-corner tr"></span><span class="target-corner bl"></span><span class="target-corner br"></span><span data-icon="lock"></span></span><span class="scanner-placeholder">Kemudian letak bentangan</span></span>
-          <span class="scanner-bottom" id="scanner-bottom-r2">LANGKAH 2 · PADANKAN BENTANGAN</span>
+        <button class="scanner scanner-locked" id="r2" data-target="r2" aria-disabled="true" aria-label="Pengimbas R2, jawab R1 dahulu" type="button" data-i18n-aria-label="Pengimbas R2, jawab R1 dahulu">
+          <span class="scanner-top"><b>R2 <span data-i18n="BENTANGAN 2D">BENTANGAN 2D</span></b><span class="scanner-led"><span class="led-dot off" id="led-r2"></span><span id="status-r2" data-i18n="Jawab R1 dahulu">Jawab R1 dahulu</span></span></span>
+          <span class="scanner-body" id="scanner-body-r2"><span class="scan-target"><span class="target-corner tl"></span><span class="target-corner tr"></span><span class="target-corner bl"></span><span class="target-corner br"></span><span data-icon="lock"></span></span><span class="scanner-placeholder" data-i18n="Kemudian letak bentangan">Kemudian letak bentangan</span></span>
+          <span class="scanner-bottom" id="scanner-bottom-r2" data-i18n="LANGKAH 2 · PADANKAN BENTANGAN">LANGKAH 2 · PADANKAN BENTANGAN</span>
         </button>
       </div>
-      <div class="game-feedback" id="game-status" role="status" aria-live="polite"><span data-icon="cursor"></span><span id="feedback-text">Baca soalan, kemudian pilih satu bongkah untuk R1.</span></div>
+      <div class="game-feedback" id="game-status" role="status" aria-live="polite"><span data-icon="cursor"></span><span id="feedback-text" data-i18n="Baca soalan, kemudian pilih satu bongkah untuk R1.">Baca soalan, kemudian pilih satu bongkah untuk R1.</span></div>
 
       <div class="answer-shelves">
-        <section class="shelf" aria-labelledby="solid-shelf-title"><div class="shelf-heading"><h3 id="solid-shelf-title"><span class="shelf-badge">R1</span> Koleksi bongkah</h3><span>5 pilihan · seret atau klik</span></div><div class="choices" id="solid-choices"></div></section>
-        <section class="shelf" aria-labelledby="net-shelf-title"><div class="shelf-heading"><h3 id="net-shelf-title"><span class="shelf-badge net-badge">R2</span> Kad bentangan</h3><span>5 pilihan · kad tanpa nama</span></div><div class="choices" id="net-choices"></div></section>
+        <section class="shelf" aria-labelledby="solid-shelf-title"><div class="shelf-heading"><h3 id="solid-shelf-title"><span class="shelf-badge">R1</span> <span data-i18n="Koleksi bongkah">Koleksi bongkah</span></h3><span data-i18n="5 pilihan · seret atau klik">5 pilihan · seret atau klik</span></div><div class="choices" id="solid-choices"></div></section>
+        <section class="shelf" aria-labelledby="net-shelf-title"><div class="shelf-heading"><h3 id="net-shelf-title"><span class="shelf-badge net-badge">R2</span> <span data-i18n="Kad bentangan">Kad bentangan</span></h3><span data-i18n="5 pilihan · kad tanpa nama">5 pilihan · kad tanpa nama</span></div><div class="choices" id="net-choices"></div></section>
       </div>
-      <div class="round-bottom"><p><span class="led-dot blue"></span> Sedia <span class="led-dot green"></span> Betul <span class="led-dot red"></span> Cuba lagi <span class="led-dot purple"></span> Petunjuk</p><button id="skip-button" class="button button-quiet"><span data-icon="skip"></span> Langkau soalan <small>+0 markah</small></button></div>
+      <div class="round-bottom"><p><span class="led-dot blue"></span> <span data-i18n="Sedia">Sedia</span> <span class="led-dot green"></span> <span data-i18n="Betul">Betul</span> <span class="led-dot red"></span> <span data-i18n="Cuba lagi">Cuba lagi</span> <span class="led-dot purple"></span> <span data-i18n="Petunjuk">Petunjuk</span></p><button id="skip-button" class="button button-quiet"><span data-icon="skip"></span> <span data-i18n="Langkau soalan">Langkau soalan</span> <small data-i18n="+0 markah">+0 markah</small></button></div>
     </section>
 
     <section id="result-screen" class="result-screen" hidden aria-labelledby="result-title">
-      <div class="result-heading"><span class="eyebrow">PUSINGAN SELESAI</span><h1 id="result-title" tabindex="-1">Bagus, teruskan meneroka!</h1><p id="result-player"></p></div>
-      <div class="result-layout"><div class="result-main"><div class="result-medal"><span data-icon="trophy"></span><div><b id="result-score">10</b><span>/ 10 markah</span></div><span class="medal-spark">✦</span></div><div class="result-level" id="result-level">Pakar padanan</div><p id="result-message"></p><div class="result-metrics"><div><span data-icon="clock"></span><b id="result-time"></b><small>Masa bermain</small></div><div><b id="result-first"></b><small>Betul cubaan pertama</small></div><div><b id="result-mistakes"></b><small>Cubaan salah</small></div><div><b id="result-hints"></b><small>Soalan guna petunjuk</small></div></div><div class="result-actions"><button class="button button-primary" id="replay-button"><span data-icon="refresh"></span> Main lagi</button><button class="button button-outline" data-action="home">Tukar pemain</button></div></div><div class="result-side"><div class="mini-title"><span data-icon="trophy"></span><h2>Papan skor</h2><span>PERANTI INI</span></div><div id="result-leaderboard"></div><button class="button button-quiet" data-action="scores">Lihat semua skor <span data-icon="arrow"></span></button><p class="score-scope">Skor lebih tinggi dahulu, kemudian cubaan salah lebih sedikit dan masa lebih pantas.</p></div></div>
-      <div class="review-section"><h2>Lihat semula pusingan anda</h2><p>Kenali pasangan yang telah dijawab atau dilangkau.</p><div class="review-list" id="review-list"></div></div>
+      <div class="result-heading"><span class="eyebrow" data-i18n="PUSINGAN SELESAI">PUSINGAN SELESAI</span><h1 id="result-title" tabindex="-1" data-i18n="Bagus, teruskan meneroka!">Bagus, teruskan meneroka!</h1><p id="result-player"></p></div>
+      <div class="result-layout"><div class="result-main"><div class="result-medal"><span data-icon="trophy"></span><div><b id="result-score">10</b><span data-i18n="/ 10 markah">/ 10 markah</span></div><span class="medal-spark">✦</span></div><div class="result-level" id="result-level" data-i18n="Pakar padanan">Pakar padanan</div><p id="result-message"></p><div class="result-metrics"><div><span data-icon="clock"></span><b id="result-time"></b><small data-i18n="Masa bermain">Masa bermain</small></div><div><b id="result-first"></b><small data-i18n="Betul cubaan pertama">Betul cubaan pertama</small></div><div><b id="result-mistakes"></b><small data-i18n="Cubaan salah">Cubaan salah</small></div><div><b id="result-hints"></b><small data-i18n="Soalan guna petunjuk">Soalan guna petunjuk</small></div></div><div class="result-actions"><button class="button button-primary" id="replay-button"><span data-icon="refresh"></span> <span data-i18n="Main lagi">Main lagi</span></button><button class="button button-outline" data-action="home" data-i18n="Tukar pemain">Tukar pemain</button></div></div><div class="result-side"><div class="mini-title"><span data-icon="trophy"></span><h2 data-i18n="Papan skor">Papan skor</h2><span data-i18n="PERANTI INI">PERANTI INI</span></div><div id="result-leaderboard"></div><button class="button button-quiet" data-action="scores"><span data-i18n="Lihat semua skor">Lihat semua skor</span> <span data-icon="arrow"></span></button><p class="score-scope" data-i18n="Skor lebih tinggi dahulu, kemudian cubaan salah lebih sedikit dan masa lebih pantas.">Skor lebih tinggi dahulu, kemudian cubaan salah lebih sedikit dan masa lebih pantas.</p></div></div>
+      <div class="review-section"><h2 data-i18n="Lihat semula pusingan anda">Lihat semula pusingan anda</h2><p data-i18n="Kenali pasangan yang telah dijawab atau dilangkau.">Kenali pasangan yang telah dijawab atau dilangkau.</p><div class="review-list" id="review-list"></div></div>
     </section>
 
-    <div class="storage-warning" id="storage-warning" hidden role="status">Simpanan pelayar tidak tersedia. Anda masih boleh bermain; skor sesi ini boleh dieksport sebelum halaman ditutup.</div>
+    <div class="storage-warning" id="storage-warning" hidden role="status" data-i18n="Simpanan pelayar tidak tersedia. Anda masih boleh bermain; skor sesi ini boleh dieksport sebelum halaman ditutup.">Simpanan pelayar tidak tersedia. Anda masih boleh bermain; skor sesi ini boleh dieksport sebelum halaman ditutup.</div>
   </main>
-  <footer class="site-footer"><span>GeoDecoder <b>Digital V1</b></span><span>Belajar bentuk. Bina kefahaman.</span><span>Serasi tetikus, sentuhan &amp; papan kekunci</span></footer>
+  <footer class="site-footer"><span>GeoDecoder <b data-i18n="Digital V1">Digital V1</b></span><span data-i18n="Belajar bentuk. Bina kefahaman.">Belajar bentuk. Bina kefahaman.</span><span data-i18n="Serasi tetikus, sentuhan &amp; papan kekunci">Serasi tetikus, sentuhan &amp; papan kekunci</span></footer>
   <div id="announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
-  <dialog id="app-dialog" aria-labelledby="dialog-title"><div class="dialog-shell"><div class="dialog-header"><h2 id="dialog-title"></h2><button class="icon-button" id="dialog-close" aria-label="Tutup tetingkap"><span data-icon="close"></span></button></div><div id="dialog-content"></div></div></dialog>
-  <noscript><div class="noscript">Hidupkan JavaScript dalam pelayar untuk bermain GeoDecoder Digital.</div></noscript>
+  <dialog id="app-dialog" aria-labelledby="dialog-title"><div class="dialog-shell"><div class="dialog-header"><h2 id="dialog-title"></h2><button class="icon-button" id="dialog-close" aria-label="Tutup tetingkap" data-i18n-aria-label="Tutup tetingkap"><span data-icon="close"></span></button></div><div id="dialog-content"></div></div></dialog>
+  <noscript><div class="noscript" data-i18n="Hidupkan JavaScript dalam pelayar untuk bermain GeoDecoder Digital.">Hidupkan JavaScript dalam pelayar untuk bermain GeoDecoder Digital. / Enable JavaScript in your browser to play GeoDecoder Digital.</div></noscript>
   <script type="module">
 // Generated from the verified firmware bank; see docs/SOURCE.md.
 const QUESTIONS = [
@@ -310,7 +330,7 @@ const QUESTIONS = [
 ];
 
 
-const VERSION = '1.0.0';
+const VERSION = '1.1.0';
 const SHAPES = ['cube', 'cuboid', 'pyramid', 'cylinder', 'cone'];
 const ROUND_SIZE = 10;
 const BLINK_MS = 900;
@@ -482,11 +502,695 @@ class Game {
 }
 
 
+// Local KSSM BM/English presentation data. No network translation. See docs/DWI_LANGUAGE.md.
+const MESSAGES = {
+  "ms": {
+    "Terus ke kandungan": "Terus ke kandungan",
+    "GeoDecoder Digital, halaman mula": "GeoDecoder Digital, halaman mula",
+    "Menu utama": "Menu utama",
+    "DIGITAL EDITION": "EDISI DIGITAL",
+    "Cara main": "Cara main",
+    "Papan skor": "Papan skor",
+    "MAKMAL GEOMETRI ANDA": "MAKMAL GEOMETRI ANDA",
+    "Kenali bentuk.": "Kenali bentuk.",
+    "Temui padanannya.": "Temui padanannya.",
+    "Bongkah 3D, kad bentangan dan dua pengimbas.": "Bongkah 3D, kad bentangan dan dua pengimbas.",
+    "Pengalaman GeoDecoder, kini boleh dimainkan di skrin.": "Pengalaman GeoDecoder, kini boleh dimainkan di skrin.",
+    "Ilustrasi bongkah dan bentangan di atas dua pengimbas digital": "Ilustrasi bongkah dan bentangan di atas dua pengimbas digital",
+    "Seret. Imbas. Padankan.": "Seret. Imbas. Padankan.",
+    "BONGKAH": "BONGKAH",
+    "BENTANGAN": "BENTANGAN",
+    "Pasangan tepat!": "Pasangan tepat!",
+    "jenis bongkah": "jenis bongkah",
+    "soalan setiap pusingan": "soalan setiap pusingan",
+    "Cabar skor sendiri": "Cabar skor sendiri",
+    "SEDIA UNTUK MENCUBA?": "SEDIA UNTUK MENCUBA?",
+    "Jom kenalkan diri.": "Jom kenalkan diri.",
+    "Isi maklumat anda sebelum mula bermain.": "Isi maklumat anda sebelum mula bermain.",
+    "Nama pemain": "Nama pemain",
+    "Contoh: Aisyah": "Contoh: Aisyah",
+    "Saya seorang": "Saya seorang",
+    "Murid": "Murid",
+    "Pelajar": "Pelajar",
+    "Kelas": "Kelas",
+    "Contoh: 1 Bestari": "Contoh: 1 Bestari",
+    "Mulakan permainan": "Mulakan permainan",
+    "Nama dan skor disimpan dalam pelayar ini sahaja. Anda boleh gunakan nama panggilan.": "Nama dan skor disimpan dalam pelayar ini sahaja. Anda boleh gunakan nama panggilan.",
+    "Markah": "Markah",
+    "Masa": "Masa",
+    "Hidupkan bunyi": "Hidupkan bunyi",
+    "Matikan bunyi": "Matikan bunyi",
+    "Jeda permainan": "Jeda permainan",
+    "Kembali ke mula": "Kembali ke mula",
+    "SOALAN 01 / 10": "SOALAN 01 / 10",
+    "Kenali bongkah": "Kenali bongkah",
+    "Kemajuan soalan": "Kemajuan soalan",
+    "Beri petunjuk": "Beri petunjuk",
+    "Tutup petunjuk": "Tutup petunjuk",
+    "Tiada potongan markah": "Tiada potongan markah",
+    "Pilih bongkah yang betul": "Pilih bongkah yang betul",
+    "Seret ke pengimbas, atau klik kad kemudian klik pengimbas.": "Seret ke pengimbas, atau klik kad kemudian klik pengimbas.",
+    "Pengimbas R1, imbas bongkah": "Pengimbas R1, imbas bongkah",
+    "Pengimbas R2, jawab R1 dahulu": "Pengimbas R2, jawab R1 dahulu",
+    "BONGKAH 3D": "BONGKAH 3D",
+    "BENTANGAN 2D": "BENTANGAN 2D",
+    "Sedia diimbas": "Sedia diimbas",
+    "Letak bongkah di sini": "Letak bongkah di sini",
+    "Kemudian letak bentangan": "Kemudian letak bentangan",
+    "Letak kad bentangan di sini": "Letak kad bentangan di sini",
+    "LANGKAH 1 · PILIH BONGKAH": "LANGKAH 1 · PILIH BONGKAH",
+    "LANGKAH 2 · PADANKAN BENTANGAN": "LANGKAH 2 · PADANKAN BENTANGAN",
+    "Jawab R1 dahulu": "Jawab R1 dahulu",
+    "Baca soalan, kemudian pilih satu bongkah untuk R1.": "Baca soalan, kemudian pilih satu bongkah untuk R1.",
+    "Koleksi bongkah": "Koleksi bongkah",
+    "5 pilihan · seret atau klik": "5 pilihan · seret atau klik",
+    "Kad bentangan": "Kad bentangan",
+    "5 pilihan · kad tanpa nama": "5 pilihan · kad tanpa nama",
+    "Sedia": "Sedia",
+    "Betul": "Betul",
+    "Cuba lagi": "Cuba lagi",
+    "Petunjuk": "Petunjuk",
+    "Langkau soalan": "Langkau soalan",
+    "+0 markah": "+0 markah",
+    "PUSINGAN SELESAI": "PUSINGAN SELESAI",
+    "Bagus, teruskan meneroka!": "Bagus, teruskan meneroka!",
+    "/ 10 markah": "/ 10 markah",
+    "Pakar padanan": "Pakar padanan",
+    "Masa bermain": "Masa bermain",
+    "Betul cubaan pertama": "Betul cubaan pertama",
+    "Cubaan salah": "Cubaan salah",
+    "Soalan guna petunjuk": "Soalan guna petunjuk",
+    "Main lagi": "Main lagi",
+    "Tukar pemain": "Tukar pemain",
+    "PERANTI INI": "PERANTI INI",
+    "Lihat semua skor": "Lihat semua skor",
+    "Skor lebih tinggi dahulu, kemudian cubaan salah lebih sedikit dan masa lebih pantas.": "Skor lebih tinggi dahulu, kemudian cubaan salah lebih sedikit dan masa lebih pantas.",
+    "Lihat semula pusingan anda": "Lihat semula pusingan anda",
+    "Kenali pasangan yang telah dijawab atau dilangkau.": "Kenali pasangan yang telah dijawab atau dilangkau.",
+    "Simpanan pelayar tidak tersedia. Anda masih boleh bermain; skor sesi ini boleh dieksport sebelum halaman ditutup.": "Simpanan pelayar tidak tersedia. Anda masih boleh bermain; skor sesi ini boleh dieksport sebelum halaman ditutup.",
+    "Digital V1": "Digital V1",
+    "Belajar bentuk. Bina kefahaman.": "Belajar bentuk. Bina kefahaman.",
+    "Serasi tetikus, sentuhan & papan kekunci": "Serasi tetikus, sentuhan & papan kekunci",
+    "Tutup tetingkap": "Tutup tetingkap",
+    "Hidupkan JavaScript dalam pelayar untuk bermain GeoDecoder Digital.": "Hidupkan JavaScript dalam pelayar untuk bermain GeoDecoder Digital.",
+    "Main GeoDecoder Digital: seret bongkah 3D ke R1, padankan bentangannya di R2 dan kumpulkan 10 markah.": "Main GeoDecoder Digital: seret bongkah 3D ke R1, padankan bentangannya di R2 dan kumpulkan 10 markah.",
+    "GeoDecoder Digital — Jom main geometri": "GeoDecoder Digital — Jom main geometri",
+    "GeoDecoder Digital — Sedang bermain": "GeoDecoder Digital — Sedang bermain",
+    "GeoDecoder Digital — Keputusan pusingan": "GeoDecoder Digital — Keputusan pusingan",
+    "Masukkan nama antara 2 hingga 60 aksara.": "Masukkan nama antara 2 hingga 60 aksara.",
+    "Pilih Murid atau Pelajar.": "Pilih Murid atau Pelajar.",
+    "Masukkan kelas, maksimum 40 aksara.": "Masukkan kelas, maksimum 40 aksara.",
+    "Maklumat belum lengkap. ": "Maklumat belum lengkap. ",
+    "Permainan bermula. Sepuluh soalan. Pilih bongkah untuk R1 dahulu.": "Permainan bermula. Sepuluh soalan. Pilih bongkah untuk R1 dahulu.",
+    "Cabaran rumus": "Cabaran rumus",
+    "Cabaran bentangan": "Cabaran bentangan",
+    "Bongkah apakah ini?": "Bongkah apakah ini?",
+    "Bongkah manakah yang sepadan?": "Bongkah manakah yang sepadan?",
+    "Rumus ini mewakili bongkah apa?": "Rumus ini mewakili bongkah apa?",
+    "V = isi padu · L = luas permukaan · j = jejari · t = tinggi": "V = isi padu · L = luas permukaan · j = jejari · t = tinggi",
+    "bongkah": "bongkah",
+    "bentangan": "bentangan",
+    "Bongkah": "Bongkah",
+    "Kad": "Kad",
+    "kad bentangan": "kad bentangan",
+    "Pasangan tepat! +1 markah": "Pasangan tepat! +1 markah",
+    "Soalan dilangkau. +0 markah": "Soalan dilangkau. +0 markah",
+    "Bagus! Kini padankan bentangannya": "Bagus! Kini padankan bentangannya",
+    "Bongkah diterima": "Bongkah diterima",
+    "Bentangan diterima": "Bentangan diterima",
+    "+1 markah": "+1 markah",
+    "Dilangkau": "Dilangkau",
+    "Imbasan betul": "Imbasan betul",
+    "Petunjuk dibuka": "Petunjuk dibuka",
+    "Mulakan dengan bongkah di R1. Kad bentangan digunakan selepas itu.": "Mulakan dengan bongkah di R1. Kad bentangan digunakan selepas itu.",
+    "Bongkah R1 sudah betul. Pilih satu kad bentangan untuk R2.": "Bongkah R1 sudah betul. Pilih satu kad bentangan untuk R2.",
+    "R1 dahulu. Imbas bongkah sebelum kad bentangan.": "R1 dahulu. Imbas bongkah sebelum kad bentangan.",
+    "Bongkah R1 sudah betul. Padankan kad bentangan di R2.": "Bongkah R1 sudah betul. Padankan kad bentangan di R2.",
+    "R1 hanya menerima bongkah 3D.": "R1 hanya menerima bongkah 3D.",
+    "R2 hanya menerima kad bentangan.": "R2 hanya menerima kad bentangan.",
+    "Belum tepat. Lihat sifat dalam soalan dan cuba bongkah lain.": "Belum tepat. Lihat sifat dalam soalan dan cuba bongkah lain.",
+    "Bentangan belum sepadan. Bongkah R1 kekal betul; cuba kad bentangan lain.": "Bentangan belum sepadan. Bongkah R1 kekal betul; cuba kad bentangan lain.",
+    "Bongkah betul! Sekarang seret kad bentangannya ke R2.": "Bongkah betul! Sekarang seret kad bentangannya ke R2.",
+    "Pasangan tepat! +1 markah. Bersedia untuk soalan seterusnya.": "Pasangan tepat! +1 markah. Bersedia untuk soalan seterusnya.",
+    "Petunjuk dibuka. Baca petunjuk dan teruskan memilih.": "Petunjuk dibuka. Baca petunjuk dan teruskan memilih.",
+    "Petunjuk ditutup. Teruskan menjawab.": "Petunjuk ditutup. Teruskan menjawab.",
+    "Soalan dilangkau. Tiada markah untuk soalan ini.": "Soalan dilangkau. Tiada markah untuk soalan ini.",
+    "Pilihan belum diimbas. Seret ke pengimbas yang aktif, atau klik pengimbas.": "Pilihan belum diimbas. Seret ke pengimbas yang aktif, atau klik pengimbas.",
+    "Semua skor dalam pelayar ini telah dipadam.": "Semua skor dalam pelayar ini telah dipadam.",
+    "Skor tersimpan tidak dapat dipadam. Semak kebenaran storan pelayar dan cuba lagi.": "Skor tersimpan tidak dapat dipadam. Semak kebenaran storan pelayar dan cuba lagi.",
+    "Cara main GeoDecoder": "Cara main GeoDecoder",
+    "Sambung permainan": "Sambung permainan",
+    "Saya faham": "Saya faham",
+    "Permainan dijeda": "Permainan dijeda",
+    "Permainan dijeda semasa anda meninggalkan tab ini.": "Permainan dijeda semasa anda meninggalkan tab ini.",
+    "Berehat seketika. Masa dan soalan anda dikekalkan.": "Berehat seketika. Masa dan soalan anda dikekalkan.",
+    "Tamatkan pusingan": "Tamatkan pusingan",
+    "Tamatkan pusingan ini?": "Tamatkan pusingan ini?",
+    "Terus bermain": "Terus bermain",
+    "Skor pertama menanti": "Skor pertama menanti",
+    "Lengkapkan satu pusingan untuk menyimpan skor.": "Lengkapkan satu pusingan untuk menyimpan skor.",
+    "Skor terbaik dalam pelayar ini": "Skor terbaik dalam pelayar ini",
+    "Pemain": "Pemain",
+    "Salah / Masa": "Salah / Masa",
+    "Belum ada skor": "Belum ada skor",
+    "Lengkapkan 10 soalan untuk merekodkan skor pertama.": "Lengkapkan 10 soalan untuk merekodkan skor pertama.",
+    "Skor sesi ini sahaja; simpanan pelayar tidak tersedia.": "Skor sesi ini sahaja; simpanan pelayar tidak tersedia.",
+    "Rekod dalam pelayar ini sahaja. Maksimum 50 skor terbaik.": "Rekod dalam pelayar ini sahaja. Maksimum 50 skor terbaik.",
+    "Tutup papan skor": "Tutup papan skor",
+    "Padam semua skor?": "Padam semua skor?",
+    "Kekalkan skor": "Kekalkan skor",
+    "Padam semua skor": "Padam semua skor",
+    "Fail CSV papan skor telah disediakan.": "Fail CSV papan skor telah disediakan.",
+    "Hebat! Semua pasangan tepat.": "Hebat! Semua pasangan tepat.",
+    "Bagus, anda semakin mahir!": "Bagus, anda semakin mahir!",
+    "Teruskan mencuba, teruskan belajar.": "Teruskan mencuba, teruskan belajar.",
+    "Penjelajah geometri": "Penjelajah geometri",
+    "Peneroka bentuk": "Peneroka bentuk",
+    "✓ Pasangan betul": "✓ Pasangan betul",
+    "↷ Dilangkau": "↷ Dilangkau",
+    "Bunyi tidak tersedia dalam pelayar ini. Permainan boleh diteruskan.": "Bunyi tidak tersedia dalam pelayar ini. Permainan boleh diteruskan.",
+    "Satu soalan, dua padanan. Sasarkan": "Satu soalan, dua padanan. Sasarkan",
+    "10 daripada 10 markah": "10 daripada 10 markah",
+    "Baca soalan dan pilih bongkah": "Baca soalan dan pilih bongkah",
+    "Seret satu bongkah 3D ke pengimbas R1 yang berwarna biru.": "Seret satu bongkah 3D ke pengimbas R1 yang berwarna biru.",
+    "Padankan kad bentangannya": "Padankan kad bentangannya",
+    "Selepas R1 hijau, seret kad bentangan yang sepadan ke R2.": "Selepas R1 hijau, seret kad bentangan yang sepadan ke R2.",
+    "Kumpulkan satu markah": "Kumpulkan satu markah",
+    "Pasangan betul memberi +1. Kedua-dua pengimbas berkelip hijau sebelum soalan seterusnya.": "Pasangan betul memberi +1. Kedua-dua pengimbas berkelip hijau sebelum soalan seterusnya.",
+    "Tanpa menyeret:": "Tanpa menyeret:",
+    "klik / sentuh kad": "klik / sentuh kad",
+    "kemudian": "kemudian",
+    "klik pengimbas": "klik pengimbas",
+    "Papan kekunci:": "Papan kekunci:",
+    "untuk bergerak,": "untuk bergerak,",
+    "atau": "atau",
+    "untuk memilih dan mengimbas.": "untuk memilih dan mengimbas.",
+    "Salah? Cuba lagi.": "Salah? Cuba lagi.",
+    "Tiada potongan markah. Petunjuk juga percuma. Langkau memberi +0 untuk soalan itu. Jam dijeda semasa tetingkap ini dibuka.": "Tiada potongan markah. Petunjuk juga percuma. Langkau memberi +0 untuk soalan itu. Jam dijeda semasa tetingkap ini dibuka.",
+    "Tekan sambung apabila sudah bersedia.": "Tekan sambung apabila sudah bersedia.",
+    "Jika kembali ke mula, kemajuan pusingan ini dilepaskan dan skor pusingan ini tidak disimpan.": "Jika kembali ke mula, kemajuan pusingan ini dilepaskan dan skor pusingan ini tidak disimpan.",
+    "Skor tertinggi dahulu, kemudian cubaan salah paling sedikit dan masa terpantas.": "Skor tertinggi dahulu, kemudian cubaan salah paling sedikit dan masa terpantas.",
+    "Eksport CSV": "Eksport CSV",
+    "Padam skor": "Padam skor",
+    "Semua rekod nama, kelas dan keputusan dalam papan skor pelayar ini akan dipadam. Muat turun CSV dahulu jika mahu menyimpannya.": "Semua rekod nama, kelas dan keputusan dalam papan skor pelayar ini akan dipadam. Muat turun CSV dahulu jika mahu menyimpannya.",
+    "question.counter": "SOALAN {number} / 10",
+    "question.progress": "Soalan {number} daripada 10. {score} pasangan betul, {skipped} dilangkau.",
+    "question.dot": "Soalan {number}{state}",
+    "question.current": ": semasa",
+    "question.correct": ": betul",
+    "question.skipped": ": dilangkau",
+    "choice.label": "Pilih {kind} {letter}. {description}",
+    "choice.selected": "{kind} {letter} dipilih. Klik pengimbas {target} untuk mengimbas.",
+    "choice.first": "Pilih {kind} dahulu, kemudian klik pengimbas {target}.",
+    "scanner.label": "Pengimbas {target}, {kind}. {status}.",
+    "scanner.action": " Klik atau tekan Enter untuk imbas pilihan.",
+    "score.mine": " · Anda",
+    "score.wrong": "{count} cubaan salah",
+    "score.shortWrong": "{count} salah",
+    "score.records": "{shown} daripada {total} rekod",
+    "result.summary": "{score} pasangan betul, {skipped} soalan dilangkau.",
+    "result.rank": " Kedudukan #{rank} dalam papan skor pelayar ini.",
+    "result.try": " Cuba lagi untuk mengurangkan cubaan salah atau memperbaiki masa.",
+    "result.complete": "Pusingan selesai. {score} daripada 10 markah. Masa {time}.",
+    "round.next": "Soalan {number} daripada 10. Pilih bongkah untuk R1.",
+    "leave.progress": "Anda sedang bermain soalan",
+    "leave.count": "{number} daripada 10",
+    "language.label": "Bahasa",
+    "language.changed": "Bahasa Melayu dipilih.",
+    "csv.headers": "Kedudukan|Nama|Kategori|Kelas|Markah|Jumlah|Kesilapan|Petunjuk|Langkau|Cubaan pertama|Masa (saat)|Tarikh (Malaysia)"
+  },
+  "en": {
+    "Terus ke kandungan": "Skip to content",
+    "GeoDecoder Digital, halaman mula": "GeoDecoder Digital, home",
+    "Menu utama": "Main menu",
+    "DIGITAL EDITION": "DIGITAL EDITION",
+    "Cara main": "How to play",
+    "Papan skor": "Leaderboard",
+    "MAKMAL GEOMETRI ANDA": "YOUR GEOMETRY LAB",
+    "Kenali bentuk.": "Discover shapes.",
+    "Temui padanannya.": "Find their matches.",
+    "Bongkah 3D, kad bentangan dan dua pengimbas.": "3D solids, net cards and two scanners.",
+    "Pengalaman GeoDecoder, kini boleh dimainkan di skrin.": "Play GeoDecoder on your screen.",
+    "Ilustrasi bongkah dan bentangan di atas dua pengimbas digital": "Solids and nets above two digital scanners",
+    "Seret. Imbas. Padankan.": "Drag. Scan. Match.",
+    "BONGKAH": "SOLID",
+    "BENTANGAN": "NET",
+    "Pasangan tepat!": "A perfect match!",
+    "jenis bongkah": "types of solids",
+    "soalan setiap pusingan": "questions per round",
+    "Cabar skor sendiri": "Beat your own score",
+    "SEDIA UNTUK MENCUBA?": "READY TO TRY?",
+    "Jom kenalkan diri.": "Introduce yourself.",
+    "Isi maklumat anda sebelum mula bermain.": "Enter your details before you start.",
+    "Nama pemain": "Player name",
+    "Contoh: Aisyah": "Example: Aisyah",
+    "Saya seorang": "I am a",
+    "Murid": "Pupil",
+    "Pelajar": "Student",
+    "Kelas": "Class",
+    "Contoh: 1 Bestari": "Example: 1 Bestari",
+    "Mulakan permainan": "Start game",
+    "Nama dan skor disimpan dalam pelayar ini sahaja. Anda boleh gunakan nama panggilan.": "Your name and score stay in this browser. You may use a nickname.",
+    "Markah": "Score",
+    "Masa": "Time",
+    "Hidupkan bunyi": "Turn sound on",
+    "Matikan bunyi": "Turn sound off",
+    "Jeda permainan": "Pause game",
+    "Kembali ke mula": "Back to start",
+    "SOALAN 01 / 10": "QUESTION 01 / 10",
+    "Kenali bongkah": "Explore solids",
+    "Kemajuan soalan": "Question progress",
+    "Beri petunjuk": "Show hint",
+    "Tutup petunjuk": "Hide hint",
+    "Tiada potongan markah": "No points deducted",
+    "Pilih bongkah yang betul": "Choose the correct solid",
+    "Seret ke pengimbas, atau klik kad kemudian klik pengimbas.": "Drag to a scanner, or select a card and click the scanner.",
+    "Pengimbas R1, imbas bongkah": "Scanner R1, scan a solid",
+    "Pengimbas R2, jawab R1 dahulu": "Scanner R2, answer R1 first",
+    "BONGKAH 3D": "3D SOLID",
+    "BENTANGAN 2D": "2D NET",
+    "Sedia diimbas": "Ready to scan",
+    "Letak bongkah di sini": "Place a solid here",
+    "Kemudian letak bentangan": "Then place a net",
+    "Letak kad bentangan di sini": "Place a net card here",
+    "LANGKAH 1 · PILIH BONGKAH": "STEP 1 · CHOOSE A SOLID",
+    "LANGKAH 2 · PADANKAN BENTANGAN": "STEP 2 · MATCH THE NET",
+    "Jawab R1 dahulu": "Answer R1 first",
+    "Baca soalan, kemudian pilih satu bongkah untuk R1.": "Read the question, then choose a solid for R1.",
+    "Koleksi bongkah": "Solid collection",
+    "5 pilihan · seret atau klik": "5 choices · drag or click",
+    "Kad bentangan": "Net cards",
+    "5 pilihan · kad tanpa nama": "5 choices · unnamed cards",
+    "Sedia": "Ready",
+    "Betul": "Correct",
+    "Cuba lagi": "Try again",
+    "Petunjuk": "Hint",
+    "Langkau soalan": "Skip question",
+    "+0 markah": "+0 points",
+    "PUSINGAN SELESAI": "ROUND COMPLETE",
+    "Bagus, teruskan meneroka!": "Well done, keep exploring!",
+    "/ 10 markah": "/ 10 points",
+    "Pakar padanan": "Matching expert",
+    "Masa bermain": "Playing time",
+    "Betul cubaan pertama": "Correct on first try",
+    "Cubaan salah": "Wrong attempts",
+    "Soalan guna petunjuk": "Questions with hints",
+    "Main lagi": "Play again",
+    "Tukar pemain": "Change player",
+    "PERANTI INI": "THIS DEVICE",
+    "Lihat semua skor": "View all scores",
+    "Skor lebih tinggi dahulu, kemudian cubaan salah lebih sedikit dan masa lebih pantas.": "Higher scores first, then fewer wrong attempts and faster times.",
+    "Lihat semula pusingan anda": "Review your round",
+    "Kenali pasangan yang telah dijawab atau dilangkau.": "Explore the pairs you answered or skipped.",
+    "Simpanan pelayar tidak tersedia. Anda masih boleh bermain; skor sesi ini boleh dieksport sebelum halaman ditutup.": "Browser storage is unavailable. You can still play and export this session’s scores before closing the page.",
+    "Digital V1": "Digital V1",
+    "Belajar bentuk. Bina kefahaman.": "Explore shapes. Build understanding.",
+    "Serasi tetikus, sentuhan & papan kekunci": "Mouse, touch & keyboard support",
+    "Tutup tetingkap": "Close window",
+    "Hidupkan JavaScript dalam pelayar untuk bermain GeoDecoder Digital.": "Enable JavaScript in your browser to play GeoDecoder Digital.",
+    "Main GeoDecoder Digital: seret bongkah 3D ke R1, padankan bentangannya di R2 dan kumpulkan 10 markah.": "Play GeoDecoder Digital: drag 3D solids to R1, match their nets at R2 and earn 10 points.",
+    "GeoDecoder Digital — Jom main geometri": "GeoDecoder Digital — Explore geometry",
+    "GeoDecoder Digital — Sedang bermain": "GeoDecoder Digital — Playing",
+    "GeoDecoder Digital — Keputusan pusingan": "GeoDecoder Digital — Round results",
+    "Masukkan nama antara 2 hingga 60 aksara.": "Enter a name with 2 to 60 characters.",
+    "Pilih Murid atau Pelajar.": "Choose Pupil or Student.",
+    "Masukkan kelas, maksimum 40 aksara.": "Enter a class, up to 40 characters.",
+    "Maklumat belum lengkap. ": "Some details are missing. ",
+    "Permainan bermula. Sepuluh soalan. Pilih bongkah untuk R1 dahulu.": "Game started. Ten questions. Choose a solid for R1 first.",
+    "Cabaran rumus": "Formula challenge",
+    "Cabaran bentangan": "Net challenge",
+    "Bongkah apakah ini?": "Which solid is this?",
+    "Bongkah manakah yang sepadan?": "Which solid matches?",
+    "Rumus ini mewakili bongkah apa?": "Which solid does this formula describe?",
+    "V = isi padu · L = luas permukaan · j = jejari · t = tinggi": "V = volume · L = surface area · j = radius · t = height",
+    "bongkah": "solid",
+    "bentangan": "net",
+    "Bongkah": "Solid",
+    "Kad": "Card",
+    "kad bentangan": "net card",
+    "Pasangan tepat! +1 markah": "A perfect match! +1 point",
+    "Soalan dilangkau. +0 markah": "Question skipped. +0 points",
+    "Bagus! Kini padankan bentangannya": "Great! Now match its net",
+    "Bongkah diterima": "Solid accepted",
+    "Bentangan diterima": "Net accepted",
+    "+1 markah": "+1 point",
+    "Dilangkau": "Skipped",
+    "Imbasan betul": "Correct scan",
+    "Petunjuk dibuka": "Hint open",
+    "Mulakan dengan bongkah di R1. Kad bentangan digunakan selepas itu.": "Start with a solid at R1. Use a net card after that.",
+    "Bongkah R1 sudah betul. Pilih satu kad bentangan untuk R2.": "The solid at R1 is correct. Choose a net card for R2.",
+    "R1 dahulu. Imbas bongkah sebelum kad bentangan.": "R1 first. Scan a solid before a net card.",
+    "Bongkah R1 sudah betul. Padankan kad bentangan di R2.": "The solid at R1 is correct. Match its net card at R2.",
+    "R1 hanya menerima bongkah 3D.": "R1 only accepts 3D solids.",
+    "R2 hanya menerima kad bentangan.": "R2 only accepts net cards.",
+    "Belum tepat. Lihat sifat dalam soalan dan cuba bongkah lain.": "Not quite. Read the properties and try another solid.",
+    "Bentangan belum sepadan. Bongkah R1 kekal betul; cuba kad bentangan lain.": "The net does not match. The solid at R1 stays correct; try another net card.",
+    "Bongkah betul! Sekarang seret kad bentangannya ke R2.": "Correct solid! Now drag its net card to R2.",
+    "Pasangan tepat! +1 markah. Bersedia untuk soalan seterusnya.": "A perfect match! +1 point. Get ready for the next question.",
+    "Petunjuk dibuka. Baca petunjuk dan teruskan memilih.": "Hint open. Read it and keep choosing.",
+    "Petunjuk ditutup. Teruskan menjawab.": "Hint closed. Keep answering.",
+    "Soalan dilangkau. Tiada markah untuk soalan ini.": "Question skipped. No points for this question.",
+    "Pilihan belum diimbas. Seret ke pengimbas yang aktif, atau klik pengimbas.": "Your choice has not been scanned. Drag it to the active scanner, or click the scanner.",
+    "Semua skor dalam pelayar ini telah dipadam.": "All scores in this browser have been deleted.",
+    "Skor tersimpan tidak dapat dipadam. Semak kebenaran storan pelayar dan cuba lagi.": "Saved scores could not be deleted. Check browser storage permissions and try again.",
+    "Cara main GeoDecoder": "How to play GeoDecoder",
+    "Sambung permainan": "Resume game",
+    "Saya faham": "Got it",
+    "Permainan dijeda": "Game paused",
+    "Permainan dijeda semasa anda meninggalkan tab ini.": "The game was paused while you were away from this tab.",
+    "Berehat seketika. Masa dan soalan anda dikekalkan.": "Take a break. Your time and question are kept.",
+    "Tamatkan pusingan": "End round",
+    "Tamatkan pusingan ini?": "End this round?",
+    "Terus bermain": "Keep playing",
+    "Skor pertama menanti": "Your first score awaits",
+    "Lengkapkan satu pusingan untuk menyimpan skor.": "Complete a round to save your score.",
+    "Skor terbaik dalam pelayar ini": "Best scores in this browser",
+    "Pemain": "Player",
+    "Salah / Masa": "Errors / Time",
+    "Belum ada skor": "No scores yet",
+    "Lengkapkan 10 soalan untuk merekodkan skor pertama.": "Complete 10 questions to record your first score.",
+    "Skor sesi ini sahaja; simpanan pelayar tidak tersedia.": "Session scores only; browser storage is unavailable.",
+    "Rekod dalam pelayar ini sahaja. Maksimum 50 skor terbaik.": "Records stay in this browser. Up to 50 best scores.",
+    "Tutup papan skor": "Close leaderboard",
+    "Padam semua skor?": "Delete all scores?",
+    "Kekalkan skor": "Keep scores",
+    "Padam semua skor": "Delete all scores",
+    "Fail CSV papan skor telah disediakan.": "The leaderboard CSV file is ready.",
+    "Hebat! Semua pasangan tepat.": "Excellent! Every pair is correct.",
+    "Bagus, anda semakin mahir!": "Well done, your skills are growing!",
+    "Teruskan mencuba, teruskan belajar.": "Keep trying, keep learning.",
+    "Penjelajah geometri": "Geometry explorer",
+    "Peneroka bentuk": "Shape explorer",
+    "✓ Pasangan betul": "✓ Correct pair",
+    "↷ Dilangkau": "↷ Skipped",
+    "Bunyi tidak tersedia dalam pelayar ini. Permainan boleh diteruskan.": "Sound is unavailable in this browser. You can keep playing.",
+    "Satu soalan, dua padanan. Sasarkan": "One question, two matches. Aim for",
+    "10 daripada 10 markah": "10 out of 10 points",
+    "Baca soalan dan pilih bongkah": "Read the question and choose a solid",
+    "Seret satu bongkah 3D ke pengimbas R1 yang berwarna biru.": "Drag a 3D solid to the blue R1 scanner.",
+    "Padankan kad bentangannya": "Match its net card",
+    "Selepas R1 hijau, seret kad bentangan yang sepadan ke R2.": "When R1 turns green, drag the matching net card to R2.",
+    "Kumpulkan satu markah": "Earn one point",
+    "Pasangan betul memberi +1. Kedua-dua pengimbas berkelip hijau sebelum soalan seterusnya.": "A correct pair earns +1. Both scanners flash green before the next question.",
+    "Tanpa menyeret:": "Without dragging:",
+    "klik / sentuh kad": "click / tap a card",
+    "kemudian": "then",
+    "klik pengimbas": "click the scanner",
+    "Papan kekunci:": "Keyboard:",
+    "untuk bergerak,": "to move,",
+    "atau": "or",
+    "untuk memilih dan mengimbas.": "to choose and scan.",
+    "Salah? Cuba lagi.": "Wrong? Try again.",
+    "Tiada potongan markah. Petunjuk juga percuma. Langkau memberi +0 untuk soalan itu. Jam dijeda semasa tetingkap ini dibuka.": "No points are deducted. Hints are free too. Skipping earns +0 for that question. The clock pauses while this window is open.",
+    "Tekan sambung apabila sudah bersedia.": "Press resume when you are ready.",
+    "Jika kembali ke mula, kemajuan pusingan ini dilepaskan dan skor pusingan ini tidak disimpan.": "If you return to the start, this round’s progress will be lost and its score will not be saved.",
+    "Skor tertinggi dahulu, kemudian cubaan salah paling sedikit dan masa terpantas.": "Highest scores first, then fewest wrong attempts and fastest times.",
+    "Eksport CSV": "Export CSV",
+    "Padam skor": "Delete scores",
+    "Semua rekod nama, kelas dan keputusan dalam papan skor pelayar ini akan dipadam. Muat turun CSV dahulu jika mahu menyimpannya.": "All names, classes and results in this browser’s leaderboard will be deleted. Download the CSV first if you want to keep them.",
+    "question.counter": "QUESTION {number} / 10",
+    "question.progress": "Question {number} of 10. {score} correct pairs, {skipped} skipped.",
+    "question.dot": "Question {number}{state}",
+    "question.current": ": current",
+    "question.correct": ": correct",
+    "question.skipped": ": skipped",
+    "choice.label": "Choose {kind} {letter}. {description}",
+    "choice.selected": "{kind} {letter} selected. Click scanner {target} to scan.",
+    "choice.first": "Choose a {kind} first, then click scanner {target}.",
+    "scanner.label": "Scanner {target}, {kind}. {status}.",
+    "scanner.action": " Click or press Enter to scan your choice.",
+    "score.mine": " · You",
+    "score.wrong": "{count} wrong attempts",
+    "score.shortWrong": "{count} errors",
+    "score.records": "{shown} of {total} records",
+    "result.summary": "{score} correct pairs, {skipped} questions skipped.",
+    "result.rank": " Rank #{rank} in this browser’s leaderboard.",
+    "result.try": " Play again to reduce wrong attempts or improve your time.",
+    "result.complete": "Round complete. {score} out of 10 points. Time {time}.",
+    "round.next": "Question {number} of 10. Choose a solid for R1.",
+    "leave.progress": "You are on question",
+    "leave.count": "{number} of 10",
+    "language.label": "Language",
+    "language.changed": "English selected.",
+    "csv.headers": "Rank|Name|Category|Class|Score|Total|Errors|Hints|Skipped|First try|Time (seconds)|Date (Malaysia)"
+  }
+};
+const SHAPE_COPY = {
+  "ms": {
+    "cube": {
+      "name": "Kubus",
+      "solid": "Bongkah dengan muka segi empat sama dan semua tepi sama panjang.",
+      "net": "Bentangan enam segi empat sama sama saiz, membentuk salib dengan empat petak sebaris."
+    },
+    "cuboid": {
+      "name": "Kuboid",
+      "solid": "Bongkah seperti kotak; panjang, lebar dan tinggi berbeza dalam contoh ini.",
+      "net": "Bentangan enam segi empat tepat: tiga pasang muka berhadapan dengan ukuran berbeza."
+    },
+    "pyramid": {
+      "name": "Piramid bertapak segi empat sama",
+      "solid": "Bongkah bertapak segi empat sama; muka segi tiga bertemu pada satu puncak.",
+      "net": "Bentangan satu segi empat sama, dengan satu segi tiga pada setiap empat sisinya."
+    },
+    "cylinder": {
+      "name": "Silinder",
+      "solid": "Bongkah dengan dua tapak bulatan sama saiz dan satu permukaan melengkung.",
+      "net": "Bentangan satu segi empat tepat dan dua bulatan sama saiz pada sisi bertentangan."
+    },
+    "cone": {
+      "name": "Kon",
+      "solid": "Bongkah dengan satu tapak bulatan dan satu permukaan melengkung yang bertemu pada puncak.",
+      "net": "Bentangan satu sektor bulatan dan satu bulatan; panjang lengkok sektor sepadan lilitan tapak."
+    }
+  },
+  "en": {
+    "cube": {
+      "name": "Cube",
+      "solid": "A solid with square faces and edges of equal length.",
+      "net": "A net of six equal squares, in a cross with four squares in a row."
+    },
+    "cuboid": {
+      "name": "Cuboid",
+      "solid": "A box-shaped solid with different length, width and height in this example.",
+      "net": "A net of six rectangles: three pairs of opposite faces with different dimensions."
+    },
+    "pyramid": {
+      "name": "Square-based pyramid",
+      "solid": "A solid with a square base and triangular faces meeting at an apex.",
+      "net": "A net of one square with a triangle on each of its four sides."
+    },
+    "cylinder": {
+      "name": "Cylinder",
+      "solid": "A solid with two circular bases of the same size and one curved surface.",
+      "net": "A net of one rectangle and two equal circles on opposite sides."
+    },
+    "cone": {
+      "name": "Cone",
+      "solid": "A solid with one circular base and a curved surface meeting at an apex.",
+      "net": "A net of one sector of a circle and one circle; the sector’s arc length matches the base circumference."
+    }
+  }
+};
+const QUESTION_COPY = {
+  "P1": {
+    "lines": [
+      "Which solid is this?",
+      "A square base with",
+      "4 triangular faces."
+    ],
+    "prompt": "Which solid is this? A square base with 4 triangular faces.",
+    "hint": "The side faces meet at an apex when folded."
+  },
+  "P2": {
+    "lines": [
+      "V=a^2*t/3; t=height",
+      "a=side length of the square base",
+      "Which solid is this?"
+    ],
+    "prompt": "V=a^2*t/3; t=height a=side length of the square base Which solid is this?",
+    "hint": "a^2 is the base area. Think about the solid’s side faces."
+  },
+  "P3": {
+    "lines": [
+      "Choose the net with",
+      "1 square",
+      "and 4 triangles."
+    ],
+    "prompt": "Choose the net with 1 square and 4 triangles.",
+    "hint": "Fold the triangles along the square’s sides until they meet at 1 apex."
+  },
+  "S1": {
+    "lines": [
+      "A drinks can has two",
+      "equal circular bases.",
+      "Which solid is this?"
+    ],
+    "prompt": "A drinks can has two equal circular bases. Which solid is this?",
+    "hint": "Two circular bases of the same size are joined by a curved surface."
+  },
+  "S2": {
+    "lines": [
+      "V=pi*j^2*t",
+      "L=2*pi*j*(j+t)",
+      "Which solid is this?"
+    ],
+    "prompt": "V=pi*j^2*t L=2*pi*j*(j+t) Which solid is this?",
+    "hint": "j=radius and t=height. The top and bottom bases are the same size."
+  },
+  "S3": {
+    "lines": [
+      "Choose the net:",
+      "2 circles of the same size,",
+      "1 rectangle."
+    ],
+    "prompt": "Choose the net: 2 circles of the same size, 1 rectangle.",
+    "hint": "Curve the rectangle; the two circles become the bases."
+  },
+  "K1": {
+    "lines": [
+      "Six faces in the shape",
+      "of squares.",
+      "Which solid is this?"
+    ],
+    "prompt": "Six faces in the shape of squares. Which solid is this?",
+    "hint": "12 edges of equal length. Every face has the same shape and size."
+  },
+  "K2": {
+    "lines": [
+      "V=a^3; L=6*a^2",
+      "a=edge length",
+      "Which solid is this?"
+    ],
+    "prompt": "V=a^3; L=6*a^2 a=edge length Which solid is this?",
+    "hint": "The length, width and height of this solid are equal."
+  },
+  "K3": {
+    "lines": [
+      "Choose the net:",
+      "6 squares,",
+      "all the same size."
+    ],
+    "prompt": "Choose the net: 6 squares, all the same size.",
+    "hint": "Imagine folding the faces into a box without any faces overlapping."
+  },
+  "C1": {
+    "lines": [
+      "V=pi*j^2*t/3",
+      "j=radius; t=height.",
+      "Which solid is this?"
+    ],
+    "prompt": "V=pi*j^2*t/3 j=radius; t=height. Which solid is this?",
+    "hint": "Look at its circular base. Its curved surface narrows to an apex."
+  },
+  "C2": {
+    "lines": [
+      "L=pi*j*(j+s)",
+      "j=radius; s=slant",
+      "height. Which shape is it?"
+    ],
+    "prompt": "L=pi*j*(j+s) j=radius; s=slant height. Which shape is it?",
+    "hint": "The slant height is measured along a straight line on the curved surface from the base edge to the apex."
+  },
+  "C3": {
+    "lines": [
+      "Choose the net with",
+      "1 sector of a circle",
+      "and 1 circle."
+    ],
+    "prompt": "Choose the net with 1 sector of a circle and 1 circle.",
+    "hint": "Join the straight sides of the sector. The circle becomes the base."
+  },
+  "B1": {
+    "lines": [
+      "This box has",
+      "3 different dimensions.",
+      "Which solid is this?"
+    ],
+    "prompt": "This box has 3 different dimensions. Which solid is this?",
+    "hint": "Look at the length, width and height. Opposite faces are equal."
+  },
+  "B2": {
+    "lines": [
+      "V=p*l*t; p,l,t are",
+      "3 different dimensions.",
+      "Which solid is this?"
+    ],
+    "prompt": "V=p*l*t; p,l,t are 3 different dimensions. Which solid is this?",
+    "hint": "p=length, l=width, t=height. Think of a shoe box."
+  },
+  "B3": {
+    "lines": [
+      "A box: 6cm x 4cm",
+      "with a height of 3cm.",
+      "Choose its net."
+    ],
+    "prompt": "A box: 6cm x 4cm with a height of 3cm. Choose its net.",
+    "hint": "Match the faces of the same size, then fold them into a box."
+  }
+};
+
+// Digital presentation only: retain the byte-for-byte firmware/source snapshot.
+const QUESTION_BM_COPY = {
+  P1: {lines:['Bongkah apakah ini?','Tapak segi empat sama dengan','4 muka segi tiga.']},
+  P2: {lines:['V=a^2*t/3; t=tinggi','a=panjang sisi tapak segi empat sama','Bongkah apakah ini?']},
+  S1: {hint:'2 tapak bulatan sama saiz disambungkan oleh satu permukaan melengkung.'},
+  K1: {hint:'12 tepi sama panjang. Setiap muka sama bentuk dan saiz.'},
+  K2: {lines:['V=a^3; L=6*a^2','a=panjang tepi','Bongkah apakah ini?']},
+  C1: {hint:'Lihat tapaknya yang bulat. Permukaan melengkungnya mengecil ke puncak.'},
+  C2: {hint:'Tinggi sendeng diukur dari tepi tapak ke puncak di sepanjang garis lurus pada permukaan melengkung.'}
+};
+const moduleMessages = {
+  'view.top':['Pandangan atas','Top view'],
+  'view.bottom':['Pandangan bawah','Bottom view'],
+  'view.front':['Pandangan hadapan','Front view'],
+  'view.back':['Pandangan belakang','Back view'],
+  'view.left':['Pandangan kiri','Left view'],
+  'view.right':['Pandangan kanan','Right view'],
+  'view.plan':['Pelan','Plan'],
+  'view.frontElevation':['Dongakan hadapan','Front elevation'],
+  'view.sideElevation':['Dongakan sisi','Side elevation'],
+  'animation.unfold':['Buka bentangan','Unfold'],
+  'animation.fold':['Lipat menjadi bongkah','Fold into a solid'],
+  'animation.play':['Mainkan animasi','Play animation'],
+  'animation.pause':['Jeda animasi','Pause animation'],
+  'animation.reset':['Tetapkan semula pandangan','Reset view']
+};
+for (const [key,[ms,en]] of Object.entries(moduleMessages)) {
+  MESSAGES.ms[key]=ms;MESSAGES.en[key]=en;
+}
+const LANGUAGE_KEY = 'geodecoder.digital.language';
+function createI18n(storage) {
+  let language = 'ms';
+  try { const saved = storage?.getItem(LANGUAGE_KEY); if (saved === 'en') language = 'en'; } catch { /* Session preference still works. */ }
+  return {
+    get language() { return language; },
+    setLanguage(next) {
+      if (next !== 'ms' && next !== 'en') return false;
+      language = next;
+      try { storage?.setItem(LANGUAGE_KEY, next); } catch { /* Keep in-memory selection. */ }
+      return true;
+    }
+  };
+}
+function translate(language, key, params = {}) {
+  const catalog = MESSAGES[language] || MESSAGES.ms;
+  const message = catalog[key] ?? MESSAGES.ms[key] ?? '';
+  return message.replace(/\{(\w+)\}/g, (_, name) => String(params[name] ?? ''));
+}
+function localizeQuestion(question, language = 'ms') {
+  const text = language === 'en' ? QUESTION_COPY[question.id] : QUESTION_BM_COPY[question.id];
+  const result={...question,...text,lines:[...(text?.lines||question.lines)]};
+  if(text?.lines)result.prompt=result.lines.join(' ');
+  return result;
+}
+function shapeName(shape, language = 'ms') { return SHAPE_COPY[language]?.[shape]?.name || SHAPE_COPY.ms[shape]?.name || ''; }
+
+
 const SCORE_KEY = 'geodecoder.digital.v1.scores';
 const MAX_SCORES = 50;
 
 function validRecord(r) {
-  return !!r && typeof r.id === 'string' && r.id.length < 120 && r.version === '1.0.0' &&
+  return !!r && typeof r.id === 'string' && r.id.length < 120 && ['1.0.0','1.1.0'].includes(r.version) &&
     !!r.player && typeof r.player.name === 'string' && r.player.name.length >= 2 && r.player.name.length <= 60 &&
     ['Murid', 'Pelajar'].includes(r.player.category) && typeof r.player.className === 'string' && r.player.className.length > 0 && r.player.className.length <= 40 &&
     r.total === 10 && Number.isInteger(r.score) && r.score >= 0 && r.score <= 10 &&
@@ -529,38 +1233,20 @@ class ScoreStore {
   }
 }
 
-function csvScores(scores) {
+function csvScores(scores,language='ms') {
   const field = value => {
     let v = String(value);
     if (/^\s*[=+@\-\t\r]/.test(v)) v = "'" + v;
     return '"' + v.replaceAll('"', '""') + '"';
   };
-  const header = ['Kedudukan','Nama','Kategori','Kelas','Markah','Jumlah','Kesilapan','Hint','Langkau','Cubaan pertama','Masa (saat)','Tarikh (Malaysia)'];
-  const rows = rankScores(scores).map((r, i) => [i+1,r.player.name,r.player.category,r.player.className,r.score,r.total,r.mistakes,r.hints,r.skipped,r.firstTry,(r.elapsed / 1000).toFixed(3),new Date(r.completedAt).toLocaleString('ms-MY',{timeZone:'Asia/Kuala_Lumpur'})]);
+  const header = translate(language,'csv.headers').split('|');
+  const rows = rankScores(scores).map((r, i) => [i+1,r.player.name,translate(language,r.player.category),r.player.className,r.score,r.total,r.mistakes,r.hints,r.skipped,r.firstTry,(r.elapsed / 1000).toFixed(3),new Date(r.completedAt).toLocaleString(language==='en'?'en-MY':'ms-MY',{timeZone:'Asia/Kuala_Lumpur'})]);
   return '\uFEFF' + [header,...rows].map(row => row.map(field).join(',')).join('\r\n');
 }
 
 
-const SHAPE_NAMES = {cube:'Kubus',cuboid:'Kuboid',pyramid:'Piramid',cylinder:'Silinder',cone:'Kon'};
-
-const descriptions = {
-  solid: {
-    cube:'Bongkah dengan muka segi empat sama dan semua rusuk sama panjang.',
-    cuboid:'Bongkah seperti kotak, dengan panjang, lebar dan tinggi yang berbeza.',
-    pyramid:'Bongkah bertapak segi empat sama; muka segi tiga bertemu pada satu puncak.',
-    cylinder:'Bongkah dengan dua tapak bulatan sama saiz dan satu sisi melengkung.',
-    cone:'Bongkah dengan satu tapak bulatan dan sisi melengkung yang bertemu pada puncak.'
-  },
-  net: {
-    cube:'Bentangan enam segi empat sama sama saiz, membentuk salib dengan empat petak sebaris.',
-    cuboid:'Bentangan enam segi empat tepat: tiga pasang muka berhadapan dengan ukuran berbeza.',
-    pyramid:'Bentangan satu segi empat sama, dengan satu segi tiga pada setiap empat sisinya.',
-    cylinder:'Bentangan satu segi empat tepat dan dua bulatan sama saiz pada sisi bertentangan.',
-    cone:'Bentangan satu sektor bulatan dan satu bulatan; panjang lengkok sektor sepadan lilitan tapak.'
-  }
-};
-
-function describeShape(shape, kind) { return descriptions[kind][shape]; }
+const SHAPE_NAMES = Object.fromEntries(Object.entries(SHAPE_COPY.ms).map(([key,value])=>[key,value.name]));
+function describeShape(shape,kind,language='ms'){return SHAPE_COPY[language]?.[shape]?.[kind]||SHAPE_COPY.ms[shape]?.[kind]||'';}
 
 function icon(name, cls='') {
   const paths = {
@@ -588,7 +1274,7 @@ function icon(name, cls='') {
   return `<svg class="icon ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name]||paths.spark}</svg>`;
 }
 
-function shapeArt(shape, kind='solid', decorative=false) {
+function shapeArt(shape, kind='solid', decorative=false, language='ms') {
   const common='stroke="#236D69" stroke-width="2.2" stroke-linejoin="round"';
   let content='';
   if(kind==='solid') {
@@ -611,7 +1297,7 @@ function shapeArt(shape, kind='solid', decorative=false) {
     };
     content=nets[shape]||'';
   }
-  return `<svg class="shape-art" viewBox="0 0 200 164" ${decorative?'aria-hidden="true"':`role="img" aria-label="${descriptions[kind][shape]}"`}><g>${kind==='solid'?'<ellipse cx="100" cy="148" rx="60" ry="7" fill="#18334B" opacity=".06"/>':''}${content}</g></svg>`;
+  return `<svg class="shape-art" viewBox="0 0 200 164" ${decorative?'aria-hidden="true"':`role="img" aria-label="${describeShape(shape,kind,language)}"`}><g>${kind==='solid'?'<ellipse cx="100" cy="148" rx="60" ry="7" fill="#18334B" opacity=".06"/>':''}${content}</g></svg>`;
 }
 
 function brandArt() {
@@ -619,19 +1305,32 @@ function brandArt() {
 }
 
 
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// Symbol replacement must leave words such as tepi and overlapping intact.
+function formatMathText(value) {
+  return escapeHtml(value).replace(/\bpi\b/g,'π').replaceAll('^2','²').replaceAll('^3','³').replaceAll('*',' × ').replaceAll('=', ' = ').replaceAll('6cm','6 cm').replaceAll('4cm','4 cm').replaceAll('3cm','3 cm').replaceAll(' x ',' × ');
+}
+
+
 
 const $ = id => document.getElementById(id);
-const escapeHtml = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const pretty = value => escapeHtml(value).replaceAll('pi', 'π').replaceAll('^2','²').replaceAll('^3','³').replaceAll('*',' × ').replaceAll('=', ' = ').replaceAll('6cm', '6 cm').replaceAll('4cm','4 cm').replaceAll('3cm','3 cm').replaceAll(' x ', ' × ');
+const pretty = formatMathText;
 const now = () => performance.now();
 let storage;
 try { storage = window.localStorage; } catch { storage = {getItem(){throw new Error('Storage unavailable');},setItem(){throw new Error('Storage unavailable');},removeItem(){throw new Error('Storage unavailable');}}; }
 const store = new ScoreStore(storage);
+const locale = createI18n(storage);
+const t = (key,params) => translate(locale.language,key,params);
 let screen = 'welcome', game = null, selected = null, acceptedSolid = null, acceptedNet = null;
 let player = null, roundId = '', lastResult = null, dialogMode = '', dialogTrigger = null;
 let drag = null, suppressClickUntil = 0, hiddenPause = false, sound = false, audioContext = null;
 let scoresExpanded = false, lastClock = '', lastLed = {};
 const dialog = $('app-dialog');
+const languageControl=$('language-control'), languageHome=languageControl.parentElement;
+let refreshingLanguage=false, lastStatus=null, validationErrors=null, scoreNotice='', automaticPause=false;
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 function hydrate(root = document) {
@@ -642,11 +1341,14 @@ function hydrate(root = document) {
 hydrate();
 
 function announce(message) { $('announcer').textContent = ''; requestAnimationFrame(() => { $('announcer').textContent = message; }); }
-function setStatus(message, tone = '', symbol = 'cursor') {
-  $('feedback-text').textContent = message;
-  $('game-status').className = `game-feedback ${tone}`;
-  const existing = $('game-status').querySelector('.icon');
-  if (existing) existing.outerHTML = icon(symbol);
+function setStatus(key, tone = '', symbol = 'cursor', params = {}) {
+  if(!refreshingLanguage)lastStatus={key,tone,symbol,params};
+  const values={...params};
+  if(values.kind)values.kind=t(values.kind);
+  $('feedback-text').textContent=t(key,values);
+  $('game-status').className=`game-feedback ${tone}`;
+  const existing=$('game-status').querySelector('.icon');
+  if(existing)existing.outerHTML=icon(symbol);
 }
 function storageStatus() { $('storage-warning').hidden = !store.failed; }
 function showScreen(next) {
@@ -654,8 +1356,11 @@ function showScreen(next) {
   $('welcome').hidden = next !== 'welcome';
   $('game-screen').hidden = next !== 'game';
   $('result-screen').hidden = next !== 'result';
-  document.title = next === 'welcome' ? 'GeoDecoder Digital — Jom main geometri' : next === 'game' ? 'GeoDecoder Digital — Sedang bermain' : 'GeoDecoder Digital — Keputusan pusingan';
+  updateTitle(next);
   window.scrollTo({top:0,behavior:'instant'});
+}
+function updateTitle(next=screen) {
+  document.title = next === 'welcome' ? t("GeoDecoder Digital — Jom main geometri") : next === 'game' ? t("GeoDecoder Digital — Sedang bermain") : t("GeoDecoder Digital — Keputusan pusingan");
 }
 function uid() { return globalThis.crypto?.randomUUID?.() || `round-${Date.now()}-${Math.random().toString(36).slice(2)}`; }
 
@@ -664,24 +1369,25 @@ $('player-form').addEventListener('submit', event => {
   if (screen !== 'welcome') return;
   const form = new FormData(event.currentTarget);
   const result = validatePlayer({name:form.get('name'),category:form.get('category'),className:form.get('className')});
+  validationErrors=result.errors;
   for (const key of ['name','className']) {
     const field = $(key === 'name' ? 'player-name' : 'player-class');
-    $(key + '-error').textContent = result.errors[key] || '';
+    $(key + '-error').textContent = (result.errors[key] ? t(result.errors[key]) : '');
     field.setAttribute('aria-invalid', String(!!result.errors[key]));
   }
-  $('category-error').textContent = result.errors.category || '';
+  $('category-error').textContent = result.errors.category ? t(result.errors.category) : '';
   if (!result.valid) {
     if (result.errors.name) $('player-name').focus();
     else if (result.errors.category) document.querySelector('input[name="category"]').focus();
     else $('player-class').focus();
-    announce('Maklumat belum lengkap. ' + Object.values(result.errors).join(' '));
+    announce(t("Maklumat belum lengkap. ") + Object.values(result.errors).map(key=>t(key)).join(' '));
     return;
   }
   player = result.player;
   startGame();
 });
 for (const [id,key] of [['player-name','name'],['player-class','className']]) {
-  $(id).addEventListener('input', () => { $(id).removeAttribute('aria-invalid'); $(key+'-error').textContent = ''; });
+  $(id).addEventListener('input', () => { $(id).removeAttribute('aria-invalid'); $(key+'-error').textContent = '';if(validationErrors)delete validationErrors[key]; });
 }
 
 function startGame() {
@@ -691,56 +1397,61 @@ function startGame() {
   roundId = uid(); lastResult = null; lastClock = ''; lastLed = {};
   $('player-initial').textContent = player.name[0].toLocaleUpperCase('ms-MY');
   $('player-display').textContent = player.name;
-  $('player-meta').textContent = `${player.category} · ${player.className}`;
+  $('player-meta').textContent = `${t(player.category)} · ${player.className}`;
   showScreen('game');
   renderQuestion();
   $('question-title').focus({preventScroll:true});
-  announce('Permainan bermula. Sepuluh soalan. Pilih bongkah untuk R1 dahulu.');
+  announce(t("Permainan bermula. Sepuluh soalan. Pilih bongkah untuk R1 dahulu."));
 }
 
 function renderQuestion() {
   acceptedSolid = null; acceptedNet = null; selected = null;
-  const q = game.question;
-  const number = String(game.index+1).padStart(2,'0');
-  $('question-counter').textContent = `SOALAN ${number} / 10`;
-  $('question-topic').textContent = q.id.endsWith('2') || q.id === 'C1' ? 'Cabaran rumus' : q.id.endsWith('3') ? 'Cabaran bentangan' : 'Kenali bongkah';
-  let heading = 'Bongkah apakah ini?', detail = q.prompt;
-  if (/Pilih bentangan/.test(q.prompt) || q.id === 'B3') {
-    heading = 'Bongkah manakah yang sepadan?';
-  } else if (q.prompt.startsWith('V=') || q.prompt.startsWith('L=')) {
-    heading = 'Rumus ini mewakili bongkah apa?';
-  }
-  detail = detail.replace(/Bongkah apakah ini\?/g,'').replace(/Bentuk apa\?/g,'').trim();
-  $('question-title').textContent = heading;
-  if (q.id.endsWith('2') || q.id === 'C1') {
-    const formulaLines = q.lines.filter(line => /^V=|^L=/.test(line));
-    const rest = q.lines.filter(line => !/^V=|^L=/.test(line)).join(' ').replace(/Bongkah apakah ini\?|Bentuk apa\?/g,'').trim();
-    $('question-detail').innerHTML = `<span class="formula-line">${formulaLines.map(pretty).join('<br>')}</span>${pretty(rest)}`;
-  } else $('question-detail').innerHTML = pretty(detail);
-  $('formula-key').hidden = true;
-  if (q.id === 'S2') { $('formula-key').textContent = 'V = isi padu · L = luas permukaan · j = jejari · t = tinggi'; $('formula-key').hidden = false; }
-  $('hint-text').innerHTML = pretty(q.hint);
-  const dots = Array.from({length:10}, (_,i) => {
-    const answer = game.answers[i];
-    const cls = answer ? answer.outcome : i===game.index ? 'current' : '';
-    return `<span class="progress-dot ${cls}" title="Soalan ${i+1}${answer ? answer.outcome === 'correct' ? ': betul' : ': dilangkau' : i===game.index ? ': semasa' : ''}"></span>`;
-  }).join('');
-  $('progress-dots').innerHTML = dots;
-  $('progress-dots').setAttribute('aria-label', `Soalan ${game.index+1} daripada 10. ${game.score} pasangan betul, ${game.skipped} dilangkau.`);
+  renderQuestionContent();
   renderChoices('solid', game.solidOrder);
   renderChoices('net', game.netOrder);
   setStatus('Baca soalan, kemudian pilih satu bongkah untuk R1.');
   renderState();
 }
 
+function renderQuestionContent() {
+  const q = localizeQuestion(game.question, locale.language);
+  const number = String(game.index+1).padStart(2,'0');
+  $('question-counter').textContent = t('question.counter',{number});
+  $('question-topic').textContent = q.id.endsWith('2') || q.id === 'C1' ? t("Cabaran rumus") : q.id.endsWith('3') ? t("Cabaran bentangan") : t("Kenali bongkah");
+  let heading = t("Bongkah apakah ini?"), detail = q.prompt;
+  if (q.id.endsWith('3')) {
+    heading = t("Bongkah manakah yang sepadan?");
+  } else if (q.prompt.startsWith('V=') || q.prompt.startsWith('L=')) {
+    heading = t("Rumus ini mewakili bongkah apa?");
+  }
+  detail = detail.replace(/Bongkah apakah ini\?|Bentuk apa\?|Which solid is this\?|Which shape is it\?/g,'').trim();
+  $('question-title').textContent = heading;
+  if (q.id.endsWith('2') || q.id === 'C1') {
+    const formulaLines = q.lines.filter(line => /^V=|^L=/.test(line));
+    const rest = q.lines.filter(line => !/^V=|^L=/.test(line)).join(' ').replace(/Bongkah apakah ini\?|Bentuk apa\?|Which solid is this\?|Which shape is it\?/g,'').trim();
+    $('question-detail').innerHTML = `<span class="formula-line">${formulaLines.map(pretty).join('<br>')}</span>${pretty(rest)}`;
+  } else $('question-detail').innerHTML = pretty(detail);
+  $('formula-key').hidden = true;
+  if (q.id === 'S2') { $('formula-key').textContent = t("V = isi padu · L = luas permukaan · j = jejari · t = tinggi"); $('formula-key').hidden = false; }
+  $('hint-text').innerHTML = pretty(q.hint);
+  const dots = Array.from({length:10}, (_,i) => {
+    const answer = game.answers[i];
+    const cls = answer ? answer.outcome : i===game.index ? 'current' : '';
+    return `<span class="progress-dot ${cls}" title="${t('question.dot',{number:i+1,state:answer?t(answer.outcome==='correct'?'question.correct':'question.skipped'):i===game.index?t('question.current'):''})}"></span>`;
+  }).join('');
+  $('progress-dots').innerHTML = dots;
+  $('progress-dots').setAttribute('aria-label', t('question.progress',{number:game.index+1,score:game.score,skipped:game.skipped}));
+
+}
+
 function renderChoices(kind, order) {
   $(kind+'-choices').innerHTML = order.map((shape,i) => {
-    const letter = String.fromCharCode(65+i), label = kind === 'solid' ? 'bongkah' : 'bentangan';
-    return `<button type="button" class="choice ${kind === 'net' ? 'net-choice' : ''}" data-kind="${kind}" data-shape="${shape}" data-letter="${letter}" aria-pressed="false" aria-label="Pilih ${label} ${letter}. ${describeShape(shape,kind)}">${shapeArt(shape,kind,true)}<span class="choice-id"><span class="grip" aria-hidden="true">⠿</span>${kind === 'solid' ? 'Bongkah' : 'Kad'} ${letter}</span></button>`;
+    const letter = String.fromCharCode(65+i), label = kind === 'solid' ? t("bongkah") : t("bentangan");
+    return `<button type="button" class="choice ${kind === 'net' ? 'net-choice' : ''}" data-kind="${kind}" data-shape="${shape}" data-letter="${letter}" aria-pressed="false" aria-label="${escapeHtml(t('choice.label',{kind:label,letter,description:describeShape(shape,kind,locale.language)}))}">${shapeArt(shape,kind,true)}<span class="choice-id"><span class="grip" aria-hidden="true">⠿</span>${kind === 'solid' ? t("Bongkah") : t("Kad")} ${letter}</span></button>`;
   }).join('');
 }
 
-const emptyScanner = target => `<span class="scan-target"><span class="target-corner tl"></span><span class="target-corner tr"></span><span class="target-corner bl"></span><span class="target-corner br"></span>${icon(target === 'r2' && game.stage === 'solid' ? 'lock':'cursor')}</span><span class="scanner-placeholder">${target==='r1'?'Letak bongkah di sini':game.stage==='solid'?'Kemudian letak bentangan':'Letak kad bentangan di sini'}</span>`;
+const emptyScanner = target => `<span class="scan-target"><span class="target-corner tl"></span><span class="target-corner tr"></span><span class="target-corner bl"></span><span class="target-corner br"></span>${icon(target === 'r2' && game.stage === 'solid' ? 'lock':'cursor')}</span><span class="scanner-placeholder">${target==='r1'?t("Letak bongkah di sini"):game.stage==='solid'?t("Kemudian letak bentangan"):t("Letak kad bentangan di sini")}</span>`;
 
 function renderState() {
   if (!game) return;
@@ -751,9 +1462,9 @@ function renderState() {
   $('skip-button').disabled = busy;
   $('pause-button').disabled = game.status === 'feedback';
   $('hint-button').setAttribute('aria-expanded',String(game.hintOpen));
-  $('hint-label').textContent = game.hintOpen ? 'Tutup petunjuk' : 'Beri petunjuk';
+  $('hint-label').textContent = game.hintOpen ? t("Tutup petunjuk") : t("Beri petunjuk");
   $('hint-panel').hidden = !game.hintOpen;
-  $('stage-instruction').textContent = game.status==='feedback' ? game.lastOutcome==='correct'?'Pasangan tepat! +1 markah':'Soalan dilangkau. +0 markah' : game.stage==='solid'?'Pilih bongkah yang betul':'Bagus! Kini padankan bentangannya';
+  $('stage-instruction').textContent = game.status==='feedback' ? game.lastOutcome==='correct'?t("Pasangan tepat! +1 markah"):t("Soalan dilangkau. +0 markah") : game.stage==='solid'?t("Pilih bongkah yang betul"):t("Bagus! Kini padankan bentangannya");
   document.querySelectorAll('.choice').forEach(button => {
     const isSelected = selected && button.dataset.kind === selected.kind && button.dataset.shape === selected.shape;
     button.setAttribute('aria-pressed', String(!!isSelected));
@@ -768,12 +1479,12 @@ function renderState() {
     pad.classList.toggle('scanner-locked',target==='r2' && game.stage==='solid' && game.status !== 'feedback');
     pad.classList.toggle('filled',!!accepted);
     pad.classList.toggle('has-selection',!!selected && active===target && !busy);
-    const body = accepted ? `${shapeArt(accepted,kind,true)}<span class="scanned-label">${icon('check')}${target==='r1'?'Bongkah diterima':'Bentangan diterima'}</span>` : emptyScanner(target);
+    const body = accepted ? `${shapeArt(accepted,kind,true)}<span class="scanned-label">${icon('check')}${target==='r1'?t("Bongkah diterima"):t("Bentangan diterima")}</span>` : emptyScanner(target);
     if ($('scanner-body-'+target).innerHTML !== body) $('scanner-body-'+target).innerHTML = body;
     const led=game.led(target,now());
-    const status = game.status==='feedback' ? game.lastOutcome==='correct'?'+1 markah':'Dilangkau' : led==='red'?'Cuba lagi':accepted ? 'Imbasan betul' : target==='r2' && game.stage==='solid' ? 'Jawab R1 dahulu' : game.hintOpen ? 'Petunjuk dibuka' : 'Sedia diimbas';
+    const status = game.status==='feedback' ? game.lastOutcome==='correct'?t("+1 markah"):t("Dilangkau") : led==='red'?t("Cuba lagi"):accepted ? t("Imbasan betul") : target==='r2' && game.stage==='solid' ? t("Jawab R1 dahulu") : game.hintOpen ? t("Petunjuk dibuka") : t("Sedia diimbas");
     $('status-'+target).textContent = status;
-    pad.setAttribute('aria-label', `Pengimbas ${target.toUpperCase()}, ${target==='r1'?'bongkah':'bentangan'}. ${status}.${selected && active===target ? ' Klik atau tekan Enter untuk imbas pilihan.' : ''}`);
+    pad.setAttribute('aria-label', t('scanner.label',{target:target.toUpperCase(),kind:target==='r1'?t('bongkah'):t('bentangan'),status})+(selected&&active===target?t('scanner.action'):''));
   }
   renderLeds(now());
 }
@@ -788,8 +1499,8 @@ function renderLeds(time) {
     $(target).classList.toggle('scanner-correct',color==='green');
     $(target).classList.toggle('scanner-wrong',color==='red');
     $(target).classList.toggle('scanner-hint',color==='purple');
-    $('status-'+target).textContent = game.status==='feedback' ? game.lastOutcome==='correct'?'+1 markah':'Dilangkau' : color==='red'?'Cuba lagi':target==='r1'&&game.stage==='net'?'Imbasan betul':target==='r2'&&game.stage==='solid'?'Jawab R1 dahulu':game.hintOpen?'Petunjuk dibuka':'Sedia diimbas';
-    $(target).setAttribute('aria-label',`Pengimbas ${target.toUpperCase()}, ${target==='r1'?'bongkah':'bentangan'}. ${$('status-'+target).textContent}.`);
+    $('status-'+target).textContent = game.status==='feedback' ? game.lastOutcome==='correct'?t("+1 markah"):t("Dilangkau") : color==='red'?t("Cuba lagi"):target==='r1'&&game.stage==='net'?t("Imbasan betul"):target==='r2'&&game.stage==='solid'?t("Jawab R1 dahulu"):game.hintOpen?t("Petunjuk dibuka"):t("Sedia diimbas");
+    $(target).setAttribute('aria-label',t('scanner.label',{target:target.toUpperCase(),kind:target==='r1'?t('bongkah'):t('bentangan'),status:$('status-'+target).textContent}));
   }
 }
 
@@ -797,33 +1508,33 @@ function choose(button) {
   if (!game?.interactive) return;
   const {kind,shape,letter} = button.dataset;
   if (kind !== game.stage) {
-    setStatus(game.stage === 'solid' ? 'Mulakan dengan bongkah di R1. Kad bentangan digunakan selepas itu.' : 'Bongkah R1 sudah betul. Pilih satu kad bentangan untuk R2.');
+    setStatus(game.stage === 'solid' ? "Mulakan dengan bongkah di R1. Kad bentangan digunakan selepas itu." : "Bongkah R1 sudah betul. Pilih satu kad bentangan untuk R2.");
     return;
   }
   selected = {kind,shape,letter};
   const target = kind==='solid'?'R1':'R2';
-  setStatus(`${kind==='solid'?'Bongkah':'Kad'} ${letter} dipilih. Klik pengimbas ${target} untuk mengimbas.`, '', 'cursor');
+  setStatus('choice.selected','','cursor',{kind:kind==='solid'?'Bongkah':'Kad',letter,target});
   renderState();
 }
 
 function scan(choice,target) {
   if (!game?.interactive) return;
-  if (!choice) { setStatus(`Pilih ${game.stage==='solid'?'bongkah':'kad bentangan'} dahulu, kemudian klik pengimbas ${target.toUpperCase()}.`); return; }
+  if (!choice) { setStatus('choice.first','','cursor',{kind:game.stage==='solid'?'bongkah':'kad bentangan',target:target.toUpperCase()}); return; }
   const result = game.scan(choice.kind,choice.shape,target,now());
   if (result.type==='blocked') return;
-  if (result.type==='stage') { setStatus(result.target==='r1'?'R1 dahulu. Imbas bongkah sebelum kad bentangan.':'Bongkah R1 sudah betul. Padankan kad bentangan di R2.'); return; }
-  if (result.type==='kind') { setStatus(game.stage==='solid'?'R1 hanya menerima bongkah 3D.':'R2 hanya menerima kad bentangan.'); return; }
+  if (result.type==='stage') { setStatus(result.target==='r1'?"R1 dahulu. Imbas bongkah sebelum kad bentangan.":"Bongkah R1 sudah betul. Padankan kad bentangan di R2."); return; }
+  if (result.type==='kind') { setStatus(game.stage==='solid'?"R1 hanya menerima bongkah 3D.":"R2 hanya menerima kad bentangan."); return; }
   selected=null;
   if (result.type==='wrong') {
-    setStatus(target==='r1'?'Belum tepat. Lihat sifat dalam soalan dan cuba bongkah lain.':'Bentangan belum sepadan. Bongkah R1 kekal betul; cuba kad bentangan lain.','error','refresh');
+    setStatus(target==='r1'?"Belum tepat. Lihat sifat dalam soalan dan cuba bongkah lain.":"Bentangan belum sepadan. Bongkah R1 kekal betul; cuba kad bentangan lain.",'error','refresh');
     tone('wrong');
   } else if (result.type==='solid') {
     acceptedSolid=choice.shape;
-    setStatus('Bongkah betul! Sekarang seret kad bentangannya ke R2.','success','check');
+    setStatus("Bongkah betul! Sekarang seret kad bentangannya ke R2.",'success','check');
     tone('solid');
   } else if (result.type==='correct') {
     acceptedNet=choice.shape;
-    setStatus('Pasangan tepat! +1 markah. Bersedia untuk soalan seterusnya.','success','check');
+    setStatus("Pasangan tepat! +1 markah. Bersedia untuk soalan seterusnya.",'success','check');
     tone('correct');
   }
   renderState();
@@ -846,12 +1557,12 @@ document.addEventListener('click', event => {
 $('brand-home').addEventListener('click',event=>{event.preventDefault();requestHome();});
 $('hint-button').addEventListener('click',()=>{
   if(game?.toggleHint()){
-    setStatus(game.hintOpen?'Petunjuk dibuka. Baca petunjuk dan teruskan memilih.':'Petunjuk ditutup. Teruskan menjawab.',game.hintOpen?'hint':'','bulb');
+    setStatus(game.hintOpen?"Petunjuk dibuka. Baca petunjuk dan teruskan memilih.":"Petunjuk ditutup. Teruskan menjawab.",game.hintOpen?'hint':'','bulb');
     renderState();
   }
 });
 $('skip-button').addEventListener('click',()=>{
-  if(game?.skip(now())){ cancelDrag(); selected=null;setStatus('Soalan dilangkau. Tiada markah untuk soalan ini.','','skip');renderState();tone('skip'); }
+  if(game?.skip(now())){ cancelDrag(); selected=null;setStatus("Soalan dilangkau. Tiada markah untuk soalan ini.",'','skip');renderState();tone('skip'); }
 });
 $('pause-button').addEventListener('click',()=>openPause());
 $('replay-button').addEventListener('click',()=>startGame());
@@ -884,7 +1595,7 @@ document.addEventListener('pointerup',event=>{
     suppressClickUntil=now()+400;
     cancelDrag();
     if(target) scan(saved.choice,target.dataset.target);
-    else { selected=saved.choice;renderState();setStatus('Pilihan belum diimbas. Seret ke pengimbas yang aktif, atau klik pengimbas.'); }
+    else { selected=saved.choice;renderState();setStatus("Pilihan belum diimbas. Seret ke pengimbas yang aktif, atau klik pengimbas."); }
   }else cancelDrag();
 });
 document.addEventListener('pointercancel',()=>cancelDrag());
@@ -906,12 +1617,14 @@ function cancelDrag(){
 }
 
 function openDialog(mode,title,content){
+  if(refreshingLanguage){dialogMode=mode;$('dialog-title').textContent=title;$('dialog-content').innerHTML=content;return;}
   cancelDrag();
   if(!dialog.open)dialogTrigger=document.activeElement;
   if(game && screen==='game')game.pause(now());
   dialogMode=mode;
   $('dialog-title').textContent=title;
   $('dialog-content').innerHTML=content;
+  $('dialog-close').before(languageControl);
   if(!dialog.open)dialog.showModal();
   const first=$('dialog-content').querySelector('[data-autofocus]');
   (first || $('dialog-close')).focus({preventScroll:true});
@@ -919,6 +1632,7 @@ function openDialog(mode,title,content){
 function closeDialog(){ if(dialog.open)dialog.close(); }
 $('dialog-close').addEventListener('click',closeDialog);
 dialog.addEventListener('close',()=>{
+  languageHome.append(languageControl);
   dialogMode='';
   if(game && screen==='game') { game.resume(now());renderState(); }
   if(dialogTrigger?.isConnected)dialogTrigger.focus({preventScroll:true});
@@ -935,73 +1649,79 @@ dialog.addEventListener('click',event=>{
   if(action==='erase')openErase();
   if(action==='confirm-erase'){
     const cleared=store.clear();storageStatus();
-    openScores(cleared?'Semua skor dalam pelayar ini telah dipadam.':'Skor tersimpan tidak dapat dipadam. Semak kebenaran storan pelayar dan cuba lagi.');
+    openScores(cleared?"Semua skor dalam pelayar ini telah dipadam.":"Skor tersimpan tidak dapat dipadam. Semak kebenaran storan pelayar dan cuba lagi.");
     if(screen==='result')renderMiniScores();
   }
   if(action==='back-scores')openScores();
 });
 
 function openHelp(){
-  openDialog('help','Cara main GeoDecoder',`<p class="help-intro">Satu soalan, dua padanan. Sasarkan <b>10 daripada 10 markah</b>.</p><div class="help-steps"><div class="help-step"><span class="help-number">1</span><div><h3>Baca soalan dan pilih bongkah</h3><p>Seret satu bongkah 3D ke pengimbas R1 yang berwarna biru.</p></div></div><div class="help-step"><span class="help-number">2</span><div><h3>Padankan kad bentangannya</h3><p>Selepas R1 hijau, seret kad bentangan yang sepadan ke R2.</p></div></div><div class="help-step"><span class="help-number">3</span><div><h3>Kumpulkan satu markah</h3><p>Pasangan betul memberi +1. Kedua-dua pengimbas berkelip hijau sebelum soalan seterusnya.</p></div></div></div><div class="help-mini-art">${shapeArt('cube','solid',true)}<span>R1 ${icon('arrow')} R2</span>${shapeArt('cube','net',true)}</div><p class="keyboard-help">Tanpa menyeret: <b>klik / sentuh kad</b>, kemudian <b>klik pengimbas</b>. Papan kekunci: <kbd>Tab</kbd> untuk bergerak, <kbd>Enter</kbd> atau <kbd>Space</kbd> untuk memilih dan mengimbas.</p><p class="help-note"><b>Salah? Cuba lagi.</b> Tiada potongan markah. Petunjuk juga percuma. Langkau memberi +0 untuk soalan itu. Jam dijeda semasa tetingkap ini dibuka.</p><div class="dialog-actions"><button class="button button-primary" data-dialog-action="close" data-autofocus>${screen==='game'?'Sambung permainan':'Saya faham'} ${icon('arrow')}</button></div>`);
+  openDialog('help',t("Cara main GeoDecoder"),`<p class="help-intro">${t("Satu soalan, dua padanan. Sasarkan")} <b>${t("10 daripada 10 markah")}</b>.</p><div class="help-steps"><div class="help-step"><span class="help-number">1</span><div><h3>${t("Baca soalan dan pilih bongkah")}</h3><p>${t("Seret satu bongkah 3D ke pengimbas R1 yang berwarna biru.")}</p></div></div><div class="help-step"><span class="help-number">2</span><div><h3>${t("Padankan kad bentangannya")}</h3><p>${t("Selepas R1 hijau, seret kad bentangan yang sepadan ke R2.")}</p></div></div><div class="help-step"><span class="help-number">3</span><div><h3>${t("Kumpulkan satu markah")}</h3><p>${t("Pasangan betul memberi +1. Kedua-dua pengimbas berkelip hijau sebelum soalan seterusnya.")}</p></div></div></div><div class="help-mini-art">${shapeArt('cube','solid',true)}<span>R1 ${icon('arrow')} R2</span>${shapeArt('cube','net',true)}</div><p class="keyboard-help">${t("Tanpa menyeret:")} <b>${t("klik / sentuh kad")}</b>, ${t("kemudian")} <b>${t("klik pengimbas")}</b>. ${t("Papan kekunci:")} <kbd>Tab</kbd> ${t("untuk bergerak,")} <kbd>Enter</kbd> ${t("atau")} <kbd>Space</kbd> ${t("untuk memilih dan mengimbas.")}</p><p class="help-note"><b>${t("Salah? Cuba lagi.")}</b> ${t("Tiada potongan markah. Petunjuk juga percuma. Langkau memberi +0 untuk soalan itu. Jam dijeda semasa tetingkap ini dibuka.")}</p><div class="dialog-actions"><button class="button button-primary" data-dialog-action="close" data-autofocus>${screen==='game'?t("Sambung permainan"):t("Saya faham")} ${icon('arrow')}</button></div>`);
 }
 
 function openPause(automatic=false){
+  if(!refreshingLanguage)automaticPause=automatic;
   if(!game || screen!=='game')return;
-  game.pause(now());
-  openDialog('pause','Permainan dijeda',`<div class="pause-symbol">${icon('pause')} ${formatTime(game.time(now()))}</div><p class="dialog-copy">${automatic?'Permainan dijeda semasa anda meninggalkan tab ini.':'Berehat seketika. Masa dan soalan anda dikekalkan.'} Tekan sambung apabila sudah bersedia.</p><div class="dialog-actions"><button class="button button-outline" data-dialog-action="request-home">Tamatkan pusingan</button><button class="button button-primary" data-dialog-action="close" data-autofocus>Sambung permainan ${icon('arrow')}</button></div>`);
+  if(!refreshingLanguage)game.pause(now());
+  openDialog('pause',t("Permainan dijeda"),`<div class="pause-symbol">${icon('pause')} ${formatTime(game.time(now()))}</div><p class="dialog-copy">${automatic?t("Permainan dijeda semasa anda meninggalkan tab ini."):t("Berehat seketika. Masa dan soalan anda dikekalkan.")} ${t("Tekan sambung apabila sudah bersedia.")}</p><div class="dialog-actions"><button class="button button-outline" data-dialog-action="request-home">${t("Tamatkan pusingan")}</button><button class="button button-primary" data-dialog-action="close" data-autofocus>${t("Sambung permainan")} ${icon('arrow')}</button></div>`);
 }
 
 function requestHome(){
   if(screen==='game' && game && game.status!=='finished'){
-    openDialog('leave','Tamatkan pusingan ini?',`<p class="dialog-copy">Anda sedang bermain soalan <b>${game.index+1} daripada 10</b>. Jika kembali ke mula, kemajuan pusingan ini dilepaskan dan skor pusingan ini tidak disimpan.</p><div class="dialog-actions"><button class="button button-outline" data-dialog-action="close" data-autofocus>Terus bermain</button><button class="button button-danger" data-dialog-action="home">Tamatkan pusingan</button></div>`);
+    openDialog('leave',t("Tamatkan pusingan ini?"),`<p class="dialog-copy">${t("leave.progress")} <b>${t("leave.count",{number:game.index+1})}</b>. ${t("Jika kembali ke mula, kemajuan pusingan ini dilepaskan dan skor pusingan ini tidak disimpan.")}</p><div class="dialog-actions"><button class="button button-outline" data-dialog-action="close" data-autofocus>${t("Terus bermain")}</button><button class="button button-danger" data-dialog-action="home">${t("Tamatkan pusingan")}</button></div>`);
   }else{ game=null;selected=null;showScreen('welcome');$('player-name').focus({preventScroll:true}); }
 }
 
 function miniScoresMarkup(scores){
-  if(!scores.length)return `<div class="empty-scores">${icon('trophy')}<h3>Skor pertama menanti</h3><p>Lengkapkan satu pusingan untuk menyimpan skor.</p></div>`;
-  return scores.slice(0,5).map((r,i)=>`<div class="mini-score ${r.id===lastResult?.id?'mine':''}"><span class="mini-rank">${i+1}</span><span class="mini-player"><b>${escapeHtml(r.player.name)}${r.id===lastResult?.id?' · Anda':''}</b><small>${escapeHtml(r.player.className)} · ${r.mistakes} cubaan salah</small></span><span class="mini-points">${r.score}<small>${formatTime(r.elapsed)}</small></span></div>`).join('');
+  if(!scores.length)return `<div class="empty-scores">${icon('trophy')}<h3>${t("Skor pertama menanti")}</h3><p>${t("Lengkapkan satu pusingan untuk menyimpan skor.")}</p></div>`;
+  return scores.slice(0,5).map((r,i)=>`<div class="mini-score ${r.id===lastResult?.id?'mine':''}"><span class="mini-rank">${i+1}</span><span class="mini-player"><b>${escapeHtml(r.player.name)}${r.id===lastResult?.id?t('score.mine'):''}</b><small>${escapeHtml(r.player.className)} · ${t('score.wrong',{count:r.mistakes})}</small></span><span class="mini-points">${r.score}<small>${formatTime(r.elapsed)}</small></span></div>`).join('');
 }
 function renderMiniScores(){ $('result-leaderboard').innerHTML=miniScoresMarkup(store.read());storageStatus(); }
 
 function openScores(message=''){
+  if(!refreshingLanguage)scoreNotice=message;
   const scores=store.read();storageStatus();
   const visible=scoresExpanded?scores:scores.slice(0,10);
-  const table=scores.length?`<div class="score-table-wrap"><table class="score-table"><caption class="sr-only">Skor terbaik dalam pelayar ini</caption><thead><tr><th scope="col">#</th><th scope="col">Pemain</th><th scope="col">Kelas</th><th scope="col">Markah</th><th scope="col">Salah / Masa</th></tr></thead><tbody>${visible.map((r,i)=>`<tr class="${r.id===lastResult?.id?'mine':''}"><td>${i+1}</td><td><b>${escapeHtml(r.player.name)}</b><small>${escapeHtml(r.player.category)}</small></td><td>${escapeHtml(r.player.className)}</td><td><b>${r.score} / 10</b></td><td>${r.mistakes} salah<small>${formatTime(r.elapsed)}</small></td></tr>`).join('')}</tbody></table></div>`:`<div class="empty-scores">${icon('trophy')}<h3>Belum ada skor</h3><p>Lengkapkan 10 soalan untuk merekodkan skor pertama.</p></div>`;
-  openDialog('scores','Papan skor',`<p class="score-info">${store.failed?'Skor sesi ini sahaja; simpanan pelayar tidak tersedia.':'Rekod dalam pelayar ini sahaja. Maksimum 50 skor terbaik.'} Skor tertinggi dahulu, kemudian cubaan salah paling sedikit dan masa terpantas.</p>${message?`<p class="help-note" role="status">${escapeHtml(message)}</p>`:''}${table}<div class="score-toolbar"><span>${visible.length} daripada ${scores.length} rekod</span>${scores.length>10&&!scoresExpanded?'<button class="button button-outline" data-dialog-action="show-all">Lihat semua skor</button>':''}<button class="button button-outline" data-dialog-action="export" ${!scores.length?'disabled':''}>${icon('download')} Eksport CSV</button><button class="button button-quiet score-delete" data-dialog-action="erase" ${!scores.length?'disabled':''}>${icon('trash')} Padam skor</button></div><div class="dialog-actions"><button class="button button-primary" data-dialog-action="close">${screen==='game'?'Sambung permainan':'Tutup papan skor'}</button></div>`);
+  const table=scores.length?`<div class="score-table-wrap"><table class="score-table"><caption class="sr-only">${t("Skor terbaik dalam pelayar ini")}</caption><thead><tr><th scope="col">#</th><th scope="col">${t("Pemain")}</th><th scope="col">${t("Kelas")}</th><th scope="col">${t("Markah")}</th><th scope="col">${t("Salah / Masa")}</th></tr></thead><tbody>${visible.map((r,i)=>`<tr class="${r.id===lastResult?.id?'mine':''}"><td>${i+1}</td><td><b>${escapeHtml(r.player.name)}</b><small>${escapeHtml(t(r.player.category))}</small></td><td>${escapeHtml(r.player.className)}</td><td><b>${r.score} / 10</b></td><td>${t('score.shortWrong',{count:r.mistakes})}<small>${formatTime(r.elapsed)}</small></td></tr>`).join('')}</tbody></table></div>`:`<div class="empty-scores">${icon('trophy')}<h3>${t("Belum ada skor")}</h3><p>${t("Lengkapkan 10 soalan untuk merekodkan skor pertama.")}</p></div>`;
+  openDialog('scores',t("Papan skor"),`<p class="score-info">${store.failed?t("Skor sesi ini sahaja; simpanan pelayar tidak tersedia."):t("Rekod dalam pelayar ini sahaja. Maksimum 50 skor terbaik.")} ${t("Skor tertinggi dahulu, kemudian cubaan salah paling sedikit dan masa terpantas.")}</p>${message?`<p class="help-note" role="status">${escapeHtml(t(message))}</p>`:''}${table}<div class="score-toolbar"><span>${t('score.records',{shown:visible.length,total:scores.length})}</span>${scores.length>10&&!scoresExpanded?`<button class="button button-outline" data-dialog-action="show-all">${t("Lihat semua skor")}</button>`:''}<button class="button button-outline" data-dialog-action="export" ${!scores.length?'disabled':''}>${icon('download')} ${t("Eksport CSV")}</button><button class="button button-quiet score-delete" data-dialog-action="erase" ${!scores.length?'disabled':''}>${icon('trash')} ${t("Padam skor")}</button></div><div class="dialog-actions"><button class="button button-primary" data-dialog-action="close">${screen==='game'?t("Sambung permainan"):t("Tutup papan skor")}</button></div>`);
 }
 
 function openErase(){
-  openDialog('erase','Padam semua skor?',`<p class="dialog-copy">Semua rekod nama, kelas dan keputusan dalam papan skor pelayar ini akan dipadam. Muat turun CSV dahulu jika mahu menyimpannya.</p><div class="dialog-actions"><button class="button button-outline" data-dialog-action="back-scores" data-autofocus>Kekalkan skor</button><button class="button button-danger" data-dialog-action="confirm-erase">Padam semua skor</button></div>`);
+  openDialog('erase',t("Padam semua skor?"),`<p class="dialog-copy">${t("Semua rekod nama, kelas dan keputusan dalam papan skor pelayar ini akan dipadam. Muat turun CSV dahulu jika mahu menyimpannya.")}</p><div class="dialog-actions"><button class="button button-outline" data-dialog-action="back-scores" data-autofocus>${t("Kekalkan skor")}</button><button class="button button-danger" data-dialog-action="confirm-erase">${t("Padam semua skor")}</button></div>`);
 }
 function downloadScores(){
   const scores=store.read();if(!scores.length)return;
-  const blob=new Blob([csvScores(scores)],{type:'text/csv;charset=utf-8;'});
+  const blob=new Blob([csvScores(scores,locale.language)],{type:'text/csv;charset=utf-8;'});
   const url=URL.createObjectURL(blob),a=document.createElement('a');
   a.href=url;a.download='GeoDecoder_Digital_Skor.csv';document.body.append(a);a.click();a.remove();
   setTimeout(()=>URL.revokeObjectURL(url),1000);
-  announce('Fail CSV papan skor telah disediakan.');
+  announce(t("Fail CSV papan skor telah disediakan."));
 }
 
 function finishGame(){
   cancelDrag();selected=null;
   lastResult=game.result(roundId);
   store.save(lastResult);storageStatus();
+  renderResult();
+  showScreen('result');
+  $('result-title').focus({preventScroll:true});
+  announce(t('result.complete',{score:lastResult.score,time:formatTime(lastResult.elapsed)}));
+}
+function renderResult(){
   const r=lastResult;
-  $('result-title').textContent=r.score===10?'Hebat! Semua pasangan tepat.':r.score>=7?'Bagus, anda semakin mahir!':'Teruskan mencuba, teruskan belajar.';
-  $('result-player').textContent=`${r.player.name} · ${r.player.category} · ${r.player.className}`;
+  $('result-title').textContent=r.score===10?t("Hebat! Semua pasangan tepat."):r.score>=7?t("Bagus, anda semakin mahir!"):t("Teruskan mencuba, teruskan belajar.");
+  $('result-player').textContent=`${r.player.name} · ${t(r.player.category)} · ${r.player.className}`;
   $('result-score').textContent=r.score;
-  $('result-level').textContent=r.score===10?'Pakar padanan':r.score>=7?'Penjelajah geometri':'Peneroka bentuk';
+  $('result-level').textContent=r.score===10?t("Pakar padanan"):r.score>=7?t("Penjelajah geometri"):t("Peneroka bentuk");
   const rank=store.read().findIndex(s=>s.id===r.id)+1;
-  $('result-message').textContent=`${r.score} pasangan betul, ${r.skipped} soalan dilangkau.${rank>0?` Kedudukan #${rank} dalam papan skor pelayar ini.`:''} Cuba lagi untuk mengurangkan cubaan salah atau memperbaiki masa.`;
+  $('result-message').textContent=t('result.summary',{score:r.score,skipped:r.skipped})+(rank>0?t('result.rank',{rank}):'')+t('result.try');
   $('result-time').textContent=formatTime(r.elapsed);
   $('result-first').textContent=`${r.firstTry} / 10`;
   $('result-mistakes').textContent=r.mistakes;
   $('result-hints').textContent=r.hints;
-  $('review-list').innerHTML=game.answers.map((answer,i)=>`<article class="review-card ${answer.outcome==='skipped'?'skipped':''}"><small>SOALAN ${i+1}</small><div class="review-pair">${shapeArt(answer.shape,'solid',true)}${shapeArt(answer.shape,'net',true)}</div><h3>${SHAPE_NAMES[answer.shape]}</h3><p>${answer.outcome==='correct'?'✓ Pasangan betul':'↷ Dilangkau'}</p></article>`).join('');
+  $('review-list').innerHTML=game.answers.map((answer,i)=>`<article class="review-card ${answer.outcome==='skipped'?'skipped':''}"><small>${t('question.counter',{number:i+1})}</small><div class="review-pair">${shapeArt(answer.shape,'solid',true)}${shapeArt(answer.shape,'net',true)}</div><h3>${shapeName(answer.shape,locale.language)}</h3><p>${answer.outcome==='correct'?t("✓ Pasangan betul"):t("↷ Dilangkau")}</p></article>`).join('');
   renderMiniScores();
-  showScreen('result');
-  $('result-title').focus({preventScroll:true});
-  announce(`Pusingan selesai. ${r.score} daripada 10 markah. Masa ${formatTime(r.elapsed)}.`);
+
 }
 
 function tone(kind){
@@ -1017,13 +1737,13 @@ function tone(kind){
       gain.gain.setValueAtTime(0,t);gain.gain.linearRampToValueAtTime(.065,t+.01);gain.gain.exponentialRampToValueAtTime(.001,t+.16);
       oscillator.connect(gain);gain.connect(audioContext.destination);oscillator.start(t);oscillator.stop(t+.17);
     });
-  }catch{sound=false;updateSound();announce('Bunyi tidak tersedia dalam pelayar ini. Permainan boleh diteruskan.');}
+  }catch{sound=false;updateSound();announce(t("Bunyi tidak tersedia dalam pelayar ini. Permainan boleh diteruskan."));}
 }
 function updateSound(){
   $('sound-button').innerHTML=icon(sound?'sound':'mute');
   $('sound-button').setAttribute('aria-pressed',String(sound));
-  $('sound-button').setAttribute('aria-label',sound?'Matikan bunyi':'Hidupkan bunyi');
-  $('sound-button').title=sound?'Matikan bunyi':'Hidupkan bunyi';
+  $('sound-button').setAttribute('aria-label',sound?t("Matikan bunyi"):t("Hidupkan bunyi"));
+  $('sound-button').title=sound?t("Matikan bunyi"):t("Hidupkan bunyi");
 }
 $('sound-button').addEventListener('click',()=>{sound=!sound;updateSound();if(sound)tone('solid');});
 
@@ -1045,7 +1765,7 @@ function frame(time){
   if(game && screen==='game'){
     if(game.update(time)){
       if(game.status==='finished')finishGame();
-      else{lastLed={};renderQuestion();announce(`Soalan ${game.index+1} daripada 10. Pilih bongkah untuk R1.`);}
+      else{lastLed={};renderQuestion();announce(t('round.next',{number:game.index+1}));}
     }
     const clock=formatTime(game.time(time));
     if(clock!==lastClock){$('time-value').textContent=clock;lastClock=clock;}
@@ -1059,6 +1779,57 @@ function frame(time){
 }
 store.read();storageStatus();
 requestAnimationFrame(frame);
+
+function applyStaticLanguage(){
+  document.documentElement.lang=locale.language;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{el.textContent=t(el.dataset.i18n);});
+  for(const name of ['aria-label','title','placeholder','content']){
+    document.querySelectorAll('[data-i18n-'+name+']').forEach(el=>el.setAttribute(name,t(el.getAttribute('data-i18n-'+name))));
+  }
+  $('language-select').value=locale.language;
+  updateTitle();updateSound();
+}
+function applyLanguage(){
+  const focused=document.activeElement;
+  const focusedAction=focused?.dataset.dialogAction;
+  refreshingLanguage=true;
+  try{
+    applyStaticLanguage();
+    for(const key of ['name','className','category']){
+      const error=validationErrors?.[key];
+      $(key+'-error').textContent=error?t(error):'';
+    }
+    if(game&&screen==='game'){
+      $('player-meta').textContent=`${t(player.category)} · ${player.className}`;
+      renderQuestionContent();
+      document.querySelectorAll('.choice').forEach(button=>{
+        const {kind,shape,letter}=button.dataset;
+        button.setAttribute('aria-label',t('choice.label',{kind:kind==='solid'?t('bongkah'):t('bentangan'),letter,description:describeShape(shape,kind,locale.language)}));
+        button.querySelector('.choice-id').innerHTML=`<span class="grip" aria-hidden="true">⠿</span>${kind==='solid'?t('Bongkah'):t('Kad')} ${letter}`;
+      });
+      lastLed={};renderState();
+      if(lastStatus){
+        setStatus(lastStatus.key,lastStatus.tone,lastStatus.symbol,lastStatus.params);
+      }
+    }
+    if(screen==='result'&&lastResult)renderResult();
+    if(dialog.open){
+      if(dialogMode==='help')openHelp();
+      else if(dialogMode==='pause')openPause(automaticPause);
+      else if(dialogMode==='leave')requestHome();
+      else if(dialogMode==='scores')openScores(scoreNotice);
+      else if(dialogMode==='erase')openErase();
+    }
+    storageStatus();
+  }finally{refreshingLanguage=false;}
+  if(focused?.isConnected)focused.focus({preventScroll:true});
+  else if(focusedAction)dialog.querySelector('[data-dialog-action="'+focusedAction+'"]')?.focus({preventScroll:true});
+}
+$('language-select').addEventListener('change',event=>{
+  cancelDrag();
+  if(locale.setLanguage(event.target.value)){applyLanguage();announce(t('language.changed'));}
+});
+applyLanguage();
 
 </script>
 </body>

@@ -1,23 +1,6 @@
-export const SHAPE_NAMES = {cube:'Kubus',cuboid:'Kuboid',pyramid:'Piramid',cylinder:'Silinder',cone:'Kon'};
-
-const descriptions = {
-  solid: {
-    cube:'Bongkah dengan muka segi empat sama dan semua rusuk sama panjang.',
-    cuboid:'Bongkah seperti kotak, dengan panjang, lebar dan tinggi yang berbeza.',
-    pyramid:'Bongkah bertapak segi empat sama; muka segi tiga bertemu pada satu puncak.',
-    cylinder:'Bongkah dengan dua tapak bulatan sama saiz dan satu sisi melengkung.',
-    cone:'Bongkah dengan satu tapak bulatan dan sisi melengkung yang bertemu pada puncak.'
-  },
-  net: {
-    cube:'Bentangan enam segi empat sama sama saiz, membentuk salib dengan empat petak sebaris.',
-    cuboid:'Bentangan enam segi empat tepat: tiga pasang muka berhadapan dengan ukuran berbeza.',
-    pyramid:'Bentangan satu segi empat sama, dengan satu segi tiga pada setiap empat sisinya.',
-    cylinder:'Bentangan satu segi empat tepat dan dua bulatan sama saiz pada sisi bertentangan.',
-    cone:'Bentangan satu sektor bulatan dan satu bulatan; panjang lengkok sektor sepadan lilitan tapak.'
-  }
-};
-
-export function describeShape(shape, kind) { return descriptions[kind][shape]; }
+import {SHAPE_COPY, shapeName} from './i18n.mjs';
+export const SHAPE_NAMES = Object.fromEntries(Object.entries(SHAPE_COPY.ms).map(([key,value])=>[key,value.name]));
+export function describeShape(shape,kind,language='ms'){return SHAPE_COPY[language]?.[shape]?.[kind]||SHAPE_COPY.ms[shape]?.[kind]||'';}
 
 export function icon(name, cls='') {
   const paths = {
@@ -45,7 +28,7 @@ export function icon(name, cls='') {
   return `<svg class="icon ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name]||paths.spark}</svg>`;
 }
 
-export function shapeArt(shape, kind='solid', decorative=false) {
+export function shapeArt(shape, kind='solid', decorative=false, language='ms') {
   const common='stroke="#236D69" stroke-width="2.2" stroke-linejoin="round"';
   let content='';
   if(kind==='solid') {
@@ -68,7 +51,7 @@ export function shapeArt(shape, kind='solid', decorative=false) {
     };
     content=nets[shape]||'';
   }
-  return `<svg class="shape-art" viewBox="0 0 200 164" ${decorative?'aria-hidden="true"':`role="img" aria-label="${descriptions[kind][shape]}"`}><g>${kind==='solid'?'<ellipse cx="100" cy="148" rx="60" ry="7" fill="#18334B" opacity=".06"/>':''}${content}</g></svg>`;
+  return `<svg class="shape-art" viewBox="0 0 200 164" ${decorative?'aria-hidden="true"':`role="img" aria-label="${describeShape(shape,kind,language)}"`}><g>${kind==='solid'?'<ellipse cx="100" cy="148" rx="60" ry="7" fill="#18334B" opacity=".06"/>':''}${content}</g></svg>`;
 }
 
 export function brandArt() {

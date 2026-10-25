@@ -1,4 +1,4 @@
-export const VERSION = '1.0.0';
+export const VERSION = '1.1.0';
 export const SHAPES = ['cube', 'cuboid', 'pyramid', 'cylinder', 'cone'];
 export const ROUND_SIZE = 10;
 export const BLINK_MS = 900;

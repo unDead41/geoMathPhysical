@@ -1,6 +1,17 @@
-# GeoDecoder Digital V1
+# GeoDecoder Digital — Bahasa Melayu / English
 
-Versi digital: **v1.0.0**. Branch GeoDecoder: **digitalize**.
+Versi digital: **v1.1.0**. Branch GeoDecoder: **digital-dwi**.
+
+Pilih **Bahasa Melayu / English** pada bahagian atas. Bahasa boleh ditukar
+semasa bermain atau di dalam dialog tanpa mengulang soalan, menukar pilihan kad,
+menghilangkan padanan diterima atau mengubah skor. Pilihan bahasa disimpan pada
+peranti; BM ialah pilihan awal. Semua terjemahan turut berada dalam HTML tunggal.
+
+Istilah, rujukan kurikulum dan kontrak integrasi:
+[BM/BI](docs/DWI_LANGUAGE.md), [glosari](docs/DWI_GLOSSARY.md),
+[bukti ujian](docs/DWI_VERIFICATION.md), [changelog digital](CHANGELOG.md).
+Nombor digital berasingan daripada firmware v1.1.3; main/digitalize belum menerima
+versi branch bahasa ini.
 
 ## Cuba terus — satu fail HTML
 
@@ -14,6 +25,10 @@ JavaScript, 15 soalan dan ilustrasi SVG; tiada fail luaran diperlukan.
 3. Selepas R1 betul, seret kad bentangan yang sepadan ke **R2**.
 4. Pasangan betul mendapat **+1 markah**. Lengkapkan 10 soalan.
 5. Keputusan, cubaan salah, penggunaan petunjuk dan papan skor dipaparkan.
+
+Dalam English, kategori dipaparkan sebagai **Pupil / Student**. ID kategori
+tersimpan dikekalkan supaya papan skor v1.0.0 masih boleh dibaca. Tajuk CSV dan
+label kategori mengikut bahasa pilihan semasa eksport.
 
 Alternatif tanpa seret: klik/sentuh kad, kemudian klik pengimbas. Papan kekunci:
 Tab untuk bergerak; Enter/Space untuk memilih dan mengimbas. Escape menjeda.
@@ -53,6 +68,10 @@ npm test
 npm run standalone
 npm run check
 ```
+
+Ujian Chrome sebenar tambahan: pasang Playwright berasingan dan jalankan
+`npm run test:browser`. Jika dependency/browser disediakan di lokasi lain,
+tetapkan `PLAYWRIGHT_MODULE_PATH` dan `PLAYWRIGHT_CHROMIUM_PATH`.
 
 Node.js hanya diperlukan untuk pembangunan dan ujian, bukan untuk memainkan HTML.
 Tiada pakej npm tambahan diperlukan. Untuk pratonton modular, jalankan pelayan
