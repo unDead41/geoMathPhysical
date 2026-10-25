@@ -1,7 +1,7 @@
 # GeoDecoder Digital BM / English
 
 Tarikh semakan: 25 Oktober 2026, Malaysia. Branch kerja: `digital-dwi`.
-Versi digital cadangan: **v1.1.0**; firmware kekal **v1.1.3**. Versi digital ini
+Versi digital cadangan: **v1.2.0**; firmware kekal **v1.1.3**. Versi digital ini
 belum diterbitkan ke `main`. Polisi nombor mengikuti `docs/SOR_VERSIONING.md`;
 versi digital datang daripada `dist/core.mjs`, diselaraskan dengan package,
 README, changelog digital dan lencana paparan. Jangan naikkan nombor firmware
@@ -11,7 +11,8 @@ untuk menggambarkan perubahan digital pada branch ini.
 
 | Rujukan | SHA penuh | Versi / kegunaan |
 |---|---|---|
-| `digitalize` | `cd47ebd7dbcbab709b9f61a2122f7492f2b74113` | Digital v1.0.0; sumber kerja |
+| `digitalize` awal | `cd47ebd7dbcbab709b9f61a2122f7492f2b74113` | Digital v1.0.0; asas branch awal |
+| `digitalize` terkini | `55a79849d5007ec53a9b877cd20877c9bf15aa8d` | Digital v1.1.0; integrasi serentak sebelum serahan |
 | `main` | `a059979d97926b82cafd4aa5cf3fe59da04a55bb` | Firmware v1.1.3; bank 15 soalan |
 | `sharing` | `01b549a26861ef5f093d4c2c630700de37008d6b` | SHA pemeriksaan awal; tiada perubahan |
 
@@ -22,12 +23,13 @@ hash Git sebelum penyuntingan dalam checkout berasingan. Commit bootstrap
 tempatan bukan sejarah repository remote. Publication menggunakan tree asal dan
 satu parent remote sebenar supaya fail firmware/PDF yang tidak disentuh kekal.
 
-Peraturan asas yang dikekalkan: 10 soalan unik, dua bagi setiap lima bongkah;
-R1 dahulu kemudian R2, +1 hanya bagi pasangan lengkap, cubaan semula selepas
-salah, petunjuk tanpa penalti, langkau +0, maklum balas 900 ms dan skor setempat.
-Permintaan had satu percubaan/animasi/analitik dalam chat lain belum berada pada
-commit asas ini. Branch bahasa tidak mengubah atau mendakwa telah melaksanakan
-perubahan permainan tersebut. Tiada pengubahsuaian kepada branch modul.
+Sebelum serahan, digitalize bergerak kepada v1.1.0 ketika semakan remote.
+Branch bahasa diselaraskan dengan SHA baharu itu tanpa menulis kepada digitalize.
+Teras `Game` akhir sama byte-for-byte dengan sumber baharu kecuali nombor
+versi digital: 10 soalan unik, satu percubaan setiap soalan, +1 pasangan lengkap,
++0 salah/langkau, semakan jawapan sebelum sambung, perubahan warna/posisi, kawalan
+animasi dan analitik asal dikekalkan. Pertukaran bahasa hanya melukis semula
+paparan. R1/R2 yang belum dicuba tidak dicipta sebagai rekod percubaan.
 
 ## Kontrak bahasa
 
@@ -55,11 +57,15 @@ perubahan permainan tersebut. Tiada pengubahsuaian kepada branch modul.
 - Satu elemen pemilih bahasa dipindahkan ke kepala dialog semasa dialog modal
   dibuka, kemudian dikembalikan ke navigasi. Tiada pemilih kedua. Refresh bahasa
   tidak memanggil tindakan `scan`, `toggleHint`, `update`, `skip`, `resume` atau
-  memulakan `Game` baharu. Kad terpilih/diterima, order dan masa kekal.
+  memulakan `Game` baharu. Kad terpilih/diterima, order, warna, masa dan deadline semakan kekal.
+  `renderCorrection()` melukis teks semakan sahaja; fokus, scroll dan pengumuman
+  baharu kekal di `showCorrection()`. Analitik diterjemah tanpa mengubah peratus.
 - Keputusan dilukis semula oleh `renderResult()` tanpa `store.save()`. Hanya
-  `finishGame()` menyimpan sekali. Kunci skor lama dikekalkan; rekod digital
-  v1.0.0 dan v1.1.0 dibaca bersama. Kategori tersimpan kekal `Murid` / `Pelajar`;
-  label BI ialah Pupil / Student, termasuk eksport CSV.
+  `finishGame()` menyimpan sekali. Peraturan storan upstream dikekalkan: skor satu percubaan menggunakan
+  `geodecoder.digital.single-attempt.v1.scores`; skor cuba semula v1.0.0 dan publication BM/BI awal v1.1.0 kekal
+  berasingan di `geodecoder.digital.v1.scores` dan dipaparkan sebagai skor terdahulu. Kategori tersimpan kekal `Murid` / `Pelajar`;
+  label BI ialah Pupil / Student, termasuk eksport CSV. Rekod semasa dikenal pasti
+  melalui ruleset `single-attempt-v1`, bukan bahasa atau versi paparan.
 - Semua terjemahan disertakan dalam HTML tunggal. Tiada API terjemahan,
   font luaran atau permintaan rangkaian diperlukan untuk bermain.
 

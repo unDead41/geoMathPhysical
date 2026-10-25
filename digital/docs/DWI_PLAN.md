@@ -3,6 +3,8 @@
 User-approved specification: the nine requirements in the 25 October 2026 request; final branch is `digital-dwi`.
 
 Base: `digitalize` at `cd47ebd7dbcbab709b9f61a2122f7492f2b74113`, digital v1.0.0.
+
+Final integration: digitalize advanced concurrently to `55a79849d5007ec53a9b877cd20877c9bf15aa8d`, v1.1.0. Retain its single-attempt rules, corrections, colours and analytics. BM/BI feature version is v1.2.0.
 Firmware reference: `main` at `a059979d97926b82cafd4aa5cf3fe59da04a55bb`, v1.1.3.
 Work is in an independent pinned source checkout. GitHub connector handles the branch and publication against the original remote tree; the local bootstrap commit is not remote project history.
 
@@ -12,7 +14,7 @@ Architecture: keep `Game`, the source BM question bank and stored score IDs unch
 
 - [x] Write failing tests for locale persistence, denied storage, unsupported locales, question coverage/formula fidelity and translated CSV with stable category values.
 - [x] Add `dist/i18n.mjs`: `createI18n(storage)`, `translate(language,key,params)`, `localizeQuestion(question,language)`, shape copy and bilingual messages.
-- [x] Extend CSV presentation only; retain old v1.0.0 records and score key when advancing digital feature version to v1.1.0.
+- [x] Extend CSV presentation only; retain the upstream separation of old retry and current single-attempt records when advancing digital feature version to v1.2.0.
 - [x] Run `npm test`; no changed score, round selection, timer or scan behavior.
 
 ## Task 2: presentation and standalone delivery
@@ -33,3 +35,5 @@ Architecture: keep `Game`, the source BM question bank and stored score IDs unch
 ## Review focus
 
 Changing language must not reset accepted/selected cards or reroll the order; hint use cannot increase; feedback deadlines and pause state cannot move; results cannot be saved twice; legacy scores and formula symbols must survive; no player text may enter HTML without escaping.
+
+Ruling: integrate the concurrently published digitalize v1.1.0 into digital-dwi before final handoff, preserving the new core and extending localization to its correction/motion/analytics UI. No protected branch was written.

@@ -2,7 +2,8 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {createI18n, translate, localizeQuestion, MESSAGES, QUESTION_COPY, SHAPE_COPY, LANGUAGE_KEY} from '../dist/i18n.mjs';
 import {QUESTIONS} from '../dist/questions.mjs';
-import {csvScores, ScoreStore} from '../dist/storage.mjs';
+import {csvScores, ScoreStore, LEGACY_SCORE_KEY} from '../dist/storage.mjs';
+import {RULESET, VERSION} from '../dist/core.mjs';
 
 const memory=()=>{const data=new Map();return {getItem:k=>data.get(k)??null,setItem:(k,v)=>data.set(k,v),removeItem:k=>data.delete(k)};};
 test('language defaults to BM, persists English and rejects unsupported input',()=>{
@@ -48,8 +49,15 @@ test('BM presentation uses KSSM surface and edge terms while preserving the sour
 test('English CSV localizes headers and category while stored legacy/new records keep stable values',()=>{
   const storage=memory(),store=new ScoreStore(storage);
   const old={id:'old',version:'1.0.0',player:{name:'Aisyah',category:'Murid',className:'1 Bestari'},score:10,total:10,mistakes:0,hints:0,skipped:0,firstTry:10,elapsed:30000,completedAt:10000};
-  store.save(old);store.save({...old,id:'new',version:'1.1.0'});
-  assert.equal(store.read().length,2);assert.equal(store.read()[0].player.category,'Murid');
+  storage.setItem(LEGACY_SCORE_KEY,JSON.stringify([old]));store.save({...old,id:'new',version:VERSION,ruleset:RULESET});
+  assert.equal(store.read().length,1);assert.equal(store.readLegacy().length,1);assert.equal(store.read()[0].player.category,'Murid');
   const csv=csvScores(store.read(),'en');assert.match(csv,/"Rank","Name","Category","Class"/);assert.match(csv,/"Pupil"/);
   assert.match(csvScores(store.read()),/Kedudukan/);
+});
+test('retry scores from the first published BM/BI version remain visible as legacy only',()=>{
+  const storage=memory(),store=new ScoreStore(storage);
+  const retry={id:'dwi-retry',version:'1.1.0',player:{name:'Aisyah',category:'Murid',className:'1 A'},score:9,total:10,mistakes:3,hints:1,skipped:1,firstTry:6,elapsed:10000,completedAt:10000};
+  storage.setItem(LEGACY_SCORE_KEY,JSON.stringify([retry]));
+  assert.equal(store.readLegacy().length,1);assert.equal(store.readLegacy()[0].version,'1.1.0');
+  assert.equal(store.read().length,0);
 });

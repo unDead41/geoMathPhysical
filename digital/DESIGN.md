@@ -49,7 +49,7 @@ Malaysian Murid/Pelajar, readable at Tingkatan 1 level, using mouse, keyboard or
 Model B: `dist/style.css :root` owns runtime tokens. This document mirrors the accepted palette. Primary→--primary→buttons/focus; ink→--ink→text; background→--bg→body; surface→--surface→panels; success→--success→correct; danger→--danger→wrong; accent→--accent→milestone; muted→--muted→secondary text; border→--border→all controls. Type→--font-display/--font-body/--font-mono. Corners→--radius/--radius-lg. `tools/check.mjs` checks exact drift for palette.
 
 ## Colors
-Cool blue-white canvas, navy text, royal blue interaction. Mint indicates success; red errors; violet active hints. Shape diagrams use the same mint on every answer so colour cannot give the answer away. Net cards are all blue with dark folds. All status colours also have text.
+Cool blue-white canvas, navy text, royal blue interaction. Mint indicates success; red errors; violet active hints. Per user request, solids and nets now use eight expressive palettes owned by `dist/visuals.mjs` and consumed by `art.mjs`. Five unique colours per shelf, changed for every shape each question. Solid/net colours differ for the same shape, so colour is not an answer cue. All status colours also have text.
 
 ## Typography
 Trebuchet MS display headlines, Segoe UI body with system fallback, monospace clocks. Body line-height 1.55, short instructions 16px, headers 32–56px. No network fonts or font swaps.
@@ -81,7 +81,7 @@ All fields have visible labels, inline errors and first-error focus, no native v
 Small inline SVG icons, 1.8px strokes, 20–24px, text labels on primary controls. Brand cube uses geometric faces. Every geometric answer has an equivalent screen-reader description.
 
 ### Motion
-R1/R2 feedback exactly three 150ms ON/OFF cycles; input and stopwatch pause for 900ms. Reduced motion removes flashes and movement, preserves input timing and text feedback. No automatic camera animation or spinning shapes.
+R1/R2 feedback uses three 150ms ON/OFF cycles. Successful pairs advance after 900ms; wrong/skipped answers hold a correction until the player continues, with a minimum 1800ms reading interval. Hero objects float slowly, card artwork breathes 3px inside fixed hit areas, accepted models enter scanner pads, and correction pairs slide into place. No geometry morph is claimed; the full unfolding module is a separate branch task. The header motion control and system reduced-motion setting remove movement/flashing while preserving text and timing. Decorative perspective grids are clipped within the hero scene to prevent horizontal page overflow.
 
 ### Content and data visualization
 BM, short specific instructions. No shape names printed on answer cards; use shuffled A–E identifiers with diagram descriptions for screen readers. Names are rendered as text, never trusted HTML. Time MM:SS; date ms-MY in Asia/Kuala_Lumpur.

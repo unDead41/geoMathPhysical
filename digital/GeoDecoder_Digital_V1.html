@@ -42,6 +42,98 @@ dialog{border:1px solid var(--border);border-radius:var(--radius-lg);padding:0;w
 @media(forced-colors:active){*{scrollbar-color:auto}.led-dot{border:2px solid CanvasText}.choice[aria-pressed="true"]{outline:3px solid Highlight}.scanner{border:2px solid CanvasText}.progress-dot{background:CanvasText}.progress-dot.current{background:Highlight}}
 @media print{.site-header nav,.session-actions,.result-actions,.site-footer,.review-section,.game-screen,.entry-screen,dialog{display:none!important}.result-layout{display:block}.result-main,.result-side{break-inside:avoid}.result-side{margin-top:20px}}
 
+/* The animated geometry kit: controls and card hit areas stay still. */
+.lab-scene{overflow:clip}
+.brand-version{font-family:var(--font-mono);font-size:9px;letter-spacing:.2px;color:var(--primary);margin-left:6px;white-space:nowrap}
+.motion-button{min-width:44px;min-height:44px;justify-content:center;padding:10px}
+.motion-button[aria-pressed="true"]{background:var(--blue-soft);color:var(--primary)}
+.motion-button:disabled{opacity:.55;cursor:default}
+.scene-cube{--tilt:-8deg;animation:kit-float 5.6s ease-in-out infinite}
+.scene-cone{--tilt:-18deg;animation:kit-float 6.8s ease-in-out -1.6s infinite}
+.scene-pyramid{--tilt:15deg;animation:kit-float 6.2s ease-in-out -.8s infinite}
+.scene-net{--tilt:9deg;animation:kit-float 5.6s ease-in-out -2.8s infinite}
+.scene-star{animation:kit-spark 3.8s ease-in-out infinite}.star-two{animation-delay:-1.9s}
+.scene-pad .scanner-rings{animation:pad-breathe 3s ease-in-out infinite}.pad-two .scanner-rings{animation-delay:-1.5s}
+.scene-score{animation:score-float 5.6s ease-in-out -1.2s infinite}
+.choice{animation:deal-card .36s cubic-bezier(.2,.7,.3,1) calc(var(--i,0)*45ms) backwards}
+.choice.inactive{opacity:.75}
+.result-medal>[data-icon]>.icon{width:64px;height:64px;color:#B98424}
+.choice>.shape-art>g{transform-origin:100px 82px;animation:shape-breathe 5s ease-in-out calc(var(--i,0)*-.7s) infinite}
+.choice:hover>.shape-art>g,.choice:focus-visible>.shape-art>g{animation-play-state:paused}
+.scanner.filled .scanner-body>.shape-art{animation:scan-arrival .42s cubic-bezier(.2,.8,.3,1)}
+.is-correct #score-value{display:inline-block;animation:score-pop .6s ease-out}
+.is-correct .stage-connector{animation:score-pop .6s ease-out;color:var(--success)}
+.progress-dot.wrong{background:var(--danger)}
+.choice.revealed-answer{border:2px solid var(--success);background:var(--mint-soft);opacity:1;filter:none}
+.choice.revealed-wrong{border:2px solid var(--danger);background:var(--red-soft);opacity:.85}
+.is-review .choice>.shape-art>g{animation:none}
+.correction-panel{display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,.8fr);align-items:center;gap:20px 30px;padding:24px;margin:8px 0 28px;background:var(--surface);border:2px solid #B9DCCF;border-radius:var(--radius-lg);box-shadow:0 10px 35px #18334B08;animation:panel-arrival .35s ease-out}
+.correction-copy .card-kicker{color:var(--muted)}
+.correction-copy h2{font-size:25px;letter-spacing:-.6px;margin:8px 0 10px}
+.correction-copy p{font-size:13px;color:var(--muted);line-height:1.7}
+.correction-copy #correction-attempt{color:var(--danger);font-weight:600;margin-bottom:7px}
+.correction-pair{display:grid;grid-template-columns:minmax(0,1fr) 26px minmax(0,1fr);align-items:center;gap:6px;padding:12px 6px;background:var(--bg);border-radius:18px;overflow:hidden}
+.correct-model,.correct-net{min-width:0;text-align:center}
+.correction-pair .shape-art{height:118px;width:100%;max-width:160px;margin:0 auto}
+.correct-model{animation:correct-model-in 1.2s cubic-bezier(.2,.75,.25,1) backwards}
+.correct-net{animation:correct-net-in 1.4s cubic-bezier(.2,.75,.25,1) .15s backwards}
+.correction-pair>div>span{display:block;font-size:11px;font-weight:650;color:var(--ink);margin-top:6px}
+.correct-link{color:var(--success);animation:link-in .6s ease-out .7s backwards}
+.correction-actions{grid-column:1/-1;display:flex;justify-content:space-between;gap:15px;align-items:center;border-top:1px solid var(--border);padding-top:16px}
+.correction-actions>span{font-size:11px;color:var(--muted)}
+.correction-actions .button{min-width:225px;min-height:48px;font-size:13px}
+.analysis-section{margin:36px 0}
+.analysis-heading h2{font-size:28px;letter-spacing:-.7px;margin:9px 0}
+.analysis-heading>p{font-size:13px;color:var(--muted)}
+.analysis-summary{display:flex;align-items:center;gap:17px;border:1px solid #C9D9F7;background:var(--blue-soft);border-radius:18px;padding:22px 24px;margin:20px 0}
+.analysis-summary>.icon{width:30px;height:30px;color:var(--primary)}
+.analysis-summary h3{font-size:20px;margin-bottom:7px}
+.analysis-summary p{font-size:13px;line-height:1.7;color:var(--muted)}
+.analysis-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.analysis-card{min-width:0;border:1px solid var(--border);background:var(--surface);border-radius:var(--radius-lg);padding:25px}
+.analysis-card h3{font-size:19px;margin-bottom:7px}.analysis-card>p{font-size:12px;color:var(--muted);margin-bottom:20px}
+.analysis-row{display:flex;align-items:center;gap:12px;margin:19px 0}
+.analysis-row>.shape-art{width:48px;height:46px;flex-shrink:0}
+.analysis-row-body{flex:1;min-width:0}
+.analysis-row-title{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:13px}
+.analysis-row-title b{font-weight:650}.analysis-row-title>span{font-family:var(--font-mono);font-size:12px;white-space:nowrap}
+.analysis-row-title small{font-size:10px;color:var(--muted)}
+.analysis-track{height:8px;border-radius:6px;background:#E6EDF5;overflow:hidden;margin:8px 0}
+.analysis-track>span{height:100%;display:block;border-radius:6px;background:var(--primary);transform-origin:left;animation:bar-grow .7s ease-out backwards}
+.analysis-row-body>p{font-size:10px;color:var(--muted);line-height:1.6}
+.topic-heading{padding-top:18px;border-top:1px solid var(--border);margin-top:24px}
+.analysis-advice{padding:23px 25px;background:var(--mint-soft);border:1px solid #CCE5DA;border-radius:var(--radius-lg);margin-top:22px}
+.analysis-advice h3{font-size:19px}.analysis-advice ul{padding-left:20px;margin:13px 0;font-size:13px;line-height:1.8}.analysis-advice li+li{margin-top:7px}
+.analysis-advice>p{font-size:11px;color:var(--muted);border-top:1px solid #C9E2D6;padding-top:12px}
+.review-list{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.review-card{padding:18px;min-width:0;text-align:left}
+.review-card.wrong{border-color:#E7C4C0;background:#FFFAF9}
+.review-card .review-prompt{font-size:12px;line-height:1.6;min-height:58px;margin:10px 0;color:var(--ink)}
+.review-card .review-pair{justify-content:center}.review-card .review-pair .shape-art{height:85px;max-width:110px}
+.review-card h3{font-size:14px;margin:10px 0 7px}.review-card .review-outcome{font-size:12px;color:var(--success);font-weight:650}
+.review-card.wrong .review-outcome{color:var(--danger)}.review-card.skipped .review-outcome{color:var(--muted)}
+.review-card .review-attempt{font-size:11px;margin-top:9px;line-height:1.7;color:var(--muted);overflow-wrap:anywhere}
+.legacy-scores{border:1px solid var(--border);padding:12px 15px;border-radius:12px;margin:16px 0;font-size:12px}
+.legacy-scores summary{font-weight:650;cursor:pointer;min-height:32px}.legacy-scores summary:hover{color:var(--primary)}.legacy-scores summary:focus-visible{outline:3px solid var(--primary);outline-offset:4px}
+.legacy-scores p{font-size:11px;color:var(--muted);margin:8px 0}.legacy-scores ol{padding-left:20px;line-height:1.8}.legacy-scores li{overflow-wrap:anywhere}
+.motion-paused .scene-object,.motion-paused .scene-net,.motion-paused .scene-star,.motion-paused .scanner-rings,.motion-paused .scene-score,.motion-paused .choice,.motion-paused .choice>.shape-art>g,.motion-paused .scanner .shape-art,.motion-paused #score-value,.motion-paused .stage-connector,.motion-paused .correction-panel,.motion-paused .correct-model,.motion-paused .correct-net,.motion-paused .correct-link,.motion-paused .analysis-track>span{animation:none!important}
+@keyframes kit-float{0%,100%{transform:translateY(0) rotate(var(--tilt))}50%{transform:translateY(-11px) rotate(calc(var(--tilt) + 3deg))}}
+@keyframes kit-spark{0%,100%{opacity:.45;transform:scale(.8) rotate(-8deg)}50%{opacity:1;transform:scale(1.08) rotate(12deg)}}
+@keyframes pad-breathe{0%,100%{opacity:.35}50%{opacity:.8}}
+@keyframes score-float{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-5px) rotate(-1deg)}}
+@keyframes shape-breathe{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes deal-card{from{opacity:0;transform:translateY(12px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes scan-arrival{from{opacity:.2;transform:translateY(-14px) scale(.85)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes score-pop{0%,100%{transform:scale(1)}40%{transform:scale(1.3)}}
+@keyframes panel-arrival{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes correct-model-in{from{opacity:0;transform:translateX(-42px) rotate(-12deg) scale(.8)}to{opacity:1;transform:translateX(0) rotate(0) scale(1)}}
+@keyframes correct-net-in{from{opacity:0;transform:translateX(42px) rotate(12deg) scale(.65)}to{opacity:1;transform:translateX(0) rotate(0) scale(1)}}
+@keyframes link-in{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:translateX(0)}}
+@keyframes bar-grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@media(max-width:800px){.analysis-grid{grid-template-columns:1fr}.correction-panel{grid-template-columns:1fr;gap:16px}.correction-pair{max-width:440px;width:100%;justify-self:center}.review-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.site-header{gap:8px}.site-header nav{gap:0}.nav-button{padding:10px;min-width:40px;min-height:44px}.nav-button[data-action="help"]>span:last-child{display:none}.brand small{letter-spacing:1.5px}.brand-version{font-size:8px;margin-left:3px}.correction-panel{padding:18px;border-radius:18px}.correction-copy h2{font-size:22px}.correction-copy p{font-size:12px}.correction-actions{align-items:stretch;flex-direction:column;gap:10px}.correction-actions .button{width:100%;min-width:0}.correction-pair .shape-art{height:104px}.analysis-heading h2{font-size:24px}.analysis-summary{padding:18px;align-items:flex-start;gap:12px}.analysis-summary h3{font-size:18px}.analysis-summary p{font-size:12px}.analysis-card{padding:20px}.analysis-row-title{font-size:12px}.analysis-row-title>span{font-size:11px}.analysis-row>.shape-art{width:38px;height:40px}.analysis-advice{padding:19px}.analysis-advice ul{font-size:12px}.review-list{gap:12px}.review-card{padding:13px}.review-card .review-prompt{font-size:11px;min-height:75px}.review-card .review-pair .shape-art{height:65px;max-width:75px}.review-card h3{font-size:13px}.review-card .review-outcome,.review-card .review-attempt{font-size:10px}}
+@media(max-width:360px){.brand-mark{width:23px;height:29px}.brand{font-size:19px;gap:5px}.brand small{font-size:6px;letter-spacing:1px}.brand-version{font-size:7px}.nav-button{min-width:36px;padding:8px}.analysis-row-title{flex-wrap:wrap;gap:3px}}
+
 /* Language control remains the same element when moved into an open dialog. */
 .language-control{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:12px;font-weight:600}
 .language-control select{font:inherit;max-width:150px;min-height:40px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--ink);padding:7px 24px 7px 9px}
@@ -62,15 +154,17 @@ select:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
   .language-control select{max-width:150px;min-width:140px}
 }
 
+@media(max-width:360px){.site-header nav{gap:4px}}
+
 </style>
 </head>
 <body>
   <a class="skip-link" href="#main" data-i18n="Terus ke kandungan">Terus ke kandungan</a>
   <header class="site-header">
-    <a href="#" class="brand" id="brand-home" aria-label="GeoDecoder Digital, halaman mula" data-i18n-aria-label="GeoDecoder Digital, halaman mula"><span data-brand></span><span>Geo<span class="brand-blue">Decoder</span><small data-i18n="DIGITAL EDITION">DIGITAL EDITION</small></span></a>
+    <a href="#" class="brand" id="brand-home" aria-label="GeoDecoder Digital, halaman mula" data-i18n-aria-label="GeoDecoder Digital, halaman mula"><span data-brand></span><span>Geo<span class="brand-blue">Decoder</span><small><span data-i18n="DIGITAL EDITION">DIGITAL EDITION</span> <b class="brand-version" id="app-version">V1.2.0</b></small></span></a>
     <nav aria-label="Menu utama" data-i18n-aria-label="Menu utama">
-      <span class="version-badge">V1.1.0</span><label class="language-control" id="language-control"><span data-i18n="language.label">Bahasa</span><select id="language-select" aria-label="Bahasa / Language"><option value="ms" lang="ms">Bahasa Melayu</option><option value="en" lang="en">English</option></select></label>
-      <button class="nav-button" data-action="help"><span data-icon="help"></span><span data-i18n="Cara main">Cara main</span></button>
+      <label class="language-control" id="language-control"><span data-i18n="language.label">Bahasa</span><select id="language-select" aria-label="Bahasa / Language"><option value="ms" lang="ms">Bahasa Melayu</option><option value="en" lang="en">English</option></select></label><button class="nav-button motion-button" id="motion-button" aria-label="Jeda animasi" aria-pressed="false" title="Jeda animasi" data-i18n-aria-label="Jeda animasi" data-i18n-title="Jeda animasi"><span data-icon="pause"></span></button>
+      <button class="nav-button" data-action="help" aria-label="Cara main" data-i18n-aria-label="Cara main"><span data-icon="help"></span><span data-i18n="Cara main">Cara main</span></button>
       <button class="nav-button score-nav" data-action="scores" aria-label="Papan skor" data-i18n-aria-label="Papan skor"><span data-icon="trophy"></span><span data-i18n="Papan skor">Papan skor</span></button>
     </nav>
   </header>
@@ -85,9 +179,9 @@ select:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
           <div class="scene-grid"></div>
           <div class="scene-note"><span data-icon="cursor"></span> <span data-i18n="Seret. Imbas. Padankan.">Seret. Imbas. Padankan.</span></div>
           <div class="scene-object scene-cube" data-art="cube"></div>
-          <div class="scene-object scene-cone" data-art="cone"></div>
-          <div class="scene-object scene-pyramid" data-art="pyramid"></div>
-          <div class="scene-net" data-art="cube" data-kind="net"></div>
+          <div class="scene-object scene-cone" data-art="cone" data-tone="orange"></div>
+          <div class="scene-object scene-pyramid" data-art="pyramid" data-tone="violet"></div>
+          <div class="scene-net" data-art="cube" data-kind="net" data-tone="pink"></div>
           <div class="scene-pad pad-one"><span class="led-dot blue"></span><b>R1</b><span data-i18n="BONGKAH">BONGKAH</span><div class="scanner-rings"></div></div>
           <div class="scene-pad pad-two"><span class="led-dot green"></span><b>R2</b><span data-i18n="BENTANGAN">BENTANGAN</span><div class="scanner-rings"></div></div>
           <span class="scene-connector" data-icon="arrow"></span>
@@ -99,7 +193,7 @@ select:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
       <div class="registration-card">
         <span class="card-kicker" data-i18n="SEDIA UNTUK MENCUBA?">SEDIA UNTUK MENCUBA?</span>
         <h2 data-i18n="Jom kenalkan diri.">Jom kenalkan diri.</h2>
-        <p data-i18n="Isi maklumat anda sebelum mula bermain.">Isi maklumat anda sebelum mula bermain.</p>
+        <p data-i18n="Isi maklumat anda. Setiap soalan ada satu percubaan.">Isi maklumat anda. Setiap soalan ada satu percubaan.</p>
         <form id="player-form" novalidate>
           <div class="field"><label for="player-name" data-i18n="Nama pemain">Nama pemain</label><input id="player-name" name="name" type="text" maxlength="60" autocomplete="off" placeholder="Contoh: Aisyah" aria-describedby="name-error" data-i18n-placeholder="Contoh: Aisyah"><span class="field-error" id="name-error"></span></div>
           <fieldset class="category-field"><legend data-i18n="Saya seorang">Saya seorang</legend><div class="radio-options"><label class="radio-card"><input type="radio" name="category" value="Murid" checked><span><span data-icon="user"></span><span data-i18n="Murid">Murid</span></span></label><label class="radio-card"><input type="radio" name="category" value="Pelajar"><span><span data-icon="user"></span><span data-i18n="Pelajar">Pelajar</span></span></label></div><span class="field-error" id="category-error"></span></fieldset>
@@ -140,17 +234,24 @@ select:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
       </div>
       <div class="game-feedback" id="game-status" role="status" aria-live="polite"><span data-icon="cursor"></span><span id="feedback-text" data-i18n="Baca soalan, kemudian pilih satu bongkah untuk R1.">Baca soalan, kemudian pilih satu bongkah untuk R1.</span></div>
 
+      <section class="correction-panel" id="correction-panel" hidden aria-labelledby="correction-title">
+        <div class="correction-copy"><span class="card-kicker" id="correction-outcome" data-i18n="JAWAPAN SEBENAR">JAWAPAN SEBENAR</span><h2 id="correction-title" tabindex="-1"></h2><p id="correction-attempt"></p><p id="correction-explanation"></p></div>
+        <div class="correction-pair" id="correction-pair"></div>
+        <div class="correction-actions"><span data-i18n="Fahami padanannya dahulu. Masa dijeda.">Fahami padanannya dahulu. Masa dijeda.</span><button class="button button-primary" id="continue-button" disabled data-i18n="Perhatikan jawapan…">Perhatikan jawapan…</button></div>
+      </section>
+
       <div class="answer-shelves">
         <section class="shelf" aria-labelledby="solid-shelf-title"><div class="shelf-heading"><h3 id="solid-shelf-title"><span class="shelf-badge">R1</span> <span data-i18n="Koleksi bongkah">Koleksi bongkah</span></h3><span data-i18n="5 pilihan · seret atau klik">5 pilihan · seret atau klik</span></div><div class="choices" id="solid-choices"></div></section>
         <section class="shelf" aria-labelledby="net-shelf-title"><div class="shelf-heading"><h3 id="net-shelf-title"><span class="shelf-badge net-badge">R2</span> <span data-i18n="Kad bentangan">Kad bentangan</span></h3><span data-i18n="5 pilihan · kad tanpa nama">5 pilihan · kad tanpa nama</span></div><div class="choices" id="net-choices"></div></section>
       </div>
-      <div class="round-bottom"><p><span class="led-dot blue"></span> <span data-i18n="Sedia">Sedia</span> <span class="led-dot green"></span> <span data-i18n="Betul">Betul</span> <span class="led-dot red"></span> <span data-i18n="Cuba lagi">Cuba lagi</span> <span class="led-dot purple"></span> <span data-i18n="Petunjuk">Petunjuk</span></p><button id="skip-button" class="button button-quiet"><span data-icon="skip"></span> <span data-i18n="Langkau soalan">Langkau soalan</span> <small data-i18n="+0 markah">+0 markah</small></button></div>
+      <div class="round-bottom"><p><span class="led-dot blue"></span> <span data-i18n="Sedia">Sedia</span> <span class="led-dot green"></span> <span data-i18n="Betul">Betul</span> <span class="led-dot red"></span> <span data-i18n="Salah">Salah</span> <span class="led-dot purple"></span> <span data-i18n="Petunjuk">Petunjuk</span></p><button id="skip-button" class="button button-quiet"><span data-icon="skip"></span> <span data-i18n="Langkau soalan">Langkau soalan</span> <small data-i18n="+0 markah">+0 markah</small></button></div>
     </section>
 
     <section id="result-screen" class="result-screen" hidden aria-labelledby="result-title">
       <div class="result-heading"><span class="eyebrow" data-i18n="PUSINGAN SELESAI">PUSINGAN SELESAI</span><h1 id="result-title" tabindex="-1" data-i18n="Bagus, teruskan meneroka!">Bagus, teruskan meneroka!</h1><p id="result-player"></p></div>
-      <div class="result-layout"><div class="result-main"><div class="result-medal"><span data-icon="trophy"></span><div><b id="result-score">10</b><span data-i18n="/ 10 markah">/ 10 markah</span></div><span class="medal-spark">✦</span></div><div class="result-level" id="result-level" data-i18n="Pakar padanan">Pakar padanan</div><p id="result-message"></p><div class="result-metrics"><div><span data-icon="clock"></span><b id="result-time"></b><small data-i18n="Masa bermain">Masa bermain</small></div><div><b id="result-first"></b><small data-i18n="Betul cubaan pertama">Betul cubaan pertama</small></div><div><b id="result-mistakes"></b><small data-i18n="Cubaan salah">Cubaan salah</small></div><div><b id="result-hints"></b><small data-i18n="Soalan guna petunjuk">Soalan guna petunjuk</small></div></div><div class="result-actions"><button class="button button-primary" id="replay-button"><span data-icon="refresh"></span> <span data-i18n="Main lagi">Main lagi</span></button><button class="button button-outline" data-action="home" data-i18n="Tukar pemain">Tukar pemain</button></div></div><div class="result-side"><div class="mini-title"><span data-icon="trophy"></span><h2 data-i18n="Papan skor">Papan skor</h2><span data-i18n="PERANTI INI">PERANTI INI</span></div><div id="result-leaderboard"></div><button class="button button-quiet" data-action="scores"><span data-i18n="Lihat semua skor">Lihat semua skor</span> <span data-icon="arrow"></span></button><p class="score-scope" data-i18n="Skor lebih tinggi dahulu, kemudian cubaan salah lebih sedikit dan masa lebih pantas.">Skor lebih tinggi dahulu, kemudian cubaan salah lebih sedikit dan masa lebih pantas.</p></div></div>
-      <div class="review-section"><h2 data-i18n="Lihat semula pusingan anda">Lihat semula pusingan anda</h2><p data-i18n="Kenali pasangan yang telah dijawab atau dilangkau.">Kenali pasangan yang telah dijawab atau dilangkau.</p><div class="review-list" id="review-list"></div></div>
+      <div class="result-layout"><div class="result-main"><div class="result-medal"><span data-icon="trophy"></span><div><b id="result-score">10</b><span data-i18n="/ 10 markah">/ 10 markah</span></div><span class="medal-spark">✦</span></div><div class="result-level" id="result-level" data-i18n="Pakar padanan">Pakar padanan</div><p id="result-message"></p><div class="result-metrics"><div><span data-icon="clock"></span><b id="result-time"></b><small data-i18n="Masa bermain">Masa bermain</small></div><div><b id="result-first"></b><small data-i18n="Bongkah R1 betul">Bongkah R1 betul</small></div><div><b id="result-mistakes"></b><small data-i18n="Soalan salah">Soalan salah</small></div><div><b id="result-hints"></b><small data-i18n="Soalan guna petunjuk">Soalan guna petunjuk</small></div></div><div class="result-actions"><button class="button button-primary" id="replay-button"><span data-icon="refresh"></span> <span data-i18n="Main lagi">Main lagi</span></button><button class="button button-outline" data-action="home" data-i18n="Tukar pemain">Tukar pemain</button></div></div><div class="result-side"><div class="mini-title"><span data-icon="trophy"></span><h2 data-i18n="Papan skor">Papan skor</h2><span data-i18n="PERANTI INI">PERANTI INI</span></div><div id="result-leaderboard"></div><button class="button button-quiet" data-action="scores"><span data-i18n="Lihat semua skor">Lihat semua skor</span> <span data-icon="arrow"></span></button><p class="score-scope" data-i18n="Satu percubaan. Skor lebih tinggi dahulu, kemudian soalan salah lebih sedikit dan masa lebih pantas.">Satu percubaan. Skor lebih tinggi dahulu, kemudian soalan salah lebih sedikit dan masa lebih pantas.</p></div></div>
+      <section class="analysis-section" aria-labelledby="analysis-title"><div class="analysis-heading"><span class="eyebrow" data-i18n="KENALI KEKUATAN ANDA">KENALI KEKUATAN ANDA</span><h2 id="analysis-title" data-i18n="Apa yang perlu dilatih lagi?">Apa yang perlu dilatih lagi?</h2><p data-i18n="Analisis berdasarkan 10 soalan pusingan ini. Dua soalan bagi setiap bongkah.">Analisis berdasarkan 10 soalan pusingan ini. Dua soalan bagi setiap bongkah.</p></div><div id="analysis-summary" class="analysis-summary"></div><div class="analysis-grid"><section class="analysis-card"><h3 data-i18n="Padanan mengikut bongkah">Padanan mengikut bongkah</h3><p data-i18n="Pasangan betul daripada soalan yang diberi.">Pasangan betul daripada soalan yang diberi.</p><div id="analysis-shapes"></div></section><section class="analysis-card"><h3 data-i18n="Bongkah atau bentangan?">Bongkah atau bentangan?</h3><p data-i18n="Ketepatan daripada imbasan yang benar-benar dicuba.">Ketepatan daripada imbasan yang benar-benar dicuba.</p><div id="analysis-stages"></div><h3 class="topic-heading" data-i18n="Jenis soalan">Jenis soalan</h3><div id="analysis-topics"></div></section></div><div id="analysis-advice" class="analysis-advice"></div></section>
+      <div class="review-section"><h2 data-i18n="Lihat semula pusingan anda">Lihat semula pusingan anda</h2><p data-i18n="Semak pilihan anda, jawapan betul dan soalan yang dilangkau.">Semak pilihan anda, jawapan betul dan soalan yang dilangkau.</p><div class="review-list" id="review-list"></div></div>
     </section>
 
     <div class="storage-warning" id="storage-warning" hidden role="status" data-i18n="Simpanan pelayar tidak tersedia. Anda masih boleh bermain; skor sesi ini boleh dieksport sebelum halaman ditutup.">Simpanan pelayar tidak tersedia. Anda masih boleh bermain; skor sesi ini boleh dieksport sebelum halaman ditutup.</div>
@@ -158,7 +259,7 @@ select:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
   <footer class="site-footer"><span>GeoDecoder <b data-i18n="Digital V1">Digital V1</b></span><span data-i18n="Belajar bentuk. Bina kefahaman.">Belajar bentuk. Bina kefahaman.</span><span data-i18n="Serasi tetikus, sentuhan &amp; papan kekunci">Serasi tetikus, sentuhan &amp; papan kekunci</span></footer>
   <div id="announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
   <dialog id="app-dialog" aria-labelledby="dialog-title"><div class="dialog-shell"><div class="dialog-header"><h2 id="dialog-title"></h2><button class="icon-button" id="dialog-close" aria-label="Tutup tetingkap" data-i18n-aria-label="Tutup tetingkap"><span data-icon="close"></span></button></div><div id="dialog-content"></div></div></dialog>
-  <noscript><div class="noscript" data-i18n="Hidupkan JavaScript dalam pelayar untuk bermain GeoDecoder Digital.">Hidupkan JavaScript dalam pelayar untuk bermain GeoDecoder Digital. / Enable JavaScript in your browser to play GeoDecoder Digital.</div></noscript>
+  <noscript><div class="noscript" data-i18n="Hidupkan JavaScript dalam pelayar untuk bermain GeoDecoder Digital.">Hidupkan JavaScript dalam pelayar untuk bermain GeoDecoder Digital.</div></noscript>
   <script type="module">
 // Generated from the verified firmware bank; see docs/SOURCE.md.
 const QUESTIONS = [
@@ -330,11 +431,13 @@ const QUESTIONS = [
 ];
 
 
-const VERSION = '1.1.0';
+const VERSION = '1.2.0';
+const RULESET = 'single-attempt-v1';
 const SHAPES = ['cube', 'cuboid', 'pyramid', 'cylinder', 'cone'];
 const ROUND_SIZE = 10;
 const BLINK_MS = 900;
 const WRONG_MS = 1200;
+const REVIEW_MS = 1800;
 
 function shuffle(items, rng = Math.random) {
   const result = [...items];
@@ -343,6 +446,40 @@ function shuffle(items, rng = Math.random) {
     [result[i], result[j]] = [result[j], result[i]];
   }
   return result;
+}
+
+function reshuffle(items, previous, rng = Math.random) {
+  if (!previous || previous.length !== items.length) return shuffle(items,rng);
+  for (let attempt=0;attempt<12;attempt++) {
+    const candidate = shuffle(items,rng);
+    if (candidate.every((value,index)=>value!==previous[index])) return candidate;
+  }
+  const shift=1+Math.floor(rng()*(previous.length-1));
+  return [...previous.slice(shift),...previous.slice(0,shift)];
+}
+
+function questionTopic(question) {
+  return /^[VL]=/.test(question.prompt) ? 'formula' : question.id.endsWith('3') ? 'net' : 'properties';
+}
+
+function analyseAnswers(answers) {
+  function group(ids,key) {
+    return ids.map(id=>{
+      const rows=answers.filter(answer=>answer[key]===id), total=rows.length;
+      const correct=rows.filter(answer=>answer.outcome==='correct').length;
+      return {id,total,correct,wrong:rows.filter(a=>a.outcome==='wrong').length,skipped:rows.filter(a=>a.outcome==='skipped').length,hints:rows.filter(a=>a.hint).length,elapsed:rows.reduce((sum,a)=>sum+a.elapsed,0),percent:total?Math.round(correct/total*100):null};
+    });
+  }
+  const byShape=group(SHAPES,'shape'),byTopic=group(['properties','formula','net'],'topic');
+  const byStage=['solid','net'].map(id=>{
+    const attempted=answers.filter(a=>a.attempts[id]!==null);
+    const correct=attempted.filter(a=>a.attempts[id]===a.shape).length;
+    return {id,attempted:attempted.length,correct,wrong:attempted.length-correct,notAttempted:answers.length-attempted.length,percent:attempted.length?Math.round(correct/attempted.length*100):null};
+  });
+  const weakShapes=byShape.filter(row=>row.total&&row.correct<row.total).sort((a,b)=>a.percent-b.percent||b.wrong-a.wrong);
+  const weakTopics=byTopic.filter(row=>row.total&&row.correct<row.total).sort((a,b)=>a.percent-b.percent||b.wrong-a.wrong);
+  const weakStage=byStage.filter(row=>row.attempted&&row.wrong).sort((a,b)=>a.percent-b.percent)[0]||null;
+  return {byShape,byTopic,byStage,weakShapes,weakTopics,weakStage};
 }
 
 function buildRound(bank, rng = Math.random) {
@@ -381,6 +518,9 @@ class Game {
     this.hintOpen = false;
     this.hintUsed = false;
     this.wrongOnQuestion = false;
+    this.attempts = {solid:null,net:null};
+    this.questionStartElapsed = 0;
+    this.reviewReadyAt = 0;
     this.firstTry = 0;
     this.elapsed = 0;
     this.segmentStart = now;
@@ -405,11 +545,12 @@ class Game {
     const activeTarget = this.stage === 'solid' ? 'r1' : 'r2';
     if (target !== activeTarget) return {type: 'stage', target: activeTarget};
     if (kind !== this.stage || !SHAPES.includes(shape)) return {type: 'kind', kind: this.stage};
+    this.attempts[this.stage] = shape;
     if (shape !== this.question.shape) {
       this.mistakes++;
       this.wrongOnQuestion = true;
-      this.wrongUntil = now + WRONG_MS;
       this.wrongReader = activeTarget;
+      this.beginFeedback('wrong',now);
       return {type: 'wrong', target: activeTarget};
     }
     this.wrongUntil = 0;
@@ -427,12 +568,13 @@ class Game {
 
   beginFeedback(outcome, now) {
     this.elapsed = this.time(now);
-    this.status = 'feedback';
+    this.status = outcome==='correct'?'feedback':'review';
     this.lastOutcome = outcome;
     this.transitionAt = now + BLINK_MS;
+    this.reviewReadyAt = now + REVIEW_MS;
     this.hintOpen = false;
     this.wrongUntil = 0;
-    this.answers.push({id: this.question.id, shape: this.question.shape, outcome, hint: this.hintUsed, firstTry: outcome === 'correct' && !this.wrongOnQuestion});
+    this.answers.push({id:this.question.id,shape:this.question.shape,topic:questionTopic(this.question),outcome,hint:this.hintUsed,failedAt:outcome==='wrong'?this.stage:null,attempts:{...this.attempts},elapsed:Math.round(this.elapsed-this.questionStartElapsed),firstTry:outcome==='correct'});
   }
 
   skip(now) {
@@ -451,6 +593,17 @@ class Game {
 
   update(now) {
     if (this.paused || this.status !== 'feedback' || now < this.transitionAt) return false;
+    return this.advance(now);
+  }
+
+  get reviewing() { return this.status==='review'; }
+  reviewReady(now) { return this.reviewing && !this.paused && now>=this.reviewReadyAt; }
+  continueReview(now) {
+    if (!this.reviewReady(now)) return false;
+    return this.advance(now);
+  }
+
+  advance(now) {
     if (this.index === this.round.length - 1) {
       this.status = 'finished';
       return true;
@@ -459,12 +612,14 @@ class Game {
     this.stage = 'solid';
     this.status = 'running';
     this.segmentStart = now;
+    this.questionStartElapsed = this.elapsed;
     this.hintUsed = false;
     this.hintOpen = false;
     this.wrongOnQuestion = false;
+    this.attempts = {solid:null,net:null};
     this.wrongReader = null;
-    this.solidOrder = shuffle(SHAPES, this.rng);
-    this.netOrder = shuffle(SHAPES, this.rng);
+    this.solidOrder = reshuffle(SHAPES, this.solidOrder, this.rng);
+    this.netOrder = reshuffle(SHAPES, this.netOrder, this.rng);
     return true;
   }
 
@@ -477,15 +632,19 @@ class Game {
   resume(now) {
     if (!this.paused) return;
     const gap = Math.max(0, now - this.pauseStart);
-    if (this.status === 'feedback') this.transitionAt += gap;
+    if (this.status === 'feedback' || this.reviewing) this.transitionAt += gap;
+    if (this.reviewing) this.reviewReadyAt += gap;
     if (this.wrongUntil) this.wrongUntil += gap;
     this.segmentStart = now;
     this.paused = false;
   }
 
   led(reader, now) {
-    if (this.status === 'feedback') {
+    if (this.status === 'feedback' || this.reviewing) {
       const clock = this.paused ? this.pauseStart : now;
+      if (this.reviewing && clock>=this.transitionAt) {
+        return reader===this.wrongReader?'red':reader==='r1'&&this.stage==='net'?'green':'off';
+      }
       const on = Math.floor(Math.max(0, clock - (this.transitionAt - BLINK_MS)) / 150) % 2 === 0;
       return on ? (this.lastOutcome === 'correct' ? 'green' : 'red') : 'off';
     }
@@ -497,8 +656,38 @@ class Game {
 
   result(id, completedAt = Date.now()) {
     if (this.status !== 'finished') return null;
-    return {id, version: VERSION, player: {...this.player}, score: this.score, total: ROUND_SIZE, mistakes: this.mistakes, hints: this.hints, skipped: this.skipped, firstTry: this.firstTry, elapsed: Math.round(this.elapsed), completedAt};
+    return {id,version:VERSION,ruleset:RULESET,player:{...this.player},score:this.score,total:ROUND_SIZE,mistakes:this.mistakes,hints:this.hints,skipped:this.skipped,firstTry:this.firstTry,elapsed:Math.round(this.elapsed),completedAt,answers:this.answers.map(answer=>({...answer,attempts:{...answer.attempts}}))};
   }
+}
+
+
+
+const PALETTES = {
+  mint:   {light:'#C3F1DC', mid:'#8AD6BA', dark:'#58BBA5', stroke:'#236D69'},
+  pink:   {light:'#FFE0EF', mid:'#F4A3C8', dark:'#DC6FA7', stroke:'#8D3265'},
+  orange: {light:'#FFE5C7', mid:'#FFC17B', dark:'#EF9951', stroke:'#95501B'},
+  blue:   {light:'#DCEAFF', mid:'#90BAF4', dark:'#5C95E2', stroke:'#275D9E'},
+  violet: {light:'#EEE2FF', mid:'#C4A4EF', dark:'#A578D7', stroke:'#66418E'},
+  yellow: {light:'#FFF2C2', mid:'#F3D77C', dark:'#DDB550', stroke:'#806219'},
+  coral:  {light:'#FFDED9', mid:'#F4AA9C', dark:'#DD8072', stroke:'#8B433C'},
+  lime:   {light:'#E9F4CA', mid:'#BBD78A', dark:'#91B85D', stroke:'#516D2D'}
+};
+const PALETTE_NAMES = Object.keys(PALETTES);
+
+function nextVisualPlan(previous = null, rng = Math.random) {
+  function shelf(old = {}, opposite = {}) {
+    const available = [...PALETTE_NAMES], colors = {};
+    for (const shape of SHAPES) {
+      const candidates = available.filter(color => color !== old[shape] && color !== opposite[shape]);
+      const picked = candidates[Math.floor(rng() * candidates.length)];
+      colors[shape] = picked;
+      available.splice(available.indexOf(picked), 1);
+    }
+    return colors;
+  }
+  const solid = shelf(previous?.solid);
+  const net = shelf(previous?.net, solid);
+  return {solid, net};
 }
 
 
@@ -694,7 +883,7 @@ const MESSAGES = {
     "Padam skor": "Padam skor",
     "Semua rekod nama, kelas dan keputusan dalam papan skor pelayar ini akan dipadam. Muat turun CSV dahulu jika mahu menyimpannya.": "Semua rekod nama, kelas dan keputusan dalam papan skor pelayar ini akan dipadam. Muat turun CSV dahulu jika mahu menyimpannya.",
     "question.counter": "SOALAN {number} / 10",
-    "question.progress": "Soalan {number} daripada 10. {score} pasangan betul, {skipped} dilangkau.",
+    "question.progress": "Soalan {number} daripada 10. {score} pasangan betul, {mistakes} salah, {skipped} dilangkau.",
     "question.dot": "Soalan {number}{state}",
     "question.current": ": semasa",
     "question.correct": ": betul",
@@ -705,11 +894,11 @@ const MESSAGES = {
     "scanner.label": "Pengimbas {target}, {kind}. {status}.",
     "scanner.action": " Klik atau tekan Enter untuk imbas pilihan.",
     "score.mine": " · Anda",
-    "score.wrong": "{count} cubaan salah",
+    "score.wrong": "{count} soalan salah",
     "score.shortWrong": "{count} salah",
-    "score.records": "{shown} daripada {total} rekod",
-    "result.summary": "{score} pasangan betul, {skipped} soalan dilangkau.",
-    "result.rank": " Kedudukan #{rank} dalam papan skor pelayar ini.",
+    "score.records": "{shown} daripada {total} rekod semasa",
+    "result.summary": "{score} pasangan betul, {mistakes} soalan salah, {skipped} dilangkau.",
+    "result.rank": " Kedudukan #{rank} dalam papan skor satu percubaan pelayar ini.",
     "result.try": " Cuba lagi untuk mengurangkan cubaan salah atau memperbaiki masa.",
     "result.complete": "Pusingan selesai. {score} daripada 10 markah. Masa {time}.",
     "round.next": "Soalan {number} daripada 10. Pilih bongkah untuk R1.",
@@ -717,7 +906,104 @@ const MESSAGES = {
     "leave.count": "{number} daripada 10",
     "language.label": "Bahasa",
     "language.changed": "Bahasa Melayu dipilih.",
-    "csv.headers": "Kedudukan|Nama|Kategori|Kelas|Markah|Jumlah|Kesilapan|Petunjuk|Langkau|Cubaan pertama|Masa (saat)|Tarikh (Malaysia)"
+    "csv.headers": "Kedudukan|Nama|Kategori|Kelas|Markah|Jumlah|Kesilapan|Petunjuk|Langkau|Cubaan pertama|Masa (saat)|Tarikh (Malaysia)",
+    "Animasi dikurangkan mengikut tetapan peranti": "Animasi dikurangkan mengikut tetapan peranti",
+    "Sambung animasi": "Sambung animasi",
+    "Jeda animasi": "Jeda animasi",
+    "Isi maklumat anda. Setiap soalan ada satu percubaan.": "Isi maklumat anda. Setiap soalan ada satu percubaan.",
+    "Sifat bongkah": "Sifat bongkah",
+    "Rumus": "Rumus",
+    "Bentangan": "Bentangan",
+    "Salah": "Salah",
+    "Satu percubaan. Baca soalan, kemudian pilih bongkah untuk R1.": "Satu percubaan. Baca soalan, kemudian pilih bongkah untuk R1.",
+    "Permainan bermula. Sepuluh soalan, satu percubaan setiap soalan. Pilih bongkah untuk R1 dahulu.": "Permainan bermula. Sepuluh soalan, satu percubaan setiap soalan. Pilih bongkah untuk R1 dahulu.",
+    "Lihat pasangan yang betul di bawah": "Lihat pasangan yang betul di bawah",
+    "Dilangkau · +0": "Dilangkau · +0",
+    "Salah · +0": "Salah · +0",
+    "Bongkah betul": "Bongkah betul",
+    "Soalan tamat": "Soalan tamat",
+    "Bongkah belum tepat. Percubaan tamat, +0 markah. Mari lihat jawapannya.": "Bongkah belum tepat. Percubaan tamat, +0 markah. Mari lihat jawapannya.",
+    "Bongkah R1 betul, tetapi bentangan belum sepadan. Percubaan tamat, +0 markah.": "Bongkah R1 betul, tetapi bentangan belum sepadan. Percubaan tamat, +0 markah.",
+    "Soalan dilangkau, +0 markah. Lihat jawapan sebelum meneruskan.": "Soalan dilangkau, +0 markah. Lihat jawapan sebelum meneruskan.",
+    "PERCUBAAN TAMAT · +0 MARKAH": "PERCUBAAN TAMAT · +0 MARKAH",
+    "DILANGKAU · +0 MARKAH": "DILANGKAU · +0 MARKAH",
+    "JAWAPAN SEBENAR": "JAWAPAN SEBENAR",
+    "Jawapan betul:": "Jawapan betul:",
+    "Jawapan:": "Jawapan:",
+    "Bongkah R1 anda sudah betul.": "Bongkah R1 anda sudah betul.",
+    "Soalan ini dilangkau. Lihat pasangan yang sepadan.": "Soalan ini dilangkau. Lihat pasangan yang sepadan.",
+    "R2 · Bentangannya": "R2 · Bentangannya",
+    "Perhatikan jawapan…": "Perhatikan jawapan…",
+    "Lihat analisis": "Lihat analisis",
+    "Soalan seterusnya": "Soalan seterusnya",
+    "Fahami padanannya dahulu. Masa dijeda.": "Fahami padanannya dahulu. Masa dijeda.",
+    "belum diimbas": "belum diimbas",
+    "✓ Pasangan betul · +1": "✓ Pasangan betul · +1",
+    "↷ Dilangkau · +0": "↷ Dilangkau · +0",
+    "Petunjuk digunakan": "Petunjuk digunakan",
+    "Mod satu percubaan.": "Mod satu percubaan.",
+    "Peraturan lama membenarkan cuba semula. Rekod ini disimpan berasingan daripada kedudukan satu percubaan.": "Peraturan lama membenarkan cuba semula. Rekod ini disimpan berasingan daripada kedudukan satu percubaan.",
+    "Skor tertinggi dahulu, kemudian soalan salah paling sedikit dan masa terpantas.": "Skor tertinggi dahulu, kemudian soalan salah paling sedikit dan masa terpantas.",
+    "Satu soalan, dua padanan,": "Satu soalan, dua padanan,",
+    "satu percubaan": "satu percubaan",
+    ". Sasarkan": ". Sasarkan",
+    "Selepas R1 hijau, seret kad bentangan yang sepadan ke R2. Bentuk menentukan jawapan; warna dan kedudukan berubah setiap soalan.": "Selepas R1 hijau, seret kad bentangan yang sepadan ke R2. Bentuk menentukan jawapan; warna dan kedudukan berubah setiap soalan.",
+    "Semak dan belajar": "Semak dan belajar",
+    "Pasangan betul memberi +1. Salah pada R1 atau R2 menamatkan soalan dengan +0. Lihat jawapan betul, kemudian tekan soalan seterusnya.": "Pasangan betul memberi +1. Salah pada R1 atau R2 menamatkan soalan dengan +0. Lihat jawapan betul, kemudian tekan soalan seterusnya.",
+    "Fikir dahulu sebelum mengimbas.": "Fikir dahulu sebelum mengimbas.",
+    "Memilih kad sahaja belum menggunakan percubaan. Petunjuk percuma. Langkau memberi +0 dan turut menunjukkan jawapan. Analisis akhir membantu anda memilih perkara yang perlu dilatih lagi. Jam dijeda semasa semakan dan tetingkap ini dibuka.": "Memilih kad sahaja belum menggunakan percubaan. Petunjuk percuma. Langkau memberi +0 dan turut menunjukkan jawapan. Analisis akhir membantu anda memilih perkara yang perlu dilatih lagi. Jam dijeda semasa semakan dan tetingkap ini dibuka.",
+    "Betul di R1": "Betul di R1",
+    "Soalan salah": "Soalan salah",
+    "ANALISIS PEMBELAJARAN": "ANALISIS PEMBELAJARAN",
+    "Di mana anda boleh bertambah baik?": "Di mana anda boleh bertambah baik?",
+    "Keputusan pusingan ini membantu anda mengenal pasti perkara yang perlu dilatih lagi.": "Keputusan pusingan ini membantu anda mengenal pasti perkara yang perlu dilatih lagi.",
+    "Mengikut bongkah": "Mengikut bongkah",
+    "Mengikut tahap": "Mengikut tahap",
+    "Mengikut jenis soalan": "Mengikut jenis soalan",
+    "Belum dicuba": "Belum dicuba",
+    "Semua pasangan tepat!": "Semua pasangan tepat!",
+    "Cuba menjawab untuk melihat kekuatan anda.": "Cuba menjawab untuk melihat kekuatan anda.",
+    "Padanan yang anda cuba sudah tepat.": "Padanan yang anda cuba sudah tepat.",
+    "Anda berjaya mengenal bongkah dan memadankan semua bentangan dalam pusingan ini.": "Anda berjaya mengenal bongkah dan memadankan semua bentangan dalam pusingan ini.",
+    "R1 · Kenal bongkah": "R1 · Kenal bongkah",
+    "R2 · Padankan bentangan": "R2 · Padankan bentangan",
+    "Latih bentangan R2: kira bentuk dan bilangan mukanya. Bayangkan setiap muka dilipat sebelum mengimbas.": "Latih bentangan R2: kira bentuk dan bilangan mukanya. Bayangkan setiap muka dilipat sebelum mengimbas.",
+    "Latih bongkah R1: kenal pasti tapak, muka rata, permukaan melengkung dan puncak daripada soalan.": "Latih bongkah R1: kenal pasti tapak, muka rata, permukaan melengkung dan puncak daripada soalan.",
+    "Latih rumus: bezakan isi padu V dan luas permukaan L. Fahami simbol jejari, tinggi dan tinggi sendeng dalam soalan.": "Latih rumus: bezakan isi padu V dan luas permukaan L. Fahami simbol jejari, tinggi dan tinggi sendeng dalam soalan.",
+    "Cuba pusingan baharu tanpa petunjuk. Kekalkan ketepatan sebelum mengejar masa.": "Cuba pusingan baharu tanpa petunjuk. Kekalkan ketepatan sebelum mengejar masa.",
+    "Teruskan dengan pusingan baharu. Susunan, warna dan pilihan soalan akan berubah.": "Teruskan dengan pusingan baharu. Susunan, warna dan pilihan soalan akan berubah.",
+    "Cadangan latihan anda": "Cadangan latihan anda",
+    "R2 yang belum dicuba selepas salah R1 tidak dikira sebagai kesilapan R2. Petunjuk tidak memotong markah.": "R2 yang belum dicuba selepas salah R1 tidak dikira sebagai kesilapan R2. Petunjuk tidak memotong markah.",
+    "Kubus mempunyai enam muka segi empat sama yang sama saiz. Bentangannya terdiri daripada enam petak yang boleh dilipat menjadi kubus.": "Kubus mempunyai enam muka segi empat sama yang sama saiz. Bentangannya terdiri daripada enam petak yang boleh dilipat menjadi kubus.",
+    "Kuboid mempunyai tiga pasang muka segi empat tepat yang sama saiz. Padankan panjang dan lebar setiap pasangan muka dalam bentangannya.": "Kuboid mempunyai tiga pasang muka segi empat tepat yang sama saiz. Padankan panjang dan lebar setiap pasangan muka dalam bentangannya.",
+    "Piramid ini bertapak segi empat sama. Empat muka segi tiga dilipat ke atas sehingga bertemu pada satu puncak.": "Piramid ini bertapak segi empat sama. Empat muka segi tiga dilipat ke atas sehingga bertemu pada satu puncak.",
+    "Silinder mempunyai dua tapak bulatan sama saiz. Permukaan melengkungnya apabila dibuka menjadi segi empat tepat.": "Silinder mempunyai dua tapak bulatan sama saiz. Permukaan melengkungnya apabila dibuka menjadi segi empat tepat.",
+    "Kon mempunyai satu tapak bulatan. Permukaan melengkungnya apabila dibuka menjadi sektor bulatan, bukan segi tiga.": "Kon mempunyai satu tapak bulatan. Permukaan melengkungnya apabila dibuka menjadi sektor bulatan, bukan segi tiga.",
+    "question.wrong": ": salah",
+    "round.single": "Soalan {number} daripada 10. Satu percubaan.",
+    "legacy.count": "Skor V1 terdahulu ({count})",
+    "correction.attempt": "Pilihan anda di {target}: {shape}. {note}",
+    "correction.announce": "Jawapan betul ialah {shape}. {note} Tiada markah. Tekan terus selepas melihat jawapan.",
+    "review.wrong": "✕ Salah di {target} · +0",
+    "analysis.hints": "{count} soalan menggunakan petunjuk. Cuba pusingan baharu tanpa petunjuk untuk menguji ingatan.",
+    "analysis.skipped": "{count} soalan dilangkau. Lengkapkan soalan itu dalam pusingan baharu untuk melihat kefahaman anda.",
+    "analysis.focus": "Fokus semula: {shapes}.",
+    "analysis.errors": "{wrong} soalan salah, {skipped} dilangkau. Lihat tahap dan jenis soalan di bawah sebelum mencuba lagi.",
+    "analysis.shape": "{wrong} salah · {skipped} dilangkau · {hints} guna petunjuk",
+    "analysis.stage": "{wrong} imbasan salah · {untried} belum dicuba",
+    "analysis.topic": "{wrong} salah · {skipped} dilangkau",
+    "analysis.retrySkipped": "Cuba semula {count} soalan yang dilangkau. Gunakan petunjuk sebelum mengimbas jika belum pasti.",
+    "Bongkah R1 betul": "Bongkah R1 betul",
+    "Satu percubaan. Skor lebih tinggi dahulu, kemudian soalan salah lebih sedikit dan masa lebih pantas.": "Satu percubaan. Skor lebih tinggi dahulu, kemudian soalan salah lebih sedikit dan masa lebih pantas.",
+    "KENALI KEKUATAN ANDA": "KENALI KEKUATAN ANDA",
+    "Apa yang perlu dilatih lagi?": "Apa yang perlu dilatih lagi?",
+    "Analisis berdasarkan 10 soalan pusingan ini. Dua soalan bagi setiap bongkah.": "Analisis berdasarkan 10 soalan pusingan ini. Dua soalan bagi setiap bongkah.",
+    "Padanan mengikut bongkah": "Padanan mengikut bongkah",
+    "Pasangan betul daripada soalan yang diberi.": "Pasangan betul daripada soalan yang diberi.",
+    "Bongkah atau bentangan?": "Bongkah atau bentangan?",
+    "Ketepatan daripada imbasan yang benar-benar dicuba.": "Ketepatan daripada imbasan yang benar-benar dicuba.",
+    "Jenis soalan": "Jenis soalan",
+    "Semak pilihan anda, jawapan betul dan soalan yang dilangkau.": "Semak pilihan anda, jawapan betul dan soalan yang dilangkau."
   },
   "en": {
     "Terus ke kandungan": "Skip to content",
@@ -909,7 +1195,7 @@ const MESSAGES = {
     "Padam skor": "Delete scores",
     "Semua rekod nama, kelas dan keputusan dalam papan skor pelayar ini akan dipadam. Muat turun CSV dahulu jika mahu menyimpannya.": "All names, classes and results in this browser’s leaderboard will be deleted. Download the CSV first if you want to keep them.",
     "question.counter": "QUESTION {number} / 10",
-    "question.progress": "Question {number} of 10. {score} correct pairs, {skipped} skipped.",
+    "question.progress": "Question {number} of 10. Correct pairs: {score}; wrong: {mistakes}; skipped: {skipped}.",
     "question.dot": "Question {number}{state}",
     "question.current": ": current",
     "question.correct": ": correct",
@@ -920,11 +1206,11 @@ const MESSAGES = {
     "scanner.label": "Scanner {target}, {kind}. {status}.",
     "scanner.action": " Click or press Enter to scan your choice.",
     "score.mine": " · You",
-    "score.wrong": "{count} wrong attempts",
-    "score.shortWrong": "{count} errors",
-    "score.records": "{shown} of {total} records",
-    "result.summary": "{score} correct pairs, {skipped} questions skipped.",
-    "result.rank": " Rank #{rank} in this browser’s leaderboard.",
+    "score.wrong": "Wrong questions: {count}",
+    "score.shortWrong": "Errors: {count}",
+    "score.records": "Current records: {shown} / {total}",
+    "result.summary": "Correct pairs: {score}; wrong questions: {mistakes}; skipped: {skipped}.",
+    "result.rank": " Rank #{rank} in this browser’s single-attempt leaderboard.",
     "result.try": " Play again to reduce wrong attempts or improve your time.",
     "result.complete": "Round complete. {score} out of 10 points. Time {time}.",
     "round.next": "Question {number} of 10. Choose a solid for R1.",
@@ -932,7 +1218,104 @@ const MESSAGES = {
     "leave.count": "{number} of 10",
     "language.label": "Language",
     "language.changed": "English selected.",
-    "csv.headers": "Rank|Name|Category|Class|Score|Total|Errors|Hints|Skipped|First try|Time (seconds)|Date (Malaysia)"
+    "csv.headers": "Rank|Name|Category|Class|Score|Total|Errors|Hints|Skipped|First try|Time (seconds)|Date (Malaysia)",
+    "Animasi dikurangkan mengikut tetapan peranti": "Motion reduced by your device settings",
+    "Sambung animasi": "Resume animation",
+    "Jeda animasi": "Pause animation",
+    "Isi maklumat anda. Setiap soalan ada satu percubaan.": "Enter your details. Each question has one attempt.",
+    "Sifat bongkah": "Solid properties",
+    "Rumus": "Formula",
+    "Bentangan": "Nets",
+    "Salah": "Wrong",
+    "Satu percubaan. Baca soalan, kemudian pilih bongkah untuk R1.": "One attempt. Read the question, then choose a solid for R1.",
+    "Permainan bermula. Sepuluh soalan, satu percubaan setiap soalan. Pilih bongkah untuk R1 dahulu.": "Game started. Ten questions, one attempt per question. Choose a solid for R1 first.",
+    "Lihat pasangan yang betul di bawah": "See the correct pair below",
+    "Dilangkau · +0": "Skipped · +0",
+    "Salah · +0": "Wrong · +0",
+    "Bongkah betul": "Correct solid",
+    "Soalan tamat": "Question ended",
+    "Bongkah belum tepat. Percubaan tamat, +0 markah. Mari lihat jawapannya.": "The solid is not correct. Your attempt is over, +0 points. Let’s look at the answer.",
+    "Bongkah R1 betul, tetapi bentangan belum sepadan. Percubaan tamat, +0 markah.": "The solid at R1 is correct, but the net does not match. Your attempt is over, +0 points.",
+    "Soalan dilangkau, +0 markah. Lihat jawapan sebelum meneruskan.": "Question skipped, +0 points. Review the answer before continuing.",
+    "PERCUBAAN TAMAT · +0 MARKAH": "ATTEMPT OVER · +0 POINTS",
+    "DILANGKAU · +0 MARKAH": "SKIPPED · +0 POINTS",
+    "JAWAPAN SEBENAR": "CORRECT ANSWER",
+    "Jawapan betul:": "Correct answer:",
+    "Jawapan:": "Answer:",
+    "Bongkah R1 anda sudah betul.": "Your solid at R1 was correct.",
+    "Soalan ini dilangkau. Lihat pasangan yang sepadan.": "This question was skipped. Look at the matching pair.",
+    "R2 · Bentangannya": "R2 · Its net",
+    "Perhatikan jawapan…": "Study the answer…",
+    "Lihat analisis": "View analysis",
+    "Soalan seterusnya": "Next question",
+    "Fahami padanannya dahulu. Masa dijeda.": "Study the match first. The clock is paused.",
+    "belum diimbas": "not scanned",
+    "✓ Pasangan betul · +1": "✓ Correct pair · +1",
+    "↷ Dilangkau · +0": "↷ Skipped · +0",
+    "Petunjuk digunakan": "Hint used",
+    "Mod satu percubaan.": "Single-attempt mode.",
+    "Peraturan lama membenarkan cuba semula. Rekod ini disimpan berasingan daripada kedudukan satu percubaan.": "The old rules allowed retries. These records are kept separate from the single-attempt rankings.",
+    "Skor tertinggi dahulu, kemudian soalan salah paling sedikit dan masa terpantas.": "Highest scores first, then fewest wrong questions and fastest times.",
+    "Satu soalan, dua padanan,": "One question, two matches,",
+    "satu percubaan": "one attempt",
+    ". Sasarkan": ". Aim for",
+    "Selepas R1 hijau, seret kad bentangan yang sepadan ke R2. Bentuk menentukan jawapan; warna dan kedudukan berubah setiap soalan.": "When R1 turns green, drag the matching net card to R2. Shape determines the answer; colours and positions change each question.",
+    "Semak dan belajar": "Review and learn",
+    "Pasangan betul memberi +1. Salah pada R1 atau R2 menamatkan soalan dengan +0. Lihat jawapan betul, kemudian tekan soalan seterusnya.": "A correct pair earns +1. A wrong answer at R1 or R2 ends the question with +0. Review the correct answer, then press next question.",
+    "Fikir dahulu sebelum mengimbas.": "Think before scanning.",
+    "Memilih kad sahaja belum menggunakan percubaan. Petunjuk percuma. Langkau memberi +0 dan turut menunjukkan jawapan. Analisis akhir membantu anda memilih perkara yang perlu dilatih lagi. Jam dijeda semasa semakan dan tetingkap ini dibuka.": "Selecting a card does not use your attempt. Hints are free. Skipping earns +0 and shows the answer. The final analysis helps you choose what to practise next. The clock pauses during review and while this window is open.",
+    "Betul di R1": "Correct at R1",
+    "Soalan salah": "Wrong questions",
+    "ANALISIS PEMBELAJARAN": "LEARNING ANALYSIS",
+    "Di mana anda boleh bertambah baik?": "Where can you improve?",
+    "Keputusan pusingan ini membantu anda mengenal pasti perkara yang perlu dilatih lagi.": "This round’s results help you identify what to practise next.",
+    "Mengikut bongkah": "By solid",
+    "Mengikut tahap": "By stage",
+    "Mengikut jenis soalan": "By question type",
+    "Belum dicuba": "Not attempted",
+    "Semua pasangan tepat!": "Every pair is correct!",
+    "Cuba menjawab untuk melihat kekuatan anda.": "Try answering to discover your strengths.",
+    "Padanan yang anda cuba sudah tepat.": "The pairs you attempted were correct.",
+    "Anda berjaya mengenal bongkah dan memadankan semua bentangan dalam pusingan ini.": "You identified the solids and matched every net in this round.",
+    "R1 · Kenal bongkah": "R1 · Identify solids",
+    "R2 · Padankan bentangan": "R2 · Match nets",
+    "Latih bentangan R2: kira bentuk dan bilangan mukanya. Bayangkan setiap muka dilipat sebelum mengimbas.": "Practise R2 nets: identify the shapes and count their faces. Imagine each face folding before you scan.",
+    "Latih bongkah R1: kenal pasti tapak, muka rata, permukaan melengkung dan puncak daripada soalan.": "Practise R1 solids: identify the base, flat faces, curved surfaces and apex from the question.",
+    "Latih rumus: bezakan isi padu V dan luas permukaan L. Fahami simbol jejari, tinggi dan tinggi sendeng dalam soalan.": "Practise formulas: distinguish volume V from surface area L. Understand the symbols for radius, height and slant height in the question.",
+    "Cuba pusingan baharu tanpa petunjuk. Kekalkan ketepatan sebelum mengejar masa.": "Try a new round without hints. Focus on accuracy before speed.",
+    "Teruskan dengan pusingan baharu. Susunan, warna dan pilihan soalan akan berubah.": "Try a new round. Positions, colours and selected questions will change.",
+    "Cadangan latihan anda": "Your practice suggestions",
+    "R2 yang belum dicuba selepas salah R1 tidak dikira sebagai kesilapan R2. Petunjuk tidak memotong markah.": "An unattempted R2 after a wrong R1 is not counted as an R2 error. Hints do not deduct points.",
+    "Kubus mempunyai enam muka segi empat sama yang sama saiz. Bentangannya terdiri daripada enam petak yang boleh dilipat menjadi kubus.": "A cube has six equal square faces. Its net has six squares that fold into a cube.",
+    "Kuboid mempunyai tiga pasang muka segi empat tepat yang sama saiz. Padankan panjang dan lebar setiap pasangan muka dalam bentangannya.": "A cuboid has three pairs of equal rectangular faces. Match the length and width of each pair in its net.",
+    "Piramid ini bertapak segi empat sama. Empat muka segi tiga dilipat ke atas sehingga bertemu pada satu puncak.": "This pyramid has a square base. Four triangular faces fold up to meet at an apex.",
+    "Silinder mempunyai dua tapak bulatan sama saiz. Permukaan melengkungnya apabila dibuka menjadi segi empat tepat.": "A cylinder has two equal circular bases. Its curved surface unfolds into a rectangle.",
+    "Kon mempunyai satu tapak bulatan. Permukaan melengkungnya apabila dibuka menjadi sektor bulatan, bukan segi tiga.": "A cone has one circular base. Its curved surface unfolds into a sector of a circle, not a triangle.",
+    "question.wrong": ": wrong",
+    "round.single": "Question {number} of 10. One attempt.",
+    "legacy.count": "Previous V1 scores ({count})",
+    "correction.attempt": "Your choice at {target}: {shape}. {note}",
+    "correction.announce": "The correct answer is {shape}. {note} No points. Continue after studying the answer.",
+    "review.wrong": "✕ Wrong at {target} · +0",
+    "analysis.hints": "Questions with hints: {count}. Try a new round without hints to test your memory.",
+    "analysis.skipped": "Skipped questions: {count}. Complete the skipped questions in a new round to check your understanding.",
+    "analysis.focus": "Focus on: {shapes}.",
+    "analysis.errors": "Wrong questions: {wrong}; skipped: {skipped}. Check the stages and question types below before trying again.",
+    "analysis.shape": "{wrong} wrong · {skipped} skipped · {hints} with hints",
+    "analysis.stage": "Wrong scans: {wrong} · Not attempted: {untried}",
+    "analysis.topic": "{wrong} wrong · {skipped} skipped",
+    "analysis.retrySkipped": "Practise the skipped questions ({count}). Use a hint before scanning if you are unsure.",
+    "Bongkah R1 betul": "Correct R1 solid",
+    "Satu percubaan. Skor lebih tinggi dahulu, kemudian soalan salah lebih sedikit dan masa lebih pantas.": "One attempt. Higher scores first, then fewer wrong questions and faster times.",
+    "KENALI KEKUATAN ANDA": "DISCOVER YOUR STRENGTHS",
+    "Apa yang perlu dilatih lagi?": "What should you practise next?",
+    "Analisis berdasarkan 10 soalan pusingan ini. Dua soalan bagi setiap bongkah.": "Analysis of this round’s 10 questions. Two questions for each solid.",
+    "Padanan mengikut bongkah": "Matches by solid",
+    "Pasangan betul daripada soalan yang diberi.": "Correct pairs out of the questions given.",
+    "Bongkah atau bentangan?": "Solids or nets?",
+    "Ketepatan daripada imbasan yang benar-benar dicuba.": "Accuracy from scans that were actually attempted.",
+    "Jenis soalan": "Question types",
+    "Semak pilihan anda, jawapan betul dan soalan yang dilangkau.": "Review your choices, correct answers and skipped questions."
   }
 };
 const SHAPE_COPY = {
@@ -1186,27 +1569,36 @@ function localizeQuestion(question, language = 'ms') {
 function shapeName(shape, language = 'ms') { return SHAPE_COPY[language]?.[shape]?.name || SHAPE_COPY.ms[shape]?.name || ''; }
 
 
-const SCORE_KEY = 'geodecoder.digital.v1.scores';
+const LEGACY_SCORE_KEY = 'geodecoder.digital.v1.scores';
+const SCORE_KEY = 'geodecoder.digital.single-attempt.v1.scores';
 const MAX_SCORES = 50;
 
-function validRecord(r) {
-  return !!r && typeof r.id === 'string' && r.id.length < 120 && ['1.0.0','1.1.0'].includes(r.version) &&
+function validRecord(r, legacy=false) {
+  return !!r && typeof r.id === 'string' && r.id.length < 120 &&
+    (legacy ? ['1.0.0','1.1.0'].includes(r.version) && r.ruleset!==RULESET : typeof r.version==='string' && /^\d+\.\d+\.\d+$/.test(r.version) && r.ruleset===RULESET) &&
     !!r.player && typeof r.player.name === 'string' && r.player.name.length >= 2 && r.player.name.length <= 60 &&
     ['Murid', 'Pelajar'].includes(r.player.category) && typeof r.player.className === 'string' && r.player.className.length > 0 && r.player.className.length <= 40 &&
     r.total === 10 && Number.isInteger(r.score) && r.score >= 0 && r.score <= 10 &&
     ['mistakes', 'hints', 'skipped', 'firstTry'].every(k => Number.isInteger(r[k]) && r[k] >= 0) &&
-    r.hints <= 10 && r.skipped <= 10 && r.score + r.skipped === 10 && r.firstTry <= r.score &&
+    r.hints <= 10 && r.skipped <= 10 &&
+    (legacy ? r.score+r.skipped===10 && r.firstTry<=r.score : r.mistakes<=10 && r.score+r.mistakes+r.skipped===10 && r.firstTry===r.score) &&
     Number.isFinite(r.elapsed) && r.elapsed >= 0 && Number.isFinite(r.completedAt) && r.completedAt > 0;
 }
 
 function rankScores(scores) {
-  return [...new Map(scores.filter(validRecord).map(r => [r.id, r])).values()]
+  return [...new Map(scores.filter(r=>validRecord(r)).map(r => [r.id, r])).values()]
     .sort((a,b) => b.score - a.score || a.mistakes - b.mistakes || a.elapsed - b.elapsed || a.completedAt - b.completedAt)
     .slice(0, MAX_SCORES);
 }
 
 class ScoreStore {
   constructor(storage) { this.storage = storage; this.memory = []; this.failed = false; }
+  readLegacy() {
+    try {
+      const rows=JSON.parse(this.storage.getItem(LEGACY_SCORE_KEY)||'[]');
+      return Array.isArray(rows)?rows.filter(r=>validRecord(r,true)).slice(0,MAX_SCORES):[];
+    } catch { return []; }
+  }
   read() {
     try {
       const text = this.storage.getItem(SCORE_KEY);
@@ -1228,7 +1620,7 @@ class ScoreStore {
   }
   clear() {
     this.memory = [];
-    try { this.storage.removeItem(SCORE_KEY); this.failed = false; return true; }
+    try { this.storage.removeItem(SCORE_KEY); this.storage.removeItem(LEGACY_SCORE_KEY); this.failed = false; return true; }
     catch { this.failed = true; return false; }
   }
 }
@@ -1274,7 +1666,7 @@ function icon(name, cls='') {
   return `<svg class="icon ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name]||paths.spark}</svg>`;
 }
 
-function shapeArt(shape, kind='solid', decorative=false, language='ms') {
+function shapeArt(shape, kind='solid', decorative=false, tone='mint', language='ms') {
   const common='stroke="#236D69" stroke-width="2.2" stroke-linejoin="round"';
   let content='';
   if(kind==='solid') {
@@ -1297,7 +1689,9 @@ function shapeArt(shape, kind='solid', decorative=false, language='ms') {
     };
     content=nets[shape]||'';
   }
-  return `<svg class="shape-art" viewBox="0 0 200 164" ${decorative?'aria-hidden="true"':`role="img" aria-label="${describeShape(shape,kind,language)}"`}><g>${kind==='solid'?'<ellipse cx="100" cy="148" rx="60" ry="7" fill="#18334B" opacity=".06"/>':''}${content}</g></svg>`;
+  const key = Object.hasOwn(PALETTES,tone) ? tone : 'mint', palette = PALETTES[key];
+  content = content.replaceAll('#C3F1DC',palette.light).replaceAll('#8AD6BA',palette.mid).replaceAll('#58BBA5',palette.dark).replaceAll('#236D69',palette.stroke).replaceAll('#D5E6FF',palette.light).replaceAll('#366BAD',palette.stroke);
+  return `<svg class="shape-art" data-tone="${key}" viewBox="0 0 200 164" ${decorative?'aria-hidden="true"':`role="img" aria-label="${describeShape(shape,kind,language)}"`}><g>${kind==='solid'?'<ellipse cx="100" cy="148" rx="60" ry="7" fill="#18334B" opacity=".06"/>':''}${content}</g></svg>`;
 }
 
 function brandArt() {
@@ -1327,18 +1721,37 @@ const t = (key,params) => translate(locale.language,key,params);
 let screen = 'welcome', game = null, selected = null, acceptedSolid = null, acceptedNet = null;
 let player = null, roundId = '', lastResult = null, dialogMode = '', dialogTrigger = null;
 let drag = null, suppressClickUntil = 0, hiddenPause = false, sound = false, audioContext = null;
-let scoresExpanded = false, lastClock = '', lastLed = {};
+let scoresExpanded = false, lastClock = '', lastLed = {}, visualPlan = null, motionPaused = false;
 const dialog = $('app-dialog');
 const languageControl=$('language-control'), languageHome=languageControl.parentElement;
 let refreshingLanguage=false, lastStatus=null, validationErrors=null, scoreNotice='', automaticPause=false;
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+const TOPIC_NAMES = {properties:'Sifat bongkah',formula:'Rumus',net:'Bentangan'};
+const SHAPE_NOTES = {
+  cube:'Kubus mempunyai enam muka segi empat sama yang sama saiz. Bentangannya terdiri daripada enam petak yang boleh dilipat menjadi kubus.',
+  cuboid:'Kuboid mempunyai tiga pasang muka segi empat tepat yang sama saiz. Padankan panjang dan lebar setiap pasangan muka dalam bentangannya.',
+  pyramid:'Piramid ini bertapak segi empat sama. Empat muka segi tiga dilipat ke atas sehingga bertemu pada satu puncak.',
+  cylinder:'Silinder mempunyai dua tapak bulatan sama saiz. Permukaan melengkungnya apabila dibuka menjadi segi empat tepat.',
+  cone:'Kon mempunyai satu tapak bulatan. Permukaan melengkungnya apabila dibuka menjadi sektor bulatan, bukan segi tiga.'
+};
 
 function hydrate(root = document) {
   root.querySelectorAll('[data-icon]').forEach(el => { el.innerHTML = icon(el.dataset.icon); });
   root.querySelectorAll('[data-brand]').forEach(el => { el.innerHTML = brandArt(); });
-  root.querySelectorAll('[data-art]').forEach(el => { el.innerHTML = shapeArt(el.dataset.art, el.dataset.kind || 'solid', true); });
+  root.querySelectorAll('[data-art]').forEach(el => { el.innerHTML = shapeArt(el.dataset.art, el.dataset.kind || 'solid', true,el.dataset.tone||'mint'); });
 }
 hydrate();
+$('app-version').textContent='V'+VERSION;
+function updateMotion(){
+  document.body.classList.toggle('motion-paused',motionPaused||reducedMotion.matches);
+  const label=reducedMotion.matches?t("Animasi dikurangkan mengikut tetapan peranti"):motionPaused?t("Sambung animasi"):t("Jeda animasi");
+  $('motion-button').disabled=reducedMotion.matches;
+  $('motion-button').setAttribute('aria-label',label);$('motion-button').title=label;
+  $('motion-button').setAttribute('aria-pressed',String(motionPaused||reducedMotion.matches));
+  $('motion-button').innerHTML=icon(motionPaused||reducedMotion.matches?'spark':'pause');
+}
+$('motion-button').addEventListener('click',()=>{motionPaused=!motionPaused;updateMotion();});
+reducedMotion.addEventListener('change',updateMotion);updateMotion();
 
 function announce(message) { $('announcer').textContent = ''; requestAnimationFrame(() => { $('announcer').textContent = message; }); }
 function setStatus(key, tone = '', symbol = 'cursor', params = {}) {
@@ -1394,30 +1807,33 @@ function startGame() {
   if (!player) return;
   cancelDrag();
   game = new Game(QUESTIONS, player, now());
-  roundId = uid(); lastResult = null; lastClock = ''; lastLed = {};
+  roundId = uid(); lastResult = null; lastClock = ''; lastLed = {}; visualPlan=null;
   $('player-initial').textContent = player.name[0].toLocaleUpperCase('ms-MY');
   $('player-display').textContent = player.name;
   $('player-meta').textContent = `${t(player.category)} · ${player.className}`;
   showScreen('game');
   renderQuestion();
   $('question-title').focus({preventScroll:true});
-  announce(t("Permainan bermula. Sepuluh soalan. Pilih bongkah untuk R1 dahulu."));
+  announce(t("Permainan bermula. Sepuluh soalan, satu percubaan setiap soalan. Pilih bongkah untuk R1 dahulu."));
 }
 
 function renderQuestion() {
   acceptedSolid = null; acceptedNet = null; selected = null;
+  visualPlan=nextVisualPlan(visualPlan);
+  $('correction-panel').hidden=true;
+  $('game-screen').classList.remove('is-review','is-correct');
   renderQuestionContent();
   renderChoices('solid', game.solidOrder);
   renderChoices('net', game.netOrder);
-  setStatus('Baca soalan, kemudian pilih satu bongkah untuk R1.');
+  setStatus("Satu percubaan. Baca soalan, kemudian pilih bongkah untuk R1.");
   renderState();
 }
 
 function renderQuestionContent() {
   const q = localizeQuestion(game.question, locale.language);
   const number = String(game.index+1).padStart(2,'0');
-  $('question-counter').textContent = t('question.counter',{number});
-  $('question-topic').textContent = q.id.endsWith('2') || q.id === 'C1' ? t("Cabaran rumus") : q.id.endsWith('3') ? t("Cabaran bentangan") : t("Kenali bongkah");
+  $('question-counter').textContent = t("question.counter",{number});
+  $('question-topic').textContent = t(TOPIC_NAMES[questionTopic(q)]);
   let heading = t("Bongkah apakah ini?"), detail = q.prompt;
   if (q.id.endsWith('3')) {
     heading = t("Bongkah manakah yang sepadan?");
@@ -1426,7 +1842,7 @@ function renderQuestionContent() {
   }
   detail = detail.replace(/Bongkah apakah ini\?|Bentuk apa\?|Which solid is this\?|Which shape is it\?/g,'').trim();
   $('question-title').textContent = heading;
-  if (q.id.endsWith('2') || q.id === 'C1') {
+  if (questionTopic(q)==='formula') {
     const formulaLines = q.lines.filter(line => /^V=|^L=/.test(line));
     const rest = q.lines.filter(line => !/^V=|^L=/.test(line)).join(' ').replace(/Bongkah apakah ini\?|Bentuk apa\?|Which solid is this\?|Which shape is it\?/g,'').trim();
     $('question-detail').innerHTML = `<span class="formula-line">${formulaLines.map(pretty).join('<br>')}</span>${pretty(rest)}`;
@@ -1437,17 +1853,17 @@ function renderQuestionContent() {
   const dots = Array.from({length:10}, (_,i) => {
     const answer = game.answers[i];
     const cls = answer ? answer.outcome : i===game.index ? 'current' : '';
-    return `<span class="progress-dot ${cls}" title="${t('question.dot',{number:i+1,state:answer?t(answer.outcome==='correct'?'question.correct':'question.skipped'):i===game.index?t('question.current'):''})}"></span>`;
+    return `<span class="progress-dot ${cls}" title="${t("question.dot",{number:i+1,state:answer?t(answer.outcome==='correct'?"question.correct":answer.outcome==='wrong'?"question.wrong":"question.skipped"):i===game.index?t("question.current"):''})}"></span>`;
   }).join('');
   $('progress-dots').innerHTML = dots;
-  $('progress-dots').setAttribute('aria-label', t('question.progress',{number:game.index+1,score:game.score,skipped:game.skipped}));
+  $('progress-dots').setAttribute('aria-label', t("question.progress",{number:game.index+1,score:game.score,skipped:game.skipped,mistakes:game.mistakes}));
 
 }
 
 function renderChoices(kind, order) {
   $(kind+'-choices').innerHTML = order.map((shape,i) => {
     const letter = String.fromCharCode(65+i), label = kind === 'solid' ? t("bongkah") : t("bentangan");
-    return `<button type="button" class="choice ${kind === 'net' ? 'net-choice' : ''}" data-kind="${kind}" data-shape="${shape}" data-letter="${letter}" aria-pressed="false" aria-label="${escapeHtml(t('choice.label',{kind:label,letter,description:describeShape(shape,kind,locale.language)}))}">${shapeArt(shape,kind,true)}<span class="choice-id"><span class="grip" aria-hidden="true">⠿</span>${kind === 'solid' ? t("Bongkah") : t("Kad")} ${letter}</span></button>`;
+    return `<button type="button" class="choice ${kind === 'net' ? 'net-choice' : ''}" style="--i:${i}" data-kind="${kind}" data-shape="${shape}" data-letter="${letter}" aria-pressed="false" aria-label="${escapeHtml(t("choice.label",{kind:label,letter,description:describeShape(shape,kind,locale.language)}))}">${shapeArt(shape,kind,true,visualPlan[kind][shape])}<span class="choice-id"><span class="grip" aria-hidden="true">⠿</span>${kind === 'solid' ? t("Bongkah") : t("Kad")} ${letter}</span></button>`;
   }).join('');
 }
 
@@ -1464,11 +1880,18 @@ function renderState() {
   $('hint-button').setAttribute('aria-expanded',String(game.hintOpen));
   $('hint-label').textContent = game.hintOpen ? t("Tutup petunjuk") : t("Beri petunjuk");
   $('hint-panel').hidden = !game.hintOpen;
-  $('stage-instruction').textContent = game.status==='feedback' ? game.lastOutcome==='correct'?t("Pasangan tepat! +1 markah"):t("Soalan dilangkau. +0 markah") : game.stage==='solid'?t("Pilih bongkah yang betul"):t("Bagus! Kini padankan bentangannya");
+  $('progress-dots').setAttribute('aria-label',t("question.progress",{number:game.index+1,score:game.score,mistakes:game.mistakes,skipped:game.skipped}));
+  $('progress-dots').querySelectorAll('.progress-dot').forEach((dot,index)=>{
+    const answer=game.answers[index];
+    if(answer){dot.className='progress-dot '+answer.outcome;dot.title=t("question.dot",{number:index+1,state:t(answer.outcome==='correct'?"question.correct":answer.outcome==='wrong'?"question.wrong":"question.skipped")});}
+  });
+  $('stage-instruction').textContent = game.reviewing ? t("Lihat pasangan yang betul di bawah") : game.status==='feedback' ? t("Pasangan tepat! +1 markah") : game.stage==='solid'?t("Pilih bongkah yang betul"):t("Bagus! Kini padankan bentangannya");
   document.querySelectorAll('.choice').forEach(button => {
     const isSelected = selected && button.dataset.kind === selected.kind && button.dataset.shape === selected.shape;
     button.setAttribute('aria-pressed', String(!!isSelected));
     button.classList.toggle('inactive',button.dataset.kind !== game.stage);
+    button.classList.toggle('revealed-answer',game.reviewing&&button.dataset.shape===game.question.shape);
+    button.classList.toggle('revealed-wrong',game.reviewing&&button.dataset.shape!==game.question.shape&&game.attempts[button.dataset.kind]===button.dataset.shape);
     button.disabled = busy;
   });
   for (const target of ['r1','r2']) {
@@ -1479,28 +1902,34 @@ function renderState() {
     pad.classList.toggle('scanner-locked',target==='r2' && game.stage==='solid' && game.status !== 'feedback');
     pad.classList.toggle('filled',!!accepted);
     pad.classList.toggle('has-selection',!!selected && active===target && !busy);
-    const body = accepted ? `${shapeArt(accepted,kind,true)}<span class="scanned-label">${icon('check')}${target==='r1'?t("Bongkah diterima"):t("Bentangan diterima")}</span>` : emptyScanner(target);
+    const body = accepted ? `${shapeArt(accepted,kind,true,visualPlan[kind][accepted])}<span class="scanned-label">${icon('check')}${target==='r1'?t("Bongkah diterima"):t("Bentangan diterima")}</span>` : emptyScanner(target);
     if ($('scanner-body-'+target).innerHTML !== body) $('scanner-body-'+target).innerHTML = body;
     const led=game.led(target,now());
-    const status = game.status==='feedback' ? game.lastOutcome==='correct'?t("+1 markah"):t("Dilangkau") : led==='red'?t("Cuba lagi"):accepted ? t("Imbasan betul") : target==='r2' && game.stage==='solid' ? t("Jawab R1 dahulu") : game.hintOpen ? t("Petunjuk dibuka") : t("Sedia diimbas");
+    const status = scannerStatus(target,led);
     $('status-'+target).textContent = status;
-    pad.setAttribute('aria-label', t('scanner.label',{target:target.toUpperCase(),kind:target==='r1'?t('bongkah'):t('bentangan'),status})+(selected&&active===target?t('scanner.action'):''));
+    pad.setAttribute('aria-label', t("scanner.label",{target:target.toUpperCase(),kind:target==='r1'?t("bongkah"):t("bentangan"),status})+(selected&&active===target?t("scanner.action"):''));
   }
   renderLeds(now());
+}
+
+function scannerStatus(target,color){
+  if(game.reviewing)return game.lastOutcome==='skipped'?t("Dilangkau · +0"):target===game.wrongReader?t("Salah · +0"):target==='r1'&&game.stage==='net'?t("Bongkah betul"):t("Soalan tamat");
+  if(game.status==='feedback')return t("+1 markah");
+  return color==='red'?t("Salah"):target==='r1'&&game.stage==='net'?t("Imbasan betul"):target==='r2'&&game.stage==='solid'?t("Jawab R1 dahulu"):game.hintOpen?t("Petunjuk dibuka"):t("Sedia diimbas");
 }
 
 function renderLeds(time) {
   for (const target of ['r1','r2']) {
     let color = game.led(target,time);
-    if (reducedMotion.matches && game.status==='feedback') color = game.lastOutcome==='correct'?'green':'red';
+    if ((reducedMotion.matches||motionPaused) && (game.status==='feedback'||game.reviewing)) color = game.lastOutcome==='correct'?'green':target===game.wrongReader||game.lastOutcome==='skipped'?'red':target==='r1'&&game.stage==='net'?'green':'off';
     if (lastLed[target] === color) continue;
     lastLed[target] = color;
     $('led-'+target).className = 'led-dot '+color;
     $(target).classList.toggle('scanner-correct',color==='green');
     $(target).classList.toggle('scanner-wrong',color==='red');
     $(target).classList.toggle('scanner-hint',color==='purple');
-    $('status-'+target).textContent = game.status==='feedback' ? game.lastOutcome==='correct'?t("+1 markah"):t("Dilangkau") : color==='red'?t("Cuba lagi"):target==='r1'&&game.stage==='net'?t("Imbasan betul"):target==='r2'&&game.stage==='solid'?t("Jawab R1 dahulu"):game.hintOpen?t("Petunjuk dibuka"):t("Sedia diimbas");
-    $(target).setAttribute('aria-label',t('scanner.label',{target:target.toUpperCase(),kind:target==='r1'?t('bongkah'):t('bentangan'),status:$('status-'+target).textContent}));
+    $('status-'+target).textContent = scannerStatus(target,color);
+    $(target).setAttribute('aria-label',t("scanner.label",{target:target.toUpperCase(),kind:target==='r1'?t("bongkah"):t("bentangan"),status:$('status-'+target).textContent}));
   }
 }
 
@@ -1513,20 +1942,21 @@ function choose(button) {
   }
   selected = {kind,shape,letter};
   const target = kind==='solid'?'R1':'R2';
-  setStatus('choice.selected','','cursor',{kind:kind==='solid'?'Bongkah':'Kad',letter,target});
+  setStatus("choice.selected",'','cursor',{kind:kind==='solid'?"Bongkah":"Kad",letter,target});
   renderState();
 }
 
 function scan(choice,target) {
   if (!game?.interactive) return;
-  if (!choice) { setStatus('choice.first','','cursor',{kind:game.stage==='solid'?'bongkah':'kad bentangan',target:target.toUpperCase()}); return; }
+  if (!choice) { setStatus("choice.first",'','cursor',{kind:game.stage==='solid'?"bongkah":"kad bentangan",target:target.toUpperCase()}); return; }
   const result = game.scan(choice.kind,choice.shape,target,now());
   if (result.type==='blocked') return;
   if (result.type==='stage') { setStatus(result.target==='r1'?"R1 dahulu. Imbas bongkah sebelum kad bentangan.":"Bongkah R1 sudah betul. Padankan kad bentangan di R2."); return; }
   if (result.type==='kind') { setStatus(game.stage==='solid'?"R1 hanya menerima bongkah 3D.":"R2 hanya menerima kad bentangan."); return; }
   selected=null;
   if (result.type==='wrong') {
-    setStatus(target==='r1'?"Belum tepat. Lihat sifat dalam soalan dan cuba bongkah lain.":"Bentangan belum sepadan. Bongkah R1 kekal betul; cuba kad bentangan lain.",'error','refresh');
+    setStatus(target==='r1'?"Bongkah belum tepat. Percubaan tamat, +0 markah. Mari lihat jawapannya.":"Bongkah R1 betul, tetapi bentangan belum sepadan. Percubaan tamat, +0 markah.",'error','close');
+    showCorrection();
     tone('wrong');
   } else if (result.type==='solid') {
     acceptedSolid=choice.shape;
@@ -1536,8 +1966,36 @@ function scan(choice,target) {
     acceptedNet=choice.shape;
     setStatus("Pasangan tepat! +1 markah. Bersedia untuk soalan seterusnya.",'success','check');
     tone('correct');
+    $('game-screen').classList.add('is-correct');
   }
   renderState();
+}
+
+function showCorrection(){
+  renderCorrection();
+  $('correction-title').focus({preventScroll:true});
+  $('correction-panel').scrollIntoView({block:'nearest',behavior:reducedMotion.matches||motionPaused?'instant':'smooth'});
+  const q=game.question;
+  announce(t('correction.announce',{shape:shapeName(q.shape,locale.language),note:t(SHAPE_NOTES[q.shape])}));
+}
+function renderCorrection(){
+  const answer=game.answers.at(-1),q=game.question;
+  $('game-screen').classList.add('is-review');$('correction-panel').hidden=false;
+  $('correction-outcome').textContent=t(answer.outcome==='wrong'?'PERCUBAAN TAMAT · +0 MARKAH':'DILANGKAU · +0 MARKAH');
+  $('correction-title').textContent=t('Jawapan betul:')+' '+shapeName(q.shape,locale.language);
+  $('correction-attempt').textContent=answer.failedAt?t('correction.attempt',{target:answer.failedAt==='solid'?'R1':'R2',shape:shapeName(answer.attempts[answer.failedAt],locale.language),note:answer.failedAt==='net'?t('Bongkah R1 anda sudah betul.'):''}):t('Soalan ini dilangkau. Lihat pasangan yang sepadan.');
+  $('correction-explanation').textContent=t(SHAPE_NOTES[q.shape]);
+  if(refreshingLanguage){
+    const model=$('correction-pair').querySelector('.correct-model'),net=$('correction-pair').querySelector('.correct-net');
+    model.querySelector('span').textContent='R1 · '+shapeName(q.shape,locale.language);
+    net.querySelector('span').textContent=t('R2 · Bentangannya');
+    model.querySelector('svg').setAttribute('aria-label',describeShape(q.shape,'solid',locale.language));
+    net.querySelector('svg').setAttribute('aria-label',describeShape(q.shape,'net',locale.language));
+  }else{
+    $('correction-pair').innerHTML=`<div class="correct-model">${shapeArt(q.shape,'solid',false,visualPlan.solid[q.shape],locale.language)}<span>R1 · ${shapeName(q.shape,locale.language)}</span></div><span class="correct-link" aria-hidden="true">${icon('arrow')}</span><div class="correct-net">${shapeArt(q.shape,'net',false,visualPlan.net[q.shape],locale.language)}<span>${t('R2 · Bentangannya')}</span></div>`;
+  }
+  if(!refreshingLanguage)$('continue-button').disabled=!game.reviewReady(now());
+  $('continue-button').innerHTML=$('continue-button').disabled?t('Perhatikan jawapan…'):t(game.index===9?'Lihat analisis':'Soalan seterusnya')+' '+icon('arrow');
 }
 
 document.addEventListener('click', event => {
@@ -1562,7 +2020,11 @@ $('hint-button').addEventListener('click',()=>{
   }
 });
 $('skip-button').addEventListener('click',()=>{
-  if(game?.skip(now())){ cancelDrag(); selected=null;setStatus("Soalan dilangkau. Tiada markah untuk soalan ini.",'','skip');renderState();tone('skip'); }
+  if(game?.skip(now())){ cancelDrag(); selected=null;setStatus("Soalan dilangkau, +0 markah. Lihat jawapan sebelum meneruskan.",'','skip');showCorrection();renderState();tone('skip'); }
+});
+$('continue-button').addEventListener('click',()=>{
+  if(!game?.continueReview(now()))return;
+  if(game.status==='finished')finishGame();else{lastLed={};renderQuestion();$('question-title').focus({preventScroll:true});announce(t("round.single",{number:game.index+1}));}
 });
 $('pause-button').addEventListener('click',()=>openPause());
 $('replay-button').addEventListener('click',()=>startGame());
@@ -1582,7 +2044,7 @@ document.addEventListener('pointermove',event=>{
     selected=null;
     drag.ghost=document.createElement('div');
     drag.ghost.className='drag-ghost';drag.ghost.setAttribute('aria-hidden','true');
-    drag.ghost.innerHTML=shapeArt(drag.choice.shape,drag.choice.kind,true);
+    drag.ghost.innerHTML=shapeArt(drag.choice.shape,drag.choice.kind,true,visualPlan[drag.choice.kind][drag.choice.shape]);
     document.body.append(drag.ghost);drag.source.classList.add('drag-source');
   }
   if(drag.started){event.preventDefault();moveDrag();}
@@ -1656,7 +2118,7 @@ dialog.addEventListener('click',event=>{
 });
 
 function openHelp(){
-  openDialog('help',t("Cara main GeoDecoder"),`<p class="help-intro">${t("Satu soalan, dua padanan. Sasarkan")} <b>${t("10 daripada 10 markah")}</b>.</p><div class="help-steps"><div class="help-step"><span class="help-number">1</span><div><h3>${t("Baca soalan dan pilih bongkah")}</h3><p>${t("Seret satu bongkah 3D ke pengimbas R1 yang berwarna biru.")}</p></div></div><div class="help-step"><span class="help-number">2</span><div><h3>${t("Padankan kad bentangannya")}</h3><p>${t("Selepas R1 hijau, seret kad bentangan yang sepadan ke R2.")}</p></div></div><div class="help-step"><span class="help-number">3</span><div><h3>${t("Kumpulkan satu markah")}</h3><p>${t("Pasangan betul memberi +1. Kedua-dua pengimbas berkelip hijau sebelum soalan seterusnya.")}</p></div></div></div><div class="help-mini-art">${shapeArt('cube','solid',true)}<span>R1 ${icon('arrow')} R2</span>${shapeArt('cube','net',true)}</div><p class="keyboard-help">${t("Tanpa menyeret:")} <b>${t("klik / sentuh kad")}</b>, ${t("kemudian")} <b>${t("klik pengimbas")}</b>. ${t("Papan kekunci:")} <kbd>Tab</kbd> ${t("untuk bergerak,")} <kbd>Enter</kbd> ${t("atau")} <kbd>Space</kbd> ${t("untuk memilih dan mengimbas.")}</p><p class="help-note"><b>${t("Salah? Cuba lagi.")}</b> ${t("Tiada potongan markah. Petunjuk juga percuma. Langkau memberi +0 untuk soalan itu. Jam dijeda semasa tetingkap ini dibuka.")}</p><div class="dialog-actions"><button class="button button-primary" data-dialog-action="close" data-autofocus>${screen==='game'?t("Sambung permainan"):t("Saya faham")} ${icon('arrow')}</button></div>`);
+  openDialog('help',t("Cara main GeoDecoder"),`<p class="help-intro">${t("Satu soalan, dua padanan,")} <b>${t("satu percubaan")}</b>${t(". Sasarkan")} <b>${t("10 daripada 10 markah")}</b>.</p><div class="help-steps"><div class="help-step"><span class="help-number">1</span><div><h3>${t("Baca soalan dan pilih bongkah")}</h3><p>${t("Seret satu bongkah 3D ke pengimbas R1 yang berwarna biru.")}</p></div></div><div class="help-step"><span class="help-number">2</span><div><h3>${t("Padankan kad bentangannya")}</h3><p>${t("Selepas R1 hijau, seret kad bentangan yang sepadan ke R2. Bentuk menentukan jawapan; warna dan kedudukan berubah setiap soalan.")}</p></div></div><div class="help-step"><span class="help-number">3</span><div><h3>${t("Semak dan belajar")}</h3><p>${t("Pasangan betul memberi +1. Salah pada R1 atau R2 menamatkan soalan dengan +0. Lihat jawapan betul, kemudian tekan soalan seterusnya.")}</p></div></div></div><div class="help-mini-art">${shapeArt('cube','solid',true)}<span>R1 ${icon('arrow')} R2</span>${shapeArt('cube','net',true)}</div><p class="keyboard-help">${t("Tanpa menyeret:")} <b>${t("klik / sentuh kad")}</b>, ${t("kemudian")} <b>${t("klik pengimbas")}</b>. ${t("Papan kekunci:")} <kbd>Tab</kbd> ${t("untuk bergerak,")} <kbd>Enter</kbd> ${t("atau")} <kbd>Space</kbd> ${t("untuk memilih dan mengimbas.")}</p><p class="help-note"><b>${t("Fikir dahulu sebelum mengimbas.")}</b> ${t("Memilih kad sahaja belum menggunakan percubaan. Petunjuk percuma. Langkau memberi +0 dan turut menunjukkan jawapan. Analisis akhir membantu anda memilih perkara yang perlu dilatih lagi. Jam dijeda semasa semakan dan tetingkap ini dibuka.")}</p><div class="dialog-actions"><button class="button button-primary" data-dialog-action="close" data-autofocus>${screen==='game'?t("Sambung permainan"):t("Saya faham")} ${icon('arrow')}</button></div>`);
 }
 
 function openPause(automatic=false){
@@ -1674,16 +2136,17 @@ function requestHome(){
 
 function miniScoresMarkup(scores){
   if(!scores.length)return `<div class="empty-scores">${icon('trophy')}<h3>${t("Skor pertama menanti")}</h3><p>${t("Lengkapkan satu pusingan untuk menyimpan skor.")}</p></div>`;
-  return scores.slice(0,5).map((r,i)=>`<div class="mini-score ${r.id===lastResult?.id?'mine':''}"><span class="mini-rank">${i+1}</span><span class="mini-player"><b>${escapeHtml(r.player.name)}${r.id===lastResult?.id?t('score.mine'):''}</b><small>${escapeHtml(r.player.className)} · ${t('score.wrong',{count:r.mistakes})}</small></span><span class="mini-points">${r.score}<small>${formatTime(r.elapsed)}</small></span></div>`).join('');
+  return scores.slice(0,5).map((r,i)=>`<div class="mini-score ${r.id===lastResult?.id?'mine':''}"><span class="mini-rank">${i+1}</span><span class="mini-player"><b>${escapeHtml(r.player.name)}${r.id===lastResult?.id?t("score.mine"):''}</b><small>${escapeHtml(r.player.className)} · ${t("score.wrong",{count:r.mistakes})}</small></span><span class="mini-points">${r.score}<small>${formatTime(r.elapsed)}</small></span></div>`).join('');
 }
 function renderMiniScores(){ $('result-leaderboard').innerHTML=miniScoresMarkup(store.read());storageStatus(); }
 
 function openScores(message=''){
   if(!refreshingLanguage)scoreNotice=message;
-  const scores=store.read();storageStatus();
+  const scores=store.read(),legacy=store.readLegacy();storageStatus();
   const visible=scoresExpanded?scores:scores.slice(0,10);
-  const table=scores.length?`<div class="score-table-wrap"><table class="score-table"><caption class="sr-only">${t("Skor terbaik dalam pelayar ini")}</caption><thead><tr><th scope="col">#</th><th scope="col">${t("Pemain")}</th><th scope="col">${t("Kelas")}</th><th scope="col">${t("Markah")}</th><th scope="col">${t("Salah / Masa")}</th></tr></thead><tbody>${visible.map((r,i)=>`<tr class="${r.id===lastResult?.id?'mine':''}"><td>${i+1}</td><td><b>${escapeHtml(r.player.name)}</b><small>${escapeHtml(t(r.player.category))}</small></td><td>${escapeHtml(r.player.className)}</td><td><b>${r.score} / 10</b></td><td>${t('score.shortWrong',{count:r.mistakes})}<small>${formatTime(r.elapsed)}</small></td></tr>`).join('')}</tbody></table></div>`:`<div class="empty-scores">${icon('trophy')}<h3>${t("Belum ada skor")}</h3><p>${t("Lengkapkan 10 soalan untuk merekodkan skor pertama.")}</p></div>`;
-  openDialog('scores',t("Papan skor"),`<p class="score-info">${store.failed?t("Skor sesi ini sahaja; simpanan pelayar tidak tersedia."):t("Rekod dalam pelayar ini sahaja. Maksimum 50 skor terbaik.")} ${t("Skor tertinggi dahulu, kemudian cubaan salah paling sedikit dan masa terpantas.")}</p>${message?`<p class="help-note" role="status">${escapeHtml(t(message))}</p>`:''}${table}<div class="score-toolbar"><span>${t('score.records',{shown:visible.length,total:scores.length})}</span>${scores.length>10&&!scoresExpanded?`<button class="button button-outline" data-dialog-action="show-all">${t("Lihat semua skor")}</button>`:''}<button class="button button-outline" data-dialog-action="export" ${!scores.length?'disabled':''}>${icon('download')} ${t("Eksport CSV")}</button><button class="button button-quiet score-delete" data-dialog-action="erase" ${!scores.length?'disabled':''}>${icon('trash')} ${t("Padam skor")}</button></div><div class="dialog-actions"><button class="button button-primary" data-dialog-action="close">${screen==='game'?t("Sambung permainan"):t("Tutup papan skor")}</button></div>`);
+  const table=scores.length?`<div class="score-table-wrap"><table class="score-table"><caption class="sr-only">${t("Skor terbaik dalam pelayar ini")}</caption><thead><tr><th scope="col">#</th><th scope="col">${t("Pemain")}</th><th scope="col">${t("Kelas")}</th><th scope="col">${t("Markah")}</th><th scope="col">${t("Salah / Masa")}</th></tr></thead><tbody>${visible.map((r,i)=>`<tr class="${r.id===lastResult?.id?'mine':''}"><td>${i+1}</td><td><b>${escapeHtml(r.player.name)}</b><small>${escapeHtml(t(r.player.category))}</small></td><td>${escapeHtml(r.player.className)}</td><td><b>${r.score} / 10</b></td><td>${t("score.shortWrong",{count:r.mistakes})}<small>${formatTime(r.elapsed)}</small></td></tr>`).join('')}</tbody></table></div>`:`<div class="empty-scores">${icon('trophy')}<h3>${t("Belum ada skor")}</h3><p>${t("Lengkapkan 10 soalan untuk merekodkan skor pertama.")}</p></div>`;
+  const legacyMarkup=legacy.length?`<details class="legacy-scores"><summary>${t("legacy.count",{count:legacy.length})}</summary><p>${t("Peraturan lama membenarkan cuba semula. Rekod ini disimpan berasingan daripada kedudukan satu percubaan.")}</p><ol>${legacy.map(r=>`<li><b>${escapeHtml(r.player.name)}</b> · ${escapeHtml(r.player.className)} · ${r.score}/10 · ${formatTime(r.elapsed)}</li>`).join('')}</ol></details>`:'';
+  openDialog('scores',t("Papan skor"),`<p class="score-info"><b>${t("Mod satu percubaan.")}</b> ${store.failed?t("Skor sesi ini sahaja; simpanan pelayar tidak tersedia."):t("Rekod dalam pelayar ini sahaja. Maksimum 50 skor terbaik.")} ${t("Skor tertinggi dahulu, kemudian soalan salah paling sedikit dan masa terpantas.")}</p>${message?`<p class="help-note" role="status">${escapeHtml(t(message))}</p>`:''}${table}${legacyMarkup}<div class="score-toolbar"><span>${t("score.records",{shown:visible.length,total:scores.length})}</span>${scores.length>10&&!scoresExpanded?`<button class="button button-outline" data-dialog-action="show-all">${t("Lihat semua skor")}</button>`:''}<button class="button button-outline" data-dialog-action="export" ${!scores.length?'disabled':''}>${icon('download')} ${t('Eksport CSV')}</button><button class="button button-quiet score-delete" data-dialog-action="erase" ${!scores.length&&!legacy.length?'disabled':''}>${icon('trash')} ${t('Padam skor')}</button></div><div class="dialog-actions"><button class="button button-primary" data-dialog-action="close">${screen==='game'?t("Sambung permainan"):t("Tutup papan skor")}</button></div>`);
 }
 
 function openErase(){
@@ -1705,7 +2168,7 @@ function finishGame(){
   renderResult();
   showScreen('result');
   $('result-title').focus({preventScroll:true});
-  announce(t('result.complete',{score:lastResult.score,time:formatTime(lastResult.elapsed)}));
+  announce(t("result.complete",{score:lastResult.score,time:formatTime(lastResult.elapsed)}));
 }
 function renderResult(){
   const r=lastResult;
@@ -1714,14 +2177,42 @@ function renderResult(){
   $('result-score').textContent=r.score;
   $('result-level').textContent=r.score===10?t("Pakar padanan"):r.score>=7?t("Penjelajah geometri"):t("Peneroka bentuk");
   const rank=store.read().findIndex(s=>s.id===r.id)+1;
-  $('result-message').textContent=t('result.summary',{score:r.score,skipped:r.skipped})+(rank>0?t('result.rank',{rank}):'')+t('result.try');
+  $('result-message').textContent=t("result.summary",{score:r.score,mistakes:r.mistakes,skipped:r.skipped})+(rank>0?t("result.rank",{rank}):'');
   $('result-time').textContent=formatTime(r.elapsed);
-  $('result-first').textContent=`${r.firstTry} / 10`;
+  $('result-first').textContent=`${analyseAnswers(r.answers).byStage[0].correct} / 10`;
   $('result-mistakes').textContent=r.mistakes;
   $('result-hints').textContent=r.hints;
-  $('review-list').innerHTML=game.answers.map((answer,i)=>`<article class="review-card ${answer.outcome==='skipped'?'skipped':''}"><small>${t('question.counter',{number:i+1})}</small><div class="review-pair">${shapeArt(answer.shape,'solid',true)}${shapeArt(answer.shape,'net',true)}</div><h3>${shapeName(answer.shape,locale.language)}</h3><p>${answer.outcome==='correct'?t("✓ Pasangan betul"):t("↷ Dilangkau")}</p></article>`).join('');
+  renderAnalysis(r);
+  $('review-list').innerHTML=r.answers.map((answer,i)=>{
+    const q=localizeQuestion(QUESTIONS.find(q=>q.id===answer.id),locale.language);
+    const attempts=['solid','net'].map((kind,index)=>`R${index+1}: ${answer.attempts[kind]?shapeName(answer.attempts[kind],locale.language):t("belum diimbas")}`).join(' · ');
+    return `<article class="review-card ${answer.outcome}"><small>${t("question.counter",{number:i+1})} · ${t(TOPIC_NAMES[answer.topic])}</small><p class="review-prompt">${pretty(q.prompt)}</p><div class="review-pair">${shapeArt(answer.shape,'solid',true,'orange')}${shapeArt(answer.shape,'net',true,'violet')}</div><h3>${t("Jawapan:")} ${shapeName(answer.shape,locale.language)}</h3><p class="review-outcome">${answer.outcome==='correct'?t("✓ Pasangan betul · +1"):answer.outcome==='wrong'?t("review.wrong",{target:answer.failedAt==='solid'?'R1':'R2'}):t("↷ Dilangkau · +0")}</p><p class="review-attempt">${attempts}${answer.hint?'<br>'+t("Petunjuk digunakan"):''}</p></article>`;
+  }).join('');
   renderMiniScores();
 
+}
+
+function analysisBar(label,correct,total,note='',art=''){
+  const percent=total?Math.round(correct/total*100):0;
+  return `<div class="analysis-row">${art}<div class="analysis-row-body"><div class="analysis-row-title"><b>${label}</b><span>${total?`${correct} / ${total} <small>(${percent}%)</small>`:t("Belum dicuba")}</span></div><div class="analysis-track" aria-hidden="true"><span style="width:${percent}%"></span></div>${note?`<p>${note}</p>`:''}</div></div>`;
+}
+
+function renderAnalysis(result){
+  const a=analyseAnswers(result.answers),weak=a.weakShapes.filter(row=>row.wrong),advice=[];
+  let title,copy;
+  if(result.score===10){title=t('Semua pasangan tepat!');copy=result.hints?t('analysis.hints',{count:result.hints}):t('Anda berjaya mengenal bongkah dan memadankan semua bentangan dalam pusingan ini.');}
+  else if(!result.mistakes){title=t(result.skipped===10?'Cuba menjawab untuk melihat kekuatan anda.':'Padanan yang anda cuba sudah tepat.');copy=t('analysis.skipped',{count:result.skipped});}
+  else{title=t('analysis.focus',{shapes:weak.map(row=>shapeName(row.id,locale.language)).join(', ')});copy=t('analysis.errors',{wrong:result.mistakes,skipped:result.skipped});}
+  $('analysis-summary').innerHTML=`${icon(result.score===10?'trophy':'bulb')}<div><h3>${title}</h3><p>${copy}</p></div>`;
+  $('analysis-shapes').innerHTML=a.byShape.map(row=>analysisBar(shapeName(row.id,locale.language),row.correct,row.total,t('analysis.shape',{wrong:row.wrong,skipped:row.skipped,hints:row.hints}),shapeArt(row.id,'solid',true,visualPlan.solid[row.id]))).join('');
+  $('analysis-stages').innerHTML=a.byStage.map(row=>analysisBar(t(row.id==='solid'?'R1 · Kenal bongkah':'R2 · Padankan bentangan'),row.correct,row.attempted,t('analysis.stage',{wrong:row.wrong,untried:row.notAttempted}))).join('');
+  $('analysis-topics').innerHTML=a.byTopic.map(row=>analysisBar(t(TOPIC_NAMES[row.id]),row.correct,row.total,t('analysis.topic',{wrong:row.wrong,skipped:row.skipped}))).join('');
+  if(a.weakStage)advice.push(t(a.weakStage.id==='net'?'Latih bentangan R2: kira bentuk dan bilangan mukanya. Bayangkan setiap muka dilipat sebelum mengimbas.':'Latih bongkah R1: kenal pasti tapak, muka rata, permukaan melengkung dan puncak daripada soalan.'));
+  for(const row of weak.slice(0,2))advice.push(t(SHAPE_NOTES[row.id]));
+  if(a.byTopic.find(row=>row.id==='formula').wrong)advice.push(t('Latih rumus: bezakan isi padu V dan luas permukaan L. Fahami simbol jejari, tinggi dan tinggi sendeng dalam soalan.'));
+  if(result.skipped)advice.push(t('analysis.retrySkipped',{count:result.skipped}));
+  if(!advice.length)advice.push(t(result.hints?'Cuba pusingan baharu tanpa petunjuk. Kekalkan ketepatan sebelum mengejar masa.':'Teruskan dengan pusingan baharu. Susunan, warna dan pilihan soalan akan berubah.'));
+  $('analysis-advice').innerHTML=`<h3>${t('Cadangan latihan anda')}</h3><ul>${advice.slice(0,4).map(text=>`<li>${text}</li>`).join('')}</ul><p>${t('R2 yang belum dicuba selepas salah R1 tidak dikira sebagai kesilapan R2. Petunjuk tidak memotong markah.')}</p>`;
 }
 
 function tone(kind){
@@ -1758,18 +2249,22 @@ document.addEventListener('keydown',event=>{
   if(!dialog.open && screen==='game' && game?.interactive){event.preventDefault();openPause();}
 });
 window.addEventListener('storage',event=>{
-  if(event.key===SCORE_KEY || event.key===null){store.memory=[];if(dialogMode==='scores')openScores();if(screen==='result')renderMiniScores();}
+  if(event.key===SCORE_KEY || event.key===LEGACY_SCORE_KEY || event.key===null){store.memory=[];if(dialogMode==='scores')openScores();if(screen==='result')renderMiniScores();}
 });
 
 function frame(time){
   if(game && screen==='game'){
     if(game.update(time)){
       if(game.status==='finished')finishGame();
-      else{lastLed={};renderQuestion();announce(t('round.next',{number:game.index+1}));}
+      else{lastLed={};renderQuestion();$('question-title').focus({preventScroll:true});announce(t("round.next",{number:game.index+1}));}
     }
     const clock=formatTime(game.time(time));
     if(clock!==lastClock){$('time-value').textContent=clock;lastClock=clock;}
     renderLeds(time);
+    if(game.reviewing&&game.reviewReady(time)&&$('continue-button').disabled){
+      $('continue-button').disabled=false;
+      $('continue-button').innerHTML=(game.index===9?t("Lihat analisis"):t("Soalan seterusnya"))+' '+icon('arrow');
+    }
   }
   if(drag?.started){
     const step=drag.y<90?-10:drag.y>window.innerHeight-65?10:0;
@@ -1787,7 +2282,7 @@ function applyStaticLanguage(){
     document.querySelectorAll('[data-i18n-'+name+']').forEach(el=>el.setAttribute(name,t(el.getAttribute('data-i18n-'+name))));
   }
   $('language-select').value=locale.language;
-  updateTitle();updateSound();
+  updateTitle();updateSound();updateMotion();
 }
 function applyLanguage(){
   const focused=document.activeElement;
@@ -1804,10 +2299,11 @@ function applyLanguage(){
       renderQuestionContent();
       document.querySelectorAll('.choice').forEach(button=>{
         const {kind,shape,letter}=button.dataset;
-        button.setAttribute('aria-label',t('choice.label',{kind:kind==='solid'?t('bongkah'):t('bentangan'),letter,description:describeShape(shape,kind,locale.language)}));
-        button.querySelector('.choice-id').innerHTML=`<span class="grip" aria-hidden="true">⠿</span>${kind==='solid'?t('Bongkah'):t('Kad')} ${letter}`;
+        button.setAttribute('aria-label',t("choice.label",{kind:kind==='solid'?t("bongkah"):t("bentangan"),letter,description:describeShape(shape,kind,locale.language)}));
+        button.querySelector('.choice-id').innerHTML=`<span class="grip" aria-hidden="true">⠿</span>${kind==='solid'?t("Bongkah"):t("Kad")} ${letter}`;
       });
       lastLed={};renderState();
+      if(game.reviewing)renderCorrection();
       if(lastStatus){
         setStatus(lastStatus.key,lastStatus.tone,lastStatus.symbol,lastStatus.params);
       }
@@ -1827,7 +2323,7 @@ function applyLanguage(){
 }
 $('language-select').addEventListener('change',event=>{
   cancelDrag();
-  if(locale.setLanguage(event.target.value)){applyLanguage();announce(t('language.changed'));}
+  if(locale.setLanguage(event.target.value)){applyLanguage();announce(t("language.changed"));}
 });
 applyLanguage();
 

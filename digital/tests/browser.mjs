@@ -23,10 +23,10 @@ try{
   const select=page.locator('#language-select');
   await check('BM default, one language selector and English welcome',async()=>{
     assert.equal(await select.count(),1);assert.equal(await select.inputValue(),'ms');
-    await page.screenshot({path:path.join(evidence,'welcome-bm.png'),fullPage:true});
+    await page.screenshot({animations:'disabled',path:path.join(evidence,'welcome-bm.png'),fullPage:true});
     await select.selectOption('en');assert.equal(await page.locator('html').getAttribute('lang'),'en');
     assert.match(await page.locator('#welcome-title').innerText(),/Discover/);
-    await page.screenshot({path:path.join(evidence,'welcome-en.png'),fullPage:true});
+    await page.screenshot({animations:'disabled',path:path.join(evidence,'welcome-en.png'),fullPage:true});
   });
   await check('registration errors refresh without clearing entered values',async()=>{
     await page.locator('.start-button').click();assert.match(await page.locator('#name-error').innerText(),/name/);
@@ -34,7 +34,7 @@ try{
     await select.selectOption('en');await page.locator('#player-class').fill('1 Bestari');await page.locator('.start-button').click();
   });
   const round=new Game(QUESTIONS,{name:'Aisyah',category:'Murid',className:'1 Bestari'},0,()=>.41).round;
-  const order=()=>page.locator('.choice').evaluateAll(nodes=>nodes.map(n=>[n.dataset.kind,n.dataset.shape]));
+  const order=()=>page.locator('.choice').evaluateAll(nodes=>nodes.map(n=>[n.dataset.kind,n.dataset.shape,n.querySelector('.shape-art').dataset.tone]));
   const pick=async(kind,shape)=>{await page.locator(`.choice[data-kind="${kind}"][data-shape="${shape}"]`).click();};
   await check('selected card/order, hint use and accepted R1 survive language changes',async()=>{
     const before=await order();await pick('solid',round[0].shape);
@@ -46,10 +46,15 @@ try{
     await select.selectOption('en');assert.notEqual(await page.locator('#hint-text').innerText(),hint);
     assert.equal(await page.locator('#hint-button').getAttribute('aria-expanded'),'true');assert.equal(await page.locator('#r1').isDisabled(),true);
     const wrong=['cube','cuboid','pyramid','cylinder','cone'].find(s=>s!==round[0].shape);
-    await pick('net',wrong);await page.locator('#r2').click();await select.selectOption('ms');assert.match(await page.locator('#feedback-text').innerText(),/belum sepadan/);
-    await page.screenshot({path:path.join(evidence,'game-bm.png'),fullPage:true});
+    await pick('net',wrong);await page.locator('#r2').click();
+    const correctionArt=await page.locator('#correction-pair .shape-art').first().elementHandle();
+    await select.selectOption('ms');assert.match(await page.locator('#feedback-text').innerText(),/belum sepadan/);
+    assert.equal(await correctionArt.evaluate(el=>el.isConnected),true,'Language change preserves the running correction animation');
+    assert.match(await page.locator('.progress-dot').first().getAttribute('title'),/: salah/);
+    await page.screenshot({animations:'disabled',path:path.join(evidence,'game-bm.png'),fullPage:true});
     await select.selectOption('en');assert.match(await page.locator('#feedback-text').innerText(),/does not match/);
-    await page.screenshot({path:path.join(evidence,'game-en.png'),fullPage:true});
+    assert.match(await page.locator('.progress-dot').first().getAttribute('title'),/: wrong/);
+    await page.screenshot({animations:'disabled',path:path.join(evidence,'game-en.png'),fullPage:true});
   });
   await check('pause/help/scores/erase/leave dialogs translate and keep time paused',async()=>{
     await page.locator('#pause-button').click();const clock=await page.locator('#time-value').innerText();
@@ -60,23 +65,31 @@ try{
     await page.locator('.leave-button').click();await select.selectOption('ms');assert.match(await page.locator('#dialog-title').innerText(),/Tamatkan/);await page.locator('#dialog-close').click();
     await select.selectOption('en');
   });
-  await check('full round, translated results, one saved record and localized CSV',async()=>{
-    await pick('net',round[0].shape);await page.locator('#r2').click();await select.selectOption('ms');
-    await page.waitForTimeout(1000);
+  await check('single-attempt round, translated analysis, one saved record and localized CSV',async()=>{
+    assert.equal(await page.locator('.choice:not([disabled])').count(),0);
+    assert.match(await page.locator('#correction-title').innerText(),/Correct answer/);
+    await select.selectOption('ms');assert.match(await page.locator('#correction-title').innerText(),/Jawapan betul/);
+    await page.screenshot({animations:'disabled',path:path.join(evidence,'correction-bm.png'),fullPage:true});
+    await select.selectOption('en');await page.screenshot({animations:'disabled',path:path.join(evidence,'correction-en.png'),fullPage:true});
+    await page.locator('#continue-button').click();
     for(let i=1;i<10;i++){
       await pick('solid',round[i].shape);await page.locator('#r1').click();
       await pick('net',round[i].shape);await page.locator('#r2').click();
       await page.waitForTimeout(1000);
     }
-    assert.equal(await page.locator('#result-score').innerText(),'10');
+    assert.equal(await page.locator('#result-score').innerText(),'9');
     assert.equal(await page.locator('#result-hints').innerText(),'1');assert.equal(await page.locator('#result-mistakes').innerText(),'1');
-    assert.equal(await page.locator('#result-first').innerText(),'9 / 10');
-    await page.screenshot({path:path.join(evidence,'result-bm.png'),fullPage:true});
-    await select.selectOption('en');assert.match(await page.locator('#result-title').innerText(),/Excellent/);assert.equal(await page.locator('.review-card').count(),10);
-    await page.screenshot({path:path.join(evidence,'result-en.png'),fullPage:true});
+    assert.equal(await page.locator('#result-first').innerText(),'10 / 10');
+    await select.selectOption('ms');assert.match(await page.locator('#result-title').innerText(),/Bagus/);
+    await page.screenshot({animations:'disabled',path:path.join(evidence,'result-bm.png'),fullPage:true});
+    await select.selectOption('en');assert.match(await page.locator('#result-title').innerText(),/Well done/);assert.equal(await page.locator('.review-card').count(),10);
+    assert.match(await page.locator('#analysis-stages').innerText(),/Match nets/);
+    const percentages=await page.locator('.analysis-track span').evaluateAll(nodes=>nodes.map(n=>n.style.width));
+    await select.selectOption('ms');await select.selectOption('en');assert.deepEqual(await page.locator('.analysis-track span').evaluateAll(nodes=>nodes.map(n=>n.style.width)),percentages);
+    await page.screenshot({animations:'disabled',path:path.join(evidence,'result-en.png'),fullPage:true});
     await select.selectOption('ms');await select.selectOption('en');
-    assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('geodecoder.digital.v1.scores')).length),1);
-    await page.evaluate(()=>{const key='geodecoder.digital.v1.scores',r=JSON.parse(localStorage.getItem(key))[0];localStorage.setItem(key,JSON.stringify(Array.from({length:12},(_,i)=>({...r,id:i===0?r.id:'fixture-'+i,completedAt:r.completedAt+i}))));});
+    assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('geodecoder.digital.single-attempt.v1.scores')).length),1);
+    await page.evaluate(()=>{const key='geodecoder.digital.single-attempt.v1.scores',r=JSON.parse(localStorage.getItem(key))[0];localStorage.setItem(key,JSON.stringify(Array.from({length:12},(_,i)=>({...r,id:i===0?r.id:'fixture-'+i,completedAt:r.completedAt+i}))));});
     await page.locator('[data-action="scores"]').first().click();
     assert.equal(await page.locator('[data-dialog-action="show-all"]').innerText(),'View all scores');
     await page.locator('[data-dialog-action="show-all"]').click();assert.equal(await page.locator('.score-table tbody tr').count(),12);
@@ -92,12 +105,12 @@ try{
       assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`${width}:${locale}`);
       assert.ok(await select.evaluate(el=>{const style=getComputedStyle(el),canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');ctx.font=style.font;return ctx.measureText(el.selectedOptions[0].textContent).width<=el.clientWidth-parseFloat(style.paddingLeft)-parseFloat(style.paddingRight);}),`${width}:${locale}:language label fits`);
     }
-    await page.setViewportSize({width:390,height:844});await select.selectOption('en');await page.screenshot({path:path.join(evidence,'mobile-en.png'),fullPage:true});
-    await select.selectOption('ms');await page.screenshot({path:path.join(evidence,'mobile-bm.png'),fullPage:true});
+    await page.setViewportSize({width:390,height:844});await select.selectOption('en');await page.screenshot({animations:'disabled',path:path.join(evidence,'mobile-en.png'),fullPage:true});
+    await select.selectOption('ms');await page.screenshot({animations:'disabled',path:path.join(evidence,'mobile-bm.png'),fullPage:true});
     await page.locator('#player-name').fill('Mobile');await page.locator('#player-class').fill('1 A');await page.locator('.start-button').click();
     for(const locale of ['ms','en']){
       await select.selectOption(locale);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`mobile game:${locale}`);
-      await page.screenshot({path:path.join(evidence,'mobile-game-'+(locale==='ms'?'bm':'en')+'.png'),fullPage:true});
+      await page.screenshot({animations:'disabled',path:path.join(evidence,'mobile-game-'+(locale==='ms'?'bm':'en')+'.png'),fullPage:true});
     }
   });
   await check('standalone HTML starts and plays with network offline',async()=>{
