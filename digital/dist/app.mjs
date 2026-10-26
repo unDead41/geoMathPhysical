@@ -2,6 +2,7 @@ import {reviewQuestionIds} from './usability.mjs';
 import {createPreferences,PREFERENCES_KEY,textSize} from './preferences.mjs';
 import {ModuleProgress} from './module-progress.mjs';
 import {createUsabilityUI} from './usability-ui.mjs';
+import {createHelpSupport} from './help-support.mjs';
 import {ClassroomCloud} from './cloud.mjs';
 import {createPortal} from './portal.mjs';
 import {initTheme,setTheme} from './theme.mjs';
@@ -25,7 +26,7 @@ let storage;
 try { storage = window.localStorage; } catch { storage = {getItem(){throw new Error('Storage unavailable');},setItem(){throw new Error('Storage unavailable');},removeItem(){throw new Error('Storage unavailable');}}; }
 const store = new ScoreStore(storage);
 const preferenceStore=createPreferences(storage);let preferences=preferenceStore.value;
-let usabilityUI=null,moduleBridge=null;
+let usabilityUI=null,moduleBridge=null,helpSupport=null;
 const locale = createI18n(storage);
 const t = (key,params) => translate(locale.language,key,params);
 const music=createMusic({storage,persistEnabled:false,onChange:renderMusicButton});
@@ -742,6 +743,7 @@ dialog.addEventListener('cancel',event=>{event.preventDefault();closeDialog();})
 dialog.addEventListener('click',event=>{
   const action=event.target.closest('[data-dialog-action]')?.dataset.dialogAction;
   if(usabilityUI?.handleAction(action))return;
+  if(action==='help-open')openHelp();
   if(action==='close')closeDialog();
   if(action==='home')returnHome();
   if(action==='open-portal')openAccounts(null,requestedPortalTarget);
@@ -758,7 +760,15 @@ dialog.addEventListener('click',event=>{
   if(action==='back-scores')openScores();
 });
 
-function openHelp(){usabilityUI.openTutorial();}
+function supportContext(){
+  const inGame=screen==='game',mode=roomState&&['game','result'].includes(screen)?'classroom':screen==='guest'?$('play-mode').value:screen==='duel'?'duel':['game','result'].includes(screen)?game?.mode:'none';
+  const service=roomState&&inGame?(roomPending&&!roomSending?'retry-needed':'last-response-ok'):mode==='duel'&&duelClient.snapshot?(duelClient.connected?'last-response-ok':'retry-needed'):screen==='module'&&moduleProgress.state.status==='synced'?'last-response-ok':'not-checked';
+  return {screen,mode,language:locale.language,questionId:inGame?game?.question?.id:null,
+    stage:inGame?(game?.stage==='solid'?'R1':'R2'):null,
+    phase:inGame?(game?.reviewing?'review':game?.status==='feedback'?'feedback':'running'):null,
+    width:window.innerWidth,height:window.innerHeight,browserOnline:navigator.onLine,service};
+}
+function openHelp(){helpSupport.open();}
 
 function openPause(automatic=false){
   if(!refreshingLanguage)automaticPause=automatic;
@@ -998,7 +1008,7 @@ function applyLanguage(){
     if(dialog.open){
       if(dialogMode==='settings'){$('dialog-title').textContent=t('ease.settings');usabilityUI.refreshSettings();}
       else if(dialogMode==='tutorial')usabilityUI.refreshTutorial();
-      else if(dialogMode==='help')openHelp();
+      else if(dialogMode==='help')helpSupport.refresh();
       else if(dialogMode==='pause')openPause(automaticPause);
       else if(dialogMode==='leave')requestHome();
       else if(dialogMode==='scores')openScores(scoreNotice);
@@ -1015,8 +1025,9 @@ $('language-select').addEventListener('change',event=>{
   cancelDrag();
   if(locale.setLanguage(event.target.value)){applyLanguage();announce(t("language.changed"));}
 });
-moduleBridge=createModuleBridge({frame:$('module-frame'),getSettings:()=>({language:locale.language,textSize:textSize(preferences.text),motionPaused,contrast:preferences.contrast,autoRotate:preferences.autoRotate,showLabels:preferences.labels,resume:preferences.resume,lastSection:preferences.lastSection,audioEnabled:!preferences.muted}),openSettings:()=>usabilityUI.openSettings(),onChoice:patch=>preferenceStore.set(patch)});
-usabilityUI=createUsabilityUI({storage,preferenceStore,t,openDialog,closeDialog,onStart:beginSelectedMode,onTheme:setTheme,onTestSound:()=>tone('solid')});
+moduleBridge=createModuleBridge({frame:$('module-frame'),getSettings:()=>({language:locale.language,textSize:textSize(preferences.text),motionPaused,contrast:preferences.contrast,autoRotate:preferences.autoRotate,showLabels:preferences.labels,resume:preferences.resume,lastSection:preferences.lastSection,audioEnabled:!preferences.muted}),openSettings:()=>usabilityUI.openSettings(),openHelp,onChoice:patch=>preferenceStore.set(patch)});
+usabilityUI=createUsabilityUI({storage,preferenceStore,t,openDialog,closeDialog,onStart:beginSelectedMode,onTheme:setTheme,onTestSound:()=>tone('solid'),onHelp:openHelp});
+helpSupport=createHelpSupport({t,getLanguage:()=>locale.language,getContext:supportContext,openDialog,openTutorial:()=>usabilityUI.openTutorial({fromHelp:true}),openSettings:()=>usabilityUI.openSettings(),openModuleGuide:()=>{closeDialog();moduleBridge.showGuide();}});
 function applyPreferences(value){
   preferences=value;document.documentElement.dataset.textSize=String(textSize(value.text));document.documentElement.style.setProperty('--text-scale',String(textSize(value.text)/100));document.documentElement.dataset.contrast=value.contrast;
   sound=value.effects;updateSound();updateMotion();music.setVolume(value.musicVolume/100);void music.setEnabled(value.music&&!value.muted);

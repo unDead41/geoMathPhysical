@@ -2,6 +2,7 @@ import {USABILITY_COPY} from './usability-copy.mjs';
 import {PORTAL_COPY} from './portal-copy.mjs';
 import {ACCOUNT_COPY} from './account-copy.mjs';
 import {SETTINGS_COPY} from './settings.mjs';
+import {HELP_COPY} from './help-copy.mjs';
 // Local KSSM BM/English presentation data. No network translation. See docs/DWI_LANGUAGE.md.
 // Presentation emphasis follows DWI_GLOSSARY.md; these strings never select an answer.
 export const RICH_TERMS = {
@@ -960,6 +961,7 @@ for(const [key,[ms,en]] of Object.entries(USABILITY_COPY)){MESSAGES.ms[key]=ms;M
 for(const [key,en] of Object.entries(PORTAL_COPY)){MESSAGES.ms[key]=key;MESSAGES.en[key]=en;}
 for(const [key,en] of Object.entries(ACCOUNT_COPY))if(!Object.hasOwn(MESSAGES.ms,key)){MESSAGES.ms[key]=key;MESSAGES.en[key]=en;}
 for(const [key,[ms,en]] of Object.entries(SETTINGS_COPY)){MESSAGES.ms[key]=ms;MESSAGES.en[key]=en;}
+for(const [key,[ms,en]] of Object.entries(HELP_COPY)){MESSAGES.ms[key]=ms;MESSAGES.en[key]=en;}
 export const LANGUAGE_KEY = 'geodecoder.digital.language';
 export function createI18n(storage) {
   let language = 'ms';

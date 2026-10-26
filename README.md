@@ -2,7 +2,7 @@
 
 Versi semasa: **v1.1.3**.
 
-GeoDecoder Digital: **v2.6.0**, modul **v1.5.0**, branch penerbitan **main-digitalized**.
+GeoDecoder Digital cadangan branch bantuan: **v2.7.0**, modul **v1.5.0**, branch penerbitan **main-digitalized**.
 Rujukan digital: [panduan penerbitan](docs/DIGITAL_PUBLISHING.md) dan
 [laporan integrasi](digital/docs/RELEASE_V2_6.md).
 Rujukan kemas kini: [SOR versi](docs/SOR_VERSIONING.md) dan [changelog](CHANGELOG.md).

@@ -7,16 +7,22 @@ Firmware rounds remain a separate contract.
 
 ## Canonical UI map
 
-| Capability | Owner | Variants | Verification |
-|---|---|---|---|
-| Guest form | index.html + validateGuest/validatePlayer | nickname-only guest, old/classroom profiles | core/storage/browser |
-| Dialog/settings/tutorial | usability-ui.mjs + app dialog owner | Settings, three-step guide, pause, scores, leave | browser/focus/state |
-| Text and math | i18n.mjs + local copy modules + format.mjs | BM/English, SVG/MathML | catalog/bank/browser |
-| Direct manipulation | app Pointer Events controller | pointer, touch, click, keyboard | browser stage/selection |
-| Scores | storage.mjs | save, list, CSV, erase, legacy | storage tests/browser |
-| Modes | one Game engine | quiz10, practice15, review subset, Duel10 | core/browser |
-| Classroom | existing cloud.mjs + portal.mjs | accounts, roster, rooms | existing cloud/auth tests + portal UI |
-| Duel | duel.mjs + isolated existing service | PIN, ready, live/result, reconnect | two real browser contexts |
+| Capability | Canonical owner | Source of truth | Allowed variants | Verification |
+|---|---|---|---|---|
+| Form | index.html, core validators, portal form owner; support-report.mjs for reports | domain validation + this contract | nickname, account, local report | core, portal, support integration/browser |
+| Select/Listbox | native select + shared field CSS | DESIGN.md; platform-owned popup | game mode, preferences, report category | keyboard and open native popup |
+| Scrollbar | style.css global scrollbar tokens | DESIGN.md runtime mapping | dialog/textarea geometry only | check.mjs + browser reflow |
+| Toast | app announcer, portal notice, report role=status | actual action outcome | status, error, local export | integration/browser |
+| CRUD | portal.mjs + cloud.mjs; storage.mjs for local scores | backend contracts; SOR | accounts/classes/rooms, local score erase | cloud/auth/storage + portal integration |
+| Guest form | index.html + validateGuest/validatePlayer | core.mjs | nickname-only guest, old/classroom profiles | core/storage/browser |
+| Dialog/settings/tutorial | usability-ui.mjs + app dialog owner | app.mjs openDialog/closeDialog | Settings, three-step guide, pause, scores, leave, help/report | browser/focus/state |
+| Help and support | help-support.mjs + support-report.mjs | HELP_SUPPORT_PLAN.md + HELP_SUPPORT_AUDIT.md | guide, report draft, read-only preview, copy/download | privacy/integration/browser |
+| Text and math | i18n.mjs + local copy modules + format.mjs | language catalog and stable IDs | BM/English, SVG/MathML | catalog/bank/browser |
+| Direct manipulation | app Pointer Events controller | core.mjs | pointer, touch, click, keyboard | browser stage/selection |
+| Scores | storage.mjs | single-attempt ruleset | save, list, CSV, erase, legacy | storage tests/browser |
+| Modes | one Game engine | core.mjs | quiz10, practice15, review subset, Duel10 | core/browser |
+| Classroom | existing cloud.mjs + portal.mjs | server state/RLS | accounts, roster, rooms | existing cloud/auth tests + portal UI |
+| Duel | duel.mjs + isolated existing service | Duel contract/server | PIN, ready, live/result, reconnect | isolated transport + existing live suite |
 
 ## Home, guest and settings
 
@@ -148,3 +154,11 @@ Completed achievements survive retries and edits, while current observations and
 checks are invalidated as needed. Restored practice is formative self-report, not
 verified mastery or TP. Root index and all standalone aliases share one build.
 See docs/RELEASE_V2_6.md for source SHAs, tests and deployment limits.
+
+## Help and support candidate v2.7.0
+
+One native app-dialog owns help, report, tutorial and Settings. Opening these
+views never replaces a game or iframe. Solo pauses; classroom/Duel retain their
+server clocks. Report drafts remain memory-only; explicit preview is the exact
+copy/download content. Automatic diagnostics use an allowlist; no remote report
+transport exists. Reuse existing module guide through the validated bridge.

@@ -1,0 +1,28 @@
+GeoDecoder Digital · Lapor masalah · schema 1
+Laporan belum dihantar. Salin atau muat turun, kemudian kongsi sendiri kepada guru atau pengendali.
+
+Kategori masalah: Permainan dan soalan
+
+Penerangan masalah:
+The scanner did not respond.
+
+Langkah menghasilkan masalah:
+Select a card, then tap the scanner.
+
+Hasil dijangka:
+The card should be scanned.
+
+Hasil sebenar:
+The selected card stays on the shelf.
+
+Konteks ketika borang dibuka:
+Versi aplikasi: v2.7.0
+Binaan / sumber asas: digitalized-utility-help-support / 790d989d666e64f3beabb507cd4140b832696367
+Skrin: Home
+Mod: Tidak berkaitan
+Bahasa aplikasi: Bahasa Melayu
+ID soalan: Tidak berkaitan
+Tahap soalan: Tidak berkaitan
+Keadaan soalan: Tidak berkaitan
+Saiz paparan (CSS px): 1365 × 980
+Isyarat pelayar / respons perkhidmatan terakhir: Rangkaian tersedia menurut pelayar; capaian Internet/API belum disahkan / Perkhidmatan belum disahkan dalam konteks ini

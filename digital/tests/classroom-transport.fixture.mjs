@@ -8,6 +8,11 @@ export async function classroomFixture(context,role,{finishedState,snapshotFailu
   await context.route('https://fkrlwzxvyufndavlpzbp.supabase.co/**',async route=>{
     const request=route.request(),url=new URL(request.url());
     if(request.method()==='OPTIONS'){await route.fulfill({status:204,headers:{'access-control-allow-origin':'*','access-control-allow-headers':'*'}});return;}
+    if(url.pathname==='/rest/v1/rpc/geo_module_progress'){
+      const {action}=request.postDataJSON();
+      if(!['mine','class'].includes(action))throw new Error('Fixture prohibits module writes: '+action);
+      await route.fulfill({status:200,contentType:'application/json',headers:{'access-control-allow-origin':'*'},body:JSON.stringify({records:[],students:[]})});return;
+    }
     if(url.pathname==='/rest/v1/rpc/geo_action'){
       const {action,payload}=request.postDataJSON();actions.push(action);
       if(!['snapshot','heartbeat'].includes(action))throw new Error('Fixture prohibits writes: '+action);

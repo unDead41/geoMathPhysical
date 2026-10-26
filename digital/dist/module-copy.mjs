@@ -2,6 +2,7 @@
 // Formula symbols, values, stable IDs and user-entered responses remain unchanged.
 export const MODULE_COPY = {
   "exact": {
+    "Pusat Bantuan": "Help centre",
     "DIGITAL · MODUL PEMBELAJARAN": "DIGITAL · LEARNING MODULE",
     "GeoDecoder — Modul pembelajaran bongkah": "GeoDecoder — Solid learning module",
     "GeoDecoder Digital, modul pembelajaran": "GeoDecoder Digital, learning module",

@@ -6,13 +6,13 @@ import {validateModuleSettings,MODULE_CHANNEL} from '../dist/module-frame.mjs';
 const release=JSON.parse(fs.readFileSync(new URL('../vendor/module-release.json',import.meta.url),'utf8'));
 const html=fs.readFileSync(new URL('../vendor/'+release.path,import.meta.url),'utf8');
 function harness(){
- const host=new EventTarget(),frame=new EventTarget(),messages=[],choices=[];let requested=0,sequence=0;
+ const host=new EventTarget(),frame=new EventTarget(),messages=[],choices=[];let requested=0,helpRequested=0,sequence=0;
  let settings={language:'en',textSize:150,motionPaused:true};
  frame.contentWindow={postMessage:(message,target)=>messages.push({message,target})};
  frame.getAttribute=key=>frame[key]||null;frame.removeAttribute=key=>delete frame[key];
- const bridge=createModuleBridge({frame,getSettings:()=>settings,hostWindow:host,openSettings:()=>requested++,onChoice:value=>choices.push(value),createId:()=>`test-${++sequence}`});
+ const bridge=createModuleBridge({frame,getSettings:()=>settings,hostWindow:host,openSettings:()=>requested++,openHelp:()=>helpRequested++,onChoice:value=>choices.push(value),createId:()=>`test-${++sequence}`});
  function receive(data,source=frame.contentWindow,origin='null'){const event=new Event('message');Object.assign(event,{data,source,origin});host.dispatchEvent(event);}
- return {bridge,frame,messages,choices,receive,get requested(){return requested;},set settings(value){settings=value;}};
+ return {bridge,frame,messages,choices,receive,get requested(){return requested;},get helpRequested(){return helpRequested;},set settings(value){settings=value;}};
 }
 test('module settings permit only the three supported presentation values',()=>{
  assert.deepEqual(validateModuleSettings({language:'ms',textSize:100,motionPaused:false}),{language:'ms',textSize:100,motionPaused:false});
@@ -38,4 +38,13 @@ test('foreign windows, origins, versions and closed/old frames cannot open host 
  h.bridge.open(html);h.receive(good);assert.equal(h.requested,1);
  h.bridge.clear();h.receive({...good,instanceId:'test-2'});h.frame.dispatchEvent(new Event('load'));
  assert.equal(h.requested,1);assert.equal(h.frame.getAttribute('srcdoc'),null);assert.equal(h.bridge.sync(),false);
+});
+test('help requests reuse the active frame and reject stale, foreign or forged messages',()=>{
+ const h=harness();h.bridge.open(html);const source=h.frame.srcdoc;
+ const good={channel:MODULE_CHANNEL,version:1,instanceId:'test-1',type:'open-help'};
+ h.receive(good,{});h.receive(good,h.frame.contentWindow,'https://other.test');
+ for(const change of [{channel:'other'},{version:2},{instanceId:'stale'}])h.receive({...good,...change});
+ assert.equal(h.helpRequested,0);h.receive(good);assert.equal(h.helpRequested,1);assert.equal(h.frame.srcdoc,source);
+ h.bridge.open(html);h.receive(good);assert.equal(h.helpRequested,1);
+ h.bridge.clear();h.receive({...good,instanceId:'test-2'});assert.equal(h.helpRequested,1);
 });

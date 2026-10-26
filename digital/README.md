@@ -1,6 +1,6 @@
 # GeoDecoder Digital V2
 
-Versi Digital: **v2.6.0**. Branch integrasi: **main-digitalized**.
+Versi Digital cadangan: **v2.7.0**. Branch kerja: **digitalized-utility-help-support**. Branch integrasi: **main-digitalized**.
 Modul pembelajaran: **v1.5.0**. Firmware kekal **v1.1.3**.
 
 Keluaran ini menyatukan BM/English, rich text, kuiz/latihan/duel, kemudahan
@@ -9,6 +9,15 @@ Kata Laluan & Keselamatan serta Tetapan Penggunaan.
 
 Rujukan sumber, perubahan, syarat database dan bukti pengesahan gabungan:
 [RELEASE_V2_6.md](docs/RELEASE_V2_6.md).
+
+## Pusat Bantuan & Lapor Masalah
+
+Buka Pusat Bantuan melalui header, Tetapan atau butang bantuan modul. Panduan
+BM/English mengguna semula tutorial dan tetapan sedia ada. Laporan mempunyai
+pratonton, Salin, Pilih teks dan muat turun TXT; tiada penghantaran automatik.
+Jangan masukkan maklumat peribadi atau rahsia dalam penerangan. Draf kekal
+dalam memori tab sahaja. Lihat [audit dan kontrak backend](docs/HELP_SUPPORT_AUDIT.md)
+dan [serahan serta ujian](docs/HELP_SUPPORT_HANDOFF.md).
 
 ## Laman GitHub Pages
 

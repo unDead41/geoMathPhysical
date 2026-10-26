@@ -44,23 +44,24 @@ cases.navigation=async(harness,track)=>{
   const before=await order(page),selected=await page.locator('.choice[aria-pressed="true"]').getAttribute('data-shape');
   await settings(page,{language:'en',theme:'dark',textSize:150},true);
   const clock=await page.locator('#time-value').innerText();await page.waitForTimeout(1100);assert.equal(await page.locator('#time-value').innerText(),clock,'Settings pauses solo time');
-  await page.locator('#sound-button').click();await page.locator('#music-button').click();await page.locator('#motion-button').click();
+  await page.locator('#sound-button').click();await page.locator('#music-button').click();await page.locator('#motion-select').selectOption('reduce');
   await fits(page,'Settings English 390px 150%');await screenshot(harness,page,'settings-en-mobile-150');await page.locator('#dialog-close').click();
   assert.deepEqual(await order(page),before);assert.equal(await page.locator('.choice[aria-pressed="true"]').getAttribute('data-shape'),selected);assert.equal(await page.locator('#score-value').innerText(),'0');
   await settings(page,{language:'ms',textSize:100,theme:'light'});await screenshot(harness,page,'game-r1-bm-mobile');
-  await page.locator('[data-action="help"]').first().click();const helpClock=await page.locator('#time-value').innerText();
+  await page.locator('[data-action="help"]').first().click();await page.locator('[data-help-action="tutorial"]').click();const helpClock=await page.locator('#time-value').innerText();
   await page.waitForTimeout(1100);assert.equal(await page.locator('#time-value').innerText(),helpClock,'Reopened tutorial pauses solo time');
   assert.equal(await page.locator('[data-dialog-action="tutorial-skip"]').count(),0);
   await page.locator('[data-dialog-action="tutorial-next"]').click();assert.match(await page.locator('#tutorial-progress').innerText(),/2.*3/);
   await page.locator('[data-dialog-action="tutorial-previous"]').click();assert.match(await page.locator('#tutorial-progress').innerText(),/1.*3/);
   await page.locator('[data-dialog-action="tutorial-next"]').click();await page.locator('[data-dialog-action="tutorial-next"]').click();await page.locator('[data-dialog-action="tutorial-finish"]').click();
+  await page.locator('[data-help-view="home"]').waitFor({state:'visible'});await page.locator('#dialog-close').click();
   assert.deepEqual(await order(page),before);assert.equal(await page.locator('.choice[aria-pressed="true"]').getAttribute('data-shape'),selected);
   await page.locator('#r1').tap();assert.match(await page.locator('#step-progress').innerText(),/2.*2/);await screenshot(harness,page,'game-r2-bm-mobile');
   await settings(page,{language:'en'});assert.equal(await page.locator('#player-display').innerText(),'Guru','Literal nickname does not translate');assert.equal(await page.locator('#r1').isDisabled(),true);
   await choice(page,'net',q.shape).focus();await page.keyboard.press('Enter');await page.locator('#r2').focus();await page.keyboard.press('Enter');
   await page.waitForFunction(()=>document.querySelector('#question-counter').textContent.includes('02 / 10'));assert.equal(await page.locator('#score-value').innerText(),'1','Touch and keyboard scans agree');
   await page.reload();assert.equal(await page.locator('html').getAttribute('lang'),'en');
-  await settings(page,{},true);assert.equal(await page.locator('#sound-button').getAttribute('aria-pressed'),'true');assert.equal(await page.locator('#music-button').getAttribute('aria-pressed'),'false');assert.equal(await page.locator('#motion-button').getAttribute('aria-pressed'),'true');
+  await settings(page,{},true);assert.equal(await page.locator('#sound-button').getAttribute('aria-pressed'),'true');assert.equal(await page.locator('#music-button').getAttribute('aria-pressed'),'false');assert.equal(await page.locator('#motion-select').inputValue(),'reduce');
   await page.locator('#dialog-close').click();await startGuest(page);assert.equal(await page.locator('#app-dialog').isVisible(),false,'First tutorial stays dismissed after reload');
 };
 

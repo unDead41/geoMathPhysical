@@ -11,15 +11,16 @@
   <link rel="stylesheet" href="./style.css">
   <link rel="stylesheet" href="./portal.css">
   <link rel="stylesheet" href="./usability.css">
+  <link rel="stylesheet" href="./help-support.css">
 </head>
 <body>
   <a class="skip-link" href="#main" data-i18n="Terus ke kandungan">Terus ke kandungan</a>
   <header class="site-header">
-    <a href="#" class="brand" id="brand-home" aria-label="GeoDecoder Digital, halaman mula" data-i18n-aria-label="GeoDecoder Digital, halaman mula"><span data-brand></span><span>Geo<span class="brand-blue">Decoder</span><small><span data-i18n="DIGITAL EDITION">DIGITAL EDITION</span> <b class="brand-version" id="app-version">V2.6.0</b></small></span></a>
+    <a href="#" class="brand" id="brand-home" aria-label="GeoDecoder Digital, halaman mula" data-i18n-aria-label="GeoDecoder Digital, halaman mula"><span data-brand></span><span>Geo<span class="brand-blue">Decoder</span><small><span data-i18n="DIGITAL EDITION">DIGITAL EDITION</span> <b class="brand-version" id="app-version">V2.7.0</b></small></span></a>
     <nav aria-label="Menu utama" data-i18n-aria-label="Menu utama">
       <button type="button" class="nav-button" id="profile-button" aria-label="Profil Saya" title="Profil Saya" data-i18n-aria-label="Profil Saya" data-i18n-title="Profil Saya"><span data-icon="user"></span><span data-i18n="Profil Saya">Profil Saya</span></button>
       <button type="button" class="nav-button" id="settings-button" aria-label="Tetapan" data-i18n-aria-label="ease.settings"><span data-icon="settings"></span><span data-i18n="ease.settings">Tetapan</span></button>
-      <button type="button" class="nav-button" data-action="help" aria-label="Cara main" data-i18n-aria-label="Cara main"><span data-icon="help"></span><span data-i18n="Cara main">Cara main</span></button>
+      <button type="button" class="nav-button" id="help-button" data-action="help" aria-label="Pusat Bantuan" data-i18n-aria-label="help.title"><span data-icon="help"></span><span data-i18n="help.title">Pusat Bantuan</span></button>
       <button type="button" class="nav-button score-nav" data-action="scores" aria-label="Papan skor" data-i18n-aria-label="Papan skor"><span data-icon="trophy"></span><span data-i18n="Papan skor">Papan skor</span></button>
     </nav>
   </header>
@@ -46,7 +47,7 @@
       <p class="settings-notice" data-i18n="preferences.learningNote">Putaran mengikut pilihan animasi. Kawalan kelajuan dan langkah tersedia dalam modul.</p>
     </fieldset>
     <button type="button" class="button button-quiet" data-reset-preferences data-i18n="preferences.reset">Pulihkan tetapan asal</button>
-    <button type="button" class="button button-outline" data-dialog-action="tutorial-open"><span data-icon="help"></span><span data-i18n="ease.tutorialOpen">Buka panduan tiga langkah</span></button>
+    <button type="button" class="button button-outline" data-dialog-action="help-open"><span data-icon="help"></span><span data-i18n="help.title">Pusat Bantuan</span></button>
     <p id="settings-notice" class="settings-notice" role="status"></p>
     <div class="dialog-actions"><button type="button" class="button button-primary" data-dialog-action="close" data-i18n="ease.close">Tutup</button></div>
   </div></div>

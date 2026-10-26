@@ -1,5 +1,15 @@
 # GeoDecoder Digital changelog
 
+## v2.7.0 — 26 Oktober 2026 (cadangan branch digitalized-utility-help-support)
+
+- Pusat Bantuan BM/English daripada header, Tetapan, permainan dan modul.
+- Tutorial dan panduan modul sedia ada boleh dibuka semula tanpa memuat semula aktiviti.
+- Borang masalah dengan validasi, pratonton, salin dan TXT setempat; fallback pilih teks.
+- Konteks automatik allowlist tanpa jawapan, identiti, PIN atau credential.
+- Dialog mengekalkan keadaan dan polisi masa solo, kelas dan Duel.
+- Tiada endpoint baharu atau laporan sebenar dihantar; lihat HELP_SUPPORT_HANDOFF.md.
+
+
 ## v2.6.0 — 26 Oktober 2026 (main-digitalized)
 
 - Satukan branch digital: BM/English, rich text, latihan 15 soalan, Duel,
