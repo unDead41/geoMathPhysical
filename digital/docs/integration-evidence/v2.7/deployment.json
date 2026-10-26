@@ -25,5 +25,12 @@
   "motionAuditBranch": {
     "head": "cd451b98972d159217300fcb4824476c1d4cabef",
     "scope": "audit/evidence only; runtime upgrade pending design-system dependency"
+  },
+  "live": {
+    "httpStatus": 200,
+    "bytes": 1169894,
+    "sha256": "d924bf8709dc04b946cdc64b27f1a271d56380beef4fa82390256f4ae2631f0c",
+    "verifiedAt": "2026-10-26T11:16:28.797878Z",
+    "workflowConclusion": "success"
   }
 }
