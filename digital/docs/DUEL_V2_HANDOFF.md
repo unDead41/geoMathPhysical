@@ -7,9 +7,11 @@ Asas integrasi: **790d989d666e64f3beabb507cd4140b832696367**
 integrasi (29 commit di hadapan, 0 di belakang). Firmware main yang diperiksa:
 **a059979d97926b82cafd4aa5cf3fe59da04a55bb**, v1.1.3.
 
-Commit pelaksanaan: **resit SHA sebenar ditambah selepas commit kod dicipta**.
-Commit resit susulan hanya mengemas kini dokumen handoff ini. Jangan menganggap
-SHA asas di atas sebagai commit hasil kerja.
+Commit pelaksanaan: **f98a2c4b6860bc0bec4cfab3f4efbb327e45f00e**
+([lihat commit](https://github.com/unDead41/geodecoder/commit/f98a2c4b6860bc0bec4cfab3f4efbb327e45f00e)).
+Commit resit susulan hanya mengemas kini dokumen handoff ini; ambil HEAD branch
+untuk resit akhir. Kod dan bukti yang diuji ialah commit pelaksanaan di atas.
+Remote main-digitalized disemak lagi sebelum push dan kekal pada SHA asas.
 
 ## Perubahan tingkah laku
 
