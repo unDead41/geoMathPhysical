@@ -1,0 +1,119 @@
+{
+  "moduleVersion": "1.1.0",
+  "dateMalaysia": "2026-10-26",
+  "htmlSha256": "8c9a3e87cfa4b73dc3f8de82445db6c4f708815d7fd1cb19d38ca8b12834f599",
+  "htmlBytes": 109580,
+  "method": "Actual cloud Chrome screenshots of final standalone HTML through HTTP preview; phone uses actual 320px iframe, not physical mobile. JPEG bytes saved without image edits.",
+  "automatedTests": {
+    "passed": 67,
+    "failed": 0,
+    "geometry": 33,
+    "renderer": 2,
+    "app": 17,
+    "lessons": 15
+  },
+  "browserDefaults": [
+    {
+      "shape": "cube",
+      "area": "96 cm²",
+      "volume": "64 cm³"
+    },
+    {
+      "shape": "cuboid",
+      "area": "108 cm²",
+      "volume": "72 cm³"
+    },
+    {
+      "shape": "pyramid",
+      "area": "96 cm²",
+      "volume": "48 cm³"
+    },
+    {
+      "shape": "cylinder",
+      "area": "748 cm²",
+      "volume": "1540 cm³"
+    },
+    {
+      "shape": "cone",
+      "area": "75.43 cm²",
+      "volume": "37.71 cm³"
+    }
+  ],
+  "piChecks": {
+    "cone3142": "75.41 cm²",
+    "coneFull": "75.4 cm²",
+    "decimalCommaAccepted": true,
+    "invalidZeroClearsOutputs": true,
+    "errorFocus": "measure-j",
+    "smallPositiveVolume": "< 0.01 cm³"
+  },
+  "notesToNet": {
+    "shape": "cone",
+    "progress": "100% terbuka",
+    "stage": "Bentangan rata"
+  },
+  "notesToView": {
+    "mode": "views",
+    "progress": "0% terbuka",
+    "view": "top",
+    "stage": "Pandangan atas · Ortografik"
+  },
+  "responsive": [
+    {
+      "iframeWidth": 320,
+      "clientWidth": 310,
+      "scrollWidth": 310
+    },
+    {
+      "iframeWidth": 390,
+      "clientWidth": 380,
+      "scrollWidth": 380
+    },
+    {
+      "iframeWidth": 768,
+      "clientWidth": 758,
+      "scrollWidth": 758
+    }
+  ],
+  "applicationErrorsInExaminedLog": [],
+  "excludedLogSource": "chrome-extension metadata errors",
+  "notTested": [
+    "Cold file:// open (browser policy blocks that protocol)",
+    "Edge",
+    "Physical touch device",
+    "Real OS reduced motion",
+    "Screen reader"
+  ],
+  "screenshots": [
+    {
+      "path": "screenshots/notes-v1-1-overview.jpg",
+      "description": "Desktop: nota kon, pemilih bongkah, sifat dan rumus pantas",
+      "dimensions": [
+        1353,
+        929
+      ],
+      "bytes": 88543,
+      "sha256": "af73fa8c4cd4096fd45239c359c85f77f389e5fb127a23bfd07bbef608dfac51"
+    },
+    {
+      "path": "screenshots/notes-v1-1-cone-calculator.jpg",
+      "description": "Desktop: keratan rentas kon, ukuran j=3/t=4, s=5, luas 75.43 dan isi padu 37.71",
+      "dimensions": [
+        1353,
+        929
+      ],
+      "bytes": 65593,
+      "sha256": "fad9add015e7373a7d28270f69aead54ae28178c3a69c2f9ee0afa23f42ac58e"
+    },
+    {
+      "path": "screenshots/notes-v1-1-phone-320.jpg",
+      "description": "Viewport iframe 320px dalam workbench QA; kalkulator kon selepas lompat nota",
+      "dimensions": [
+        1348,
+        926
+      ],
+      "bytes": 45646,
+      "sha256": "3f899e86eddfa8bfa1e3c98e47f9c0e7c2391ec3a658d2f350aedc77157bedcc"
+    }
+  ]
+}

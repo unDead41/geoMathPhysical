@@ -1,0 +1,55 @@
+{
+  "browser": "Chrome cloud browser",
+  "automation": "Cua supported APIs; actual mouse drag, key presses and native clicks",
+  "screenshots": 21,
+  "observations": {
+    "openedAndClosed": [
+      "cube",
+      "cuboid",
+      "pyramid",
+      "cylinder",
+      "cone"
+    ],
+    "directionSelections": 30,
+    "pausedProgress": "50% before and after self-check interaction",
+    "mouseDragPixels": [
+      70,
+      25
+    ],
+    "dragCamera": {
+      "yaw": 1.1800000000000008,
+      "pitch": 0.575
+    },
+    "keyboardZoom": "110%",
+    "settledRightCamera": {
+      "yaw": 1.5707963267948966,
+      "pitch": 0
+    },
+    "responsive": [
+      {
+        "iframeWidth": 390,
+        "scrollWidth": 380
+      },
+      {
+        "iframeWidth": 320,
+        "scrollWidth": 320
+      },
+      {
+        "iframeWidth": 768,
+        "scrollWidth": 758
+      }
+    ],
+    "afterPreviewStopped": {
+      "shape": "cone",
+      "progress": "100% terbuka",
+      "externalRuntimeElements": 0
+    },
+    "moduleOriginConsoleErrors": 0
+  },
+  "limits": [
+    "Exact standalone tested via HTTP; cold file:// and separate Edge not exercised",
+    "CSS-width iframe tests, no physical touch/pinch",
+    "Reduced motion tested with matchMedia adapter, not OS preference",
+    "Some main camera screenshots show transitions; six thumbnails stay orthographic"
+  ]
+}
