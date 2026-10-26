@@ -1,0 +1,79 @@
+[
+  {
+    "file": "before-explore.jpg",
+    "bytes": 80358,
+    "sha256": "5af2b5f1ba5d6f89f5f964aab3f24f0a2ea8204e9e0bbe4136071a86e519c9bd",
+    "method": "actual browser screenshot",
+    "baseline": true
+  },
+  {
+    "file": "before-net.jpg",
+    "bytes": 84394,
+    "sha256": "72e619805040481187033e57faf82494510f509fbace344c588497f5bbf4a25f",
+    "method": "actual browser screenshot",
+    "baseline": true
+  },
+  {
+    "file": "before-320.jpg",
+    "bytes": 62580,
+    "sha256": "edf5b5e794bce0a8037ff5c653a831fb48f2aa5c6e391e43d04248983d701c3d",
+    "method": "actual browser screenshot",
+    "baseline": true
+  },
+  {
+    "file": "final-explore-desktop.jpg",
+    "bytes": 78162,
+    "sha256": "1d01888899cedeb0089e8bd19e5245787e1fa831acf13e20d0888c28fc8ca502",
+    "method": "actual browser screenshot",
+    "baseline": false
+  },
+  {
+    "file": "final-net-desktop.jpg",
+    "bytes": 96104,
+    "sha256": "a3a6faac6dcbbdfb44b4401232168629208a3c50aa16a28858e54bbfbdaf9bbf",
+    "method": "actual browser screenshot",
+    "baseline": false
+  },
+  {
+    "file": "final-volume-desktop.jpg",
+    "bytes": 89844,
+    "sha256": "6e0508dfe4e7d50ab72a7404051b64fc20e2b9060ac88ee351a1691766542612",
+    "method": "actual browser screenshot",
+    "baseline": false
+  },
+  {
+    "file": "final-area-desktop.jpg",
+    "bytes": 102963,
+    "sha256": "d060395ddac5a83eca657ce1d84fba161e9004cf787a792c1c137ee6b8e8cf0e",
+    "method": "actual browser screenshot",
+    "baseline": false
+  },
+  {
+    "file": "final-composite-desktop.jpg",
+    "bytes": 100611,
+    "sha256": "9edc7a846ea1ee07771f247b1079a015d6f122b399ea0b7ab56d9fff7d01451a",
+    "method": "actual browser screenshot",
+    "baseline": false
+  },
+  {
+    "file": "final-notes-desktop.jpg",
+    "bytes": 65827,
+    "sha256": "4fcc380cfc86d27910996dd6c21a9eeb457b72921efd48c0eeff1fa8d5ad6ebe",
+    "method": "actual browser screenshot",
+    "baseline": false
+  },
+  {
+    "file": "final-notes-320.jpg",
+    "bytes": 45552,
+    "sha256": "0abce05e113ee3bae25b212afa6f82612c35e4a483df0dd4446ed9aa064a9858",
+    "method": "actual browser screenshot",
+    "baseline": false
+  },
+  {
+    "file": "final-tablet-768.jpg",
+    "bytes": 64001,
+    "sha256": "93d77c6d5bdf340c3881abad9da9a4d4aeab4cc0a9e6dcba73be0ddac781ce61",
+    "method": "actual browser screenshot",
+    "baseline": false
+  }
+]

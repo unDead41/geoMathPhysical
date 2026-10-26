@@ -1,5 +1,17 @@
 # Asas sumber dan polisi branch
 
+## Integrasi MD v1.3.1 — 26 Oktober 2026
+
+Pengguna kemudian membenarkan push hasil reka bentuk ke branch penerbitan.
+Branch sebenar ialah `main-digitalized` (MD), dibaca pada
+`8c12818565d8b5531216ec0a24fa8a93a583bf35`. Reka bentuk
+`2a62091fe72f88c59b2f3ca393a29fc3f1b47263` digabungkan dengan semua fungsi
+makmal v1.3.0 daripada `ee7c7ee983ce32bc9681c60424df184f29e8a80b`.
+Hasil modul ialah v1.3.1. Semua blob MD di luar `digital/module/` dipelihara.
+Lihat [laporan integrasi dan batasan ujian](INTEGRATION_MD_V1_3_1.md).
+
+## Sejarah sumber terdahulu
+
 - Repo: https://github.com/unDead41/geodecoder
 - Branch asal: `digitalize`.
 - SHA penuh asal ketika kerja bermula: `cd47ebd7dbcbab709b9f61a2122f7492f2b74113`.

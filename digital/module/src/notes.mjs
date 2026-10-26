@@ -1,7 +1,9 @@
 import {MODEL_DATA,MODEL_ORDER} from './content.mjs';
 import {LESSON_DATA,MEASURE_FIELDS,FIELD_LABELS,PI_MODES,UNIT_FACTS,calculateMeasures} from './lessons.mjs';
+import {uiNode,uiSvg} from './ui.mjs';
+import {UI_TOKENS} from './design-system.mjs';
 const noteEl=id=>document.getElementById(id);
-function noteNode(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node;}
+const noteNode=uiNode;
 // A small positive volume must never appear to be a zero-volume solid.
 const noteNumber=n=>n>0&&n<.01?'< 0.01':new Intl.NumberFormat('ms-MY',{maximumFractionDigits:2,useGrouping:false}).format(n);
 function noteList(items,ordered=false){const list=noteNode(ordered?'ol':'ul');for(const text of items)list.append(noteNode('li',{},text));return list;}
@@ -9,11 +11,11 @@ function noteExample(example,label){
   const card=noteNode('details',{class:'worked-example'}),summary=noteNode('summary',{},'Contoh berpandu · '+label);
   const body=noteNode('div',{class:'example-body'});body.append(noteNode('p',{class:'example-question'},example.question),noteList(example.steps,true),noteNode('p',{class:'example-answer'},'Jawapan: '+example.answer));card.append(summary,body);return card;
 }
-function noteSvg(tag,attrs={},text=''){const node=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node;}
+const noteSvg=uiSvg;
 function drawNoteDiagram(shape,result){
   const svg=noteEl('notes-diagram');svg.replaceChildren();
   const line=(x1,y1,x2,y2,color='#215FF0',dash=false)=>svg.append(noteSvg('line',{x1,y1,x2,y2,stroke:color,'stroke-width':1.7,...(dash?{'stroke-dasharray':'5 4'}:{})}));
-  const text=(x,y,value,color='#18334B')=>svg.append(noteSvg('text',{x,y,fill:color,'font-size':13,'font-family':'Segoe UI, Arial, sans-serif','text-anchor':'middle'},value));
+  const text=(x,y,value,color='#18334B')=>svg.append(noteSvg('text',{x,y,fill:color,'font-size':UI_TOKENS['diagram-label-size'],'font-family':'Segoe UI, Arial, sans-serif','text-anchor':'middle'},value));
   const poly=(points,fill)=>svg.append(noteSvg('polygon',{points:points.map(p=>p.join(',')).join(' '),fill,stroke:'#526A7D','stroke-width':1.3,'stroke-linejoin':'round'}));
   if(!result.valid){text(140,110,'Masukkan ukuran yang sah.','#B9403E');svg.setAttribute('aria-label','Rajah menunggu ukuran yang sah.');return;}
   const d=result.dimensions;

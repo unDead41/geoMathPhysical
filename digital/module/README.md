@@ -1,6 +1,6 @@
 # Modul Pembelajaran GeoDecoder Digital V1
 
-Versi modul: **v1.3.0**. Branch kerja: **digitalize-module**.
+Versi modul: **v1.3.1**. Branch kerja: **digitalize-module**.
 
 ## Cuba terus
 
@@ -70,7 +70,8 @@ menggunakan paras tidak linear yang sepadan dengan isi padu. Simulasi ini
 memaparkan paras/isi ideal, bukan aliran bendalir fizikal. Poligon tambahan ialah
 contoh tegak dengan tapak sekata, bukan bentangan bentuk bebas sewenang-wenangnya.
 
-Pengesahan terkini: [laporan v1.3.0](docs/LABS_V1_3.md).
+Pengesahan integrasi MD: [laporan v1.3.1](docs/INTEGRATION_MD_V1_3_1.md).
+Sejarah fungsi v1.3.0: [laporan makmal](docs/LABS_V1_3.md).
 Sejarah: [laporan empat makmal v1.2.0](docs/LABS_V1_2.md).
 
 ## Kandungan dan matematik
@@ -92,6 +93,8 @@ bukan pertukaran gambar atau panel poligon berengsel.
 
 | Laluan | Tanggungjawab |
 |---|---|
+| `src/design-system.mjs`, `src/design-tokens.css` | Token/ikon utama dan CSS terjana; jangan edit CSS terjana |
+| `src/ui.mjs` | DOM/SVG selamat dan label Main/Jeda/Sambung bersama |
 | `src/geometry.mjs` | Geometri, lipatan tegar, pembangunan permukaan dan kamera ortografik |
 | `src/renderer.mjs` | Lukisan Canvas 2D bagi model 3D, cahaya dan pemilihan permukaan |
 | `src/content.mjs` | Satu sumber versi modul dan penerangan BM |
@@ -149,3 +152,9 @@ Simulasi reduced motion di workbench ialah suntikan dependency untuk ujian sahaj
 bukan perubahan tetapan OS. Borang evidence menerima screenshot daripada pelayar
 ujian dan menyimpannya dalam evidence/ tanpa menindih fail. Server ini hanya alat
 pembangunan dan tidak dimasukkan ke dalam HTML murid.
+
+## Reka bentuk seragam v1.3.1
+
+Token warna, tipografi, ruang, radius, saiz kawalan, ikon dan tempoh animasi datang daripada `src/design-system.mjs`. Semua bahagian berkongsi komponen butang/panel/medan/maklum balas. Teks kecil minimum 12px; kawalan biasa sekurang-kurangnya 44px. Label rajah SVG menggunakan 16px supaya masih 12px pada skrin 320px.
+
+Semua fungsi v1.3.0 dikekalkan. Jeda/sambung mengekalkan garis masa easing sebenar, dan pembingkaian model tetap sepanjang lipatan/cantuman. Kamera boleh dikawal melalui butang arah. Kawalan kembali ke model tersedia selepas panel aktiviti; susun atur kecil menggunakan tatal dokumen biasa.

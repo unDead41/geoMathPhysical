@@ -1,0 +1,32 @@
+{
+  "version": "1.3.1",
+  "baseline": "8c12818565d8b5531216ec0a24fa8a93a583bf35",
+  "design": "2a62091fe72f88c59b2f3ca393a29fc3f1b47263",
+  "files": [
+    {
+      "file": "md-before-v1.3.0.jpg",
+      "bytes": 86910,
+      "sha256": "57a153c82c46d3d7847a3a12b9b09205d57c558257f20d60e8c6a0e29ebb853e"
+    },
+    {
+      "file": "md-after-flat-v1.3.1-1793012651.jpg",
+      "bytes": 118813,
+      "sha256": "15e2e127c6d24d27d2015456b026d1d46acf8eb6a32445aeedfb5bf21f89c808"
+    },
+    {
+      "file": "md-after-phone320-v1.3.1.jpg",
+      "bytes": 57509,
+      "sha256": "56eb0f91818b42ab54c03492968eb0da120d3022ad32005eb1b0c45f2aeb473a"
+    },
+    {
+      "file": "md-after-volume-v1.3.1.jpg",
+      "bytes": 89522,
+      "sha256": "a956eae107251bda649c835a8a096e88ab857136e89be16ae869112e10411a8d"
+    },
+    {
+      "file": "md-browser-v1.3.1-checks.json",
+      "bytes": 31610,
+      "sha256": "482bc410acba9819594b3fa2acfd20684d918201f5d2ef6cda5c194eced67e75"
+    }
+  ]
+}

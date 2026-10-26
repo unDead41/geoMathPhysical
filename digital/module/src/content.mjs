@@ -1,4 +1,4 @@
-export const MODULE_VERSION='1.3.0';
+export const MODULE_VERSION='1.3.1';
 export const MODEL_ORDER=['cube','cuboid','pyramid','cylinder','cone'];
 export const MODEL_DATA={
   cube:{name:'Kubus',tag:'Enam muka, semuanya sama.',flat:6,curved:0,edges:12,vertices:8,

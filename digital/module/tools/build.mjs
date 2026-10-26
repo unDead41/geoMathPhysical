@@ -1,11 +1,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {designTokenCss,iconMarkup} from '../src/design-system.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 let html=fs.readFileSync(path.join(root,'src/index.html'),'utf8');
 const css=fs.readFileSync(path.join(root,'src/style.css'),'utf8');
-const js=['geometry','content','lessons','lab-geometry','preset-nets','volume-lab','renderer','notes','labs','app'].map(name=>fs.readFileSync(path.join(root,`src/${name}.mjs`),'utf8').replace(/^import .+;\r?\n/gm,'').replace(/^export /gm,'')).join('\n\n');
+const tokens=designTokenCss();fs.writeFileSync(path.join(root,'src/design-tokens.css'),tokens);
+const js=['design-system','ui','geometry','content','lessons','lab-geometry','preset-nets','volume-lab','renderer','notes','labs','app'].map(name=>fs.readFileSync(path.join(root,`src/${name}.mjs`),'utf8').replace(/^import .+;\r?\n/gm,'').replace(/^export /gm,'')).join('\n\n');
 if(/<\/script/i.test(js))throw new Error('Unsafe inline script terminator');
-html=html.replace('<link rel="stylesheet" href="./style.css">',()=>`<style>\n${css}\n</style>`).replace('<script type="module" src="./app.mjs"></script>',()=>`<script>\n'use strict';\n(()=>{\n${js}\n})();\n</script>`);
+html=html.replace('<link rel="stylesheet" href="./design-tokens.css">',()=>`<style>\n${tokens}\n</style>`).replace('<link rel="stylesheet" href="./style.css">',()=>`<style>\n${css}\n</style>`).replace(/<svg data-icon="([a-z]+)"><\/svg>/g,(_,name)=>iconMarkup(name)).replace('<script type="module" src="./app.mjs"></script>',()=>`<script>\n'use strict';\n(()=>{\n${js}\n})();\n</script>`);
 const out=path.join(root,'GeoDecoder_Modul_V1.html');
 fs.writeFileSync(out,html);console.log(`${path.basename(out)} · ${Buffer.byteLength(html)} bytes · self-contained`);

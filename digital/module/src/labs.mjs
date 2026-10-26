@@ -5,15 +5,16 @@ import {LESSON_DATA,MEASURE_FIELDS,calculateMeasures} from './lessons.mjs';
 import {NET_PRESETS,cubeNetState,cubeNetMesh,labDimensions,surfacePieces,pourState,compositionMeasures,unitCubeMesh,pourMesh,compositionMesh} from './lab-geometry.mjs';
 import {PRESET_NETS,presetNetMesh} from './preset-nets.mjs';
 import {volumeFields,volumeDefaults,volumeInfo,volumeComparisonMesh,comparisonTotal} from './volume-lab.mjs';
-const LAB_TIME={fold:4000,open:4000,pour:2600,join:1600,layer:600,compareAdd:1200,compareFill:2600};
+import {UI_MOTION} from './design-system.mjs';
+import {uiNode,playbackButton} from './ui.mjs';
 const labEl=id=>document.getElementById(id);
 const labNumberFormat=new Intl.NumberFormat('ms-MY',{maximumFractionDigits:2,useGrouping:false});
 const labFmt=n=>n>0&&n<.01?'< 0.01':labNumberFormat.format(n);
-function labNode(tag,attrs={},text=''){const n=document.createElement(tag);for(const [k,v] of Object.entries(attrs))n.setAttribute(k,String(v));if(text)n.textContent=text;return n;}
+const labNode=uiNode;
 const LAB_COPY={net:['Teroka dan bina bentangan','Pilih bentangan siap atau susun petak kubus. Lipat perlahan, jeda dan jejaki muka yang sama melalui warna serta nombor.'],volume:['Makmal isi padu','Isi satu atau dua bongkah dan jumlahkan isi pilihan. Anda juga boleh menyusun kiub unit atau membandingkan tiga tuangan pada bekas bertapak dan bertinggi sama.'],area:['Terbitkan rumus luas permukaan','Hubungkan setiap permukaan berwarna dengan luasnya. Jumlah bahagian yang dipilih akan membentuk rumus keseluruhan.'],composite:['Bongkah gabungan','Cantum dua bongkah pada tapak yang sama saiz. Tentukan permukaan yang terdedah dan tambah isi padunya.']};
 export class LearningLabs{
  constructor({announce,prefersReduced}){
-  this.announce=announce;this.prefersReduced=prefersReduced;this.ready=false;this.active=false;this.kind='net';this.raf=0;this.anim=null;this.paused=null;
+  this.announce=announce;this.prefersReduced=prefersReduced;this.ready=false;this.active=false;this.kind='net';this.raf=0;this.anim=null;this.paused=null;this.framing=null;this.step=time=>this.frame(time);
   this.speed=.5;this.suspended=new Map();this.guideKey='';
   this.camera={yaw:.48,pitch:.3,zoom:1};this.net={mode:'gallery',preset:'cube',presetFace:null,presetDirty:true,cells:NET_PRESETS.cross.map(p=>[...p]),progress:0,selected:0,dirty:true,notice:'',drag:null,suppressUntil:0};
   this.volume={kind:'compare',units:0,d:{p:3,l:2,t:3},size:3,height:4,pours:0,progress:0,full:true};
@@ -32,8 +33,8 @@ export class LearningLabs{
   this.bind('net-example',()=>{const preset=NET_PRESETS[labEl('net-example').value];if(preset){this.net.cells=preset.map(p=>[...p]);this.changedNet();}},'change');
   this.bind('net-clear',()=>{this.net.cells=[];this.changedNet();});this.bind('net-selected',()=>{this.net.selected=Number(labEl('net-selected').value);},'change');
   for(const [id,dx,dy] of [['net-left',-1,0],['net-right',1,0],['net-up',0,-1],['net-down',0,1]])this.bind(id,()=>{if(this.net.progress>0)return;const p=this.net.cells[this.net.selected];if(p)this.moveNet(this.net.selected,[p[0]+dx,p[1]+dy]);});
-  this.bind('net-fold',()=>this.start(()=>this.net.progress,v=>this.net.progress=v,1,LAB_TIME.fold));
-  this.bind('net-flat',()=>this.start(()=>this.net.progress,v=>this.net.progress=v,0,LAB_TIME.fold));
+  this.bind('net-fold',()=>this.start(()=>this.net.progress,v=>this.net.progress=v,1,UI_MOTION.fold));
+  this.bind('net-flat',()=>this.start(()=>this.net.progress,v=>this.net.progress=v,0,UI_MOTION.fold));
   this.bind('volume-kind',()=>{const kind=labEl('volume-kind').value;this.stop();this.volume.kind=kind;this.volume.size=kind==='pyramid'?6:3;this.resetPour();},'change');
   for(const key of ['p','l','t'])this.bind('unit-'+key,()=>{const value=Number(labEl('unit-'+key).value);this.stop();this.volume.d[key]=value;this.volume.units=0;this.announce('Ukuran berubah. Bekas kiub unit dikosongkan.');},'input');
   this.bind('unit-one',()=>{if(!this.anim&&!this.paused)this.volume.units=Math.min(this.unitCapacity(),this.volume.units+1);});
@@ -42,7 +43,7 @@ export class LearningLabs{
   this.bind('pour-size',()=>{this.volume.size=Number(labEl('pour-size').value);this.resetPour();},'input');
   this.bind('pour-height',()=>{this.volume.height=Number(labEl('pour-height').value);this.resetPour();},'input');
   this.bind('pour-reset',()=>this.resetPour());this.bind('pour-refill',()=>{this.volume.full=true;this.volume.progress=0;});
-  this.bind('pour-one',()=>{const v=this.volume;if(v.pours>=3||!v.full||v.progress>0||this.anim||this.paused)return;this.start(()=>v.progress,n=>v.progress=n,1,LAB_TIME.pour,()=>{v.pours++;v.progress=0;v.full=false;this.announce('Tuangan '+v.pours+' selesai. Perhatikan paras isi sebelum meneruskan.');});});
+  this.bind('pour-one',()=>{const v=this.volume;if(v.pours>=3||!v.full||v.progress>0||this.anim||this.paused)return;this.start(()=>v.progress,n=>v.progress=n,1,UI_MOTION.pour,()=>{v.pours++;v.progress=0;v.full=false;this.announce('Tuangan '+v.pours+' selesai. Perhatikan paras isi sebelum meneruskan.');});});
   for(const [i,letter] of ['a','b'].entries()){
    labEl('compare-shape-'+letter).replaceChildren(...choices());
    this.bind('compare-shape-'+letter,()=>{this.stop();const key=labEl('compare-shape-'+letter).value;this.compare.items[i]={key,d:volumeDefaults(key),fill:0};},'change');
@@ -56,18 +57,19 @@ export class LearningLabs{
   this.bind('compare-empty',()=>{this.stop();this.compare.items.forEach(x=>x.fill=0);this.compare.transfer=0;});
   this.bind('area-shape',()=>{this.stop();this.area.shape=labEl('area-shape').value;this.area.d={...LESSON_DATA[this.area.shape].defaults};this.area.progress=0;this.clearArea();},'change');
   for(const key of ['a','p','l','t','j'])this.bind('area-'+key,()=>{const value=Number(labEl('area-'+key).value);this.stop();this.area.d[key]=value;this.clearArea();},'input');
-  this.bind('area-open',()=>this.start(()=>this.area.progress,v=>this.area.progress=v,1,LAB_TIME.open));
-  this.bind('area-close',()=>this.start(()=>this.area.progress,v=>this.area.progress=v,0,LAB_TIME.open));
+  this.bind('area-open',()=>this.start(()=>this.area.progress,v=>this.area.progress=v,1,UI_MOTION.fold));
+  this.bind('area-close',()=>this.start(()=>this.area.progress,v=>this.area.progress=v,0,UI_MOTION.fold));
   this.bind('area-all',()=>{if(!this.areaReady())return;this.area.selected=new Set(surfacePieces(this.area.shape,this.area.d).map(p=>p.id));this.area.dirty=true;});this.bind('area-clear',()=>this.clearArea());
   this.bind('comp-kind',()=>{this.stop();this.comp.kind=labEl('comp-kind').value;this.comp.size=this.comp.kind==='roof'?6:3;this.changedComp();},'change');
   for(const [id,key] of [['comp-size','size'],['comp-body-height','h'],['comp-roof-height','t']])this.bind(id,()=>{const value=Number(labEl(id).value);this.stop();this.comp[key]=value;this.changedComp();},'input');
-  this.bind('comp-join',()=>this.start(()=>this.comp.joined,v=>this.comp.joined=v,1,LAB_TIME.join));this.bind('comp-separate',()=>this.start(()=>this.comp.joined,v=>this.comp.joined=v,0,LAB_TIME.join));
+  this.bind('comp-join',()=>this.start(()=>this.comp.joined,v=>this.comp.joined=v,1,UI_MOTION.join));this.bind('comp-separate',()=>this.start(()=>this.comp.joined,v=>this.comp.joined=v,0,UI_MOTION.join));
   this.bind('comp-check',()=>{const c=this.comp,r=compositionMeasures(c.kind,this.compDims());if(!this.compReady())return;const correct=r.groups.every(g=>c.selected.has(g.key)===g.external);c.feedback=correct?'Tepat! Kedua-dua permukaan yang bercantum berada di dalam. Jumlahkan permukaan yang terdedah sahaja.':'Semak semula. Pilih semua permukaan luar; dua permukaan yang bercantum tidak dikira. Pisahkan bongkah untuk melihatnya.';this.announce(c.feedback);});
   this.bind('lab-progress',()=>{const n=Number(labEl('lab-progress').value)/1000;this.stop();if(this.kind==='net')this.net.progress=n;if(this.kind==='area')this.area.progress=n;if(this.kind==='composite')this.comp.joined=n;},'input');
   this.bind('lab-pause',()=>{if(this.anim)this.pause();else this.resume();});
-  this.bind('lab-speed',()=>{const value=Number(labEl('lab-speed').value);if(![.25,.5,1].includes(value))return;const a=this.anim;this.speed=value;if(a)this.start(a.get,a.set,a.to,a.baseDuration,a.done,false);},'change');
+  this.bind('lab-speed',()=>{const value=Number(labEl('lab-speed').value);if([.25,.5,1].includes(value))this.speed=value;},'change');
   for(const [id,key,amount] of [['lab-left','yaw',-.2],['lab-right','yaw',.2],['lab-up','pitch',.15],['lab-down','pitch',-.15],['lab-zoom-out','zoom',-.15],['lab-zoom-in','zoom',.15]])this.bind(id,()=>{this.camera[key]+=amount;this.boundCamera();});
   this.bind('lab-reset-camera',()=>this.camera={yaw:.48,pitch:.3,zoom:1});
+  this.bind('lab-return',()=>this.revealStage());
   const canvas=labEl('labs-canvas');let pointer=null;
   canvas.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'&&e.button!==0)return;pointer={id:e.pointerId,x:e.clientX,y:e.clientY};canvas.setPointerCapture(e.pointerId);});
   canvas.addEventListener('pointermove',e=>{if(!pointer||pointer.id!==e.pointerId)return;this.camera.yaw+=(e.clientX-pointer.x)*.009;this.camera.pitch+=(e.clientY-pointer.y)*.009;pointer.x=e.clientX;pointer.y=e.clientY;this.boundCamera();this.draw();});
@@ -81,14 +83,22 @@ export class LearningLabs{
  open(){this.init();this.active=true;this.render();}
  close(){this.pause();this.active=false;this.net.drag=null;labEl('net-drag-ghost').hidden=true;}
  stop(clear=true){if(this.raf)cancelAnimationFrame(this.raf);this.raf=0;this.anim=null;if(clear)this.paused=null;if(this.ready)this.refreshPlayback();}
- pause(){if(this.anim){const a=this.anim;this.stop(false);this.paused=a;}if(this.ready){this.refreshPlayback();this.render();}}
- resume(){if(this.paused){const a=this.paused;this.start(a.get,a.set,a.to,a.baseDuration,a.done);}}
+ pause(){if(this.anim)this.paused=this.anim;this.stop(false);if(this.ready)this.render();}
+ resume(){if(this.paused){this.anim=this.paused;this.paused=null;this.anim.last=performance.now();this.revealStage();this.raf=requestAnimationFrame(this.step);}}
  revealStage(){const canvas=labEl('labs-canvas'),r=canvas.getBoundingClientRect();canvas.focus({preventScroll:true});if(r.top<80||r.bottom>(window.innerHeight||800)-50)canvas.scrollIntoView({behavior:this.prefersReduced()?'instant':'smooth',block:'center'});}
  start(get,set,to,baseDuration,done=null,reveal=true){
   this.stop();if(reveal)this.revealStage();const from=get();if(from===to){if(done)done();this.render();return;}
-  this.anim={get,set,from,to,baseDuration,duration:Math.max(1,baseDuration*Math.abs(to-from)/this.speed),start:performance.now(),done};
-  const step=time=>{this.raf=0;if(!this.active||document.hidden){this.pause();return;}const a=this.anim;if(!a)return;const t=clamp01((time-a.start)/a.duration);a.set(a.from+(a.to-a.from)*ease(t));if(t===1){a.set(a.to);this.anim=null;if(a.done)a.done();}this.render();if(this.anim)this.raf=requestAnimationFrame(step);};
-  this.raf=requestAnimationFrame(step);this.refreshPlayback();
+  this.anim={get,set,from,to,baseDuration,duration:Math.max(1,baseDuration*Math.abs(to-from)),elapsed:0,last:performance.now(),done};
+  this.raf=requestAnimationFrame(this.step);this.refreshPlayback();
+ }
+ frame(time){
+  this.raf=0;if(!this.active||document.hidden){this.pause();return;}const a=this.anim;if(!a)return;
+  // Accumulate timeline time at the chosen speed; pause and speed changes keep
+  // the original endpoints and easing rather than beginning a new acceleration.
+  a.elapsed+=Math.max(0,time-a.last)*this.speed;a.last=time;
+  const t=clamp01(a.elapsed/a.duration);a.set(a.from+(a.to-a.from)*ease(t));
+  if(t===1){a.set(a.to);this.anim=null;if(a.done)a.done();}
+  this.render();if(this.anim)this.raf=requestAnimationFrame(this.step);
  }
  choose(kind){if(!LAB_COPY[kind]||kind===this.kind)return;const old=this.kind,saved=this.anim||this.paused;this.stop();if(saved)this.suspended.set(old,saved);this.kind=kind;this.paused=this.suspended.get(kind)||null;this.suspended.delete(kind);this.camera={yaw:.48,pitch:.3,zoom:1};this.announce(LAB_COPY[kind][0]+' dipilih.');}
  boundCamera(){this.camera.pitch=Math.max(-1.5,Math.min(1.5,this.camera.pitch));this.camera.zoom=Math.max(.6,Math.min(2,this.camera.zoom));}
@@ -105,8 +115,8 @@ export class LearningLabs{
   }));
   labEl('net-selected').replaceChildren(...n.cells.map((p,id)=>labNode('option',{value:id},'Muka '+(id+1))));labEl('net-selected').value=String(n.selected);if(n.focusCell){[...labEl('net-grid').children].find(b=>b.dataset.cell===n.focusCell)?.focus({preventScroll:true});n.focusCell=null;}n.dirty=false;
  }
- fillUnits(target){if(this.anim||this.paused)return;const v=this.volume,perUnit=LAB_TIME.layer/(v.d.p*v.d.l);this.start(()=>v.units,n=>v.units=Math.round(n),target,perUnit);}
- fillCompare(indices,full){if(this.anim||this.paused)return;const c=this.compare,from=c.items.map(x=>x.fill),targets=from.map((f,i)=>indices.includes(i)?Math.min(1,full?1:f+1/volumeInfo(c.items[i].key,c.items[i].d).volume):f);if(targets.every((n,i)=>n===from[i]))return;c.transfer=0;this.start(()=>c.transfer,n=>{c.transfer=n;c.items.forEach((x,i)=>x.fill=from[i]+(targets[i]-from[i])*n);},1,full?LAB_TIME.compareFill:LAB_TIME.compareAdd);}
+ fillUnits(target){if(this.anim||this.paused)return;const v=this.volume,perUnit=UI_MOTION.layer/(v.d.p*v.d.l);this.start(()=>v.units,n=>v.units=Math.round(n),target,perUnit);}
+ fillCompare(indices,full){if(this.anim||this.paused)return;const c=this.compare,from=c.items.map(x=>x.fill),targets=from.map((f,i)=>indices.includes(i)?Math.min(1,full?1:f+1/volumeInfo(c.items[i].key,c.items[i].d).volume):f);if(targets.every((n,i)=>n===from[i]))return;c.transfer=0;this.start(()=>c.transfer,n=>{c.transfer=n;c.items.forEach((x,i)=>x.fill=from[i]+(targets[i]-from[i])*n);},1,full?UI_MOTION.compareFill:UI_MOTION.compareAdd);}
  areaReady(){return this.area.progress===1&&!this.anim&&!this.paused;}
  compReady(){return this.comp.joined===1&&!this.anim&&!this.paused;}
  renderGuide(){
@@ -129,7 +139,8 @@ export class LearningLabs{
  changedComp(){this.comp.joined=0;this.comp.selected.clear();this.comp.dirty=true;this.comp.feedback='';}
  refreshPlayback(){
   labEl('lab-playback').hidden=false;labEl('lab-speed').value=String(this.speed);
-  const slider=this.kind!=='volume',pour=this.kind==='volume'&&!['unit','compare'].includes(this.volume.kind);labEl('lab-slider-wrap').hidden=!slider;labEl('lab-pause').disabled=!this.anim&&!this.paused;labEl('lab-pause').textContent=this.paused?(pour?'Sambung tuangan':'Sambung animasi'):(pour?'Jeda tuangan':'Jeda animasi');
+  const slider=this.kind!=='volume',pour=this.kind==='volume'&&!['unit','compare'].includes(this.volume.kind);labEl('lab-slider-wrap').hidden=!slider;labEl('lab-pause').disabled=!this.anim&&!this.paused;
+  playbackButton(labEl('lab-pause'),this.paused?(pour?'Sambung tuangan':'Sambung animasi'):(pour?'Jeda tuangan':'Jeda animasi'),Boolean(this.anim));
   const progress=this.kind==='net'?this.net.progress:this.kind==='area'?this.area.progress:this.kind==='composite'?this.comp.joined:this.volume.kind==='compare'?this.compare.transfer:this.volume.progress,verb=this.kind==='net'?'dilipat':this.kind==='area'?'dibuka':'dicantum';
   labEl('lab-progress').value=String(Math.round(progress*1000));labEl('lab-progress-value').textContent=Math.round(progress*100)+'% '+verb;labEl('lab-progress').setAttribute('aria-valuetext',Math.round(progress*100)+' peratus '+verb);
   labEl('lab-progress-label').textContent=this.kind==='net'?'Bentangan rata → bongkah':this.kind==='area'?'Bongkah → bentangan rata':'Terpisah → bercantum';
@@ -140,7 +151,8 @@ export class LearningLabs{
   const k=this.kind;for(const kind of Object.keys(LAB_COPY)){labEl('lab-'+kind).setAttribute('aria-pressed',String(k===kind));labEl('lab-'+kind+'-panel').hidden=k!==kind;}
   labEl('lab-title').textContent=LAB_COPY[k][0];labEl('lab-intro').textContent=LAB_COPY[k][1];
   if(k==='net')this.renderNet();if(k==='volume')this.renderVolume();if(k==='area')this.renderArea();if(k==='composite')this.renderComposite();
-  labEl('lab-zoom-level').textContent=Math.round(this.camera.zoom*100)+'%';this.refreshPlayback();this.renderGuide();this.draw();
+  labEl('lab-zoom-level').textContent=Math.round(this.camera.zoom*100)+'%';labEl('lab-zoom-out').disabled=this.camera.zoom<=.6;labEl('lab-zoom-in').disabled=this.camera.zoom>=2;
+  this.refreshPlayback();this.renderGuide();this.draw();
  }
  renderNet(){
   const n=this.net,gallery=n.mode==='gallery',data=PRESET_NETS.find(p=>p.key===n.preset),status=cubeNetState(n.cells),locked=n.progress>0||Boolean(this.anim);
@@ -150,7 +162,7 @@ export class LearningLabs{
   if(gallery){labEl('net-preset-tag').textContent=data.project?'Bongkah GeoDecoder':'Pengayaan · contoh tambahan';labEl('net-preset-summary').textContent=data.description;
    if(n.presetDirty){const mesh=presetNetMesh(n.preset,0),colors=new Map(mesh.map(f=>[f.id,f.color]));labEl('net-preset-faces').replaceChildren(...data.labels.map((name,id)=>{const b=labNode('button',{type:'button',class:'face-chip','aria-pressed':String(n.presetFace===id)},(id+1)+'. '+name),swatch=labNode('i',{'aria-hidden':'true',class:'preset-swatch'});swatch.style.backgroundColor=colors.get(id);b.append(swatch);b.addEventListener('click',()=>{n.presetFace=n.presetFace===id?null:id;n.presetFocusPending=id;n.presetDirty=true;this.render();});return b;}));if(n.presetFocusPending!==undefined){labEl('net-preset-faces').children[n.presetFocusPending]?.focus({preventScroll:true});delete n.presetFocusPending;}n.presetDirty=false;}
    labEl('net-feedback').textContent=this.paused?'Gerakan dijeda. Tekan Sambung animasi apabila bersedia.':this.anim?'Perhatikan muka yang sedang bergerak. Gunakan Jeda untuk memeriksa sambungannya.':n.progress===1?data.name+' telah terbentuk. Buka rata untuk menjejaki muka semula.':'Bentangan siap yang sah. Tekan Lipat perlahan untuk membentuk '+data.name.toLowerCase()+'.';labEl('net-feedback').dataset.success=n.progress===1?'true':'neutral';
-  }else{if(n.dirty)this.buildNetGrid();for(const b of labEl('net-grid').children)b.disabled=locked;labEl('net-count').textContent=n.cells.length+' / 6 muka';for(const id of ['net-selected','net-left','net-right','net-up','net-down'])labEl(id).disabled=locked||n.cells.length===0;labEl('net-example').disabled=Boolean(this.anim);labEl('net-clear').disabled=Boolean(this.anim);
+  }else{if(n.dirty)this.buildNetGrid();for(const b of labEl('net-grid').children){b.disabled=locked;b.setAttribute('data-selected',String(b.dataset.cell===n.cells[n.selected]?.join(',')));}labEl('net-count').textContent=n.cells.length+' / 6 muka';for(const id of ['net-selected','net-left','net-right','net-up','net-down'])labEl(id).disabled=locked||n.cells.length===0;labEl('net-example').disabled=Boolean(this.anim);labEl('net-clear').disabled=Boolean(this.anim);
    labEl('net-feedback').textContent=n.notice||(n.progress===1?status.message:n.cells.length!==6||!status.connected?status.message:'Enam muka bersambung. Tekan Lipat perlahan untuk menyemak hasil.');labEl('net-feedback').dataset.success=n.progress===1?String(status.valid&&!n.notice):'neutral';
   }
   labEl('net-edit-note').textContent=!gallery&&locked?'Untuk mengubah petak, tekan Buka rata dahulu.':'Warna dan nombor menjejak muka yang sama sepanjang proses.';
@@ -189,6 +201,7 @@ export class LearningLabs{
   const ready=this.areaReady();const a=this.area,parts=surfacePieces(a.shape,a.d),fields=MEASURE_FIELDS[a.shape];labEl('area-shape').value=a.shape;
   for(const key of ['a','p','l','t','j']){labEl('area-field-'+key).hidden=!fields.includes(key);labEl('area-'+key).value=String(a.d[key]||1);labEl('area-'+key+'-value').textContent=(a.d[key]||1)+' cm';}
   const measures=calculateMeasures(a.shape,a.d,'full');labEl('area-slant').textContent=measures.slant===null?'':'Tinggi sendeng s ≈ '+labFmt(measures.slant)+' cm, dikira daripada tinggi tegak dan '+(a.shape==='pyramid'?'separuh sisi tapak.':'jejari.');
+  labEl('area-open').disabled=a.progress===1&&!this.anim;labEl('area-close').disabled=a.progress===0&&!this.anim;
   if(a.dirty){labEl('area-pieces').replaceChildren(...parts.map(p=>{const b=labNode('button',{type:'button',class:'area-piece','data-piece':p.id,'aria-pressed':String(a.selected.has(p.id))});const swatch=labNode('i',{'aria-hidden':'true'});swatch.style.backgroundColor=p.color;b.append(swatch,labNode('span',{},(p.id+1)+'. '+p.name),labNode('b',{},labFmt(p.area)+' cm²'));b.addEventListener('click',()=>{if(!this.areaReady())return;if(a.selected.has(p.id))a.selected.delete(p.id);else a.selected.add(p.id);a.focus=p.id;a.focusPending=true;a.dirty=true;this.render();});return b;}));if(a.focusPending){[...labEl('area-pieces').children].find(b=>Number(b.dataset.piece)===a.focus)?.focus({preventScroll:true});a.focusPending=false;}a.dirty=false;}
   for(const button of labEl('area-pieces').children)button.disabled=!ready;labEl('area-all').disabled=!ready;labEl('area-clear').disabled=a.selected.size===0;
   const chosen=parts.filter(p=>a.selected.has(p.id)),sum=chosen.reduce((s,p)=>s+p.area,0);labEl('area-count').textContent=`${chosen.length} / ${parts.length} permukaan dipilih`;
@@ -200,10 +213,12 @@ export class LearningLabs{
  }
  renderComposite(){
   const c=this.comp,r=compositionMeasures(c.kind,this.compDims()),roof=c.kind==='roof';labEl('comp-kind').value=c.kind;labEl('comp-size-label').textContent=roof?'a · sisi tapak bersama':'j · jejari tapak bersama';labEl('comp-body-field').hidden=roof;
+  labEl('comp-join').disabled=c.joined===1&&!this.anim;labEl('comp-separate').disabled=c.joined===0&&!this.anim;
   for(const [id,value] of [['comp-size',c.size],['comp-body-height',c.h],['comp-roof-height',c.t]]){labEl(id).value=String(value);labEl(id+'-value').textContent=value+' cm';}
   if(c.dirty){labEl('comp-groups').replaceChildren(...r.groups.map(g=>{const b=labNode('button',{type:'button',class:'area-piece','data-group':g.key,'aria-pressed':String(c.selected.has(g.key))},g.label);b.addEventListener('click',()=>{if(!this.compReady())return;if(c.selected.has(g.key))c.selected.delete(g.key);else c.selected.add(g.key);c.dirty=true;c.focusPending=g.key;c.feedback='';this.render();});return b;}));if(c.focusPending){[...labEl('comp-groups').children].find(b=>b.dataset.group===c.focusPending)?.focus({preventScroll:true});c.focusPending=null;}c.dirty=false;}
   const ready=this.compReady();for(const button of labEl('comp-groups').children)button.disabled=!ready;labEl('comp-check').disabled=!ready;
   labEl('comp-feedback').textContent=c.feedback||'Pilih permukaan yang akan terdedah di luar selepas kedua-dua bongkah dicantum.';
+  labEl('comp-feedback').setAttribute('data-success',c.feedback?String(c.feedback.startsWith('Tepat')):'');
   labEl('comp-area').textContent=c.joined===1?labFmt(r.area)+' cm²':'Cantum dahulu';labEl('comp-volume').textContent=labFmt(r.volume)+' cm³';
   labEl('comp-equation').textContent=`Luas dua bongkah berasingan ${labFmt(r.separateArea)} cm² − 2 × luas tapak bersama ${labFmt(r.sharedArea)} cm² = ${labFmt(r.area)} cm². Tinggi sendeng bahagian atas s ≈ ${labFmt(r.slant)} cm.`;
   labEl('lab-scene-label').textContent=roof?'KUBUS + PIRAMID':'SILINDER + KON';labEl('lab-caption').textContent=c.joined===1?'Tapak bahagian atas menutup muka atas bahagian bawah. Kedua-duanya menjadi permukaan dalaman.':'Pisahkan untuk melihat kedua-dua tapak yang akan bertemu. Saiz tapaknya sentiasa sepadan.';
@@ -215,7 +230,16 @@ export class LearningLabs{
   if(k==='volume'){const v=this.volume;progress=v.kind==='compare'?this.compare.transfer:v.kind==='unit'?v.units/this.unitCapacity():v.progress;mesh=v.kind==='compare'?volumeComparisonMesh(this.compare.items,this.compare.count):v.kind==='unit'?unitCubeMesh(v.d,v.units):pourMesh(v.kind,this.pourDims(),v.pours,v.progress,v.full);}
   if(k==='area'){const a=this.area;progress=a.progress;mesh=buildMesh(a.shape,progress,144,labDimensions(a.shape,a.d));labels=true;selected=[...a.selected];}
   if(k==='composite'){progress=this.comp.joined;mesh=compositionMesh(this.comp.kind,this.compDims(),progress);}
-  this.renderer.draw({shape:'lab',mesh,progress,...this.camera,labels,selected});const canvas=labEl('labs-canvas');
+  let fitMesh=null;
+  if(k!=='volume'){
+   const n=this.net,key=k+JSON.stringify(k==='net'?(n.mode==='gallery'?['gallery',n.preset]:['editor',n.cells]):k==='area'?[this.area.shape,this.area.d]:[this.comp.kind,this.compDims()]);
+   if(this.framing?.key!==key){
+    const reference=[0,.25,.5,.75,1].flatMap(p=>k==='net'?(n.mode==='gallery'?presetNetMesh(n.preset,p):cubeNetMesh(n.cells,p)):k==='area'?buildMesh(this.area.shape,p,64,labDimensions(this.area.shape,this.area.d)):compositionMesh(this.comp.kind,this.compDims(),p));
+    this.framing={key,mesh:reference};
+   }
+   fitMesh=this.framing.mesh.length?this.framing.mesh:null;
+  }
+  this.renderer.draw({shape:'lab',mesh,fitMesh,progress,...this.camera,labels,selected});const canvas=labEl('labs-canvas');
   Object.assign(canvas.dataset,{lab:k,progress:String(progress),valid:String(cubeNetState(this.net.cells).valid),units:String(this.volume.units),pours:String(this.volume.pours),joined:String(this.comp.joined),yaw:String(this.camera.yaw),pitch:String(this.camera.pitch),zoom:String(this.camera.zoom),preset:this.net.mode==='gallery'?this.net.preset:'editor',volumeMode:this.volume.kind,fillA:String(this.compare.items[0].fill),fillB:String(this.compare.items[1].fill),totalVolume:String(comparisonTotal(this.compare.items,this.compare.included,this.compare.count))});
   canvas.setAttribute('aria-label',LAB_COPY[k][0]+'. '+labEl('lab-caption').textContent);
  }

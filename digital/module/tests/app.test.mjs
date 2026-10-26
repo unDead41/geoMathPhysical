@@ -3,10 +3,12 @@ import test from 'node:test';import assert from 'node:assert/strict';import fs f
 // This executes the ACTUAL shipped app, not a duplicate animation state machine.
 class NodePort {
  constructor(tag='div'){this.tagName=tag;this.children=[];this.attributes={};this.dataset={};this.events={};this.style={};this.textContent='';this.value='0';this.disabled=false;this.checked=false;this.firstChild={textContent:''};}
+ get textContent(){return this.ownText+this.children.map(n=>n.textContent??'').join('');}
+ set textContent(value){this.ownText=String(value);this.children=[];}
  setAttribute(k,v){this.attributes[k]=v;if(k.startsWith('data-'))this.dataset[k.slice(5).replace(/-([a-z])/g,(_,c)=>c.toUpperCase())]=v;}
  getAttribute(k){return this.attributes[k]??null;}
  append(...nodes){this.children.push(...nodes);}
- replaceChildren(...nodes){this.children=[...nodes];}
+ replaceChildren(...nodes){this.ownText='';this.children=[...nodes];}
  addEventListener(k,fn){(this.events[k]??=[]).push(fn);}
  querySelector(tag){let n=this.children.find(n=>n.tagName===tag);if(!n){n=new NodePort(tag);this.children.push(n);}return n;}
  querySelectorAll(tag){return this.children.filter(n=>n.tagName===tag);}
@@ -20,7 +22,7 @@ function app(reduce=true){
  const html=fs.readFileSync(new URL('../GeoDecoder_Modul_V1.html',import.meta.url),'utf8'),code=html.match(/<script>([\s\S]*?)<\/script>/)[1],nodes={};
  for(const m of html.matchAll(/id="([^"]+)"/g))nodes[m[1]]=new NodePort();
  let clock=0,id=0,queue=new Map();const media={matches:reduce,addEventListener(k,fn){const old=this.change;this.change=old?()=>{old();fn();}:fn;}};
- const doc={hidden:false,events:{},getElementById:id=>nodes[id]??null,createElement:tag=>new NodePort(tag),createElementNS:(_,tag)=>new NodePort(tag),createTextNode:text=>({textContent:text}),addEventListener(k,fn){const old=this.events[k];this.events[k]=old?()=>{old();fn();}:fn;}};
+ const doc={hidden:false,events:{},querySelectorAll:()=>[],getElementById:id=>nodes[id]??null,createElement:tag=>new NodePort(tag),createElementNS:(_,tag)=>new NodePort(tag),createTextNode:text=>({textContent:text}),addEventListener(k,fn){const old=this.events[k];this.events[k]=old?()=>{old();fn();}:fn;}};
  const context={document:doc,window:{matchMedia:()=>media},location:{hash:''},history:{replaceState(){}},performance:{now:()=>clock},ResizeObserver:class{observe(){}},requestAnimationFrame:fn=>{queue.set(++id,fn);return id;},cancelAnimationFrame:k=>queue.delete(k),console};
  vm.runInNewContext(code,context,{timeout:2000});
  const tick=(ms=16)=>{clock+=ms;const work=[...queue.values()];queue.clear();for(const fn of work)fn(clock);};
@@ -180,4 +182,53 @@ test('tiny positive contents stay visible and have a unit-aware accessible slide
 
 test('valid ready-made layouts use neutral instructions before closing, never an error colour',()=>{
  const a=app();a.click('learn-labs');assert.notEqual(a.nodes['net-feedback'].dataset.success,'false');a.click('net-fold');a.advance(1200);assert.match(a.nodes['net-feedback'].textContent,/sedang|Perhatikan/i);a.click('lab-pause');assert.match(a.nodes['net-feedback'].textContent,/dijeda/i);a.click('lab-pause');a.advance(8500);assert.equal(a.nodes['net-feedback'].dataset.success,'true');
+});
+test('pausing exploration freezes camera as well as the net and exposes the resume action',()=>{
+ const a=app(false);a.click('open-net');a.advance(200);a.click('play');const before=a.state();a.advance(1500);
+ assert.equal(a.state().yaw,before.yaw,'camera kept moving after pause');assert.equal(a.state().pitch,before.pitch);
+ assert.equal(a.state().progress,before.progress);assert.equal(a.nodes.play.getAttribute('aria-label'),'Sambung animasi');
+ a.click('play');a.advance(7000);assert.equal(a.state().progress,'1');
+});
+test('paused volume transfer has one resume action and cannot start a competing pour',()=>{
+ const a=app();a.click('learn-labs');a.click('lab-volume');a.nodes['volume-kind'].value='cone';a.nodes['volume-kind'].emit('change');
+ a.click('pour-one');a.advance(800);a.click('lab-pause');const before=a.nodes['labs-canvas'].dataset.progress;
+ assert.equal(a.nodes['pour-one'].disabled,true,'paused transfer may only resume through the playback control');
+ assert.equal(a.nodes['pour-refill'].disabled,true,'paused transfer cannot replace its source');
+ assert.equal(a.nodes['lab-pause'].getAttribute('aria-label'),'Sambung tuangan');
+ a.advance(2000);assert.equal(a.nodes['labs-canvas'].dataset.progress,before);
+ a.click('lab-pause');a.advance(6000);assert.equal(a.nodes['labs-canvas'].dataset.pours,'1');assert.equal(a.pending(),0);
+});
+test('a hidden tab preserves the explicit lab target for a deliberate resume',()=>{
+ const a=app();a.click('learn-labs');a.click('net-fold');a.advance(1000);const before=a.nodes['labs-canvas'].dataset.progress;
+ a.doc.hidden=true;a.doc.events.visibilitychange();a.advance(10000);a.doc.hidden=false;a.doc.events.visibilitychange();
+ assert.equal(a.nodes['labs-canvas'].dataset.progress,before);assert.equal(a.nodes['lab-pause'].disabled,false);
+ assert.equal(a.nodes['lab-pause'].getAttribute('aria-label'),'Sambung animasi');assert.equal(a.pending(),0);
+ a.click('lab-pause');a.advance(8500);assert.equal(a.nodes['labs-canvas'].dataset.progress,'1');
+});
+test('lab resume preserves the original easing timeline at the default half speed',()=>{
+ const a=app();a.click('learn-labs');a.click('net-fold');a.advance(2000);a.click('lab-pause');a.advance(1500);a.click('lab-pause');a.advance(1000);
+ const p=Number(a.nodes['labs-canvas'].dataset.progress);
+ // A four-second fold at half speed has an eight-second easing timeline.
+ assert.ok(Math.abs(p-.31640625)<1e-8,'resume lost the original eight-second smoothstep timeline: '+p);
+});
+test('backgrounding exploration preserves its one-way target for an explicit resume',()=>{
+ const a=app();a.click('open-net');a.advance(1400);a.doc.hidden=true;a.doc.events.visibilitychange();a.advance(10000);a.doc.hidden=false;a.doc.events.visibilitychange();a.tick();
+ assert.equal(a.nodes.play.getAttribute('aria-label'),'Sambung animasi');a.click('play');a.advance(7000);assert.equal(a.state().progress,'1');assert.equal(a.state().playing,'false');
+});
+test('changing speed while a gallery fold is paused preserves its original easing position',()=>{
+ const a=app();a.click('learn-labs');a.click('net-fold');a.advance(2000);a.click('lab-pause');const before=a.nodes['labs-canvas'].dataset.progress;
+ a.nodes['lab-speed'].value='0.25';a.nodes['lab-speed'].emit('change');a.advance(4000);
+ assert.equal(a.nodes['labs-canvas'].dataset.progress,before);assert.equal(a.pending(),0);
+ a.click('lab-pause');a.advance(2000);const p=Number(a.nodes['labs-canvas'].dataset.progress);
+ assert.ok(Math.abs(p-.31640625)<1e-8,'speed change restarted the easing curve: '+p);
+ a.advance(12000);assert.equal(a.nodes['labs-canvas'].dataset.progress,'1');assert.equal(a.pending(),0);
+});
+test('a hidden gallery session keeps its easing position when another lab changes speed',()=>{
+ const a=app();a.click('learn-labs');a.click('net-fold');a.advance(2000);const before=a.nodes['labs-canvas'].dataset.progress;
+ a.doc.hidden=true;a.doc.events.visibilitychange();a.advance(10000);a.doc.hidden=false;a.doc.events.visibilitychange();
+ a.click('lab-area');a.nodes['lab-speed'].value='0.25';a.nodes['lab-speed'].emit('change');a.advance(1000);a.click('lab-net');
+ assert.equal(a.nodes['labs-canvas'].dataset.progress,before);assert.equal(a.pending(),0);assert.equal(a.nodes['lab-pause'].getAttribute('aria-label'),'Sambung animasi');
+ a.click('lab-pause');a.advance(2000);const p=Number(a.nodes['labs-canvas'].dataset.progress);
+ assert.ok(Math.abs(p-.31640625)<1e-8,'suspended gallery session lost elapsed progress or current speed: '+p);
+ a.advance(12000);assert.equal(a.nodes['labs-canvas'].dataset.progress,'1');assert.equal(a.pending(),0);
 });

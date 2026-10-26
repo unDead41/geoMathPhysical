@@ -1,4 +1,5 @@
 import {buildMesh,meshBounds,viewPoint,sub3,cross3,length3,faceCenter} from './geometry.mjs';
+import {UI_TOKENS} from './design-system.mjs';
 function shade(hex,amount) {
   const c=hex.slice(1).match(/../g).map(v=>parseInt(v,16));
   return 'rgb('+c.map(v=>Math.round(Math.max(0,Math.min(255,v*amount)))).join(',')+')';
@@ -15,7 +16,7 @@ function drawBadge(ctx,p,text) {
 }
 export class ModelRenderer {
   constructor(canvas) {this.canvas=canvas;this.ctx=canvas.getContext('2d');this.hitFaces=[];this.meshKey='';this.mesh=null;}
-  draw({shape,progress=0,yaw=.55,pitch=.35,zoom=1,labels=false,selected=null,mini=false,mesh:customMesh=null}) {
+  draw({shape,progress=0,yaw=.55,pitch=.35,zoom=1,labels=false,selected=null,mini=false,mesh:customMesh=null,fitMesh=null}) {
     const ctx=this.ctx;if(!ctx)return;
     const box=this.canvas.getBoundingClientRect(),w=box.width,h=box.height;
     if(w<=0||h<=0)return;
@@ -26,10 +27,11 @@ export class ModelRenderer {
     const key=shape+':'+progress+':'+mini;
     if(customMesh){this.mesh=customMesh;this.bounds=meshBounds(customMesh);this.meshKey='';}
     else if(key!==this.meshKey){this.mesh=buildMesh(shape,progress,mini?64:144);this.bounds=meshBounds(this.mesh);this.meshKey=key;}
-    const {center,radius}=this.bounds;
+    if(fitMesh&&this.fitMesh!==fitMesh){this.fitMesh=fitMesh;this.fitBounds=meshBounds(fitMesh);}
+    const {center,radius}=fitMesh?this.fitBounds:this.bounds;
     let scale=Math.min(w,h)/(2*radius)*(mini?.79:.78)*zoom,offsetX=0,offsetY=0;
     if(customMesh){
-      const vs=this.mesh.flatMap(f=>f.vertices).map(p=>viewPoint(sub3(p,center),yaw,pitch));
+      const vs=(fitMesh||this.mesh).flatMap(f=>f.vertices).map(p=>viewPoint(sub3(p,center),yaw,pitch));
       const minX=Math.min(...vs.map(p=>p[0])),maxX=Math.max(...vs.map(p=>p[0])),minY=Math.min(...vs.map(p=>p[1])),maxY=Math.max(...vs.map(p=>p[1]));
       scale=Math.min(w/(maxX-minX||1),h/(maxY-minY||1))*.76*zoom;offsetX=(minX+maxX)/2;offsetY=(minY+maxY)/2;
     }
@@ -52,10 +54,10 @@ export class ModelRenderer {
       if(Math.abs(vNormal[2])<.00001)continue;
       trace(ctx,pts);ctx.fillStyle=shade(f.color,brightness);if(!f.wire)ctx.fill();
       if(!f.outline&&!f.wire) {ctx.strokeStyle=ctx.fillStyle;ctx.lineWidth=.65;ctx.stroke();}
-      if(f.outline) {ctx.strokeStyle=f.warning?'#B9403E':activeFace(f.id)?'#215FF0':'rgba(24,51,75,.67)';ctx.lineWidth=activeFace(f.id)?3:mini?1:1.45;ctx.stroke();}
+      if(f.outline) {ctx.strokeStyle=f.warning?UI_TOKENS.danger:activeFace(f.id)?UI_TOKENS.primary:'rgba(24,51,75,.67)';ctx.lineWidth=activeFace(f.id)?3:mini?1:1.45;ctx.stroke();}
       if(f.rim) {
         ctx.beginPath();for(const [a,b] of f.rim){ctx.moveTo(...pts[a].slice(0,2));ctx.lineTo(...pts[b].slice(0,2));}
-        ctx.strokeStyle=activeFace(f.id)?'#215FF0':'rgba(24,51,75,.6)';ctx.lineWidth=activeFace(f.id)?2.7:mini?.9:1.25;ctx.stroke();
+        ctx.strokeStyle=activeFace(f.id)?UI_TOKENS.primary:'rgba(24,51,75,.6)';ctx.lineWidth=activeFace(f.id)?2.7:mini?.9:1.25;ctx.stroke();
       }
       if(f.cut) {ctx.beginPath();for(const [a,b] of f.cut){ctx.moveTo(...pts[a].slice(0,2));ctx.lineTo(...pts[b].slice(0,2));}if(f.cutUnderlay){ctx.strokeStyle='#F3F7FB';ctx.lineWidth=3.5;ctx.stroke();}ctx.strokeStyle='#526A7D';ctx.setLineDash([4,3]);ctx.lineWidth=1;ctx.stroke();ctx.setLineDash([]);}
       this.hitFaces.push({id:f.id,pts});
@@ -75,10 +77,10 @@ export class ModelRenderer {
   }
   pick(x,y) {for(const f of [...this.hitFaces].reverse())if(polygonContains(f.pts,x,y))return f.id;return null;}
   drawCompass(ctx,w,h,yaw,pitch) {
-    const x=45,y=h-44;
-    ctx.font='10px "Segoe UI",sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+    const x=Math.min(64,w*.26),y=h-44;
+    ctx.font='12px "Segoe UI",sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
     for(const [dir,name,color] of [[[1,0,0],'Kanan','#2C6BC5'],[[0,1,0],'Atas','#237E6C'],[[0,0,1],'Depan','#A84C78']]) {
-      const p=viewPoint(dir,yaw,pitch),end=[x+p[0]*26,y-p[1]*26];ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(...end);ctx.strokeStyle=color;ctx.lineWidth=1.6;ctx.stroke();ctx.fillStyle=color;ctx.fillText(name,end[0]+p[0]*10,end[1]-p[1]*10);
+      const p=viewPoint(dir,yaw,pitch),end=[x+p[0]*22,y-p[1]*22];ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(...end);ctx.strokeStyle=color;ctx.lineWidth=1.6;ctx.stroke();ctx.fillStyle=color;ctx.fillText(name,end[0]+p[0]*7,end[1]-p[1]*7);
     }
   }
 }
