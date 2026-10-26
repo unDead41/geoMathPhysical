@@ -45,6 +45,25 @@ components:
 
 # GeoDecoder Learning Module
 
+## Pelan & pengiraan v1.6.0
+
+Add two labelled peers to the existing learning navigation. Preserve all three
+older sections and their state owners. New feature panels use native bilingual
+copy under `data-module-native-language`; the host translates legacy sections
+only. Continue using `uiNode`, `uiSvg`, `uiIcon`, shared button/field tokens and
+the same light/dark palette. Text and controls inherit host scale and contrast.
+
+Studio uses the real learning mesh and analytic orthographic answers. Its single
+combined sheet keeps a constant physical grid scale, front above plan and the
+right side view to the left. Narrow screens scroll that sheet locally, with a
+coordinate form below for non-drag input. Geometry never shrinks or changes its
+scale to fit the page. Model directions, dimensions and line types have text.
+
+Calculation uses one question setup and four numbered semantic step cards.
+Only relevant measurements are shown. Later steps wait for earlier checks; edits
+invalidate dependent checks. Hints precede solution disclosure. Worked examples
+and pupil drafts are distinct. Neither tool starts animation or speech by itself.
+
 ## Overview
 
 A classroom geometry workbench for Malaysian pupils, with BM at Tingkatan 1

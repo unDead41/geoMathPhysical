@@ -1,6 +1,26 @@
 # Modul Pembelajaran GeoDecoder Digital V1
 
-Versi modul: **v1.5.0**. Sasaran integrasi: **main-digitalized**.
+Versi modul: **v1.6.0** (cadangan branch). Sasaran integrasi: **main-digitalized**.
+
+## Dua fungsi pembelajaran v1.6.0
+
+- **Pelan & Dongakan:** model projek dan dua susunan kiub unit, contoh berpandu,
+  tiga grid dalam susunan Bab 7, skala 1:1 / 1:2, garis nampak/terlindung/binaan,
+  garis/bulatan, koordinat papan kekunci, pilih/padam, Undo dan semakan setiap
+  pandangan. Garis terbalik atau dipecah/dicantum diterima; toleransi inklusif
+  0.06 cm lukisan. Ini pandangan objek tertutup, berbeza daripada bentangan.
+- **Semakan Pengiraan:** murid menulis Rumus → Gantian nilai → Pengiraan → Unit.
+  Luas permukaan dan isi padu bagi semua 11 bentuk, bekas terbuka terpilih serta
+  dua gabungan. Pilih nilai π dan unit akhir, baca petunjuk khusus, cuba semula
+  atau lihat penyelesaian. Input ialah ungkapan matematik terhad, bukan kod.
+- Dari nota, **Semak langkah untuk ukuran ini** membawa ukuran dan π kalkulator
+  kepada soalan yang sama. **Latih pelan & dongakan** membawa lima bentuk projek
+  ke studio. Navigasi umum mengekalkan draf sesi; sesi akaun baharu memadam draf.
+- Kedua-duanya ikut bahasa/tetapan induk tanpa menambah skor atau rekod baharu
+  kepada empat aktiviti refleksi. Sesi HTML mandiri kekal tanpa storan/rangkaian.
+
+Rujukan: [pemetaan sumber](docs/SOURCES_PELAN_PENGIRAAN.md),
+[handoff dan pengesahan v1.6.0](docs/HANDOFF_PELAN_PENGIRAAN_V1_6.md).
 
 ## Aktiviti berpandu v1.5.0
 
@@ -167,8 +187,9 @@ persamaan asal. Dua tapak silinder dan tapak kon dibuka selepas garis potong
 konseptual, dengan satu titik sentuh kekal pada bentangan. Tiada tab gam atau
 simulasi ketebalan kertas. Ini penerokaan geometri, bukan pola pemotongan fabrikasi.
 
-Enam pandangan menunjukkan permukaan nampak dan rusuk yang kelihatan; garis rusuk
-terlindung dan latihan lukisan pelan/dongakan mengikut skala belum disediakan.
+Enam pandangan dalam Teroka menunjukkan permukaan nampak dan rusuk yang kelihatan.
+Studio Pelan & Dongakan berasingan menyediakan latihan berskala serta rusuk
+terlindung bagi susunan kiub; konvensyen dan batasnya dinyatakan dalam handoff.
 Paparan Canvas mempunyai penerangan teks dan kawalan setara; ia bukan model
 sentuhan atau pengganti penuh penerangan guru untuk murid bermasalah penglihatan.
 Lihat [pengesahan](docs/VERIFICATION.md) untuk beza ujian sebenar dan simulasi.

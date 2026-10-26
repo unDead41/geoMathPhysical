@@ -1,5 +1,42 @@
 # Kontrak interaksi Modul GeoDecoder
 
+## Pelan & pengiraan v1.6.0
+
+`ProjectionStudio` owns its shape/dimensions/scale, guided example, three drafts,
+per-view Undo and checks. `CalculationWorkshop` owns its question, four step
+drafts, hints and check gates. Both initialize their DOM lazily, expose
+open/close/refreshLanguage/resetContext and add no persistence. Generic section
+navigation and preference refresh preserve input. A changed explicit question,
+shape, dimensions or scale clears affected checks; a new valid parent session
+clears pupil drafts. The four protocol-1 activities/records remain unchanged.
+
+The notes calculator transfers its validated dimensions and selected π through
+an in-memory call. Invalid notes stay in notes with first-error focus. Studio
+entry from notes is offered for the five supported project solids. New sections
+pause the older scene owner, stop speech and set one active navigation state.
+
+Projection answers are orthographic geometry, with optional construction guides,
+thick visible and dashed hidden edges. All three checks use inclusive 0.06 drawing
+cm tolerance. Reversed order/direction and split/merged collinear segments are
+equivalent. Visible edges take precedence where projections coincide; optional
+construction lines never replace required edges. Exact coordinate entry is an
+alternative to snap and pointer interaction. Undo applies to the active view.
+
+The calculation parser never calls eval or Function. Limits: 480 input characters,
+180 tokens/nodes, parsing depth 28, exponent magnitude 12 and numeric magnitude
+10^30. It supports arithmetic, powers, parentheses, pi, sqrt and stated symbols.
+Formula comparison tests nine independent dimension sets; numeric substitution
+checks dimension provenance with a bounded 8192-candidate search. It is a bounded
+educational checker, not a formal symbolic algebra prover. Intermediate values
+stay full precision. Final two-decimal tolerance is inclusive 0.005000001 plus
+floating-point allowance; values under 0.01 use three significant figures and a
+place-dependent half-unit tolerance. A positive quantity is never accepted as zero.
+
+New bilingual roots and navigation labels are excluded from the parent legacy
+DOM translator. Parent font scaling, contrast, effective reduced motion, theme
+and audio ownership remain in their existing bridge. Optional voice uses the
+current explanation; unavailable local voices always retain text.
+
 Modul pembelajaran bebas tanpa skor atau profil dalaman. Sesi mandiri tiada storan
 atau rangkaian; konteks terbenam boleh menukar refleksi kendiri melalui protokol 1
 dengan sumber induk dan token sesi yang sah.
