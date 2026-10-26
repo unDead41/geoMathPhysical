@@ -115,6 +115,15 @@ export class ClassroomCloud {
     if(identity===this._session?.user?.id){if(data?.profile)this.profile=data.profile;if(data?.room&&scope===this.roomScope)this.room=data.room;}
     return data;
   }
+  async moduleProgress(action,payload={}){
+    const identity=this._session?.user?.id;
+    if(!identity||this.recoveryRequired)throw Error('Log masuk untuk menyelaraskan rekod latihan.');
+    const {data,error}=await this.client.rpc('geo_module_progress',{action,payload}).abortSignal(AbortSignal.timeout(20000));
+    if(identity!==this._session?.user?.id)throw Error('Akaun sudah berubah. Buka semula modul.');
+    if(error)throw Error('Rekod latihan awan belum tersedia. Kemajuan pada peranti masih boleh digunakan.');
+    if(data?.error)throw Error(data.error.message||'Rekod latihan tidak boleh diakses.');
+    return data;
+  }
   onSessionChange(listener){this.listeners.add(listener);return()=>this.listeners.delete(listener);}
   setRoom(roomId){const next=roomId||null;if(next!==this.roomId)this.roomScope++;this.roomId=next;}
   startHeartbeat(){

@@ -609,3 +609,14 @@
 .guest-back{margin:0 0 16px}
 .guest-back .icon{transform:rotate(180deg)}
 .guest-card h1{font-size:28px;line-height:1.25;margin:11px 0 9px;letter-spacing:-.8px}
+
+.portal-module-card{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-bottom:24px}
+.portal-module-card h2{font-size:1.3rem;margin:6px 0}.portal-module-card>div{min-width:0;flex:1}.portal-module-card>.button{flex-shrink:0}
+.portal-module-records{min-width:180px;max-width:640px;text-align:left;font-size:.85rem}
+.portal-module-records summary{cursor:pointer;display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 0;color:var(--ink)}
+.portal-module-records summary span{font-size:.78rem;color:var(--primary);text-decoration:underline}.portal-module-records summary:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
+.portal-module-records ol{padding:0;list-style:none;margin:4px 0 12px}.portal-module-records li{border-top:1px solid var(--border);padding:12px 0;white-space:normal;overflow-wrap:anywhere}
+.portal-module-records li>b{display:block}.portal-module-stage{display:block;color:var(--muted);margin:4px 0}
+.portal-module-records dl{margin:8px 0}.portal-module-records dt{font-weight:700;font-size:.75rem}.portal-module-records dd{margin:2px 0 8px;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--muted);max-width:42ch}
+.portal-module-records small,.portal-module-warning{color:var(--muted);font-size:.78rem;line-height:1.6}
+@media(max-width:600px){.portal-module-card{flex-direction:column}.portal-module-card>.button{width:100%}}

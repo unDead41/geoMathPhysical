@@ -1,5 +1,6 @@
 import {icon, shapeArt} from './art.mjs';
 import {VERSION, formatTime} from './core.mjs';
+import {renderLearningRecords} from './module-progress-view.mjs';
 
 const PAGE_SIZE = 20;
 const ROOM_PAGE_SIZE = 6;
@@ -24,7 +25,7 @@ function hasAttempt(player) {
 function errorText(error) { return error?.message || 'Permintaan belum dapat disahkan. Cuba semula.'; }
 
 /** Account, class, invitation, and live-room UI. All authorization remains server-owned. */
-export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onError = () => {}} = {}) {
+export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onExit = () => {}, onError = () => {}} = {}) {
   const screen = document.getElementById('portal-screen');
   if (!screen) throw new Error('Bahagian #portal-screen diperlukan.');
   if (!cloud || typeof cloud.rpc !== 'function' || typeof cloud.auth !== 'function') throw new Error('Sambungan akaun diperlukan.');
@@ -34,6 +35,11 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
   let epoch = 0;
   let authMode = 'login';
   let snapshot = null;
+  let learningData = null;
+  let learningError = '';
+  let learningRequest = 0;
+  let learningPending = '';
+
   let profile = null;
   let roomId = null;
   let classId = null;
@@ -214,7 +220,7 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
     const query = rosterQuery.toLocaleLowerCase('ms-MY');
     const filtered = members.filter(member => `${member.display_name || ''} ${member.username || ''}`.toLocaleLowerCase('ms-MY').includes(query));
     rosterPage = Math.min(rosterPage, Math.max(1, Math.ceil(filtered.length / PAGE_SIZE)));
-    return `<section class="portal-panel portal-roster-panel" aria-labelledby="portal-roster-title"><div class="portal-panel-title"><div><h2 id="portal-roster-title">Pelajar dalam kelas</h2><p><span data-online-count>${members.filter(member => online(member.last_seen)).length}</span> aktif sekarang daripada ${members.length} pelajar</p></div><div class="portal-search"><label class="sr-only" for="portal-roster-search">Cari nama atau nama pengguna</label><input id="portal-roster-search" type="search" autocomplete="off" placeholder="Cari pelajar" value="${esc(rosterQuery)}"><button type="button" data-portal-action="clear-search" aria-label="Kosongkan carian pelajar" ${rosterQuery ? '' : 'hidden'}>${icon('close')}</button></div></div><div class="portal-table-scroll" tabindex="0" role="region" aria-label="Senarai pelajar, leret untuk melihat semua lajur"><table class="portal-table"><caption class="sr-only">Senarai pelajar bagi kelas ${esc(item.name)}</caption><thead><tr><th scope="col">Pelajar</th><th scope="col">Kehadiran</th><th scope="col">Terakhir aktif (MYT)</th></tr></thead><tbody>${filtered.length ? filtered.slice((rosterPage - 1) * PAGE_SIZE, rosterPage * PAGE_SIZE).map(member => `<tr><th scope="row"><span class="portal-table-person"><span class="portal-avatar portal-avatar-small">${esc(initial(member.display_name))}</span><span><b>${esc(member.display_name)}</b><small>@${esc(member.username)}</small></span></span></th><td>${presence(member.last_seen)}</td><td class="portal-muted">${esc(dateText(member.last_seen))}</td></tr>`).join('') : `<tr><td colspan="3" class="portal-empty-cell">${query ? 'Tiada pelajar sepadan. Cuba nama atau nama pengguna lain.' : 'Belum ada pelajar. Kongsi PIN kelas atau jemput menggunakan nama pengguna.'}</td></tr>`}</tbody></table></div>${pager(filtered.length, rosterPage, PAGE_SIZE, 'roster')}<p class="portal-table-note">“Aktif sekarang” bermaksud akaun dikesan dalam 45 saat terakhir.</p></section>`;
+    return `<section class="portal-panel portal-roster-panel" aria-labelledby="portal-roster-title"><div class="portal-panel-title"><div><h2 id="portal-roster-title">Pelajar dalam kelas</h2><p><span data-online-count>${members.filter(member => online(member.last_seen)).length}</span> aktif sekarang daripada ${members.length} pelajar</p></div><div class="portal-search"><label class="sr-only" for="portal-roster-search">Cari nama atau nama pengguna</label><input id="portal-roster-search" type="search" autocomplete="off" placeholder="Cari pelajar" value="${esc(rosterQuery)}"><button type="button" data-portal-action="clear-search" aria-label="Kosongkan carian pelajar" ${rosterQuery ? '' : 'hidden'}>${icon('close')}</button></div></div><div class="portal-table-scroll" tabindex="0" role="region" aria-label="Senarai pelajar, leret untuk melihat semua lajur"><table class="portal-table"><caption class="sr-only">Senarai pelajar bagi kelas ${esc(item.name)}</caption><thead><tr><th scope="col">Pelajar</th><th scope="col">Kehadiran</th><th scope="col">Terakhir aktif (MYT)</th><th scope="col">Kemajuan modul</th></tr></thead><tbody>${filtered.length ? filtered.slice((rosterPage - 1) * PAGE_SIZE, rosterPage * PAGE_SIZE).map(member => `<tr><th scope="row"><span class="portal-table-person"><span class="portal-avatar portal-avatar-small">${esc(initial(member.display_name))}</span><span><b>${esc(member.display_name)}</b><small>@${esc(member.username)}</small></span></span></th><td>${presence(member.last_seen)}</td><td class="portal-muted">${esc(dateText(member.last_seen))}</td><td data-module-student="${esc(member.id)}">${learningData?.class_id === item.id ? renderLearningRecords(list(learningData.students).find(s => s.user_id === member.id)?.records) : '<span class="portal-muted">Belum dimuatkan</span>'}</td></tr>`).join('') : `<tr><td colspan="4" class="portal-empty-cell">${query ? 'Tiada pelajar sepadan. Cuba nama atau nama pengguna lain.' : 'Belum ada pelajar. Kongsi PIN kelas atau jemput menggunakan nama pengguna.'}</td></tr>`}</tbody></table></div>${pager(filtered.length, rosterPage, PAGE_SIZE, 'roster')}<p class="portal-table-note">“Aktif sekarang” bermaksud akaun dikesan dalam 45 saat terakhir. Rekod modul ialah latihan yang dilaporkan oleh pelajar dan bukan markah penilaian.</p>${learningError ? `<p class="portal-module-warning" role="status">${esc(learningError)}</p>` : ''}</section>`;
   }
 
   function renderRoomCards(rooms, teacher) {
@@ -228,7 +234,7 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
     if (!currentClass()) classId = classes[0]?.id || null;
     const selected = currentClass();
     const rooms = list(snapshot?.rooms).filter(room => !selected || String(room.class_id) === String(selected.id));
-    return `${accountHeading('RUANG GURU', 'Kelas anda, belajar bersama.', 'Urus pelajar, kongsi PIN dan pantau permainan kelas.')}${freshness()}<div class="portal-teacher-layout">${renderClassList(classes)}<div class="portal-class-main">${selected ? `<section class="portal-panel portal-class-overview"><div class="portal-panel-title"><div><p class="card-kicker">KELAS DIPILIH</p><h2>${esc(selected.name)}</h2><p>${list(selected.members).length} pelajar berdaftar</p></div><span class="portal-class-geometry" aria-hidden="true">${shapeArt('cuboid', 'solid', true, 'orange')}</span></div>${pinPanel(selected, 'class')}<form data-portal-form="invite" novalidate class="portal-inline-form"><div><h3>Jemput pelajar</h3><p>Masukkan nama pengguna tepat. Pelajar perlu menerima jemputan dalam akaunnya.</p></div><div class="portal-inline-form-fields">${field('portal-invite-username', 'Nama pengguna pelajar', {name: 'username', max: 24, placeholder: 'nama_pengguna', help: 'Huruf besar ditukar kepada huruf kecil. Gunakan username berdaftar pelajar.'})}${submit('Hantar jemputan', false)}</div>${formError()}</form></section>${renderRoster(selected)}<section class="portal-panel" aria-labelledby="portal-rooms-title"><div class="portal-panel-title"><div><h2 id="portal-rooms-title">Bilik permainan</h2><p>Setiap bilik mempunyai PIN dan papan skor sendiri.</p></div><span class="portal-count">${rooms.length}</span></div><form data-portal-form="create-room" novalidate class="portal-room-form"><div class="portal-inline-form-fields">${field('portal-room-name', 'Nama bilik', {name: 'name', max: 80, placeholder: 'Contoh: Latihan bongkah', help: 'Pelajar akan melihat nama ini.'})}${submit('Cipta bilik')}</div>${formError()}</form>${renderRoomCards(rooms, true)}</section>` : '<section class="portal-panel portal-first-class"><div class="portal-empty-state">' + geometryKit() + '<h2>Sediakan kelas pertama anda</h2><p>Masukkan nama kelas di sebelah. Kemudian kongsi PIN atau jemput pelajar menggunakan nama pengguna.</p></div></section>'}</div></div>`;
+    return `${accountHeading('RUANG GURU', 'Kelas anda, belajar bersama.', 'Urus pelajar, kongsi PIN dan pantau permainan kelas.')}${freshness()}<p>${button('Teroka modul pembelajaran', 'open-module', {symbol: 'arrow'})}</p><div class="portal-teacher-layout">${renderClassList(classes)}<div class="portal-class-main">${selected ? `<section class="portal-panel portal-class-overview"><div class="portal-panel-title"><div><p class="card-kicker">KELAS DIPILIH</p><h2>${esc(selected.name)}</h2><p>${list(selected.members).length} pelajar berdaftar</p></div><span class="portal-class-geometry" aria-hidden="true">${shapeArt('cuboid', 'solid', true, 'orange')}</span></div>${pinPanel(selected, 'class')}<form data-portal-form="invite" novalidate class="portal-inline-form"><div><h3>Jemput pelajar</h3><p>Masukkan nama pengguna tepat. Pelajar perlu menerima jemputan dalam akaunnya.</p></div><div class="portal-inline-form-fields">${field('portal-invite-username', 'Nama pengguna pelajar', {name: 'username', max: 24, placeholder: 'nama_pengguna', help: 'Huruf besar ditukar kepada huruf kecil. Gunakan username berdaftar pelajar.'})}${submit('Hantar jemputan', false)}</div>${formError()}</form></section>${renderRoster(selected)}<section class="portal-panel" aria-labelledby="portal-rooms-title"><div class="portal-panel-title"><div><h2 id="portal-rooms-title">Bilik permainan</h2><p>Setiap bilik mempunyai PIN dan papan skor sendiri.</p></div><span class="portal-count">${rooms.length}</span></div><form data-portal-form="create-room" novalidate class="portal-room-form"><div class="portal-inline-form-fields">${field('portal-room-name', 'Nama bilik', {name: 'name', max: 80, placeholder: 'Contoh: Latihan bongkah', help: 'Pelajar akan melihat nama ini.'})}${submit('Cipta bilik')}</div>${formError()}</form>${renderRoomCards(rooms, true)}</section>` : '<section class="portal-panel portal-first-class"><div class="portal-empty-state">' + geometryKit() + '<h2>Sediakan kelas pertama anda</h2><p>Masukkan nama kelas di sebelah. Kemudian kongsi PIN atau jemput pelajar menggunakan nama pengguna.</p></div></section>'}</div></div>`;
   }
 
   function renderStudent() {
@@ -236,7 +242,7 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
     const classes = list(snapshot?.classes);
     const invites = list(snapshot?.invites);
     const rooms = list(snapshot?.rooms);
-    return `${accountHeading('RUANG PELAJAR', 'Jom temui padanannya.', 'Sertai kelas anda dan tunggu guru memulakan permainan.')}${freshness()}<div class="portal-student-top"><section class="portal-panel portal-join-panel"><div><p class="card-kicker">ADA PIN DARIPADA GURU?</p><h2>Sertai kelas atau bilik</h2><p>Masukkan enam digit PIN yang diberi oleh guru.</p></div><form data-portal-form="join-pin" novalidate>${field('portal-join-pin', 'PIN enam digit', {name: 'pin', max: 6, inputmode: 'numeric', placeholder: '000000', help: 'PIN kelas menambah anda ke kelas. PIN bilik membuka bilik permainan.'})}${formError()}${submit('Sertai dengan PIN')}</form></section><section class="portal-panel portal-student-classes"><div class="portal-panel-title"><h2>Kelas saya</h2><span class="portal-count">${classes.length}</span></div>${classes.length ? `<ul>${classes.map(item => `<li><span class="portal-class-icon">${icon('user')}</span><span><b>${esc(item.name)}</b><small>Anda ahli kelas ini</small></span>${icon('check')}</li>`).join('')}</ul>` : '<p class="portal-empty-note">Kelas anda akan muncul selepas menyertai melalui PIN atau menerima jemputan.</p>'}</section></div>${invites.length ? `<section class="portal-panel portal-invites"><div class="portal-panel-title"><div><h2>Jemputan kelas</h2><p>Semak nama guru dan kelas sebelum menerima.</p></div><span class="portal-count">${invites.length}</span></div><ul>${invites.map(invite => `<li><span class="portal-invite-symbol">${icon('user')}</span><div><b>${esc(invite.class_name)}</b><p>Daripada ${esc(invite.teacher_name)}</p></div>${button('Terima jemputan', 'accept-invite', {id: invite.id, primary: true, symbol: 'check'})}</li>`).join('')}</ul></section>` : ''}<section class="portal-panel" aria-labelledby="portal-rooms-title"><div class="portal-panel-title"><div><h2 id="portal-rooms-title">Bilik permainan kelas</h2><p>Masuk ke bilik untuk melihat status dan papan skor.</p></div><span class="portal-count">${rooms.length}</span></div>${renderRoomCards(rooms, false)}</section>`;
+    return `${accountHeading('RUANG PELAJAR', 'Jom temui padanannya.', 'Sertai kelas anda dan tunggu guru memulakan permainan.')}${freshness()}<section class="portal-panel portal-module-card"><div><p class="card-kicker">LATIHAN BERSEMUKA DENGAN MODEL</p><h2>Empat makmal, ikut rentak anda.</h2><p>Ramalkan, cuba, semak dan terangkan. Rekod latihan boleh dilihat oleh guru dalam kelas anda.</p>${learningData?.records ? renderLearningRecords(learningData.records) : '<p class="portal-muted">Kemajuan akan muncul selepas rekod dimuatkan.</p>'}${learningError ? `<p class="portal-module-warning" role="status">${esc(learningError)}</p>` : ''}</div>${button('Sambung modul pembelajaran', 'open-module', {primary: true, symbol: 'arrow'})}</section><div class="portal-student-top"><section class="portal-panel portal-join-panel"><div><p class="card-kicker">ADA PIN DARIPADA GURU?</p><h2>Sertai kelas atau bilik</h2><p>Masukkan enam digit PIN yang diberi oleh guru.</p></div><form data-portal-form="join-pin" novalidate>${field('portal-join-pin', 'PIN enam digit', {name: 'pin', max: 6, inputmode: 'numeric', placeholder: '000000', help: 'PIN kelas menambah anda ke kelas. PIN bilik membuka bilik permainan.'})}${formError()}${submit('Sertai dengan PIN')}</form></section><section class="portal-panel portal-student-classes"><div class="portal-panel-title"><h2>Kelas saya</h2><span class="portal-count">${classes.length}</span></div>${classes.length ? `<ul>${classes.map(item => `<li><span class="portal-class-icon">${icon('user')}</span><span><b>${esc(item.name)}</b><small>Anda ahli kelas ini</small></span>${icon('check')}</li>`).join('')}</ul>` : '<p class="portal-empty-note">Kelas anda akan muncul selepas menyertai melalui PIN atau menerima jemputan.</p>'}</section></div>${invites.length ? `<section class="portal-panel portal-invites"><div class="portal-panel-title"><div><h2>Jemputan kelas</h2><p>Semak nama guru dan kelas sebelum menerima.</p></div><span class="portal-count">${invites.length}</span></div><ul>${invites.map(invite => `<li><span class="portal-invite-symbol">${icon('user')}</span><div><b>${esc(invite.class_name)}</b><p>Daripada ${esc(invite.teacher_name)}</p></div>${button('Terima jemputan', 'accept-invite', {id: invite.id, primary: true, symbol: 'check'})}</li>`).join('')}</ul></section>` : ''}<section class="portal-panel" aria-labelledby="portal-rooms-title"><div class="portal-panel-title"><div><h2 id="portal-rooms-title">Bilik permainan kelas</h2><p>Masuk ke bilik untuk melihat status dan papan skor.</p></div><span class="portal-count">${rooms.length}</span></div>${renderRoomCards(rooms, false)}</section>`;
   }
 
   function elapsed(player) {
@@ -277,7 +283,9 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
     }
     const focused = document.activeElement;
     const focus = content.contains(focused) ? {id: focused.id, action: focused.dataset?.portalAction, keys: Object.fromEntries(['portalAction', 'id', 'target', 'page', 'mode', 'kind', 'input'].map(key => [key, focused.dataset?.[key]])), form: focused.closest?.('form[data-portal-form]')?.dataset.portalForm, type: focused.type, start: focused.selectionStart, end: focused.selectionEnd} : null;
-    return {fields, focus};
+    const disclosures = [...content.querySelectorAll('[data-module-student] details[open]')].map(node => node.closest('[data-module-student]').dataset.moduleStudent);
+    const ownDisclosure = Boolean(content.querySelector('.portal-module-card details[open]'));
+    return {fields, focus, disclosures, ownDisclosure};
   }
 
   function render({focus = false, preserve = true} = {}) {
@@ -292,6 +300,8 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
     else if (!snapshot || !profile) content.innerHTML = '<div class="portal-panel portal-loading" aria-busy="true"><span class="portal-spinner" aria-hidden="true"></span><h1 id="portal-title" tabindex="-1">Memuatkan ruang kelas…</h1><p>Sedang mendapatkan kelas dan permainan anda.</p></div>';
     else content.innerHTML = roomId ? renderRoom() : isTeacher() ? renderTeacher() : renderStudent();
     if (saved && !focus) {
+      for (const cell of content.querySelectorAll('[data-module-student]')) if (saved.disclosures.includes(cell.dataset.moduleStudent)) cell.querySelector('details')?.setAttribute('open', '');
+      if (saved.ownDisclosure) content.querySelector('.portal-module-card details')?.setAttribute('open', '');
       for (const [id, value] of saved.fields) {
         const input = document.getElementById(id);
         if (!input || !content.contains(input)) continue;
@@ -439,6 +449,7 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
         if (notice.tone === 'error' && wasStale) announce('Sambungan berjaya dikemas kini.', 'success');
         render();
         startLive();
+        if (!requestedRoom) void refreshLearning();
       } catch (error) {
         if (!valid(token, identity)) return;
         stale = true;
@@ -457,6 +468,28 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
     return task;
   }
 
+  async function refreshLearning() {
+    if (!active || destroyed || !accountAvailable() || roomId || !profile) return;
+    const selectedClass = isTeacher() ? currentClass()?.id : null;
+    if (isTeacher() && !selectedClass) return;
+    const target = selectedClass || 'mine';
+    if (learningPending === target) return;
+    const job = ++learningRequest, token = epoch, identity = sessionKey();
+    learningPending = target;
+    if (learningData?.class_id !== selectedClass && isTeacher()) learningData = null;
+    try {
+      if (typeof cloud.moduleProgress !== 'function') throw Error('Rekod latihan awan belum tersedia.');
+      const data = await cloud.moduleProgress(isTeacher() ? 'class' : 'mine', selectedClass ? {class_id: selectedClass} : {});
+      if (!valid(token, identity) || job !== learningRequest || (isTeacher() && currentClass()?.id !== selectedClass)) return;
+      learningData = data; learningError = '';
+    } catch (error) {
+      if (!valid(token, identity) || job !== learningRequest) return;
+      learningError = 'Rekod latihan awan belum dapat dimuatkan. Tekan Muat semula untuk mencuba lagi.';
+    } finally {
+      if (job === learningRequest) { learningPending = ''; if (valid(token, identity)) render(); }
+    }
+  }
+
   function clearAccount() {
     epoch += 1;
     operation += 1;
@@ -464,6 +497,7 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
     authPending = false;
     stopLive();
     snapshot = null;
+    learningRequest++; learningPending = ''; learningData = null; learningError = '';
     profile = null;
     roomId = null;
     cloud.setRoom?.(null);
@@ -778,8 +812,9 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
       return;
     }
     if (!accountAvailable()) return;
+    if (action === 'open-module') { close(); onModule(); return; }
     if (action === 'select-class') {
-      classId = control.dataset.id; rosterQuery = ''; rosterPage = roomPage = 1; render({preserve: false});
+      classId = control.dataset.id; rosterQuery = ''; rosterPage = roomPage = 1; learningData = null; learningError = ''; render({preserve: false}); void refreshLearning();
       const heading = content.querySelector('.portal-class-overview h2');
       heading?.setAttribute('tabindex', '-1'); heading?.focus({preventScroll: true});
       return;

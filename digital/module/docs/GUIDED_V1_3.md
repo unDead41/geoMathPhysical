@@ -5,7 +5,7 @@ kekal. Perubahan ini hanya pada modul; tiada push, merge atau penerbitan awam.
 
 ## Hasil automatik
 
-- `npm run build`: HTML mandiri dibina, 193876 bait.
+- `npm run build`: HTML mandiri dibina, 194684 bait.
 - `npm test`: **121/121** lulus (100 ujian asal, 21 tambahan).
 - `npm run check`: sintaks, ID, CSP, versi, token reka bentuk dan tiada dependency,
   panggilan rangkaian atau storan pelayar runtime lulus.
@@ -45,6 +45,9 @@ pembacaan screen reader atau audio sebenar. CSS disediakan bagi 320px, focus,
 dark/light dan reduced motion; port DOM bukan bukti visual. Suara BM setempat
 mungkin tiada; teks kekal dan mesej ketersediaan jelas. Tiada ujian firmware,
 USB atau perkakasan diperlukan oleh perubahan modul ini.
+
+Pengesahan integrasi akhir, termasuk pelayar dan viewport sempit, direkodkan
+dalam `../../docs/RELEASE_V2_4.md`. Laporan ini mengekalkan batas bukti unit modul.
 
 Rekod kemajuan ialah latihan refleksi kendiri. Gerbang UI menguji pemerhatian dan
 jawapan konsep, tetapi pelayan/rekod dipulihkan tidak membuktikan penguasaan.

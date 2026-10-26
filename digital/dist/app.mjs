@@ -7,8 +7,9 @@ import {ClassroomCloud} from './cloud.mjs';
 import {createPortal} from './portal.mjs';
 import {initTheme} from './theme.mjs';
 import {createMusic} from './music.mjs';
-import moduleHtml from '../vendor/module-v1.2.0.html';
+import moduleHtml from '../vendor/module-v1.3.0.html';
 import {prepareModuleFrame} from './module-frame.mjs';
+import {ModuleProgress} from './module-progress.mjs';
 
 const $ = id => document.getElementById(id);
 const escapeHtml = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -36,7 +37,9 @@ let drag = null, suppressClickUntil = 0, hiddenPause = false, sound = false, aud
 let scoresExpanded = false, lastClock = '', lastLed = {}, visualPlan = null, motionPaused = false;
 let roomState=null,roomReceivedAt=0,roomPending=null,roomSending=false,roomPolling=null,roomEpoch=0,roomInFlight=null;
 const cloud=new ClassroomCloud();
-const portal=createPortal({cloud,onPlay:openRoomGame,onExit:returnHome,onError:()=>{}});
+let moduleLaunchEpoch=0,moduleReturnToPortal=false;
+const moduleProgress=new ModuleProgress({storage,cloud,onChange:renderModuleSaveStatus});
+const portal=createPortal({cloud,onPlay:openRoomGame,onModule:()=>void openLearningModule(true),onExit:returnHome,onError:()=>{}});
 const dialog = $('app-dialog');
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const TOPIC_NAMES = {properties:'Sifat bongkah',formula:'Rumus',net:'Bentangan'};
@@ -84,7 +87,7 @@ function showScreen(next) {
   $('result-screen').hidden = next !== 'result';
   $('portal-screen').hidden=next!=='portal';
   $('module-screen').hidden=next!=='module';
-  if(next!=='module'&&$('module-frame').getAttribute('srcdoc'))$('module-frame').removeAttribute('srcdoc');
+  if(next!=='module'){moduleLaunchEpoch++;moduleProgress.close();if($('module-frame').getAttribute('srcdoc'))$('module-frame').removeAttribute('srcdoc');}
   void music.setScene(next);
   document.title = next==='portal'?'GeoDecoder Digital — Akaun dan kelas':next==='guest'?'GeoDecoder Digital — Main sebagai tetamu':next === 'welcome' ? 'GeoDecoder Digital — Jom main geometri' : next === 'game' ? 'GeoDecoder Digital — Sedang bermain' : 'GeoDecoder Digital — Keputusan pusingan';
   if(next==='module')document.title='GeoDecoder Digital — Modul pembelajaran';
@@ -343,10 +346,40 @@ $('account-button').addEventListener('click',()=>requestAccounts());
 $('welcome-account-button').addEventListener('click',()=>requestAccounts());
 $('guest-button').addEventListener('click',openGuest);
 $('guest-back-button').addEventListener('click',returnHome);
-$('module-button').addEventListener('click',()=>{
-  showScreen('module');$('module-frame').srcdoc=prepareModuleFrame(moduleHtml);$('module-title').focus({preventScroll:true});
+function renderModuleSaveStatus(state){
+  const place=state.storageFailed?'sesi ini sahaja':'pelayar ini';
+  const message=state.status==='syncing'?'Sedang menyelaraskan rekod latihan…':state.status==='synced'?'Rekod latihan sudah diselaraskan ke akaun.':state.status==='pending'?`Rekod kekal dalam ${place}. Awan belum dapat diselaraskan.`:state.actor==='guest'?`Rekod tetamu disimpan dalam ${place}.`:`Rekod latihan disimpan dalam ${place}.`;
+  $('module-sync-status').textContent=`${state.completed}/4 aktiviti selesai · ${message}`;
+  $('module-sync-retry').hidden=state.status!=='pending';
+}
+async function openLearningModule(fromPortal=false){
+  moduleReturnToPortal=fromPortal;const request=++moduleLaunchEpoch;
+  showScreen('module');moduleProgress.close();$('module-frame').removeAttribute('srcdoc');
+  $('module-back-button').innerHTML=icon('home')+(fromPortal?'Kembali ke kelas':'Kembali ke Home');
+  $('module-sync-status').textContent='Membuka modul dan rekod latihan…';$('module-sync-retry').hidden=true;
+  $('module-title').focus({preventScroll:true});
+  try{
+    await cloud.init();
+    if(request!==moduleLaunchEpoch||screen!=='module')return;
+    if(cloud.recoveryRequired){void openAccounts();return;}
+    if(cloud.session?.user?.id&&!cloud.profile)await cloud.rpc('snapshot').catch(()=>{});
+  }catch{/* Local learning remains available if the account service is unavailable. */}
+  if(request!==moduleLaunchEpoch||screen!=='module')return;
+  moduleProgress.setAccount(cloud.session?.user?.id?{id:cloud.session.user.id,role:cloud.profile?.role}:null);
+  $('module-frame').srcdoc=prepareModuleFrame(moduleHtml);
+  moduleProgress.open($('module-frame').contentWindow);
+  moduleProgress.setTheme(document.documentElement.dataset.theme);renderModuleSaveStatus(moduleProgress.state);
+  void moduleProgress.sync();
+}
+$('module-button').addEventListener('click',()=>void openLearningModule());
+$('module-back-button').addEventListener('click',()=>moduleReturnToPortal&&cloud.session?void openAccounts():returnHome());
+$('module-sync-retry').addEventListener('click',()=>void moduleProgress.sync());
+window.addEventListener('message',event=>moduleProgress.handleMessage(event));
+document.addEventListener('geodecoder:theme',event=>moduleProgress.setTheme(event.detail?.theme));
+cloud.onSessionChange(()=>{
+  const actor=cloud.session?.user?.id||'guest';
+  if(actor!==moduleProgress.state.actor){moduleProgress.setAccount(cloud.session?.user?.id?{id:actor,role:cloud.profile?.role}:null);if(screen==='module'&&$('module-frame').hasAttribute('srcdoc'))void openLearningModule(moduleReturnToPortal);}
 });
-$('module-back-button').addEventListener('click',returnHome);
 $('online-retry').addEventListener('click',()=>{if(roomPending)sendRoomPending();});
 $('online-room-back').addEventListener('click',()=>openAccounts(roomState?.roomId));
 
@@ -654,6 +687,7 @@ document.addEventListener('keydown',event=>{
   if(!dialog.open && screen==='game' && game?.interactive){event.preventDefault();openPause();}
 });
 window.addEventListener('storage',event=>{
+  if(event.key===moduleProgress.key||event.key===null)moduleProgress.refreshLocal();
   if(event.key===SCORE_KEY || event.key===LEGACY_SCORE_KEY || event.key===null){store.memory=[];if(dialogMode==='scores')openScores();if(screen==='result')renderMiniScores();}
 });
 

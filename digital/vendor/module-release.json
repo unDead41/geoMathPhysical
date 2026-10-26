@@ -1,9 +1,10 @@
 {
-  "version": "1.2.0",
-  "path": "module-v1.2.0.html",
+  "version": "1.3.0",
+  "path": "module-v1.3.0.html",
   "sourceRepository": "unDead41/geodecoder",
-  "sourceBranch": "digitalize-module",
-  "sourceCommit": "931a0150397bfb3fd79ef3c8da6684167d1c6aad",
+  "sourceBranch": "digitalize-module-upgrade",
+  "sourceCommit": "8197673bbb4c2d439d2c8d06bda2a6d62d3a88a9",
   "sourcePath": "digital/module/GeoDecoder_Modul_V1.html",
-  "blob": "5f58d2df981c7a21cc063a4958e898a46b6134fe"
+  "upstreamCommit": "931a0150397bfb3fd79ef3c8da6684167d1c6aad",
+  "blob": "2aa205a66b7bc944ea8d96b9307a8661d212d90b"
 }

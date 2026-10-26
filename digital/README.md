@@ -1,8 +1,8 @@
 # GeoDecoder Digital V2
 
-Versi Digital semasa: **v2.3.0**. Modul pembelajaran **v1.2.0** kini mempunyai empat Makmal interaktif.
+Versi Digital branch ini: **v2.4.0**. Modul pembelajaran **v1.3.0** mempunyai empat Makmal berpandu.
 
-Versi digital **2.3.0**, branch **digitalize**. Permainan geometri R1 → R2 kini mempunyai akaun guru/pelajar, kelas dan room dengan skor langsung. Firmware v1.1.3 menggunakan versi berasingan.
+Versi digital **2.4.0**, branch **digitalize-module-upgrade**. Permainan geometri R1 → R2 kini mempunyai akaun guru/pelajar, kelas dan room dengan skor langsung. Firmware v1.1.3 menggunakan versi berasingan.
 
 ## Laman GitHub Pages
 
@@ -76,7 +76,7 @@ Panduan database/RPC: `backend/README.md`. Untuk projek baharu, gunakan `backend
 
 Jalankan `backend/verify.sql` sebagai database owner: seluruh ujian dibatalkan melalui rollback. `GEODECODER_LIVE_TEST=yes node tools/verify-cloud.mjs` ialah ujian integrasi opt-in yang **mencipta akaun/kelas/bilik sintetik sebenar** pada projek dikonfigurasi. Fail credential dalam `artifacts/` adalah sementara dan tidak boleh dicommit. Bersihkan fixture berdasarkan UUID yang direkodkan selepas ujian. Jangan jalankan secara membuta tuli pada projek pengguna lain.
 
-Rujukan bank/SHA: `docs/SOURCE.md`. Keputusan dan had ujian: `docs/VERIFICATION.md`. Modul v1.2.0 daripada `digitalize-module` dipinkan tanpa perubahan sebagai `vendor/module-v1.2.0.html` (commit `931a0150397bfb3fd79ef3c8da6684167d1c6aad`), dibuka dalam iframe terasing daripada Home. Branch modul asal tidak diubah.
+Rujukan bank/SHA: `docs/SOURCE.md`. Keputusan dan had ujian: `docs/VERIFICATION.md`. Modul v1.3.0 dalam branch ini dipinkan sebagai `vendor/module-v1.3.0.html`, sumber `module/GeoDecoder_Modul_V1.html` (commit `8197673bbb4c2d439d2c8d06bda2a6d62d3a88a9`). Asas modul v1.2.0 ialah `931a0150397bfb3fd79ef3c8da6684167d1c6aad`; branch asalnya tidak diubah.
 
 ## Muzik latar
 
@@ -85,3 +85,14 @@ Rujukan bank/SHA: `docs/SOURCE.md`. Keputusan dan had ujian: `docs/VERIFICATION.
 ## Makmal interaktif
 
 Dari Home, pilih **Teroka modul pembelajaran → Makmal interaktif**. Empat aktiviti: **Bina Bentangan**, **Makmal Isi Padu**, **Terbitkan Rumus** dan **Bongkah Gabungan**. Aktiviti menggunakan geometri dan kawalan modul asal; muzik map berjalan sepanjang modul dibuka. Pin tepat direkodkan dalam `vendor/module-release.json`.
+
+
+## Naik taraf modul v1.3.0 / Digital v2.4.0
+
+Empat makmal menggunakan aliran **Ramalkan → Cuba → Semak → Terangkan**. Penyelesaian memerlukan eksperimen lengkap, semakan konsep dan penerangan. Kawalan 0.5×/1×, langkah seterusnya, Undo, Ulang aktiviti, Asal kamera, Fokus model dan tema cerah/gelap disediakan. Suara Melayu menggunakan suara setempat yang tersedia; teks kekal boleh dibaca jika tiada suara.
+
+Kemajuan disimpan oleh aplikasi mengikut ID akaun, dengan ruang tetamu berasingan. Guru boleh melihat empat rekod latihan bagi ahli kelas miliknya. Rekod ini ialah refleksi latihan kendiri, bukan markah penilaian atau gred TP.
+
+**Branch sahaja:** keluaran laman awam kekal v2.3.0. Sebelum deploy v2.4.0 pada pangkalan data sedia ada, jalankan `backend/module_progress_v2_4.sql` sekali. Pemasangan baharu boleh menggunakan `backend/schema.sql` yang sudah mengandungi definisi ini. Kegagalan awan mengekalkan rekod setempat dan memberi pilihan cuba semula. Tiada perubahan SMTP/Auth/firmware dalam naik taraf ini.
+
+Pengesahan dan hadnya: [RELEASE_V2_4.md](docs/RELEASE_V2_4.md).

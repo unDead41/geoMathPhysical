@@ -36,7 +36,7 @@ The account entry is distinct from practice. Signup requires email, username, di
 
 One looping background Audio element plays the supplied rest-site track on Home, Guest, accounts and results, and the supplied map track during games and the module. Initial playback waits for a trusted user gesture. Track changes pause the old source before playing the new one. A dedicated, labelled header toggle persists the preference; game sound effects are independent. Hidden tabs pause music. Playback failure does not block learning or scoring. Website assets load on demand; downloadable HTML embeds both full tracks.
 
-Home opens the pinned module v1.2.0 in an opaque-origin iframe with scripts and optional popups. Its canonical artifact is unchanged; the embedding adapter rewrites fragment links to about:srcdoc so Guide/Skip stay within the module. A labelled parent Back button unloads the frame, stopping its animation, and restores menu music. The module keeps its independent layout and learning controls.
+Home opens the pinned module v1.3.0 in an opaque-origin iframe with scripts and optional popups. Its source is maintained under module/ on this feature branch; the embedding adapter rewrites fragment links to about:srcdoc so Guide/Skip stay within the module. A labelled parent Back button unloads the frame, stopping its animation, and restores menu music. The module keeps its independent layout and learning controls.
 
 Teachers create only their own classes and rooms, see roster presence, and invite a registered student by exact username. The student accepts invitations. A six-digit class PIN enrolls in the class; a room PIN enrolls in its class and room. Codes are server generated, unique, expire after 24 hours and can be regenerated even when no active code remains. Owners alone see PINs. Repeated invalid guesses are rate limited. Presence is an estimate based on a heartbeat within the last 45 seconds, not proof that the game tab has focus.
 
@@ -48,4 +48,13 @@ The teacher board subscribes to authorized room_progress changes. Only a confirm
 
 The theme button applies light/dark across entry, game, dialogs, results and portal, persists the preference and respects the system choice before an explicit selection. Both themes preserve visible text, focus outlines and non-colour state labels.
 
-The v1.2.0 module includes four interactive labs reachable from its own Makmal interaktif tab. Parent navigation still owns the iframe lifetime and the map music; classroom Auth and scoring remain in the parent application.
+The v1.3.0 module includes four guided interactive labs reachable from its own Makmal interaktif tab. Parent navigation still owns the iframe lifetime and the map music; classroom Auth and scoring remain in the parent application.
+
+
+## Module practice records (v2.4.0)
+
+Parent ModuleProgress owns bounded, validated records for net/volume/area/composite. Each guest or authenticated ID has a separate key. Only the active iframe window and current CSPRNG nonce may send protocol-1 records. The child has no network/storage access. Restoration updates earned achievements without unlocking a fresh experiment. Account changes clear ownership, drafts and pending queues; async results check identity/epoch before application.
+
+The parent merges milestones monotonically; completed local achievements survive retries, delayed saves and unavailable storage (session memory). Students synchronize through the dedicated authenticated geo_module_progress RPC. Private role/class ownership determines access; teachers see only student members of their own classes. Practice reports are self-reported reflections and never verified assessment/TP. Portal polling refreshes the records and preserves expanded disclosures. Deployment requires the v2.4 migration; the feature branch does not apply it to production.
+
+Embedded theme follows the parent. Focus enlarges the model and keeps nearby motion/camera controls. Browser-local Malay speech is explicit, optional and paired with persistent transcript text. Hidden tabs/navigation stop speech and animation. All generated offline aliases come from the same builder artifact.
