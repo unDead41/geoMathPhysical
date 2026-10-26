@@ -1,16 +1,29 @@
-# Auth email v1.0.0 — pengesahan dan handoff
+# Auth email v1.1.0 — pengesahan dan handoff
 
 Tarikh: **26 Oktober 2026, Malaysia**.
 Repository: `unDead41/geodecoder`.
 Branch hasil: `digitalized-utility-auth-email`.
-Asas remote: `main-digitalized`, `790d989d666e64f3beabb507cd4140b832696367`.
+Asas asal remote: `main-digitalized`, `790d989d666e64f3beabb507cd4140b832696367`.
 Rujukan firmware `main`: `a059979d97926b82cafd4aa5cf3fe59da04a55bb`, v1.1.3.
+
+Asas redesign: `digitalized-utility-auth-email`,
+`b90f06b54be7de0bbfa973752850d5ac19662a28` (pakej v1.0.1).
+
+## Redesign v1.1.0
+
+Menggantikan masthead navy dan panel amaran berbingkai dengan kad putih yang
+lebih ringkas: jenama di luar kad, ilustrasi sampul surat dengan bentuk geometri,
+salinan berpusat, satu butang maksimum 340px dan pautan alternatif berlabel.
+English ialah teks sekunder dengan `lang="en"`, termasuk pengenalan. Pautan
+Auth penuh kekal dalam `href`; token URL panjang tidak dicetak dalam kandungan.
+Hiasan tidak bergantung pada imej/font luar dan disembunyikan daripada pembaca
+skrin. Tiada perubahan aliran Auth, penghantaran atau polisi keselamatan.
 
 ## Skop dan kaedah
 
 Lapan templat, satu sumber susun atur/salinan, manifest subjek, alat bina/
 pratonton/eksport setempat dan dokumentasi pemasangan. Versi pakej templat
-v1.0.0 berasingan daripada aplikasi v2.6.0 serta modul v1.5.0. Tiada perubahan
+v1.1.0 berasingan daripada aplikasi v2.6.0 serta modul v1.5.0. Tiada perubahan
 runtime aplikasi, modul, firmware, database, RLS, fungsi Auth atau Pages.
 
 Ref dan sumber dibaca melalui GitHub connector pada SHA tetap. Git CLI tidak
@@ -30,9 +43,11 @@ dalam laporan akhir; dokumen ini tidak cuba menyimpan SHA commitnya sendiri.
 | `python tools/check_version.py` | v1.1.3 kekal sepadan README/CHANGELOG firmware. |
 | Semakan visual offline | 32 kes: 8 templat × alamat biasa/254 aksara × lebar 320/640px; tiada teks keluar daripada ruang halaman. |
 | Pembaca HTML offline | WeasyPrint 70.0, tanpa rangkaian. Gaya asas diuji tanpa kebergantungan pada media query skrin sempit. Ini bukan Gmail/Outlook atau pelayar sebenar. |
-| Percubaan pratonton pelayar tempatan | Pelayar pengguna tidak dapat mencapai pelayan setempat persekitaran kerja. Tiada dakwaan ujian responsive pelayar dibuat. |
+| Pratonton pelayar / klien e-mel | Belum diuji pada Gmail/Outlook. Bukti di bawah ialah render HTML offline sahaja. |
 | Dashboard Supabase sebenar | Projek GeoDecoder Digital Free memaparkan **Set up custom SMTP to edit templates**; Save disabled. [Bukti skrin](auth-email-evidence/supabase-smtp-required.png). |
 | Pengaktifan hosted dan peti masuk | **Belum dibuat**: custom SMTP ialah prasyarat yang belum tersedia. Tiada permintaan e-mel ujian, perubahan credential, toggle atau kuota. |
+
+HTML terbesar v1.1.0: **8,589 bait**.
 
 Laporan susun atur: [layout-checks.json](auth-email-evidence/layout-checks.json).
 Pratonton: [pengesahan desktop](auth-email-evidence/confirmation-640.png),

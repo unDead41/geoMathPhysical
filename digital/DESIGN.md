@@ -126,14 +126,21 @@ Only one account subpage is active; leaving Security erases sensitive fields.
 The embedded v1.5 module uses a native startup bridge for current settings,
 with its independent progress channel and theme context kept source/session-scoped.
 
-## Account email templates v1.0.0
+## Account email templates v1.1.0
 
 `backend/email/templates.mjs` owns email copy and layout, with generated HTML
 and a dashboard-subject manifest beside it. Reuse primary #215FF0, ink #18334B,
-background #F3F7FB, muted #526A7D and accent #FFCB66. A 600px flexible table,
-inline styles, system fonts, large action and copyable fallback URL keep the
+background #F3F7FB, muted #526A7D and accent #FFCB66. A 560px flexible table,
+inline styles, system fonts, large action and labelled alternative link keep the
 message readable without remote imagery or scripts. BM and English appear in
 the same message because current Auth metadata does not carry a language choice.
 The English text has language attributes. Narrow clients reduce padding/type;
 the flexible base also wraps 254-character email addresses without media queries.
 Hosted email rendering is separate from application light/dark preferences.
+
+The v1.1.0 email uses a centred geometry postcard: quiet wordmark above a white
+card, a pale blue illustration panel with an HTML envelope and geometric shapes,
+centred headline/copy, and a 340px maximum primary action. Gold and pale mint
+#B4E2D1 are decorative, never account-status indicators. The secondary Auth link
+lives below the card with a readable label instead of printing a token URL.
+Decoration is aria-hidden; text stays usable if clients simplify rounded shapes.

@@ -80,11 +80,11 @@ machine keys must not be shown to learners.
 
 The account entry is distinct from practice. Signup requires email, username, display name, password and teacher/student role; Auth verifies the email before login. A scoped Auth insert trigger validates and copies the initial role into an immutable private profile. Later metadata edits cannot change authorization. Login accepts email or username. Forgotten password requests an email link; reset takes priority over account dashboards only after an SDK-validated recovery session. Two matching 10–128-character passwords are required; successful reset signs out globally. Invalid/expired links offer a new request. Resend has a 60-second UI cooldown and provider errors remain visible. Request success uses generic copy and does not assert inbox delivery. Public delivery depends on configured SMTP and redirect URLs. Legacy username-only accounts retain secondary code recovery; email accounts cannot use legacy codes. No credentials or recovery codes are logged. Names are escaped. Session changes clear account/room caches; stale responses cannot overwrite current context. Recovery screens stop dashboard polling.
 
-## Account email presentation v1.0.0
+## Account email presentation v1.1.0
 
 Confirm sign up and reset emails use the same GeoDecoder wordmark, palette,
 large action and BM/English message. `ConfirmationURL` remains the destination
-of both the action and copyable fallback. Reauthentication shows the Auth OTP;
+of both the action and labelled alternative link. Reauthentication shows the Auth OTP;
 security notifications link to `SiteURL`. No template claims a fixed expiry
 or exposes passwords, tokens in subjects, roles or class membership. Additional
 templates do not enable application capabilities or notification toggles.

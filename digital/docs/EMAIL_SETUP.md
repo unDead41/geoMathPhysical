@@ -6,7 +6,7 @@ SMTP lalai. Banner **Set up custom SMTP to edit templates** menyekat suntingan
 subjek/body. Gambar yang dibekalkan pengguna menunjukkan e-mel asal diterima,
 tetapi penghantaran dengan reka bentuk baharu belum diuji atau diaktifkan.
 
-Pakej [templat akaun v1.0.0](../backend/email/README.md) menyediakan lapan HTML
+Pakej [templat akaun v1.1.0](../backend/email/README.md) menyediakan lapan HTML
 BM/English dengan identiti GeoDecoder. Subjek dan pemetaan dashboard berada dalam
 `backend/email/manifest.json`. Push branch tidak mengubah templat hosted.
 
@@ -18,7 +18,7 @@ BM/English dengan identiti GeoDecoder. Subjek dan pemetaan dashboard berada dala
 4. Kekalkan pengesahan email pendaftaran. Pemeriksaan public Auth settings pada sesi ini menunjukkan `mailer_autoconfirm=false`. Jangan mematikan pengesahan semata-mata untuk mengatasi kegagalan penghantaran.
 5. Selepas SMTP aktif, pasang subjek dan body daripada pakej templat untuk aliran
    yang digunakan. **Confirm sign up** dan **Reset password** mengekalkan
-   `{{ .ConfirmationURL }}` pada butang serta pautan sandaran. Auth mengesahkan
+   `{{ .ConfirmationURL }}` pada butang serta pautan alternatif berlabel. Auth mengesahkan
    token sebelum mengembalikan sesi ke laman. Jangan mengganti URL dengan halaman
    statik tanpa token. Templat tambahan tidak mengaktifkan aliran/notifikasi baharu.
 

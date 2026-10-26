@@ -1,15 +1,29 @@
 # E-mel akaun GeoDecoder Digital
 
-Pakej templat **v1.0.0**, branch `digitalized-utility-auth-email`.
-Asas remote `main-digitalized`: `790d989d666e64f3beabb507cd4140b832696367`.
+Pakej templat **v1.1.0**, branch `digitalized-utility-auth-email`.
+Asas asal remote `main-digitalized`: `790d989d666e64f3beabb507cd4140b832696367`.
+Redesign v1.1.0 berasaskan branch remote `b90f06b54be7de0bbfa973752850d5ac19662a28`.
 Versi aplikasi v2.6.0, modul v1.5.0 dan firmware v1.1.3 dikekalkan.
+
+## Reka bentuk v1.1.0
+
+Jenama ringan di atas kad putih, panel ilustrasi sampul surat berasaskan bentuk
+geometri, tajuk berpusat dan satu tindakan utama dengan lebar maksimum 340px.
+Biru GeoDecoder, emas dan hijau pastel membentuk aksen ilustrasi. Semua hiasan
+ialah HTML/CSS tanpa imej luar. Hiasan disembunyikan daripada pembaca skrin;
+maklumat penting kekal teks. BM utama dan English sekunder menggunakan atribut
+bahasa yang betul. Tiada animasi dalam e-mel.
+
+Pautan alternatif menggunakan label yang boleh difahami, dengan URL Auth penuh
+kekal pada `href`. Untuk menyalinnya, gunakan menu klik kanan/tekan lama klien
+e-mel. URL token panjang tidak dicetak sebagai teks dalam badan e-mel.
 
 ## Kandungan
 
-Lapan templat HTML menggunakan warna GeoDecoder, butang besar, pautan sandaran,
+Lapan templat HTML menggunakan warna GeoDecoder, butang besar, pautan alternatif berlabel,
 salinan BM/English, tip keselamatan dan preheader. Semua teks kekal teks sebenar,
 bukan imej. Tiada font, logo atau aset yang perlu dimuat turun. Jadual susun atur,
-gaya inline, had lebar 600px dan pembalut pautan panjang menyokong klien e-mel.
+gaya inline, had lebar 560px dan pembalut pautan panjang menyokong klien e-mel.
 Jika media query dibuang, susun atur asas masih menggunakan lebar fleksibel.
 
 | Supabase → Authentication → Emails | Fail | Tindakan |

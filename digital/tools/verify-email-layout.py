@@ -25,5 +25,5 @@ for src in sorted((root/'artifacts/email-previews').glob('*.html')):
    pdf=fitz.open(stream=document.write_pdf(),filetype='pdf')
    clip=fitz.Rect(0,0,width*.75,min(3000,bottom)*.75)
    pdf[0].get_pixmap(matrix=fitz.Matrix(4/3,4/3),clip=clip).save(out/f'{src.stem}-{width}.png')
-(out/'layout-checks.json').write_text(json.dumps({'scope':'Offline HTML rendering only; not Gmail, Outlook, a browser or a delivered message. Base layout checked even when media queries are unavailable.','cases':cases},indent=2)+'\n')
+(out/'layout-checks.json').write_text(json.dumps({'templateVersion':json.loads((root/'backend/email/manifest.json').read_text())['version'],'scope':'Offline HTML rendering only; not Gmail, Outlook, a browser or a delivered message. Base layout checked even when media queries are unavailable.','cases':cases},indent=2)+'\n')
 print('Offline visual layout:',len(cases),'cases; no text outside 320px/640px pages.')
