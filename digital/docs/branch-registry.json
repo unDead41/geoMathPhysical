@@ -1,0 +1,215 @@
+{
+  "schemaVersion": 1,
+  "repository": "unDead41/geodecoder",
+  "publicationBranch": "main-digitalized",
+  "protectedBranches": [
+    "main-digitalized",
+    "main",
+    "sharing",
+    "codex/game-flow-rgb",
+    "codex/question-audio-elevenlabs",
+    "codex/question-bank-harmonised-lcd",
+    "codex/serial-unassign",
+    "testing/components"
+  ],
+  "protectedBranchesMeaning": "Names excluded from branch-renaming operations; this is not a claim about GitHub branch-protection settings. main-digitalized content may advance through the authorized integration.",
+  "renames": [
+    {
+      "from": "digitalize",
+      "to": "digitalized-core-portal",
+      "sha": "adc51627eaaace5d9543c7e033d2994986c8715d"
+    },
+    {
+      "from": "digital-dwi",
+      "to": "digitalized-game-language",
+      "sha": "b8f7360fc15cb7b23666b092ade8e1d2058878bb"
+    },
+    {
+      "from": "digital-richText",
+      "to": "digitalized-game-duel",
+      "sha": "8373fd4bae11847c3a3099ee6f61e2756d99349b"
+    },
+    {
+      "from": "digitalize-ease-of-use",
+      "to": "digitalized-ux-usability",
+      "sha": "51a0a0f852c1796e6e491c9abd91c2b776ecfffe"
+    },
+    {
+      "from": "digitalize-module",
+      "to": "digitalized-module-content",
+      "sha": "694c2c9623a76be1b885611e2c90575b734d0b00"
+    },
+    {
+      "from": "digitalize-module-design",
+      "to": "digitalized-module-design",
+      "sha": "2a62091fe72f88c59b2f3ca393a29fc3f1b47263"
+    },
+    {
+      "from": "digitalize-module-upgrade",
+      "to": "digitalized-module-guided",
+      "sha": "4c3a165613fd310e5e7e889e793065d4818250b2"
+    },
+    {
+      "from": "digitalize-utility-profile",
+      "to": "digitalized-utility-profile",
+      "sha": "3e48d322e146f75a7407afcc9467b12561700646"
+    },
+    {
+      "from": "digitalize-utility-security",
+      "to": "digitalized-utility-security",
+      "sha": "80309ab7bdcddd6a96317f3088d0d8378d121a1f"
+    },
+    {
+      "from": "digitalize-utility-preferences",
+      "to": "digitalized-utility-preferences",
+      "sha": "5c9699a1962103c1edcb906f383015c60dbad21c"
+    },
+    {
+      "from": "main-digital",
+      "to": "digitalized-release-legacy",
+      "sha": "71db77c0206de664e50fa57ff57e1825af13f938"
+    }
+  ],
+  "frozenInventory": {
+    "capturedDate": "2026-10-26",
+    "verifiedAt": "2026-10-26T03:41:27.629Z",
+    "meaning": "Immutable pre-migration heads. These are not claims about current heads after subsequent integration or publication.",
+    "sourceRepository": "unDead41/geodecoder",
+    "sourceVisibility": "private",
+    "sourceHeads": [
+      {
+        "name": "codex/game-flow-rgb",
+        "sha": "e457b0536987d35042da4d47337fea65a0ad5d77"
+      },
+      {
+        "name": "codex/question-audio-elevenlabs",
+        "sha": "09122e801b91041237b897c021229721a4bbcd6c"
+      },
+      {
+        "name": "codex/question-bank-harmonised-lcd",
+        "sha": "d241ea5683c2af24d418af468cff3cdf394226ba"
+      },
+      {
+        "name": "codex/serial-unassign",
+        "sha": "797a21f01ebcd47966aef5316aa813f2834e9347"
+      },
+      {
+        "name": "digital-dwi",
+        "sha": "b8f7360fc15cb7b23666b092ade8e1d2058878bb"
+      },
+      {
+        "name": "digital-richText",
+        "sha": "8373fd4bae11847c3a3099ee6f61e2756d99349b"
+      },
+      {
+        "name": "digitalize",
+        "sha": "adc51627eaaace5d9543c7e033d2994986c8715d"
+      },
+      {
+        "name": "digitalize-ease-of-use",
+        "sha": "51a0a0f852c1796e6e491c9abd91c2b776ecfffe"
+      },
+      {
+        "name": "digitalize-module",
+        "sha": "694c2c9623a76be1b885611e2c90575b734d0b00"
+      },
+      {
+        "name": "digitalize-module-design",
+        "sha": "2a62091fe72f88c59b2f3ca393a29fc3f1b47263"
+      },
+      {
+        "name": "digitalize-module-upgrade",
+        "sha": "4c3a165613fd310e5e7e889e793065d4818250b2"
+      },
+      {
+        "name": "digitalize-utility-preferences",
+        "sha": "5c9699a1962103c1edcb906f383015c60dbad21c"
+      },
+      {
+        "name": "digitalize-utility-profile",
+        "sha": "3e48d322e146f75a7407afcc9467b12561700646"
+      },
+      {
+        "name": "digitalize-utility-security",
+        "sha": "80309ab7bdcddd6a96317f3088d0d8378d121a1f"
+      },
+      {
+        "name": "main",
+        "sha": "a059979d97926b82cafd4aa5cf3fe59da04a55bb"
+      },
+      {
+        "name": "main-digital",
+        "sha": "71db77c0206de664e50fa57ff57e1825af13f938"
+      },
+      {
+        "name": "main-digitalized",
+        "sha": "5f577d63f17067a8488e17cafcbcb25d5872360b"
+      },
+      {
+        "name": "sharing",
+        "sha": "01b549a26861ef5f093d4c2c630700de37008d6b"
+      },
+      {
+        "name": "testing/components",
+        "sha": "36d999a9016cf0389005cede7567b654c462b03d"
+      }
+    ],
+    "integrationBaseSha": "5f577d63f17067a8488e17cafcbcb25d5872360b",
+    "firmwareReference": {
+      "branch": "main",
+      "sha": "a059979d97926b82cafd4aa5cf3fe59da04a55bb",
+      "version": "v1.1.3"
+    },
+    "publicMirror": {
+      "repository": "unDead41/geodecoder-digital",
+      "visibility": "public",
+      "heads": [
+        {
+          "name": "main",
+          "sha": "1856860cc4277f7ea9477b3ccbda52c0472d4d2a"
+        },
+        {
+          "name": "main-digital",
+          "sha": "8cce135102618ffad2c1de46063fcb5042ba0907"
+        }
+      ],
+      "liveBranchFromExistingReleaseDocumentation": "main-digital",
+      "pagesSettingsVerifiedInThisCheck": false
+    }
+  },
+  "targetContract": {
+    "branchPattern": "digitalized-<main-category>-<subcategory>",
+    "categories": [
+      "core",
+      "game",
+      "ux",
+      "module",
+      "utility",
+      "release"
+    ],
+    "source": {
+      "repository": "unDead41/geodecoder",
+      "visibility": "private",
+      "branch": "main-digitalized"
+    },
+    "publicFrontend": {
+      "repository": "unDead41/geodecoder-digital",
+      "visibility": "public",
+      "branch": "main-digitalized",
+      "pagesPath": "/",
+      "url": "https://undead41.github.io/geodecoder-digital/"
+    },
+    "renameMethod": "native_github_branch_rename",
+    "allowAliasFallback": false,
+    "allowDeleteFallback": false,
+    "preserveCommitHistory": true
+  },
+  "operationStateAtAuthoring": {
+    "checkedAt": "2026-10-26T03:41:27.629Z",
+    "nativeRenames": "blocked_authentication",
+    "pagesSourceChange": "blocked_authentication",
+    "integrationPublication": "handled_separately_by_release_operator",
+    "note": "Code publication, branch renaming, Pages settings and backend deployment require separate verified receipts. An empty operationReceipts array records no completed mutation."
+  },
+  "operationReceipts": []
+}

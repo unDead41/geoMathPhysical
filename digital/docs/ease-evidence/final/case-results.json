@@ -1,0 +1,302 @@
+{
+  "generated_at": "2026-10-26T01:48:32.496183+00:00",
+  "branch": "digitalize-ease-of-use",
+  "environment": {
+    "browser": "Headless Chromium /tmp/chromium via Playwright",
+    "rng": "Math.random = () => 0.41",
+    "viewport_widths": [
+      320,
+      390,
+      1365
+    ],
+    "locales": [
+      "ms",
+      "en"
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "text_percent": [
+      100,
+      125,
+      150
+    ],
+    "screenshots": "Actual rendered UI; CSS animation freeze only during capture; emulated touch restored after full-page screenshots."
+  },
+  "current_bundle_sha256": "8ae47f950b1bd2fb22d5618f75694029d794e44371654d7236a2912245ed93a4",
+  "counts": {
+    "named_cases_passed": 13,
+    "layout_checks": 216,
+    "rich_text_views": 90,
+    "bank_ids": 15,
+    "successful_screenshots": 16
+  },
+  "cases": [
+    {
+      "case": "navigation",
+      "status": "PASS",
+      "log": "../logs/ease-touch-navigation-final.log",
+      "run_started_at": "2026-10-26T01:47:29.436Z"
+    },
+    {
+      "case": "dialog-race",
+      "status": "PASS",
+      "log": "../logs/ease-navigation-final.log",
+      "run_started_at": "2026-10-26T01:39:38.138Z"
+    },
+    {
+      "case": "drag",
+      "status": "PASS",
+      "log": "../logs/ease-navigation-final.log",
+      "run_started_at": "2026-10-26T01:39:38.138Z"
+    },
+    {
+      "case": "storage",
+      "status": "PASS",
+      "log": "../logs/ease-navigation-final.log",
+      "run_started_at": "2026-10-26T01:39:38.138Z"
+    },
+    {
+      "case": "account",
+      "status": "PASS",
+      "log": "../logs/ease-classroom-green.log",
+      "run_started_at": "2026-10-26T01:43:04.649Z"
+    },
+    {
+      "case": "quiz-review",
+      "status": "PASS",
+      "log": "../logs/ease-quiz-review-final.log",
+      "run_started_at": "2026-10-26T01:41:35.803Z"
+    },
+    {
+      "case": "layout",
+      "status": "PASS",
+      "log": "../logs/ease-layout-final.log",
+      "run_started_at": "2026-10-26T01:38:04.367Z"
+    },
+    {
+      "case": "classroom-fixture",
+      "status": "PASS",
+      "log": "../logs/ease-classroom-green.log",
+      "run_started_at": "2026-10-26T01:43:04.649Z"
+    },
+    {
+      "case": "classroom-errors-fixture",
+      "status": "PASS",
+      "log": "../logs/ease-classroom-green.log",
+      "run_started_at": "2026-10-26T01:43:04.649Z"
+    },
+    {
+      "case": "classroom-review-fixture",
+      "status": "PASS",
+      "log": "../logs/ease-classroom-green.log",
+      "run_started_at": "2026-10-26T01:43:04.649Z"
+    },
+    {
+      "case": "review-one-fixture",
+      "status": "PASS",
+      "log": "../logs/ease-classroom-green.log",
+      "run_started_at": "2026-10-26T01:43:04.649Z"
+    },
+    {
+      "case": "practice-correct",
+      "status": "PASS",
+      "log": "../logs/practice-completed-cases.log",
+      "run_started_at": "2026-10-26T01:27:46.509Z",
+      "scope_note": "Case assertions and runtime-error check passed on the earlier frozen integration build. Later edits affected portal recovery, dialog cleanup and responsive result CSS; practice/math rules did not change. The long multi-case batch ended later without a final summary; these completed cases were not repeated."
+    },
+    {
+      "case": "practice-mixed",
+      "status": "PASS",
+      "log": "../logs/practice-completed-cases.log",
+      "run_started_at": "2026-10-26T01:27:46.509Z",
+      "scope_note": "Case assertions and runtime-error check passed on the earlier frozen integration build. Later edits affected portal recovery, dialog cleanup and responsive result CSS; practice/math rules did not change. The long multi-case batch ended later without a final summary; these completed cases were not repeated."
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "home-bm-desktop.png",
+      "capture_run": "2026-10-26T01-47-29-436Z",
+      "language": "ms",
+      "viewport_width": 1365,
+      "text_percent": 100,
+      "theme": "light",
+      "kind": "actual-ui",
+      "sha256": "1a21c37d9844bf6f1c89e93ff08ef89a939472a9d17b6af596d5512dd1d3ae43"
+    },
+    {
+      "file": "home-en-mobile.png",
+      "capture_run": "2026-10-26T01-47-29-436Z",
+      "language": "en",
+      "viewport_width": 390,
+      "text_percent": 100,
+      "theme": "light",
+      "kind": "actual-ui",
+      "sha256": "d6c93173e093976c72f0e606f53de4577bb4517e6eb09b3f870a36eeb26d65d2"
+    },
+    {
+      "file": "tutorial-bm-mobile.png",
+      "capture_run": "2026-10-26T01-47-29-436Z",
+      "language": "ms",
+      "viewport_width": 390,
+      "text_percent": 100,
+      "theme": "light",
+      "kind": "actual-ui",
+      "sha256": "0e82f3f8cb732adc3dc28617936e9da87efccf8fd1826994433c3ae58e1669dd"
+    },
+    {
+      "file": "settings-en-mobile-150.png",
+      "capture_run": "2026-10-26T01-47-29-436Z",
+      "language": "en",
+      "viewport_width": 390,
+      "text_percent": 150,
+      "theme": "dark",
+      "kind": "actual-ui",
+      "sha256": "6a791469ce4d31801d1abbcd78e7919264188dfe79b6b8e67025a80dcfe9d86c"
+    },
+    {
+      "file": "game-r1-bm-mobile.png",
+      "capture_run": "2026-10-26T01-47-29-436Z",
+      "language": "ms",
+      "viewport_width": 390,
+      "text_percent": 100,
+      "theme": "light",
+      "kind": "actual-ui",
+      "sha256": "2010ffffeba5b44ed51e7a50bde305680bc3eee7c0030d923c8e05f63bfccfa4"
+    },
+    {
+      "file": "game-r2-bm-mobile.png",
+      "capture_run": "2026-10-26T01-47-29-436Z",
+      "language": "ms",
+      "viewport_width": 390,
+      "text_percent": 100,
+      "theme": "light",
+      "kind": "actual-ui",
+      "sha256": "577947ec69f1d138f43ad1c6c367b48f8d9e3d64d16bdd8c501b014ba9b29acd"
+    },
+    {
+      "file": "quiz-result-collapsed.png",
+      "capture_run": "2026-10-26T01-41-35-803Z",
+      "language": "en",
+      "viewport_width": 1365,
+      "text_percent": 125,
+      "theme": "dark",
+      "kind": "actual-ui",
+      "sha256": "cc45240d975972892711d048deee02a145858449342e10d20ef2cd1ee7d85d4f"
+    },
+    {
+      "file": "quiz-review-expanded-en-320-150.png",
+      "capture_run": "2026-10-26T01-41-35-803Z",
+      "language": "en",
+      "viewport_width": 320,
+      "text_percent": 150,
+      "theme": "dark",
+      "kind": "actual-ui",
+      "sha256": "24d30f30c2defc96e36bffc0be5542c0272a634d1f2312718bb239b205dadd82"
+    },
+    {
+      "file": "review-practice-original-three.png",
+      "capture_run": "2026-10-26T01-41-35-803Z",
+      "language": "ms",
+      "viewport_width": 1365,
+      "text_percent": 100,
+      "theme": "dark",
+      "kind": "actual-ui",
+      "sha256": "9d502ea22350433b0838d83277525788629fef837ea0bb21d4de5a131d27d5e5"
+    },
+    {
+      "file": "rich-fraction-mobile-ms.png",
+      "capture_run": "2026-10-26T01-27-46-509Z",
+      "language": "ms",
+      "viewport_width": 390,
+      "text_percent": 100,
+      "theme": "light",
+      "kind": "actual-offline-ui",
+      "sha256": "cdd472c7f1435d917844f22c21edf4662facc03ad597e680ff5c46825a67926a"
+    },
+    {
+      "file": "rich-fraction-mobile-en.png",
+      "capture_run": "2026-10-26T01-27-46-509Z",
+      "language": "en",
+      "viewport_width": 390,
+      "text_percent": 100,
+      "theme": "light",
+      "kind": "actual-offline-ui",
+      "sha256": "dd6f88c29b1d0011454bd45f98137e5ac3974ded05960ad4177f0db8ca763c34"
+    },
+    {
+      "file": "classroom-teacher-fixture-en-320.png",
+      "capture_run": "2026-10-26T01-43-04-649Z",
+      "language": "en",
+      "viewport_width": 320,
+      "text_percent": 150,
+      "theme": "dark",
+      "kind": "actual-ui-with-intercepted-read-only-classroom-transport",
+      "sha256": "716430d1377b501d68d9fd9a93f2e65e7b0cd8c656616abe08eebf2b8504486e"
+    },
+    {
+      "file": "classroom-student-fixture-en-320.png",
+      "capture_run": "2026-10-26T01-43-04-649Z",
+      "language": "en",
+      "viewport_width": 320,
+      "text_percent": 150,
+      "theme": "dark",
+      "kind": "actual-ui-with-intercepted-read-only-classroom-transport",
+      "sha256": "266d9deb2c8f8b303ac36aa542d6cba07e376eb260d077ff4ff28affd134a452"
+    },
+    {
+      "file": "account-invalid-en-password-preserved.png",
+      "capture_run": "2026-10-26T01-43-04-649Z",
+      "language": "en",
+      "viewport_width": 1365,
+      "text_percent": 100,
+      "theme": "light",
+      "kind": "actual-ui",
+      "sha256": "b6eed12fc0887bec9f778ba5f1d0d47f8d4ade3f32dcf4b6717a0c127fc50142"
+    },
+    {
+      "file": "review-one-question-result-en-mobile.png",
+      "capture_run": "2026-10-26T01-43-04-649Z",
+      "language": "en",
+      "viewport_width": 390,
+      "text_percent": 100,
+      "theme": "light",
+      "kind": "actual-local-review-from-intercepted-classroom-result",
+      "sha256": "cdb25aef648386feeb375bd6b907c5e3c44288f64345f8a9ffa82966386a6df4"
+    },
+    {
+      "file": "review-one-question-result-en-320-150.png",
+      "capture_run": "2026-10-26T01-43-04-649Z",
+      "language": "en",
+      "viewport_width": 320,
+      "text_percent": 150,
+      "theme": "dark",
+      "kind": "actual-local-review-from-intercepted-classroom-result",
+      "sha256": "b0aa9ae68b60a80bb2cfca8601c617cd94b5c542ec77db54fd0de9eb6056898e"
+    }
+  ],
+  "fixed_findings": [
+    "Settings language preserves invalid field/form errors and transient typed password.",
+    "Queued dialog close cannot steal next-card focus or stash a newly reopened Settings panel.",
+    "Home and result grids fit 320px at 125/150% text.",
+    "Completed classroom result initializes its visual palette before analysis.",
+    "Classroom recovery notice stays bilingual and retains Refresh/Logout across language changes."
+  ],
+  "focused_review": {
+    "status": "No unresolved material findings in settings/tutorial/review transitions after fixes.",
+    "reviewed": [
+      "Solo tutorial precedes Game creation and reopens without spending an answer or clock reset.",
+      "Settings preserve selected card/order/colors, accepted R1, score and original result.",
+      "Native dialog close cleanup is synchronous and idempotent; stale close events are ignored.",
+      "Review detaches room/Duel scope, uses validated original wrong/skipped IDs, and cannot enter quiz scores.",
+      "Late classroom responses are guarded by attempt identity/epoch; language refresh does not create a new answer/retry action."
+    ]
+  },
+  "limitations": [
+    "Chromium emulation does not certify physical phones or Safari.",
+    "Classroom UI/finished-result/retry checks use intercepted fixture transport, not a live classroom backend.",
+    "No real account or email was created; no classroom backend was changed.",
+    "Live Duel is verified separately by the Duel QA owner."
+  ]
+}

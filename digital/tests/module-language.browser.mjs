@@ -1,0 +1,40 @@
+import assert from 'node:assert/strict';
+import {pathToFileURL} from 'node:url';
+import {MODULE_COPY} from '../dist/module-copy.mjs';
+import {installModuleLanguage} from '../dist/module-language.mjs';
+const {chromium}=await import(pathToFileURL(process.env.PLAYWRIGHT_MODULE_PATH||'/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs'));
+const browser=await chromium.launch({executablePath:process.env.PLAYWRIGHT_CHROMIUM_PATH||'/tmp/chromium',headless:true,args:['--no-sandbox']});
+try{
+ const page=await browser.newPage();const errors=[];page.on('pageerror',error=>errors.push(error.message));
+ await page.setContent('<html lang="ms"><body><h1 id="heading">Bina bentangan sendiri</h1><p id="description">Tiga tuangan memenuhi penerima.</p><p id="status">6 / 6 muka</p><button id="choice" aria-label="Baris 2, lajur 3, muka 4">Muka 4</button><input id="measure" value="7.5"><select id="kind"><option value="cone">Kon</option><option value="cylinder">Silinder</option></select><div class="property"><b>2</b><span id="surface-count">permukaan</span><small id="apex">puncak</small></div><div class="property"><b>8</b><span id="vertex-count">bucu</span></div><div class="property"><b>1</b><span id="one-vertex">bucu</span></div><div class="property"><b>12</b><span id="edge-count">rusuk</span><small id="straight">lurus</small></div><canvas id="canvas"></canvas><script>window.fixture = "Pilih bongkah";</script></body></html>');
+ await page.addScriptTag({content:'window.localizer=('+installModuleLanguage.toString()+')({language:"en",catalog:'+JSON.stringify(MODULE_COPY)+'});'});
+ assert.equal(await page.locator('#surface-count').innerText(),'surfaces');
+ assert.equal(await page.locator('#apex').innerText(),'apex');
+ assert.equal(await page.locator('#vertex-count').innerText(),'vertices');
+ assert.equal(await page.locator('#one-vertex').innerText(),'vertex');
+ assert.equal(await page.locator('#edge-count').innerText(),'edges');
+ assert.equal(await page.locator('#straight').innerText(),'straight');
+ assert.equal(await page.locator('#heading').innerText(),'Build your own net');
+ assert.equal(await page.locator('#status').innerText(),'6 / 6 faces');
+ assert.equal(await page.locator('#choice').getAttribute('aria-label'),'Row 2, column 3, face 4');
+ assert.equal(await page.locator('#kind').inputValue(),'cone');
+ assert.equal(await page.locator('#kind option[value="cone"]').innerText(),'Cone');
+ assert.equal(await page.locator('#measure').inputValue(),'7.5');
+ assert.equal(await page.evaluate(()=>window.fixture),'Pilih bongkah');
+ await page.evaluate(()=>{document.querySelector('#status').textContent='Isi penerima: 25 / 75 cm³. '+document.querySelector('#description').textContent;document.querySelector('#choice').setAttribute('aria-label','Baris 4, lajur 1, petak kosong');});
+ await page.waitForFunction(()=>document.querySelector('#status').textContent==='Receiver volume: 25 / 75 cm³. Three pours fill the receiver.');
+ assert.equal(await page.locator('#choice').getAttribute('aria-label'),'Row 4, column 1, empty cell');
+ await page.evaluate(()=>window.localizer.setLanguage('ms'));
+ assert.equal(await page.locator('#surface-count').innerText(),'permukaan');
+ assert.equal(await page.locator('#apex').innerText(),'puncak');
+ assert.equal(await page.locator('#vertex-count').innerText(),'bucu');
+ assert.equal(await page.locator('#heading').innerText(),'Bina bentangan sendiri');
+ assert.equal(await page.locator('#status').innerText(),'Isi penerima: 25 / 75 cm³. Tiga tuangan memenuhi penerima.');
+ assert.equal(await page.locator('#choice').getAttribute('aria-label'),'Baris 4, lajur 1, petak kosong');
+ for(let i=0;i<3;i++){await page.evaluate(()=>window.localizer.setLanguage('en'));await page.evaluate(()=>window.localizer.setLanguage('ms'));}
+ assert.equal(await page.locator('#measure').inputValue(),'7.5');
+ assert.equal(await page.locator('#kind').inputValue(),'cone');
+ assert.equal(await page.locator('#kind option[value="cone"]').innerText(),'Kon');
+ assert.deepEqual(errors,[]);
+ console.log('PASS real DOM: initial English, dynamic text/ARIA, mixed-source canonical BM restoration, repeated language switches, input/option IDs and script preservation; no runtime errors');
+}finally{await browser.close();}

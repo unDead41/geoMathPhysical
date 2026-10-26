@@ -1,0 +1,7 @@
+Extract from ease-ui-full.log; batch 2026-10-26T01:27:46.509Z.
+Completed practice assertions; other failed cases were fixed and re-run in the final logs.
+EVIDENCE docs/ease-evidence/2026-10-26T01-27-46-509Z/rich-fraction-mobile-ms.png
+EVIDENCE docs/ease-evidence/2026-10-26T01-27-46-509Z/rich-fraction-mobile-en.png
+DETAIL all 15 IDs, 90 BM/English rich-text views, offline standalone with zero HTTP(S) requests
+PASS practice-correct
+PASS practice-mixed

@@ -1,14 +1,33 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {build} from 'esbuild';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
-let html=fs.readFileSync(path.join(root,'dist/index.html'),'utf8');
-const css=fs.readFileSync(path.join(root,'dist/style.css'),'utf8');
-const javascript=['questions','core','visuals','i18n','storage','art','format','app'].map(name=>fs.readFileSync(path.join(root,`dist/${name}.mjs`),'utf8').replace(/^import .+;\r?\n/gm,'').replace(/^export /gm,'')).join('\n\n');
-if(javascript.includes('</script'))throw new Error('Unsafe inline script terminator');
-html=html.replace('<link rel="stylesheet" href="./style.css">',`<style>\n${css}\n</style>`).replace('<script type="module" src="./app.mjs"></script>',`<script type="module">\n${javascript}\n</script>`);
+const moduleRelease=JSON.parse(fs.readFileSync(path.join(root,'vendor/module-release.json'),'utf8'));
+const template=fs.readFileSync(path.join(root,'dist/index.html'),'utf8');
+const css=['style','portal','usability'].map(name=>fs.readFileSync(path.join(root,`dist/${name}.css`),'utf8')).join('\n');
+const options={entryPoints:[path.join(root,'dist/app.mjs')],bundle:true,write:false,platform:'browser',format:'iife',target:['es2022'],minify:true,legalComments:'eof',loader:{'.html':'text'}};
+const javascript=(await build(options)).outputFiles[0].text;
+fs.writeFileSync(path.join(root,'dist/app.bundle.js'),javascript);
+function page(script){
+  if(script.includes('</script'))throw new Error('Unsafe inline script terminator');
+  return template.replace('<link rel="stylesheet" href="./style.css">',()=>`<style>\n${css}\n</style>`).replace('<link rel="stylesheet" href="./portal.css">','').replace('<link rel="stylesheet" href="./usability.css">','').replace('<script type="module" src="./app.bundle.js"></script>',()=>`<script type="module">\n${script}\n</script>`);
+}
 fs.mkdirSync(path.join(root,'artifacts'),{recursive:true});
-fs.writeFileSync(path.join(root,'artifacts/GeoDecoder_Digital_V1.html'),html);
-// A second identical entry is for testing the exact downloadable artifact through preview.
-fs.writeFileSync(path.join(root,'dist/GeoDecoder_Digital_V1.html'),html);
-console.log(`GeoDecoder_Digital_V1.html: ${Buffer.byteLength(html)} bytes, self-contained`);
+// Pages loads music on demand, keeping the first Home download small.
+fs.writeFileSync(path.join(root,'artifacts/site-index.html'),page(javascript));
+// The downloadable HTML carries both complete tracks and the pinned module.
+let offline=javascript;
+for(const name of ['menu','map']){
+  const needle=JSON.stringify(`./assets/audio/${name}.mp3`);
+  if(offline.split(needle).length!==2)throw new Error(`Expected exactly one ${name} track URL in the bundle`);
+  const embedded=JSON.stringify('data:audio/mpeg;base64,'+fs.readFileSync(path.join(root,`dist/assets/audio/${name}.mp3`)).toString('base64'));
+  offline=offline.replaceAll(needle,()=>embedded);
+}
+const html=page(offline);
+const canonical=path.join(root,'artifacts/GeoDecoder_Digital_V2.html');
+fs.writeFileSync(canonical,html);
+for(const target of ['GeoDecoder_Digital_V1.html','GeoDecoder_Digital_V2.html','artifacts/GeoDecoder_Digital_V1.html','dist/GeoDecoder_Digital_V1.html','dist/GeoDecoder_Digital_V2.html']){
+  const destination=path.join(root,target);fs.rmSync(destination,{force:true});fs.linkSync(canonical,destination);
+}
+console.log(`GeoDecoder Digital: website ${Buffer.byteLength(page(javascript))} bytes; offline HTML ${Buffer.byteLength(html)} bytes including both complete music tracks and module v${moduleRelease.version}.`);

@@ -1,3 +1,39 @@
+# GeoDecoder Digital — penerbitan semasa
+
+Destinasi sumber gabungan: **main-digitalized**. Digital **v2.6.0**,
+modul **v1.5.0**, firmware **v1.1.3**. Tarikh: 26 Oktober 2026 (Malaysia).
+
+Root `index.html` dan setiap alias HTML digital mesti byte-identik dengan
+`digital/artifacts/GeoDecoder_Digital_V2.html`. Jalankan:
+
+```sh
+cd digital
+npm ci
+npm test
+npm run build
+npm run prepare:pages
+npm run check
+```
+
+Repository `unDead41/geodecoder` menyimpan sumber, schema dan sejarah firmware.
+Repository public `unDead41/geodecoder-digital` ialah mirror frontend sahaja.
+Branch penerbitan yang dikehendaki pada kedua-duanya ialah **main-digitalized**.
+Jangan menyalin backend, fixture akaun atau key server ke mirror frontend.
+
+URL laman awam: https://undead41.github.io/geodecoder-digital/ .
+Perubahan branch sumber tidak mengubah repository mirror atau tetapan Pages
+secara automatik. Rekod status sebenar terakhir, sumber beku dan bukti gabungan:
+[digital/docs/RELEASE_V2_6.md](../digital/docs/RELEASE_V2_6.md).
+Pemetaan nama branch: [BRANCH_ARCHITECTURE.md](../digital/docs/BRANCH_ARCHITECTURE.md).
+
+Migration profile/progress mesti dipasang sebelum frontend cloud baharu.
+Tetapan SMTP/redirect email kekal keperluan berasingan. Tiada visibility
+repository atau langganan diubah untuk membolehkan Pages.
+
+---
+
+## Rekod sejarah sebelum integrasi ini
+
 # GeoDecoder Digital — publication branch
 
 Branch penerbitan: **main-digital**.

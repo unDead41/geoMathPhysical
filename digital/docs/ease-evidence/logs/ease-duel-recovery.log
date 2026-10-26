@@ -1,0 +1,2 @@
+PASS expired-session recovery starts a fresh lobby; no runtime errors
+PASS bilingual PIN validation/copy and live surrender UI: opponent wins, remaining answers settle, leaving token cleared

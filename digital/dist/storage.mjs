@@ -8,8 +8,8 @@ export function validRecord(r, legacy=false) {
   return !!r && typeof r.id === 'string' && r.id.length < 120 &&
     (legacy ? ['1.0.0','1.1.0'].includes(r.version) && r.ruleset!==RULESET : typeof r.version==='string' && /^\d+\.\d+\.\d+$/.test(r.version) && r.ruleset===RULESET) &&
     !!r.player && typeof r.player.name === 'string' && r.player.name.length >= 2 && r.player.name.length <= 60 &&
-    ['Murid', 'Pelajar'].includes(r.player.category) && typeof r.player.className === 'string' && r.player.className.length > 0 && r.player.className.length <= 40 &&
-    r.total === 10 && Number.isInteger(r.score) && r.score >= 0 && r.score <= 10 &&
+    (legacy ? ['Murid','Pelajar'] : ['Murid','Pelajar','Tetamu']).includes(r.player.category) && typeof r.player.className === 'string' && (r.player.category==='Tetamu' || r.player.className.length > 0) && r.player.className.length <= 40 &&
+    (r.mode === undefined || r.mode === 'quiz') && r.total === 10 && Number.isInteger(r.score) && r.score >= 0 && r.score <= 10 &&
     ['mistakes', 'hints', 'skipped', 'firstTry'].every(k => Number.isInteger(r[k]) && r[k] >= 0) &&
     r.hints <= 10 && r.skipped <= 10 &&
     (legacy ? r.score+r.skipped===10 && r.firstTry<=r.score : r.mistakes<=10 && r.score+r.mistakes+r.skipped===10 && r.firstTry===r.score) &&

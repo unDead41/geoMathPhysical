@@ -1,12 +1,27 @@
 {
   "name": "geodecoder-digital",
-  "version": "1.2.0",
+  "version": "2.6.0",
   "private": true,
   "type": "module",
   "scripts": {
     "test": "node --test tests/*.test.mjs",
     "check": "node tools/check.mjs",
     "standalone": "node tools/standalone.mjs",
-    "test:browser": "node tests/browser.mjs"
+    "build": "node tools/standalone.mjs",
+    "test:browser": "node tests/usability.browser.mjs",
+    "test:duel": "node tests/duel.browser.mjs",
+    "test:practice": "node tests/practice.browser.mjs",
+    "test:rich-text": "node tests/rich-text.browser.mjs",
+    "preview:security": "node tools/security-preview.mjs",
+    "prepare:pages": "node tools/prepare-publication.mjs",
+    "release:check": "npm test && npm run build && npm run prepare:pages && npm run check"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "2.118.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2",
+    "@electric-sql/pglite": "0.5.11",
+    "jsdom": "30.1.3"
   }
 }

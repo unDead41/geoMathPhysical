@@ -1,0 +1,84 @@
+{
+  "results": [
+    {
+      "width": 1440,
+      "size": "normal",
+      "page": false,
+      "dialog": false
+    },
+    {
+      "width": 1440,
+      "size": "large",
+      "page": false,
+      "dialog": false
+    },
+    {
+      "width": 1440,
+      "size": "largest",
+      "page": false,
+      "dialog": false
+    },
+    {
+      "width": 768,
+      "size": "normal",
+      "page": false,
+      "dialog": false
+    },
+    {
+      "width": 768,
+      "size": "large",
+      "page": false,
+      "dialog": false
+    },
+    {
+      "width": 768,
+      "size": "largest",
+      "page": false,
+      "dialog": false
+    },
+    {
+      "width": 390,
+      "size": "normal",
+      "page": false,
+      "dialog": false
+    },
+    {
+      "width": 390,
+      "size": "large",
+      "page": false,
+      "dialog": false
+    },
+    {
+      "width": 390,
+      "size": "largest",
+      "page": false,
+      "dialog": false
+    },
+    {
+      "width": 320,
+      "size": "normal",
+      "page": false,
+      "dialog": false
+    },
+    {
+      "width": 320,
+      "size": "large",
+      "page": false,
+      "dialog": false
+    },
+    {
+      "width": 320,
+      "size": "largest",
+      "page": false,
+      "dialog": false
+    }
+  ],
+  "checks": [
+    "save/reload/reset",
+    "blocked storage",
+    "keyboard slider and Escape focus",
+    "system reduced motion changes",
+    "module label persistence and section resume"
+  ],
+  "errors": []
+}

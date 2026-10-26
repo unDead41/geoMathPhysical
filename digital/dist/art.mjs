@@ -5,6 +5,7 @@ export function describeShape(shape,kind,language='ms'){return SHAPE_COPY[langua
 
 export function icon(name, cls='') {
   const paths = {
+    settings:'<path d="M9.5 3h5l.6 2.1 1.8 1 2.1-.5 2.5 4.3-1.5 1.6v2l1.5 1.6-2.5 4.3-2.1-.5-1.8 1-.6 2.1h-5l-.6-2.1-1.8-1-2.1.5L2 15.1l1.5-1.6v-2L2 9.9l2.5-4.3 2.1.5 1.8-1L9.5 3Z"/><circle cx="12" cy="12" r="3"/>',
     arrow:'<path d="M4 12h15m-6-6 6 6-6 6"/>',
     chevron:'<path d="m9 5 7 7-7 7"/>',
     check:'<path d="m5 12 4 4L19 6"/>',

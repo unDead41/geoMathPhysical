@@ -1,3 +1,5 @@
+> Rekod sumber terdahulu. Untuk aliran, struktur fail, bukti dan had semasa v2.4.0, lihat [EASE_OF_USE.md](EASE_OF_USE.md).
+
 # GeoDecoder Digital BM/BI implementation plan
 
 User-approved specification: the nine requirements in the 25 October 2026 request; final branch is `digital-dwi`.

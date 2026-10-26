@@ -1,4 +1,28 @@
+import {USABILITY_COPY} from './usability-copy.mjs';
+import {PORTAL_COPY} from './portal-copy.mjs';
+import {ACCOUNT_COPY} from './account-copy.mjs';
+import {SETTINGS_COPY} from './settings.mjs';
 // Local KSSM BM/English presentation data. No network translation. See docs/DWI_LANGUAGE.md.
+// Presentation emphasis follows DWI_GLOSSARY.md; these strings never select an answer.
+export const RICH_TERMS = {
+  ms: ['segi empat sama','segi empat tepat','sektor bulatan','segi tiga',
+    'permukaan melengkung','permukaan rata','muka sisi','luas permukaan','luas tapak',
+    'tinggi sendeng','isi padu','bentangan','bulatan','bucu','puncak','tepi','muka',
+    'jejari','panjang','lebar','tinggi','tapak'],
+  en: ['sector of a circle','curved surface','flat surface','triangular faces',
+    'square faces','circular bases','square base','surface area','base area',
+    'slant height','side faces','rectangles','rectangle','triangles','triangle',
+    'squares','square','circles','circle','vertices','vertex','edges','edge',
+    'faces','face','apex','radius','length','width','height','volume','bases','base','nets','net']
+};
+export const MATH_SPEECH = {
+  ms: {equals:'sama dengan',times:'darab',plus:'tambah',minus:'tolak',squared:'kuasa dua',
+    cubed:'kuasa tiga',power:'kuasa',open:'buka kurungan',close:'tutup kurungan',
+    fraction:'pecahan pengangka',denominator:'penyebut',endFraction:'tamat pecahan'},
+  en: {equals:'equals',times:'times',plus:'plus',minus:'minus',squared:'squared',
+    cubed:'cubed',power:'to the power of',open:'open bracket',close:'close bracket',
+    fraction:'fraction numerator',denominator:'denominator',endFraction:'end fraction'}
+};
 export const MESSAGES = {
   "ms": {
     "Terus ke kandungan": "Terus ke kandungan",
@@ -189,8 +213,8 @@ export const MESSAGES = {
     "Eksport CSV": "Eksport CSV",
     "Padam skor": "Padam skor",
     "Semua rekod nama, kelas dan keputusan dalam papan skor pelayar ini akan dipadam. Muat turun CSV dahulu jika mahu menyimpannya.": "Semua rekod nama, kelas dan keputusan dalam papan skor pelayar ini akan dipadam. Muat turun CSV dahulu jika mahu menyimpannya.",
-    "question.counter": "SOALAN {number} / 10",
-    "question.progress": "Soalan {number} daripada 10. {score} pasangan betul, {mistakes} salah, {skipped} dilangkau.",
+    "question.counter": "SOALAN {number} / {total}",
+    "question.progress": "Soalan {number} daripada {total}. {score} pasangan betul, {mistakes} salah, {skipped} dilangkau.",
     "question.dot": "Soalan {number}{state}",
     "question.current": ": semasa",
     "question.correct": ": betul",
@@ -207,10 +231,10 @@ export const MESSAGES = {
     "result.summary": "{score} pasangan betul, {mistakes} soalan salah, {skipped} dilangkau.",
     "result.rank": " Kedudukan #{rank} dalam papan skor satu percubaan pelayar ini.",
     "result.try": " Cuba lagi untuk mengurangkan cubaan salah atau memperbaiki masa.",
-    "result.complete": "Pusingan selesai. {score} daripada 10 markah. Masa {time}.",
-    "round.next": "Soalan {number} daripada 10. Pilih bongkah untuk R1.",
+    "result.complete": "Pusingan selesai. {score} daripada {total} markah. Masa {time}.",
+    "round.next": "Soalan {number} daripada {total}. Pilih bongkah untuk R1.",
     "leave.progress": "Anda sedang bermain soalan",
-    "leave.count": "{number} daripada 10",
+    "leave.count": "{number} daripada {total}",
     "language.label": "Bahasa",
     "language.changed": "Bahasa Melayu dipilih.",
     "csv.headers": "Kedudukan|Nama|Kategori|Kelas|Markah|Jumlah|Kesilapan|Petunjuk|Langkau|Cubaan pertama|Masa (saat)|Tarikh (Malaysia)",
@@ -287,7 +311,7 @@ export const MESSAGES = {
     "Silinder mempunyai dua tapak bulatan sama saiz. Permukaan melengkungnya apabila dibuka menjadi segi empat tepat.": "Silinder mempunyai dua tapak bulatan sama saiz. Permukaan melengkungnya apabila dibuka menjadi segi empat tepat.",
     "Kon mempunyai satu tapak bulatan. Permukaan melengkungnya apabila dibuka menjadi sektor bulatan, bukan segi tiga.": "Kon mempunyai satu tapak bulatan. Permukaan melengkungnya apabila dibuka menjadi sektor bulatan, bukan segi tiga.",
     "question.wrong": ": salah",
-    "round.single": "Soalan {number} daripada 10. Satu percubaan.",
+    "round.single": "Soalan {number} daripada {total}. Satu percubaan.",
     "legacy.count": "Skor V1 terdahulu ({count})",
     "correction.attempt": "Pilihan anda di {target}: {shape}. {note}",
     "correction.announce": "Jawapan betul ialah {shape}. {note} Tiada markah. Tekan terus selepas melihat jawapan.",
@@ -501,8 +525,8 @@ export const MESSAGES = {
     "Eksport CSV": "Export CSV",
     "Padam skor": "Delete scores",
     "Semua rekod nama, kelas dan keputusan dalam papan skor pelayar ini akan dipadam. Muat turun CSV dahulu jika mahu menyimpannya.": "All names, classes and results in this browser’s leaderboard will be deleted. Download the CSV first if you want to keep them.",
-    "question.counter": "QUESTION {number} / 10",
-    "question.progress": "Question {number} of 10. Correct pairs: {score}; wrong: {mistakes}; skipped: {skipped}.",
+    "question.counter": "QUESTION {number} / {total}",
+    "question.progress": "Question {number} of {total}. Correct pairs: {score}; wrong: {mistakes}; skipped: {skipped}.",
     "question.dot": "Question {number}{state}",
     "question.current": ": current",
     "question.correct": ": correct",
@@ -519,10 +543,10 @@ export const MESSAGES = {
     "result.summary": "Correct pairs: {score}; wrong questions: {mistakes}; skipped: {skipped}.",
     "result.rank": " Rank #{rank} in this browser’s single-attempt leaderboard.",
     "result.try": " Play again to reduce wrong attempts or improve your time.",
-    "result.complete": "Round complete. {score} out of 10 points. Time {time}.",
-    "round.next": "Question {number} of 10. Choose a solid for R1.",
+    "result.complete": "Round complete. {score} out of {total} points. Time {time}.",
+    "round.next": "Question {number} of {total}. Choose a solid for R1.",
     "leave.progress": "You are on question",
-    "leave.count": "{number} of 10",
+    "leave.count": "{number} of {total}",
     "language.label": "Language",
     "language.changed": "English selected.",
     "csv.headers": "Rank|Name|Category|Class|Score|Total|Errors|Hints|Skipped|First try|Time (seconds)|Date (Malaysia)",
@@ -599,7 +623,7 @@ export const MESSAGES = {
     "Silinder mempunyai dua tapak bulatan sama saiz. Permukaan melengkungnya apabila dibuka menjadi segi empat tepat.": "A cylinder has two equal circular bases. Its curved surface unfolds into a rectangle.",
     "Kon mempunyai satu tapak bulatan. Permukaan melengkungnya apabila dibuka menjadi sektor bulatan, bukan segi tiga.": "A cone has one circular base. Its curved surface unfolds into a sector of a circle, not a triangle.",
     "question.wrong": ": wrong",
-    "round.single": "Question {number} of 10. One attempt.",
+    "round.single": "Question {number} of {total}. One attempt.",
     "legacy.count": "Previous V1 scores ({count})",
     "correction.attempt": "Your choice at {target}: {shape}. {note}",
     "correction.announce": "The correct answer is {shape}. {note} No points. Continue after studying the answer.",
@@ -829,6 +853,90 @@ const QUESTION_BM_COPY = {
   C1: {hint:'Lihat tapaknya yang bulat. Permukaan melengkungnya mengecil ke puncak.'},
   C2: {hint:'Tinggi sendeng diukur dari tepi tapak ke puncak di sepanjang garis lurus pada permukaan melengkung.'}
 };
+const duelMessages = {
+  'duel.mode':['Duel · 2 pemain','Duel · 2 players'],
+  'duel.title':['Duel bersama kawan','Duel with a friend'],
+  'duel.pageTitle':['GeoDecoder Digital — Duel','GeoDecoder Digital — Duel'],
+  'duel.modeNote':['Cipta PIN enam digit atau masukkan PIN kawan. Dua pemain menjawab 10 soalan yang sama. Internet diperlukan.','Create a six-digit PIN or enter your friend’s PIN. Two players answer the same 10 questions. Internet required.'],
+  'duel.privacy':['Nama panggilan anda dikongsi dengan pelayan dan kawan dalam bilik. Kelas dan kategori kekal pada peranti ini.','Your nickname is shared with the server and your friend in the room. Class and category stay on this device.'],
+  'duel.open':['Buka Duel','Open Duel'],
+  'duel.create':['Cipta PIN','Create PIN'],
+  'duel.join':['Masuk bilik','Join room'],
+  'duel.pinLabel':['PIN enam digit','Six-digit PIN'],
+  'duel.pinPlaceholder':['Contoh: 123456','Example: 123456'],
+  'duel.share':['Kongsi PIN ini dengan seorang kawan. PIN lobi sah selama 10 minit.','Share this PIN with one friend. The lobby PIN is valid for 10 minutes.'],
+  'duel.copy':['Salin PIN','Copy PIN'],
+  'duel.copied':['PIN disalin. Hantar kepada kawan anda.','PIN copied. Send it to your friend.'],
+  'duel.copySelected':['PIN dipilih. Gunakan arahan Salin pada peranti anda.','PIN selected. Use Copy on your device.'],
+  'duel.ready':['Saya sedia','I’m ready'],
+  'duel.isReady':['Sedia','Ready'],
+  'duel.notReady':['Belum sedia','Not ready'],
+  'duel.waitFriend':['Menunggu kawan memasukkan PIN…','Waiting for your friend to enter the PIN…'],
+  'duel.waitReady':['Kedua-dua pemain perlu menekan Sedia.','Both players need to press Ready.'],
+  'duel.countdown':['Duel bermula dalam {seconds}…','Duel starts in {seconds}…'],
+  'duel.live':['Duel sedang berlangsung','Duel in progress'],
+  'duel.you':['Anda','You'],
+  'duel.friend':['Kawan','Friend'],
+  'duel.progress':['{answered} / 10 soalan selesai','{answered} / 10 questions completed'],
+  'duel.connected':['Disambungkan','Connected'],
+  'duel.connecting':['Menghubungkan…','Connecting…'],
+  'duel.offline':['Sambungan terputus. Kemajuan diterima pelayan dikekalkan.','Connection lost. Progress received by the server is kept.'],
+  'duel.retry':['Sambung semula','Reconnect'],
+  'duel.leave':['Keluar Duel','Leave Duel'],
+  'duel.leaveTitle':['Keluar daripada duel ini?','Leave this duel?'],
+  'duel.leaveCopy':['Jika anda belum selesai, keluar semasa duel menyerahkan kemenangan kepada lawan.','If you have not finished, leaving an active duel gives your opponent the win.'],
+  'duel.confirmLeave':['Keluar dan sahkan','Confirm leave'],
+  'duel.rules':['Markah lebih tinggi menang. Jika markah sama, masa lebih pantas menang. Had duel 15 minit.','Higher score wins. If scores tie, the faster time wins. Duel limit: 15 minutes.'],
+  'duel.clockNote':['Masa duel terus berjalan semasa menu dibuka, tab tersembunyi atau sambungan terputus.','The duel clock keeps running while menus are open, the tab is hidden or the connection is lost.'],
+  'duel.helpNote':['Memilih kad sahaja belum menggunakan percubaan. Petunjuk percuma; langkau memberi sifar markah. Masa duel terus berjalan sepanjang menu, semakan dan gangguan sambungan.','Selecting a card does not use an attempt. Hints are free; skipping earns zero points. The duel clock keeps running during menus, reviews and connection problems.'],
+  'duel.menu':['Menu Duel','Duel menu'],
+  'duel.waitFinish':['Menunggu keputusan lawan…','Waiting for your opponent’s result…'],
+  'duel.youWin':['Anda menang!','You win!'],
+  'duel.youLose':['Kawan anda menang.','Your friend wins.'],
+  'duel.draw':['Duel seri!','The duel is a draw!'],
+  'duel.byScore':['Ditentukan oleh markah akhir.','Decided by the final score.'],
+  'duel.byTime':['Markah sama; ditentukan oleh masa pelayan hingga jawapan terakhir.','Scores are tied; decided by server time to the last answer.'],
+  'duel.byForfeit':['Seorang pemain telah menyerah kalah.','A player has forfeited.'],
+  'duel.byDeadline':['Had masa tamat. Jawapan yang belum dibuat mendapat sifar markah.','Time is up. Unanswered questions receive zero points.'],
+  'duel.resultScope':['Keputusan duel disahkan pelayan dan tidak masuk papan skor kuiz.','Duel results are confirmed by the server and do not enter the quiz leaderboard.'],
+  'duel.new':['Duel baharu','New duel'],
+  'duel.closed':['Bilik ditutup atau PIN tamat tempoh. Cipta PIN baharu untuk bermain lagi.','The room is closed or the PIN has expired. Create a new PIN to play again.'],
+  'duel.presenceAway':['Belum menerima kemas kini kawan. Masa duel masih berjalan.','No recent update from your friend. The duel clock is still running.'],
+  'duel.error':['Sambungan belum berjaya. Cuba sambung semula.','Could not connect. Try reconnecting.'],
+  'duel.error.invalid_request':['Semak maklumat dan PIN enam digit anda.','Check your details and six-digit PIN.'],
+  'duel.error.invalid_token':['Sesi duel tidak sah. Buka semula lobi Duel.','This duel session is invalid. Reopen the Duel lobby.'],
+  'duel.error.room_unavailable':['PIN tidak ditemui atau bilik sudah ditutup.','The PIN was not found or the room is closed.'],
+  'duel.error.room_full':['Bilik ini sudah mempunyai dua pemain.','This room already has two players.'],
+  'duel.error.room_expired':['PIN tamat tempoh. Minta kawan mencipta PIN baharu.','The PIN has expired. Ask your friend to create a new PIN.'],
+  'duel.error.not_started':['Tunggu sehingga kira detik tamat.','Wait until the countdown ends.'],
+  'duel.error.not_ready':['Tunggu animasi atau semakan jawapan selesai.','Wait for the animation or answer review to finish.'],
+  'duel.error.rate_limited':['Terlalu banyak permintaan. Tunggu sebentar sebelum mencuba lagi.','Too many requests. Wait a moment before trying again.'],
+  'duel.error.sequence_conflict':['Kemajuan berubah pada peranti ini. Sambung semula untuk menyelaraskannya.','Progress changed on this device. Reconnect to sync it.'],
+  'duel.error.question_mismatch':['Soalan sedang diselaraskan. Tekan Sambung semula.','The question needs to sync. Press Reconnect.'],
+  'duel.syncing':['Mengesahkan dengan pelayan…','Confirming with the server…']
+};
+for(const [key,[ms,en]] of Object.entries(duelMessages)){MESSAGES.ms[key]=ms;MESSAGES.en[key]=en;}
+const practiceMessages = {
+  'mode.label':['Mod permainan','Play mode'],
+  'mode.quiz':['Kuiz — 10 soalan','Quiz — 10 questions'],
+  'mode.practice':['Latihan Pengukuhan · 15','Practice · All 15 questions'],
+  'mode.quizTitle':['Kuiz','Quiz'],
+  'mode.practiceTitle':['Latihan Pengukuhan','Reinforcement Practice'],
+  'mode.quizNote':['10 soalan rawak, dua bagi setiap bongkah. Lengkapkan kuiz untuk merekodkan skor.','10 random questions, two per solid. Complete the quiz to record your score.'],
+  'mode.practiceNote':['Jawab semua 15 soalan tanpa ulangan, tiga bagi setiap bongkah. Skor latihan tidak masuk papan skor kuiz.','Answer all 15 questions once, three per solid. Practice scores do not enter the quiz leaderboard.'],
+  'mode.startPractice':['Mulakan latihan','Start practice'],
+  'mode.startAnnouncement':['{mode} bermula. {total} soalan, satu percubaan setiap soalan. Pilih bongkah untuk R1 dahulu.','{mode} started. {total} questions, one attempt per question. Choose a solid for R1 first.'],
+  'mode.points':['/ {total} markah','/ {total} points'],
+  'mode.target':['{total} daripada {total} markah','{total} out of {total} points'],
+  'mode.analysisScope':['Analisis berdasarkan {total} soalan; {perShape} soalan bagi setiap bongkah.','Analysis of {total} questions; {perShape} questions per solid.'],
+  'mode.quizBoard':['Papan skor kuiz · 10 soalan','Quiz leaderboard · 10 questions'],
+  'mode.practiceResult':['Latihan Pengukuhan selesai. Keputusan latihan ini tidak masuk papan skor kuiz.','Reinforcement Practice complete. This practice result does not enter the quiz leaderboard.'],
+  'mode.repeatPractice':['Ulang latihan','Repeat practice'],
+  'mode.meta':['Main kuiz 10 soalan atau Latihan Pengukuhan semua 15 soalan GeoDecoder Digital.','Play a 10-question quiz or Reinforcement Practice with all 15 GeoDecoder Digital questions.']
+};
+for(const [key,[ms,en]] of Object.entries(practiceMessages)){
+  MESSAGES.ms[key]=ms;MESSAGES.en[key]=en;
+}
 const moduleMessages = {
   'view.top':['Pandangan atas','Top view'],
   'view.bottom':['Pandangan bawah','Bottom view'],
@@ -848,6 +956,10 @@ const moduleMessages = {
 for (const [key,[ms,en]] of Object.entries(moduleMessages)) {
   MESSAGES.ms[key]=ms;MESSAGES.en[key]=en;
 }
+for(const [key,[ms,en]] of Object.entries(USABILITY_COPY)){MESSAGES.ms[key]=ms;MESSAGES.en[key]=en;}
+for(const [key,en] of Object.entries(PORTAL_COPY)){MESSAGES.ms[key]=key;MESSAGES.en[key]=en;}
+for(const [key,en] of Object.entries(ACCOUNT_COPY))if(!Object.hasOwn(MESSAGES.ms,key)){MESSAGES.ms[key]=key;MESSAGES.en[key]=en;}
+for(const [key,[ms,en]] of Object.entries(SETTINGS_COPY)){MESSAGES.ms[key]=ms;MESSAGES.en[key]=en;}
 export const LANGUAGE_KEY = 'geodecoder.digital.language';
 export function createI18n(storage) {
   let language = 'ms';
@@ -864,7 +976,8 @@ export function createI18n(storage) {
 }
 export function translate(language, key, params = {}) {
   const catalog = MESSAGES[language] || MESSAGES.ms;
-  const message = catalog[key] ?? MESSAGES.ms[key] ?? '';
+  const form=Number(params.total)===1&&catalog[key+'.one']?key+'.one':key;
+  const message = catalog[form] ?? MESSAGES.ms[form] ?? '';
   return message.replace(/\{(\w+)\}/g, (_, name) => String(params[name] ?? ''));
 }
 export function localizeQuestion(question, language = 'ms') {

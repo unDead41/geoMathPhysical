@@ -1,0 +1,19 @@
+EASE browser cases: navigation, dialog-race, drag, storage, account
+EVIDENCE_DIRECTORY /workspace/scratch/dd6ea0c4da20/geodecoder-ease/digital/docs/ease-evidence/2026-10-26T01-39-38-138Z
+RUN navigation
+EVIDENCE docs/ease-evidence/2026-10-26T01-39-38-138Z/home-bm-desktop.png
+EVIDENCE docs/ease-evidence/2026-10-26T01-39-38-138Z/home-en-mobile.png
+EVIDENCE docs/ease-evidence/2026-10-26T01-39-38-138Z/tutorial-bm-mobile.png
+EVIDENCE docs/ease-evidence/2026-10-26T01-39-38-138Z/settings-en-mobile-150.png
+EVIDENCE docs/ease-evidence/2026-10-26T01-39-38-138Z/game-r1-bm-mobile.png
+EVIDENCE docs/ease-evidence/2026-10-26T01-39-38-138Z/game-r2-bm-mobile.png
+PASS navigation
+RUN dialog-race
+PASS dialog-race
+RUN drag
+PASS drag
+RUN storage
+PASS storage
+RUN account
+PASS account
+RESULT 5/5 browser cases passed; 0 failures

@@ -1,0 +1,4 @@
+# Generated bundles preserve upstream JavaScript string/template whitespace.
+GeoDecoder_Digital_V*.html linguist-generated=true whitespace=-blank-at-eol
+dist/GeoDecoder_Digital_V*.html linguist-generated=true whitespace=-blank-at-eol
+dist/app.bundle.js linguist-generated=true whitespace=-blank-at-eol

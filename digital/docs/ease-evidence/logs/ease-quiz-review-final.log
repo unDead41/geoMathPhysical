@@ -1,0 +1,8 @@
+EASE browser cases: quiz-review
+EVIDENCE_DIRECTORY /workspace/scratch/dd6ea0c4da20/geodecoder-ease/digital/docs/ease-evidence/2026-10-26T01-41-35-803Z
+RUN quiz-review
+EVIDENCE docs/ease-evidence/2026-10-26T01-41-35-803Z/quiz-result-collapsed.png
+EVIDENCE docs/ease-evidence/2026-10-26T01-41-35-803Z/quiz-review-expanded-en-320-150.png
+EVIDENCE docs/ease-evidence/2026-10-26T01-41-35-803Z/review-practice-original-three.png
+PASS quiz-review
+RESULT 1/1 browser cases passed; 0 failures

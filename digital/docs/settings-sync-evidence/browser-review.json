@@ -1,0 +1,155 @@
+{
+  "startedAt": "2026-10-26T02:37:24.051Z",
+  "browser": "Headless Chromium /tmp/chromium via Playwright",
+  "bundleSha256": "14fbffd81f396a47b3db9dc88f7bd14201288355deffd0d2ed24d56f2587ec33",
+  "cases": [
+    {
+      "name": "initial-live",
+      "status": "PASS",
+      "durationMs": 2678
+    },
+    {
+      "name": "notes-labs",
+      "status": "PASS",
+      "durationMs": 4252
+    },
+    {
+      "name": "layout",
+      "status": "PASS",
+      "durationMs": 15384
+    },
+    {
+      "name": "large-text-words",
+      "status": "PASS",
+      "durationMs": 1241
+    },
+    {
+      "name": "language-coverage",
+      "status": "PASS",
+      "durationMs": 3500
+    },
+    {
+      "name": "device-motion",
+      "status": "PASS",
+      "durationMs": 1105
+    },
+    {
+      "name": "message-boundary",
+      "status": "PASS",
+      "durationMs": 935
+    },
+    {
+      "name": "offline-denied-game",
+      "status": "PASS",
+      "durationMs": 6592
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "module-en-desktop-150.png",
+      "capture": "viewport (no temporary viewport resize)",
+      "skipLink": {
+        "focused": false,
+        "rect": {
+          "x": 20,
+          "y": -80,
+          "width": 222.28125,
+          "height": 61.1875,
+          "top": -80,
+          "right": 242.28125,
+          "bottom": -18.8125,
+          "left": 20
+        },
+        "top": "-80px",
+        "active": "module-title"
+      },
+      "sha256": "9e637fcf0cba52c51f381275f8001b41c84d881c578f889eb1782112e8f5a2a8"
+    },
+    {
+      "file": "shared-settings-en-mobile-150.png",
+      "capture": "viewport (no temporary viewport resize)",
+      "skipLink": {
+        "focused": false,
+        "rect": {
+          "x": 20,
+          "y": -80,
+          "width": 222.28125,
+          "height": 61.1875,
+          "top": -80,
+          "right": 242.28125,
+          "bottom": -18.8125,
+          "left": 20
+        },
+        "top": "-80px",
+        "active": "language-select"
+      },
+      "sha256": "0a482c6a01093a43dbbbf3db76884c40b3ef4b7ca28143ad72a8da9d2f742d0f"
+    },
+    {
+      "file": "module-composite-en-desktop.png",
+      "capture": "viewport (no temporary viewport resize)",
+      "skipLink": {
+        "focused": false,
+        "rect": {
+          "x": 20,
+          "y": -80,
+          "width": 191.90625,
+          "height": 55,
+          "top": -80,
+          "right": 211.90625,
+          "bottom": -25,
+          "left": 20
+        },
+        "top": "-80px",
+        "active": "module-title"
+      },
+      "sha256": "f1a711a865707ec14b4ee0b4f2377f9af8819c442e2aff4c023fd552ab703eb3"
+    },
+    {
+      "file": "module-notes-bm-390-125.png",
+      "capture": "viewport (no temporary viewport resize)",
+      "skipLink": {
+        "focused": false,
+        "rect": {
+          "x": 20,
+          "y": -80,
+          "width": 240.171875,
+          "height": 55,
+          "top": -80,
+          "right": 260.171875,
+          "bottom": -25,
+          "left": 20
+        },
+        "top": "-80px",
+        "active": "module-title"
+      },
+      "sha256": "265839965c1d5e23c342e45085ab05da500b6144b0c5209c22fa61f4c7620af7"
+    },
+    {
+      "file": "module-lab-en-320-150.png",
+      "capture": "viewport (no temporary viewport resize)",
+      "skipLink": {
+        "focused": false,
+        "rect": {
+          "x": 20,
+          "y": -80,
+          "width": 222.28125,
+          "height": 61.1875,
+          "top": -80,
+          "right": 242.28125,
+          "bottom": -18.8125,
+          "left": 20
+        },
+        "top": "-80px",
+        "active": "module-title"
+      },
+      "sha256": "65ab0568458576480eea9befa3a79563e3f6817a06137334147779aaee6df292"
+    }
+  ],
+  "layoutChecks": 108,
+  "limitations": [
+    "Chromium desktop and touch viewport emulation; physical phones/Safari/Firefox not certified.",
+    "Classroom and Duel backend are unchanged; no new live account, email or Duel match was created in this display-only check."
+  ],
+  "finishedAt": "2026-10-26T02:38:00.048Z"
+}

@@ -43,7 +43,12 @@ components:
 A real classroom geometry kit translated into a bright digital workbench. The signature is the two scanner pads: R1 takes a solid, R2 takes its net. Exact SVG models serve learning and are never decorative AI geometry.
 
 ### Product context and register
-Malaysian Murid/Pelajar, readable at Tingkatan 1 level, using mouse, keyboard or touchscreen. All product language is BM. Sessions are self-paced, ten questions, local high scores. Product register throughout registration, game and scoreboard. Avoid dashboards, neon arcade treatments and tiny LCD-only text.
+Malaysian pupils/students, readable at Tingkatan1 level, using mouse,
+keyboard or touch. BM is default with English available. Home groups Main,
+Belajar and Akaun/Kelas; guest entry needs a nickname only. Quiz10, practice15
+and missed-question review share one geometry workbench. Accounts/classrooms
+and two-player Duel retain separate server rules. Preserve the physical kit
+identity and exact solid/net illustrations.
 
 ### Token ownership/runtime mapping
 Model B: `dist/style.css :root` owns runtime tokens. This document mirrors the accepted palette. Primary→--primary→buttons/focus; ink→--ink→text; background→--bg→body; surface→--surface→panels; success→--success→correct; danger→--danger→wrong; accent→--accent→milestone; muted→--muted→secondary text; border→--border→all controls. Type→--font-display/--font-body/--font-mono. Corners→--radius/--radius-lg. `tools/check.mjs` checks exact drift for palette.
@@ -72,7 +77,11 @@ Hover raises choices 3px; focus is a 3px blue outline; active selections use out
 Solid primary for start/replay/scan, outline neutral for secondary, outline danger for erase/leave. Labels describe actions. Icon buttons have accessible BM names. Fixed minimum 44px height.
 
 ### Navigation and data display
-Top header keeps brand and Cara main/Papan skor actions. Scores table is bounded to 50 completed sessions and top ten initially, with an explicit show-all action. Local-only scope is visible.
+Header keeps brand, Tetapan, Cara main and Papan skor. Settings groups
+language, theme, audio, text size and animation. Home separates play, learning
+and class accounts. The quiz board stays bounded to50 records with show-all.
+Results show score/actions before expandable detailed analysis. Storage scope
+and classroom/Duel authority remain explicit.
 
 ### Forms and overlays
 All fields have visible labels, inline errors and first-error focus, no native validation bubbles. Category is a radio pair. Shared native `<dialog>` provides authored contents, modal inertness, Escape and restored focus. Confirm before abandoning an active round or erasing scores.
@@ -92,3 +101,27 @@ BM, short specific instructions. No shape names printed on answer cards; use shu
 - Do require R1 before R2 and grant one mark for a pair.
 - Don't give the answer through matching card positions or colours.
 - Don't rely on dragging, colour or sound alone.
+
+## V2 classroom and themes
+
+`dist/portal.css` owns account/class/room layouts and the `html[data-theme="dark"]` overrides; the original light tokens remain the baseline. Dark uses deep blue canvas and lighter panels with bright blue focus, readable grey text and semantic mint/red/violet feedback. Geometry palettes retain their mathematical meaning without global inversion. `dist/theme.mjs` owns preference and header control. Prepaint theme selection prevents an initial light flash.
+
+Teacher entry uses a class sidebar, selected-class PIN/invitation panel, searchable roster and room list. The room screen leads with name, status and PIN, then live/final scores. The student screen leads with PIN join, class membership, invitations and rooms. Panels stack on phones; only wide data tables scroll horizontally inside labelled regions. Empty/loading/error/expired-PIN/closed-room states retain a concrete next action.
+
+## Home and guest entry V2.1
+
+Preserve the supplied Home hero, geometry kit and two-column desktop
+layout. The right panel groups Main, Belajar and Akaun/Kelas. Guest opens a
+nickname/mode card with a visible Back to Home action. Keep the existing
+colours and focus tokens in both themes. On phones use document scrolling,
+wrapping actions and readable tap targets; selected-card→active-scanner is
+explicit. The first-play guide uses three short steps and the same SVG models.
+
+## Integrated usage and account utilities (v2.6.0)
+
+The shared Settings dialog keeps one language/text/motion owner and adds contrast,
+independent audio volumes/mute and learning defaults. Profile and Security use
+existing portal panels, visible native labels and the same light/dark tokens.
+Only one account subpage is active; leaving Security erases sensitive fields.
+The embedded v1.5 module uses a native startup bridge for current settings,
+with its independent progress channel and theme context kept source/session-scoped.

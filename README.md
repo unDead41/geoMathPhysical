@@ -1,6 +1,10 @@
 # GeoDecoder
 
 Versi semasa: **v1.1.3**.
+
+GeoDecoder Digital: **v2.6.0**, modul **v1.5.0**, branch penerbitan **main-digitalized**.
+Rujukan digital: [panduan penerbitan](docs/DIGITAL_PUBLISHING.md) dan
+[laporan integrasi](digital/docs/RELEASE_V2_6.md).
 Rujukan kemas kini: [SOR versi](docs/SOR_VERSIONING.md) dan [changelog](CHANGELOG.md).
 
 Kuiz geometri 3D menggunakan ESP32 klasik/WROOM-32, dua pembaca MFRC522,
@@ -319,5 +323,3 @@ Kemudian Build dan Upload semula melalui environment yang sama.
 Rujukan rasmi:
 [PlatformIO untuk VS Code](https://docs.platformio.org/en/latest/integration/ide/vscode.html),
 [ESP32 Dev Module](https://docs.platformio.org/en/latest/boards/espressif32/esp32dev.html).
-
-

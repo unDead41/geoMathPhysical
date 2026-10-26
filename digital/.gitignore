@@ -2,3 +2,7 @@
 .openai/preview*
 node_modules/
 artifacts/
+backend/.migration-parts/
+dist/qa-*
+dist/app.qa.bundle.js
+dist/geodecoder-design-qa-*/

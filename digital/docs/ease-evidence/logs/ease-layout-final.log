@@ -1,0 +1,6 @@
+EASE browser cases: layout
+EVIDENCE_DIRECTORY /workspace/scratch/dd6ea0c4da20/geodecoder-ease/digital/docs/ease-evidence/2026-10-26T01-38-04-367Z
+RUN layout
+DETAIL 216 Home/game/result/Settings layout checks: 2 languages × 2 themes × 3 text sizes × 3 viewport widths
+PASS layout
+RESULT 1/1 browser cases passed; 0 failures

@@ -1,3 +1,5 @@
+> Rekod sumber terdahulu. Untuk aliran, struktur fail, bukti dan had semasa v2.4.0, lihat [EASE_OF_USE.md](EASE_OF_USE.md).
+
 # Pengesahan GeoDecoder Digital BM/BI v1.2.0
 
 Tarikh: 25 Oktober 2026 (Malaysia). Branch: `digital-dwi`.

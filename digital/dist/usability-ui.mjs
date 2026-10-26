@@ -1,0 +1,44 @@
+import {shapeArt,icon} from './art.mjs';
+
+
+/** Dialog views only. Gameplay, language and audio continue to have one owner. */
+export function createUsabilityUI({storage,preferenceStore,t,openDialog,closeDialog,onStart,onTheme,onTestSound}){
+  const $=id=>document.getElementById(id),panel=$('settings-panel'),home=$('settings-home');
+  let step=0,beginAfterGuide=false,themeChoice='system';
+  try{const saved=storage.getItem('geodecoder.theme.v1');if(['light','dark'].includes(saved))themeChoice=saved;}catch{}
+  function persist(){refreshSettings();}
+  function refreshSettings(){
+    const preferences=preferenceStore.value;
+    $('text-size-select').value=String(({normal:100,large:125,largest:150})[preferences.text]);$('theme-select').value=themeChoice;
+    for(const node of panel.querySelectorAll('[data-pref]')){const value=preferences[node.dataset.pref];if(node.type==='checkbox')node.checked=value===true;else node.value=String(value);}
+    for(const node of panel.querySelectorAll('[data-volume]'))node.textContent=preferences[node.dataset.volume]+'%';
+    $('settings-notice').textContent=t(preferenceStore.failed?'ease.preferencesDenied':'ease.devicePreferences');
+  }
+  function stash(){if(panel.parentElement!==home){panel.hidden=true;home.append(panel);}}
+  function openSettings(){
+    openDialog('settings',t('ease.settings'),'');
+    $('dialog-content').append(panel);panel.hidden=false;refreshSettings();$('language-select').focus({preventScroll:true});
+  }
+  function renderTutorial(){
+    const active=step+1,art=step===0?shapeArt('cube','solid',true,'violet'):step===1?shapeArt('cube','net',true,'orange'):shapeArt('cube','solid',true,'violet')+icon('arrow')+shapeArt('cube','net',true,'orange');
+    openDialog('tutorial',t('ease.tutorial'),`<div class="tutorial-content"><p id="tutorial-progress" class="eyebrow" aria-live="polite">${t('ease.tutorialProgress',{step:active})}</p><div class="tutorial-art" aria-hidden="true">${art}</div><h3>${t('ease.tutorial'+active+'Title')}</h3><p>${t('ease.tutorial'+active+'Copy')}</p><p class="tutorial-keyboard">${t('ease.keyboardNote')}</p>${beginAfterGuide?`<p class="tutorial-clock">${t('ease.tutorialSoloClock')}</p>`:''}<div class="tutorial-actions">${step?`<button class="button button-outline" data-dialog-action="tutorial-previous">${t('ease.previous')}</button>`:''}${step<2?`<button class="button button-primary" data-dialog-action="tutorial-next" data-autofocus>${t('ease.next')} ${icon('arrow')}</button>`:`<button class="button button-primary" data-dialog-action="tutorial-finish" data-autofocus>${t(beginAfterGuide?'ease.start':'ease.close')}</button>`}</div>${beginAfterGuide&&step<2?`<button class="button button-quiet tutorial-skip" data-dialog-action="tutorial-skip">${t('ease.skipGuide')}</button>`:''}</div>`);
+  }
+  function openTutorial({start=false}={}){step=0;beginAfterGuide=start;renderTutorial();}
+  function finishTutorial(){preferenceStore.set({tutorialSeen:true});persist();const begin=beginAfterGuide;beginAfterGuide=false;closeDialog();if(begin)onStart();}
+  function handleAction(action){
+    if(action==='tutorial-open'){openTutorial();return true;}
+    if(action==='tutorial-next'){step=Math.min(2,step+1);renderTutorial();return true;}
+    if(action==='tutorial-previous'){step=Math.max(0,step-1);renderTutorial();return true;}
+    if(action==='tutorial-finish'||action==='tutorial-skip'){finishTutorial();return true;}
+    return false;
+  }
+  $('settings-button').addEventListener('click',openSettings);
+  $('text-size-select').addEventListener('change',event=>{preferenceStore.set({text:({100:'normal',125:'large',150:'largest'})[event.target.value]});persist();});
+  function changePreference(event){const node=event.target,key=node.dataset.pref;if(!key)return;preferenceStore.set({[key]:node.type==='checkbox'?node.checked:node.type==='range'?Number(node.value):node.value});refreshSettings();}
+  panel.addEventListener('input',event=>{if(event.target.type==='range')changePreference(event);});
+  panel.addEventListener('change',event=>{if(event.target.type!=='range')changePreference(event);});
+  panel.addEventListener('click',event=>{if(event.target.closest('[data-reset-preferences]')){preferenceStore.reset();themeChoice='system';onTheme(themeChoice);refreshSettings();}if(event.target.closest('[data-test-sound]'))onTestSound?.();});
+  $('theme-select').addEventListener('change',event=>{themeChoice=event.target.value;onTheme(themeChoice);});
+  refreshSettings();
+  return {openSettings,openTutorial,handleAction,stash,persist,refreshSettings,refreshTutorial:renderTutorial};
+}
