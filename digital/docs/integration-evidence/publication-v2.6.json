@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "status": "code_published_activation_waiting_for_database_authorization",
+  "status": "deployed_and_verified",
   "applicationVersion": "2.6.0",
   "moduleVersion": "1.5.0",
   "source": {
@@ -16,14 +16,15 @@
   "publicFrontend": {
     "repository": "unDead41/geodecoder-digital",
     "branch": "main-digitalized",
-    "commit": "2058c89ff77521be0d57115744554b44372ec3aa",
+    "commit": "f5e5e13edd4c3627282cdaca78870c13399ac915",
     "websiteBlob": "fb91b41ab062ace14acd9589c2c463774b4b0593",
     "websiteSha256": "c37c2b1fcac5abb51263a67a14332779b9b01cdb96d39e264465b2934c306960",
     "websiteBytes": 1097468,
     "preservedAudioBlobs": {
       "assets/audio/menu.mp3": "84aa7525f2c4a04cfd8ac750ad79fec77353e32f",
       "assets/audio/map.mp3": "0ef77140fbee08967839da0b1a1fa6770e337c18"
-    }
+    },
+    "initialPayloadCommit": "2058c89ff77521be0d57115744554b44372ec3aa"
   },
   "validation": {
     "applicationTestsPassed": 248,
@@ -38,9 +39,8 @@
     "projectName": "GeoDecoder Digital",
     "projectId": "fkrlwzxvyufndavlpzbp",
     "migrationName": "geodecoder_profile_and_module_progress_v2_6",
-    "applied": false,
-    "approvalState": "auto_review_rejected_missing_explicit_user_authorization",
-    "blockedAction": "Apply combined hosted schema/function/grant/RLS migration",
+    "applied": true,
+    "approvalState": "explicit_user_approved",
     "noWriteFallbackAttempted": true,
     "preparedChanges": [
       "Add avatar column and update profile snapshot/action functions",
@@ -56,20 +56,40 @@
         "path": "digital/backend/module_progress_v2_4.sql",
         "sha256": "f22ab14e1298a36c0ce27400b76472218b40e04b0689a1813b708e5df7c6cf2b"
       }
-    ]
+    ],
+    "approvalHistory": [
+      {
+        "state": "auto_review_rejected_missing_explicit_user_authorization",
+        "reason": "Earlier branch-only authorization did not explicitly cover hosted database changes."
+      },
+      {
+        "state": "explicit_user_approved",
+        "instruction": "Ya, jalankan kedua-dua migration pada Supabase GeoDecoder Digital dan aktifkan Pages."
+      }
+    ],
+    "migrationVersion": "20261026050330",
+    "appliedAt": "2026-10-26T05:03:31.019Z",
+    "hostedVerification": "Profile and module progress assertions passed; synthetic fixtures rolled back."
   },
   "pages": {
     "repository": "unDead41/geodecoder-digital",
     "settingsReadDate": "2026-10-26",
     "actualSource": "Deploy from a branch",
-    "actualBranch": "main-digital",
+    "actualBranch": "main-digitalized",
     "actualPath": "/",
-    "lastObservedWorkflow": "40249504326",
+    "lastObservedWorkflow": "40272514912",
     "requestedBranch": "main-digitalized",
     "requestedPath": "/",
     "formSelectionPrepared": true,
-    "saveSubmitted": false,
-    "activationHold": "Await explicit approval and successful database migration before publishing v2.6",
-    "url": "https://undead41.github.io/geodecoder-digital/"
-  }
+    "saveSubmitted": true,
+    "url": "https://undead41.github.io/geodecoder-digital/",
+    "previousSource": {
+      "branch": "main-digital",
+      "path": "/",
+      "workflow": "40249504326"
+    },
+    "deploymentVerified": true,
+    "verifiedAt": "2026-10-26T05:15:06.543Z"
+  },
+  "deploymentReceipt": "deployment-v2.6-20261026.json"
 }

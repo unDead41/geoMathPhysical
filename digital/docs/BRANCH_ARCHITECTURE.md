@@ -2,21 +2,21 @@
 
 Tarikh keputusan: 26 Oktober 2026. Nama branch penerbitan tepat ialah
 `main-digitalized`. Dokumen ini menetapkan pemetaan nama, sempadan komponen dan
-aliran penerbitan. Kod integrasi telah diterbitkan ke branch sumber itu;
-pengaktifan Pages dan migration hosted masih menunggu. Inventori sebelum migrasi
-dan resit operasi berada dalam [branch-registry.json](branch-registry.json).
+aliran penerbitan. Kod integrasi, native rename, migration hosted dan pengaktifan
+Pages telah diselesaikan. Inventori sebelum migrasi dan resit operasi berada
+dalam [branch-registry.json](branch-registry.json).
 
 ## Dua repository, satu sumber pembangunan
 
 | Peranan | Repository / branch | Kandungan dan tanggungjawab |
 |---|---|---|
 | Sumber pembangunan private | `unDead41/geodecoder` / `main-digitalized` | Satu integrasi Digital: aplikasi, modul, backend, ujian, dokumentasi dan hasil binaan yang diperlukan. Semua perubahan Digital disatukan di sini. |
-| Penerbitan awam | `unDead41/geodecoder-digital` / `main-digitalized` disediakan | Salinan frontend yang telah dibina: `index.html`, audio, `.nojekyll`, README penerbitan dan `release.json`. Sasaran Pages ialah `main-digitalized /(root)`; tetapan aktif masih `main-digital /(root)`. |
+| Penerbitan awam | `unDead41/geodecoder-digital` / `main-digitalized` aktif | Salinan frontend yang telah dibina: `index.html`, audio, `.nojekyll`, README penerbitan dan `release.json`. Sumber Pages `main-digitalized /(root)` telah disimpan dan dibaca semula. |
 | Firmware | `unDead41/geodecoder` / `main`, `sharing`, branch perkakasan sedia ada | Sumber ESP32 dan pakej perkongsian. Nama, sejarah, GPIO, format simpanan dan versi firmware tidak berubah oleh migrasi Digital. |
 
 Pada inventori awal, Pages awam menggunakan `main-digital`, manakala sumber
-private sudah mempunyai `main-digitalized`. Sasaran pengguna ialah Pages pada
-branch bernama `main-digitalized` juga. Menukar atau menolak kod ke branch private
+private sudah mempunyai `main-digitalized`. Kini Pages awam juga menggunakan
+branch bernama `main-digitalized`. Menukar atau menolak kod ke branch private
 tidak menukar tetapan Pages atau kandungan repository awam. Penerbitan mesti
 menyatakan **repository serta branch**, kerana nama branch yang sama berada dalam
 dua repository berbeza. Visibility sumber private dikekalkan.
@@ -31,16 +31,19 @@ Jangan menukar Pages kepada branch legacy private itu.
 |---|---|
 | Push kod integrasi private | Selesai pada `6246d06ab492a5b0ab3edb3d5ee7b25bcc84b081`, daripada sejarah `main-digitalized` sedia ada. |
 | Pin sumber modul v1.5.0 | `fc9bda734f8b59825271a7cc4b91c101cb30bdde`. |
-| Frontend mirror awam | Branch `main-digitalized` tersedia pada `2058c89ff77521be0d57115744554b44372ec3aa`; ini penyediaan kod, bukan deployment Pages. |
-| Native rename branch pembangunan | Resit operasi menentukan pasangan yang telah berjaya; jadual pemetaan di bawah kekal inventori sebelum migrasi. Status agregat dicatat oleh pengendali dalam registry selepas semua bacaan remote. |
-| Tetapan Pages | Sumber yang benar-benar dibaca ialah `main-digital /(root)` pada repository awam. Pilihan `main-digitalized` belum disimpan. Workflow terakhir yang disahkan ialah `40249504326` untuk keluaran lama. |
-| Migration hosted | Profile/progress belum dipasang. Semakan kelulusan automatik menolak perubahan schema/fungsi/grant/RLS kerana kebenaran pengguna yang jelas belum diberikan; tiada penulisan database atau pemintasan dilakukan. |
+| Frontend mirror awam | Branch `main-digitalized` aktif pada `f5e5e13edd4c3627282cdaca78870c13399ac915`; metadata deployment diperbaharui tanpa menukar payload aplikasi yang diuji. |
+| Native rename branch pembangunan | Kesemua 11 native rename selesai; setiap head mengekalkan SHA beku dan semua 11 ref lama sudah tiada. |
+| Tetapan Pages | `main-digitalized /(root)` disimpan pada repository awam dan disahkan selepas reload. Workflow `40272514912` selesai `completed/success`; HTTP live sepadan hash artifak. |
+| Migration hosted | `geodecoder_profile_and_module_progress_v2_6`, versi `20261026050330`, berjaya pada GeoDecoder Digital `fkrlwzxvyufndavlpzbp` selepas kebenaran pengguna yang jelas. Hosted verify profile/progress PASS; fixture sintetik ROLLBACK. |
 
-Pengaktifan Pages sudah dibenarkan pengguna dan ditahan sehingga kelulusan
-migration hosted serta prasyarat backend selesai. Rujuk
+Pengaktifan Pages dan migration hosted disahkan dengan bukti berasingan.
+Bilangan rekod sebenar kekal profiles2/classes0/rooms0/attempts0/progress0.
+Penolakan kelulusan automatik pada peringkat persediaan ialah rekod sejarah;
+pengguna kemudian memberikan kebenaran jelas sebelum migration dilaksanakan. Rujuk
 [penerbitan semasa](../../docs/DIGITAL_PUBLISHING.md) dan
 [rekod Pages](GITHUB_PAGES.md) untuk perbezaan payload, tetapan sebenar dan
-langkah pengaktifan. SHA di atas merekodkan commit payload yang telah disahkan;
+hasil pengesahan live dan prosedur penerbitan. SHA di atas merekodkan commit
+payload yang telah disahkan;
 commit dokumentasi susulan boleh memajukan head branch.
 
 ## Pemetaan nama dan head beku
@@ -189,8 +192,8 @@ tidak menerima credential dan tidak menulis terus ke database.
    awam. `release.json` merekodkan repository/branch/SHA sumber dan hash HTML/aset.
    Rekod SHA commit penerbitan dalam resit selepas commit wujud; jangan cuba
    memasukkan SHA commit itu sendiri ke fail sebelum commit berkenaan dicipta.
-7. Selepas kelulusan migration hosted serta prasyarat backend selesai, simpan dan sahkan
-   konfigurasi Pages pada repository awam menunjuk `main-digitalized`
+7. Sahkan prasyarat backend bagi keluaran tersebut dan konfigurasi Pages pada
+   repository awam menunjuk `main-digitalized`
    dan `/(root)`, workflow selesai berjaya, URL HTTPS sebenar serta hash HTML/aset.
    Pertukaran nama branch sahaja tidak membuktikan Pages telah bertukar.
 
@@ -238,8 +241,10 @@ pengaktifan Pages dan migration backend tetap memerlukan rekod berasingan.
 Setiap nama baharu menunjuk SHA beku yang tepat; kesemua 11 ref lama sudah tiada.
 Tujuh ref firmware/perkakasan di luar penerbitan tidak berubah. Sumber gabungan
 v2.6.0 telah dipush ke `main-digitalized`; mirror awam branch bernama sama
-disediakan. Pengaktifan Pages menunggu kelulusan migration hosted yang ditolak
-semakan kelulusan automatik. Lihat [resit rename akhir](integration-evidence/branch-migration-final.json),
+aktif pada `f5e5e13edd4c3627282cdaca78870c13399ac915`. Migration hosted versi
+`20261026050330` berjaya dan Pages `main-digitalized /(root)` telah disimpan;
+workflow `40272514912`, HTTP/hash dan smoke test Chrome live disahkan. Lihat
+[resit rename akhir](integration-evidence/branch-migration-final.json),
 [bacaan ref remote](integration-evidence/remote-branches-final.json),
 [bukti senarai branch](integration-evidence/branch-architecture-1792990066721.jpg)
 dan [resit penerbitan](integration-evidence/publication-v2.6.json).

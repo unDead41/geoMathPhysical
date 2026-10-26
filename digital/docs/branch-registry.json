@@ -368,6 +368,23 @@
     }
   ],
   "currentOperationState": {
+    "checkedAt": "2026-10-26T05:15:06.543Z",
+    "nativeRenames": "complete",
+    "verifiedRenames": 11,
+    "oldRefsAbsent": 11,
+    "preservedNonPublicationBranches": 7,
+    "sourceCodePublication": "verified",
+    "sourceCodeCommit": "6246d06ab492a5b0ab3edb3d5ee7b25bcc84b081",
+    "publicFrontendPreparation": "verified",
+    "publicFrontendCommit": "f5e5e13edd4c3627282cdaca78870c13399ac915",
+    "pagesSourceChange": "active_and_verified",
+    "hostedMigration": "applied_and_verified",
+    "branchReceipt": "integration-evidence/branch-migration-final.json",
+    "publicationReceipt": "integration-evidence/publication-v2.6.json",
+    "pagesWorkflow": 40272514912,
+    "deploymentReceipt": "integration-evidence/deployment-v2.6-20261026.json"
+  },
+  "operationStateBeforeHostedApproval": {
     "checkedAt": "2026-10-26T04:46:21.269Z",
     "nativeRenames": "complete",
     "verifiedRenames": 11,

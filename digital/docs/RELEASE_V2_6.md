@@ -51,44 +51,55 @@ v1.3.0 diadaptasi di atas modul itu, bukan menggantikannya dengan salinan lama.
 
 ## Database dan deployment
 
-Untuk database sedia ada selepas email v2.2:
+**Deployment hosted selesai dan disahkan pada 26 Oktober 2026.** Pengguna
+memberi kebenaran jelas untuk kedua-dua migration serta pengaktifan Pages.
+Projek sedia ada **GeoDecoder Digital** (`fkrlwzxvyufndavlpzbp`) digunakan.
 
-1. Jalankan `backend/profile_v2_3.sql` sebagai owner.
-2. Jalankan `backend/module_progress_v2_4.sql` sebagai owner.
-3. Deploy frontend v2.6.0 selepas kedua-duanya berjaya.
+Kedua-dua fail yang diuji dipasang dalam satu transaksi melalui migration
+`geodecoder_profile_and_module_progress_v2_6`, versi **20261026050330**.
+Cache schema PostgREST dimuat semula. Kolum avatar, jadual kemajuan dan RPC
+tersedia; RLS aktif, RPC authenticated dibenarkan dan akses terus jadual ditolak.
 
-Schema untuk pemasangan baharu sudah merangkumi kedua-dua definisi. Backend
-Duel kekal berasingan di `backend/duel/`; jangan menggantikannya dengan schema
-kelas atau sebaliknya. Security/preferences tidak memerlukan perubahan Auth
-dashboard baharu. SMTP dan URL redirect email ialah keperluan deployment
-terdahulu yang berasingan.
-
-Kod dan kedua-dua migration sudah diuji pada fixture. Semakan baca sahaja pada
-projek hosted **GeoDecoder Digital** (`fkrlwzxvyufndavlpzbp`) mengesahkan
-schema kelas/email terdahulu tersedia, tetapi kolum avatar dan kontrak rekod
-modul belum dipasang. Tiada kata laluan akaun sebenar diubah.
-
-Percubaan migration gabungan `geodecoder_profile_and_module_progress_v2_6`
-**ditolak oleh semakan kelulusan automatik sebelum dilaksanakan**. Sebab yang
-dinyatakan: perubahan database hosted meliputi jadual, fungsi, grants dan RLS
-belum mendapat kebenaran pengguna yang jelas. Tiada workaround atau operasi SQL
-tulis lain digunakan. Pemasangan menunggu kelulusan khusus pengguna untuk projek
-ini; pengaktifan Pages v2.6 ditangguhkan sehingga database bersedia.
-
-Perubahan yang disediakan menambah avatar profil dan jadual kemajuan modul,
-mengemas kini dispatcher/snapshot serta fungsi RPC dan kebenaran pelaksanaannya.
-Ia tidak mengandungi arahan memadam jadual atau rekod sedia ada. Semakan fixture
-tidak menghapuskan risiko perubahan kontrak/kebenaran pada database hosted.
-
-| Migration yang menunggu kelulusan | SHA256 fail yang diuji |
+| Migration dipasang | SHA256 fail yang diuji |
 |---|---|
 | [profile_v2_3.sql](../backend/profile_v2_3.sql) | `d73f8dbe5c451140b5c718c3009bd100a81ae5029ee85cfe60bcd5f84972200f` |
 | [module_progress_v2_4.sql](../backend/module_progress_v2_4.sql) | `f22ab14e1298a36c0ce27400b76472218b40e04b0689a1813b708e5df7c6cf2b` |
 
-Selepas kelulusan, pasang kedua-duanya dalam satu migration transaksi, muat
-semula cache schema PostgREST, sahkan struktur/RPC/grants dan rekod migration,
-kemudian aktifkan sumber Pages. Kegagalan cloud pada frontend mengekalkan rekod
-setempat dan boleh dicuba semula.
+Ujian SQL hosted [verify_profile.sql](../backend/verify_profile.sql) dan
+[verify_module_progress.sql](../backend/verify_module_progress.sql) kedua-duanya
+**PASS**. Profil sendiri, medan identiti/role yang tidak boleh ditukar, metrik
+room, pemilikan rekod dan kelas, validasi payload, pencapaian tidak boleh
+undur, serta sekatan anon/jadual terus diuji. Semua fixture Auth/kelas/rekod
+di-rollback. Sebelum dan selepas ujian: dua profil sedia ada; sifar kelas,
+room, percubaan dan rekod kemajuan. Tiada kata laluan akaun sebenar diubah.
+
+Semakan advisor merekodkan INFO RLS tanpa policy pada 17 jadual private/RPC-only;
+kebenaran akses terus authenticated disahkan tiada. Amaran sedia ada
+[leaked-password protection](https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection)
+kekal di luar skop migration. Tiada dakwaan semua amaran keselamatan sudah selesai.
+
+Penolakan kelulusan automatik terdahulu ialah sejarah sebelum kebenaran khusus
+pengguna diterima. Ia diselesaikan melalui kebenaran tersebut, kemudian operasi
+migration asal dilaksanakan; tiada laluan pemintasan digunakan.
+
+GitHub Pages awam kini menggunakan **main-digitalized /(root)** pada
+`unDead41/geodecoder-digital`. Commit public akhir
+`f5e5e13edd4c3627282cdaca78870c13399ac915` mempunyai workflow
+[40272514912](https://github.com/unDead41/geodecoder-digital/actions/runs/40272514912)
+**completed/success**. HTML HTTPS live memberi 200 dan hash sepadan tepat dengan
+binaan yang diuji; kedua-dua MP3 dan `release.json` juga memberi 200.
+
+Pada Chrome live: Home → tetamu Release QA → Practice15 → piramid R1 dan
+bentangan sepadan R2 memberi **1/15**. Modul **v1.5.0** dibuka; Settings modul
+membuka dialog parent. English dan 150% diterima kedua-duanya, computed font
+16px →24px, modul client/scroll1204/1204; BM/100% dipulihkan selepas ujian.
+Ujian akaun/RPC hosted melalui fixture SQL tidak membuktikan login/password
+provider sebenar atau penghantaran email.
+
+Resit lengkap dan screenshot sebenar:
+[deployment-v2.6-20261026.json](integration-evidence/deployment-v2.6-20261026.json).
+Schema pemasangan baharu sudah merangkumi kontrak sama. Backend Duel kekal
+berasingan; SMTP dan URL redirect email tidak diubah oleh deployment ini.
 
 ## Binaan yang boleh diulang
 
@@ -169,18 +180,18 @@ repository frontend. Push sumber sahaja tidak menukar tetapan Pages.
 
 | Operasi | Hasil disahkan |
 |---|---|
-| Integrasi sumber `unDead41/geodecoder` / `main-digitalized` | `6246d06ab492a5b0ab3edb3d5ee7b25bcc84b081`; tree `839b68bfb6323bac386eed9b4b33a68e873a0808` |
-| Ancestry sumber | Kesemua 11 head sumber dalam jadual beku ialah parent tambahan commit integrasi; sejarah MD terdahulu melalui commit modul `fc9bda734f8b59825271a7cc4b91c101cb30bdde` |
-| Frontend `unDead41/geodecoder-digital` / `main-digitalized` | `2058c89ff77521be0d57115744554b44372ec3aa`; HTML website yang diuji, audio terdahulu dan `.nojekyll` disahkan |
-| Tetapan Pages sebenar | `Deploy from a branch`, **main-digital**, **/(root)**; diperiksa pada 26 Oktober 2026, workflow terakhir `40249504326` |
-| Pilihan Pages yang disediakan | **main-digitalized**, **/(root)** dipilih dalam borang, **Save belum ditekan**; menunggu kelulusan migration |
-| Database hosted | Migration belum dijalankan; ditolak semakan kelulusan automatik, menunggu kebenaran khusus pengguna |
+| Kod integrasi `unDead41/geodecoder` / `main-digitalized` | `6246d06ab492a5b0ab3edb3d5ee7b25bcc84b081`; tree `839b68bfb6323bac386eed9b4b33a68e873a0808` |
+| Ancestry sumber | Kesemua 11 head sumber beku ialah parent tambahan commit integrasi; sejarah MD terdahulu melalui commit modul `fc9bda734f8b59825271a7cc4b91c101cb30bdde` |
+| Resit penamaan branch sebelum deployment | `0d51bda7d63f3a88865a0922230eda175eb47177`; kandungan runtime kekal sama |
+| Frontend public semasa | `unDead41/geodecoder-digital` / `main-digitalized` / `f5e5e13edd4c3627282cdaca78870c13399ac915` |
+| Pages disimpan dan dibaca semula | `Deploy from a branch`, **main-digitalized**, **/(root)** |
+| Workflow akhir | `40272514912`, **completed/success** |
+| Database hosted | Migration **20261026050330** berjaya; kedua-dua suite SQL hosted PASS dan fixture di-rollback |
 
 Commit dokumentasi/resit susulan boleh memajukan head sumber tanpa mengubah
-blob aplikasi yang diuji. SHA di atas mengenal pasti penerbitan kod v2.6, bukan
-SHA dokumentasi yang belum wujud semasa resit ini ditulis. `release.json` public
-masih menandakan migration dan pertukaran Pages sebagai belum dilaksanakan;
-kod yang sudah dipush bukan bukti laman v2.6 sudah live.
+blob aplikasi yang diuji. SHA kod mengenal pasti payload v2.6; SHA commit resit
+sendiri dilaporkan selepas commit itu wujud. `release.json` public kini
+merekodkan kedua-dua migration dan pertukaran Pages sebagai dilaksanakan.
 
 ## Had bukti
 

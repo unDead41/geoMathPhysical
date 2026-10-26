@@ -12,14 +12,27 @@ Rujukan sumber, perubahan, syarat database dan bukti pengesahan gabungan:
 
 ## Laman GitHub Pages
 
-Main terus: **https://undead41.github.io/geodecoder-digital/**.
+Main terus: **[GeoDecoder Digital](https://undead41.github.io/geodecoder-digital/)**.
 
 Pautan itu menggunakan repository penerbitan berasingan. Push ke
 `main-digitalized` tidak dengan sendiri mengemas kini repository laman awam.
 Fail `index.html` di akar branch ini dan setiap HTML muat turun dibina daripada
 satu artifak v2.6.0 yang sama.
 
-Penerbitan menggunakan repository public `unDead41/geodecoder-digital`, branch `main-digital`, folder akar. Repository asal ini kekal private. Fail laman mengandungi frontend sahaja; database/Auth/Realtime kekal pada Supabase. Lihat `docs/GITHUB_PAGES.md` untuk rekod keluaran dan cara kemas kini laman.
+Penerbitan aktif menggunakan repository public `unDead41/geodecoder-digital`,
+branch **main-digitalized**, folder **/(root)**. Tetapan Pages telah disimpan dan
+disahkan selepas reload. Commit awam
+`f5e5e13edd4c3627282cdaca78870c13399ac915` mempunyai workflow
+[40272514912](https://github.com/unDead41/geodecoder-digital/actions/runs/40272514912)
+yang berjaya; HTTP/hash laman sepadan artifak yang diuji. Sumber kod aplikasi
+kekal `6246d06ab492a5b0ab3edb3d5ee7b25bcc84b081`.
+
+Repository asal ini kekal private. Fail laman mengandungi frontend sahaja;
+database/Auth/Realtime kekal pada Supabase. Migration hosted profile/progress
+telah dipasang dan disahkan. Smoke test Chrome live mengesahkan Practice15
+memberi **1/15** bagi pasangan piramid yang tepat, modul v1.5.0 serta penyelarasan
+English/saiz teks. Lihat [rekod Pages](docs/GITHUB_PAGES.md) untuk resit dan
+had pengesahan.
 
 ## Cuba satu fail HTML
 
@@ -120,7 +133,13 @@ dan [kontrak rich text](docs/RICH_TEXT.md).
 
 ## Backend hosted
 
-Database PostgreSQL, Auth, Realtime dan Edge Function `geodecoder-auth` sudah disediakan pada projek Supabase Free **GeoDecoder Digital**, region Singapore. URL awam: `https://fkrlwzxvyufndavlpzbp.supabase.co`. Frontend membawa publishable key sahaja; service-role key hanya berada dalam persekitaran Edge Function. Pendaftaran baharu menggunakan email sebenar dengan pengesahan Supabase Auth. Login menerima email atau username. Terlupa kata laluan meminta pautan email dan membuka borang kata laluan baharu hanya selepas sesi pemulihan disahkan. Akaun lama tanpa email masih menggunakan username dan kod pemulihan lama. **Penghantaran email umum memerlukan custom SMTP serta URL redirect; tetapan dashboard belum dapat diselesaikan kerana sesi browser meminta log masuk.** Lihat `docs/EMAIL_SETUP.md`.
+Database PostgreSQL, Auth, Realtime dan Edge Function `geodecoder-auth` sudah disediakan pada projek Supabase Free **GeoDecoder Digital**, region Singapore. URL awam: `https://fkrlwzxvyufndavlpzbp.supabase.co`. Frontend membawa publishable key sahaja; service-role key hanya berada dalam persekitaran Edge Function. Pendaftaran baharu menggunakan email sebenar dengan pengesahan Supabase Auth. Login menerima email atau username. Terlupa kata laluan meminta pautan email dan membuka borang kata laluan baharu hanya selepas sesi pemulihan disahkan. Akaun lama tanpa email masih menggunakan username dan kod pemulihan lama. **Penghantaran email umum memerlukan custom SMTP serta URL redirect; penghantaran email sebenar tidak diuji dalam keluaran ini.** Lihat [EMAIL_SETUP.md](docs/EMAIL_SETUP.md).
+
+Migration gabungan `geodecoder_profile_and_module_progress_v2_6`, versi
+`20261026050330`, berjaya digunakan selepas kebenaran pengguna. Pengesahan
+PostgreSQL hosted `verify_profile.sql` dan `verify_module_progress.sql` lulus;
+semua fixture sintetik di-ROLLBACK. Ini pengesahan kontrak database, berasingan
+daripada ujian Auth pengguna sebenar.
 
 Guru hanya mengurus kelas/bilik sendiri. Pelajar tidak boleh mencipta kelas, membaca kelas guru lain atau menulis markah terus. Skema `private` tidak didedahkan melalui Data API. RLS pada `public.room_progress` mengehadkan bacaan kepada pemilik bilik atau pelajar yang sudah menyertainya. Peranan disalin sekali daripada metadata pendaftaran yang disahkan ke profil peribadi; suntingan metadata selepas pendaftaran tidak menukar peranan atau kebenaran.
 
@@ -133,10 +152,16 @@ cd digital
 npm ci
 npm test
 npm run build
+npm run prepare:pages
 npm run check
 ```
 
-Node/npm hanya diperlukan untuk pembangunan; dependency dipin melalui `package-lock.json`. `dist/index.html` menggunakan `dist/app.bundle.js`. Pembina juga menghasilkan HTML tunggal dalam `artifacts/`; salin ke akar folder sebelum commit. Tetapan awam projek berada dalam `dist/cloud-config.mjs`.
+Node/npm hanya diperlukan untuk pembangunan; dependency dipin melalui
+`package-lock.json`. `dist/index.html` menggunakan `dist/app.bundle.js`.
+Pembina menghasilkan HTML dalam `artifacts/`; `prepare:pages` menyemak alias
+offline dan menyediakan root index private. Mirror Pages menggunakan
+`artifacts/site-index.html` dengan audio berasingan. Tetapan awam projek berada
+dalam `dist/cloud-config.mjs`.
 
 Panduan database/RPC: `backend/README.md`. Untuk projek baharu, gunakan `backend/schema.sql`, deploy `backend/auth/index.ts` sebagai Edge Function `geodecoder-auth` dengan `verify_jwt=false` (endpoint signup/login melakukan pengesahan sendiri), dan gunakan environment built-in `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`. Jangan masukkan key server ke frontend. `backend/fix_v2.sql` merekodkan pembetulan alias yang telah digunakan pada projek hosted; schema penuh sudah mengandungi pembetulan itu.
 
@@ -172,7 +197,10 @@ Kemajuan tetamu dan setiap akaun kekal berasingan. Rekod latihan ialah refleksi
 kendiri, bukan gred TP atau bukti penguasaan yang disahkan. Guru hanya melihat
 ahli kelas miliknya.
 
-Untuk database sedia ada, pasang `backend/profile_v2_3.sql` dan
-`backend/module_progress_v2_4.sql` sebelum frontend gabungan. Pemasangan baharu
-menggunakan `backend/schema.sql`. Backend Duel kekal dalam `backend/duel/`.
-Push branch ini tidak memasang migration atau mengubah SMTP/Auth secara automatik.
+Projek hosted semasa sudah menerima kontrak profile/progress melalui migration
+gabungan versi `20261026050330`. Untuk pemasangan lain yang masih menggunakan
+kontrak lama, migration sumber ialah `backend/profile_v2_3.sql` dan
+`backend/module_progress_v2_4.sql`; sahkan kontrak akhir sebelum mengaktifkan
+frontend gabungan. Pemasangan baharu menggunakan `backend/schema.sql`. Backend
+Duel kekal dalam `backend/duel/`. Push branch tidak memasang migration atau
+mengubah SMTP/Auth secara automatik.

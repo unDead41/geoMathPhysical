@@ -1,4 +1,6 @@
-> **v2.4.0 Profil Saya:** Untuk pemasangan sedia ada selepas email v2.2, jalankan `profile_v2_3.sql` sebelum frontend. `schema.sql` sudah merangkumi perubahan ini bagi pemasangan baharu. Migrasi hosted belum dilaksanakan dalam branch ini. Lihat `../docs/PROFILE.md`.
+> **v2.6.0 deployment disahkan:** Projek hosted GeoDecoder Digital telah menerima `profile_v2_3.sql` dan `module_progress_v2_4.sql` dalam migration transaksi `20261026050330` (`geodecoder_profile_and_module_progress_v2_6`), selepas kebenaran jelas pengguna. Kedua-dua ujian SQL hosted lulus dan semua fixture di-rollback. Avatar/RPC/rekod kemajuan serta grants/RLS telah disahkan. Resit: `../docs/integration-evidence/deployment-v2.6-20261026.json`.
+
+> **Upgrade projek lain:** Selepas schema kelas/email v2.2, pasang migration profil dan kemajuan sebelum frontend. `schema.sql` ialah keadaan lengkap pemasangan baharu. Jangan jalankan semula migration dispatcher lama selepas kontrak baharu tanpa menyemak definisi akhirnya. Lihat `../docs/PROFILE.md` dan `../docs/RELEASE_V2_6.md`.
 
 > **v2.2.0 email:** Signup baharu menggunakan email sebenar dan pengesahan Auth; login menerima email/username. Jalankan `email_v2_2.sql` untuk database sedia ada, deploy auth/index.ts, kemudian lengkapkan Site URL/redirect dan custom SMTP mengikut `../docs/EMAIL_SETUP.md`. `schema.sql` sudah mengandungi trigger yang sama. `verify_email.sql` serta `verify.sql` menguji dengan rollback. Akaun lama dan kod pemulihannya dikekalkan. Bahagian username-only di bawah menerangkan keluaran terdahulu.
 
@@ -68,3 +70,18 @@ Subscribe to `postgres_changes` for `public.room_progress` with `room_id=eq.ROOM
 The sanitized row contains `room_id`, `user_id`, `username`, `display_name`, `status`, `question_index`, `score`, `total`, `mistakes`, `hints`, `skipped`, `elapsed_ms`, `timer_started_at`, `updated_at`, `last_seen`. The primary key is `(room_id,user_id)`. Projection status maps running to `playing`, feedback/review to `review`, plus `waiting`, `finished` and `closed`. Refresh `snapshot` after reconnect to recover events missed while offline.
 
 The free project may pause when inactive. The client should display recoverable connection errors and retry; this backend requires no paid database feature. Verify actual publication delivery through the deployed browser in addition to the rolled-back SQL suite.
+
+
+## Module progress RPC
+
+`public.geo_module_progress(action text, payload jsonb)` hanya boleh dilaksanakan
+oleh `authenticated`. Tindakan `mine` membaca rekod pelajar sendiri; `save`
+menyimpan refleksi aktiviti sendiri; `class` hanya dibenarkan kepada guru untuk
+kelas miliknya. Payload tidak boleh menentukan pemilik, role atau markah.
+`private.module_progress` menggunakan RLS dan tiada akses jadual terus untuk
+anon/authenticated/service_role; gateway yang disemak menguatkuasakan pemilikan.
+
+Rekod latihan kendiri tidak menjadi markah room atau pengesahan TP. Ujian
+`verify_profile.sql` dan `verify_module_progress.sql` menggunakan fixture rawak
+dan rollback. Deployment ini tidak mengesahkan penghantaran email atau aliran
+kata laluan pengguna sebenar.

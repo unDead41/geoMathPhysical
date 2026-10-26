@@ -2,35 +2,38 @@
 
 Sumber canonical ialah repository private `unDead41/geodecoder`, branch
 **main-digitalized**. Frontend awam diterbitkan secara berasingan dalam
-`unDead41/geodecoder-digital`. Branch mirror sasaran juga **main-digitalized**,
+`unDead41/geodecoder-digital`. Branch mirror aktif juga **main-digitalized**,
 folder **/(root)**. Repository sumber kekal private.
 
 **Status 26 Oktober 2026:** kod Digital v2.6.0/modul v1.5.0 telah diterbitkan ke
-branch sumber dan frontend mirror baharu sudah disediakan. Tetapan Pages yang
-benar-benar dibaca masih **main-digital /(root)**. Pilihan **main-digitalized**
-dalam borang belum disimpan; tiada deployment Pages v2.6.0 disahkan.
+branch sumber dan **sudah live di Pages**. Tetapan **main-digitalized /(root)**
+telah disimpan dan dibaca semula selepas reload. Migration hosted profile/progress
+berjaya selepas kebenaran pengguna; workflow, hash HTTP dan smoke test live
+disahkan seperti rekod di bawah.
 
-## Commit dan payload yang disediakan
+## Commit dan payload aktif
 
 | Rujukan | Nilai disahkan |
 |---|---|
 | Commit kod integrasi private | `6246d06ab492a5b0ab3edb3d5ee7b25bcc84b081` |
 | Sumber modul v1.5.0 | `fc9bda734f8b59825271a7cc4b91c101cb30bdde` |
-| Commit mirror awam `main-digitalized` | `2058c89ff77521be0d57115744554b44372ec3aa` |
+| Commit mirror awam `main-digitalized` | `f5e5e13edd4c3627282cdaca78870c13399ac915` |
 | Index mirror, daripada `digital/artifacts/site-index.html` | 1,097,468 bait; SHA256 `c37c2b1fcac5abb51263a67a14332779b9b01cdb96d39e264465b2934c306960` |
 | Git blob index mirror | `fb91b41ab062ace14acd9589c2c463774b4b0593` |
 | Git blob `assets/audio/menu.mp3` | `84aa7525f2c4a04cfd8ac750ad79fec77353e32f` |
 | Git blob `assets/audio/map.mp3` | `0ef77140fbee08967839da0b1a1fa6770e337c18` |
 
-Commit mirror baharu mengubah `index.html`, README dan `release.json`; kedua-dua
-audio dikekalkan. `release.json` merekodkan sumber, versi, hash, pengesahan kod
+Payload frontend mula disediakan pada commit
+`2058c89ff77521be0d57115744554b44372ec3aa`; kedua-dua audio dikekalkan. Commit
+awam semasa mengemas kini metadata deployment tanpa menukar payload aplikasi
+yang telah diuji. `release.json` merekodkan sumber, versi, hash, pengesahan kod
 serta flag `pagesSourceChanged`, `profileMigrationApplied` dan
-`moduleProgressMigrationApplied` yang masih false pada commit ini. Kewujudan
-commit tidak bermaksud hosting atau backend sudah bertukar.
+`moduleProgressMigrationApplied` yang kini **true**.
 
 `main-digital` private ialah sejarah persediaan yang dipetakan kepada
 `digitalized-release-legacy`. Ia bukan branch `main-digital` dalam repository
-awam yang masih dipilih oleh Pages. Nyatakan repository bersama nama branch
+awam yang menghidangkan keluaran lama sebelum pertukaran ini. Nyatakan repository
+bersama nama branch
 ketika menyemak atau mengubah tetapan.
 
 ## Fail penerbitan dan pengesahan
@@ -58,37 +61,60 @@ atau mengubah Pages. Salin `artifacts/site-index.html` ke index mirror, sertakan
 aset yang diperlukan, dan kemas kini metadata keluaran. Gunakan expected-head
 ketika menolak frontend supaya head yang bergerak tidak ditimpa.
 
-## Langkah pengaktifan yang masih menunggu
+## Deployment v2.6.0 yang disahkan
 
-Migration `profile_v2_3.sql` dan `module_progress_v2_4.sql` belum dipasang pada
-hosted Supabase. Semakan kelulusan automatik menolak tindakan itu kerana
-perubahan schema/fungsi/grant/RLS hosted memerlukan kebenaran pengguna yang jelas.
-Tiada penulisan database dilakukan atau pemintasan keputusan dicuba.
-Pengaktifan Pages sudah dibenarkan pengguna dan ditahan sehingga kelulusan
-migration hosted serta prasyarat backend selesai; flag deployment tidak boleh
-ditukar berdasarkan ujian fixture sahaja.
+Pengguna telah memberi kebenaran jelas untuk migration hosted dan pengaktifan
+Pages. Migration gabungan **geodecoder_profile_and_module_progress_v2_6**, versi
+**20261026050330**, berjaya pada projek Supabase GeoDecoder Digital
+`fkrlwzxvyufndavlpzbp`. Kandungan profile/progress menggunakan hash SQL yang sama
+dengan semakan sebelum deployment. Pengesahan hosted `verify_profile.sql` dan
+`verify_module_progress.sql` kedua-duanya **PASS**; semua fixture sintetik
+**ROLLBACK**. Bilangan rekod sebenar sebelum/selepas kekal profiles **2**, classes
+**0**, rooms **0**, attempts **0**, progress **0**.
 
-Selepas migration hosted dibenarkan dan prasyarat backend disahkan:
+Settings → Pages dalam repository **unDead41/geodecoder-digital** telah disimpan
+sebagai **Deploy from a branch → main-digitalized → /(root)**. Reload tetapan
+mengesahkan sumber itu kekal. Workflow
+[40272514912](https://github.com/unDead41/geodecoder-digital/actions/runs/40272514912)
+untuk commit awam semasa selesai **completed/success**. Deployment awal v2.6.0
+pada commit `2058c89ff77521be0d57115744554b44372ec3aa` juga berjaya melalui
+[40272415997](https://github.com/unDead41/geodecoder-digital/actions/runs/40272415997).
 
-1. Buka Settings → Pages dalam repository **unDead41/geodecoder-digital**.
-2. Pilih Source **Deploy from a branch**, branch **main-digitalized**, folder
-   **/(root)**, kemudian **Save**.
-3. Baca semula tetapan yang disimpan; tunggu workflow bagi SHA mirror baharu
-   selesai berjaya.
-4. Semak [URL HTTPS sebenar](https://undead41.github.io/geodecoder-digital/):
-   versi, hash HTML/aset, tetamu/permainan, modul/tetapan serta aliran cloud yang
-   benar-benar tersedia. Rekod ujian hosted berasingan daripada simulasi.
+[URL HTTPS sebenar](https://undead41.github.io/geodecoder-digital/) memberi
+**HTTP 200**, **1,097,468 bait**, SHA256
+`c37c2b1fcac5abb51263a67a14332779b9b01cdb96d39e264465b2934c306960`:
+sepadan payload yang diuji. Kedua-dua MP3 memberikan **HTTP 200**. Ini pengesahan
+live, berasingan daripada hasil build/check setempat.
 
-Workflow Pages terakhir yang disahkan ialah
-[40249504326](https://github.com/unDead41/geodecoder-digital/actions/runs/40249504326),
-pada commit lama `8cce135102618ffad2c1de46063fcb5042ba0907`, Digital v2.3.0.
-Ia tidak mengesahkan frontend v2.6.0 atau source branch baharu. SMTP serta
-Site URL/redirect allowlist email kekal keperluan berasingan; kejayaan build
-atau deployment Pages tidak membuktikan email sampai.
+Chrome pada URL live mengesahkan:
+
+- Tetamu **Practice15**: piramid R1 dan bentangan padan R2 memberi **1/15**.
+- Modul **v1.5.0** dibuka; butang Tetapan modul membuka dialog parent yang sama.
+- English serta saiz teks150% disegerakkan. Computed font parent dan modul
+  berubah **16→24px**; lebar/scroll modul desktop **1204/1204px**. Tetapan
+  dipulihkan kepada BM/100% selepas ujian.
+
+Tiada dakwaan perubahan kata laluan akaun sebenar, logout peranti, penghantaran
+email, aliran guru/pelajar dengan akaun sebenar atau ujian telefon fizikal.
+SMTP serta Site URL/redirect allowlist email kekal keperluan berasingan;
+kejayaan migration dan Pages tidak membuktikan email sampai.
+
+Untuk keluaran seterusnya, sahkan migration yang diperlukan dan kontrak hosted,
+kemas kini mirror melalui expected-head, kekalkan source Pages di atas, kemudian
+semak workflow bagi SHA baharu serta hash dan aliran pengguna pada HTTPS sebenar.
 
 Rujukan aktif: [penerbitan semasa](../../docs/DIGITAL_PUBLISHING.md),
 [RELEASE_V2_6.md](RELEASE_V2_6.md), [BRANCH_ARCHITECTURE.md](BRANCH_ARCHITECTURE.md)
 dan [EMAIL_SETUP.md](EMAIL_SETUP.md).
+
+## Riwayat persediaan v2.6.0
+
+Semakan kelulusan automatik pada peringkat awal menolak migration hosted kerana
+kebenaran pengguna belum jelas; tindakan dan pertukaran Pages ditahan ketika itu.
+Selepas pengguna memberi kebenaran jelas, migration dan pengaktifan diselesaikan
+seperti rekod semasa. Flag false pada metadata commit persediaan `2058c89` dan
+rekod Pages lama `main-digital` ialah sejarah, bukan status aktif. Workflow lama
+`40249504326` merujuk v2.3.0 sahaja.
 
 ## Bukti keluaran terdahulu
 

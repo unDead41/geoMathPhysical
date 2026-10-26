@@ -1,0 +1,182 @@
+{
+  "schemaVersion": 1,
+  "status": "deployed_and_verified",
+  "verifiedAt": "2026-10-26T05:15:06.543Z",
+  "authorization": {
+    "source": "explicit_user_instruction",
+    "instruction": "Ya, jalankan kedua-dua migration pada Supabase GeoDecoder Digital dan aktifkan Pages."
+  },
+  "applicationVersion": "2.6.0",
+  "moduleVersion": "1.5.0",
+  "source": {
+    "repository": "unDead41/geodecoder",
+    "branch": "main-digitalized",
+    "testedCodeCommit": "6246d06ab492a5b0ab3edb3d5ee7b25bcc84b081",
+    "beforeReceiptCommit": "0d51bda7d63f3a88865a0922230eda175eb47177",
+    "moduleSourceCommit": "fc9bda734f8b59825271a7cc4b91c101cb30bdde",
+    "runtimeFilesChanged": false
+  },
+  "database": {
+    "projectId": "fkrlwzxvyufndavlpzbp",
+    "projectName": "GeoDecoder Digital",
+    "region": "ap-southeast-1",
+    "migration": {
+      "version": "20261026050330",
+      "name": "geodecoder_profile_and_module_progress_v2_6"
+    },
+    "appliedAt": "2026-10-26T05:03:31.019Z",
+    "atomicTransaction": true,
+    "migrationFileHashes": {
+      "profile_v2_3.sql": "d73f8dbe5c451140b5c718c3009bd100a81ae5029ee85cfe60bcd5f84972200f",
+      "module_progress_v2_4.sql": "f22ab14e1298a36c0ce27400b76472218b40e04b0689a1813b708e5df7c6cf2b"
+    },
+    "before": {
+      "rooms": 0,
+      "classes": 0,
+      "attempts": 0,
+      "profiles": 2,
+      "avatar_available": false,
+      "module_progress_rpc": null,
+      "module_progress_table": null
+    },
+    "contract": {
+      "rooms": 0,
+      "classes": 0,
+      "attempts": 0,
+      "profiles": 2,
+      "avatar_available": true,
+      "module_progress_rls": true,
+      "module_progress_rpc": "geo_module_progress(text,jsonb)",
+      "anon_profile_execute": false,
+      "anon_progress_execute": false,
+      "module_progress_table": "private.module_progress",
+      "module_progress_records": 0,
+      "authenticated_profile_execute": true,
+      "authenticated_progress_execute": true,
+      "authenticated_direct_profile_write": false,
+      "authenticated_direct_progress_access": false,
+      "authenticated_private_records_execute": false
+    },
+    "afterRollbackVerification": {
+      "rooms": 0,
+      "classes": 0,
+      "attempts": 0,
+      "profiles": 2,
+      "module_progress": 0
+    },
+    "profileVerification": "PASS: own-profile updates, immutable permissions, room-metric preservation and independent module records; fixtures rolled back",
+    "moduleProgressVerification": "PASS: module progress validation, role grants, identity isolation, owned-class authorization and monotonic upsert; rolled back",
+    "syntheticFixturesRolledBack": true,
+    "existingAccountPasswordsChanged": false,
+    "securityAdvisors": {
+      "privateRpcOnlyTablesWithoutPolicies": 17,
+      "directAuthenticatedTableAccessVerifiedDenied": true,
+      "preExistingLeakedPasswordProtectionWarningUnchanged": true,
+      "remediation": "https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection"
+    }
+  },
+  "pages": {
+    "repository": "unDead41/geodecoder-digital",
+    "branch": "main-digitalized",
+    "path": "/",
+    "settingsSaved": true,
+    "settingsReloadVerified": true,
+    "publicCommit": "f5e5e13edd4c3627282cdaca78870c13399ac915",
+    "workflow": {
+      "id": 40272514912,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/unDead41/geodecoder-digital/actions/runs/40272514912"
+    },
+    "url": "https://undead41.github.io/geodecoder-digital/",
+    "http": [
+      {
+        "path": "index.html",
+        "status": 200,
+        "bytes": 1097468,
+        "sha256": "c37c2b1fcac5abb51263a67a14332779b9b01cdb96d39e264465b2934c306960",
+        "type": "text/html; charset=utf-8",
+        "matches_tested_build": true
+      },
+      {
+        "path": "release.json",
+        "status": 200,
+        "bytes": 1314,
+        "sha256": "0b5407888ba6c1e67a68a41eee842f2148a3408508ac23f5f2d920e865c03cc3",
+        "type": "application/json; charset=utf-8",
+        "release": {
+          "applicationVersion": "2.6.0",
+          "moduleVersion": "1.5.0",
+          "publicationBranch": "main-digitalized",
+          "sourceRepository": "unDead41/geodecoder",
+          "sourceBranch": "main-digitalized",
+          "sourceCommit": "6246d06ab492a5b0ab3edb3d5ee7b25bcc84b081",
+          "moduleSourceCommit": "fc9bda734f8b59825271a7cc4b91c101cb30bdde",
+          "websiteBlob": "fb91b41ab062ace14acd9589c2c463774b4b0593",
+          "websiteSha256": "c37c2b1fcac5abb51263a67a14332779b9b01cdb96d39e264465b2934c306960",
+          "websiteBytes": 1097468,
+          "validation": {
+            "applicationTests": 248,
+            "moduleTests": 244,
+            "build": true,
+            "check": true,
+            "browser": "Chrome representative UI; CSS viewports320/390; not physical devices",
+            "hostedDatabase": "Profile and module-progress SQL assertions passed; all synthetic fixtures rolled back"
+          },
+          "deployment": {
+            "pagesSourceChanged": true,
+            "requestedPagesSource": "main-digitalized",
+            "profileMigrationApplied": true,
+            "moduleProgressMigrationApplied": true,
+            "requiredMigrations": [
+              "profile_v2_3.sql",
+              "module_progress_v2_4.sql"
+            ],
+            "actualPagesSource": "main-digitalized",
+            "pagesPath": "/",
+            "migrationName": "geodecoder_profile_and_module_progress_v2_6",
+            "migrationVersion": "20261026050330",
+            "databaseVerifiedAt": "2026-10-26T05:06:41.152Z"
+          }
+        }
+      },
+      {
+        "path": "assets/audio/menu.mp3",
+        "status": 200,
+        "bytes": 2161058,
+        "sha256": "9843f7da5eb33dcde18e83401debf2d82e1355a07cea0df5e4a696b1e123b0b4",
+        "type": "audio/mp3"
+      },
+      {
+        "path": "assets/audio/map.mp3",
+        "status": 200,
+        "bytes": 2006517,
+        "sha256": "a86d0abe511f1ef5291c95b27b8aee42338d9dc5970af03d79fdef8e157aacb4",
+        "type": "audio/mp3"
+      }
+    ]
+  },
+  "browser": {
+    "environment": "Cloud Chrome on published HTTPS URL",
+    "practice": "Home to Guest Release QA to Practice15; correct pyramid R1 and matching net R2 gave1/15; QA round then ended",
+    "module": "Version1.5.0 loaded",
+    "preferences": "Module Settings opened parent dialog; English and150% propagated to parent/module; restored BM100%",
+    "computedFont": {
+      "parent100": "16px",
+      "parent150": "24px",
+      "module150": "24px"
+    },
+    "moduleAt150": {
+      "clientWidth": 1204,
+      "scrollWidth": 1204
+    },
+    "limitations": [
+      "No real-user password changes, email delivery or external-provider Auth flow tested",
+      "No physical-device, screen-reader or human-audio validation"
+    ],
+    "screenshots": [
+      "pages-settings-1792991582840.jpg",
+      "pages-live-module-1792991583010.jpg"
+    ]
+  }
+}
