@@ -1,0 +1,5 @@
+PASS: SQL gameplay, terminal, deadline, privileges and rollback fixtures
+PASS: real Edge → SQL as service_role, anon denial, max2, 10 correct pairs, retries, pacing and completed-player departure
+PASS: PIN guessing limit persists across invalid PINs and rotating player tokens
+PASS: global create120/min and join300/min quotas survive rotating tokens and fingerprints
+PASS: bounded cleanup, direct 24h expiry and cascading removal of player data

@@ -3,6 +3,10 @@
 Versi Digital: **v2.6.0**. Branch integrasi: **main-digitalized**.
 Modul pembelajaran: **v1.5.0**. Firmware kekal **v1.1.3**.
 
+Candidate branch `digitalized-game-duel` menyediakan Duel protocol 2 daripada
+asas keluaran ini. Migration/Edge v2 belum diterbitkan oleh chat Duel.
+Lihat [handoff integrasi](docs/DUEL_V2_HANDOFF.md) sebelum merge atau deploy.
+
 Keluaran ini menyatukan BM/English, rich text, kuiz/latihan/duel, kemudahan
 penggunaan, modul geometri diperluas, aktiviti berpandu, Profil Saya,
 Kata Laluan & Keselamatan serta Tetapan Penggunaan.

@@ -148,3 +148,16 @@ Completed achievements survive retries and edits, while current observations and
 checks are invalidated as needed. Restored practice is formative self-report, not
 verified mastery or TP. Root index and all standalone aliases share one build.
 See docs/RELEASE_V2_6.md for source SHAs, tests and deployment limits.
+
+## Duel protocol 2 candidate
+
+The Duel branch sends only the current bilingual prompt without an answer or
+future selection IDs. Requested hints and completed-answer corrections are
+server projections. The one Game engine renders accepted backend state rather
+than evaluating a Duel scan locally. Durable review survives refresh; an
+idempotent server-paced advance acknowledges the existing 900/1800ms feedback.
+Scores, single attempt, common start and server wall-clock tiebreaker are unchanged.
+Lobby/match remaining time, finished/forfeited/estimated-away labels, Home resume,
+live errors and a short teacher guide use the existing settings and visual system.
+Protocol 1 clients fail closed after the coordinated backend update. This is
+not deployed by the Duel branch; see docs/DUEL_V2.md and DUEL_V2_HANDOFF.md.

@@ -210,3 +210,13 @@ select:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
 .module-save-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 14px;padding:12px 16px;border:1px solid var(--border);border-radius:12px;background:var(--surface)}
 .module-save-bar p{margin:0;color:var(--muted);font-size:calc(14px * var(--text-scale,1));line-height:1.6;overflow-wrap:anywhere}.module-save-bar .button{flex-shrink:0}
 @media(max-width:600px){.module-save-bar{align-items:stretch;flex-direction:column}.module-save-bar .button{width:100%}}
+
+/* Duel status uses text as well as colour; clocks are deliberately not live regions. */
+.duel-deadline{font-variant-numeric:tabular-nums;font-weight:700;color:var(--ink);margin:.75rem 0}
+.duel-teacher-guide{border-top:1px solid var(--border);padding:1rem 0;margin-top:1rem;line-height:1.65}
+.duel-teacher-guide summary{cursor:pointer;font-weight:700}
+.duel-resume-banner{margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)}
+.duel-resume-banner p{font-size:.92em;line-height:1.55}
+.duel-player strong,.duel-player span,.duel-live-heading span{overflow-wrap:anywhere;min-width:0}
+.duel-player p{font-variant-numeric:tabular-nums;margin:.3rem 0 0}
+.duel-live-heading{flex-wrap:wrap}

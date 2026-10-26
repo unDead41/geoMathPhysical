@@ -6,7 +6,7 @@ const roomId='00000000-0000-4000-8000-000000000001';
 const memory=()=>{const m=new Map();return{getItem:k=>m.get(k)||null,setItem:(k,v)=>m.set(k,v),removeItem:k=>m.delete(k)};};
 test('duel HTTP retries a lost acknowledgement with the same sequence and reconnects the saved session',async()=>{
   let seq=0,hints=0,dropped=false,requests=0,stale=false;
-  const snapshot=()=>({ok:true,serverNow:stale?100:1000+seq,room:{id:roomId,code:'123456',status:'playing',startsAt:900,deadlineAt:900900,questionIds:[],total:10,winnerId:null},me:{id:'me',name:'Aisyah',seq:stale?0:seq,hints:stale?0:hints,answered:0},opponent:null,actionResult:{type:'hint'}});
+  const snapshot=()=>({ok:true,protocol:2,serverNow:stale?100:1000+seq,room:{id:roomId,code:'123456',status:'playing',startsAt:900,deadlineAt:900900,questionIds:[],total:10,winnerId:null},me:{id:'me',name:'Aisyah',seq:stale?0:seq,hints:stale?0:hints,answered:0},opponent:null,actionResult:{type:'hint'}});
   const server=createServer(async(req,res)=>{
     let text='';for await(const part of req)text+=part;const body=JSON.parse(text);requests++;
     if(body.action==='hint'){
@@ -37,7 +37,7 @@ test('a real HTTP timeout is retried as a network error without duplicating an a
   const server=createServer(async(req,res)=>{
     let text='';for await(const part of req)text+=part;const body=JSON.parse(text);
     if(body.action==='hint'){hintRequests++;if(body.seq>seq){seq=body.seq;hints++;}}
-    const value={ok:true,serverNow:1000+seq,room:{id:roomId,code:'123456',status:'playing'},me:{id:'me',seq,hints},opponent:null};
+    const value={ok:true,protocol:2,serverNow:1000+seq,room:{id:roomId,code:'123456',status:'playing'},me:{id:'me',seq,hints},opponent:null};
     if(body.action==='hint'&&!delayed){delayed=true;await new Promise(r=>setTimeout(r,150));}
     if(!res.destroyed)res.end(JSON.stringify(value));
   });await new Promise(r=>server.listen(0,'127.0.0.1',r));

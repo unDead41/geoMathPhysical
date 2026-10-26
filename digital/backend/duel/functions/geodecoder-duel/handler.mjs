@@ -1,16 +1,17 @@
+import {DUEL_QUESTIONS} from './questions.mjs';
 // This module also runs under Node: the deployed Deno entry point only supplies env.
-const ACTIONS = new Set(['create','join','state','ready','leave','hint','skip','scan']);
-const MUTATIONS = new Set(['ready','leave','hint','skip','scan']);
-const QUESTIONS = new Set(['hint','skip','scan']);
+const ACTIONS = new Set(['create','join','state','ready','leave','hint','skip','scan','advance']);
+const MUTATIONS = new Set(['ready','leave','hint','skip','scan','advance']);
+const QUESTIONS = new Set(['hint','skip','scan','advance']);
 const SHAPES = new Set(['cube','cuboid','pyramid','cylinder','cone']);
-const STATUS = Object.freeze({invalid_request:400,invalid_token:401,room_unavailable:404,room_full:409,room_expired:410,not_started:409,not_ready:409,question_mismatch:409,stage_mismatch:409,sequence_mismatch:409,sequence_conflict:409,rate_limited:429,server_error:500});
-const CORS = Object.freeze({'Access-Control-Allow-Origin':'*','Access-Control-Allow-Methods':'POST, OPTIONS','Access-Control-Allow-Headers':'content-type, authorization, apikey, x-client-info','Access-Control-Max-Age':'86400','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});
+const STATUS = Object.freeze({invalid_request:400,invalid_token:401,room_unavailable:404,room_full:409,room_expired:410,not_started:409,not_ready:409,question_mismatch:409,stage_mismatch:409,sequence_mismatch:409,sequence_conflict:409,rate_limited:429,client_update_required:426,backend_update_required:503,server_error:500});
+const CORS = Object.freeze({'Access-Control-Allow-Origin':'*','Access-Control-Allow-Methods':'POST, OPTIONS','Access-Control-Allow-Headers':'content-type, authorization, apikey, x-client-info','Access-Control-Expose-Headers':'X-GeoDecoder-Duel-Protocol','X-GeoDecoder-Duel-Protocol':'2','Access-Control-Max-Age':'86400','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});
 const MAX_BODY = 4096;
 const encoder = new TextEncoder();
 const hex = bytes => [...new Uint8Array(bytes)].map(byte=>byte.toString(16).padStart(2,'0')).join('');
 const isObject = value => value!==null && typeof value==='object' && !Array.isArray(value);
 const pick = (value, fields) => Object.fromEntries(fields.filter(key=>Object.hasOwn(value,key)).map(key=>[key,value[key]]));
-const ROOM_FIELDS = ['id','code','status','startsAt','deadlineAt','questionIds','total','winnerId','reason'];
+const ROOM_FIELDS = ['id','code','status','startsAt','deadlineAt','lobbyExpiresAt','total','winnerId','reason'];
 const SUMMARY_FIELDS = ['id','slot','name','ready','answered','stage','score','mistakes','skipped','hints','finishedAt','elapsed','forfeited','lastSeenAt'];
 const ANSWER_FIELDS = ['id','shape','topic','outcome','hint','failedAt','elapsed','firstTry'];
 
@@ -21,8 +22,9 @@ const error = (code,status=STATUS[code]??500) => reply({ok:false,error:code},sta
 
 function validate(body) {
   if(!isObject(body) || !ACTIONS.has(body.action))return 'invalid_request';
+  if(body.protocol!==2)return 'client_update_required';
   if(typeof body.token!=='string' || !/^[a-f0-9]{64}$/i.test(body.token))return 'invalid_token';
-  const allowed = ['action','token'];
+  const allowed = ['action','token','protocol'];
   if(body.action==='create'||body.action==='join'){
     allowed.push('name');
     if(typeof body.name!=='string' || /[\u0000-\u001f\u007f]/.test(body.name))return 'invalid_request';
@@ -84,13 +86,27 @@ function randomCode(crypto) {
   return String(100000+values[0]%900000);
 }
 
-function safeSnapshot(value) {
+function publicQuestion(id,index,withHint=false,settled=false) {
+  const q=DUEL_QUESTIONS[id];
+  if(!q)throw new Error('Unknown server question');
+  const copy=Object.fromEntries(['ms','en'].map(language=>[language,{
+    prompt:q.copy[language].prompt,lines:[...q.copy[language].lines],
+    ...(withHint?{hint:q.copy[language].hint}:{})
+  }]));
+  return {id:settled?id:`duel-${index}`,index,topic:q.topic,copy,
+    ...(q.formulaKey?{formulaKey:{...q.formulaKey}}:{}),...(settled?{shape:q.shape}:{})};
+}
+
+export function projectDuelSnapshot(value) {
   if(!isObject(value)||value.ok!==true||!isObject(value.room)||!isObject(value.me)||!Array.isArray(value.me.answers)||!Number.isFinite(value.serverNow))return null;
-  const me=pick(value.me,[...SUMMARY_FIELDS,'hintUsed','seq','nextReadyAt']);
+  if(typeof value.me.reviewPending!=='boolean'||!Number.isFinite(value.room.lobbyExpiresAt))return null;
+  const me=pick(value.me,[...SUMMARY_FIELDS,'hintUsed','seq','nextReadyAt','reviewPending']);
   me.attempts=isObject(value.me.attempts)?pick(value.me.attempts,['solid','net']):{solid:null,net:null};
-  me.answers=value.me.answers.map(answer=>({...pick(answer,ANSWER_FIELDS),attempts:isObject(answer.attempts)?pick(answer.attempts,['solid','net']):{solid:null,net:null}}));
+  me.answers=value.me.answers.map((answer,index)=>({...pick(answer,ANSWER_FIELDS),question:publicQuestion(answer.id,index,true,true),attempts:isObject(answer.attempts)?pick(answer.attempts,['solid','net']):{solid:null,net:null}}));
   const actionResult=isObject(value.actionResult)?pick(value.actionResult,['type','target']):null;
-  return {ok:true,serverNow:value.serverNow,room:pick(value.room,ROOM_FIELDS),me,opponent:isObject(value.opponent)?pick(value.opponent,SUMMARY_FIELDS):null,actionResult};
+  const currentQuestion=value.room.status==='playing'&&!me.reviewPending&&me.answered<value.room.total
+    ?publicQuestion(value.room.questionIds[me.answered],me.answered,me.hintUsed):null;
+  return {ok:true,protocol:2,serverNow:value.serverNow,room:pick(value.room,ROOM_FIELDS),me,currentQuestion,opponent:isObject(value.opponent)?pick(value.opponent,SUMMARY_FIELDS):null,actionResult};
 }
 
 export function createDuelHandler({fetch:fetchImpl=globalThis.fetch,env=name=>globalThis.Deno?.env.get(name),crypto=globalThis.crypto,rpcTimeoutMs=8000}={}) {
@@ -117,7 +133,7 @@ export function createDuelHandler({fetch:fetchImpl=globalThis.fetch,env=name=>gl
       const address=/^[0-9a-f:.]{1,80}$/i.test(forwarded)?forwarded:'unavailable';
       const hmac=await crypto.subtle.importKey('raw',encoder.encode(serviceKey),{name:'HMAC',hash:'SHA-256'},false,['sign']);
       const fingerprint=hex(await crypto.subtle.sign('HMAC',hmac,encoder.encode(`geodecoder-duel:v1:${address}`)));
-      const {token:ignored,...fields}=body;
+      const {token:ignored,protocol:ignoredProtocol,...fields}=body;
       const payload={...fields,tokenHash,fingerprint};
       const controller=new AbortController();
       const timeout=setTimeout(()=>controller.abort(),rpcTimeoutMs);
@@ -131,7 +147,10 @@ export function createDuelHandler({fetch:fetchImpl=globalThis.fetch,env=name=>gl
             if(result.error==='pin_collision'&&body.action==='create')continue;
             return error(Object.hasOwn(STATUS,result.error)?result.error:'server_error');
           }
-          const snapshot=safeSnapshot(result);
+          if(result?.ok!==true)return error('server_error');
+          // Fail closed if code is deployed before its additive database migration.
+          if(typeof result?.me?.reviewPending!=='boolean'||!Number.isFinite(result?.room?.lobbyExpiresAt))return error('backend_update_required');
+          const snapshot=projectDuelSnapshot(result);
           return snapshot?reply(snapshot):error('server_error');
         }
         return error('server_error',503);

@@ -19,6 +19,14 @@ export async function classroomFixture(context,role,{finishedState,snapshotFailu
       }
       await route.fulfill({status:200,contentType:'application/json',headers:{'access-control-allow-origin':'*'},body:JSON.stringify(data)});return;
     }
+    if(url.pathname==='/rest/v1/rpc/geo_module_progress'){
+      // v2.6 portal reads formative module progress alongside its room snapshot.
+      // This fixture still prohibits saving progress, scores or answers.
+      const {action,payload}=request.postDataJSON();
+      if(!['mine','class'].includes(action))throw new Error('Fixture prohibits module writes: '+action);
+      const data=action==='mine'?{records:[]}:{class_id:payload.class_id,students:[]};
+      await route.fulfill({status:200,contentType:'application/json',headers:{'access-control-allow-origin':'*'},body:JSON.stringify(data)});return;
+    }
     throw new Error('Unexpected fixture request: '+request.method()+' '+url.pathname);
   });
   return actions;

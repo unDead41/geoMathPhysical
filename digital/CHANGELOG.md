@@ -1,5 +1,13 @@
 # GeoDecoder Digital changelog
 
+## Belum diterbitkan — Duel protocol 2 (digitalized-game-duel)
+
+- Tutup metadata jawapan aktif/future question IDs; hint hanya selepas ACK pelayan.
+- Semakan tahan refresh melalui migration durable review dan tindakan advance.
+- Perbaiki request/polling lama, terminal ACK selepas deadline dan tanda salah R1.
+- Tambah baki masa, status pemain, Home resume, panduan guru serta jejak enam PDF.
+- Backend production dan Pages belum diubah; lihat docs/DUEL_V2_HANDOFF.md.
+
 ## v2.6.0 — 26 Oktober 2026 (main-digitalized)
 
 - Satukan branch digital: BM/English, rich text, latihan 15 soalan, Duel,

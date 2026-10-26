@@ -1,7 +1,7 @@
 // Optional isolated full-stack QA. Install @electric-sql/pglite outside this repo
 // and set PGLITE_MODULE to its dist/index.js; no production dependency is added.
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync,readdirSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import { webcrypto } from 'node:crypto';
 import { createDuelHandler } from './functions/geodecoder-duel/handler.mjs';
@@ -19,7 +19,7 @@ const handler=createDuelHandler({env:name=>env[name],crypto:webcrypto,fetch:asyn
   return Response.json(rows[0].result);
 }});
 async function call(body,address='203.0.113.8'){
-  const response=await handler(new Request(endpoint,{method:'POST',headers:{'Content-Type':'application/json','X-Forwarded-For':address},body:JSON.stringify(body)}));
+  const response=await handler(new Request(endpoint,{method:'POST',headers:{'Content-Type':'application/json','X-Forwarded-For':address},body:JSON.stringify({protocol:2,...body})}));
   return {status:response.status,...await response.json()};
 }
 try{
@@ -29,6 +29,8 @@ try{
   const {rows:[empty]}=await db.query('select count(*)::int as count from geodecoder_duel.rooms');
   assert.equal(empty.count,0,'transactional verification must leave no rooms');
   console.log('PASS: SQL gameplay, terminal, deadline, privileges and rollback fixtures');
+  const migration=readdirSync(new URL('./supabase/migrations/',import.meta.url)).find(n=>n.endsWith('_duel_durable_review_v2.sql'));
+  await db.exec(readFileSync(new URL('./supabase/migrations/'+migration,import.meta.url),'utf8'));
 
   for(const role of ['anon','authenticated']){
     await db.exec(`set role ${role}`);
@@ -51,7 +53,9 @@ try{
   assert.equal((await call({action:'ready',token:hostToken,roomId,seq:1})).ok,true);
   const countdown=await call({action:'ready',token:otherToken,roomId,seq:1});
   assert.equal(countdown.room.status,'countdown');
-  assert.equal(new Set(countdown.room.questionIds).size,10);
+  assert.equal(countdown.room.questionIds,undefined,'Future question IDs stay private');
+  const {rows:[{ids}]}=await db.query('select question_ids as ids from geodecoder_duel.rooms where id=$1',[roomId]);
+  assert.equal(new Set(ids).size,10);
   const premature=await call({action:'skip',token:hostToken,roomId,seq:2,questionIndex:0});
   assert.equal(premature.error,'not_started');
   // Advance only fixture clocks. All gameplay mutations below use the real Edge
@@ -60,7 +64,7 @@ try{
   await db.query('update geodecoder_duel.players set next_ready_at=$1,question_started_at=$1 where room_id=$2',[Date.now()-10000,roomId]);
   let seq=1,last;
   for(let index=0;index<10;index++){
-    const question=QUESTIONS.find(q=>q.id===countdown.room.questionIds[index]);
+    const question=QUESTIONS.find(q=>q.id===ids[index]);
     for(const [kind,target] of [['solid','r1'],['net','r2']]){
       const body={action:'scan',token:hostToken,roomId,seq:++seq,questionIndex:index,kind,target,shape:question.shape};
       last=await call(body);
@@ -77,8 +81,10 @@ try{
     if(index<9){
       const blocked=await call({action:'skip',token:hostToken,roomId,seq:seq+1,questionIndex:index+1});
       assert.equal(blocked.error,'not_ready');
-      await db.query('update geodecoder_duel.players set next_ready_at=$1 where id=$2',[Date.now()-1,last.me.id]);
     }
+    await db.query('update geodecoder_duel.players set next_ready_at=$1 where id=$2',[Date.now()-1,last.me.id]);
+    last=await call({action:'advance',token:hostToken,roomId,seq:++seq,questionIndex:index});
+    assert.equal(last.ok,true,JSON.stringify(last));
   }
   assert.equal(last.room.status,'playing');
   assert.equal(last.room.winnerId,null);

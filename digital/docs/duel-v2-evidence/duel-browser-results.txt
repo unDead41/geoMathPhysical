@@ -1,0 +1,18 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> geodecoder-digital@2.6.0 test:duel
+> node tests/duel.browser.mjs
+
+PASS: invalid PIN, escaped aliases, two-player lobby, third-player rejection, BM/EN and mobile 150%
+PASS: common server start, current prompt only, no future IDs/answer/hint in player response
+PASS: delayed accepted R1 survives opening a menu before ACK
+PASS: refresh resumes accepted R1 using the Home resume action
+PASS: lost R2 ACK retries without a second point
+PASS: wrong-answer correction and server pacing survive refresh
+PASS: network-offline pending R2 reconnects with the same operation
+PASS: complete ten-question two-session match, 10–9 winner agrees on both clients
+PASS: a wrong R1 restored after refresh is never labelled as accepted
+PASS: fresh-PIN replay and confirmed departure produce one consistent forfeit result
+PASS: server deadline settles unanswered questions and displays final results at 320 px / 150%
+PASS: accepted answer with lost ACK replayed after deadline opens final results without scoring twice
+PASS: no browser runtime errors; all browser traffic stayed on the isolated local fixture
