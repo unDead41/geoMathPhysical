@@ -1,0 +1,107 @@
+{
+  "scope": "Only Form 2 Chapter 6 and Form 3 Chapter 7; source metadata may be inspected to locate these ranges. No other chapter body is used.",
+  "files": [
+    {
+      "filename": "01-DSKP-KSSM-MATEMATIK-TINGKATAN-2.pdf",
+      "form": 2,
+      "chapter": "Bab 6",
+      "language": "DSKP",
+      "pdf_pages_total": 100,
+      "pdf_pages_in_scope": [
+        63,
+        66
+      ],
+      "printed_pages_in_scope": [
+        51,
+        54
+      ],
+      "bytes": 1218749,
+      "sha256": "6985d7b77d955e743efa9423b8edbca6dc8b1ef0634245227b09613504f4c7db"
+    },
+    {
+      "filename": "02-Matematik-Tingkatan-2-KSSM.pdf",
+      "form": 2,
+      "chapter": "Bab 6",
+      "language": "BM",
+      "pdf_pages_total": 161,
+      "pdf_pages_in_scope": [
+        54,
+        64
+      ],
+      "printed_pages_in_scope": [
+        98,
+        119
+      ],
+      "bytes": 18410744,
+      "sha256": "a419eb7dca0f693a72c2bacfacef6e168ccc58da67f0e6163d87c2d00a720122"
+    },
+    {
+      "filename": "03-Mathematics-Form-2-KSSM.pdf",
+      "form": 2,
+      "chapter": "Chapter 6",
+      "language": "EN",
+      "pdf_pages_total": 161,
+      "pdf_pages_in_scope": [
+        54,
+        64
+      ],
+      "printed_pages_in_scope": [
+        98,
+        119
+      ],
+      "bytes": 19557614,
+      "sha256": "cc91d6dad34531640d4c37d9df162e87769f342b85adb31f7bba522646ad2fd0"
+    },
+    {
+      "filename": "04-Matematik-Tingkatan-3-KSSM.pdf",
+      "form": 3,
+      "chapter": "Bab 7",
+      "language": "BM",
+      "pdf_pages_total": 276,
+      "pdf_pages_in_scope": [
+        178,
+        207
+      ],
+      "printed_pages_in_scope": [
+        168,
+        197
+      ],
+      "bytes": 114638228,
+      "sha256": "fbf4cc21d864e61858693e1804f6a7bf00fb68d6416b724279dcb0290fb8b45f"
+    },
+    {
+      "filename": "05-Mathematics-Form-3-KSSM.pdf",
+      "form": 3,
+      "chapter": "Chapter 7",
+      "language": "EN",
+      "pdf_pages_total": 276,
+      "pdf_pages_in_scope": [
+        178,
+        207
+      ],
+      "printed_pages_in_scope": [
+        168,
+        197
+      ],
+      "bytes": 42223293,
+      "sha256": "56e7f05cf19f70fb380dafb56f3110fb998cbc25ce839088e970b815852a85d1"
+    },
+    {
+      "filename": "06-DSKP-KSSM-MATEMATIK-TINGKATAN-3.pdf",
+      "form": 3,
+      "chapter": "Bab 7",
+      "language": "DSKP",
+      "pdf_pages_total": 86,
+      "pdf_pages_in_scope": [
+        69,
+        72
+      ],
+      "printed_pages_in_scope": [
+        57,
+        60
+      ],
+      "bytes": 3487295,
+      "sha256": "a054e7dc05af1b4d7b3565f302d69ed9bd494b46af21dfd71cb48044854fd7bb"
+    }
+  ]
+}

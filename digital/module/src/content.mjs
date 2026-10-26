@@ -1,5 +1,5 @@
-export const MODULE_VERSION='1.3.0';
-export const MODEL_ORDER=['cube','cuboid','pyramid','cylinder','cone'];
+export const MODULE_VERSION='1.4.0';
+export const MODEL_ORDER=['cube','cuboid','pyramid','cylinder','cone','triangular-prism','tetrahedron','pentagonal-prism','hexagonal-prism','sphere','hemisphere'];
 export const MODEL_DATA={
   cube:{name:'Kubus',tag:'Enam muka, semuanya sama.',flat:6,curved:0,edges:12,vertices:8,
     intro:'Kubus mempunyai 6 muka segi empat sama. Semua muka sama bentuk dan sama saiz. Kesemua 12 rusuknya sama panjang.',
@@ -37,3 +37,45 @@ export const MODEL_DATA={
     question:'Apakah bentuk permukaan melengkung kon apabila dibuka rata?',options:['Segi tiga.','Sektor bulatan.'],answer:1,
     feedback:'Permukaan itu menjadi sektor bulatan, bukan segi tiga. Lengkok sektor menutup tepat sekeliling tapak bulatan apabila dicantum.',curvedEdges:true}
 };
+
+// Learning enrichment stays inside the module; game Shape IDs are unchanged.
+function learningPrismMetadata(n,polygon){
+  return {name:'Prisma '+polygon,tag:'Dua tapak '+polygon+' sekata yang sepadan.',enrichment:true,
+    flat:n+2,curved:0,edges:3*n,vertices:2*n,
+    intro:'Prisma tegak ini mempunyai dua tapak '+polygon+' sekata yang kongruen dan selari. '+n+' muka sisinya berbentuk segi empat tepat. Keratan yang selari dengan tapak mempunyai bentuk dan saiz yang sama.',
+    net:'Dua tapak '+polygon+' dan '+n+' segi empat tepat membentuk bentangan. Muka sisi boleh dibuka sebagai satu jalur; kedua-dua tapak menutup hujung prisma apabila dilipat.',
+    observe:'Bandingkan pandangan atas dengan pandangan sisi. Dari atas, bentuk tapak kelihatan. Dari sisi, tinggi prisma kelihatan.',
+    labels:[...Array.from({length:n},(_,i)=>'Muka sisi '+(i+1)),'Tapak atas','Tapak bawah'],
+    views:[polygon[0].toUpperCase()+polygon.slice(1),polygon[0].toUpperCase()+polygon.slice(1),'Segi empat tepat + rusuk','Segi empat tepat + rusuk','Segi empat tepat + rusuk','Segi empat tepat + rusuk'],
+    question:'Apakah yang sama pada kedua-dua tapak prisma ini?',options:['Bentuk dan saiznya sama.','Hanya warnanya mesti sama.'],answer:0,
+    feedback:'Kedua-dua tapak prisma kongruen dan selari. Kongruen bermaksud sama bentuk dan sama saiz; warna tidak menentukan sifat prisma.'};
+}
+Object.assign(MODEL_DATA,{
+  'triangular-prism':learningPrismMetadata(3,'segi tiga'),
+  tetrahedron:{name:'Piramid bertapak segi tiga',tag:'Satu tapak segi tiga, tiga muka sisi.',enrichment:true,
+    flat:4,curved:0,edges:6,vertices:4,
+    intro:'Piramid tegak ini mempunyai tapak segi tiga sama sisi. Tiga muka sisi segi tiga bertemu pada satu puncak. Jumlahnya empat muka, enam rusuk dan empat bucu. Pepejal bermuka empat segi tiga ini juga dipanggil tetrahedron.',
+    net:'Satu segi tiga ialah tapak dan tiga segi tiga lagi ialah muka sisi. Ketiga-tiga muka sisi dilipat pada rusuk tapak sehingga bertemu pada puncak.',
+    observe:'Tinggi tegak diukur dari pusat tapak ke puncak. Tinggi sendeng muka sisi diukur dari titik tengah sisi tapak ke puncak.',
+    labels:['Tapak segi tiga','Muka sisi 1','Muka sisi 2','Muka sisi 3'],views:['Segi tiga + rusuk','Segi tiga','Segi tiga + rusuk','Segi tiga + rusuk','Segi tiga + rusuk','Segi tiga + rusuk'],
+    question:'Piramid bertapak segi tiga ini mempunyai berapa muka semuanya?',options:['Tiga muka.','Empat muka.'],answer:1,
+    feedback:'Satu muka ialah tapak segi tiga dan tiga lagi ialah muka sisi. Jadi, jumlahnya empat muka segi tiga.'},
+  'pentagonal-prism':learningPrismMetadata(5,'segi lima'),
+  'hexagonal-prism':learningPrismMetadata(6,'segi enam'),
+  sphere:{name:'Sfera',tag:'Satu permukaan melengkung, tanpa bucu.',enrichment:true,noNet:true,
+    flat:0,curved:1,edges:0,vertices:0,
+    intro:'Sfera mempunyai satu permukaan melengkung dan tiada permukaan rata. Semua titik pada permukaannya berada pada jarak yang sama dari pusat. Jarak itu ialah jejari. Sfera tiada rusuk dan tiada bucu.',
+    net:'Sfera tidak mempunyai bentangan rata yang tepat. Permukaan melengkungnya tidak boleh diratakan tanpa regangan atau penghampiran. Garisan pada ilustrasi sfera membantu menunjukkan bentuk, bukan rusuk.',
+    observe:'Pandangan ortografik sfera dari mana-mana arah ialah bulatan. Bulatan itu ialah pandangan, bukannya bentangan sfera.',
+    labels:['Permukaan melengkung'],views:['Bulatan','Bulatan','Bulatan','Bulatan','Bulatan','Bulatan'],
+    question:'Adakah bulatan pandangan atas ialah bentangan seluruh sfera?',options:['Ya, seluruh permukaan telah dibuka.','Tidak, itu hanya pandangan dari satu arah.'],answer:1,
+    feedback:'Bulatan itu ialah unjuran sfera dari satu arah. Seluruh permukaan sfera tidak mempunyai bentangan rata yang tepat.'},
+  hemisphere:{name:'Hemisfera',tag:'Separuh sfera dengan satu tapak bulatan.',enrichment:true,noNet:true,
+    flat:1,curved:1,edges:1,vertices:0,curvedEdges:true,
+    intro:'Hemisfera ialah separuh sfera. Model tertutup ini mempunyai satu permukaan melengkung dan satu tapak bulatan rata. Ada satu rusuk melengkung pada sempadan tapak dan tiada bucu.',
+    net:'Tapak hemisfera boleh dilukis sebagai bulatan rata. Bahagian melengkungnya tidak mempunyai bentangan rata yang tepat tanpa regangan atau penghampiran.',
+    observe:'Dari atas atau bawah, pandangannya bulatan. Dari depan dan sisi, bentuk luarnya separuh bulatan. Tentukan sama ada tapak diambil kira apabila menghitung luas permukaan.',
+    labels:['Permukaan melengkung','Tapak bulatan'],views:['Bulatan','Bulatan','Separuh bulatan','Separuh bulatan','Separuh bulatan','Separuh bulatan'],
+    question:'Luas seluruh permukaan hemisfera tertutup perlu mengira bahagian mana?',options:['Permukaan melengkung dan tapak bulatan.','Permukaan melengkung sahaja.'],answer:0,
+    feedback:'Hemisfera tertutup mempunyai permukaan melengkung dan satu tapak rata. Jumlah luasnya ialah 2πj² + πj² = 3πj².'}
+});

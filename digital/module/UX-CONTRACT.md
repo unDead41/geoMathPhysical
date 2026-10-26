@@ -8,8 +8,10 @@ dengan varian modul dalam DESIGN.md. Tidak mengubah kontrak kuiz Digital.
 
 | Capability | Canonical owner | Source of truth | Allowed variants | Verification |
 |---|---|---|---|---|
-| Scrollbar | src/style.css global baseline | DESIGN.md | forced-colors native | source check + phone browser |
+| Scrollbar | design-system.mjs tokens + src/style.css global baseline | DESIGN.md | forced-colors native | source check + phone browser |
 | Toast | app.mjs announce + inline text | this contract | info, learning feedback | browser + tests/app.test.mjs |
+| Form | notes.mjs labelled fields + calculate | lessons.mjs measurement limits | inline validation / first-error focus | app tests + browser |
+| Select/Listbox | native select in index.html + shared field recipe | fixed lab choices; DESIGN.md | browser/OS-owned popup | keyboard and browser selection |
 | Direct manipulation | app.mjs Pointer Events controller | user brief | mouse/touch, two-pointer pinch, keyboard, direction buttons | browser drag/keys + cancellation handlers |
 | Range | native input range + progress state | this contract | drag, keyboard | browser Home/End/PageUp |
 | Selection | native buttons with aria-pressed | this contract | shape, view, face, answer | browser all choices |
@@ -71,7 +73,7 @@ menggunakan < 0.01 cm³. Rajah ukuran tidak menukar bentuk umum model 3D.
 
 Labs own one independent cancellable rAF controller. Entering notes/exploration
 closes the lab controller before the other section becomes active. Choosing a
-lab, changing dimensions/type or editing a net cancels pending motion as needed.
+lab suspends its pending timeline. Changing dimensions/type or editing a net cancels the affected motion as needed.
 Pause retains the target; resume continues to it. Background and reduced-motion
 preference changes stop motion without an automatic restart. Only deliberate
 playback moves a lab scene. Progress sliders offer direct frame inspection.
@@ -87,6 +89,53 @@ All quantities are in cm/cm²/cm³. Lab circular values use Math.PI; notes retai
 their independent selectable π convention. Display rounds only after calculation.
 Wrong exterior choices produce explanation and allow retry, with no score or data
 collection. Shapes/dimensions change the lab mesh only; quiz/model defaults remain.
+
+
+## Penyatuan reka bentuk v1.2.1
+
+Arahan pengguna 26 Oktober 2026 mengehadkan pelaksanaan kepada modul, kemudian
+menetapkan penerbitan ke branch baharu digitalize-module-design. Source pembelajaran
+dan dasar kuiz tidak berubah. Lihat DESIGN.md untuk nilai visual dan pemetaan token.
+
+| Capability | Canonical owner | Source of truth | Allowed variants | Verification |
+|---|---|---|---|---|
+| Button/Playback | src/ui.mjs playbackButton + shared style.css | this contract | solid primary / outline support / labelled icon | shipped app tests + browser |
+| Form | notes.mjs calculate + labelled markup | lessons.mjs measurement limits | inline validation, first invalid focus | app tests + browser invalid input |
+| Select/Listbox | native select; shared field recipe | fixed lab choices | OS/browser popup | popup + keyboard browser check |
+| Design tokens | design-system.mjs → generated design-tokens.css | DESIGN.md token map | original GeoDecoder brand | build + check |
+
+Every action retains a visible label or BM accessible name. Shared button states
+are normal/hover/focus/active/selected/disabled. Hover never shifts target geometry.
+Selected shapes have a tick, selected surface pieces expose a tick plus name/number,
+and the net-face selector has text as well as an outline on the chosen cell.
+
+Exploration Pause freezes progress and the pending camera tween. It exposes
+Sambung animasi for the saved target/direction, not a fresh cycle. Camera-only
+reset leaves the geometric opening percentage intact. Range input cancels pending
+playback and directly inspects the chosen geometric frame. Direction buttons and
+canvas keyboard provide equivalent orbit controls.
+
+Labs keep one animation record with its elapsed time, easing, target and completion.
+Pause stores it; Resume continues that same timeline. A hidden tab suspends the lab
+record and does not resume automatically. Returning shows Sambung animasi.
+Section/lab changes suspend pending work for explicit resume; type/dimension changes cancel it. Preference changes pause the active record.
+A paused transfer disables Tuang satu bekas and Isi semula so only the shared Resume
+action can continue. Mula semula always clears the transfer.
+
+Scene fit is cached for the full geometric animation path, keeping physical scale
+stable. It affects only the renderer camera frame, never vertices, face connectivity,
+units or totals. User orbit/zoom changes the view deliberately.
+
+Phone/tablet and short desktop layouts use normal document scroll. Long note
+references are not sticky. Only tall desktop can pin a fully visible lab column.
+Sliders, output and focus never sit under fixed controls. Explicit playback and
+Lihat perubahan pada model focus/reveal the model. Tables scroll within their
+labelled keyboard-focusable regions. No page-level horizontal overflow is accepted.
+
+All new code remains in the offline bundle. QA pointer/media-query fixtures live
+only in tools/qa.html; tests must identify them as simulations. Native popup style,
+physical touch, OS preferences and screen-reader operation require separate device
+tests before making broader accessibility/browser-support claims.
 
 ## Tempo, galeri dan isi pilihan (v1.3.0)
 
@@ -110,3 +159,31 @@ The fill range is a volume fraction, never a height fraction for pyramids/cones.
 Changing one shape/size clears that solid only. Direct ranges cancel animation
 and keep the newly read value. All calculations use unrounded quantities; tiny
 positive results show < 0.01 instead of zero. Circular values use Math.PI.
+
+## Kontrak semasa v1.4.0
+
+Katalog pembelajaran MODEL_ORDER berisi 11 bentuk dan tidak digunakan oleh kuiz.
+Lima pilihan utama kekal; enam tambahan dalam satu select native. Nota, model,
+enam pandangan, isi A/B dan luas menggunakan katalog yang sama. Sfera/hemisfera
+mempunyai progress 0; kawalan net disembunyikan/disabled dan tindakan nota dijaga.
+
+NetStudio owns constrained parent/edge trees, dimensions and opening sides for
+seven polyhedra. All eleven cube examples are distinct. Editing locks during
+folds. Real flat intersections mark warnings and block printing. NetPrinter owns
+physical mm SVG, a 10mm grid and ruler. Oversized A4 layouts are rejected, never
+silently fitted. Print mode is entered only by its explicit print button.
+
+Volume amounts accept positive decimal cm³/mL/L. Add-to-both applies the chosen
+amount independently and caps each vessel. Transfer takes existing source liquid;
+receiver fills before spill starts. A+B+spill conserves the pre-transfer total.
+Direct edits cancel paused targets and clear stale transfer proofs. Empty resets
+spill. Includer checkboxes affect the selected total, not conservation or meshes.
+
+SurfaceWorkshop owns thin open/closed containers and rectangular through cavities.
+Its exposed groups include inner walls. Capacity and material volume have distinct
+labels. Advanced surface modes have no meaningless unfold slider or internal
+triangle labels. Existing timing, keyboard/native controls and focus apply.
+
+## Integrasi reka bentuk pada MD (v1.3.1)
+
+All v1.3 controls use the shared design-system.mjs and ui.mjs owners. Speed changes change the rate of the same elapsed-time easing record; they do not restart interpolation. Suspended records retain progress and their destinations across activity/section changes. Direct inputs cancel the affected record. Gallery/editor and formula/exterior readiness gates remain from v1.3.

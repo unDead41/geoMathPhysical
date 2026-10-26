@@ -1,0 +1,55 @@
+{
+  "moduleVersion": "1.4.0",
+  "htmlBytes": 279057,
+  "htmlSHA256": "ca4db77cea20b86a2e4606b13ac8750aab46dd384a03fb000de6d05eac94adc9",
+  "screenshots": [
+    {
+      "file": "screenshots/v1.4-cavity.jpg",
+      "sha256": "6c74079ae392a8a463a9fea5de6c489d9ecbde98025bab7853b3e5d680a3a260",
+      "caption": "Final HTML; through cavity, all exposed groups selected; 170cm\u00b2 and108cm\u00b3."
+    },
+    {
+      "file": "screenshots/v1.4-transfer.jpg",
+      "sha256": "333ece3a28f8832f239a16e274455a868f92d9482b2b7440c43831ad2680930c",
+      "caption": "Final HTML; A empty, B24cm\u00b3, spill3cm\u00b3 after27cm\u00b3 transfer."
+    },
+    {
+      "file": "screenshots/v1.4-studio.jpg",
+      "sha256": "5375ac1b7b669914c50864d15db131dfe0faf2e0eaecf0d2c5781f3af36fd6ef",
+      "caption": "Final HTML; real interactive studio slider at50%, actual hinge geometry."
+    },
+    {
+      "file": "screenshots/v1.4-phone390.jpg",
+      "sha256": "901b1a14b2102e4384e40e7c69d294e30a3c09c7744c518d6223d0cc73ea964c",
+      "caption": "Final HTML inside390px CSS iframe; reduced-motion dependency fixture, hemisphere model. Browser capture includes surrounding QA controls."
+    },
+    {
+      "file": "screenshots/v1.4-print-preview.jpg",
+      "sha256": "109df6dfbe41c153276884ebfbc1f9fe14128540977c94ed1af8ada50b87f3ea",
+      "caption": "Print preview before duplicate feedback was hidden; geometry and SVG exporter same as final."
+    }
+  ],
+  "checks": {
+    "automated": 215,
+    "passed": 215,
+    "responsiveCases": 20,
+    "widthsCSS": [
+      320,
+      390,
+      768,
+      1280
+    ],
+    "responsiveIssues": 0,
+    "studyShapes": 11,
+    "viewSelections": 66,
+    "studioPolyhedra": 7,
+    "cubeNets": 11
+  },
+  "limitations": [
+    "HTTP Chromium with CSS iframe viewports; not a physical mobile device or Edge.",
+    "Reduced motion is dependency injection, not an OS preference change.",
+    "No physical print, physical touch, screen reader or native file:// run was verified.",
+    "Browser download event for Blob SVG timed out; SVG generation and physical preview verified, OS download completion unverified.",
+    "No actual video recording or FPS benchmark; genuine browser screenshots are provided."
+  ]
+}

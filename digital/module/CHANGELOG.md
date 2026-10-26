@@ -2,6 +2,27 @@
 
 Versi modul berasingan daripada permainan Digital dan firmware ESP32.
 
+## v1.4.0 — 26 Oktober 2026
+
+- Lengkapkan nota, pengiraan, model dan enam pandangan bagi 11 bentuk pembelajaran.
+  Tambah sfera/hemisfera tanpa mendakwa ada bentangan rata yang tepat.
+- Jumlah isi dalam cm³/mL/L, pindahan A↔B beransur, baki sumber, penerima dan
+  limpahan; rekod pemuliharaan isi serta jeda/sambung.
+- Bekas silinder/kuboid terbuka atau bertutup dan kuboid rongga tembus; luas
+  dinding dalam dikira dan isi padu bahan menolak rongga.
+- Studio tujuh poliedron dengan sambungan rusuk sebenar, arah bukaan, ukuran,
+  sorotan pertindihan, 11 bentangan kubus dan SVG/cetakan A4 grid 1 cm.
+- Rujukan terhad enam PDF pengguna: Tingkatan 2 Bab 6 dan Tingkatan 3 Bab 7.
+  Contoh ditulis semula; formula dan unit disemak dengan errata sumber.
+- Bukti ujian dan had sebenar: docs/LABS_V1_4.md. Permainan/firmware tidak diubah.
+
+## v1.3.1 — 26 Oktober 2026
+
+- Gabungkan reka bentuk digitalize-module-design v1.2.1 dengan semua fungsi MD v1.3.0; sembilan bentangan dan pilihan isi A/B kekal.
+- Pusatkan token warna, tipografi, ruang, kawalan, ikon dan animasi; selaraskan widget galeri, kelajuan, panduan langkah dan perbandingan isi.
+- Kekalkan garis masa easing ketika jeda/sambung/tukar kelajuan, kamera yang benar-benar berhenti dan pembingkaian fizikal stabil.
+- Pelihara rumus, geometri dan nota asal; bina semula satu HTML offline. Lihat docs/INTEGRATION_MD_V1_3_1.md untuk bukti dan batasan integrasi.
+
 ## v1.3.0 — 26 Oktober 2026
 
 - Perlahan keempat-empat makmal: lalai 0.5×, pilihan 0.25×/1×, satu Jeda/Sambung,

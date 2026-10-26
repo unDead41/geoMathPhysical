@@ -1,9 +1,36 @@
-<!doctype html><html lang="en"><meta charset="utf-8"><title>GeoDecoder module — browser evidence workbench</title><style>body{font:14px sans-serif;margin:16px;background:#e5eaf1}label{display:block;margin:10px 0}input,textarea,button{font:inherit;padding:7px}textarea{width:95%;height:70px}iframe{display:block;border:1px solid #8096ad;background:white;width:390px;height:844px}nav{display:flex;gap:9px;align-items:center;margin-bottom:14px}button{cursor:pointer}form{max-width:900px}</style><h1>Browser evidence workbench</h1><p>QA only. The iframe loads the exact downloadable HTML. Width controls test actual CSS breakpoints inside the iframe.</p><nav><button id="phone">Phone 390</button><button id="small">Phone 320</button><button id="tablet">Tablet 768</button><button id="desktop">Desktop 1280</button><label><input type="checkbox" id="motion"> Reduced-motion dependency simulation</label></nav><iframe id="preview" src="../GeoDecoder_Modul_V1.html" title="GeoDecoder module preview"></iframe><h2>Save an actual browser screenshot</h2><form method="POST" action="/__capture"><label>Evidence filename <input name="name" id="name" required pattern="[a-z0-9_-]+\.(png|jpg)"></label><label>Screenshot image (base64)<textarea id="image" name="image" required></textarea></label><button type="submit">Save evidence</button></form><script>
-const frame=document.getElementById('preview');
+<!doctype html><html lang="ms"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GeoDecoder · Semakan reka bentuk</title>
+<style>body{font:14px/1.5 system-ui;margin:16px;background:#eaf0f6;color:#18334b}h1{font-size:20px;margin:0 0 8px}button,label,select{font:inherit}button{min-height:40px;padding:8px 12px;background:white;border:1px solid #7d94a8;border-radius:6px;cursor:pointer}button:focus-visible,input:focus-visible{outline:3px solid #215ff0;outline-offset:3px}nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px}iframe{display:block;box-sizing:content-box;border:1px solid #7d94a8;background:white;width:390px;height:844px}pre{font:12px/1.5 monospace;white-space:pre-wrap;max-width:1000px}label{display:flex;gap:6px;align-items:center}p{margin:6px 0 14px}.fixture{color:#526a7d}</style>
+<h1>Semakan reka bentuk GeoDecoder</h1><p class="fixture">Alat pembangunan sahaja. Iframe memuatkan HTML keluaran sebenar. Saiz ialah viewport CSS iframe; scrollbar masih kelihatan.</p>
+<nav aria-label="Saiz ujian"><button id="phone">Telefon 390</button><button id="small">Telefon 320</button><button id="tablet">Tablet 768</button><button id="desktop">Desktop 1280</button><label><input type="checkbox" id="motion">Simulasi reduced motion</label><button id="inspect">Semak paparan</button></nav>
+<nav aria-label="Ujian pointer"><button id="test-orbit">Simulasi seret model</button><button id="test-grid">Simulasi seret muka</button><span class="fixture">Pointer sintetik, bukan sentuhan peranti fizikal.</span></nav>
+<iframe id="preview" src="../GeoDecoder_Modul_V1.html" title="Modul GeoDecoder untuk pengesahan"></iframe><h2>Keputusan semakan DOM</h2><pre id="qa-result" role="status">Pilih saiz dan bahagian, kemudian Semak paparan.</pre>
+<script>
+const frame=document.getElementById('preview'),out=document.getElementById('qa-result');
 for(const [id,width] of [['phone',390],['small',320],['tablet',768],['desktop',1280]])document.getElementById(id).onclick=()=>{frame.style.width=width+'px';frame.style.height=width<500?'844px':'960px';};
 document.getElementById('motion').onchange=async event=>{
- const res=await fetch('../GeoDecoder_Modul_V1.html');let html=await res.text();
- if(event.target.checked)html=html.replace("'use strict';","'use strict';window.matchMedia=()=>({matches:true,addEventListener(){}});");
- frame.srcdoc=html;
+ const html=await(await fetch('../GeoDecoder_Modul_V1.html')).text();
+ frame.srcdoc=event.target.checked?html.replace("'use strict';","'use strict';window.matchMedia=()=>({matches:true,addEventListener(){}});"):html;
 };
+document.getElementById('inspect').onclick=()=>{
+ const d=frame.contentDocument,w=frame.contentWindow,visible=e=>Boolean(e.getClientRects().length),rect=e=>e.getBoundingClientRect(),root=d.documentElement;
+ const controls=[...d.querySelectorAll('button,input,select,summary')].filter(visible);
+ const smallTargets=controls.filter(e=>!e.classList.contains('net-cell')&&e.type!=='checkbox'&&(rect(e).width<43.9||rect(e).height<43.9)).map(e=>({id:e.id,text:e.textContent.trim(),width:rect(e).width,height:rect(e).height}));
+ const smallText=[...d.querySelectorAll('p,span,small,button,label,summary,select')].filter(visible).filter(e=>parseFloat(w.getComputedStyle(e).fontSize)<12).map(e=>({id:e.id,text:e.textContent.slice(0,70),size:w.getComputedStyle(e).fontSize}));
+ const diagramText=[...d.querySelectorAll('#notes-diagram text')].filter(visible).map(e=>{const m=e.getScreenCTM();return {text:e.textContent,size:parseFloat(w.getComputedStyle(e).fontSize)*Math.hypot(m.a,m.b)};});
+ const smallDiagramText=diagramText.filter(e=>e.size<11.99);
+ const selectedDot=d.querySelector('#shape-picker [aria-pressed="true"] .choice-dot');
+ const selectedTick=selectedDot&&visible(selectedDot)?{display:w.getComputedStyle(selectedDot).display,content:w.getComputedStyle(selectedDot,'::before').content}:null;
+ const overflow=[...d.body.querySelectorAll('*')].filter(visible).filter(e=>{const b=rect(e);return (b.right>root.clientWidth+1||b.left< -1)&&!e.closest('.note-table-wrap')&&e.className!=='skip';}).map(e=>e.id||e.className||e.tagName).slice(0,15);
+ out.textContent=JSON.stringify({viewport:w.innerWidth,availableWidth:root.clientWidth,scrollWidth:root.scrollWidth,overflow,smallTargets,smallText,smallDiagramText,selectedTick,activeSection:d.querySelector('#learn-labs').getAttribute('aria-pressed')==='true'?'labs':d.querySelector('#learn-notes').getAttribute('aria-pressed')==='true'?'notes':'explore',reduced:document.getElementById('motion').checked,main:{...d.querySelector('#model-canvas').dataset},lab:{...d.querySelector('#labs-canvas').dataset},externalResources:[...d.querySelectorAll('script[src],link[rel="stylesheet"],img[src]')].map(e=>e.getAttribute('src')||e.getAttribute('href'))},null,2);
+};
+function syntheticDrag(source,target){
+ const w=frame.contentWindow,b=source.getBoundingClientRect(),end=target?.getBoundingClientRect(),x=b.x+b.width/2,y=b.y+b.height/2,tx=end?end.x+end.width/2:x+65,ty=end?end.y+end.height/2:y+28;
+ const dispatch=(type,px,py)=>source.dispatchEvent(new w.PointerEvent(type,{bubbles:true,pointerId:77,pointerType:'mouse',isPrimary:true,button:0,buttons:type==='pointerup'?0:1,clientX:px,clientY:py}));
+ // Synthetic events have no active hardware pointer. Stub capture only inside
+ // the QA fixture, then restore it before returning to user interactions.
+ const capture=source.setPointerCapture,has=source.hasPointerCapture,release=source.releasePointerCapture;
+ try{source.setPointerCapture=()=>{};source.hasPointerCapture=()=>false;source.releasePointerCapture=()=>{};dispatch('pointerdown',x,y);dispatch('pointermove',tx,ty);dispatch('pointerup',tx,ty);}finally{source.setPointerCapture=capture;source.hasPointerCapture=has;source.releasePointerCapture=release;}
+}
+document.getElementById('test-orbit').onclick=()=>{const d=frame.contentDocument,c=d.querySelector('#learn-labs').getAttribute('aria-pressed')==='true'?d.querySelector('#labs-canvas'):d.querySelector('#model-canvas');c.scrollIntoView({block:'center'});const before={...c.dataset};syntheticDrag(c);frame.contentWindow.requestAnimationFrame(()=>frame.contentWindow.requestAnimationFrame(()=>{out.textContent=JSON.stringify({test:'synthetic-orbit',before,after:{...c.dataset}},null,2);}));};
+document.getElementById('test-grid').onclick=()=>{const d=frame.contentDocument,source=d.querySelector('[data-cell="1,0"]'),target=d.querySelector('[data-cell="2,0"]');source.scrollIntoView({block:'center'});syntheticDrag(source,target);out.textContent=JSON.stringify({test:'synthetic-grid',targetSelected:d.querySelector('[data-cell="2,0"]').getAttribute('aria-pressed'),sourceSelected:d.querySelector('[data-cell="1,0"]').getAttribute('aria-pressed'),feedback:d.querySelector('#net-feedback').textContent},null,2);};
 </script></html>

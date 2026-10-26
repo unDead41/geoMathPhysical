@@ -8,7 +8,7 @@ export const VIEWS = {
   top:{name:'Atas',yaw:0,pitch:Math.PI/2}, bottom:{name:'Bawah',yaw:0,pitch:-Math.PI/2}
 };
 export const VIEW_ORDER = ['top','bottom','front','back','left','right'];
-export const FACE_COLORS = ['#64CBB8','#94BDF7','#F2A1C2','#BCADF0','#FFD17D','#FFAD8F'];
+export const FACE_COLORS = ['#64CBB8','#94BDF7','#F2A1C2','#BCADF0','#FFD17D','#FFAD8F','#83D0EA','#DAAE8D'];
 export const DIMENSIONS = {
   cube:{w:2,h:2,d:2},cuboid:{w:3,h:1.5,d:2},pyramid:{a:2.4,h:2.6},
   cylinder:{r:1,h:2.5},cone:{r:1,h:2.4,l:2.6}
