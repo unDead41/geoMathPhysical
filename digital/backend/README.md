@@ -6,6 +6,12 @@
 
 # GeoDecoder V2 backend
 
+**Sesi Aktif v2.7.0 candidate:** jalankan migration tambahan selepas schema
+sedia ada, termasuk bagi pemasangan baharu. RPC baca sahaja dan skop logout
+didokumenkan dalam [security/README.md](security/README.md). Tiada dispatcher
+kelas/profil/kemajuan atau Auth settings diganti. Deployment projek hosted
+direkod dalam [ACTIVE_SESSIONS.md](../docs/ACTIVE_SESSIONS.md).
+
 Apply `schema.sql` as the Supabase database owner, then run `verify.sql` with the same privileges. The schema is repeatable for this version (`IF NOT EXISTS`, replaceable functions, deterministic bank upsert). Future structural changes should use a migration rather than treating this file as a general upgrade engine. The verification transaction creates five temporary Auth users, exercises real SQL roles and RPCs, and rolls everything back. It requires no pgTAP dependency. PostgreSQL `ASSERT` failures stop the test.
 
 The browser uses the Supabase project URL and publishable/anon key. The service-role key belongs exclusively to the username authentication Edge Function. Do not expose the `private` schema through the Data API. No browser writes to any table are permitted.

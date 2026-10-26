@@ -1,5 +1,5 @@
 /** Render security UI without retaining credentials in a model or persistent store. */
-export function renderSecurityView({profile, confirming, accountHeading, button, field, formError, submit, icon, esc, t}) {
+export function renderSecurityView({profile, confirming, sessionsHTML='', accountHeading, button, field, formError, submit, icon, esc, t}) {
   const heading = profile
     ? accountHeading(t('TETAPAN AKAUN'), t('Kata Laluan & Keselamatan'), t('Lindungi akaun anda dan urus sesi log masuk.'))
     : `<header class="portal-page-heading"><div><p class="card-kicker">${t('TETAPAN AKAUN')}</p><h1 id="portal-title" tabindex="-1">${t('Kata Laluan & Keselamatan')}</h1><p>${t('Lindungi akaun yang sedang log masuk.')}</p></div></header>`;
@@ -13,5 +13,5 @@ export function renderSecurityView({profile, confirming, accountHeading, button,
     </form></section><aside class="portal-panel portal-security-sessions" aria-labelledby="portal-sessions-title"><span class="portal-security-symbol" aria-hidden="true">${icon('user')}</span><h2 id="portal-sessions-title">${t('Sesi semua peranti')}</h2>
       <p>${t('Log keluar pada telefon, komputer dan pelayar yang menggunakan akaun ini, termasuk peranti ini.')}</p><p class="portal-security-note">${t('Pelayan membatalkan sesi untuk pembaharuan log masuk. Token akses yang sudah dikeluarkan mungkin masih sah sehingga tamat tempoh; peranti lain tidak semestinya terkeluar serta-merta.')}</p>${button(t('Log keluar semua peranti'), 'request-logout-all', {danger: true})}
       ${confirming ? `<div class="portal-close-confirmation portal-security-confirm" role="group" aria-labelledby="portal-global-title"><div><h3 id="portal-global-title" tabindex="-1">${t('Log keluar semua peranti?')}</h3><p>${t('Anda juga akan keluar pada peranti ini. Simpan kerja anda dahulu. Untuk kembali, log masuk menggunakan kata laluan anda.')}</p></div><div>${button(t('Batal'), 'cancel-logout-all')}${button(t('Ya, log keluar semua'), 'logout-all', {danger: true})}</div></div>` : ''}
-    </aside></div>`;
+    </aside></div>${sessionsHTML}`;
 }

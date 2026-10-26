@@ -1,7 +1,12 @@
 # GeoDecoder Digital V2
 
-Versi Digital: **v2.6.0**. Branch integrasi: **main-digitalized**.
+Versi Digital calon branch ini: **v2.7.0** (`digitalize/security-activeSession`).
+Rujukan integrasi diterbitkan: **v2.6.0**, branch **main-digitalized**.
 Modul pembelajaran: **v1.5.0**. Firmware kekal **v1.1.3**.
+
+Senarai Sesi Aktif menggunakan rekod Auth sebenar melalui RPC baca sahaja.
+Pembatalan semua sesi lain mengekalkan peranti ini; pembatalan satu sesi pilihan
+belum disokong API rasmi. Lihat [seni bina, deployment dan batas ujian](docs/ACTIVE_SESSIONS.md).
 
 Keluaran ini menyatukan BM/English, rich text, kuiz/latihan/duel, kemudahan
 penggunaan, modul geometri diperluas, aktiviti berpandu, Profil Saya,

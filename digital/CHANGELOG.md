@@ -1,5 +1,17 @@
 # GeoDecoder Digital changelog
 
+## v2.7.0 candidate — 26 Oktober 2026 (digitalize/security-activeSession)
+
+- Tambah senarai rekod sesi Auth milik pengguna, label Peranti ini, masa mula
+  dan anggaran jenis peranti/pelayar dalam Kata Laluan & Keselamatan.
+- Tambah pembatalan semua sesi lain dan sesi semasa melalui scope SDK rasmi,
+  dengan pengesahan, respons pelayan yang disahkan serta perlindungan akaun bertukar.
+- Pembatalan satu sesi pilihan belum disokong API rasmi; paparan menerangkan
+  batasan ini dan token akses yang mungkin kekal sah sehingga luput.
+- Deploy RPC baca sahaja pada projek Supabase sedia ada. Semua 267 ujian,
+  build dan check lulus; ujian dua pelayar/sesi live serta screenshot belum disahkan.
+- Rujukan seni bina, migration, ujian dan halangan: [ACTIVE_SESSIONS.md](docs/ACTIVE_SESSIONS.md).
+
 ## v2.6.0 — 26 Oktober 2026 (main-digitalized)
 
 - Satukan branch digital: BM/English, rich text, latihan 15 soalan, Duel,

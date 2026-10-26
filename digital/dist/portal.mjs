@@ -6,6 +6,7 @@ import {renderLearningRecords} from './module-progress-view.mjs';
 import {securitySessionKey} from './account-security.mjs';
 import {renderProfileView} from './profile-view.mjs';
 import {renderSecurityView} from './security-view.mjs';
+import {renderActiveSessions} from './active-sessions.mjs';
 
 // Only authored literals pass through pt(); user-provided values stay untouched.
 const portalOriginal=new Map([...Object.entries(MESSAGES.en).map(([key,text])=>[text,key]),...Object.entries(MESSAGES.ms).map(([key,text])=>[text,key])]);
@@ -55,6 +56,10 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onE
   let securityView = false;
   let securityConfirm = false;
   let securityController = null;
+  let sessionsState = {status:'idle',data:null,error:''};
+  let sessionsConfirm = '';
+  let sessionsController = null;
+  let sessionsRequest = 0;
   let roomId = null;
   let classId = null;
   let recoveryCode = '';
@@ -221,7 +226,53 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onE
 
   function renderSecurity() {
     document.title = pt('Kata Laluan & Keselamatan — GeoDecoder Digital');
-    return renderSecurityView({profile, confirming: securityConfirm, accountHeading, button, field, formError, submit, icon, esc, t: pt});
+    return renderSecurityView({profile, confirming: securityConfirm, sessionsHTML: sessionMarkup(), accountHeading, button, field, formError, submit, icon, esc, t: pt});
+  }
+
+  function sessionMarkup() { return renderActiveSessions({state:sessionsState,confirming:sessionsConfirm,button,esc,t:pt}); }
+  function clearSessions() {
+    sessionsRequest++; sessionsController?.abort(); sessionsController=null;
+    sessionsState={status:'idle',data:null,error:''}; sessionsConfirm='';
+  }
+  // Refresh only the session region: a late list response must not replace
+  // password inputs or move focus out of a form the user is editing.
+  function updateSessionRegion() {
+    if(!active||!securityView)return;
+    const region=content.querySelector('#portal-active-sessions');if(!region)return;
+    const action=region.contains(document.activeElement)?document.activeElement.dataset.portalAction:'';
+    region.outerHTML=sessionMarkup();updateBusy();
+    if(action){
+      const target=content.querySelector(`#portal-active-sessions [data-portal-action="${action}"]:not(:disabled)`);
+      if(target)target.focus({preventScroll:true});
+      else if(action==='refresh-sessions'&&sessionsState.status==='loading')content.querySelector('#portal-active-sessions-title')?.focus({preventScroll:true});
+    }
+  }
+  async function loadSessions() {
+    if(!active||!securityView||!accountAvailable()||sessionsState.status==='loading')return;
+    const token=epoch,identity=securitySessionKey(cloud.session),job=++sessionsRequest;
+    const restoreRefresh=document.activeElement?.dataset?.portalAction==='refresh-sessions';
+    const controller=new AbortController();sessionsController=controller;sessionsConfirm='';
+    sessionsState={status:'loading',data:null,error:''};updateSessionRegion();
+    try{
+      if(typeof cloud.securitySessions!=='function')throw Object.assign(Error('Senarai sesi belum tersedia. Cuba lagi kemudian atau gunakan log keluar semua peranti.'),{code:'sessions-unavailable'});
+      const data=await cloud.securitySessions({signal:controller.signal});
+      if(!active||!securityView||token!==epoch||job!==sessionsRequest||identity!==securitySessionKey(cloud.session))return;
+      sessionsState={status:'ready',data,error:''};
+    }catch(error){
+      if(!active||!securityView||token!==epoch||job!==sessionsRequest||identity!==securitySessionKey(cloud.session))return;
+      if(error.code==='session-expired'){
+        clearSessions();clearSecurityFields();securityView=false;authOnly=true;authMode='login';
+        render({focus:true,preserve:false});announce(errorText(error),'error');return;
+      }
+      sessionsState={status:'error',data:null,error:error.message};
+    }finally{
+      if(sessionsController===controller)sessionsController=null;
+      if(job===sessionsRequest){
+        const stillAtHeading=document.activeElement?.id==='portal-active-sessions-title';
+        updateSessionRegion();
+        if(restoreRefresh&&stillAtHeading)content.querySelector('[data-portal-action="refresh-sessions"]:not(:disabled)')?.focus({preventScroll:true});
+      }
+    }
   }
 
   function clearSecurityFields() {
@@ -230,27 +281,32 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onE
 
   async function handleSecurity(form, values, type) {
     if (!securityView || !accountAvailable() || pending || type === 'logout-all' && !securityConfirm) return;
-    const token = epoch, identity = sessionKey(), job = ++operation;
+    if(type==='logout-others'&&sessionsConfirm!=='others'||type==='logout-current'&&sessionsConfirm!=='current')return;
+    const token = epoch, identity = securitySessionKey(cloud.session), job = ++operation;
     const controller = new AbortController();
     securityController = controller;
     pending = type;
     // Session changes must still clear sensitive fields while this request runs.
-    updateBusy(); announce(type === 'change-password' ? 'Sedang mengesahkan identiti dan menyimpan…' : 'Sedang meminta log keluar semua peranti…');
+    updateBusy(); announce(type === 'change-password' ? 'Sedang mengesahkan identiti dan menyimpan…' : type==='logout-all'?'Sedang meminta log keluar semua peranti…':'Sedang meminta pembatalan sesi…');
     try {
       const result = await cloud.auth(type, values, {signal: controller.signal});
-      if (!active || token !== epoch || !securityView || identity !== sessionKey() && !(type === 'logout-all' && !signedIn())) return;
+      if (!active || token !== epoch || !securityView || identity !== securitySessionKey(cloud.session) && !(['logout-all','logout-current'].includes(type) && !signedIn())) return;
       clearSecurityFields();
-      if (type === 'logout-all') {
+      if (type === 'logout-all'||type==='logout-current') {
         clearAccount(); knownSession = sessionKey(); authOnly = false; authMode = 'login';
         render({focus: true, preserve: false});
-      } else { securityConfirm = false; render({preserve: false}); content.querySelector('#portal-change-title')?.setAttribute('tabindex', '-1'); content.querySelector('#portal-change-title')?.focus(); }
+      } else if(type==='logout-others') {
+        sessionsConfirm='';pending='';await loadSessions();
+        if(!active||token!==epoch||!securityView||identity!==securitySessionKey(cloud.session))return;
+        content.querySelector('#portal-active-sessions-title')?.focus({preventScroll:true});
+      } else { securityConfirm = false; render({preserve: false}); content.querySelector('#portal-change-title')?.setAttribute('tabindex', '-1'); content.querySelector('#portal-change-title')?.focus(); void loadSessions(); }
       announce(result.message, 'success');
     } catch (error) {
       if (!active || token !== epoch || !securityView) return;
       // Never forward provider error objects or credential payloads to diagnostics.
       const message = errorText(error);
       if (error.code === 'session-expired' || error.code === 'session-changed') {
-        clearSecurityFields(); securityView = false; securityConfirm = false; authOnly = true; authMode = 'login';
+        clearSecurityFields(); clearSessions(); securityView = false; securityConfirm = false; authOnly = true; authMode = 'login';
         render({focus: true, preserve: false}); announce(message, 'error');
       } else {
         if (error.code === 'outcome-unknown') clearSecurityFields();
@@ -270,6 +326,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onE
   // Navigation owns a fresh epoch. Clear detached secrets before changing views.
   function setAccountView(view, nextRoom = null) {
     clearSecurityFields(); securityController?.abort(); securityController = null;
+    clearSessions();
     epoch += 1; operation += 1;
     pending = ''; authPending = false; refreshAgain = false; refreshPromise = null;
     composing = false; renderDeferred = false;
@@ -600,6 +657,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onE
 
   function clearAccount() {
     clearSecurityFields(); securityController?.abort(); securityController = null;
+    clearSessions();
     profileView = false; securityView = false; securityConfirm = false;
     epoch += 1;
     operation += 1;
@@ -634,7 +692,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onE
       const identity = sessionKey();
       const recovery = cloud.recoveryRequired === true;
       const linkError = String(cloud.callbackError || '');
-      if (securityView && pending === 'logout-all' && !signedIn()) return;
+      if (securityView && ['logout-all','logout-current'].includes(pending) && !signedIn()) { clearSessions();updateSessionRegion();return; }
       const securityChanged = securityView && knownSecuritySession !== securitySessionKey(cloud.session);
       if (identity === knownSession && recovery === knownRecovery && linkError === knownCallbackError && !securityChanged) return;
       knownSession = identity;
@@ -934,8 +992,15 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onE
     if (!accountAvailable()) return;
     if (action === 'profile') { setAccountView('profile'); announce(''); render({focus: true, preserve: false}); return refresh({silent: true}); }
     if (action === 'profile-back') { setAccountView('dashboard'); announce(''); render({focus: true, preserve: false}); return refresh(); }
-    if (action === 'security') { setAccountView('security'); announce(''); render({focus: true, preserve: false}); return; }
-    if (action === 'request-logout-all' && securityView) { clearSecurityFields(); securityConfirm = true; render({preserve: false}); content.querySelector('[data-portal-action="cancel-logout-all"]')?.focus(); return; }
+    if (action === 'security') { setAccountView('security'); announce(''); render({focus: true, preserve: false}); return loadSessions(); }
+    if (action === 'refresh-sessions' && securityView) return loadSessions();
+    if (['request-logout-others','request-logout-current'].includes(action) && securityView && sessionsState.status==='ready') {
+      clearSecurityFields();securityConfirm=false;sessionsConfirm=action==='request-logout-others'?'others':'current';
+      render({preserve:false});content.querySelector('[data-portal-action="cancel-session-logout"]')?.focus();return;
+    }
+    if(action==='cancel-session-logout'&&securityView){const source='request-logout-'+sessionsConfirm;sessionsConfirm='';updateSessionRegion();content.querySelector(`[data-portal-action="${source}"]`)?.focus();return;}
+    if(['logout-others','logout-current'].includes(action))return handleSecurity(null,{},action);
+    if (action === 'request-logout-all' && securityView) { clearSecurityFields(); sessionsConfirm=''; securityConfirm = true; render({preserve: false}); content.querySelector('[data-portal-action="cancel-logout-all"]')?.focus(); return; }
     if (action === 'cancel-logout-all' && securityView) { securityConfirm = false; render({preserve: false}); content.querySelector('[data-portal-action="request-logout-all"]')?.focus(); return; }
     if (action === 'logout-all') return handleSecurity(null, {}, action);
     if (action === 'security-recover' && securityView) { setAccountView('dashboard'); authOnly = true; authMode = 'recover-email'; announce(''); render({focus: true, preserve: false}); return; }
@@ -980,9 +1045,10 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onE
 
   function compositionStart() { composing = true; }
 
-  function visibility() { if (active && !document.hidden && accountAvailable()) refresh({silent: true}); }
-  function pageHide() { clearSecurityFields(); securityController?.abort(); }
+  function visibility() { if (active && !document.hidden && accountAvailable()) {if(securityView){if(!pending)void loadSessions();}else refresh({silent: true});} }
+  function pageHide() { clearSecurityFields(); securityController?.abort(); clearSessions();updateSessionRegion(); }
   function keyboard(event) {
+    if(event.key==='Escape'&&sessionsConfirm&&!pending){event.preventDefault?.();event.stopPropagation?.();const source='request-logout-'+sessionsConfirm;sessionsConfirm='';updateSessionRegion();content.querySelector(`[data-portal-action="${source}"]`)?.focus();return;}
     if (event.key === 'Escape' && securityConfirm && !pending) { event.preventDefault?.(); event.stopPropagation?.(); securityConfirm = false; render({preserve: false}); content.querySelector('[data-portal-action="request-logout-all"]')?.focus(); return; }
     if (event.key === 'Escape' && closeConfirmation) {
       event.preventDefault?.();
@@ -1030,6 +1096,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onE
     if (!accountAvailable()) { roomId = null; cloud.setRoom?.(null); }
     render({focus: true, preserve: false});
     if (accountAvailable() && !securityView) await refresh();
+    else if(accountAvailable()&&securityView)await loadSessions();
   }
 
   function close() {
