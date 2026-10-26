@@ -609,3 +609,22 @@
 .guest-back{margin:0 0 16px}
 .guest-back .icon{transform:rotate(180deg)}
 .guest-card h1{font-size:28px;line-height:1.25;margin:11px 0 9px;letter-spacing:-.8px}
+
+/* Profile uses the portal's semantic tokens and existing inline geometry. */
+.portal-profile-link{display:flex;align-items:center;gap:.75rem;border:0;background:transparent;color:var(--ink);text-align:left;cursor:pointer;min-height:44px;padding:.25rem;border-radius:var(--radius)}
+.portal-profile-link small{display:block;color:var(--muted)}
+.portal-profile-link b{overflow-wrap:anywhere}
+.portal-profile-link .portal-avatar{flex-shrink:0}
+.portal-avatar>span,.portal-avatar svg{display:block;width:100%;height:100%}
+.portal-profile-layout{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:1.5rem;margin-top:1rem}
+.portal-profile-layout>*{min-width:0}
+.portal-avatar-options{border:0;padding:0;margin:1.5rem 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.75rem}
+.portal-avatar-options legend{font-weight:700;margin-bottom:.75rem}
+.portal-avatar-options label{display:flex;align-items:center;flex-direction:column;gap:.4rem;padding:.75rem .25rem;border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;min-height:44px}
+.portal-avatar-options label:has(input:checked){border-color:var(--primary);outline:2px solid var(--primary);background:var(--bg)}
+.portal-avatar-options input{accent-color:var(--primary);width:1.1rem;height:1.1rem}
+.portal-profile-details dt{font-weight:700;margin-top:1rem}
+.portal-profile-details dd{margin:0;overflow-wrap:anywhere;color:var(--muted)}
+.portal-profile-details ul{padding-left:1.2rem;margin:.25rem 0}
+@media(max-width:800px){.portal-profile-layout{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:380px){.portal-avatar-options{grid-template-columns:repeat(2,minmax(0,1fr))}.portal-account-chip,.portal-profile-link{max-width:100%;min-width:0}.portal-profile-link>span:last-child{min-width:0}}

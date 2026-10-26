@@ -19,6 +19,7 @@ create table if not exists private.profiles (
   created_at timestamptz not null default clock_timestamp(),
   last_seen timestamptz not null default clock_timestamp()
 );
+alter table private.profiles add column if not exists avatar text not null default 'initial' check (avatar in ('initial','cube','cuboid','pyramid','cylinder','cone'));
 create table if not exists private.identities (
   user_id uuid primary key references private.profiles(id) on delete cascade,
   auth_email text not null unique check (char_length(auth_email) between 5 and 254),
@@ -416,7 +417,9 @@ as $$
 declare s jsonb; room_json jsonb;
 begin
   select jsonb_build_object(
-    'profile',jsonb_build_object('id',p.id,'username',p.username,'display_name',p.display_name,'role',p.role,'last_seen',p.last_seen),
+    'profile',jsonb_build_object('id',p.id,'username',p.username,'display_name',p.display_name,'role',p.role,'last_seen',p.last_seen,'avatar',p.avatar,
+      'email',(select u.email from auth.users u where u.id=p_user_id),
+      'email_verified',(select u.email_confirmed_at is not null from auth.users u where u.id=p_user_id)),
     'classes',coalesce((select jsonb_agg(jsonb_build_object('id',c.id,'name',c.name,'teacher_id',c.teacher_id,
       'pin',case when c.teacher_id=p_user_id then pin.pin end,
       'pin_expires_at',case when c.teacher_id=p_user_id then pin.expires_at end,
@@ -482,6 +485,25 @@ begin
       update public.room_progress set last_seen=t where user_id=uid and (rid is null or room_id=rid);
     end if;
     return private.snapshot(uid,rid);
+
+  elsif p_action='update_profile' then
+    -- Strict allowlist: identity, role and target UUID can never come from a client.
+    if (p_payload - array['display_name','avatar']) <> '{}'::jsonb
+       or jsonb_typeof(p_payload->'display_name') is distinct from 'string'
+       or jsonb_typeof(p_payload->'avatar') is distinct from 'string' then
+      return private.error('invalid_profile','Hanya nama paparan dan avatar boleh diubah.');
+    end if;
+    name_input:=btrim(p_payload->>'display_name');
+    if char_length(name_input) not between 2 and 60 or name_input ~ '[[:cntrl:]]' then
+      return private.error('invalid_name','Nama paparan mestilah 2 hingga 60 aksara tanpa aksara kawalan.');
+    end if;
+    if p_payload->>'avatar' not in ('initial','cube','cuboid','pyramid','cylinder','cone') then
+      return private.error('invalid_avatar','Pilih avatar yang tersedia.');
+    end if;
+    update private.profiles set display_name=name_input,avatar=p_payload->>'avatar' where id=uid;
+    -- Refresh only the public name; gameplay metrics remain server-owned and unchanged.
+    update public.room_progress set display_name=name_input where user_id=uid;
+    return private.snapshot(uid);
 
   elsif p_action='create_class' then
     if me.role<>'teacher' then return private.error('forbidden','Hanya guru boleh mencipta kelas.'); end if;

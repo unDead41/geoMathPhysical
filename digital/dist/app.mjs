@@ -339,6 +339,7 @@ $('continue-button').addEventListener('click',()=>{
 });
 $('pause-button').addEventListener('click',()=>openPause());
 $('replay-button').addEventListener('click',()=>roomState?openAccounts(roomState.roomId):startGame());
+$('profile-button').addEventListener('click',()=>requestProfile());
 $('account-button').addEventListener('click',()=>requestAccounts());
 $('welcome-account-button').addEventListener('click',()=>requestAccounts());
 $('guest-button').addEventListener('click',openGuest);
@@ -362,14 +363,17 @@ function openGuest(){
   showScreen('guest');$('player-name').focus({preventScroll:true});
 }
 function displayedGameTime(time=now()){return roomState?roomState.elapsed+(roomState.status==='running'?Math.max(0,time-roomReceivedAt):0):game.time(time);}
-async function openAccounts(roomId=null){
+async function openAccounts(roomId=null,profile=false){
   cancelDrag();resetRoomRequests();
   if(dialog.open)closeDialog();
-  showScreen('portal');await portal.open(roomId?{roomId}:{});
+  showScreen('portal');await portal.open({...(roomId?{roomId}:{}),profile});
 }
-function requestAccounts(){
+let requestedProfile=false;
+function requestProfile(){requestedProfile=true;requestAccounts(true);}
+function requestAccounts(profile=false){
+  requestedProfile=profile;
   if(screen==='game'&&game&&!roomState){openDialog('leave','Buka akaun dan kelas?',`<p class="dialog-copy">Kemajuan latihan sendiri ini belum disimpan. Buka akaun dan kelas untuk menyertai room guru.</p><div class="dialog-actions"><button class="button button-outline" data-dialog-action="close" data-autofocus>Teruskan latihan</button><button class="button button-primary" data-dialog-action="open-portal">Buka akaun dan kelas</button></div>`);return;}
-  openAccounts(roomState?.roomId);
+  openAccounts(roomState?.roomId,profile);
 }
 function applyRoomState(state){
   if(!state||!Array.isArray(state.questions)||state.questions.length!==10||state.questions.some(id=>!QUESTIONS.some(q=>q.id===id)))throw Error('Bank soalan room tidak sepadan. Kemas kini permainan.');
@@ -396,7 +400,7 @@ function openRoomGame(state){
   game=new Game(QUESTIONS,player,now());roundId=state.attemptId;lastResult=null;lastClock='';lastLed={};
   if(!applyRoomState(state))return;
   showScreen('game');cloud.setRoom(state.roomId);
-  $('player-initial').textContent=player.name[0];$('player-display').textContent=player.name;$('player-meta').textContent=player.className+' · Room kelas';
+  $('player-initial').innerHTML=['cube','cuboid','pyramid','cylinder','cone'].includes(profile.avatar)?shapeArt(profile.avatar,'solid',true):escapeHtml(Array.from(player.name)[0]||'?');$('player-display').textContent=player.name;$('player-meta').textContent=player.className+' · Room kelas';
   restoreRoomGameView();if(game.status==='finished')return;
   const epoch=roomEpoch;let polling=false;
   roomPolling=setInterval(async()=>{if(polling||roomSending||screen!=='game'||epoch!==roomEpoch)return;polling=true;try{const data=await cloud.rpc('snapshot',{room_id:state.roomId});if(epoch===roomEpoch&&screen==='game'&&roomState?.attemptId===state.attemptId&&data.room?.status==='closed'&&game.status!=='finished')openAccounts(state.roomId);}catch{}finally{polling=false;}},20000);
@@ -510,7 +514,7 @@ dialog.addEventListener('cancel',()=>{ /* Native dialog closes with Escape and r
 dialog.addEventListener('click',event=>{
   const action=event.target.closest('[data-dialog-action]')?.dataset.dialogAction;
   if(action==='close')closeDialog();
-  if(action==='open-portal')openAccounts();
+  if(action==='open-portal')openAccounts(null,requestedProfile);
   if(action==='home')returnHome();
   if(action==='request-home')requestHome();
   if(action==='export')downloadScores();

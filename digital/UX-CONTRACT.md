@@ -49,3 +49,7 @@ The teacher board subscribes to authorized room_progress changes. Only a confirm
 The theme button applies light/dark across entry, game, dialogs, results and portal, persists the preference and respects the system choice before an explicit selection. Both themes preserve visible text, focus outlines and non-colour state labels.
 
 The v1.2.0 module includes four interactive labs reachable from its own Makmal interaktif tab. Parent navigation still owns the iframe lifetime and the map music; classroom Auth and scoring remain in the parent application.
+
+## Profil Saya
+
+Header Profil Saya dan avatar/nama portal membuka profil. Nama paparan dan enam avatar SVG setempat boleh disimpan; identiti/peranan/kelas/pengesahan daripada backend ialah baca sahaja. Butang Simpan menyekat penghantaran berganda dan memaparkan status pending/berjaya/gagal. Kegagalan mengekalkan draf; kejayaan menggunakan respons server. Tetamu melihat penerangan dan butang log masuk. Perubahan sesi membatalkan respons lama. Halaman tidak menambah sistem akaun dalam modul iframe offline.

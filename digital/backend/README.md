@@ -1,3 +1,5 @@
+> **v2.4.0 Profil Saya:** Untuk pemasangan sedia ada selepas email v2.2, jalankan `profile_v2_3.sql` sebelum frontend. `schema.sql` sudah merangkumi perubahan ini bagi pemasangan baharu. Migrasi hosted belum dilaksanakan dalam branch ini. Lihat `../docs/PROFILE.md`.
+
 > **v2.2.0 email:** Signup baharu menggunakan email sebenar dan pengesahan Auth; login menerima email/username. Jalankan `email_v2_2.sql` untuk database sedia ada, deploy auth/index.ts, kemudian lengkapkan Site URL/redirect dan custom SMTP mengikut `../docs/EMAIL_SETUP.md`. `schema.sql` sudah mengandungi trigger yang sama. `verify_email.sql` serta `verify.sql` menguji dengan rollback. Akaun lama dan kod pemulihannya dikekalkan. Bahagian username-only di bawah menerangkan keluaran terdahulu.
 
 # GeoDecoder V2 backend
@@ -13,6 +15,7 @@ The browser uses the Supabase project URL and publishable/anon key. The service-
 | Action | Payload | Result |
 | --- | --- | --- |
 | `snapshot` | optional `room_id` | Account, classes, invites, rooms, optional room and own attempt |
+| `update_profile` | `display_name` (2–60 aksara), `avatar` (enam ID terbina dalam); tiada kunci tambahan | Snapshot profil sendiri; peranan/identiti kekal |
 | `heartbeat` | optional `room_id` | Same snapshot; updates own profile and progress presence |
 | `create_class` | `name` | Snapshot plus `class_id` |
 | `invite` | `class_id`, `username` | Snapshot plus `invite_id` |

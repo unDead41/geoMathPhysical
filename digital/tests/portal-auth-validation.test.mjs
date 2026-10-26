@@ -178,7 +178,7 @@ test('recovery and invalid callback screens take precedence over signed-in dashb
   const context = vm.createContext({
     cloud: {session: {user: {id: 'verified-user'}}, recoveryRequired: true},
     active: true, destroyed: false, composing: false, renderDeferred: false, initializing: false,
-    callbackErrorDismissed: false, authOnly: false, recoveryCode: 'old-code', snapshot: {}, profile: {}, roomId: null,
+    profileView: false, callbackErrorDismissed: false, authOnly: false, recoveryCode: 'old-code', snapshot: {}, profile: {}, roomId: null,
     content, updateBusy() {}, renderAuth: () => 'AUTH', renderRecovery: () => 'LEGACY',
     renderStudent: () => 'DASHBOARD', renderTeacher: () => 'DASHBOARD', isTeacher: () => false
   });

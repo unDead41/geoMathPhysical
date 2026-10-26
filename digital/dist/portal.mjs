@@ -35,6 +35,7 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
   let authMode = 'login';
   let snapshot = null;
   let profile = null;
+  let profileView = false;
   let roomId = null;
   let classId = null;
   let recoveryCode = '';
@@ -182,7 +183,7 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
   }
 
   function accountHeading(eyebrow, title, description) {
-    return `<header class="portal-page-heading"><div><p class="card-kicker">${eyebrow}</p><h1 id="portal-title" tabindex="-1">${title}</h1><p>${description}</p></div><div class="portal-account-chip"><span class="portal-avatar">${esc(initial(profile?.display_name))}</span><div><b>${esc(profile?.display_name)}</b><small>@${esc(profile?.username)} · ${isTeacher() ? 'Guru' : 'Pelajar'}</small></div>${button('Log keluar', 'logout', {quiet: true})}</div></header>`;
+    return `<header class="portal-page-heading"><div><p class="card-kicker">${eyebrow}</p><h1 id="portal-title" tabindex="-1">${title}</h1><p>${description}</p></div><div class="portal-account-chip"><button type="button" class="portal-profile-link" data-portal-action="profile" aria-label="Profil Saya"><span class="portal-avatar">${avatarArt(profile?.avatar)}</span><span><b>${esc(profile?.display_name)}</b><small>@${esc(profile?.username)} · ${isTeacher() ? 'Guru' : 'Pelajar'}</small><small>Profil Saya</small></span></button>${button('Log keluar', 'logout', {quiet: true})}</div></header>`;
   }
 
   function freshness() {
@@ -196,6 +197,20 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
     const expiresAt = stamp(owner.pin_expires_at);
     const expired = expiresAt !== null && expiresAt <= now();
     return `<div class="portal-pin-panel"><div><span class="portal-small-label">PIN ${kind === 'class' ? 'KELAS' : 'BILIK'}</span><input class="portal-pin" id="portal-pin-${kind}" value="${esc(owner.pin)}" aria-label="PIN ${kind === 'class' ? 'kelas' : 'bilik'}" readonly autocomplete="off" spellcheck="false"><small>${owner.pin_expires_at ? `Sah hingga ${esc(dateText(owner.pin_expires_at))} MYT` : 'Kongsi PIN ini kepada pelajar anda.'}</small></div><div class="portal-pin-actions">${button('Salin PIN', 'copy-pin', {id: owner.id, disabled: expired, extra: `data-kind="${kind}"`})}${button('PIN baharu', 'rotate-pin', {id: owner.id, quiet: true, symbol: 'refresh', extra: `data-kind="${kind}"`})}</div><p>${expired ? 'PIN ini sudah tamat. Tekan PIN baharu untuk menjemput pelajar.' : 'PIN baharu menggantikan PIN lama. PIN sah selama 24 jam.'}</p></div>`;
+  }
+
+  function avatarArt(avatar) {
+    return ['cube', 'cuboid', 'pyramid', 'cylinder', 'cone'].includes(avatar)
+      ? `<span aria-hidden="true">${shapeArt(avatar, 'solid', true, 'mint')}</span>`
+      : esc(initial(profile?.display_name));
+  }
+
+  function renderProfile() {
+    if (!signedIn()) return `<section class="portal-panel"><h1 id="portal-title" tabindex="-1">Profil Saya</h1><p>Anda sedang menggunakan mod tetamu. Log masuk untuk melihat dan menyimpan profil akaun anda.</p>${button('Log masuk', 'profile-login', {primary: true})}</section>`;
+    const email = profile?.email;
+    const legacy = !email || email.endsWith('@accounts.geodecoder.invalid');
+    const choices = [['initial', 'Inisial'], ['cube', 'Kubus'], ['cuboid', 'Kuboid'], ['pyramid', 'Piramid'], ['cylinder', 'Silinder'], ['cone', 'Kon']];
+    return `${accountHeading('AKAUN ANDA', 'Profil Saya', 'Pilih rupa anda. Nama dan avatar ini digunakan dalam akaun GeoDecoder.')}${button('Kembali ke kelas', 'profile-back', {quiet: true, symbol: 'home'})}<div class="portal-profile-layout"><section class="portal-panel"><h2>Nama &amp; avatar</h2><form data-portal-form="profile" novalidate>${field('portal-profile-name', 'Nama paparan', {name: 'display_name', autocomplete: 'nickname', value: profile.display_name, help: 'Gunakan 2–60 aksara. Nama pengguna anda kekal sama.'})}<fieldset class="portal-avatar-options"><legend>Pilih avatar</legend>${choices.map(([id, label]) => `<label><input id="portal-avatar-${id}" type="radio" name="avatar" value="${id}" ${id === (profile.avatar || 'initial') ? 'checked' : ''} required><span class="portal-avatar">${avatarArt(id)}</span><span>${label}</span></label>`).join('')}</fieldset>${formError()}${submit('Simpan')}</form></section><section class="portal-panel portal-profile-details"><h2>Maklumat akaun</h2><p class="portal-muted">Maklumat ini baca sahaja. Peranan ditetapkan oleh sistem akaun.</p><dl><dt>Nama pengguna</dt><dd>@${esc(profile.username)}</dd><dt>E-mel</dt><dd>${legacy ? 'Tiada e-mel berdaftar (akaun lama).' : esc(email)}</dd><dt>Status pengesahan e-mel</dt><dd>${legacy ? 'Tidak berkenaan' : profile.email_verified === true ? 'Disahkan' : profile.email_verified === false ? 'Belum disahkan' : 'Belum tersedia'}</dd><dt>Peranan</dt><dd>${isTeacher() ? 'Guru' : profile.role === 'student' ? 'Murid' : 'Belum tersedia'}</dd><dt>Kelas</dt><dd>${list(snapshot.classes).length ? `<ul>${snapshot.classes.map(c => `<li>${esc(c.name)}</li>`).join('')}</ul>` : 'Belum ada kelas.'}</dd></dl></section></div>`;
   }
 
   function renderClassList(classes) {
@@ -288,9 +303,10 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
     if (initializing) content.innerHTML = '<div class="portal-panel portal-loading" aria-busy="true"><span class="portal-spinner" aria-hidden="true"></span><h1 id="portal-title" tabindex="-1">Membuka akaun…</h1></div>';
     else if (cloud.recoveryRequired === true || callbackError()) content.innerHTML = renderAuth();
     else if (recoveryCode) content.innerHTML = renderRecovery();
+    else if (profileView && !signedIn()) content.innerHTML = renderProfile();
     else if (authOnly || !signedIn()) content.innerHTML = renderAuth();
     else if (!snapshot || !profile) content.innerHTML = '<div class="portal-panel portal-loading" aria-busy="true"><span class="portal-spinner" aria-hidden="true"></span><h1 id="portal-title" tabindex="-1">Memuatkan ruang kelas…</h1><p>Sedang mendapatkan kelas dan permainan anda.</p></div>';
-    else content.innerHTML = roomId ? renderRoom() : isTeacher() ? renderTeacher() : renderStudent();
+    else content.innerHTML = profileView ? renderProfile() : roomId ? renderRoom() : isTeacher() ? renderTeacher() : renderStudent();
     if (saved && !focus) {
       for (const [id, value] of saved.fields) {
         const input = document.getElementById(id);
@@ -335,6 +351,9 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
       if (submitButton) submitButton.setAttribute('aria-busy', String(busy));
     }
     for (const control of screen.querySelectorAll('[data-portal-action]')) if (control.dataset.portalAction === pending) control.setAttribute('aria-busy', 'true'); else control.removeAttribute('aria-busy');
+    const save = content.querySelector('form[data-portal-form="profile"] [type="submit"] span');
+    if (save) save.textContent = pending === 'profile' ? 'Sedang menyimpan…' : 'Simpan';
+    for (const input of content.querySelectorAll('form[data-portal-form="profile"] input')) input.disabled = pending === 'profile';
     updateEmailCooldown();
   }
 
@@ -465,6 +484,7 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
     stopLive();
     snapshot = null;
     profile = null;
+    profileView = false;
     roomId = null;
     cloud.setRoom?.(null);
     classId = null;
@@ -524,6 +544,11 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
       const input = form.elements.namedItem('email');
       if (input) input.value = values.email;
       if (!validEmail(values.email)) errors.email = 'Masukkan alamat email yang sah, maksimum 254 aksara.';
+    }
+    if (type === 'profile') {
+      const name = String(values.display_name || '').trim();
+      if (Array.from(name).length < 2 || Array.from(name).length > 60 || /[\u0000-\u001f\u007f-\u009f]/.test(name)) errors.display_name = 'Masukkan nama paparan 2–60 aksara tanpa aksara kawalan.';
+      if (!['initial', 'cube', 'cuboid', 'pyramid', 'cylinder', 'cone'].includes(values.avatar)) errors.avatar = 'Pilih avatar yang tersedia.';
     }
     if (type === 'signup' && (String(values.display_name || '').trim().length < 2 || String(values.display_name || '').trim().length > 60)) errors.display_name = 'Masukkan nama paparan antara 2 hingga 60 aksara.';
     if (['signup', 'recover', 'reset-password'].includes(type) && (String(values.password || '').length < 10 || String(values.password || '').length > 128)) errors.password = 'Gunakan kata laluan antara 10 hingga 128 aksara.';
@@ -645,14 +670,15 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
         onPlay(state);
         return;
       }
-      form?.reset();
+      if (action === 'update_profile' && !result?.profile) throw new Error('Profil belum dapat disahkan. Cuba simpan semula.');
+      if (action !== 'update_profile') form?.reset();
       if (navigateClass && result?.class_id) { classId = result.class_id; rosterPage = roomPage = 1; rosterQuery = ''; }
       const nextRoom = navigateRoom ? result?.room_id || result?.room?.id : null;
       if (nextRoom) { roomId = nextRoom; cloud.setRoom?.(roomId); boardPage = 1; closeConfirmation = false; epoch += 1; stopWatch(); }
       if (action === 'set_room') closeConfirmation = false;
       applySnapshot(result);
       announce(action === 'join_pin' ? nextRoom ? 'Anda telah masuk ke bilik permainan.' : 'Anda kini ahli kelas ini. Bilik daripada guru anda akan muncul di sini.' : success, 'success');
-      render({focus: Boolean(nextRoom), preserve: !nextRoom});
+      render({focus: Boolean(nextRoom) || action === 'update_profile', preserve: action === 'update_profile' ? false : !nextRoom});
       await refresh({silent: true});
       startLive();
     } catch (error) {
@@ -683,6 +709,7 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
     if (!validate(form, values, type)) return;
     if (['login', 'signup', 'recover', 'recover-email', 'resend-confirmation', 'reset-password'].includes(type)) return handleAuth(form, values, type);
     if (!accountAvailable()) return;
+    if (type === 'profile') return mutate('update_profile', {display_name: values.display_name.trim(), avatar: values.avatar}, {form, success: 'Profil berjaya disimpan.'});
     if (type === 'create-class') return mutate('create_class', {name: values.name.trim()}, {form, success: 'Kelas berjaya dicipta. Kongsi PIN untuk menambah pelajar.', navigateClass: true});
     if (type === 'invite' && currentClass()) return mutate('invite', {class_id: classId, username: values.username.trim()}, {form, success: 'Jemputan telah dihantar. Pelajar perlu menerimanya dalam akaun sendiri.'});
     if (type === 'create-room' && currentClass()) return mutate('create_room', {class_id: classId, name: values.name.trim()}, {form, success: 'Bilik berjaya dicipta. Pelajar boleh masuk dengan PIN bilik.', navigateRoom: true});
@@ -777,7 +804,9 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
       finally { if (job === operation) { authPending = false; pending = ''; } if (active) updateBusy(); }
       return;
     }
+    if (action === 'profile-login') { profileView = false; authMode = 'login'; render({focus: true, preserve: false}); return; }
     if (!accountAvailable()) return;
+    if (action === 'profile' || action === 'profile-back') { profileView = action === 'profile'; announce(''); render({focus: true, preserve: false}); return; }
     if (action === 'select-class') {
       classId = control.dataset.id; rosterQuery = ''; rosterPage = roomPage = 1; render({preserve: false});
       const heading = content.querySelector('.portal-class-overview h2');
@@ -844,11 +873,12 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
         authOnly = true;
         if (callbackError() && cloud.recoveryRequired !== true) authMode = 'recover-email';
         render({focus: true, preserve: false});
-      } else if (options.roomId) showRoom(options.roomId);
+      } else if (options.profile) { profileView = true; render({focus: true, preserve: false}); } else if (options.roomId) showRoom(options.roomId);
       else refresh({silent: true});
       return;
     }
     active = true;
+    profileView = options.profile === true;
     epoch += 1;
     const token = epoch;
     previousTitle = document.title;

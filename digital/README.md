@@ -1,8 +1,8 @@
 # GeoDecoder Digital V2
 
-Versi Digital semasa: **v2.3.0**. Modul pembelajaran **v1.2.0** kini mempunyai empat Makmal interaktif.
+Versi Digital semasa: **v2.4.0**. Modul pembelajaran **v1.2.0** kini mempunyai empat Makmal interaktif.
 
-Versi digital **2.3.0**, branch **digitalize**. Permainan geometri R1 → R2 kini mempunyai akaun guru/pelajar, kelas dan room dengan skor langsung. Firmware v1.1.3 menggunakan versi berasingan.
+Versi digital **2.4.0**, branch **digitalize-utility-profile**. Permainan geometri R1 → R2 kini mempunyai akaun guru/pelajar, kelas dan room dengan skor langsung. Firmware v1.1.3 menggunakan versi berasingan.
 
 ## Laman GitHub Pages
 
@@ -85,3 +85,9 @@ Rujukan bank/SHA: `docs/SOURCE.md`. Keputusan dan had ujian: `docs/VERIFICATION.
 ## Makmal interaktif
 
 Dari Home, pilih **Teroka modul pembelajaran → Makmal interaktif**. Empat aktiviti: **Bina Bentangan**, **Makmal Isi Padu**, **Terbitkan Rumus** dan **Bongkah Gabungan**. Aktiviti menggunakan geometri dan kawalan modul asal; muzik map berjalan sepanjang modul dibuka. Pin tepat direkodkan dalam `vendor/module-release.json`.
+
+## Profil Saya (v2.4.0)
+
+Tekan **Profil Saya** pada header, atau avatar/nama pada ruang akaun. Pengguna boleh menyimpan nama paparan (2–60 aksara) dan satu daripada enam avatar terbina dalam. Nama pengguna, e-mel, pengesahan e-mel, peranan dan kelas ialah maklumat baca sahaja daripada backend. Tetamu mendapat penerangan serta butang log masuk.
+
+Untuk database sedia ada, jalankan `backend/profile_v2_3.sql` sebagai database owner selepas migrasi email v2.2, sebelum menggunakan frontend ini. Fail itu ialah naik taraf daripada asas v2.3; `schema.sql` sudah merangkumi fungsi sama bagi pemasangan baharu. Tiada perubahan pada modul offline vendor. Lihat `docs/PROFILE.md` untuk kontrak, ujian dan batasan.
