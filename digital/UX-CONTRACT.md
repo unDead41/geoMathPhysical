@@ -1,7 +1,7 @@
 # GeoDecoder Digital V2 UX contract
 
-Current candidate: v2.4.0, digitalize-ease-of-use. Source of change: the eight
-ease-of-use recommendations accepted on 26 October 2026. Reference design:
+Current candidate: v2.5.0, digitalize-ease-of-use. Source of change: the eight
+ease-of-use recommendations and shared game/module settings accepted on 26 October 2026. Reference design:
 [approved specification](../docs/superpowers/specs/2026-10-26-ease-of-use-design.md).
 Firmware rounds remain a separate contract.
 
@@ -113,9 +113,19 @@ No new spoken BM/English audio is claimed.
 
 Settings applies light/dark/system and scaled text across the parent UI while
 leaving mathematical SVG geometry unchanged. Focus and text state labels remain.
-The pinned v1.2.0 module opens in an opaque-origin iframe; its canonical bytes
-and source hash are unchanged. The embedding adapter keeps fragment navigation
-inside about:srcdoc. Parent Back unloads its animation and restores menu music.
-The module retains its own layout, language and accessibility controls, with
-Teroka3D, notes and four interactive labs. Parent settings do not claim to
-replace those internal controls.
+The same persisted language, text100/125/150 and effective reduced motion now
+reach the pinned module before it starts and update it without reloading.
+A module Settings button opens the one parent dialog. Language changes preserve
+measurements, active section/lab, camera and unfold progress; canvas text redraws.
+Device reduced motion always wins. Turning reduction on stops automatic/current
+motion; turning it off does not silently resume it. Sliders and explicitly
+requested educational animations remain available, matching the existing module
+accessibility behavior. Settings do not change game or server clocks/rules.
+
+The source pin stays byte-identical1.2.0. Its original content was BM-only;
+a local canonical DOM/attribute/canvas adapter supplies reversible BM/English
+for Explore, Notes and all four Labs. This corrects the earlier documentation
+claim that this pin already owned a language selector. The parent remains the
+only owner of language/text/motion storage. Source/opaque-origin/instance-checked
+messages carry exactly three presentation values, never tokens or answers.
+See docs/MODULE_SETTINGS.md for the versioned integration contract and limits.

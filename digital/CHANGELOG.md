@@ -1,5 +1,17 @@
 # GeoDecoder Digital changelog
 
+## v2.5.0 — 26 Oktober 2026 (branch digitalize-ease-of-use)
+
+- Seragamkan BM/English, teks100/125/150% dan pilihan animasi antara permainan
+  dengan modul. Perubahan terus digunakan tanpa memuat semula iframe.
+- Tetapan dalam modul membuka dialog utama yang sama. Aktiviti, ukuran,
+  pilihan bongkah dan kemajuan bentangan dikekalkan semasa tetapan berubah.
+- Paparan English meliputi penerokaan, nota/pengiraan serta empat makmal
+  daripada modul BM yang dipinkan. Tiada kamus daripada rangkaian diperlukan.
+- Pilihan kurangkan gerakan merangkumi putaran automatik dan peralihan;
+  peluncur serta Main untuk animasi pembelajaran secara sengaja kekal tersedia.
+- Modul sumber, formula/ID, backend dan firmware dikekalkan.
+
 ## v2.4.0 — 26 Oktober 2026 (branch digitalize-ease-of-use)
 
 - Satukan platform v2.3.0 dengan BM/BI, rich text, latihan 15 soalan dan Duel

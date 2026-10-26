@@ -5,7 +5,7 @@ import {createPortal} from './portal.mjs';
 import {initTheme,setTheme} from './theme.mjs';
 import {createMusic} from './music.mjs';
 import moduleHtml from '../vendor/module-v1.2.0.html';
-import {prepareModuleFrame} from './module-frame.mjs';
+import {createModuleBridge} from './module-settings.mjs';
 
 import {createI18n, translate, localizeQuestion, shapeName} from './i18n.mjs';
 import {escapeHtml, formatRichText} from './format.mjs';
@@ -22,7 +22,7 @@ const now = () => performance.now();
 let storage;
 try { storage = window.localStorage; } catch { storage = {getItem(){throw new Error('Storage unavailable');},setItem(){throw new Error('Storage unavailable');},removeItem(){throw new Error('Storage unavailable');}}; }
 const store = new ScoreStore(storage);
-const preferences=loadPreferences(storage);let usabilityUI=null;
+const preferences=loadPreferences(storage);let usabilityUI=null,moduleBridge=null;
 const locale = createI18n(storage);
 const t = (key,params) => translate(locale.language,key,params);
 const music=createMusic({storage,onChange:renderMusicButton});
@@ -76,6 +76,7 @@ function updateMotion(){
   $('motion-button').setAttribute('aria-label',label);$('motion-button').title=label;
   $('motion-button').setAttribute('aria-pressed',String(motionPaused||reducedMotion.matches));
   $('motion-button').innerHTML=icon(motionPaused||reducedMotion.matches?'spark':'pause');
+  moduleBridge?.sync();
 }
 $('motion-button').addEventListener('click',()=>{motionPaused=!motionPaused;preferences.motionPaused=motionPaused;updateMotion();usabilityUI?.persist();});
 reducedMotion.addEventListener('change',updateMotion);updateMotion();
@@ -101,7 +102,7 @@ function showScreen(next) {
   $('guest-screen').hidden=next!=='guest';
   $('portal-screen').hidden=next!=='portal';
   $('module-screen').hidden=next!=='module';
-  if(next!=='module'&&$('module-frame').getAttribute('srcdoc'))$('module-frame').removeAttribute('srcdoc');
+  if(next!=='module')moduleBridge?.clear();
   void music.setScene(next==='duel'?'game':next);
   updateTitle(next);
   window.scrollTo({top:0,behavior:'instant'});
@@ -531,7 +532,7 @@ $('welcome-account-button').addEventListener('click',()=>requestAccounts());
 $('guest-button').addEventListener('click',openGuest);
 $('guest-back-button').addEventListener('click',returnHome);
 $('module-button').addEventListener('click',()=>{
-  showScreen('module');$('module-frame').srcdoc=prepareModuleFrame(moduleHtml);$('module-title').focus({preventScroll:true});
+  showScreen('module');moduleBridge.open(moduleHtml);$('module-title').focus({preventScroll:true});
 });
 $('module-back-button').addEventListener('click',returnHome);
 $('online-retry').addEventListener('click',()=>{if(roomPending)sendRoomPending();});
@@ -975,7 +976,8 @@ $('language-select').addEventListener('change',event=>{
   cancelDrag();
   if(locale.setLanguage(event.target.value)){applyLanguage();announce(t("language.changed"));}
 });
-usabilityUI=createUsabilityUI({storage,preferences,t,openDialog,closeDialog,onStart:beginSelectedMode,onTheme:setTheme,onTextSize:value=>{document.documentElement.dataset.textSize=String(value);document.documentElement.style.setProperty('--text-scale',String(value/100));}});
+moduleBridge=createModuleBridge({frame:$('module-frame'),getSettings:()=>({language:locale.language,textSize:preferences.textSize,motionPaused:motionPaused||reducedMotion.matches}),openSettings:()=>usabilityUI.openSettings()});
+usabilityUI=createUsabilityUI({storage,preferences,t,openDialog,closeDialog,onStart:beginSelectedMode,onTheme:setTheme,onTextSize:value=>{document.documentElement.dataset.textSize=String(value);document.documentElement.style.setProperty('--text-scale',String(value/100));moduleBridge.sync();}});
 applyLanguage();
 
 if(cloud.hasAuthCallback||cloud.hasRecoveryIntent)void openAccounts();

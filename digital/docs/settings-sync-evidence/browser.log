@@ -1,0 +1,36 @@
+RUN initial-live
+CAPTURE_STATE module-en-desktop-150 {"focused":false,"rect":{"x":20,"y":-80,"width":222.28125,"height":61.1875,"top":-80,"right":242.28125,"bottom":-18.8125,"left":20},"top":"-80px","active":"module-title"}
+EVIDENCE module-en-desktop-150.png
+CAPTURE_STATE shared-settings-en-mobile-150 {"focused":false,"rect":{"x":20,"y":-80,"width":222.28125,"height":61.1875,"top":-80,"right":242.28125,"bottom":-18.8125,"left":20},"top":"-80px","active":"language-select"}
+EVIDENCE shared-settings-en-mobile-150.png
+DETAIL initial shared settings, live same-document updates,150% font ratio, cone/progress/labels and reload persistence
+PASS initial-live
+RUN notes-labs
+CAPTURE_STATE module-composite-en-desktop {"focused":false,"rect":{"x":20,"y":-80,"width":191.90625,"height":55,"top":-80,"right":211.90625,"bottom":-25,"left":20},"top":"-80px","active":"module-title"}
+EVIDENCE module-composite-en-desktop.png
+DETAIL Notes7.5/error context and net650/unit3/area-cone-selection420/composite580 survive reversible settings in all4 labs
+PASS notes-labs
+RUN layout
+CAPTURE_STATE module-notes-bm-390-125 {"focused":false,"rect":{"x":20,"y":-80,"width":240.171875,"height":55,"top":-80,"right":260.171875,"bottom":-25,"left":20},"top":"-80px","active":"module-title"}
+EVIDENCE module-notes-bm-390-125.png
+CAPTURE_STATE module-lab-en-320-150 {"focused":false,"rect":{"x":20,"y":-80,"width":222.28125,"height":61.1875,"top":-80,"right":242.28125,"bottom":-18.8125,"left":20},"top":"-80px","active":"module-title"}
+EVIDENCE module-lab-en-320-150.png
+DETAIL 108 module layout checks2languages×3text sizes×3widths×6views
+PASS layout
+RUN large-text-words
+DETAIL320px English150% headings, labnames andnumber badges wrap only betweenwords
+PASS large-text-words
+RUN language-coverage
+DETAIL English visible-content scan5solids×Explore/Notes plus4labs, feedback states and2pour modes
+PASS language-coverage
+RUN device-motion
+DETAIL device/user reduction stops rotation; removing reduction never restarts it
+PASS device-motion
+RUN message-boundary
+DETAIL foreign-source/stale-instance/version and self-sent malformed settings ignored
+PASS message-boundary
+RUN offline-denied-game
+DETAIL offline module settings and solo acceptedR1/selection/order/score preserved
+DETAIL denied module settings and solo acceptedR1/selection/order/score preserved
+PASS offline-denied-game
+RESULT 8/8 cases passed; 108 layout checks; 5 screenshots

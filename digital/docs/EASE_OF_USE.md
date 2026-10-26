@@ -1,3 +1,6 @@
+> Rekod sejarah v2.4.0. Untuk penyelarasan tetapan permainan/modul v2.5.0,
+> lihat [MODULE_SETTINGS.md](MODULE_SETTINGS.md); perihalan modul berasingan di bawah ialah keadaan sebelum kemas kini itu.
+
 # GeoDecoder Digital v2.4.0 — kemudahan penggunaan
 
 Tarikh: 26 Oktober 2026 (Malaysia). Branch serahan:

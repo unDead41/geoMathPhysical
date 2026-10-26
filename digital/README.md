@@ -1,8 +1,8 @@
 # GeoDecoder Digital V2
 
-Versi Digital branch ini: **v2.4.0** — **digitalize-ease-of-use**. Menggabungkan platform v2.3.0 dengan BM/BI, rich text, latihan 15 soalan, Duel dan lapan penambahbaikan kemudahan penggunaan. Modul pembelajaran kekal **v1.2.0**.
+Versi Digital branch ini: **v2.5.0** — **digitalize-ease-of-use**. Menggabungkan platform v2.3.0 dengan BM/BI, rich text, latihan 15 soalan, Duel dan lapan penambahbaikan kemudahan penggunaan. Modul pembelajaran kekal **v1.2.0**.
 
-Asas `digitalize` v2.3.0: `adc51627eaaace5d9543c7e033d2994986c8715d`. Ciri dwibahasa/permainan diambil daripada `digital-richText` v1.5.0, `8373fd4bae11847c3a3099ee6f61e2756d99349b`. Firmware v1.1.3 menggunakan versi berasingan. Kerja ini hanya dipush ke branch baharu, tanpa menerbitkan semula laman awam.
+Asas `digitalize` v2.3.0: `adc51627eaaace5d9543c7e033d2994986c8715d`. Ciri dwibahasa/permainan diambil daripada `digital-richText` v1.5.0, `8373fd4bae11847c3a3099ee6f61e2756d99349b`. Firmware v1.1.3 menggunakan versi berasingan. Kemas kini v2.5.0 menyambung branch yang sama, dengan tetapan permainan/modul seragam; laman awam tidak diterbitkan semula.
 
 ## Laman GitHub Pages
 
@@ -35,7 +35,11 @@ sebelum permainan tetamu pertama; boleh dilangkau atau dibuka semula melalui
 **Tetapan**: Bahasa Melayu/English, tema, muzik, bunyi imbasan, saiz teks
 100/125/150% dan animasi. Pilihan bahasa/paparan tidak memulakan semula permainan.
 Pilihan peranti disimpan jika storan dibenarkan. Iframe modul kekal menggunakan
-kawalan pembelajaran dan bahasa dalamannya sendiri.
+tetapan bahasa, saiz teks dan animasi daripada Tetapan utama, termasuk perubahan
+semasa modul dibuka. Butang Tetapan dalam modul membuka dialog utama yang sama.
+Aktiviti, ukuran, tab dan kemajuan bentangan dikekalkan. Salinan modul asal
+v1.2.0 kekal dipinkan; penyesuai setempat menyediakan paparan BM/English.
+[Kontrak dan bukti penyelarasan](docs/MODULE_SETTINGS.md).
 
 ## Duel dengan kawan
 
