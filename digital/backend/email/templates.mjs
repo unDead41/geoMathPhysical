@@ -1,6 +1,6 @@
 // Canonical copy and email-safe layout. Generated HTML is pasted into Supabase.
 // These templates change presentation only; Auth owns tokens and redirect URLs.
-export const EMAIL_VERSION='1.0.0';
+export const EMAIL_VERSION='1.0.1';
 export const EMAIL_TEMPLATES=[
   {
     id:'confirmation',name:'Confirm sign up',kind:'link',
@@ -134,30 +134,30 @@ export function renderEmail(item){
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#F3F7FB" style="width:100%;table-layout:fixed;background-color:#F3F7FB;">
     <tr><td class="outer" align="center" style="padding:32px 16px;">
       <!--[if mso]><table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0"><tr><td><![endif]-->
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#FFFFFF" style="width:100%;max-width:600px;table-layout:fixed;background-color:#FFFFFF;border:1px solid #D9E4ED;border-radius:20px;">
-        <tr><td height="6" bgcolor="#215FF0" style="height:6px;background-color:#215FF0;border-radius:20px 20px 0 0;font-size:0;line-height:0;">&nbsp;</td></tr>
-        <tr><td class="content" style="padding:28px 32px 24px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#FFFFFF" style="width:100%;max-width:600px;table-layout:fixed;background-color:#FFFFFF;border:1px solid #D9E4ED;border-radius:24px;box-shadow:0 16px 48px #18334B12;">
+        <tr><td height="6" bgcolor="#FFCB66" style="height:6px;background-color:#FFCB66;border-radius:24px 24px 0 0;font-size:0;line-height:0;">&nbsp;</td></tr>
+        <tr><td class="content" style="padding:28px 32px 28px;background-color:#18334B;border-radius:24px 24px 0 0;">
           <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
-            <td width="44" height="44" align="center" bgcolor="#215FF0" aria-hidden="true" style="width:44px;height:44px;background-color:#215FF0;border-radius:12px;color:#FFFFFF;font-family:'Trebuchet MS',Arial,sans-serif;font-size:28px;font-weight:700;">G</td>
-            <td style="padding-left:12px;color:#18334B;"><p style="margin:0;font-family:'Trebuchet MS',Arial,sans-serif;font-size:19px;font-weight:700;line-height:1.3;">GeoDecoder</p><p style="margin:3px 0 0;color:#526A7D;font-size:10px;font-weight:700;letter-spacing:3px;line-height:1.4;">DIGITAL</p></td>
+            <td width="44" height="44" align="center" bgcolor="#215FF0" aria-hidden="true" style="width:44px;height:44px;background-color:#215FF0;border-radius:12px;color:#FFFFFF;font-family:'Trebuchet MS',Arial,sans-serif;font-size:28px;font-weight:700;">◇</td>
+            <td style="padding-left:12px;color:#FFFFFF;"><p style="margin:0;font-family:'Trebuchet MS',Arial,sans-serif;font-size:19px;font-weight:700;line-height:1.3;">GeoDecoder</p><p style="margin:3px 0 0;color:#FFCB66;font-size:10px;font-weight:700;letter-spacing:3px;line-height:1.4;">DIGITAL</p></td>
           </tr></table>
         </td></tr>
-        <tr><td class="content" style="padding:0 32px 12px;">
+        <tr><td class="content" style="padding:32px 32px 12px;">
           <p style="margin:0 0 16px;color:#526A7D;font-size:11px;font-weight:700;letter-spacing:1px;line-height:1.6;"><span style="color:#215FF0;">●</span> AKAUN GEODECODER <span lang="en">/ ACCOUNT</span></p>
-          <h1 class="headline" style="margin:0 0 6px;color:#18334B;font-family:'Trebuchet MS',Arial,sans-serif;font-size:34px;font-weight:700;line-height:1.2;">${escape(item.title)}</h1>
+          <h1 class="headline" style="margin:0 0 6px;color:#18334B;font-family:'Trebuchet MS',Arial,sans-serif;font-size:38px;font-weight:700;line-height:1.2;">${escape(item.title)}</h1>
           <p lang="en" style="margin:0 0 24px;color:#526A7D;font-size:18px;line-height:1.5;">${escape(item.englishTitle)}</p>
           <table role="presentation" width="48" cellpadding="0" cellspacing="0" border="0" style="width:48px;margin-bottom:24px;"><tr><td height="4" bgcolor="#FFCB66" style="height:4px;background-color:#FFCB66;font-size:0;line-height:0;">&nbsp;</td></tr></table>
           ${copy(item.intro)}
           ${copy(item.englishIntro)}
           ${item.detail?copy(item.detail,false,'font-weight:700;word-break:break-all;overflow-wrap:anywhere;'):''}
-          <p style="margin:20px 0 0;color:#526A7D;font-size:13px;line-height:1.6;word-break:break-all;overflow-wrap:anywhere;">Akaun <span lang="en">/ Account</span><br><strong style="color:#18334B;font-size:14px;">{{ .Email }}</strong></p>
+          <p style="margin:20px 0 0;padding:16px 18px;border-left:3px solid #215FF0;background-color:#F3F7FB;border-radius:0 12px 12px 0;color:#526A7D;font-size:13px;line-height:1.6;word-break:break-all;overflow-wrap:anywhere;">Akaun <span lang="en">/ Account</span><br><strong style="color:#18334B;font-size:14px;">{{ .Email }}</strong></p>
           ${action}
           ${copy(item.note,false,'font-size:14px;margin-bottom:6px;')}
           ${copy(item.englishNote,true,'font-size:13px;margin-bottom:16px;')}
         </td></tr>
         ${fallback}
         <tr><td class="content" style="padding:0 32px 28px;">
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#F3F7FB" style="width:100%;table-layout:fixed;border:1px solid #D9E4ED;border-radius:12px;background-color:#F3F7FB;"><tr><td style="padding:16px;word-wrap:break-word;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#FFF8E9" style="width:100%;table-layout:fixed;border:1px solid #F0D9A6;border-radius:12px;background-color:#FFF8E9;"><tr><td style="padding:16px;word-wrap:break-word;">
             <p style="margin:0 0 8px;color:#18334B;font-size:13px;font-weight:700;line-height:1.5;">Untuk keselamatan anda <span lang="en">/ For your security</span></p>
             ${copy(item.safety,false,'font-size:13px;margin-bottom:6px;')}
             ${copy(item.englishSafety,true,'font-size:12px;margin-bottom:0;')}

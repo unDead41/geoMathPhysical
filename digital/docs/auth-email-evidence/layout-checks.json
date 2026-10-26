@@ -5,224 +5,224 @@
       "fixture": "confirmation-long.html",
       "width": 320,
       "textOverflow": [],
-      "contentBottom": 2076,
+      "contentBottom": 2203,
       "renderer": "WeasyPrint 70.0; base flexible layout without narrow-screen media query"
     },
     {
       "fixture": "confirmation-long.html",
       "width": 640,
       "textOverflow": [],
-      "contentBottom": 1272,
+      "contentBottom": 1345,
       "renderer": "WeasyPrint 70.0; base flexible layout without narrow-screen media query"
     },
     {
       "fixture": "confirmation.html",
       "width": 320,
       "textOverflow": [],
-      "contentBottom": 1830,
+      "contentBottom": 1934,
       "renderer": "WeasyPrint 70.0; base flexible layout without narrow-screen media query"
     },
     {
       "fixture": "confirmation.html",
       "width": 640,
       "textOverflow": [],
-      "contentBottom": 1183,
+      "contentBottom": 1255,
       "renderer": "WeasyPrint 70.0; base flexible layout without narrow-screen media query"
     },
     {
       "fixture": "email_change-long.html",
       "width": 320,
       "textOverflow": [],
-      "contentBottom": 2221,
+      "contentBottom": 2348,
       "renderer": "WeasyPrint 70.0; base flexible layout without narrow-screen media query"
     },
     {
       "fixture": "email_change-long.html",
       "width": 640,
       "textOverflow": [],
-      "contentBottom": 1371,
+      "contentBottom": 1489,
       "renderer": "WeasyPrint 70.0; base flexible layout without narrow-screen media query"
     },
     {
       "fixture": "email_change.html",
       "width": 320,
       "textOverflow": [],
-      "contentBottom": 1974,
+      "contentBottom": 2079,
       "renderer": "WeasyPrint 70.0; base flexible layout without narrow-screen media query"
     },
     {
       "fixture": "email_change.html",
       "width": 640,
       "textOverflow": [],
-      "contentBottom": 1281,
+      "contentBottom": 1399,
       "renderer": "WeasyPrint 70.0; base flexible layout without narrow-screen media query"
     },
     {
       "fixture": "email_changed_notification-long.html",
       "width": 320,
       "textOverflow": [],
-      "contentBottom": 2217,
+      "contentBottom": 2349,
       "renderer": "WeasyPrint 70.0; base flexible layout without narrow-screen media query"
     },
     {
       "fixture": "email_changed_notification-long.html",
       "width": 640,
       "textOverflow": [],
-      "contentBottom": 1289,
+      "contentBottom": 1407,
       "renderer": "WeasyPrint 70.0; base flexible layout without narrow-screen media query"
     },
     {
       "fixture": "email_changed_notification.html",
       "width": 320,
       "textOverflow": [],
-      "contentBottom": 1689,
+      "contentBottom": 1799,
       "renderer": "WeasyPrint 70.0; base flexible layout without narrow-screen media query"
     },
     {
       "fixture": "email_changed_notification.html",
       "width": 640,
       "textOverflow": [],
-      "contentBottom": 1046,
+      "contentBottom": 1164,
       "renderer": "WeasyPrint 70.0; base flexible layout without narrow-screen media query"
     },
     {
       "fixture": "invite-long.html",
       "width": 320,
       "textOverflow": [],
-      "contentBottom": 2054,
+      "contentBottom": 2181,
       "renderer": "WeasyPrint 70.0; base flexible layout without narrow-screen media query"
     },
     {
       "fixture": "invite-long.html",
       "width": 640,
       "textOverflow": [],
-      "contentBottom": 1272,
+      "contentBottom": 1391,
       "renderer": "WeasyPrint 70.0; base flexible layout without narrow-screen media query"
     },
     {
       "fixture": "invite.html",
       "width": 320,
       "textOverflow": [],
-      "contentBottom": 1807,
+      "contentBottom": 1912,
       "renderer": "WeasyPrint 70.0; base flexible layout without narrow-screen media query"
     },
     {
       "fixture": "invite.html",
       "width": 640,
       "textOverflow": [],
-      "contentBottom": 1183,
+      "contentBottom": 1301,
       "renderer": "WeasyPrint 70.0; base flexible layout without narrow-screen media query"
     },
     {
       "fixture": "magic_link-long.html",
       "width": 320,
       "textOverflow": [],
-      "contentBottom": 1999,
+      "contentBottom": 2126,
       "renderer": "WeasyPrint 70.0; base flexible layout without narrow-screen media query"
     },
     {
       "fixture": "magic_link-long.html",
       "width": 640,
       "textOverflow": [],
-      "contentBottom": 1247,
+      "contentBottom": 1319,
       "renderer": "WeasyPrint 70.0; base flexible layout without narrow-screen media query"
     },
     {
       "fixture": "magic_link.html",
       "width": 320,
       "textOverflow": [],
-      "contentBottom": 1753,
+      "contentBottom": 1858,
       "renderer": "WeasyPrint 70.0; base flexible layout without narrow-screen media query"
     },
     {
       "fixture": "magic_link.html",
       "width": 640,
       "textOverflow": [],
-      "contentBottom": 1157,
+      "contentBottom": 1230,
       "renderer": "WeasyPrint 70.0; base flexible layout without narrow-screen media query"
     },
     {
       "fixture": "password_changed_notification-long.html",
       "width": 320,
       "textOverflow": [],
-      "contentBottom": 1773,
+      "contentBottom": 1905,
       "renderer": "WeasyPrint 70.0; base flexible layout without narrow-screen media query"
     },
     {
       "fixture": "password_changed_notification-long.html",
       "width": 640,
       "textOverflow": [],
-      "contentBottom": 1075,
+      "contentBottom": 1194,
       "renderer": "WeasyPrint 70.0; base flexible layout without narrow-screen media query"
     },
     {
       "fixture": "password_changed_notification.html",
       "width": 320,
       "textOverflow": [],
-      "contentBottom": 1527,
+      "contentBottom": 1636,
       "renderer": "WeasyPrint 70.0; base flexible layout without narrow-screen media query"
     },
     {
       "fixture": "password_changed_notification.html",
       "width": 640,
       "textOverflow": [],
-      "contentBottom": 986,
+      "contentBottom": 1104,
       "renderer": "WeasyPrint 70.0; base flexible layout without narrow-screen media query"
     },
     {
       "fixture": "reauthentication-long.html",
       "width": 320,
       "textOverflow": [],
-      "contentBottom": 1788,
+      "contentBottom": 1916,
       "renderer": "WeasyPrint 70.0; base flexible layout without narrow-screen media query"
     },
     {
       "fixture": "reauthentication-long.html",
       "width": 640,
       "textOverflow": [],
-      "contentBottom": 1143,
+      "contentBottom": 1216,
       "renderer": "WeasyPrint 70.0; base flexible layout without narrow-screen media query"
     },
     {
       "fixture": "reauthentication.html",
       "width": 320,
       "textOverflow": [],
-      "contentBottom": 1542,
+      "contentBottom": 1647,
       "renderer": "WeasyPrint 70.0; base flexible layout without narrow-screen media query"
     },
     {
       "fixture": "reauthentication.html",
       "width": 640,
       "textOverflow": [],
-      "contentBottom": 1054,
+      "contentBottom": 1126,
       "renderer": "WeasyPrint 70.0; base flexible layout without narrow-screen media query"
     },
     {
       "fixture": "recovery-long.html",
       "width": 320,
       "textOverflow": [],
-      "contentBottom": 2087,
+      "contentBottom": 2215,
       "renderer": "WeasyPrint 70.0; base flexible layout without narrow-screen media query"
     },
     {
       "fixture": "recovery-long.html",
       "width": 640,
       "textOverflow": [],
-      "contentBottom": 1314,
+      "contentBottom": 1387,
       "renderer": "WeasyPrint 70.0; base flexible layout without narrow-screen media query"
     },
     {
       "fixture": "recovery.html",
       "width": 320,
       "textOverflow": [],
-      "contentBottom": 1841,
+      "contentBottom": 1946,
       "renderer": "WeasyPrint 70.0; base flexible layout without narrow-screen media query"
     },
     {
       "fixture": "recovery.html",
       "width": 640,
       "textOverflow": [],
-      "contentBottom": 1224,
+      "contentBottom": 1297,
       "renderer": "WeasyPrint 70.0; base flexible layout without narrow-screen media query"
     }
   ]
