@@ -6,11 +6,13 @@ export const HELP_GUIDES=[
   {id:'connection',lines:4}
 ];
 export const HELP_COPY={
+  'help.keyboard':['Papan kekunci','Keyboard'],
+  'help.more':['Lihat penerangan penuh','More details'],
   'help.title':['Pusat Bantuan','Help centre'],
-  'help.intro':['Pilih perkara yang anda perlukan. Bantuan dibuka di atas skrin semasa.','Choose what you need. Help opens over your current screen.'],
+  'help.intro':['Tengok cara. Cuba sendiri.','Watch how. Then try it.'],
   'help.guides':['Panduan ringkas','Quick guides'],
   'help.report':['Lapor masalah','Report a problem'],
-  'help.reportIntro':['Terangkan masalah, semak laporan, kemudian salin atau muat turun untuk dikongsi kepada guru atau pengendali.','Describe the problem, review your report, then copy or download it to share with your teacher or support contact.'],
+  'help.reportIntro':['Ada masalah? Sediakan laporan untuk dikongsi.','Something wrong? Prepare a report to share.'],
   'help.back':['Kembali ke bantuan','Back to help'],
   'help.settings':['Buka Tetapan','Open Settings'],
   'help.tutorial':['Buka panduan tiga langkah','Open the three-step tutorial'],

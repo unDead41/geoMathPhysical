@@ -1,5 +1,13 @@
 # GeoDecoder Digital changelog
 
+## v2.7.1 — 26 Oktober 2026 (cadangan branch bantuan visual)
+
+- Tutorial R1/R2 menggunakan demonstrasi bergambar 4.8 saat, Jeda dan Main semula.
+- Tujuh panduan bantuan mengutamakan visual; penerangan penuh dibuka apabila diperlukan.
+- Kurangkan gerakan melalui OS atau Tetapan memberikan gambar statik yang bermakna.
+- BM/English, papan kekunci dan offline dikekalkan. Tiada video atau aset luar dimuat turun.
+
+
 ## v2.7.0 — 26 Oktober 2026 (cadangan branch digitalized-utility-help-support)
 
 - Pusat Bantuan BM/English daripada header, Tetapan, permainan dan modul.

@@ -1,6 +1,6 @@
 # GeoDecoder Digital V2
 
-Versi Digital cadangan: **v2.7.0**. Branch kerja: **digitalized-utility-help-support**. Branch integrasi: **main-digitalized**.
+Versi Digital cadangan: **v2.7.1**. Branch kerja: **digitalized-utility-help-support**. Branch integrasi: **main-digitalized**.
 Modul pembelajaran: **v1.5.0**. Firmware kekal **v1.1.3**.
 
 Keluaran ini menyatukan BM/English, rich text, kuiz/latihan/duel, kemudahan

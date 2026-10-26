@@ -1,3 +1,4 @@
+import {helpVisual,installHelpVisuals} from './help-visuals.mjs';
 import {escapeHtml} from './format.mjs';
 import {icon} from './art.mjs';
 import {HELP_GUIDES} from './help-copy.mjs';
@@ -6,6 +7,7 @@ import {createReportContext,formatReport,validateReport,REPORT_CATEGORIES,REPORT
 /** Local-only help/report views; the app keeps modal, focus and clock ownership. */
 export function createHelpSupport({t,getLanguage,getContext,openDialog,openTutorial,openSettings,openModuleGuide,hostDocument=document,hostWindow=window}){
   const content=hostDocument.getElementById('dialog-content');
+  installHelpVisuals(content);
   let view='home',draft={category:'game',description:'',steps:'',expected:'',actual:''};
   let context=null,errors={},preview='',revision=0,copying=false;
   const text=(key,params)=>escapeHtml(t('help.'+key,params));
@@ -21,9 +23,9 @@ export function createHelpSupport({t,getLanguage,getContext,openDialog,openTutor
     const active=context?.screen==='module'?'module':context?.screen==='portal'?'accounts':context?.mode==='duel'?'duel':'play';
     openDialog('help',t('help.title'),`<div class="help-centre" data-help-view="home">
       <p class="help-intro">${text('intro')}</p>${clockNote()}
-      <section class="help-report-prompt"><div><h3>${text('report')}</h3><p>${text('reportIntro')}</p></div><button class="button button-primary" type="button" data-help-action="report" data-autofocus>${text('report')} ${icon('arrow')}</button></section>
+      <section class="help-report-prompt"><button class="button button-primary" type="button" data-help-action="report" data-autofocus>${text('report')} ${icon('arrow')}</button></section>
       <h3 class="help-guides-title">${text('guides')}</h3>
-      <div class="help-guides">${HELP_GUIDES.map(guide=>`<details ${guide.id===active?'open':''}><summary>${text(guide.id+'.title')}</summary><div class="help-guide-copy">${guide.id==='play'?'<ol>':'<ul>'}${Array.from({length:guide.lines},(_,i)=>`<li>${text(guide.id+'.'+(i+1))}</li>`).join('')}${guide.id==='play'?'</ol>':'</ul>'}${guide.tutorial?button('tutorial','tutorial'):''}${guide.settings?button('settings','settings'):''}${guide.moduleGuide&&context?.screen==='module'?button('module-guide','moduleGuide'):''}</div></details>`).join('')}</div>
+      <div class="help-guides">${HELP_GUIDES.map(guide=>`<details ${guide.id===active?'open':''}><summary>${text(guide.id+'.title')}</summary><div class="help-guide-copy">${helpVisual(guide.id,getLanguage())}<details class="help-more"><summary>${text('more')}</summary>${guide.id==='play'?'<ol>':'<ul>'}${Array.from({length:guide.lines},(_,i)=>`<li>${text(guide.id+'.'+(i+1))}</li>`).join('')}${guide.id==='play'?'</ol>':'</ul>'}</details>${guide.tutorial?button('tutorial','tutorial'):''}${guide.settings?button('settings','settings'):''}${guide.moduleGuide&&context?.screen==='module'?button('module-guide','moduleGuide'):''}</div></details>`).join('')}</div>
     </div>`);resetScroll();
   }
   function formField(field,max){
