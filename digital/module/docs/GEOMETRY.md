@@ -59,3 +59,34 @@ luas, jejari, lilitan dan titik sentuh; enam kamera; serta 1001 tahap per bongka
 untuk nilai finite, kesinambungan dan identiti muka. Tiada dakwaan ketepatan
 piksel yang tidak terhingga: pelukisan lengkung dan depth sorting ialah
 penghampiran grafik bagi model analitik yang diuji.
+
+## Galeri poligon dan isi pilihan v1.3.0
+
+preset-nets.mjs menambah prisma tegak bertapak poligon sekata n=3/5/6 dan piramid
+bertapak segi tiga sama sisi. Bentangan prisma ialah n segi empat tepat berjajar,
+dengan dua tapak pada sisi bertentangan muka pertama. Jalur sisi melilit melalui
+sudut luaran 2π/n; dua tapak menutup selepas jalur hampir lengkap. Setiap muka
+kekal tegar dan kedua-dua titik engsel ibu-anak sentiasa bertemu. Piramid segi
+tiga memutarkan tiga muka sisi pada tiga rusuk tapak melalui putaran paksi
+Rodrigues. Kamera/alihan satah tidak menukar panjang atau luas. Keadaan rata
+pada satu satah dan penutupan tanpa celah dibuktikan dalam ujian geometri.
+
+Isi prisma tambahan = n a² t / (4 tan(π/n)). Isi piramid segi tiga = √3 a² t / 12.
+a ialah sisi poligon sekata; t ialah tinggi tegak, bukan rusuk condong. Piramid
+segi tiga di galeri mempunyai empat muka segi tiga sama sisi pada dimensi
+lalainya; mod ukuran isi padu boleh menukar tinggi dan tidak mendakwa semua
+empat muka masih sama sisi. Semua bentuk tambahan mempunyai tapak yang kekal
+sekata, bukan poligon arbitrari atau bentuk cekung.
+
+volume-lab.mjs mengira kapasiti dan isi semasa secara berasingan. Untuk pecahan
+isi f, paras dalam prisma/silinder/kubus/kuboid ialah h×f; dalam piramid/kon ia
+ialah h×(1−∛(1−f)) dari tapak luas ke puncak. Setiap muka mesh sebenar dipotong
+pada satah paras itu dan penutup cecair ditambah, supaya isipadu yang dilukis
+sepadan dengan f×V. Garisan bekas kekal penuh. Kedua-dua bongkah berkongsi skala
+cm yang sama dalam adegan; pemilihan jumlah tidak menyembunyikan isinya.
+
+Ujian bebas mengira isi mesh menggunakan pecahan tetrahedron (10%, 50%, 100%)
+untuk sembilan bentuk pada ukuran bukan default; toleransi 0.2% hanya untuk
+paparan lengkung. Pengiraan jumlah menggunakan rumus analitik tanpa pembundaran.
+Semua 101 bingkai poligon tambahan disemak panjang, luas dan titik engsel;
+topologi akhir F/V/E dan pertindihan luas rata turut disemak.

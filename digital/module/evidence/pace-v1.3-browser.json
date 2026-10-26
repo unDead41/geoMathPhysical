@@ -1,0 +1,816 @@
+{
+  "version": "1.3.0",
+  "environment": "Chrome cloud; HTTP; 320/390/768 iframe widths; reduced motion via QA dependency injection",
+  "notes": [
+    "Observations recorded during feature development and final HTML checks; pre-clamping observation explicitly labelled.",
+    "An automation waitFor deadline expired at first pour; subsequent DOM reads confirmed 1, 2, 3 pours completed for both cone and pyramid.",
+    "file://, Edge, physical touch, screen reader and OS reduced motion were not tested."
+  ],
+  "checks": [
+    {
+      "test": "add 1 cm3 A only",
+      "state": {
+        "fillA": "0.037037037037037035",
+        "fillB": "0",
+        "joined": "0",
+        "lab": "volume",
+        "pitch": "0.3",
+        "pours": "0",
+        "preset": "cube",
+        "progress": "1",
+        "totalVolume": "1",
+        "units": "0",
+        "valid": "true",
+        "volumeMode": "compare",
+        "yaw": "0.48",
+        "zoom": "1"
+      }
+    },
+    {
+      "test": "add 1 cm3 to each, A+B totals 3",
+      "state": {
+        "fillA": "0.07407407407407407",
+        "fillB": "0.041666666666666664",
+        "joined": "0",
+        "lab": "volume",
+        "pitch": "0.3",
+        "pours": "0",
+        "preset": "cube",
+        "progress": "1",
+        "totalVolume": "3",
+        "units": "0",
+        "valid": "true",
+        "volumeMode": "compare",
+        "yaw": "0.48",
+        "zoom": "1"
+      }
+    },
+    {
+      "test": "sum B only",
+      "text": "Jumlah isi dipilih = 1 cm³"
+    },
+    {
+      "test": "one solid mode retains A=2 and hides B",
+      "text": "A: 2 cm³ · dikira. Jumlah isi dipilih = 2 cm³.",
+      "BVisible": false
+    },
+    {
+      "test": "full A in one solid mode",
+      "state": {
+        "fillA": "1",
+        "fillB": "0.041666666666666664",
+        "joined": "0",
+        "lab": "volume",
+        "pitch": "0.3",
+        "pours": "0",
+        "preset": "cube",
+        "progress": "1",
+        "totalVolume": "27",
+        "units": "0",
+        "valid": "true",
+        "volumeMode": "compare",
+        "yaw": "0.48",
+        "zoom": "1"
+      }
+    },
+    {
+      "test": "full cone+cylinder",
+      "state": {
+        "fillA": "1",
+        "fillB": "1",
+        "joined": "0",
+        "lab": "volume",
+        "pitch": "0.3",
+        "pours": "0",
+        "preset": "cube",
+        "progress": "1",
+        "totalVolume": "1577.0795121020763",
+        "units": "0",
+        "valid": "true",
+        "volumeMode": "compare",
+        "yaw": "0.48",
+        "zoom": "1"
+      },
+      "phase": "Before cylinder example clamping; corrected and rechecked in nine-choice test"
+    },
+    {
+      "test": "pause full fill explicit",
+      "state": {
+        "fillA": "0",
+        "fillB": "0",
+        "joined": "0",
+        "lab": "volume",
+        "pitch": "0.3",
+        "pours": "0",
+        "preset": "cube",
+        "progress": "0",
+        "totalVolume": "0",
+        "units": "0",
+        "valid": "true",
+        "volumeMode": "compare",
+        "yaw": "0.48",
+        "zoom": "1"
+      }
+    },
+    {
+      "test": "nine comparison choices at full content",
+      "readings": [
+        {
+          "shape": "cube",
+          "dim": "a = 4 cm",
+          "volume": "Isi A: 64 / 64 cm³",
+          "fill": "1"
+        },
+        {
+          "shape": "cuboid",
+          "dim": "p = 6 cm · l = 4 cm · t = 3 cm",
+          "volume": "Isi A: 72 / 72 cm³",
+          "fill": "1"
+        },
+        {
+          "shape": "pyramid",
+          "dim": "a = 6 cm · t = 4 cm",
+          "volume": "Isi A: 48 / 48 cm³",
+          "fill": "1"
+        },
+        {
+          "shape": "cylinder",
+          "dim": "j = 7 cm · t = 8 cm",
+          "volume": "Isi A: 1231.5 / 1231.5 cm³",
+          "fill": "1"
+        },
+        {
+          "shape": "cone",
+          "dim": "j = 3 cm · t = 4 cm",
+          "volume": "Isi A: 37.7 / 37.7 cm³",
+          "fill": "1"
+        },
+        {
+          "shape": "triangular-prism",
+          "dim": "a = 3 cm · t = 4 cm",
+          "volume": "Isi A: 15.59 / 15.59 cm³",
+          "fill": "1"
+        },
+        {
+          "shape": "tetrahedron",
+          "dim": "a = 3 cm · t = 4 cm",
+          "volume": "Isi A: 5.2 / 5.2 cm³",
+          "fill": "1"
+        },
+        {
+          "shape": "pentagonal-prism",
+          "dim": "a = 3 cm · t = 4 cm",
+          "volume": "Isi A: 61.94 / 61.94 cm³",
+          "fill": "1"
+        },
+        {
+          "shape": "hexagonal-prism",
+          "dim": "a = 3 cm · t = 4 cm",
+          "volume": "Isi A: 93.53 / 93.53 cm³",
+          "fill": "1"
+        }
+      ]
+    },
+    {
+      "test": "half prism and half triangular pyramid",
+      "state": {
+        "fillA": "0.5",
+        "fillB": "0.5",
+        "joined": "0",
+        "lab": "volume",
+        "pitch": "0.3",
+        "pours": "0",
+        "preset": "cube",
+        "progress": "0",
+        "totalVolume": "10.392304845413268",
+        "units": "0",
+        "valid": "true",
+        "volumeMode": "compare",
+        "yaw": "0.48",
+        "zoom": "1"
+      }
+    },
+    {
+      "test": "actual animation paused between half and full",
+      "state": {
+        "fillA": "0.8220108132957435",
+        "fillB": "0.8220108132957435",
+        "joined": "0",
+        "lab": "volume",
+        "pitch": "0.3",
+        "pours": "0",
+        "preset": "cube",
+        "progress": "0.644021626591487",
+        "totalVolume": "17.085173915990914",
+        "units": "0",
+        "valid": "true",
+        "volumeMode": "compare",
+        "yaw": "0.48",
+        "zoom": "1"
+      }
+    },
+    {
+      "test": "pause retained same fractional content",
+      "state": {
+        "fillA": "0.8220108132957435",
+        "fillB": "0.8220108132957435",
+        "joined": "0",
+        "lab": "volume",
+        "pitch": "0.3",
+        "pours": "0",
+        "preset": "cube",
+        "progress": "0.644021626591487",
+        "totalVolume": "17.085173915990914",
+        "units": "0",
+        "valid": "true",
+        "volumeMode": "compare",
+        "yaw": "0.48",
+        "zoom": "1"
+      }
+    },
+    {
+      "test": "resumed concurrent fill completed",
+      "state": {
+        "fillA": "1",
+        "fillB": "1",
+        "joined": "0",
+        "lab": "volume",
+        "pitch": "0.3",
+        "pours": "0",
+        "preset": "cube",
+        "progress": "1",
+        "totalVolume": "20.784609690826535",
+        "units": "0",
+        "valid": "true",
+        "volumeMode": "compare",
+        "yaw": "0.48",
+        "zoom": "1"
+      }
+    },
+    {
+      "test": "tetrahedron continuous fold paused",
+      "state": {
+        "fillA": "1",
+        "fillB": "1",
+        "joined": "0",
+        "lab": "net",
+        "pitch": "0.3",
+        "pours": "0",
+        "preset": "tetrahedron",
+        "progress": "0.24822697660351564",
+        "totalVolume": "15.588457268119901",
+        "units": "0",
+        "valid": "true",
+        "volumeMode": "compare",
+        "yaw": "0.48",
+        "zoom": "1"
+      }
+    },
+    {
+      "test": "tetrahedron pause holds",
+      "state": {
+        "fillA": "1",
+        "fillB": "1",
+        "joined": "0",
+        "lab": "net",
+        "pitch": "0.3",
+        "pours": "0",
+        "preset": "tetrahedron",
+        "progress": "0.24822697660351564",
+        "totalVolume": "15.588457268119901",
+        "units": "0",
+        "valid": "true",
+        "volumeMode": "compare",
+        "yaw": "0.48",
+        "zoom": "1"
+      }
+    },
+    {
+      "test": "tetrahedron resumed to complete shell",
+      "state": {
+        "fillA": "1",
+        "fillB": "1",
+        "joined": "0",
+        "lab": "net",
+        "pitch": "0.3",
+        "pours": "0",
+        "preset": "tetrahedron",
+        "progress": "1",
+        "totalVolume": "15.588457268119901",
+        "units": "0",
+        "valid": "true",
+        "volumeMode": "compare",
+        "yaw": "0.48",
+        "zoom": "1"
+      },
+      "feedback": "Piramid bertapak segi tiga telah terbentuk. Buka rata untuk menjejaki muka semula."
+    },
+    {
+      "test": "triangular prism fold reaches full shell",
+      "state": {
+        "fillA": "0",
+        "fillB": "0",
+        "joined": "0",
+        "lab": "net",
+        "pitch": "0.3",
+        "pours": "0",
+        "preset": "triangular-prism",
+        "progress": "1",
+        "totalVolume": "0",
+        "units": "0",
+        "valid": "true",
+        "volumeMode": "compare",
+        "yaw": "0.48",
+        "zoom": "1"
+      }
+    },
+    {
+      "test": "pentagonal prism fold reaches complete shell",
+      "state": {
+        "fillA": "0",
+        "fillB": "0",
+        "joined": "0",
+        "lab": "net",
+        "pitch": "0.3",
+        "pours": "0",
+        "preset": "pentagonal-prism",
+        "progress": "1",
+        "totalVolume": "0",
+        "units": "0",
+        "valid": "true",
+        "volumeMode": "compare",
+        "yaw": "0.48",
+        "zoom": "1"
+      }
+    },
+    {
+      "test": "320px all four labs overflow and stage",
+      "readings": [
+        {
+          "width": 320,
+          "kind": "net",
+          "metrics": {
+            "client": 310,
+            "scroll": 310
+          },
+          "stage": {
+            "height": 300,
+            "width": 280
+          }
+        },
+        {
+          "width": 320,
+          "kind": "volume",
+          "metrics": {
+            "client": 310,
+            "scroll": 310
+          },
+          "stage": {
+            "height": 300,
+            "width": 280
+          }
+        },
+        {
+          "width": 320,
+          "kind": "area",
+          "metrics": {
+            "client": 310,
+            "scroll": 310
+          },
+          "stage": {
+            "height": 300,
+            "width": 280
+          }
+        },
+        {
+          "width": 320,
+          "kind": "composite",
+          "metrics": {
+            "client": 310,
+            "scroll": 310
+          },
+          "stage": {
+            "height": 300,
+            "width": 280
+          }
+        }
+      ]
+    },
+    {
+      "test": "hexagonal prism completes",
+      "state": {
+        "fillA": "0",
+        "fillB": "0",
+        "joined": "0",
+        "lab": "net",
+        "pitch": "0.3",
+        "pours": "0",
+        "preset": "hexagonal-prism",
+        "progress": "1",
+        "totalVolume": "0",
+        "units": "0",
+        "valid": "true",
+        "volumeMode": "compare",
+        "yaw": "0.48",
+        "zoom": "1"
+      }
+    },
+    {
+      "test": "hexagonal prism reopens to flat",
+      "state": {
+        "fillA": "0",
+        "fillB": "0",
+        "joined": "0",
+        "lab": "net",
+        "pitch": "0.3",
+        "pours": "0",
+        "preset": "hexagonal-prism",
+        "progress": "0",
+        "totalVolume": "0",
+        "units": "0",
+        "valid": "true",
+        "volumeMode": "compare",
+        "yaw": "0.48",
+        "zoom": "1"
+      }
+    },
+    {
+      "test": "all nine gallery selections full/flat and legends",
+      "readings": [
+        {
+          "key": "cube",
+          "closed": "1",
+          "labels": 6
+        },
+        {
+          "key": "cuboid",
+          "closed": "1",
+          "labels": 6
+        },
+        {
+          "key": "pyramid",
+          "closed": "1",
+          "labels": 5
+        },
+        {
+          "key": "cylinder",
+          "closed": "1",
+          "labels": 3
+        },
+        {
+          "key": "cone",
+          "closed": "1",
+          "labels": 2
+        },
+        {
+          "key": "triangular-prism",
+          "closed": "1",
+          "labels": 5
+        },
+        {
+          "key": "tetrahedron",
+          "closed": "1",
+          "labels": 4
+        },
+        {
+          "key": "pentagonal-prism",
+          "closed": "1",
+          "labels": 7
+        },
+        {
+          "key": "hexagonal-prism",
+          "closed": "1",
+          "labels": 8
+        }
+      ]
+    },
+    {
+      "test": "one solid hexagonal prism, B hidden",
+      "state": {
+        "fillA": "1",
+        "fillB": "0",
+        "joined": "0",
+        "lab": "volume",
+        "pitch": "0.3",
+        "pours": "0",
+        "preset": "hexagonal-prism",
+        "progress": "0",
+        "totalVolume": "93.53074360871938",
+        "units": "0",
+        "valid": "true",
+        "volumeMode": "compare",
+        "yaw": "0.48",
+        "zoom": "1"
+      },
+      "BVisible": false
+    },
+    {
+      "test": "area selection locked before flattening",
+      "enabled": false
+    },
+    {
+      "test": "three transfers current build, no extra pour",
+      "readings": [
+        {
+          "mode": "cone",
+          "num": 1,
+          "result": "1 / 3 tuangan lengkap. Penerima 33.33% penuh."
+        },
+        {
+          "mode": "cone",
+          "num": 2,
+          "result": "2 / 3 tuangan lengkap. Penerima 66.67% penuh."
+        },
+        {
+          "mode": "cone",
+          "num": 3,
+          "result": "3 / 3 tuangan lengkap. Penerima 100% penuh."
+        },
+        {
+          "mode": "pyramid",
+          "num": 1,
+          "result": "1 / 3 tuangan lengkap. Penerima 33.33% penuh."
+        },
+        {
+          "mode": "pyramid",
+          "num": 2,
+          "result": "2 / 3 tuangan lengkap. Penerima 66.67% penuh."
+        },
+        {
+          "mode": "pyramid",
+          "num": 3,
+          "result": "3 / 3 tuangan lengkap. Penerima 100% penuh."
+        }
+      ],
+      "extraEnabled": false
+    },
+    {
+      "test": "area open animation activates selection",
+      "progress": "1",
+      "enabled": true
+    },
+    {
+      "test": "five surface totals and gated full selection",
+      "readings": [
+        {
+          "key": "cube",
+          "total": "Jumlah dipilih = 96 cm²",
+          "formula": "Rumus keseluruhan: L = 6a²"
+        },
+        {
+          "key": "cuboid",
+          "total": "Jumlah dipilih = 108 cm²",
+          "formula": "Rumus keseluruhan: L = 2(pl + pt + lt)"
+        },
+        {
+          "key": "pyramid",
+          "total": "Jumlah dipilih = 96 cm²",
+          "formula": "Rumus keseluruhan: L = a² + 2as"
+        },
+        {
+          "key": "cylinder",
+          "total": "Jumlah dipilih ≈ 747.7 cm²",
+          "formula": "Rumus keseluruhan: L = 2πj² + 2πjt"
+        },
+        {
+          "key": "cone",
+          "total": "Jumlah dipilih ≈ 75.4 cm²",
+          "formula": "Rumus keseluruhan: L = πj² + πjs"
+        }
+      ]
+    },
+    {
+      "test": "exterior selection initially locked",
+      "enabled": false
+    },
+    {
+      "test": "joined cube+pyramid exterior check",
+      "area": "240 cm²",
+      "volume": "264 cm³",
+      "feedback": "Tepat! Kedua-dua permukaan yang bercantum berada di dalam. Jumlahkan permukaan yang terdedah sahaja."
+    },
+    {
+      "test": "unit partial layer completes to 36",
+      "result": "36 / 216 kiub · 1 lapisan penuh daripada 6."
+    },
+    {
+      "test": "unit maximum 216",
+      "result": "216 / 216 kiub · 6 lapisan penuh daripada 6."
+    },
+    {
+      "test": "rocket join current build",
+      "area": "188.5 cm²",
+      "volume": "207.35 cm³",
+      "ready": true
+    },
+    {
+      "test": "390/768 widths all labs",
+      "readings": [
+        {
+          "width": 390,
+          "lab": "net",
+          "metrics": {
+            "client": 380,
+            "scroll": 380
+          }
+        },
+        {
+          "width": 390,
+          "lab": "volume",
+          "metrics": {
+            "client": 380,
+            "scroll": 380
+          }
+        },
+        {
+          "width": 390,
+          "lab": "area",
+          "metrics": {
+            "client": 380,
+            "scroll": 380
+          }
+        },
+        {
+          "width": 390,
+          "lab": "composite",
+          "metrics": {
+            "client": 380,
+            "scroll": 380
+          }
+        },
+        {
+          "width": 768,
+          "lab": "net",
+          "metrics": {
+            "client": 758,
+            "scroll": 758
+          }
+        },
+        {
+          "width": 768,
+          "lab": "volume",
+          "metrics": {
+            "client": 758,
+            "scroll": 758
+          }
+        },
+        {
+          "width": 768,
+          "lab": "area",
+          "metrics": {
+            "client": 758,
+            "scroll": 758
+          }
+        },
+        {
+          "width": 768,
+          "lab": "composite",
+          "metrics": {
+            "client": 758,
+            "scroll": 758
+          }
+        }
+      ]
+    },
+    {
+      "test": "Observation before iframe navigation completed; see next record for reduced-motion verification",
+      "state": {
+        "auto": "false",
+        "learningView": "labs",
+        "mode": "model",
+        "pitch": "0.35",
+        "playing": "false",
+        "progress": "0",
+        "reducedMotion": "false",
+        "shape": "cube",
+        "yaw": "0.6783260000000001",
+        "zoom": "1"
+      },
+      "notAVerification": true
+    },
+    {
+      "test": "reduced-motion dependency after iframe load",
+      "state": {
+        "auto": "false",
+        "learningView": "labs",
+        "mode": "model",
+        "pitch": "0.35",
+        "playing": "false",
+        "progress": "0",
+        "reducedMotion": "true",
+        "shape": "cube",
+        "yaw": "0.55",
+        "zoom": "1"
+      }
+    },
+    {
+      "test": "390px comparison explicit full fill under reduced motion",
+      "state": {
+        "fillA": "1",
+        "fillB": "1",
+        "joined": "0",
+        "lab": "volume",
+        "pitch": "0.3",
+        "pours": "0",
+        "preset": "cube",
+        "progress": "1",
+        "totalVolume": "20.784609690826535",
+        "units": "0",
+        "valid": "true",
+        "volumeMode": "compare",
+        "yaw": "0.48",
+        "zoom": "1"
+      },
+      "metrics": {
+        "client": 380,
+        "scroll": 380
+      }
+    },
+    {
+      "test": "final build two-solids mid-fill paused",
+      "state": {
+        "fillA": "0.8927926037153942",
+        "fillB": "0.8927926037153942",
+        "joined": "1",
+        "lab": "volume",
+        "pitch": "0.3",
+        "pours": "0",
+        "preset": "hexagonal-prism",
+        "progress": "0.7855852074307884",
+        "totalVolume": "18.556345803081236",
+        "units": "0",
+        "valid": "true",
+        "volumeMode": "compare",
+        "yaw": "0.48",
+        "zoom": "1"
+      }
+    },
+    {
+      "test": "final build pause stable after independent read",
+      "state": {
+        "fillA": "0.8927926037153942",
+        "fillB": "0.8927926037153942",
+        "joined": "1",
+        "lab": "volume",
+        "pitch": "0.3",
+        "pours": "0",
+        "preset": "hexagonal-prism",
+        "progress": "0.7855852074307884",
+        "totalVolume": "18.556345803081236",
+        "units": "0",
+        "valid": "true",
+        "volumeMode": "compare",
+        "yaw": "0.48",
+        "zoom": "1"
+      }
+    }
+  ],
+  "logs": {
+    "main": [],
+    "workbench": []
+  },
+  "finalHtmlBytes": 195645,
+  "finalHtmlSha256": "9eeae3d2a205dd4d765a99e967b4bd8464701afe9de99658c6858bb238d9dad2",
+  "screenshots": [
+    {
+      "file": "screenshots/pace-v1-3-volume-single.jpg",
+      "bytes": 83763,
+      "sha256": "ca140b436204c740ecc6622a8472ea04bf1f54a57476c953cd0b6cd6e85f52bd",
+      "size": [
+        1353,
+        929
+      ],
+      "method": "Actual unedited Chrome screenshot via browser API"
+    },
+    {
+      "file": "screenshots/pace-v1-3-volume-both-steady.jpg",
+      "bytes": 81824,
+      "sha256": "c63a1dd1c96332a804d8b3fd0a40c28fc27a6d5a30c45a03beaf51318c841743",
+      "size": [
+        1353,
+        929
+      ],
+      "method": "Actual unedited Chrome screenshot via browser API"
+    },
+    {
+      "file": "screenshots/pace-v1-3-hexagonal-net-flat.jpg",
+      "bytes": 99772,
+      "sha256": "cf88dc179e40216654cd23741a384ea3d9d38f06315dedba3e575a3daa505516",
+      "size": [
+        1353,
+        929
+      ],
+      "method": "Actual unedited Chrome screenshot via browser API"
+    },
+    {
+      "file": "screenshots/pace-v1-3-phone-final.jpg",
+      "bytes": 54384,
+      "sha256": "43b778501ddf6c6b75258d99e3e2f3c978e68c6ec1c2f1801c6ad4e46cb44cfe",
+      "size": [
+        1348,
+        926
+      ],
+      "method": "Actual unedited Chrome screenshot via browser API"
+    }
+  ]
+}

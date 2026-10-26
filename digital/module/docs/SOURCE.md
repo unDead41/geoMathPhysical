@@ -70,3 +70,29 @@ Semua perubahan kekal di digital/module/. Main/sharing/digitalize tidak diubah.
 
 Semakan sebelum push: digitalize bergerak kepada b0000bf8f9b969c5596f75e3af70c8dfc3fc1631 sementara kerja makmal berjalan. Branch modul masih pada asas 92c12c3a07ec250c03a73decaf52a654fc26d502 dan disambung tanpa mengubah branch permainan.
 Versi digitalize pada semakan b0000bf8f9b969c5596f75e3af70c8dfc3fc1631 ialah v2.1.0, disahkan daripada core.mjs.
+
+## Sambungan tempo, bentangan siap dan isi padu v1.3.0 — 26 Oktober 2026
+
+Branch sedia ada disambung pada **931a0150397bfb3fd79ef3c8da6684167d1c6aad**,
+tree **c1ced5c619397170a5bf7e0f601f6bbafed1a52f** (modul v1.2.0).
+Ref berkaitan difetch melalui GitHub connector sebelum perubahan:
+
+- main: a059979d97926b82cafd4aa5cf3fe59da04a55bb, firmware v1.1.3.
+- sharing: 01b549a26861ef5f093d4c2c630700de37008d6b, firmware v1.1.3.
+- digitalize: 01696af497cd7fca8e299f9c1b8a6407333ce276, permainan v2.3.0,
+  disahkan daripada digital/dist/core.mjs pada SHA itu.
+- digitalize-module: 931a0150397bfb3fd79ef3c8da6684167d1c6aad, modul v1.2.0.
+
+Perubahan meneruskan branch dan worktree sendiri. Rujukan digitalize terkini
+bukan asas baharu dan perubahan kuiz/backendnya tidak diimport. Lima Shape ID
+projek kekal. Bentuk pengayaan hanya dalam galeri/makmal, tidak masuk bank soalan.
+SemVer modul naik MINOR kepada v1.3.0 kerana fungsi baharu serasi. Sumber versi
+kekal src/content.mjs, diselaraskan dengan package, badge, README dan CHANGELOG.
+Tiada perubahan firmware atau nombor saluran permainan. Semua fail kemas kini
+terhad kepada digital/module/; push menggunakan expected head branch modul.
+
+Semakan sebelum penerbitan: digitalize bergerak lagi kepada
+adc51627eaaace5d9543c7e033d2994986c8715d. core.mjs pada SHA itu masih v2.3.0
+(blob 74abef3da499bdafe1cd19cca04b1aab74357dc4). Main dan sharing kekal pada
+SHA di atas; head module yang dijadikan expected-head masih 931a0150397bfb3fd79ef3c8da6684167d1c6aad.
+Tiada perubahan branch permainan diserap ke dalam kemas kini modul ini.

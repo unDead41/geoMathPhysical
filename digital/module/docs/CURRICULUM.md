@@ -7,10 +7,10 @@ semula. Tidak mendakwa modul diluluskan KPM atau meliputi keseluruhan DSKP.
 | Rujukan | Aktiviti modul | Batas skop |
 |---|---|---|
 | Tingkatan 2, SP 6.1.1, muka surat cetak 52 / PDF 64 | Putar lima bongkah; banding permukaan rata/melengkung, rusuk dan bucu | Hanya bongkah tegak dalam projek; tidak meliputi prisma lain atau sfera |
-| Tingkatan 2, SP 6.2.1, halaman sama | Buka, jeda, jejaki muka, cantum; kenal sektor kon dan segi empat tepat silinder | Satu bentangan sah setiap bongkah; belum melukis sendiri atau meneroka semua bentangan |
+| Tingkatan 2, SP 6.2.1, halaman sama | Buka, jeda, jejaki muka, cantum; kenal sektor kon dan segi empat tepat silinder | Galeri sembilan bentuk dan editor kubus; belum melukis semua jenis bentangan |
 | Tingkatan 2, SP 6.3.1, muka surat cetak 52 / PDF 64 | Nota menghubungkan luas setiap bahagian bentangan dengan rumus luas permukaan; lima contoh berpandu dan pengiraan ukuran | Bongkah tegak tertutup; bukan derivasi semua jenis prisma |
 | Tingkatan 2, SP 6.3.3, muka surat cetak 53 / PDF 65 | Kotak kubus berbumbung piramid: abaikan kedua-dua muka yang bercantum; penukaran unit persegi | Satu contoh asal; belum merangkumi semua jenis masalah gabungan |
-| Tingkatan 2, SP 6.4.1–6.4.2, muka surat cetak 53 / PDF 65 | Nota luas tapak × tinggi, hubungan satu pertiga piramid/kon dengan prisma/silinder, contoh berpandu dan aktiviti mengubah ukuran | Hubungan diterangkan; tiada simulasi menuang atau pembuktian penuh rumus |
+| Tingkatan 2, SP 6.4.1–6.4.2, muka surat cetak 53 / PDF 65 | Nota luas tapak × tinggi, hubungan satu pertiga piramid/kon dengan prisma/silinder, contoh berpandu dan aktiviti mengubah ukuran | Simulasi tiga tuangan ideal; bukan eksperimen fizikal atau pembuktian penuh rumus |
 | Tingkatan 2, SP 6.4.3, halaman sama | Contoh tambah isi padu kubus dan piramid, cm³ kepada mL/L, panduan cm³/m³ | Masalah dan unit terpilih; tiada pentaksiran TP |
 | Tingkatan 3, SP 7.1.1–7.1.2, muka surat cetak 58 | Enam arah kamera ortografik dan perbandingan unjuran dengan objek | Pengayaan pengenalan; bukan latihan lukisan formal atau penskoran TP |
 
@@ -62,3 +62,19 @@ ialah topik DSKP Tingkatan 2; jangan menamakannya standard Tingkatan 1.
 - SP 6.3.3 dan 6.4.3: gabungan penuh kubus+piramid serta silinder+kon; dua muka
   bersama dikecualikan untuk luas luar dan dua isi padu ditambah. Aktiviti tidak
   meliputi semua masalah gabungan atau semua standard Bab 6.
+
+## Bentangan siap dan isi pilihan v1.3.0
+
+- SP 6.2.1 disokong oleh sembilan contoh bentangan sah. Lima bongkah projek kekal;
+  pengayaan menambah prisma tegak bertapak segi tiga/segi lima/segi enam sekata dan
+  piramid tegak bertapak segi tiga sama sisi (4 muka segi tiga, 6 rusuk, 4 bucu).
+  Murid boleh memilih muka, melipat, membuka, menjeda dan menjejak sambungan.
+  Editor bina sendiri kekal untuk kubus sahaja; ini bukan pembina poligon bebas.
+- SP 6.4.1–6.4.3 disokong oleh isi satu/dua bekas, ukuran bebas bagi A/B,
+  penambahan 1 cm³ dan jumlah isi yang dipilih. Prisma tambahan menggunakan
+  V = luas tapak × t; piramid segi tiga menggunakan V = ⅓ × luas tapak × t.
+  Luas tapak poligon sekata dikira analitik daripada sisi, tidak didakwa rumus
+  wajib yang telah dipelajari semua murid. Tidak meliputi sfera.
+- Bezakan peratus isi daripada peratus tinggi. Pada piramid/kon, 50% isi tidak
+  menghasilkan 50% tinggi. Ukuran/isi sebenar dan kapasiti kosong dipaparkan
+  berasingan, dengan unit cm³. Tiada markah atau tuntutan tahap penguasaan.

@@ -2,6 +2,19 @@
 
 Versi modul berasingan daripada permainan Digital dan firmware ESP32.
 
+## v1.3.0 — 26 Oktober 2026
+
+- Perlahan keempat-empat makmal: lalai 0.5×, pilihan 0.25×/1×, satu Jeda/Sambung,
+  langkah aktiviti dan keadaan yang jelas. Pilihan luas/muka luar mengikut urutan.
+- Tambah sembilan bentangan siap yang sah, termasuk prisma segi tiga/segi lima/
+  segi enam dan piramid bertapak segi tiga. Editor kubus kekal pilihan berasingan.
+- Tambah isi satu/dua bongkah, sembilan bentuk, ukuran A/B berasingan,
+  +1 cm³/penuhkan pada A, B atau kedua-duanya, peluncur isi dan jumlah A/B pilihan.
+- Kiub unit melengkapkan lapisan semasa secara beransur; tuangan dijeda boleh
+  disambung dari tempat yang sama. Gerakan tidak menyambung sendiri selepas keluar.
+- Geometri poligon, engsel, bentangan rata, isi mesh sebenar dan kitar hayat HTML
+  keluaran diperiksa. Butiran ujian dan batas sebenar: docs/LABS_V1_3.md.
+
 ## v1.2.0 — 26 Oktober 2026
 
 - Tambah empat Makmal interaktif: bina bentangan kubus sendiri, kiub unit dan

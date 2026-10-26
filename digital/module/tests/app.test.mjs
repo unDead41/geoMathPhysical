@@ -97,27 +97,27 @@ test('lab navigation stops exploration motion and hides the unrelated shape pick
  const a=app(false);a.click('learn-labs');assert.equal(a.nodes['labs-panel'].hidden,false);assert.equal(a.nodes['shape-picker'].hidden,true);assert.equal(a.state().auto,'false');assert.equal(a.pending(),0);a.click('learn-explore');a.tick();assert.equal(a.nodes['shape-picker'].hidden,false);assert.equal(a.pending(),0);
 });
 test('cube builder folds a valid layout, shows overlap and handles an empty grid',()=>{
- const a=app();a.click('learn-labs');a.click('net-fold');a.advance(5000);assert.equal(a.nodes['labs-canvas'].dataset.progress,'1');assert.equal(a.nodes['labs-canvas'].dataset.valid,'true');
- a.nodes['net-example'].value='overlap';a.nodes['net-example'].emit('change');a.click('net-fold');a.advance(5000);assert.equal(a.nodes['labs-canvas'].dataset.valid,'false');assert.match(a.nodes['net-feedback'].textContent,/bertindih/);
+ const a=app();a.click('learn-labs');a.click('net-mode-editor');a.click('net-fold');a.advance(8500);assert.equal(a.nodes['labs-canvas'].dataset.progress,'1');assert.equal(a.nodes['labs-canvas'].dataset.valid,'true');
+ a.nodes['net-example'].value='overlap';a.nodes['net-example'].emit('change');a.click('net-fold');a.advance(8500);assert.equal(a.nodes['labs-canvas'].dataset.valid,'false');assert.match(a.nodes['net-feedback'].textContent,/bertindih/);
  a.click('net-clear');assert.equal(a.nodes['net-fold'].disabled,true);assert.match(a.nodes['net-count'].textContent,/0/);
 });
 test('builder directional alternative moves a chosen face without adding or losing squares',()=>{
- const a=app();a.click('learn-labs');a.click('net-left');assert.equal(a.nodes['net-count'].textContent,'6 / 6 muka');assert.equal(a.nodes['net-grid'].children.find(n=>n.dataset.cell==='0,0').getAttribute('aria-pressed'),'true');
+ const a=app();a.click('learn-labs');a.click('net-mode-editor');a.click('net-left');assert.equal(a.nodes['net-count'].textContent,'6 / 6 muka');assert.equal(a.nodes['net-grid'].children.find(n=>n.dataset.cell==='0,0').getAttribute('aria-pressed'),'true');
 });
 test('unit-volume lab adds cubes, layers and fills exactly the displayed capacity',()=>{
- const a=app();a.click('learn-labs');a.click('lab-volume');a.click('unit-layer');assert.equal(a.nodes['labs-canvas'].dataset.units,'6');a.click('unit-one');assert.equal(a.nodes['labs-canvas'].dataset.units,'7');a.click('unit-fill');assert.equal(a.nodes['labs-canvas'].dataset.units,'18');a.click('unit-empty');assert.equal(a.nodes['labs-canvas'].dataset.units,'0');
+ const a=app();a.click('learn-labs');a.click('lab-volume');a.nodes['volume-kind'].value='unit';a.nodes['volume-kind'].emit('change');a.click('unit-layer');a.advance(1400);assert.equal(a.nodes['labs-canvas'].dataset.units,'6');a.click('unit-one');assert.equal(a.nodes['labs-canvas'].dataset.units,'7');a.click('unit-fill');a.advance(4500);assert.equal(a.nodes['labs-canvas'].dataset.units,'18');a.click('unit-empty');assert.equal(a.nodes['labs-canvas'].dataset.units,'0');
 });
 test('three explicit transfers fill the matching receiver, with refill and a bounded final state',()=>{
  const a=app();a.click('learn-labs');a.click('lab-volume');a.nodes['volume-kind'].value='cone';a.nodes['volume-kind'].emit('change');
- for(let n=1;n<=3;n++){a.click('pour-one');a.advance(3500);assert.equal(a.nodes['labs-canvas'].dataset.pours,String(n));if(n<3)a.click('pour-refill');}
+ for(let n=1;n<=3;n++){a.click('pour-one');a.advance(6000);assert.equal(a.nodes['labs-canvas'].dataset.pours,String(n));if(n<3)a.click('pour-refill');}
  assert.equal(a.nodes['pour-one'].disabled,true);assert.match(a.nodes['pour-result'].textContent,/3.*3/);a.click('pour-reset');assert.equal(a.nodes['labs-canvas'].dataset.pours,'0');
 });
 test('surface lab derives the total only after all real surfaces are selected',()=>{
- const a=app();a.click('learn-labs');a.click('lab-area');assert.match(a.nodes['area-count'].textContent,/0.*6/);a.click('area-all');assert.match(a.nodes['area-count'].textContent,/6.*6/);assert.match(a.nodes['area-total'].textContent,/96/);
- a.nodes['area-shape'].value='cylinder';a.nodes['area-shape'].emit('change');assert.match(a.nodes['area-count'].textContent,/0.*3/);a.click('area-all');assert.match(a.nodes['area-total'].textContent,/747.7/);
+ const a=app();a.click('learn-labs');a.click('lab-area');assert.match(a.nodes['area-count'].textContent,/0.*6/);a.click('area-open');a.advance(8500);a.click('area-all');assert.match(a.nodes['area-count'].textContent,/6.*6/);assert.match(a.nodes['area-total'].textContent,/96/);
+ a.nodes['area-shape'].value='cylinder';a.nodes['area-shape'].emit('change');assert.match(a.nodes['area-count'].textContent,/0.*3/);a.click('area-open');a.advance(8500);a.click('area-all');assert.match(a.nodes['area-total'].textContent,/747.7/);
 });
 test('composite lab checks exposed groups and excludes joined faces',()=>{
- const a=app();a.click('learn-labs');a.click('lab-composite');a.click('comp-join');a.advance(2400);assert.equal(a.nodes['labs-canvas'].dataset.joined,'1');assert.match(a.nodes['comp-area'].textContent,/240/);assert.match(a.nodes['comp-volume'].textContent,/264/);
+ const a=app();a.click('learn-labs');a.click('lab-composite');a.click('comp-join');a.advance(3600);assert.equal(a.nodes['labs-canvas'].dataset.joined,'1');assert.match(a.nodes['comp-area'].textContent,/240/);assert.match(a.nodes['comp-volume'].textContent,/264/);
  for(const key of ['side','bottom','roofSide'])a.nodes['comp-groups'].children.find(n=>n.dataset.group===key).emit('click');a.click('comp-check');assert.match(a.nodes['comp-feedback'].textContent,/Tepat/);
  a.nodes['comp-groups'].children.find(n=>n.dataset.group==='joinLower').emit('click');a.click('comp-check');assert.match(a.nodes['comp-feedback'].textContent,/bercantum/);
 });
@@ -125,14 +125,59 @@ test('switching lab, opening notes and hiding the page cancel pending lab frames
  const a=app();a.click('learn-labs');a.click('net-fold');a.advance(1000);assert.ok(a.pending()>0);a.click('lab-volume');assert.equal(a.pending(),0);a.click('lab-area');a.click('area-open');a.advance(1000);a.click('learn-notes');assert.equal(a.pending(),0);a.click('learn-labs');a.click('area-open');a.advance(300);a.doc.hidden=true;a.doc.events.visibilitychange();assert.equal(a.pending(),0);a.doc.hidden=false;a.doc.events.visibilitychange();assert.equal(a.pending(),0);
 });
 test('lab pause holds progress, resume reaches its target and reduced-motion changes stop motion',()=>{
- const a=app();a.click('learn-labs');a.click('net-fold');a.advance(1100);a.click('lab-pause');const before=a.nodes['labs-canvas'].dataset.progress;a.advance(1500);assert.equal(a.nodes['labs-canvas'].dataset.progress,before);a.click('lab-pause');a.advance(5000);assert.equal(a.nodes['labs-canvas'].dataset.progress,'1');a.click('net-flat');a.advance(500);a.media.change();assert.equal(a.pending(),0);
+ const a=app();a.click('learn-labs');a.click('net-fold');a.advance(1100);a.click('lab-pause');const before=a.nodes['labs-canvas'].dataset.progress;a.advance(1500);assert.equal(a.nodes['labs-canvas'].dataset.progress,before);a.click('lab-pause');a.advance(8500);assert.equal(a.nodes['labs-canvas'].dataset.progress,'1');a.click('net-flat');a.advance(500);a.media.change();assert.equal(a.pending(),0);
 });
-test('editing a grid cell keeps keyboard focus on the replacement cell',()=>{const a=app();a.click('learn-labs');a.nodes['net-grid'].children.find(n=>n.dataset.cell==='5,5').emit('click');a.click('net-clear');a.nodes['net-grid'].children.find(n=>n.dataset.cell==='0,0').emit('click');assert.equal(a.nodes['net-grid'].children.find(n=>n.dataset.cell==='0,0').focused,true);});
-test('toggling surface and composite buttons preserves their keyboard focus',()=>{const a=app();a.click('learn-labs');a.click('lab-area');a.nodes['area-pieces'].children[0].emit('click');assert.equal(a.nodes['area-pieces'].children[0].focused,true);a.click('lab-composite');a.nodes['comp-groups'].children[0].emit('click');assert.equal(a.nodes['comp-groups'].children[0].focused,true);});
+test('editing a grid cell keeps keyboard focus on the replacement cell',()=>{const a=app();a.click('learn-labs');a.click('net-mode-editor');a.nodes['net-grid'].children.find(n=>n.dataset.cell==='5,5').emit('click');a.click('net-clear');a.nodes['net-grid'].children.find(n=>n.dataset.cell==='0,0').emit('click');assert.equal(a.nodes['net-grid'].children.find(n=>n.dataset.cell==='0,0').focused,true);});
+test('toggling surface and composite buttons preserves their keyboard focus',()=>{const a=app();a.click('learn-labs');a.click('lab-area');a.click('area-open');a.advance(8500);a.nodes['area-pieces'].children[0].emit('click');assert.equal(a.nodes['area-pieces'].children[0].focused,true);a.click('lab-composite');a.click('comp-join');a.advance(3600);a.nodes['comp-groups'].children[0].emit('click');assert.equal(a.nodes['comp-groups'].children[0].focused,true);});
 test('every literal action button has a real shipped-script binding after lazy sections are opened',()=>{
  const a=app();a.click('learn-notes');a.click('learn-labs');const html=fs.readFileSync(new URL('../src/index.html',import.meta.url),'utf8');
  for(const m of html.matchAll(/<button\b([^>]*)>/g)){const attrs=m[1],id=attrs.match(/\bid="([^"]+)"/)?.[1];if(!id||/type="submit"/.test(attrs))continue;assert.ok(a.nodes[id].events.click?.length>0,id+' has no action binding');}
 });
 test('direct lab slider input keeps the new user value before cancelling playback',()=>{
  const a=app();a.click('learn-labs');for(const [kind,action,value] of [['net','net-fold','370'],['area','area-open','620'],['composite','comp-join','110']]){a.click('lab-'+kind);a.click(action);a.advance(700);a.nodes['lab-progress'].value=value;a.nodes['lab-progress'].emit('input');assert.equal(Number(a.nodes['labs-canvas'].dataset.progress),Number(value)/1000,kind+' slider was overwritten');assert.equal(a.pending(),0);assert.equal(a.nodes['lab-progress'].value,value);}
+});
+test('labs start with slow pacing and a ready-made net gallery',()=>{
+ const a=app();a.click('learn-labs');assert.equal(a.nodes['lab-speed'].value,'0.5');assert.equal(a.nodes['net-editor-panel'].hidden,true);assert.equal(a.nodes['net-preset-panel'].hidden,false);a.click('net-fold');a.advance(4000);const p=Number(a.nodes['labs-canvas'].dataset.progress);assert.ok(p>.4&&p<.6);a.advance(4500);assert.equal(a.nodes['labs-canvas'].dataset.progress,'1');
+});
+test('all nine ready-made nets can be selected, folded and reset independently of cube editing',()=>{
+ const a=app();a.click('learn-labs');for(const key of ['cube','cuboid','pyramid','cylinder','cone','triangular-prism','tetrahedron','pentagonal-prism','hexagonal-prism']){a.nodes['net-preset'].value=key;a.nodes['net-preset'].emit('change');assert.equal(a.nodes['labs-canvas'].dataset.preset,key);assert.equal(a.nodes['labs-canvas'].dataset.progress,'0');a.click('net-fold');a.advance(8500);assert.equal(a.nodes['labs-canvas'].dataset.progress,'1');assert.ok(a.nodes['net-preset-summary'].textContent.length>15);}
+ a.click('net-mode-editor');assert.equal(a.nodes['net-editor-panel'].hidden,false);assert.equal(a.nodes['labs-canvas'].dataset.progress,'0');
+});
+test('speed changes preserve pose and progress sliders retain direction-specific labels',()=>{
+ const a=app();a.click('learn-labs');a.click('net-fold');a.advance(2000);const p=a.nodes['labs-canvas'].dataset.progress;a.nodes['lab-speed'].value='0.25';a.nodes['lab-speed'].emit('change');assert.equal(a.nodes['labs-canvas'].dataset.progress,p);a.advance(1000);assert.ok(Number(a.nodes['labs-canvas'].dataset.progress)>Number(p));a.advance(20000);assert.equal(a.nodes['labs-canvas'].dataset.progress,'1');assert.match(a.nodes['lab-progress-value'].textContent,/dilipat/);
+});
+test('completing a unit layer fills the current partial layer slowly without skipping cubes',()=>{
+ const a=app();a.click('learn-labs');a.click('lab-volume');a.nodes['volume-kind'].value='unit';a.nodes['volume-kind'].emit('change');a.click('unit-one');a.click('unit-layer');assert.equal(a.nodes['labs-canvas'].dataset.units,'1');a.advance(400);assert.ok(Number(a.nodes['labs-canvas'].dataset.units)<6);a.advance(1200);assert.equal(a.nodes['labs-canvas'].dataset.units,'6');assert.match(a.nodes['lab-next-step'].textContent,/lapisan|kiub|Penuhkan/i);
+});
+test('guidance gates surface selection and exterior checks until the model is ready',()=>{
+ const a=app();a.click('learn-labs');a.click('lab-area');assert.equal(a.nodes['area-all'].disabled,true);assert.equal(a.nodes['area-pieces'].children[0].disabled,true);assert.match(a.nodes['lab-next-step'].textContent,/Buka/);a.click('area-open');a.advance(8500);assert.equal(a.nodes['area-all'].disabled,false);a.click('area-all');assert.match(a.nodes['lab-next-step'].textContent,/rumus|lengkap/i);
+ a.click('lab-composite');assert.equal(a.nodes['comp-check'].disabled,true);assert.equal(a.nodes['comp-groups'].children[0].disabled,true);a.click('comp-join');a.advance(3600);assert.equal(a.nodes['comp-groups'].children[0].disabled,false);
+});
+test('paused transfers have one resume control and survive leaving and returning to the lab',()=>{
+ const a=app();a.click('learn-labs');a.click('lab-volume');a.nodes['volume-kind'].value='cone';a.nodes['volume-kind'].emit('change');a.click('pour-one');a.advance(1700);a.click('lab-pause');const before=a.nodes['labs-canvas'].dataset.progress;assert.equal(a.nodes['pour-one'].disabled,true);assert.match(a.nodes['lab-pause'].textContent,/Sambung tuangan/);a.click('lab-area');a.click('lab-volume');assert.equal(a.nodes['labs-canvas'].dataset.progress,before);assert.match(a.nodes['lab-pause'].textContent,/Sambung tuangan/);a.click('lab-pause');a.advance(6000);assert.equal(a.nodes['labs-canvas'].dataset.pours,'1');
+});
+test('cube editing is locked while partially folded and restored after reopening flat',()=>{
+ const a=app();a.click('learn-labs');a.click('net-mode-editor');a.click('net-fold');a.advance(2000);assert.equal(a.nodes['net-grid'].children[0].disabled,true);assert.match(a.nodes['net-edit-note'].textContent,/rata/);a.click('net-flat');a.advance(8500);assert.equal(a.nodes['net-grid'].children[0].disabled,false);
+});
+test('volume comparison adds one cubic centimetre to one or both solids and sums selected contents',()=>{
+ const a=app();a.click('learn-labs');a.click('lab-volume');assert.equal(a.nodes['volume-kind'].value,'compare');a.click('compare-add-a');a.advance(3000);assert.ok(Math.abs(Number(a.nodes['labs-canvas'].dataset.totalVolume)-1)<1e-8);assert.equal(a.nodes['labs-canvas'].dataset.fillB,'0');a.click('compare-add-both');a.advance(3000);assert.ok(Math.abs(Number(a.nodes['labs-canvas'].dataset.totalVolume)-3)<1e-8);a.nodes['compare-include-a'].checked=false;a.nodes['compare-include-a'].emit('change');assert.ok(Math.abs(Number(a.nodes['labs-canvas'].dataset.totalVolume)-1)<1e-8);
+ a.nodes['compare-count'].value='1';a.nodes['compare-count'].emit('change');assert.equal(a.nodes['compare-card-b'].hidden,true);assert.ok(Math.abs(Number(a.nodes['labs-canvas'].dataset.totalVolume)-2)<1e-8);
+});
+test('comparison supports nine solids, direct contents control and capacity-safe full filling',()=>{
+ const a=app();a.click('learn-labs');a.click('lab-volume');for(const key of ['cube','cuboid','pyramid','cone','cylinder','triangular-prism','tetrahedron','pentagonal-prism','hexagonal-prism']){a.nodes['compare-shape-a'].value=key;a.nodes['compare-shape-a'].emit('change');assert.match(a.nodes['compare-total'].textContent,/0/);a.nodes['compare-fill-a'].value='500';a.nodes['compare-fill-a'].emit('input');assert.equal(a.nodes['labs-canvas'].dataset.fillA,'0.5');}a.click('compare-full-both');a.advance(6000);assert.equal(a.nodes['labs-canvas'].dataset.fillA,'1');assert.equal(a.nodes['labs-canvas'].dataset.fillB,'1');a.click('compare-empty');assert.equal(a.nodes['labs-canvas'].dataset.fillA,'0');
+});
+
+test('ready-made face tracking keeps keyboard focus after updating its highlight',()=>{
+ const a=app();a.click('learn-labs');a.nodes['net-preset-faces'].children[2].emit('click');assert.equal(a.nodes['net-preset-faces'].children[2].focused,true);assert.equal(a.nodes['net-preset-faces'].children[2].getAttribute('aria-pressed'),'true');
+});
+test('comparison resume preserves both captured destinations and supports a direct override',()=>{
+ const a=app();a.click('learn-labs');a.click('lab-volume');a.click('compare-full-both');a.advance(1200);a.click('lab-pause');const before=a.nodes['labs-canvas'].dataset.fillA;a.advance(2000);assert.equal(a.nodes['labs-canvas'].dataset.fillA,before);a.nodes['lab-speed'].value='0.25';a.nodes['lab-speed'].emit('change');a.click('lab-pause');a.advance(14000);assert.equal(a.nodes['labs-canvas'].dataset.fillA,'1');assert.equal(a.nodes['labs-canvas'].dataset.fillB,'1');assert.equal(a.pending(),0);
+ a.click('compare-empty');a.click('compare-full-a');a.advance(800);a.nodes['compare-fill-a'].value='120';a.nodes['compare-fill-a'].emit('input');a.advance(15000);assert.equal(a.nodes['labs-canvas'].dataset.fillA,'0.12');assert.equal(a.pending(),0);
+});
+test('tiny positive contents stay visible and have a unit-aware accessible slider value',()=>{
+ const a=app();a.click('learn-labs');a.click('lab-volume');a.nodes['compare-a-a'].value='1';a.nodes['compare-a-a'].emit('input');a.nodes['compare-fill-a'].value='1';a.nodes['compare-fill-a'].emit('input');assert.match(a.nodes['compare-volume-a'].textContent,/< 0.01/);assert.match(a.nodes['compare-fill-a'].getAttribute('aria-valuetext'),/isi padu.*cm³/);assert.match(a.nodes['lab-outcome'].textContent,/Jumlah isi/);
+});
+
+test('valid ready-made layouts use neutral instructions before closing, never an error colour',()=>{
+ const a=app();a.click('learn-labs');assert.notEqual(a.nodes['net-feedback'].dataset.success,'false');a.click('net-fold');a.advance(1200);assert.match(a.nodes['net-feedback'].textContent,/sedang|Perhatikan/i);a.click('lab-pause');assert.match(a.nodes['net-feedback'].textContent,/dijeda/i);a.click('lab-pause');a.advance(8500);assert.equal(a.nodes['net-feedback'].dataset.success,'true');
 });

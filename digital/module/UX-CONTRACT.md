@@ -87,3 +87,26 @@ All quantities are in cm/cm²/cm³. Lab circular values use Math.PI; notes retai
 their independent selectable π convention. Display rounds only after calculation.
 Wrong exterior choices produce explanation and allow retry, with no score or data
 collection. Shapes/dimensions change the lab mesh only; quiz/model defaults remain.
+
+## Tempo, galeri dan isi pilihan (v1.3.0)
+
+LearningLabs owns all four lab timelines with speeds 0.25/0.5/1 (default 0.5).
+Pause/resume retains the destination, including a partial pour or A/B fill.
+A lab change suspends the old lab; returning requires Resume. Explicit size,
+shape, editor or direct slider changes cancel that timeline. Speed changes
+retain the current pose and recompute the remaining duration. There is at
+most one pending rAF. Reduced motion/background never resumes automatically.
+
+The ready-made gallery in preset-nets.mjs has nine valid layouts; existing
+MODEL_ORDER and quiz IDs remain the five project shapes. Face chips restore
+keyboard focus after highlight changes. Cube cells lock while folded; opening
+flat restores editing. Surface buttons and exterior checks expose their next
+step before activation, so selection is made on a ready model.
+
+Volume-lab.mjs owns nine shape capacities and actual filled meshes. Users choose
+one/two solids, edit each size, add at most 1 cm³ per chosen solid or fill it,
+and include A/B independently in the sum. A+B adds up to 2 cm³ in total.
+The fill range is a volume fraction, never a height fraction for pyramids/cones.
+Changing one shape/size clears that solid only. Direct ranges cancel animation
+and keep the newly read value. All calculations use unrounded quantities; tiny
+positive results show < 0.01 instead of zero. Circular values use Math.PI.

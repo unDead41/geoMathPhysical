@@ -1,0 +1,6 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> geodecoder-module@1.3.0 check
+> node tools/check.mjs
+
+PASS: standalone syntax, no runtime network/storage/dependencies, IDs, reduced motion, version, event lifecycle and design tokens

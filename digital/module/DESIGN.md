@@ -122,3 +122,20 @@ scene fits projected extents uniformly, making two-container comparisons legible
 without distorting dimensions. Model focus moves into view on explicit playback.
 Native arrows/select provide alternatives to grid drag and 3D orbit. New focus
 is restored when a chosen cell/surface is rebuilt.
+
+## Tempo dan perbandingan v1.3.0
+
+Keep the model the visual anchor. Put speed, motion state and the single
+Pause/Resume control immediately above the canvas. A compact numbered guide
+shows the next meaningful action; surface selection waits for the flat net,
+and exterior checking waits for the complete join. No surprise auto-resume.
+
+Nine ready-made nets use the same native select and face chips. Cube editing
+is a separate labelled choice; editing locks until the layout is flat. Face
+identity stays coloured and numbered. Extra prisms use regular polygon bases.
+
+Volume comparison uses A mint / B blue, with text naming their left/right
+positions, independent measurement details and labelled percentage ranges.
+The stage outcome also shows both current volumes and the selected total, so
+students see the result while watching a fill. One-solid mode hides B controls.
+Amount, fill height and empty capacity must remain explicitly distinguishable.

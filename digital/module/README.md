@@ -1,6 +1,6 @@
 # Modul Pembelajaran GeoDecoder Digital V1
 
-Versi modul: **v1.2.0**. Branch kerja: **digitalize-module**.
+Versi modul: **v1.3.0**. Branch kerja: **digitalize-module**.
 
 ## Cuba terus
 
@@ -35,33 +35,43 @@ untuk bergerak semula. Reduced motion mematikan putaran awal dan peralihan kamer
 animasi pendidikan hanya dimainkan selepas arahan Main/Buka/Cantum daripada murid.
 Peluncur sentiasa membolehkan pemerhatian bingkai demi bingkai.
 
-## Makmal interaktif v1.2.0
+## Makmal interaktif v1.3.0
 
 Pilih **Makmal interaktif**, kemudian pilih aktiviti 01–04:
 
-1. **Bina bentangan:** grid 6 × 6, tepat enam muka kubus. Tekan petak, seret muka,
-   atau pilih muka dan gunakan butang arah. Lipat/buka, jeda/sambung dan peluncur
-   memaparkan muka yang tegar. Mesej membezakan tidak cukup muka, sambungan
-   terputus dan pertindihan. Susunan dengan sambungan berlebihan menandakan
-   potongan tambahan dengan garis putus-putus dalam pratonton.
-2. **Isi padu:** susun kiub unit, tambah satu lapisan atau penuhkan kuboid.
-   Ukuran integer 1–6 cm (maksimum 216 kiub). Pilih kon/piramid untuk tiga
-   pemindahan isi kepada silinder/prisma yang mempunyai tapak dan tinggi sama.
-   Isi semula sumber antara tuangan. Ukuran perbandingan 1–8 cm.
-3. **Terbitkan rumus:** semua lima bongkah, ukuran 1–10 cm, bentangan berukuran
-   sebenar, pemilihan setiap permukaan dan jumlah luas. Rumus muncul selepas
-   semua permukaan dipilih. Bulatan menggunakan nilai π penuh, ditandai anggaran
-   pada paparan; pengiraan tidak membundarkan bahagian sebelum menjumlahkan.
-4. **Gabungan:** kubus+piramid dan silinder+kon dengan tapak bersama sepadan.
-   Cantum/pisah secara berterusan, ubah ukuran dan pilih permukaan luar.
-   Kedua-dua permukaan yang bercantum dikecualikan; isi padu ditambah.
+1. **Bina bentangan:** galeri sembilan bentangan siap: lima bongkah projek,
+   prisma segi tiga/segi lima/segi enam sekata, dan piramid bertapak segi tiga
+   sama sisi. Pilih muka melalui nombor dan warna. Lipat perlahan, jeda, buka rata
+   atau periksa setiap bingkai. **Susun petak kubus** mengekalkan editor 6 × 6,
+   seretan dan alternatif butang arah serta semakan sah/terputus/bertindih.
+2. **Isi padu:** pilih satu atau dua bongkah daripada sembilan bentuk. Ukuran A/B
+   boleh diubah secara berasingan. Tambah **1 cm³ ke A**, **ke B**, atau
+   **ke A dan B** (sehingga 1 cm³ setiap bekas), penuhkan satu/kedua-duanya,
+   laraskan peratus isi, kosongkan dan pilih isi A/B yang hendak dijumlahkan.
+   Jumlah mengira isi semasa, bukan kapasiti kosong. Kiub unit 1–6 cm dan tiga
+   tuangan kon/silinder atau piramid/prisma masih tersedia dalam pilihan aktiviti.
+3. **Terbitkan rumus:** lima bongkah, ukuran 1–10 cm dan bentangan berukuran
+   sebenar. Pilihan luas diaktifkan selepas bentangan rata; jumlah dan rumus
+   membantu murid mengira setiap permukaan sekali.
+4. **Gabungan:** kubus+piramid dan silinder+kon dengan tapak sepadan. Cantum dahulu,
+   kemudian pilih permukaan luar dan semak. Dua permukaan dalaman dikecualikan.
 
-Semua makmal menggunakan satu kamera yang boleh diseret, butang arah, zum dan
-kedudukan asal. Butang yang memulakan animasi memfokuskan model. Menukar makmal,
-keluar bahagian atau menyembunyikan tab menghentikan animasi. Pemindahan cecair
-ialah simulasi aras/isi padu ideal, bukan simulasi aliran bendalir fizikal.
+Kelajuan lalai **Perlahan (0.5×)**; pilih Sangat perlahan (0.25×) atau Biasa (1×).
+Lipatan/bukaan penuh mengambil 8 saat pada lalai (16 atau 4 saat pada pilihan
+lain), satu tuangan 5.2 saat dan cantuman gabungan 3.2 saat. Ada panduan langkah
+serta satu butang Jeda/Sambung berdekatan model. Menukar kelajuan mengekalkan
+kedudukan semasa. Menukar makmal/keluar bahagian/tab tersembunyi menjeda gerakan;
+kembali tidak menyambung automatik. Saiz/bentuk baharu mengosongkan isi bongkah
+itu sahaja. Peluncur membolehkan pemerhatian terus tanpa menunggu animasi.
 
-Pengesahan v1.2.0: [laporan makmal](docs/LABS_V1_2.md).
+Semua makmal menyediakan kamera seretan, anak panah, zum dan kedudukan asal.
+Animasi eksplisit membawa model ke dalam pandangan. Isi yang mengecil ke puncak
+menggunakan paras tidak linear yang sepadan dengan isi padu. Simulasi ini
+memaparkan paras/isi ideal, bukan aliran bendalir fizikal. Poligon tambahan ialah
+contoh tegak dengan tapak sekata, bukan bentangan bentuk bebas sewenang-wenangnya.
+
+Pengesahan terkini: [laporan v1.3.0](docs/LABS_V1_3.md).
+Sejarah: [laporan empat makmal v1.2.0](docs/LABS_V1_2.md).
 
 ## Kandungan dan matematik
 
@@ -87,6 +97,8 @@ bukan pertukaran gambar atau panel poligon berengsel.
 | `src/content.mjs` | Satu sumber versi modul dan penerangan BM |
 | `src/lessons.mjs` | Nota, contoh asal, rumus dan pengiraan ukuran yang disahkan |
 | `src/lab-geometry.mjs` | Validasi bentangan, bingkai engsel, bahagian luas, isi dan gabungan |
+| `src/preset-nets.mjs` | Sembilan bentangan sah dan engsel prisma/piramid tambahan |
+| `src/volume-lab.mjs` | Rumus, jumlah pilihan dan geometri isi bagi satu/dua bekas |
 | `src/labs.mjs` | Empat aktiviti, kamera bersama, seretan dan kitar hayat animasi |
 | `src/notes.mjs` | Paparan nota, rajah SVG, input ukuran, maklum balas dan navigasi |
 | `src/app.mjs` | Kawalan input, animasi, pandangan dan aktiviti pembelajaran |
@@ -114,7 +126,8 @@ modul ialah cadangan branch, bukan pengumuman keluaran main.
 
 ## Had sebenar
 
-Permukaan melengkung dilukis melalui 144 jalur licin daripada persamaan analitik.
+Paparan bentangan utama menggunakan 144 jalur daripada persamaan analitik;
+bekas isi padu menggunakan 96 jalur dan thumbnail pandangan 64 jalur.
 Itu penghampiran paparan lengkung; pengiraan bentuk dan panjang datang daripada
 persamaan asal. Dua tapak silinder dan tapak kon dibuka selepas garis potong
 konseptual, dengan satu titik sentuh kekal pada bentangan. Tiada tab gam atau

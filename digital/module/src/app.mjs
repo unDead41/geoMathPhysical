@@ -262,7 +262,7 @@ canvas.addEventListener('keydown',event=>{
   if(event.key==='ArrowUp')state.pitch=Math.min(Math.PI/2,state.pitch+.13);if(event.key==='ArrowDown')state.pitch=Math.max(-Math.PI/2,state.pitch-.13);
   refreshControls();wake();
 });
-reduced.addEventListener('change',()=>{if(learningLabs.ready)learningLabs.stop();state.auto=false;stopAnimation();state.camera=null;refreshControls();wake();});
+reduced.addEventListener('change',()=>{if(learningLabs.ready)learningLabs.pause();state.auto=false;stopAnimation();state.camera=null;refreshControls();wake();});
 document.addEventListener('visibilitychange',()=>{if(document.hidden){stopAnimation();state.auto=false;state.camera=null;if(raf)cancelAnimationFrame(raf);raf=0;lastFrame=0;refreshControls();}else wake();});
 function redrawSmallModels(){for(const [shape,r] of navRenderers)r.draw({shape,yaw:.55,pitch:.35,mini:true});drawViews();wake();}
 if(typeof ResizeObserver!=='undefined'){const resize=new ResizeObserver(redrawSmallModels);resize.observe(el('shape-picker'));resize.observe(el('stage'));}else window.addEventListener('resize',redrawSmallModels);
