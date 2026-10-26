@@ -1,0 +1,90 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import {startHarness,newCase,root} from './ease-browser-helpers.mjs';
+
+const evidence=path.join(root,'docs/motion-audio-evidence');
+fs.mkdirSync(evidence,{recursive:true});
+const harness=await startHarness();
+let test;
+const results={kind:'baseline audit; no motion/audio implementation changes',base:'123704bd1265df05854be0f7905fb710fc04533b',observations:{}};
+try{
+  test=await newCase(harness,{setup:async context=>context.addInitScript(()=>{
+    window.__auditFrames=0;
+    const nativeRAF=window.requestAnimationFrame.bind(window);
+    window.requestAnimationFrame=callback=>nativeRAF(time=>{window.__auditFrames++;callback(time);});
+    if(window===window.top){
+      window.__auditAudio=[];
+      const NativeAudio=window.Audio;
+      window.Audio=function(...args){const audio=new NativeAudio(...args);window.__auditAudio.push(audio);return audio;};
+    }
+  })});
+  const {page}=test;
+  const first=await page.evaluate(()=>window.__auditFrames);
+  await page.waitForTimeout(300);
+  results.observations.homeIdleRafCallbacksOver300ms=(await page.evaluate(()=>window.__auditFrames))-first;
+  await page.screenshot({path:evidence+'/baseline-home.png',fullPage:true});
+  await page.locator('#module-button').click();
+  const frame=page.frameLocator('#module-frame');
+  await frame.locator('#model-canvas').waitFor();
+  await frame.locator('#face-legend .face-chip').first().focus();
+  await page.keyboard.press('Enter');
+  results.observations.moduleKeyboardFaceFocus=await frame.locator('body').evaluate(()=>({tag:document.activeElement.tagName,id:document.activeElement.id,face:document.activeElement.dataset.face??null}));
+  await frame.locator('#play').click();
+  await page.waitForTimeout(350);
+  await frame.locator('#play').click();
+  await page.waitForTimeout(40);
+  const paused=Number(await frame.locator('#model-canvas').getAttribute('data-progress'));
+  await page.waitForTimeout(200);
+  results.observations.pauseKeepsProgress=paused===Number(await frame.locator('#model-canvas').getAttribute('data-progress'));
+  assert.equal(results.observations.pauseKeepsProgress,true);
+  await frame.locator('#explore-speed').selectOption('0.5');
+  const speedProgress=Number(await frame.locator('#model-canvas').getAttribute('data-progress'));
+  results.observations.speedChangePreservesPausedProgress=paused===speedProgress;
+  assert.equal(results.observations.speedChangePreservesPausedProgress,true);
+  await frame.locator('#play').click();
+  await page.waitForTimeout(150);
+  results.observations.resumeAdvancesProgress=Number(await frame.locator('#model-canvas').getAttribute('data-progress'))>paused;
+  assert.equal(results.observations.resumeAdvancesProgress,true);
+  await page.emulateMedia({reducedMotion:'reduce'});
+  await page.waitForTimeout(60);
+  results.observations.reducedStops=await frame.locator('#model-canvas').evaluate(canvas=>({playing:canvas.dataset.playing,auto:canvas.dataset.auto,reduced:canvas.dataset.reducedMotion}));
+  assert.equal(results.observations.reducedStops.playing,'false');
+  assert.equal(results.observations.reducedStops.auto,'false');
+  await page.emulateMedia({reducedMotion:'no-preference'});
+  await page.waitForTimeout(70);
+  results.observations.restoringFullMotionDoesNotResume=await frame.locator('#model-canvas').evaluate(canvas=>canvas.dataset.playing==='false'&&canvas.dataset.auto==='false');
+  assert.equal(results.observations.restoringFullMotionDoesNotResume,true);
+  await frame.locator('#learn-notes').click();
+  await page.waitForTimeout(100);
+  const notesStart=await frame.locator('body').evaluate(()=>window.__auditFrames);
+  await page.waitForTimeout(200);
+  results.observations.moduleNotesIdleRafCallbacksOver200ms=(await frame.locator('body').evaluate(()=>window.__auditFrames))-notesStart;
+  await frame.locator('#learn-explore').click();
+  await frame.locator('#model-canvas').scrollIntoViewIfNeeded();
+  await page.screenshot({path:evidence+'/baseline-module.png',fullPage:false});
+  await page.locator('#module-back-button').click();
+  assert.equal(await page.locator('#module-frame').getAttribute('srcdoc'),null);
+  for(let i=0;i<3;i++){
+    await page.locator('#module-button').click();
+    await page.frameLocator('#module-frame').locator('#model-canvas').waitFor();
+    await page.locator('#module-back-button').click();
+  }
+  results.observations.moduleRemovedAfterRapidNavigation=await page.locator('#module-frame').getAttribute('srcdoc')===null;
+  await page.locator('#settings-button').click();
+  await page.locator('#music-volume').focus();
+  await page.keyboard.press('Home');
+  await page.keyboard.press('ArrowRight');
+  await page.keyboard.press('ArrowRight');
+  results.observations.actualMusicVolume=await page.evaluate(()=>window.__auditAudio[0]?.volume);
+  await page.locator('[data-pref="muted"]').check();
+  results.observations.mutePausesMusic=await page.evaluate(()=>window.__auditAudio[0]?.paused===true);
+  assert.equal(results.observations.mutePausesMusic,true);
+  results.observations.musicElements=await page.evaluate(()=>window.__auditAudio.length);
+  assert.equal(results.observations.musicElements,1);
+  results.observations.browserErrors=test.errors;
+  assert.deepEqual(test.errors,[]);
+  results.limits=['Desktop Chromium headless only.','No loudspeaker/headphone output or physical phone listening test.','Hidden-tab, failed-audio and SFX cancellation behavior assessed from existing tests/source only.','Screenshots show the unmodified baseline, not a completed redesign.'];
+  fs.writeFileSync(evidence+'/baseline-browser.json',JSON.stringify(results,null,2)+'\n');
+  console.log(JSON.stringify(results,null,2));
+}finally{await test?.context.close();await harness.close();}

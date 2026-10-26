@@ -1,0 +1,33 @@
+{
+  "kind": "baseline audit; no motion/audio implementation changes",
+  "base": "123704bd1265df05854be0f7905fb710fc04533b",
+  "observations": {
+    "homeIdleRafCallbacksOver300ms": 16,
+    "moduleKeyboardFaceFocus": {
+      "tag": "BODY",
+      "id": "",
+      "face": null
+    },
+    "pauseKeepsProgress": true,
+    "speedChangePreservesPausedProgress": true,
+    "resumeAdvancesProgress": true,
+    "reducedStops": {
+      "playing": "false",
+      "auto": "false",
+      "reduced": "true"
+    },
+    "restoringFullMotionDoesNotResume": true,
+    "moduleNotesIdleRafCallbacksOver200ms": 0,
+    "moduleRemovedAfterRapidNavigation": true,
+    "actualMusicVolume": 0.02,
+    "mutePausesMusic": true,
+    "musicElements": 1,
+    "browserErrors": []
+  },
+  "limits": [
+    "Desktop Chromium headless only.",
+    "No loudspeaker/headphone output or physical phone listening test.",
+    "Hidden-tab, failed-audio and SFX cancellation behavior assessed from existing tests/source only.",
+    "Screenshots show the unmodified baseline, not a completed redesign."
+  ]
+}
