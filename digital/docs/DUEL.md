@@ -1,4 +1,4 @@
-> Rekod sumber terdahulu. Untuk aliran, struktur fail, bukti dan had semasa v2.4.0, lihat [EASE_OF_USE.md](EASE_OF_USE.md).
+> Rekod protokol v1 terdahulu. Candidate protokol 2 pada `digitalized-game-duel` mempunyai [kontrak/deployment](DUEL_V2.md), [audit](DUEL_AUDIT_2026-10-26.md) dan [handoff](DUEL_V2_HANDOFF.md). Deployment v1 di bawah ialah sejarah, bukan bukti bahawa candidate v2 sudah live.
 
 # GeoDecoder Duel — kontrak pelaksanaan
 

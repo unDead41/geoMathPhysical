@@ -1,0 +1,32 @@
+/* Help inherits the workbench's theme, typography, focus and scrollbar owners. */
+.help-centre{min-width:0;color:var(--ink);line-height:1.65}
+.help-centre :is(p,li,button,label,textarea,summary){overflow-wrap:anywhere}
+.help-intro{margin:0 0 16px;color:var(--muted)}
+.help-clock{padding:12px 14px;border-inline-start:4px solid var(--primary);background:var(--blue-soft);border-radius:0 var(--radius) var(--radius) 0;font-size:calc(13px * var(--text-scale,1));margin:14px 0}
+.help-report-prompt{display:flex;align-items:center;gap:18px;margin:20px 0 24px;padding:18px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface)}
+.help-report-prompt>div{flex:1;min-width:0}.help-report-prompt h3{font-size:calc(18px * var(--text-scale,1));margin:0 0 6px;font-family:var(--font-display)}
+.help-report-prompt p{font-size:calc(13px * var(--text-scale,1));color:var(--muted);margin:0}
+.help-report-prompt>.button{flex-shrink:0}
+.help-guides-title{font-size:calc(15px * var(--text-scale,1));margin:0 0 12px}
+.help-guides{border-top:1px solid var(--border)}
+.help-guides details{border-bottom:1px solid var(--border);padding:0}
+.help-guides summary{padding:16px 4px;cursor:pointer;min-height:48px;font-weight:700;line-height:1.5;font-size:calc(14px * var(--text-scale,1))}
+.help-guides summary:hover{color:var(--primary);background:var(--blue-soft)}
+.help-guides summary:focus-visible{outline:3px solid var(--primary);outline-offset:1px;border-radius:4px}
+.help-guide-copy{padding:0 6px 18px;font-size:calc(14px * var(--text-scale,1))}
+.help-guide-copy :is(ol,ul){padding-inline-start:22px;margin:0 0 14px}.help-guide-copy li+li{margin-top:12px}
+.support-privacy{color:var(--muted);font-size:calc(13px * var(--text-scale,1));margin:18px 0}
+.support-form{margin-top:18px}.support-form .field{margin-bottom:20px}
+.support-form textarea,.support-preview{width:100%;display:block;min-width:0;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--ink);padding:12px;font:inherit;font-size:calc(14px * var(--text-scale,1));line-height:1.65;resize:none;white-space:pre-wrap;overflow-wrap:anywhere;scrollbar-gutter:stable;overflow:auto}
+.support-form textarea:focus-visible,.support-preview:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
+.support-form [aria-invalid="true"]{border-color:var(--danger)}
+.support-field-hint{display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px 12px;color:var(--muted);font-size:calc(11px * var(--text-scale,1));margin-top:6px}
+.support-field-hint output{font-variant-numeric:tabular-nums}.support-form .field-error{min-height:1.5em;display:block}
+.support-local{font-size:calc(13px * var(--text-scale,1));font-weight:600;color:var(--ink)}
+.support-preview-label{display:block;margin:18px 0 8px;font-weight:700;font-size:calc(13px * var(--text-scale,1))}
+.support-preview{font-family:var(--font-mono);font-size:calc(12px * var(--text-scale,1));min-height:240px}
+.support-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.support-actions .button{min-height:44px;max-width:100%;white-space:normal}
+.support-status{min-height:3.3em;font-size:calc(13px * var(--text-scale,1));margin:12px 0;color:var(--ink)}
+@media(max-width:560px){.help-report-prompt{align-items:stretch;flex-direction:column;padding:14px;gap:14px}.help-report-prompt>.button{align-self:flex-start}.support-actions{flex-direction:column;align-items:stretch}.support-form>.button{width:100%;white-space:normal}.help-guide-copy{padding-inline:0}}
+@media(forced-colors:active){.help-clock,.help-report-prompt,.support-preview,.support-form textarea{border:1px solid CanvasText}.help-guides summary:focus-visible,.support-preview:focus-visible,.support-form textarea:focus-visible{outline-color:Highlight}}

@@ -7,16 +7,22 @@ Firmware rounds remain a separate contract.
 
 ## Canonical UI map
 
-| Capability | Owner | Variants | Verification |
-|---|---|---|---|
-| Guest form | index.html + validateGuest/validatePlayer | nickname-only guest, old/classroom profiles | core/storage/browser |
-| Dialog/settings/tutorial | usability-ui.mjs + app dialog owner | Settings, three-step guide, pause, scores, leave | browser/focus/state |
-| Text and math | i18n.mjs + local copy modules + format.mjs | BM/English, SVG/MathML | catalog/bank/browser |
-| Direct manipulation | app Pointer Events controller | pointer, touch, click, keyboard | browser stage/selection |
-| Scores | storage.mjs | save, list, CSV, erase, legacy | storage tests/browser |
-| Modes | one Game engine | quiz10, practice15, review subset, Duel10 | core/browser |
-| Classroom | existing cloud.mjs + portal.mjs | accounts, roster, rooms | existing cloud/auth tests + portal UI |
-| Duel | duel.mjs + isolated existing service | PIN, ready, live/result, reconnect | two real browser contexts |
+| Capability | Canonical owner | Source of truth | Allowed variants | Verification |
+|---|---|---|---|---|
+| Form | index.html, core validators, portal form owner; support-report.mjs for reports | domain validation + this contract | nickname, account, local report | core, portal, support integration/browser |
+| Select/Listbox | native select + shared field CSS | DESIGN.md; platform-owned popup | game mode, preferences, report category | keyboard and open native popup |
+| Scrollbar | style.css global scrollbar tokens | DESIGN.md runtime mapping | dialog/textarea geometry only | check.mjs + browser reflow |
+| Toast | app announcer, portal notice, report role=status | actual action outcome | status, error, local export | integration/browser |
+| CRUD | portal.mjs + cloud.mjs; storage.mjs for local scores | backend contracts; SOR | accounts/classes/rooms, local score erase | cloud/auth/storage + portal integration |
+| Guest form | index.html + validateGuest/validatePlayer | core.mjs | nickname-only guest, old/classroom profiles | core/storage/browser |
+| Dialog/settings/tutorial | usability-ui.mjs + app dialog owner | app.mjs openDialog/closeDialog | Settings, three-step guide, pause, scores, leave, help/report | browser/focus/state |
+| Help and support | help-support.mjs + support-report.mjs | HELP_SUPPORT_PLAN.md + HELP_SUPPORT_AUDIT.md | guide, report draft, read-only preview, copy/download | privacy/integration/browser |
+| Text and math | i18n.mjs + local copy modules + format.mjs | language catalog and stable IDs | BM/English, SVG/MathML | catalog/bank/browser |
+| Direct manipulation | app Pointer Events controller | core.mjs | pointer, touch, click, keyboard | browser stage/selection |
+| Scores | storage.mjs | single-attempt ruleset | save, list, CSV, erase, legacy | storage tests/browser |
+| Modes | one Game engine | core.mjs | quiz10, practice15, review subset, Duel10 | core/browser |
+| Classroom | existing cloud.mjs + portal.mjs | server state/RLS | accounts, roster, rooms | existing cloud/auth tests + portal UI |
+| Duel | duel.mjs + isolated existing service | Duel contract/server | PIN, ready, live/result, reconnect | isolated transport + existing live suite |
 
 ## Home, guest and settings
 
@@ -56,7 +62,8 @@ review, Duel and classroom results cannot enter the ten-question quiz board.
 
 Solo time pauses for feedback, answer review, dialogs, hidden tabs and results.
 Backgrounding offers explicit resume; reload returns Home. Incomplete solo
-rounds do not save. Completed quizzes save once per ID; ranking remains score,
+rounds now checkpoint locally using the versioned actor-scoped SoloStore; Home
+offers a progress summary and explicit resume. See docs/SAVE_RESUME.md. Completed quizzes save once per ID; ranking remains score,
 fewer mistakes, elapsed time and completion date, capped at50. Old retry scores
 stay separate. CSV localizes labels, quotes fields and neutralizes formulas.
 Malformed records are ignored; unavailable storage provides session-only play.
@@ -80,6 +87,18 @@ machine keys must not be shown to learners.
 
 The account entry is distinct from practice. Signup requires email, username, display name, password and teacher/student role; Auth verifies the email before login. A scoped Auth insert trigger validates and copies the initial role into an immutable private profile. Later metadata edits cannot change authorization. Login accepts email or username. Forgotten password requests an email link; reset takes priority over account dashboards only after an SDK-validated recovery session. Two matching 10–128-character passwords are required; successful reset signs out globally. Invalid/expired links offer a new request. Resend has a 60-second UI cooldown and provider errors remain visible. Request success uses generic copy and does not assert inbox delivery. Public delivery depends on configured SMTP and redirect URLs. Legacy username-only accounts retain secondary code recovery; email accounts cannot use legacy codes. No credentials or recovery codes are logged. Names are escaped. Session changes clear account/room caches; stale responses cannot overwrite current context. Recovery screens stop dashboard polling.
 
+## Account email presentation v1.1.0
+
+Confirm sign up and reset emails use the same GeoDecoder wordmark, palette,
+large action and BM/English message. `ConfirmationURL` remains the destination
+of both the action and labelled alternative link. Reauthentication shows the Auth OTP;
+security notifications link to `SiteURL`. No template claims a fixed expiry
+or exposes passwords, tokens in subjects, roles or class membership. Additional
+templates do not enable application capabilities or notification toggles.
+The export contains subject/body keys only. It never changes auth settings.
+SMTP activation, hosted template saves and actual mailbox delivery need their
+own evidence. The current Free/default-SMTP restriction blocks template editing.
+
 ## Classroom timing and authorization
 
 Teachers create only their own classes and rooms, see roster presence, and invite a registered student by exact username. The student accepts invitations. A six-digit class PIN enrolls in the class; a room PIN enrolls in its class and room. Codes are server generated, unique, expire after 24 hours and can be regenerated even when no active code remains. Owners alone see PINs. Repeated invalid guesses are rate limited. Presence is an estimate based on a heartbeat within the last 45 seconds, not proof that the game tab has focus.
@@ -92,14 +111,14 @@ The teacher board subscribes to authorized room_progress changes. Only a confirm
 
 ## Duel boundary
 
-Duel retains ten common ordered IDs, two slots, an opaque sessionStorage token,
+Duel retains ten common ordered questions on the server, two slots, an opaque sessionStorage token,
 server-authoritative scores and idempotent retry. Higher score wins, then server
 wall-clock finish time. Its clock includes menus, corrections, hidden tabs and
 disconnection; classroom answering time excludes settled-answer review. PIN10min,
 match15min; leaving incomplete play forfeits. A complete Duel can start local
 wrong-question practice: the token is forgotten, polling stops and neither
 the original server result nor local quiz board changes. API access expires24h;
-physical cleanup is bounded/lazy. Existing backend deployment is reused.
+physical cleanup is bounded/lazy. Protocol 2 requires its matching backend and Edge Function; deployment evidence is recorded separately.
 
 ## Music, theme and pinned module
 
@@ -130,7 +149,7 @@ only owner of language/text/motion storage. Source/opaque-origin/instance-checke
 messages carry exactly three presentation values, never tokens or answers.
 See docs/MODULE_SETTINGS.md for the versioned integration contract and limits.
 
-## Integrated release v2.6.0 / module v1.5.0
+## Integrated release v2.7.0 / module v1.5.0
 
 main-digitalized is the integration destination. Keep the full ease-of-use
 quiz/practice/review/Duel and BM/English contract above. Profile and Security
@@ -147,4 +166,28 @@ responses after account changes. Teacher reads are limited to owned-class member
 Completed achievements survive retries and edits, while current observations and
 checks are invalidated as needed. Restored practice is formative self-report, not
 verified mastery or TP. Root index and all standalone aliases share one build.
-See docs/RELEASE_V2_6.md for source SHAs, tests and deployment limits.
+See docs/RELEASE_V2_6.md for historical v2.6.0 source SHAs, tests and deployment limits; it does not verify the v2.7.0 integration.
+
+## Duel protocol 2 — integration v2.7.0
+
+The Duel branch sends only the current bilingual prompt without an answer or
+future selection IDs. Requested hints and completed-answer corrections are
+server projections. The one Game engine renders accepted backend state rather
+than evaluating a Duel scan locally. Durable review survives refresh; an
+idempotent server-paced advance acknowledges the existing 900/1800ms feedback.
+Scores, single attempt, common start and server wall-clock tiebreaker are unchanged.
+Lobby/match remaining time, finished/forfeited/estimated-away labels, Home resume,
+live errors and a short teacher guide use the existing settings and visual system.
+Protocol 1 clients fail closed after the coordinated backend update. Deployment is verified separately; the branch handoff is historical evidence, see docs/DUEL_V2.md and DUEL_V2_HANDOFF.md.
+
+## Profil v2.7.0
+
+Draf nama/avatar tidak menukar pengepala akaun sebelum simpan disahkan. Pratonton setempat dikemas kini melalui input/change tanpa panggilan rangkaian dan mengekalkan draf semasa refresh/bahasa. Keluar ke Home, kelas, keselamatan atau log keluar menawarkan Simpan dan teruskan, Buang perubahan atau Teruskan menyunting. Escape membatalkan pilihan keluar. Gagal simpan tidak meneruskan navigasi. Tukar akaun membatalkan draf dan destinasi lama. Tutup/reload tab menggunakan amaran native browser, tertakluk kepada polisi interaksi browser. Tetapan membuka dialog bersama dan mengekalkan profil/draf di belakangnya. Kelas dan nama guru menggunakan data backend yang dibenarkan; nilai yang belum disediakan tidak direka.
+
+## Help and support v2.7.0
+
+One native app-dialog owns help, report, tutorial and Settings. Opening these
+views never replaces a game or iframe. Solo pauses; classroom/Duel retain their
+server clocks. Report drafts remain memory-only; explicit preview is the exact
+copy/download content. Automatic diagnostics use an allowlist; no remote report
+transport exists. Reuse existing module guide through the validated bridge.

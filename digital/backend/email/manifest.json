@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "version": "1.1.0",
+  "languages": [
+    "ms",
+    "en"
+  ],
+  "templates": [
+    {
+      "id": "confirmation",
+      "name": "Confirm sign up",
+      "kind": "link",
+      "subject": "GeoDecoder · Sahkan e-mel / Verify your email",
+      "file": "templates/confirmation.html",
+      "subjectKey": "mailer_subjects_confirmation",
+      "contentKey": "mailer_templates_confirmation_content"
+    },
+    {
+      "id": "recovery",
+      "name": "Reset password",
+      "kind": "link",
+      "subject": "GeoDecoder · Tetapkan kata laluan / Reset password",
+      "file": "templates/recovery.html",
+      "subjectKey": "mailer_subjects_recovery",
+      "contentKey": "mailer_templates_recovery_content"
+    },
+    {
+      "id": "invite",
+      "name": "Invite user",
+      "kind": "link",
+      "subject": "GeoDecoder · Jemputan akaun / Account invitation",
+      "file": "templates/invite.html",
+      "subjectKey": "mailer_subjects_invite",
+      "contentKey": "mailer_templates_invite_content"
+    },
+    {
+      "id": "magic_link",
+      "name": "Magic link or OTP",
+      "kind": "link",
+      "subject": "GeoDecoder · Pautan log masuk / Sign-in link",
+      "file": "templates/magic_link.html",
+      "subjectKey": "mailer_subjects_magic_link",
+      "contentKey": "mailer_templates_magic_link_content"
+    },
+    {
+      "id": "email_change",
+      "name": "Change email address",
+      "kind": "link",
+      "subject": "GeoDecoder · Sahkan perubahan e-mel / Confirm email change",
+      "file": "templates/email_change.html",
+      "subjectKey": "mailer_subjects_email_change",
+      "contentKey": "mailer_templates_email_change_content"
+    },
+    {
+      "id": "reauthentication",
+      "name": "Reauthentication",
+      "kind": "code",
+      "subject": "GeoDecoder · Kod pengesahan / Verification code",
+      "file": "templates/reauthentication.html",
+      "subjectKey": "mailer_subjects_reauthentication",
+      "contentKey": "mailer_templates_reauthentication_content"
+    },
+    {
+      "id": "password_changed_notification",
+      "name": "Password changed",
+      "kind": "notification",
+      "subject": "GeoDecoder · Kata laluan berubah / Password changed",
+      "file": "templates/password_changed_notification.html",
+      "subjectKey": "mailer_subjects_password_changed_notification",
+      "contentKey": "mailer_templates_password_changed_notification_content"
+    },
+    {
+      "id": "email_changed_notification",
+      "name": "Email address changed",
+      "kind": "notification",
+      "subject": "GeoDecoder · E-mel akaun berubah / Account email changed",
+      "file": "templates/email_changed_notification.html",
+      "subjectKey": "mailer_subjects_email_changed_notification",
+      "contentKey": "mailer_templates_email_changed_notification_content"
+    }
+  ]
+}

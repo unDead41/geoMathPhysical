@@ -651,6 +651,23 @@
 .portal-security-symbol svg {width: 24px; height: 24px}
 .portal-security-sessions .portal-security-confirm {margin-top: 0; flex-direction: column; gap: 16px; min-width: 0}
 .portal-security-confirm > div:last-child {width: 100%}
+.portal-active-sessions {margin-top:24px; display:grid; gap:18px; min-width:0}
+.portal-active-sessions .portal-panel-title {flex-wrap:wrap; gap:12px; margin-bottom:0}
+.portal-active-sessions .portal-panel-title > div {flex:1 1 220px; min-width:0}
+.portal-active-sessions p {margin:0; overflow-wrap:anywhere}
+.portal-active-sessions .portal-panel-title p {color:var(--muted); font-size:13px; line-height:1.75}
+.portal-session-list {list-style:none; padding:0; margin:0; display:grid; gap:12px}
+.portal-session-row {border:1px solid var(--border); border-radius:var(--radius); padding:16px; min-width:0}
+.portal-session-heading {display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; overflow-wrap:anywhere}
+.portal-session-current {background:var(--blue-soft); color:var(--primary); padding:4px 10px; border-radius:8px; font-size:12px; font-weight:700}
+.portal-session-row dl {margin:12px 0 0; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr)); gap:10px 24px; font-size:13px; line-height:1.65}
+.portal-session-row dt {color:var(--muted)}
+.portal-session-row dd {margin:0; overflow-wrap:anywhere}
+.portal-session-actions {display:flex; flex-wrap:wrap; gap:12px}
+.portal-session-empty {font-size:14px; font-weight:600}
+.portal-active-sessions .portal-security-confirm {flex-wrap:wrap; min-width:0; gap:16px; margin:0}
+.portal-active-sessions .portal-security-confirm > div:last-child {display:flex; flex-wrap:wrap; gap:12px}
+@media(max-width:380px){.portal-active-sessions .button {width:100%; white-space:normal; overflow-wrap:anywhere; padding-inline:12px}.portal-session-row {padding:12px}}
 @media (max-width: 800px) {.portal-security-layout {grid-template-columns: minmax(0, 1fr); gap: 18px}}
 @media (max-width: 380px) {.portal-security-layout .button {width: 100%; white-space: normal; overflow-wrap: anywhere; padding-inline: 12px}}
 
@@ -665,3 +682,16 @@ html[data-text-size=large]{font-size:20px}html[data-text-size=largest]{font-size
 @media(max-width:400px){.dialog-header h2{font-size:1rem}}
 
 .portal-utility-navigation{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0}.portal-profile-link:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
+
+/* Profile drafts and shortcuts use existing semantic tokens. */
+.portal-profile-confirm{margin-block:1rem;border-color:var(--primary)}
+.portal-profile-confirm p{margin-block:.75rem}
+.portal-profile-preview{display:flex;align-items:center;gap:.75rem;padding:1rem;border:1px solid var(--border);border-radius:var(--radius);margin-block:1rem;min-width:0}
+.portal-profile-preview>.portal-avatar{flex-shrink:0}
+.portal-profile-preview>span:last-child{min-width:0}
+.portal-profile-preview small,.portal-profile-preview b{display:block;overflow-wrap:anywhere}
+.portal-profile-preview small{color:var(--muted)}
+.portal-profile-classes{list-style:none;padding:0!important}
+.portal-profile-classes li{display:flex;flex-direction:column;gap:.25rem;padding-block:.75rem;border-bottom:1px solid var(--border)}
+.portal-profile-classes .button{align-self:flex-start}
+.portal-profile-confirm .dialog-actions{flex-wrap:wrap}

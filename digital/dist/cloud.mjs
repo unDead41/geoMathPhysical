@@ -1,6 +1,7 @@
 import {createClient} from '@supabase/supabase-js';
 import {CLOUD_CONFIG} from './cloud-config.mjs';
 import {runAccountSecurity,securitySessionKey,withAccountSessionLock} from './account-security.mjs';
+import {readSessionList,sessionListError} from './active-sessions.mjs';
 
 const AUTH_REDIRECT='https://undead41.github.io/geodecoder-digital/';
 const CALLBACK_KEYS=['access_token','refresh_token','provider_token','provider_refresh_token','token_type','expires_in','expires_at','type','error','error_code','error_description','code','token_hash'];
@@ -83,7 +84,7 @@ export class ClassroomCloud {
     finally{this.authCallbackHandled=true;try{this._history?.replaceState(null,'',cleanAuthCallbackUrl(this._location.href));}catch{/* File origins may prohibit history updates. */}}
   }
   async auth(action,payload={},options={}){
-    if(action==='change-password'||action==='logout-all'||action==='reset-password'){
+    if(['change-password','logout-all','logout-others','logout-current','reset-password'].includes(action)){
       if(this._securityPending)throw Object.assign(Error('Tunggu permintaan keselamatan selesai.'),{code:'busy'});
       this._securityPending=true;
       const identity=securitySessionKey(this._session);
@@ -99,7 +100,7 @@ export class ClassroomCloud {
         try{result=await runAccountSecurity({config:this.config,createClient:this._createClient,getSession:()=>this._session,fetcher:this._securityFetch,signal:options.signal,expectedIdentity:identity},action,payload);}
         catch(error){if(action==='reset-password'&&error.code==='password-updated-logout-failed')this._clearRecovery();throw error;}
         if(action==='reset-password'){this._clearRecovery();this.callbackError='';}
-        if(result.globalSignedOut)await withAccountSessionLock(async()=>{
+        if(result.globalSignedOut||result.localSignedOut)await withAccountSessionLock(async()=>{
           // Inspect inside the same lock used to install login sessions. A login
           // queued before cleanup wins; one queued after installs after logout.
           const actual=await this.client.auth.getSession();
@@ -125,7 +126,20 @@ export class ClassroomCloud {
     if(data.session)await withAccountSessionLock(async()=>{const {error}=await this.client.auth.setSession({access_token:data.session.access_token,refresh_token:data.session.refresh_token});if(error)throw Error('Sesi tidak dapat disimpan. Cuba log masuk semula.');this._setSession(data.session);this.startHeartbeat();});
     return data;
   }
-  async _boundRpc(name,args,{expectedUserId=this._session?.user?.id}={}){
+  async securitySessions(options={}){
+    const identity=securitySessionKey(this._session);
+    if(this._sessionListPending?.identity===identity)throw sessionListError('busy');
+    const request={identity};this._sessionListPending=request;
+    try{
+      const {data,error}=await this._boundRpc('geo_security_sessions',{}, {signal:options.signal});
+      if(error)throw sessionListError(error.status===401||['PGRST301','PGRST303'].includes(error.code)?'session-expired':error.code==='PGRST202'||error.code==='42501'?'sessions-unavailable':'network');
+      return readSessionList(data);
+    }catch(error){
+      if(['session-expired','session-changed','sessions-unavailable','network','cancelled'].includes(error.code))throw error;
+      throw sessionListError(options.signal?.aborted?'cancelled':'network');
+    }finally{if(this._sessionListPending===request)this._sessionListPending=null;}
+  }
+  async _boundRpc(name,args,{expectedUserId=this._session?.user?.id,signal}={}){
     const original=this._session,identity=securitySessionKey(original);
     const changed=()=>Object.assign(Error('Sesi akaun berubah. Log masuk semula untuk meneruskan.'),{code:'session-changed'});
     const current=()=>Boolean(expectedUserId&&this._session?.user?.id===expectedUserId&&securitySessionKey(this._session)===identity);
@@ -136,7 +150,7 @@ export class ClassroomCloud {
       if(actual.error||!actual.data?.session?.access_token||!current()||actual.data.session.user?.id!==expectedUserId||securitySessionKey(actual.data.session)!==identity)throw changed();
       // The JWT belongs to the verified actor. SDK storage may change after this
       // lock is released; fetchWithAuth must never substitute the new account.
-      const request=this.client.rpc(name,args).setHeader('Authorization','Bearer '+actual.data.session.access_token).abortSignal(AbortSignal.timeout(20000));
+      const request=this.client.rpc(name,args).setHeader('Authorization','Bearer '+actual.data.session.access_token).abortSignal(signal?AbortSignal.any([signal,AbortSignal.timeout(20000)]):AbortSignal.timeout(20000));
       return {request};
     });
     const result=await prepared.request;

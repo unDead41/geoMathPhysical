@@ -9,7 +9,7 @@ import { questionTopic } from '../dist/core.mjs';
 const token = 'ab'.repeat(32);
 const roomId = '12345678-1234-4234-8234-123456789abc';
 const config = {SUPABASE_URL:'https://duel.example.test', SUPABASE_SERVICE_ROLE_KEY:'test-server-key'};
-const snapshot = () => ({ok:true,serverNow:1000,room:{id:roomId,code:'123456',status:'waiting',startsAt:null,deadlineAt:null,questionIds:[],total:10,winnerId:null,reason:null},me:{id:'me',slot:1,name:'Alias',ready:false,answered:0,stage:'solid',score:0,mistakes:0,skipped:0,hints:0,hintUsed:false,attempts:{solid:null,net:null},answers:[],seq:0,finishedAt:null,elapsed:0,forfeited:false,lastSeenAt:1000,nextReadyAt:null},opponent:null,actionResult:null});
+const snapshot = () => ({ok:true,serverNow:1000,room:{id:roomId,code:'123456',status:'waiting',startsAt:null,deadlineAt:null,lobbyExpiresAt:601000,questionIds:[],total:10,winnerId:null,reason:null},me:{id:'me',slot:1,name:'Alias',ready:false,answered:0,stage:'solid',score:0,mistakes:0,skipped:0,hints:0,hintUsed:false,reviewPending:false,attempts:{solid:null,net:null},answers:[],seq:0,finishedAt:null,elapsed:0,forfeited:false,lastSeenAt:1000,nextReadyAt:null},opponent:null,actionResult:null});
 function setup(rpc = () => snapshot(), options = {}) {
   const calls = [];
   const handler = createDuelHandler({env:name=>config[name],crypto:webcrypto,fetch:async (url,init)=>{
@@ -20,7 +20,7 @@ function setup(rpc = () => snapshot(), options = {}) {
   return {handler,calls};
 }
 function post(body, headers = {}) {
-  return new Request('https://duel.example.test/functions/v1/geodecoder-duel',{method:'POST',headers:{'Content-Type':'application/json',...headers},body:JSON.stringify(body)});
+  return new Request('https://duel.example.test/functions/v1/geodecoder-duel',{method:'POST',headers:{'Content-Type':'application/json',...headers},body:JSON.stringify(body&&typeof body==='object'&&!Array.isArray(body)?{protocol:2,...body}:body)});
 }
 
 test('authoritative SQL question metadata matches the actual offline bank',()=>{

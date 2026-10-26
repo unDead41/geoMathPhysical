@@ -1,0 +1,10 @@
+EASE browser cases: practice-correct, practice-mixed
+EVIDENCE_DIRECTORY /workspace/scratch/0f4239410125/duel-worktree/digital/docs/ease-evidence/2026-10-26T09-37-22-874Z
+RUN practice-correct
+EVIDENCE docs/ease-evidence/2026-10-26T09-37-22-874Z/rich-fraction-mobile-ms.png
+EVIDENCE docs/ease-evidence/2026-10-26T09-37-22-874Z/rich-fraction-mobile-en.png
+DETAIL all 15 IDs, 90 BM/English rich-text views, offline standalone with zero HTTP(S) requests
+PASS practice-correct
+RUN practice-mixed
+PASS practice-mixed
+RESULT 2/2 browser cases passed; 0 failures

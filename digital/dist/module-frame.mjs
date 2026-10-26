@@ -36,7 +36,9 @@ export function installModulePreferences({initial,instanceId,channel,validate,lo
   }
   window.addEventListener('message',event=>{
     const message=event.data;
-    if(event.source!==window.parent||!message||message.channel!==channel||message.version!==1||message.instanceId!==instanceId||message.type!=='settings')return;
+    if(event.source!==window.parent||!message||message.channel!==channel||message.version!==1||message.instanceId!==instanceId)return;
+    if(message.type==='show-guide'){const guide=document.getElementById('panduan');if(guide){guide.setAttribute('tabindex','-1');guide.scrollIntoView({block:'start',behavior:'instant'});guide.focus({preventScroll:true});}return;}
+    if(message.type!=='settings')return;
     const next=validate(message.settings);if(next)update(next);
   });
   paint();
@@ -47,6 +49,10 @@ export function installModulePreferences({initial,instanceId,channel,validate,lo
       let button=document.getElementById('module-settings');
       if(!button){button=document.createElement('button');button.id='module-settings';button.type='button';button.className='help-link';button.textContent='Tetapan';button.setAttribute('aria-label','Tetapan permainan dan modul');document.querySelector('.header-meta')?.prepend(button);}
       button.addEventListener('click',()=>notify('open-settings'));
+      const help=document.createElement('button');help.id='module-help';help.type='button';help.className='help-link';help.textContent='Pusat Bantuan';
+      const originalGuide=document.querySelector('.header-meta a[href$="#panduan"]');
+      if(originalGuide)originalGuide.replaceWith(help);else document.querySelector('.header-meta')?.prepend(help);
+      help.addEventListener('click',()=>notify('open-help'));
       document.addEventListener('change',event=>{if(!applying&&event.target.id==='labels')notify('choice',{labels:event.target.checked});});
       document.addEventListener('click',event=>{
         if(applying)return;const id=event.target.closest?.('button')?.id;
@@ -73,5 +79,5 @@ export function prepareModuleFrame(html,options){
   source=source.replace(/(<style\b[^>]*>)([\s\S]*?)(<\/style>)/gi,(_,open,css,close)=>open+scaleModuleTypography(css)+close);
   const bootstrap='window.__geodecoderModuleHost=('+installModulePreferences.toString()+')({initial:'+inline(settings)+',instanceId:'+inline(options.instanceId)+',channel:'+inline(MODULE_CHANNEL)+',validate:'+validateModuleSettings.toString()+',localize:'+installModuleLanguage.toString()+',catalog:'+inline(MODULE_COPY)+'});';
   if(!source.includes('</head>'))throw new Error('Invalid module document');
-  return source.replace('</head>',()=>'<style>\nhtml[data-motion-paused="true"]{scroll-behavior:auto}html[data-motion-paused="true"] *,html[data-motion-paused="true"] *::before,html[data-motion-paused="true"] *::after{animation:none!important;transition:none!important}#module-settings{font:inherit;border:0;background:transparent;color:inherit;cursor:pointer;min-height:40px;padding:5px 8px}html[data-contrast="strong"]{--muted:#26425b;--border:#52657e;--primary:#1747bc;--text:#132c43;--ink:#132c43}html[data-theme="dark"][data-contrast="strong"]{--muted:#e0e9f6;--border:#9aadc8;--text:#fff;--ink:#fff}.site-header,.header-meta,.workspace-top,.learning-navigation,.animation-actions{flex-wrap:wrap}main,.workspace,.info-panel,.learning-layout>*{min-width:0}h1,h2,h3,p,button,summary{overflow-wrap:anywhere}@media(max-width:560px){.stage-top,.stage-bottom,.mode-switch{flex-wrap:wrap;gap:8px}.learning-nav-button{white-space:normal}.learning-layout,.lab-choices{grid-template-columns:minmax(0,1fr)}.lab-choices button>b{flex:none;min-width:2ch;white-space:nowrap;overflow-wrap:normal;text-align:center}.lab-choices button>span{flex:1;min-width:0;overflow-wrap:normal}}\n</style><script>'+bootstrap+'</script></head>');
+  return source.replace('</head>',()=>'<style>\nhtml[data-motion-paused="true"]{scroll-behavior:auto}html[data-motion-paused="true"] *,html[data-motion-paused="true"] *::before,html[data-motion-paused="true"] *::after{animation:none!important;transition:none!important}#module-settings,#module-help{font:inherit;border:0;background:transparent;color:inherit;cursor:pointer;min-height:40px;padding:5px 8px}html[data-contrast="strong"]{--muted:#26425b;--border:#52657e;--primary:#1747bc;--text:#132c43;--ink:#132c43}html[data-theme="dark"][data-contrast="strong"]{--muted:#e0e9f6;--border:#9aadc8;--text:#fff;--ink:#fff}.site-header,.header-meta,.workspace-top,.learning-navigation,.animation-actions{flex-wrap:wrap}main,.workspace,.info-panel,.learning-layout>*{min-width:0}h1,h2,h3,p,button,summary{overflow-wrap:anywhere}@media(max-width:560px){.stage-top,.stage-bottom,.mode-switch{flex-wrap:wrap;gap:8px}.learning-nav-button{white-space:normal}.learning-layout,.lab-choices{grid-template-columns:minmax(0,1fr)}.lab-choices button>b{flex:none;min-width:2ch;white-space:nowrap;overflow-wrap:normal;text-align:center}.lab-choices button>span{flex:1;min-width:0;overflow-wrap:normal}}\n</style><script>'+bootstrap+'</script></head>');
 }

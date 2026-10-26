@@ -1,4 +1,5 @@
-export const VERSION = '2.6.0';
+import {duelCheckpoint,applyDuelState} from './duel-state.mjs';
+export const VERSION = '2.7.0';
 export const RULESET = 'single-attempt-v1';
 export const SHAPES = ['cube', 'cuboid', 'pyramid', 'cylinder', 'cone'];
 export const ROUND_SIZE = 10;
@@ -27,6 +28,7 @@ export function reshuffle(items, previous, rng = Math.random) {
 }
 
 export function questionTopic(question) {
+  if(['properties','formula','net'].includes(question.topic))return question.topic;
   return /^[VL]=/.test(question.prompt) ? 'formula' : question.id.endsWith('3') ? 'net' : 'properties';
 }
 
@@ -58,10 +60,7 @@ export function buildRound(bank, rng = Math.random, mode = 'quiz', questionIds) 
     return shuffle(round,rng);
   }
   if(mode==='duel'){
-    if(!Array.isArray(questionIds)||questionIds.length!==ROUND_SIZE||new Set(questionIds).size!==ROUND_SIZE)throw new Error('Invalid duel round');
-    const round=questionIds.map(id=>bank.find(q=>q.id===id));
-    if(round.some(q=>!q)||SHAPES.some(shape=>round.filter(q=>q.shape===shape).length!==2))throw new Error('Invalid duel questions');
-    return round;
+    throw new Error('Duel requires the active server projection');
   }
   if(mode!=='quiz'&&mode!=='practice')throw new Error('Unknown play mode');
   if(mode==='practice'){
@@ -98,7 +97,8 @@ export function formatTime(ms) {
 export class Game {
   constructor(bank, player, now = 0, rng = Math.random, options = {}) {
     this.mode = options.mode ?? 'quiz';
-    this.round = buildRound(bank, rng, this.mode, options.questionIds);
+    if(this.mode==='duel'&&(!Array.isArray(options.serverRound)||options.serverRound.length!==ROUND_SIZE))throw new Error('Duel requires the active server projection');
+    this.round = this.mode==='duel'?options.serverRound:buildRound(bank, rng, this.mode, options.questionIds);
     this.player = {...player};
     this.index = 0;
     this.score = 0;
@@ -131,38 +131,18 @@ export class Game {
   get question() { return this.round[this.index]; }
   get total() { return this.round.length; }
   static fromDuelSnapshot(bank,player,snapshot,now=0,rng=Math.random){
-    const g=new Game(bank,player,now,rng,{mode:'duel',questionIds:snapshot.room?.questionIds}),m=snapshot.me;
-    if(snapshot.room.total!==ROUND_SIZE||!m||!Number.isInteger(m.answered)||m.answered<0||m.answered>g.total||!Array.isArray(m.answers)||m.answers.length!==m.answered||!Number.isFinite(m.elapsed)||m.elapsed<0)throw new Error('Invalid duel checkpoint');
-    let correct=0,wrong=0,skipped=0,hints=0;
-    const answers=m.answers.map((a,i)=>{
-      const q=g.round[i];
-      if(a.id!==q.id||a.shape!==q.shape||a.topic!==questionTopic(q)||!['correct','wrong','skipped'].includes(a.outcome)||typeof a.hint!=='boolean'||!Number.isFinite(a.elapsed)||a.elapsed<0||!a.attempts||['solid','net'].some(kind=>a.attempts[kind]!==null&&!SHAPES.includes(a.attempts[kind])))throw new Error('Invalid duel answer');
-      if(a.outcome==='correct'&&(a.attempts.solid!==q.shape||a.attempts.net!==q.shape))throw new Error('Invalid duel match');
-      correct+=a.outcome==='correct'?1:0;wrong+=a.outcome==='wrong'?1:0;skipped+=a.outcome==='skipped'?1:0;hints+=a.hint?1:0;
-      return {...a,attempts:{...a.attempts},firstTry:a.outcome==='correct'};
-    });
-    if(m.score!==correct||m.mistakes!==wrong||m.skipped!==skipped||m.hints!==hints+(m.answered<g.total&&m.hintUsed?1:0)||!['solid','net'].includes(m.stage)||!m.attempts)throw new Error('Invalid duel totals');
-    if(m.answered<g.total&&(m.attempts.net!==null||(m.stage==='net'?m.attempts.solid!==g.round[m.answered].shape:m.attempts.solid!==null)))throw new Error('Invalid duel stage');
-    g.index=Math.min(m.answered,g.total-1);g.stage=m.stage;g.status=m.answered===g.total?'finished':'running';
-    g.answers=answers;g.score=correct;g.firstTry=correct;g.mistakes=wrong;g.skipped=skipped;g.hints=m.hints;g.hintUsed=!!m.hintUsed;
-    g.attempts={...m.attempts};g.elapsed=m.elapsed;g.questionStartElapsed=m.elapsed;g.lastOutcome=answers.at(-1)?.outcome||null;
-    return g;
+    const state=duelCheckpoint(snapshot,now);
+    return Object.assign(new Game(null,player,now,rng,{mode:'duel',serverRound:state.round}),state);
   }
   time(now) { return this.elapsed + (this.status === 'running' && !this.paused ? Math.max(0, now - this.segmentStart) : 0); }
   get interactive() { return this.status === 'running' && !this.paused; }
-  applyDuelAcknowledgement(action,payload,now){
-    if(this.mode!=='duel'||this.status!=='running')return action==='scan'?{type:'blocked'}:false;
-    const wasPaused=this.paused;
-    if(wasPaused){this.paused=false;this.segmentStart=now;}
-    try{
-      if(action==='scan')return this.scan(payload.kind,payload.shape,payload.target,now);
-      if(action==='hint')return this.toggleHint();
-      if(action==='skip')return this.skip(now);
-      return false;
-    }finally{if(wasPaused){this.paused=true;this.pauseStart=now;}}
+  applyDuelAcknowledgement(action,payload,now,snapshot){
+    if(this.mode!=='duel')return false;
+    return applyDuelState(this,action,snapshot,now);
   }
 
   scan(kind, shape, target, now) {
+    if(this.mode==='duel')return {type:'blocked'};
     if (!this.interactive) return {type: 'blocked'};
     const activeTarget = this.stage === 'solid' ? 'r1' : 'r2';
     if (target !== activeTarget) return {type: 'stage', target: activeTarget};
@@ -200,6 +180,7 @@ export class Game {
   }
 
   skip(now) {
+    if(this.mode==='duel')return false;
     if (!this.interactive) return false;
     this.skipped++;
     this.beginFeedback('skipped', now);
@@ -226,6 +207,7 @@ export class Game {
   }
 
   advance(now) {
+    if(this.mode==='duel')return false;
     if (this.index === this.round.length - 1) {
       this.status = 'finished';
       return true;

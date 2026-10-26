@@ -1,0 +1,78 @@
+{
+  "date": "2026-10-26",
+  "timezone": "Asia/Kuala_Lumpur",
+  "base_sha": "790d989d666e64f3beabb507cd4140b832696367",
+  "security_branch_head": "80309ab7bdcddd6a96317f3088d0d8378d121a1f",
+  "branch": "digitalize/security-activeSession",
+  "candidate": "2.7.0",
+  "unit": {
+    "command": "node --test --test-concurrency=1 tests/*.test.mjs",
+    "passed": 272,
+    "failed": 0,
+    "new_session_tests": 24,
+    "kind": "controlled SDK HTTP responses, JSDOM, actual PostgreSQL PGlite synthetic Auth tables",
+    "latest_log": "unit-resume.txt"
+  },
+  "checks": {
+    "build": "pass",
+    "prepare_pages_local_only": "pass",
+    "static": "pass: 150 IDs, ARIA, bank, SVG, tokens",
+    "firmware_version": "pass: unchanged v1.1.3",
+    "diff_whitespace": "pass"
+  },
+  "hosted": {
+    "project": "fkrlwzxvyufndavlpzbp",
+    "migration": "geodecoder_security_sessions",
+    "version": "20261026091211",
+    "catalog_verification": "pass: private definer / public invoker, empty paths, no anon execute",
+    "anonymous_http": {
+      "status": 401,
+      "code": "42501"
+    },
+    "invalid_jwt_http": {
+      "status": 401,
+      "code": "PGRST301"
+    },
+    "no_identity_rpc": "session-expired",
+    "advisors": "unchanged from predeployment:17 existing deny-by-default INFOs and one existing leaked-password WARN"
+  },
+  "unverified": [
+    "Two actual browser profiles and native keyboard at 320px",
+    "Successful real-user list and session revocation/refresh lifecycle",
+    "Screenshot: workspace server unreachable from connected Chrome"
+  ],
+  "blocked_setup": {
+    "automatic_approval_review": "rejected direct internal-Auth QA user inserts as persistent authentication mutation without exact authorization; Admin/Studio setup recommended",
+    "mutation_executed": false,
+    "temporary_credentials": "removed from scratch; never committed",
+    "post_rejection_fixture_signin": "failed; zero successful lifecycle checks; no success claimed"
+  },
+  "assets": {
+    "index.html": {
+      "bytes": 6668556,
+      "sha256": "8b0671a11406e37a1a4dc9dbc7fbb5c3b2614b2c7912d9c8639ed4e82c07038b"
+    },
+    "digital/dist/app.bundle.js": {
+      "bytes": 953289,
+      "sha256": "accd603be4dfbce5f8dbce4c0a585186c0f7e4b5bb33b61d1fad16352e9a09ef"
+    },
+    "digital/GeoDecoder_Digital_V2.html": {
+      "bytes": 6668556,
+      "sha256": "8b0671a11406e37a1a4dc9dbc7fbb5c3b2614b2c7912d9c8639ed4e82c07038b"
+    },
+    "digital/backend/security/qa/GeoDecoder_Session_QA.html": {
+      "bytes": 561327,
+      "sha256": "96719a28d1776ba994d17bdbdf8e1685fb9def61c71e368e8407ef0896ddfacf"
+    }
+  },
+  "resume": {
+    "from_commit": "af2a76f6c036713d204d399bf7c1dff458c23402",
+    "remote_heads_and_hosted_grants_rechecked": true,
+    "new_hosted_changes": false,
+    "new_account_setup_attempted": false,
+    "portable_tool": "digital/backend/security/qa/GeoDecoder_Session_QA.html",
+    "controlled_qa_tests": 5,
+    "browser_execution_verified": false,
+    "notes": "Portable test-only page, actual hosted Auth responses only when an operator signs in; no accounts or credentials embedded."
+  }
+}

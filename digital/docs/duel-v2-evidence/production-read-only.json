@@ -1,0 +1,135 @@
+{
+  "observedAt": "2026-10-26T09:49:59.629Z",
+  "project": "fkrlwzxvyufndavlpzbp",
+  "integrationBase": "790d989d666e64f3beabb507cd4140b832696367",
+  "oldDuelHead": "8373fd4bae11847c3a3099ee6f61e2756d99349b",
+  "firmwareMain": "a059979d97926b82cafd4aa5cf3fe59da04a55bb",
+  "edge": {
+    "slug": "geodecoder-duel",
+    "version": 1,
+    "status": "ACTIVE",
+    "verify_jwt": true,
+    "ezbr_sha256": "016f16d82a8657cd65dce7062e2a3f769a8abdd537906c7ecce37cc0f9342c75"
+  },
+  "tables": [
+    {
+      "rls": true,
+      "table": "questions",
+      "forced": true,
+      "anon_select": false,
+      "authenticated_select": false
+    },
+    {
+      "rls": true,
+      "table": "rooms",
+      "forced": true,
+      "anon_select": false,
+      "authenticated_select": false
+    },
+    {
+      "rls": true,
+      "table": "players",
+      "forced": true,
+      "anon_select": false,
+      "authenticated_select": false
+    },
+    {
+      "rls": true,
+      "table": "rate_limits",
+      "forced": true,
+      "anon_select": false,
+      "authenticated_select": false
+    }
+  ],
+  "gateway": {
+    "anon": false,
+    "service_role": true,
+    "authenticated": false
+  },
+  "questions": [
+    {
+      "id": "B1",
+      "shape": "cuboid",
+      "topic": "properties"
+    },
+    {
+      "id": "B2",
+      "shape": "cuboid",
+      "topic": "formula"
+    },
+    {
+      "id": "B3",
+      "shape": "cuboid",
+      "topic": "net"
+    },
+    {
+      "id": "C1",
+      "shape": "cone",
+      "topic": "formula"
+    },
+    {
+      "id": "C2",
+      "shape": "cone",
+      "topic": "formula"
+    },
+    {
+      "id": "C3",
+      "shape": "cone",
+      "topic": "net"
+    },
+    {
+      "id": "K1",
+      "shape": "cube",
+      "topic": "properties"
+    },
+    {
+      "id": "K2",
+      "shape": "cube",
+      "topic": "formula"
+    },
+    {
+      "id": "K3",
+      "shape": "cube",
+      "topic": "net"
+    },
+    {
+      "id": "P1",
+      "shape": "pyramid",
+      "topic": "properties"
+    },
+    {
+      "id": "P2",
+      "shape": "pyramid",
+      "topic": "formula"
+    },
+    {
+      "id": "P3",
+      "shape": "pyramid",
+      "topic": "net"
+    },
+    {
+      "id": "S1",
+      "shape": "cylinder",
+      "topic": "properties"
+    },
+    {
+      "id": "S2",
+      "shape": "cylinder",
+      "topic": "formula"
+    },
+    {
+      "id": "S3",
+      "shape": "cylinder",
+      "topic": "net"
+    }
+  ],
+  "v2_column_installed": false,
+  "readOnlyProbe": {
+    "observedAt": "2026-10-26T09:38:36.541064+00:00",
+    "status": 400,
+    "error": "invalid_request",
+    "protocolHeader": null,
+    "fixtureCreated": false
+  },
+  "productionChangesMade": []
+}

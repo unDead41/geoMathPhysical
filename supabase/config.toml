@@ -1,0 +1,17 @@
+# Review-only deployment package; production automation is NOT enabled by this file.
+project_id = "geodecoder-digital"
+
+[db]
+major_version = 17
+
+[db.seed]
+enabled = false
+
+[functions.geodecoder-auth]
+verify_jwt = false
+entrypoint = "../digital/backend/auth/index.ts"
+
+[functions.geodecoder-duel]
+# Preserve the observed hosted setting. Live publishable-key smoke passed.
+verify_jwt = true
+entrypoint = "../digital/backend/duel/functions/geodecoder-duel/index.ts"

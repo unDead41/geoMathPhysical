@@ -1,7 +1,9 @@
 import {USABILITY_COPY} from './usability-copy.mjs';
 import {PORTAL_COPY} from './portal-copy.mjs';
 import {ACCOUNT_COPY} from './account-copy.mjs';
+import {SESSION_COPY} from './session-copy.mjs';
 import {SETTINGS_COPY} from './settings.mjs';
+import {HELP_COPY} from './help-copy.mjs';
 // Local KSSM BM/English presentation data. No network translation. See docs/DWI_LANGUAGE.md.
 // Presentation emphasis follows DWI_GLOSSARY.md; these strings never select an answer.
 export const RICH_TERMS = {
@@ -913,7 +915,24 @@ const duelMessages = {
   'duel.error.rate_limited':['Terlalu banyak permintaan. Tunggu sebentar sebelum mencuba lagi.','Too many requests. Wait a moment before trying again.'],
   'duel.error.sequence_conflict':['Kemajuan berubah pada peranti ini. Sambung semula untuk menyelaraskannya.','Progress changed on this device. Reconnect to sync it.'],
   'duel.error.question_mismatch':['Soalan sedang diselaraskan. Tekan Sambung semula.','The question needs to sync. Press Reconnect.'],
-  'duel.syncing':['Mengesahkan dengan pelayan…','Confirming with the server…']
+  'duel.syncing':['Mengesahkan dengan pelayan…','Confirming with the server…'],
+  'duel.forfeited':['Menyerah kalah','Forfeited'],
+  'duel.finished':['Selesai menjawab','Finished answering'],
+  'duel.awayEstimated':['Tiada kemas kini terkini (anggaran)','No recent update (estimate)'],
+  'duel.lobbyRemaining':['PIN lobi sah untuk {time} lagi.','Lobby PIN expires in {time}.'],
+  'duel.matchRemaining':['Baki masa Duel: {time}','Duel time remaining: {time}'],
+  'duel.reviewRestored':['Semakan jawapan dipulihkan. Lihat pembetulan sebelum soalan seterusnya.','Answer review restored. Read the correction before the next question.'],
+  'duel.reviewClock':['Fahami padanannya dahulu. Masa Duel terus berjalan.','Study the matching pair first. The Duel clock keeps running.'],
+  'duel.resumeRoom':['Sambung Duel','Resume Duel'],
+  'duel.resumeNote':['Sesi Duel tersedia pada tab ini. Sambung untuk menyemak keadaan terkini.','A Duel session is available in this tab. Resume to check its current state.'],
+  'duel.curriculum':['Latihan padanan Tingkatan 2 · Bab 6: Bentuk Geometri Tiga Dimensi.','Form 2 matching practice · Chapter 6: Three-Dimensional Geometrical Shapes.'],
+  'duel.teacherTitle':['Panduan ringkas guru','Quick guide for teachers'],
+  'duel.teacherGuide':['Pasangkan dua murid. Minta seorang mencipta PIN dan berkongsi dengan pasangannya; kedua-duanya menekan Sedia. Selepas Duel, bincangkan pembetulan dan gunakan Latih soalan salah. Markah ini ialah latihan pengukuhan, bukan penentuan TP rasmi.','Pair two students. Ask one to create a PIN and share it with their partner; both press Ready. After the Duel, discuss corrections and use Practise missed questions. This is reinforcement practice, not an official mastery-level assessment.'],
+  'duel.error.client_update_required':['Versi Duel ini perlu dikemas kini. Muat semula laman atau gunakan fail HTML terkini.','This Duel version needs an update. Reload the site or use the latest HTML file.'],
+  'duel.error.backend_update_required':['Duel sedang menunggu kemas kini pelayan. Cuba lagi selepas kemas kini disahkan.','Duel is waiting for a server update. Try again once the update is confirmed.'],
+  'duel.error.invalid_response':['Keadaan Duel belum dapat disahkan. Sambung semula untuk menyelaraskannya.','The Duel state could not be confirmed. Reconnect to sync it.'],
+  'duel.error.sequence_mismatch':['Turutan tindakan berubah. Sambung semula sebelum menjawab.','The action sequence changed. Reconnect before answering.'],
+  'duel.error.stage_mismatch':['Semak langkah R1 atau R2, kemudian sambung semula.','Check the R1 or R2 step, then reconnect.']
 };
 for(const [key,[ms,en]] of Object.entries(duelMessages)){MESSAGES.ms[key]=ms;MESSAGES.en[key]=en;}
 const practiceMessages = {
@@ -958,8 +977,9 @@ for (const [key,[ms,en]] of Object.entries(moduleMessages)) {
 }
 for(const [key,[ms,en]] of Object.entries(USABILITY_COPY)){MESSAGES.ms[key]=ms;MESSAGES.en[key]=en;}
 for(const [key,en] of Object.entries(PORTAL_COPY)){MESSAGES.ms[key]=key;MESSAGES.en[key]=en;}
-for(const [key,en] of Object.entries(ACCOUNT_COPY))if(!Object.hasOwn(MESSAGES.ms,key)){MESSAGES.ms[key]=key;MESSAGES.en[key]=en;}
+for(const [key,en] of Object.entries({...ACCOUNT_COPY,...SESSION_COPY}))if(!Object.hasOwn(MESSAGES.ms,key)){MESSAGES.ms[key]=key;MESSAGES.en[key]=en;}
 for(const [key,[ms,en]] of Object.entries(SETTINGS_COPY)){MESSAGES.ms[key]=ms;MESSAGES.en[key]=en;}
+for(const [key,[ms,en]] of Object.entries(HELP_COPY)){MESSAGES.ms[key]=ms;MESSAGES.en[key]=en;}
 export const LANGUAGE_KEY = 'geodecoder.digital.language';
 export function createI18n(storage) {
   let language = 'ms';
@@ -981,6 +1001,7 @@ export function translate(language, key, params = {}) {
   return message.replace(/\{(\w+)\}/g, (_, name) => String(params[name] ?? ''));
 }
 export function localizeQuestion(question, language = 'ms') {
+  if(question?.copy){const text=question.copy[language]||question.copy.ms;return {...question,...text,lines:[...text.lines],hint:text.hint||''};}
   const text = language === 'en' ? QUESTION_COPY[question.id] : QUESTION_BM_COPY[question.id];
   const result={...question,...text,lines:[...(text?.lines||question.lines)]};
   if(text?.lines)result.prompt=result.lines.join(' ');

@@ -96,3 +96,20 @@ test('merged classroom, email and module SQL verification suites retain their ro
   }
  }finally{await db.close();}
 });
+
+test('class detail migration exposes teacher names only for authorized classes and preserves dispatcher',async()=>{
+ const db=await database();try{
+ await db.exec(read('profile_class_details_v2_7.sql'));await db.exec(read('profile_class_details_v2_7.sql'));
+ const student='71111111-1111-4111-8111-111111111111',teacher='72222222-2222-4222-8222-222222222222',other='73333333-3333-4333-8333-333333333333',a='74444444-4444-4444-8444-444444444444',b='75555555-5555-4555-8555-555555555555';
+ await db.exec(`insert into auth.users(id,email) values('${student}','student@test.invalid'),('${teacher}','teacher@test.invalid'),('${other}','other@test.invalid');
+ insert into private.profiles(id,username,display_name,role) values('${student}','student_qa','Murid QA','student'),('${teacher}','teacher_qa','Cikgu Hana','teacher'),('${other}','other_qa','Guru Lain','teacher');
+ insert into private.classes(id,teacher_id,name) values('${a}','${teacher}','2 STEM'),('${b}','${other}','Kelas Tersembunyi');
+ insert into private.class_members(class_id,user_id) values('${a}','${student}');`);
+ async function as(id,action='snapshot',payload={}){await db.query("select set_config('request.jwt.claims',$1,false)",[JSON.stringify({sub:id,role:'authenticated'})]);return(await db.query('select public.geo_action($1,$2::jsonb) as value',[action,JSON.stringify(payload)])).rows[0].value;}
+ await db.exec('set role authenticated');
+ const mine=await as(student);assert.equal(mine.classes.length,1);assert.equal(mine.classes[0].teacher_name,'Cikgu Hana');assert.equal(mine.classes[0].pin,null);assert.equal(JSON.stringify(mine.classes).includes('teacher@test.invalid'),false);assert.equal(JSON.stringify(mine).includes('Kelas Tersembunyi'),false);
+ const saved=await as(teacher,'update_profile',{display_name:'Cikgu Hana Baru',avatar:'cube'});assert.equal(saved.profile.display_name,'Cikgu Hana Baru');assert.equal((await as(student)).classes[0].teacher_name,'Cikgu Hana Baru');
+ assert.equal((await as(other)).classes[0].id,b);
+ await assert.rejects(db.query('select private.snapshot($1)',[teacher]),/permission denied/);
+ }finally{await db.close();}
+});

@@ -1,0 +1,28 @@
+GeoDecoder Digital · Report a problem · schema 1
+The report has not been sent. Copy or download it, then share it yourself with your teacher or support contact.
+
+Problem category: Game and questions
+
+Problem description:
+The scanner did not respond.
+
+Steps to reproduce:
+Select a card, then tap the scanner.
+
+Expected result:
+The card should be scanned.
+
+Actual result:
+The selected card stays on the shelf.
+
+Context when the form opened:
+App version: v2.7.0
+Build / source base: digitalized-utility-help-support / 790d989d666e64f3beabb507cd4140b832696367
+Screen: Home
+Mode: Not applicable
+App language: English
+Question ID: Not applicable
+Question stage: Not applicable
+Question state: Not applicable
+Viewport size (CSS px): 390 × 844
+Browser indication / last service response: Browser reports a network; Internet/API reachability is unverified / Service not verified in this context

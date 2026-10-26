@@ -1,0 +1,46 @@
+{
+  "runtime": "Chromium 153.0.8010.0",
+  "date": "2026-10-26",
+  "mode": "local browser; intercepted service transports; no hosted writes",
+  "cases": [
+    {
+      "case": "help-preview-download-keyboard-ms",
+      "passed": true
+    },
+    {
+      "case": "help-preview-download-keyboard-en",
+      "passed": true
+    },
+    {
+      "case": "clipboard-denied-long-validation-320-dark-150",
+      "passed": true,
+      "acceptedLength": 2000
+    },
+    {
+      "case": "offline-storage-denied-copy-solo-R1-R2-review",
+      "passed": true
+    },
+    {
+      "case": "module-iframe-prediction-active-tab-and-existing-guide-preserved",
+      "passed": true
+    },
+    {
+      "case": "Duel-clock-and-state-intercepted-transport",
+      "passed": true,
+      "actions": [
+        "state"
+      ]
+    },
+    {
+      "case": "classroom-clock-accepted-R1-hint-selection-intercepted-transport",
+      "passed": true,
+      "actions": [
+        "heartbeat",
+        "snapshot",
+        "join_room",
+        "snapshot",
+        "start_attempt"
+      ]
+    }
+  ]
+}

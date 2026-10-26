@@ -1,0 +1,50 @@
+EASE browser cases: navigation, quiz-review, practice-correct, practice-mixed, layout, dialog-race, drag, storage, account, classroom-fixture, classroom-errors-fixture, classroom-review-fixture, review-one-fixture
+EVIDENCE_DIRECTORY /workspace/scratch/0f4239410125/duel-worktree/digital/docs/ease-evidence/2026-10-26T09-57-49-600Z
+RUN navigation
+EVIDENCE docs/ease-evidence/2026-10-26T09-57-49-600Z/home-bm-desktop.png
+EVIDENCE docs/ease-evidence/2026-10-26T09-57-49-600Z/home-en-mobile.png
+EVIDENCE docs/ease-evidence/2026-10-26T09-57-49-600Z/tutorial-bm-mobile.png
+EVIDENCE docs/ease-evidence/2026-10-26T09-57-49-600Z/settings-en-mobile-150.png
+EVIDENCE docs/ease-evidence/2026-10-26T09-57-49-600Z/game-r1-bm-mobile.png
+EVIDENCE docs/ease-evidence/2026-10-26T09-57-49-600Z/game-r2-bm-mobile.png
+PASS navigation
+RUN quiz-review
+EVIDENCE docs/ease-evidence/2026-10-26T09-57-49-600Z/quiz-result-collapsed.png
+EVIDENCE docs/ease-evidence/2026-10-26T09-57-49-600Z/quiz-review-expanded-en-320-150.png
+EVIDENCE docs/ease-evidence/2026-10-26T09-57-49-600Z/review-practice-original-three.png
+PASS quiz-review
+RUN practice-correct
+EVIDENCE docs/ease-evidence/2026-10-26T09-57-49-600Z/rich-fraction-mobile-ms.png
+EVIDENCE docs/ease-evidence/2026-10-26T09-57-49-600Z/rich-fraction-mobile-en.png
+DETAIL all 15 IDs, 90 BM/English rich-text views, offline standalone with zero HTTP(S) requests
+PASS practice-correct
+RUN practice-mixed
+PASS practice-mixed
+RUN layout
+DETAIL 216 Home/game/result/Settings layout checks: 2 languages × 2 themes × 3 text sizes × 3 viewport widths
+PASS layout
+RUN dialog-race
+PASS dialog-race
+RUN drag
+PASS drag
+RUN storage
+PASS storage
+RUN account
+EVIDENCE docs/ease-evidence/2026-10-26T09-57-49-600Z/account-invalid-en-password-preserved.png
+PASS account
+RUN classroom-fixture
+EVIDENCE docs/ease-evidence/2026-10-26T09-57-49-600Z/classroom-teacher-fixture-en-320.png
+EVIDENCE docs/ease-evidence/2026-10-26T09-57-49-600Z/classroom-student-fixture-en-320.png
+DETAIL classroom views used read-only fixture transport; no live classroom account/backend/email
+PASS classroom-fixture
+RUN classroom-errors-fixture
+PASS classroom-errors-fixture
+RUN classroom-review-fixture
+DETAIL completed classroom-result fixture → exact wrong/skipped local review; no score/answer backend action
+PASS classroom-review-fixture
+RUN review-one-fixture
+EVIDENCE docs/ease-evidence/2026-10-26T09-57-49-600Z/review-one-question-result-en-mobile.png
+EVIDENCE docs/ease-evidence/2026-10-26T09-57-49-600Z/review-one-question-result-en-320-150.png
+DETAIL completed classroom-result fixture → exact wrong/skipped local review; no score/answer backend action
+PASS review-one-fixture
+RESULT 13/13 browser cases passed; 0 failures

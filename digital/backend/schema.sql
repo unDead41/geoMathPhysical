@@ -422,6 +422,7 @@ begin
       'email',(select u.email from auth.users u where u.id=p_user_id),
       'email_verified',(select u.email_confirmed_at is not null from auth.users u where u.id=p_user_id)),
     'classes',coalesce((select jsonb_agg(jsonb_build_object('id',c.id,'name',c.name,'teacher_id',c.teacher_id,
+      'teacher_name',(select teacher.display_name from private.profiles teacher where teacher.id=c.teacher_id),
       'pin',case when c.teacher_id=p_user_id then pin.pin end,
       'pin_expires_at',case when c.teacher_id=p_user_id then pin.expires_at end,
       'members',case when c.teacher_id=p_user_id then coalesce((select jsonb_agg(jsonb_build_object(

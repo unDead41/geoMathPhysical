@@ -1,5 +1,51 @@
 # GeoDecoder Digital changelog
 
+## v2.7.0 — 26 Oktober 2026 (integrasi main-digitalized)
+
+Modul v1.5.0 dan firmware v1.1.3 dikekalkan. Penerbitan awam dan deployment baharu memerlukan resit berasingan; bukti ujian setiap branch bukan pengesahan automatik hasil gabungan.
+
+### Duel protocol 2
+
+- Jawapan aktif dan future question IDs tidak dihantar; hint/correction menggunakan projek pelayan selepas ACK.
+- Semakan tahan refresh, advance idempotent, perlindungan polling/request lama dan terminal ACK selepas deadline.
+- Baki masa, status pemain, Home resume dan panduan guru. Pengaktifan backend/Edge diselaraskan mengikut docs/DUEL_V2_HANDOFF.md.
+
+### Profil
+
+- Pratonton nama/avatar, status draf, amaran keluar dengan Simpan/Teruskan, Buang atau Teruskan menyunting; tetapan mengekalkan draf.
+- Nama guru daripada snapshot yang dibenarkan, pintasan kelas/keselamatan serta aliran murid tanpa kelas.
+- Migration susulan profile_class_details_v2_7.sql hanya memperluas snapshot; deployment hosted perlu disahkan berasingan. Rujuk docs/PROFILE_V2_7.md.
+
+### Sesi aktif
+
+- Senarai sesi Auth sendiri, label Peranti ini, masa mula dan anggaran peranti/pelayar.
+- Pembatalan semua sesi lain atau sesi semasa melalui scope SDK, dengan pengesahan dan perlindungan pertukaran akaun.
+- Pembatalan satu sesi pilihan tidak disokong API rasmi; token akses boleh kekal sah sehingga luput.
+- Rekod deployment RPC baca sahaja dan batas bukti dua sesi live berada dalam docs/ACTIVE_SESSIONS.md; tiada dakwaan deployment baharu oleh integrasi ini.
+
+### Auth email v1.1.0
+
+- Lapan templat BM/English dalam reka bentuk geometry postcard, satu tindakan utama dan pautan alternatif berlabel; ConfirmationURL/OTP dikekalkan.
+- Sumber canonical, manifest subjek, generator, semakan dan pratonton setempat. Custom SMTP masih prasyarat pengaktifan hosted; tiada bukti penghantaran inbox daripada merge.
+
+### Pusat Bantuan & Lapor Masalah
+
+- Bantuan BM/English melalui header, Tetapan dan bridge modul; tutorial/panduan asal dikekalkan tanpa memuat semula aktiviti.
+- Borang validasi, pratonton, salin, pilih teks dan TXT setempat. Konteks allowlist tanpa jawapan, identiti, PIN atau credential; draf dalam memori tab.
+- Keadaan permainan/iframe dan polisi masa solo/kelas/Duel dikekalkan. Tiada endpoint atau penghantaran laporan baharu. Rujuk docs/HELP_SUPPORT_HANDOFF.md.
+
+### Simpan & Sambung
+
+- Kuiz10, Latihan15 dan latihan semula dipulihkan melalui enjin Game; snapshot berasingan bagi tetamu/setiap akaun.
+- Validasi bank/ruleset, replay jawapan, warna/pilihan kad serta baki semakan dikekalkan; masa ditutup tidak dikira.
+- Ringkasan sebelum sambung, pengesahan penggantian, mesej storan gagal/rosak dan ID keputusan stabil mengelakkan skor berganda.
+- Duel/classroom serta kemajuan modul kekal menggunakan pemilik storan/masa masing-masing. Rujuk docs/SAVE_RESUME.md.
+
+### Sejarah dan operasi backend
+
+- Sejarah migration Supabase yang dipin, audit, pelan deployment dan gate semakan history disepadukan tanpa menjadikan salinan fail sebagai arahan mengulang migration hosted.
+- Rujuk backend/operations/README.md untuk prasyarat, bukti dan sempadan operasi.
+
 ## v2.6.0 — 26 Oktober 2026 (main-digitalized)
 
 - Satukan branch digital: BM/English, rich text, latihan 15 soalan, Duel,

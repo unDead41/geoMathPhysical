@@ -1,0 +1,6 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> geodecoder-digital@2.7.0 check
+> node tools/check.mjs
+
+PASS: standalone syntax/assets, 150 unique IDs, ARIA references, bank fidelity, 10 SVG diagrams, design-token drift and accessibility baselines.

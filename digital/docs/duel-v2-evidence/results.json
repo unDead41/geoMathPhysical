@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-26T10:50:34.131Z",
+  "environment": "Chromium, two independent contexts, real Edge handler + isolated PGlite; no hosted writes",
+  "checks": [
+    "invalid PIN, escaped aliases, two-player lobby, third-player rejection, BM/EN and mobile 150%",
+    "common server start, current prompt only, no future IDs/answer/hint in player response",
+    "delayed accepted R1 survives opening a menu before ACK",
+    "refresh resumes accepted R1 using the Home resume action",
+    "lost R2 ACK retries without a second point",
+    "wrong-answer correction and server pacing survive refresh",
+    "network-offline pending R2 reconnects with the same operation",
+    "complete ten-question two-session match, 10–9 winner agrees on both clients",
+    "a wrong R1 restored after refresh is never labelled as accepted",
+    "fresh-PIN replay and confirmed departure produce one consistent forfeit result",
+    "server deadline settles unanswered questions and displays final results at 320 px / 150%",
+    "accepted answer with lost ACK replayed after deadline opens final results without scoring twice",
+    "no browser runtime errors; all browser traffic stayed on the isolated local fixture"
+  ],
+  "errors": [],
+  "limitations": [
+    "PGlite serializes SQL requests; not evidence of independent PostgreSQL row-lock contention.",
+    "Network offline was emulated, not a physical network test."
+  ]
+}

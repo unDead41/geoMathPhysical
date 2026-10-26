@@ -1,14 +1,43 @@
 # GeoDecoder Digital V2
 
-Versi Digital: **v2.6.0**. Branch integrasi: **main-digitalized**.
+> v2.7.0 is integrated source/candidate only. Production activation is pending explicit authorization for its new migration and Duel Edge deployment; live Pages remains v2.6.0. See [RELEASE_V2_7.md](docs/RELEASE_V2_7.md).
+
+Versi Digital: **v2.7.0**. Branch integrasi: **main-digitalized**.
+Asas keluaran terdahulu: v2.6.0. Penggabungan kod tidak membuktikan penerbitan Pages atau deployment backend baharu.
+
+Profil mempunyai pratonton draf dan pengesahan perubahan belum disimpan; lihat [kemas kini profil](docs/PROFILE_V2_7.md).
+Simpan & Sambung: Home → **Sambung permainan** memaparkan ringkasan sebelum memulihkan Kuiz10, Latihan15 atau latihan semula. Satu slot bagi tetamu/setiap akaun pada pelayar dan origin yang sama; bukan sync antara peranti. **Mula baharu** mengesahkan penggantian sesi belum selesai. Jika storan disekat/penuh, kekalkan halaman terbuka. Lihat [kontrak dan bukti](docs/SAVE_RESUME.md).
+Sejarah migration hosted dan semakan deployment boleh diaudit melalui [operasi backend](backend/operations/README.md); fail migration dalam Git bukan bukti deployment baharu.
+
 Modul pembelajaran: **v1.5.0**. Firmware kekal **v1.1.3**.
+
+Integrasi ini merangkumi Duel protocol 2. Pengaktifan memerlukan backend/Edge yang sepadan; rekod branch Duel tidak mendakwa deployment production.
+Lihat [handoff integrasi](docs/DUEL_V2_HANDOFF.md) sebelum merge atau deploy.
+
+Senarai Sesi Aktif menggunakan rekod Auth sebenar melalui RPC baca sahaja.
+Pembatalan semua sesi lain mengekalkan peranti ini; pembatalan satu sesi pilihan
+belum disokong API rasmi. Lihat [seni bina, deployment dan batas ujian](docs/ACTIVE_SESSIONS.md).
 
 Keluaran ini menyatukan BM/English, rich text, kuiz/latihan/duel, kemudahan
 penggunaan, modul geometri diperluas, aktiviti berpandu, Profil Saya,
 Kata Laluan & Keselamatan serta Tetapan Penggunaan.
 
-Rujukan sumber, perubahan, syarat database dan bukti pengesahan gabungan:
+Rujukan sejarah sumber, perubahan, syarat database dan bukti pengesahan v2.6.0:
 [RELEASE_V2_6.md](docs/RELEASE_V2_6.md).
+
+Pakej e-mel akaun: [Auth email v1.1.0](backend/email/README.md), pada branch
+`digitalized-utility-auth-email`. Lapan templat BM/English telah disediakan;
+dashboard masih memerlukan custom SMTP untuk mengaktifkan reka bentuk sendiri.
+Lihat [persediaan dan had penghantaran](docs/EMAIL_SETUP.md).
+
+## Pusat Bantuan & Lapor Masalah
+
+Buka Pusat Bantuan melalui header, Tetapan atau butang bantuan modul. Panduan
+BM/English mengguna semula tutorial dan tetapan sedia ada. Laporan mempunyai
+pratonton, Salin, Pilih teks dan muat turun TXT; tiada penghantaran automatik.
+Jangan masukkan maklumat peribadi atau rahsia dalam penerangan. Draf kekal
+dalam memori tab sahaja. Lihat [audit dan kontrak backend](docs/HELP_SUPPORT_AUDIT.md)
+dan [serahan serta ujian](docs/HELP_SUPPORT_HANDOFF.md).
 
 ## Laman GitHub Pages
 
@@ -17,19 +46,18 @@ Main terus: **[GeoDecoder Digital](https://undead41.github.io/geodecoder-digital
 Pautan itu menggunakan repository penerbitan berasingan. Push ke
 `main-digitalized` tidak dengan sendiri mengemas kini repository laman awam.
 Fail `index.html` di akar branch ini dan setiap HTML muat turun dibina daripada
-satu artifak v2.6.0 yang sama.
+satu artifak v2.7.0 yang sama selepas binaan.
 
-Penerbitan aktif menggunakan repository public `unDead41/geodecoder-digital`,
+Rekod penerbitan v2.6.0 menggunakan repository public `unDead41/geodecoder-digital`,
 branch **main-digitalized**, folder **/(root)**. Tetapan Pages telah disimpan dan
 disahkan selepas reload. Commit awam
 `f5e5e13edd4c3627282cdaca78870c13399ac915` mempunyai workflow
 [40272514912](https://github.com/unDead41/geodecoder-digital/actions/runs/40272514912)
-yang berjaya; HTTP/hash laman sepadan artifak yang diuji. Sumber kod aplikasi
-kekal `6246d06ab492a5b0ab3edb3d5ee7b25bcc84b081`.
+yang berjaya; HTTP/hash ketika itu sepadan artifak v2.6.0 yang diuji. Sumber kod keluaran tersebut ialah `6246d06ab492a5b0ab3edb3d5ee7b25bcc84b081`.
 
 Repository asal ini kekal private. Fail laman mengandungi frontend sahaja;
-database/Auth/Realtime kekal pada Supabase. Migration hosted profile/progress
-telah dipasang dan disahkan. Smoke test Chrome live mengesahkan Practice15
+database/Auth/Realtime kekal pada Supabase. Migration hosted profile/progress v2.6.0
+telah dipasang dan disahkan dalam rekod terdahulu. Smoke test Chrome live v2.6.0 mengesahkan Practice15
 memberi **1/15** bagi pasangan piramid yang tepat, modul v1.5.0 serta penyelarasan
 English/saiz teks. Lihat [rekod Pages](docs/GITHUB_PAGES.md) untuk resit dan
 had pengesahan.
@@ -65,7 +93,7 @@ Aktiviti, ukuran, tab dan kemajuan bentangan dikekalkan. Modul v1.5.0 dipinkan d
 Pilih **Main → Duel**, isi nama panggilan dan buka lobi. Pemain pertama cipta
 Duel, salin PIN enam digit dan kongsi kepada kawannya. Pemain kedua masukkan
 PIN itu. Kedua-duanya tekan **Sedia** untuk kira detik tiga saat. Dua pemain
-menerima sepuluh ID soalan dalam susunan yang sama. Markah tertinggi menang;
+menjawab sepuluh soalan dalam susunan yang sama; hanya soalan semasa dihantar oleh pelayan. Markah tertinggi menang;
 jika sama, masa tamat pelayan yang lebih pantas menang. Seri disokong.
 
 PIN lobi sah sepuluh minit; had perlawanan 15 minit. Jam Duel terus berjalan
@@ -73,8 +101,8 @@ semasa menu, semakan, tab tersembunyi dan sambungan terputus. Keluar sebelum
 selesai bermaksud menyerah kalah. SessionStorage membolehkan sambung semula
 selepas reload apabila dibenarkan pelayar. Alias dan tindakan Duel dihantar ke
 pelayan; kelas/kategori tidak dihantar. Keputusan Duel tidak masuk papan skor
-kuiz. Backend Duel sedia ada digunakan tanpa deployment baharu; kontrak dan
-sejarah pengesahan v1.5.0 berada dalam [DUEL.md](docs/DUEL.md).
+kuiz. Protocol 2 memerlukan migration dan Edge Function yang sepadan; lihat
+[handoff semasa](docs/DUEL_V2_HANDOFF.md). Sejarah pengesahan v1.5.0 berada dalam [DUEL.md](docs/DUEL.md).
 
 ## Guru
 

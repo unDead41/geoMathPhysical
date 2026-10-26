@@ -1,0 +1,53 @@
+{
+  "sourceBase": "790d989d666e64f3beabb507cd4140b832696367",
+  "target": "main-digitalized",
+  "digitalVersion": "2.7.0",
+  "moduleVersion": "1.5.0",
+  "firmwareVersion": "1.1.3",
+  "integratedBranches": [
+    {
+      "branch": "digitalize/security-activeSession",
+      "head": "5a7a26cb13244ab6ec3088465db0956adcfab89c"
+    },
+    {
+      "branch": "digitalized-core-backend",
+      "head": "02fced51fb8b23442e57eda2890ad3882952b496"
+    },
+    {
+      "branch": "digitalized-game-duel",
+      "head": "594bf6c8fcb3e9c1323f331e4274bf2df346b6d9"
+    },
+    {
+      "branch": "digitalized-utility-auth-email",
+      "head": "72473efaa5020d88fa339bf419c65805ba886deb"
+    },
+    {
+      "branch": "digitalized-utility-help-support",
+      "head": "c47ba4236bbf717a484b0639ac6976b604e3a13b"
+    },
+    {
+      "branch": "digitalized-utility-profile",
+      "head": "c08af6081af11913bc0815be44e5b42d03193290"
+    },
+    {
+      "branch": "digitalized-utility-save-resume",
+      "head": "c5a88add985dd6a65912945ac18df7d4782bc0b2"
+    }
+  ],
+  "verification": {
+    "appUnit": 345,
+    "helpBrowser": 7,
+    "soloBrowser": "BM/EN desktop/mobile, offline, storage denied, damaged save",
+    "duelBrowser": "two contexts with real Edge handler and isolated PGlite; 10-9 match, reload,replay,offline,forfeit,deadline",
+    "hostedMigrationRehearsal": "PASS; all changes rolled back",
+    "moduleUnit": 244
+  },
+  "production": {
+    "pendingMigration": "supabase/migrations/20261026105248_geodecoder_digital_v2_7_integration.sql",
+    "migrationApplied": false,
+    "duelEdgeDeployed": false,
+    "pagesPublished": false,
+    "publicHead": "f5e5e13edd4c3627282cdaca78870c13399ac915",
+    "reason": "Automatic approval review rejected new production migration; explicit authorization required. Existing waiting lobbies are stale, but no override attempted. Do not publish protocol2 frontend before matching backend."
+  }
+}

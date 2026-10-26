@@ -31,6 +31,9 @@ function providerFailure(error,phase) {
   return phase==='update'?failure('outcome-unknown','Keputusan perubahan belum dapat disahkan. Cuba log masuk menggunakan kata laluan baharu atau gunakan pautan reset sebelum mencuba lagi.'):failure('network','Sambungan keselamatan gagal. Semak Internet dan cuba lagi.');
 }
 export async function runAccountSecurity({config,createClient,getSession,fetcher=globalThis.fetch,signal,expectedIdentity},action,values={}) {
+  if(!['change-password','reset-password','logout-all','logout-others','logout-current'].includes(action))throw failure('invalid-input','Tindakan dibatalkan.');
+  if(action.startsWith('logout-')&&Object.keys(values).length)throw failure('invalid-input','Tindakan dibatalkan.');
+  const logoutScope=action==='logout-others'?'others':action==='logout-current'?'local':'global';
   if(action==='reset-password'&&(typeof values.password!=='string'||values.password.length<10||values.password.length>128))throw failure('invalid-input','Gunakan kata laluan antara 10 hingga 128 aksara.','password');
   if(action==='change-password') {
     if(typeof values.current_password!=='string'||!values.current_password||values.current_password.length>128)throw failure('invalid-input','Masukkan kata laluan semasa, maksimum 128 aksara.','current_password');
@@ -41,14 +44,14 @@ export async function runAccountSecurity({config,createClient,getSession,fetcher
   if(!identity||!original.access_token||!original.refresh_token)throw failure('session-expired','Sesi tamat. Log masuk semula sebelum mencuba lagi.');
   if(expectedIdentity&&identity!==expectedIdentity)throw failure('session-changed','Sesi akaun berubah. Log masuk semula untuk meneruskan.');
   const check=()=>{if(signal?.aborted)throw failure('cancelled','Tindakan dibatalkan.');if(securitySessionKey(getSession())!==identity)throw failure('session-changed','Sesi akaun berubah. Buka semula halaman keselamatan dan cuba lagi.');};
-  let phase='verify',reauthenticated=false,globalAcknowledged=false,cleaningUp=false,passwordChanged=false;
+  let phase='verify',reauthenticated=false,logoutAcknowledged=false,cleaningUp=false,passwordChanged=false;
   const requestSignal=signal?AbortSignal.any([signal,AbortSignal.timeout(20000)]):AbortSignal.timeout(20000);
   const client=createClient(config.url,config.publishableKey,{
     auth:{storageKey:'geodecoder.security.'+crypto.randomUUID(),persistSession:false,autoRefreshToken:false,detectSessionInUrl:false},
     global:{fetch:async(input,init)=>{
       const response=await fetcher(input,{...init,signal:cleaningUp?AbortSignal.timeout(5000):requestSignal});
       const url=new URL(typeof input==='string'?input:input.url);
-      if(url.origin===new URL(config.url).origin&&url.pathname==='/auth/v1/logout'&&url.searchParams.get('scope')==='global'&&response.ok)globalAcknowledged=true;
+      if(url.origin===new URL(config.url).origin&&url.pathname==='/auth/v1/logout'&&url.searchParams.get('scope')===logoutScope&&response.ok)logoutAcknowledged=true;
       return response;
     }}
   });
@@ -86,10 +89,12 @@ export async function runAccountSecurity({config,createClient,getSession,fetcher
       if(updated.data?.user?.id!==original.user.id)throw failure('outcome-unknown','Keputusan perubahan belum dapat disahkan. Log masuk semula menggunakan kata laluan baharu atau gunakan pautan reset.');
       passwordChanged=true;phase='logout';
     }
-    const result=await client.auth.signOut({scope:'global'});
+    const result=await client.auth.signOut({scope:logoutScope});
     check();
     if(result.error)throw providerFailure(result.error,phase);
-    if(!globalAcknowledged)throw failure('unconfirmed-logout','Log keluar semua peranti belum dapat disahkan. Log masuk semula dan cuba lagi.');
+    if(!logoutAcknowledged)throw failure('unconfirmed-logout',logoutScope==='global'?'Log keluar semua peranti belum dapat disahkan. Log masuk semula dan cuba lagi.':'Pembatalan sesi belum dapat disahkan. Muat semula senarai sebelum mencuba lagi.');
+    if(logoutScope==='others')return {otherSessionsSignedOut:true,message:'Pelayan telah membatalkan sesi lain. Peranti ini kekal log masuk. Token akses sedia ada boleh kekal sah sehingga luput.'};
+    if(logoutScope==='local')return {localSignedOut:true,message:'Pelayan telah membatalkan sesi peranti ini. Log masuk semula untuk meneruskan.'};
     return action==='reset-password'
       ? {passwordChanged:true,globalSignedOut:true,message:'Kata laluan sudah dikemas kini. Log masuk menggunakan kata laluan baharu.'}
       : {globalSignedOut:true,message:'Pelayan telah membatalkan sesi semua peranti. Token akses yang telah dikeluarkan mungkin kekal sah sehingga tamat tempoh.'};
