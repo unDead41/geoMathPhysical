@@ -18,7 +18,7 @@ function drawBadge(ctx,p,text) {
 export class ModelRenderer {
   constructor(canvas) {this.canvas=canvas;this.ctx=canvas.getContext('2d');this.hitFaces=[];this.meshKey='';this.mesh=null;}
   draw({shape,progress=0,yaw=.55,pitch=.35,zoom=1,labels=false,selected=null,mini=false,mesh:customMesh=null,fitMesh=null}) {
-    const ctx=this.ctx;if(!ctx)return;
+    const ctx=this.ctx;if(!ctx)return;const dark=globalThis.document?.documentElement?.getAttribute('data-theme')==='dark',edge=dark?'rgba(218,232,246,.8)':'rgba(24,51,75,.67)';
     const box=this.canvas.getBoundingClientRect(),w=box.width,h=box.height;
     if(w<=0||h<=0)return;
     const dpr=Math.min(2,window.devicePixelRatio||1),cw=Math.round(w*dpr),ch=Math.round(h*dpr);
@@ -55,10 +55,10 @@ export class ModelRenderer {
       if(Math.abs(vNormal[2])<.00001)continue;
       trace(ctx,pts);ctx.fillStyle=shade(f.color,brightness);if(!f.wire)ctx.fill();
       if(!f.outline&&!f.wire) {ctx.strokeStyle=ctx.fillStyle;ctx.lineWidth=.65;ctx.stroke();}
-      if(f.outline) {ctx.strokeStyle=f.warning?UI_TOKENS.danger:activeFace(f.id)?UI_TOKENS.primary:'rgba(24,51,75,.67)';ctx.lineWidth=activeFace(f.id)?3:mini?1:1.45;ctx.stroke();}
+      if(f.outline) {ctx.strokeStyle=f.warning?UI_TOKENS.danger:activeFace(f.id)?UI_TOKENS.primary:edge;ctx.lineWidth=activeFace(f.id)?3:mini?1:1.45;ctx.stroke();}
       if(f.rim) {
         ctx.beginPath();for(const [a,b] of f.rim){ctx.moveTo(...pts[a].slice(0,2));ctx.lineTo(...pts[b].slice(0,2));}
-        ctx.strokeStyle=activeFace(f.id)?UI_TOKENS.primary:'rgba(24,51,75,.6)';ctx.lineWidth=activeFace(f.id)?2.7:mini?.9:1.25;ctx.stroke();
+        ctx.strokeStyle=activeFace(f.id)?UI_TOKENS.primary:edge;ctx.lineWidth=activeFace(f.id)?2.7:mini?.9:1.25;ctx.stroke();
       }
       if(f.cut) {ctx.beginPath();for(const [a,b] of f.cut){ctx.moveTo(...pts[a].slice(0,2));ctx.lineTo(...pts[b].slice(0,2));}if(f.cutUnderlay){ctx.strokeStyle='#F3F7FB';ctx.lineWidth=3.5;ctx.stroke();}ctx.strokeStyle='#526A7D';ctx.setLineDash([4,3]);ctx.lineWidth=1;ctx.stroke();ctx.setLineDash([]);}
       this.hitFaces.push({id:f.id,pts});
@@ -78,9 +78,9 @@ export class ModelRenderer {
   }
   pick(x,y) {for(const f of [...this.hitFaces].reverse())if(polygonContains(f.pts,x,y))return f.id;return null;}
   drawCompass(ctx,w,h,yaw,pitch) {
-    const x=Math.min(64,w*.26),y=h-44;
+    const x=Math.min(64,w*.26),y=h-44,dark=globalThis.document?.documentElement?.getAttribute('data-theme')==='dark';
     ctx.font='12px "Segoe UI",sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
-    for(const [dir,name,color] of [[[1,0,0],'Kanan','#2C6BC5'],[[0,1,0],'Atas','#237E6C'],[[0,0,1],'Depan','#A84C78']]) {
+    for(const [dir,name,color] of [[[1,0,0],'Kanan',dark?'#8BB5FF':'#2C6BC5'],[[0,1,0],'Atas',dark?'#88DFC0':'#237E6C'],[[0,0,1],'Depan',dark?'#F5B5D5':'#A84C78']]) {
       const p=viewPoint(dir,yaw,pitch),end=[x+p[0]*22,y-p[1]*22];ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(...end);ctx.strokeStyle=color;ctx.lineWidth=1.6;ctx.stroke();ctx.fillStyle=color;ctx.fillText(name,end[0]+p[0]*7,end[1]-p[1]*7);
     }
   }

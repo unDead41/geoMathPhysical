@@ -90,6 +90,7 @@
   --motion-hold:1000ms;
   --motion-maxFrame:100ms;
 }
+:root[data-theme="dark"]{color-scheme:dark;--primary:#8BB5FF;--primary-dark:#BCD3FF;--primary-pressed:#A7C7FF;--on-primary:#152536;--ink:#E1EAF4;--bg:#152536;--surface:#1E3349;--success:#88DFC0;--danger:#FFA9A6;--muted:#B3C5D8;--border:#425C76;--border-control:#91A8BF;--blue-soft:#263F60;--mint-soft:#23483F;--danger-soft:#4B3038;--hover:#263F60;--selected:#263F60;--stage-bg:#152536;--stage-dot:#425C76;--scroll-track:#152536;--scroll-thumb:#91A8BF;--scroll-hover:#B3C5D8;--scroll-active:#E1EAF4;}
 
 </style>
   <style>
@@ -545,6 +546,34 @@ footer{max-width:var(--page-max);margin:auto;padding:var(--space-5) var(--space-
 .extra-shape-field{display:flex;align-items:center;justify-content:flex-end;gap:12px;margin:-3px 0 22px;font-size:var(--text-caption);color:var(--muted)}.extra-shape-field label{font-weight:650}.extra-shape-field select{max-width:360px;min-width:0;min-height:44px;padding:9px 12px;border:1px solid var(--border);border-radius:9px;background:var(--surface);color:var(--ink);font:var(--text-small) var(--font-body)}#no-net-note{margin:15px 24px;padding:13px 16px;background:var(--mint-soft);border:1px solid var(--border);border-radius:10px;font-size:var(--text-small);line-height:1.8}.compare-amount{border:1px solid var(--border);border-radius:11px;padding:12px 15px;margin:17px 0;background:var(--bg)}.compare-amount legend{font-size:var(--text-caption);font-weight:700;padding:0 5px}.compare-amount-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(75px,.6fr);gap:10px}.compare-amount label{display:block;font-size:var(--text-caption);font-weight:650}.compare-amount input,.compare-amount select{display:block;width:100%;min-width:0;min-height:44px;border:1px solid var(--border);border-radius:8px;padding:9px;background:var(--surface);font:var(--text-small) var(--font-body);color:var(--ink);margin-top:7px}.compare-amount input[aria-invalid="true"]{border-color:var(--danger)}#compare-amount-error{color:var(--danger);font-size:var(--text-caption);margin-top:6px}.compare-transfer-panel{border:1px solid var(--border);border-radius:11px;margin:17px 0;padding:0 14px}.compare-transfer-panel>summary{font-size:var(--text-small);font-weight:700;min-height:46px;padding:14px 0;cursor:pointer}#compare-ledger{border-left:3px solid var(--primary);padding-left:11px;overflow-wrap:anywhere}.workshop-toggle{display:flex;align-items:center;gap:8px;font-size:var(--text-small);min-height:44px}.workshop-toggle input{width:17px;height:17px;accent-color:var(--primary)}
 @media(max-width:540px){.extra-shape-field{align-items:stretch;flex-direction:column;gap:7px;margin:0 0 17px}.extra-shape-field select{max-width:none;width:100%}.compare-amount{padding:12px}.compare-amount-row{gap:8px}#no-net-note{margin:14px;font-size:var(--text-caption)}.compare-transfer-panel{padding:0 12px}}
 
+/* Guided v1.5 learning controls; existing v1.4 layout and tokens remain canonical. */
+.module-tools,.motion-tools{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin:10px 0}.module-tools{justify-content:flex-end}.module-tools button,.motion-tools button,.speech-panel button{padding:10px 14px;min-height:44px;border:1px solid var(--border);border-radius:9px;background:var(--surface);font-size:12px}.motion-tools{padding:8px 16px;margin:0;border-bottom:1px solid var(--border);font-size:12px}.motion-tools select,#lab-speed{padding:8px;min-height:42px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--ink);font:inherit}.progress-summary{padding:16px 20px;margin:10px 0 22px;border:1px solid var(--border);border-radius:12px;background:var(--surface);font-size:13px;overflow-wrap:anywhere}.progress-summary p{margin:7px 0}.progress-summary small{color:var(--muted);font-size:11px}.guided-panel{padding:20px;margin-bottom:18px;border:1px solid var(--primary);border-radius:16px;background:var(--surface);font-size:13px;line-height:1.8}.guided-panel h3{font-size:18px;margin-bottom:12px}.guided-panel p{margin:10px 0;overflow-wrap:anywhere}.guided-panel label{display:block;font-size:12px;font-weight:700;margin:12px 0 6px}.guided-panel textarea,.guided-panel input,.guided-panel select{display:block;width:100%;min-width:0;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;resize:vertical}.guided-panel button{margin-top:9px;white-space:normal}.guided-panel textarea:focus-visible{outline:3px solid var(--primary);outline-offset:3px}#guided-stage{font-weight:700;color:var(--primary)}#guided-feedback{min-height:42px;color:var(--success)}.net-cell[data-overlap="true"]{outline:3px solid var(--danger);outline-offset:-3px}.lab-controls{min-width:0}.speech-panel{margin:24px auto;padding:20px;max-width:1180px;border:1px solid var(--border);border-radius:14px;background:var(--surface);font-size:13px}.speech-panel p{margin-top:10px;line-height:1.8;overflow-wrap:anywhere}#speech-status{font-size:11px;color:var(--muted)}
+[data-theme="dark"] .site-header,[data-theme="dark"] .stage,[data-theme="dark"] .shape-choice,[data-theme="dark"] .guide,[data-theme="dark"] .think-card,[data-theme="dark"] .mistake-reference,[data-theme="dark"] .composite-example{background:var(--surface);color:var(--ink);border-color:var(--border)}[data-theme="dark"] canvas{background:var(--bg)}[data-theme="dark"] .shape-choice[aria-pressed="true"],[data-theme="dark"] .example-answer{background:var(--blue-soft)}[data-theme="dark"] .net-cell{color:#18334B}[data-theme="dark"] .net-cell[aria-pressed="false"]{color:var(--ink)}[data-theme="dark"] .area-piece>i{border-color:var(--ink)}
+/* Focus keeps camera, playback, and the challenge next to the enlarged model. */
+[data-focus="true"] .intro,[data-focus="true"] .learning-notes,[data-focus="true"] .guide,[data-focus="true"] .progress-summary{display:none}[data-focus="true"] .learning-layout{grid-template-columns:minmax(0,1fr)}[data-focus="true"] #model-canvas{height:min(65vh,680px)}[data-focus="true"] .lab-layout{grid-template-columns:minmax(0,1.65fr) minmax(270px,1fr)}[data-focus="true"] #labs-canvas{height:min(60vh,620px)}[data-focus="true"] .module-tools{position:sticky;top:0;z-index:5;background:var(--bg);padding:6px}
+@media(max-width:760px){[data-focus="true"] .lab-layout{grid-template-columns:1fr}[data-focus="true"] #labs-canvas{height:50vh;min-height:280px}.speech-panel{margin:20px 16px}.module-tools button{flex:1}.guided-panel{padding:17px}.motion-tools{gap:6px}.motion-tools button{flex:1}.progress-summary{padding:14px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+
+/* Pale dark-theme accents need dark text only when they fill a primary button. */
+[data-theme="dark"] .mode-switch button:hover,[data-theme="dark"] .think-options button:hover{background:var(--blue-soft)}
+[data-theme="dark"] .mode-switch button[aria-pressed="true"]{background:var(--surface)}
+[data-theme="dark"] .face-number,[data-theme="dark"] .net-drag-ghost{color:#18334B}
+[data-theme="dark"] .stage-bottom{background:var(--surface);border-color:var(--border)}
+[data-theme="dark"] .note-table tbody tr:nth-child(even){background:var(--bg)}
+/* Embedded 320px pages can leave less than 300px inside the iframe. */
+@media(max-width:360px){.site-header{flex-wrap:wrap;column-gap:6px;row-gap:6px}.header-meta{min-width:0;max-width:100%;flex-wrap:wrap}}
+
+.module-tools button,.motion-tools button,.speech-panel button{font-size:var(--text-small);min-height:var(--control-size);border-color:var(--border-control);border-radius:var(--radius-control)}
+.progress-summary,.guided-panel,.speech-panel{font-size:var(--text-small);border-radius:var(--radius)}
+.progress-summary small,#speech-status,.guided-panel label{font-size:var(--text-caption)}
+.guided-panel textarea,.guided-panel input,.guided-panel select,.motion-tools select{min-height:var(--control-size);border-color:var(--border-control)}
+.guided-panel h3{font-size:var(--text-subheading)}
+#guided-scope{padding:var(--space-3);background:var(--blue-soft);color:var(--ink);border-radius:var(--radius-small)}
+[data-theme="dark"] .lab-stage,[data-theme="dark"] .compare-card,[data-theme="dark"] .study-tag{background:var(--surface);color:var(--ink)}
+@media(max-width:600px){.module-tools,.motion-tools,.lab-tempo{flex-wrap:wrap}.guided-panel,.speech-panel{padding:var(--space-4)}.module-tools button{flex:1}.motion-tools>*{max-width:100%}}
+
+[data-theme="dark"] #notes-diagram{background:#F3F7FB;border-radius:var(--radius-small)}
+
 .studio-connections{display:flex;flex-direction:column;gap:8px;margin:17px 0}.studio-connection{border:1px solid var(--border);border-radius:8px;padding:0 10px}.studio-connection>summary{font-size:var(--text-caption);font-weight:700;min-height:44px;padding:11px 0;cursor:pointer}.studio-connection label{display:block;font-size:var(--text-caption);font-weight:700;margin:9px 0 6px}.studio-connection select{display:block;width:100%;min-width:0;min-height:44px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--ink);font:var(--text-small) var(--font-body);padding:8px;margin-bottom:12px}.net-print-preview{max-height:340px;overflow:auto;border:1px solid var(--border);border-radius:10px;background:white;margin-top:14px}.net-print-preview>svg{display:block;width:100%;height:auto;min-width:200px}.net-print-grid-toggle{display:flex;align-items:center;gap:8px;font-size:var(--text-small);min-height:36px}.net-print-grid-toggle input{width:16px;height:16px;accent-color:var(--primary)}.net-print-sheet{display:none}#net-print-mount{margin-top:22px;padding-top:20px;border-top:1px solid var(--border)}#net-print-mount h4{margin:0 0 8px;font-size:var(--text-body)}.net-print-preview:empty{display:none}
 @page{size:A4 portrait;margin:10mm}
 @media print{body[data-net-printing="true"]{margin:0!important;padding:0!important;background:white!important}body[data-net-printing="true"]>*{display:none!important}body[data-net-printing="true"]>#net-print-sheet{display:block!important;margin:0!important;padding:0!important;border:0!important;background:white!important;max-width:none!important;width:190mm!important}body[data-net-printing="true"]>#net-print-sheet>svg{display:block!important;width:auto!important;height:auto!important;max-width:none!important}}
@@ -555,10 +584,12 @@ footer{max-width:var(--page-max);margin:auto;padding:var(--space-5) var(--space-
   <a class="skip" href="#main">Terus ke modul</a>
   <header class="site-header">
     <a href="#main" class="brand" aria-label="GeoDecoder Digital, modul pembelajaran"><svg viewBox="0 0 40 44" aria-hidden="true"><path d="m20 2 17 10v20L20 42 3 32V12Z" fill="#215FF0"/><path d="m20 2 17 10-17 10L3 12Z" fill="#6EAAFF"/><path d="m20 22 17-10v20L20 42Z" fill="#1847B0"/><path d="m11 17 9 5 9-5M20 22v10" stroke="white" stroke-width="2" fill="none"/></svg><span>Geo<span class="brand-blue">Decoder</span><small>DIGITAL · MODUL PEMBELAJARAN</small></span></a>
-    <span id="version" class="version">V1.4.0</span>
+    <span id="version" class="version">V1.5.0</span>
     <div class="header-meta"><span class="offline"><i></i>Tanpa Internet</span><a href="#panduan" class="help-link">Panduan <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a></div>
   </header>
   <main id="main">
+    <div class="module-tools" role="group" aria-label="Pilihan paparan"><button id="module-theme" aria-pressed="false">Tema gelap</button><button id="module-focus" aria-pressed="false">Fokus model</button></div>
+    <section class="progress-summary" aria-label="Ringkasan empat aktiviti"><b id="module-count">0 / 4 aktiviti selesai</b><p id="module-summary">Bentangan: belum · Isi padu: belum · Luas: belum · Gabungan: belum</p><small>Rekod latihan kendiri; bukan pengesahan penguasaan atau gred TP. Ulang aktiviti mengekalkan pencapaian.</small></section>
     <div class="intro"><div><p class="eyebrow">MAKMAL BONGKAH · KSSM</p><h1>Lihat. Buka. <span>Fahami.</span></h1><p>Teroka bongkah, bentangan dan pandangan 2D. Fahami luas permukaan serta isi padu melalui nota dan contoh.</p></div><span class="self-paced"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 5 9 3 9-3v14l-9 3-9-3V5Zm9 3v14"/></svg>Belajar ikut rentak sendiri</span></div>
     <nav class="learning-navigation" aria-label="Bahagian pembelajaran"><button id="learn-explore" class="learning-nav-button" aria-pressed="true"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 9 5v9l-9 5-9-5V8l9-5Zm0 10 9-5M3 8l9 5v9"/></svg>Teroka 3D</button><button id="learn-notes" class="learning-nav-button" aria-pressed="false"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5c3-1 6 0 9 2 3-2 6-3 9-2v15c-3-1-6 0-9 2-3-2-6-3-9-2V5Zm9 2v15"/></svg>Nota pembelajaran <span>KSSM</span></button><button id="learn-labs" class="learning-nav-button" aria-pressed="false"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3M8 15h8"/></svg>Makmal interaktif <span>4 AKTIVITI</span></button></nav>
     <nav id="shape-picker" class="shape-picker" aria-label="Pilih bongkah"></nav><div id="extra-shape-field" class="extra-shape-field"><label for="extra-shape-select">Bentuk tambahan untuk pembelajaran</label><select id="extra-shape-select"><option value="">Pilih prisma, piramid segi tiga atau sfera…</option></select></div>
@@ -567,7 +598,7 @@ footer{max-width:var(--page-max);margin:auto;padding:var(--space-5) var(--space-
         <div class="workspace-top"><div><span class="mini-label">RUANG PENEROKAAN</span><h2 id="model-title" tabindex="-1">Kubus</h2></div><div class="mode-switch" role="group" aria-label="Jenis penerokaan"><button id="mode-model" aria-pressed="true">Model &amp; bentangan</button><button id="mode-views" aria-pressed="false">Pandangan 2D</button></div></div>
         <div id="stage" class="stage">
           <div class="stage-top"><span id="stage-label" class="stage-label">Bongkah 3D</span><div class="stage-tools"><button id="zoom-out" class="icon-button" aria-label="Zum keluar" title="Zum keluar"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button><output id="zoom-level" aria-live="off">100%</output><button id="zoom-in" class="icon-button" aria-label="Zum masuk" title="Zum masuk"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button><button id="reset" class="icon-button" aria-label="Kedudukan asal" title="Kedudukan asal"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5m-4-4a8 8 0 0 1 13-3l2 3M4 16l2 3a8 8 0 0 0 13-3"/></svg></button></div></div>
-          <canvas id="model-canvas" tabindex="0" role="img" aria-label="Model interaktif kubus" aria-describedby="canvas-help">Model bongkah boleh diteroka menggunakan kawalan di bawah. Penerangan muka tersedia di sebelah model.</canvas>
+          <div class="motion-tools"><label for="explore-speed">Kelajuan animasi</label><select id="explore-speed"><option value="1">1×</option><option value="0.5">0.5×</option></select><button id="explore-next">Langkah seterusnya</button></div><canvas id="model-canvas" tabindex="0" role="img" aria-label="Model interaktif kubus" aria-describedby="canvas-help">Model bongkah boleh diteroka menggunakan kawalan di bawah. Penerangan muka tersedia di sebelah model.</canvas>
           <p id="canvas-help" class="canvas-help">Seret untuk putar · Cubit atau roda tetikus untuk zum<span>Anak panah: putar · + / −: zum · Home: asal</span></p>
           <div class="stage-bottom"><label class="toggle"><input id="labels" type="checkbox"><span>Label pada model</span></label><button id="auto-rotate" class="rotate-toggle" aria-pressed="true"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5m-4-4a8 8 0 0 1 13-3l2 3M4 16l2 3a8 8 0 0 0 13-3"/></svg><span>Hentikan putaran</span></button></div><div class="explore-camera camera-toolbar" role="group" aria-label="Kawalan arah model"><span class="camera-group-label">Putar model</span><div class="camera-group"><button id="orbit-left" class="icon-button" aria-label="Putar bongkah ke kiri" title="Putar ke kiri"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></button><button id="orbit-right" class="icon-button" aria-label="Putar bongkah ke kanan" title="Putar ke kanan"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m10 6 6 6-6 6"/></svg></button><button id="orbit-up" class="icon-button" aria-label="Putar bongkah ke atas" title="Putar ke atas"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 14 6-6 6 6"/></svg></button><button id="orbit-down" class="icon-button" aria-label="Putar bongkah ke bawah" title="Putar ke bawah"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 10 6 6 6-6"/></svg></button></div></div>
         </div>
@@ -621,9 +652,10 @@ footer{max-width:var(--page-max);margin:auto;padding:var(--space-5) var(--space-
       <div class="labs-heading"><p class="eyebrow">BELAJAR MELALUI PERBUATAN · TANPA MARKAH</p><h2 id="labs-title" tabindex="-1">Makmal interaktif</h2><p>Pilih aktiviti. Bina, ubah ukuran dan terangkan apa yang anda perhatikan.</p></div>
       <nav class="lab-choices" aria-label="Pilih makmal"><button id="lab-net" aria-pressed="true"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 2h8v20H8V2ZM2 8h20v8H2V8Z"/></svg><span>Bina bentangan<small>9 siap · studio 7 poliedron</small></span></button><button id="lab-volume" aria-pressed="false"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v15H4V5Zm0 5h16M4 15h16M9 5v15M15 5v15"/></svg><span>Makmal isi padu<small>Isi A, B atau kedua-dua</small></span></button><button id="lab-area" aria-pressed="false"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4V4Zm5 0v5H4m11-5v5h5M9 20v-5H4m11 5v-5h5"/></svg><span>Terbitkan rumus<small>Jejaki setiap permukaan</small></span></button><button id="lab-composite" aria-pressed="false"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v11H3V10Zm0 0h18M12 10v11"/></svg><span>Bongkah gabungan<small>Cari permukaan luar</small></span></button></nav>
       <div class="lab-intro"><div><h3 id="lab-title">Teroka dan bina bentangan</h3><p id="lab-intro"></p></div></div>
-      <div class="lab-guide" aria-label="Langkah aktiviti"><ol id="lab-steps"></ol><p id="lab-next-step" role="status"></p></div><div class="lab-layout"><div class="lab-scene-column"><div class="lab-stage"><div class="lab-stage-header"><span id="lab-scene-label">BENTANGAN KUBUS</span><span id="lab-zoom-level">100%</span></div><div id="lab-playback" class="lab-playback"><div class="lab-tempo"><label for="lab-speed">Kelajuan<select id="lab-speed"><option value="0.5" selected>Perlahan · disyorkan</option><option value="0.25">Sangat perlahan</option><option value="1">Biasa</option></select></label><button id="lab-pause" class="button" disabled><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg><span>Jeda animasi</span></button></div><p id="lab-motion-state" class="lab-motion-state"></p><div id="lab-slider-wrap"><div class="timeline-label"><label id="lab-progress-label" for="lab-progress">Kemajuan</label><output id="lab-progress-value">0%</output></div><input id="lab-progress" type="range" min="0" max="1000" step="1" value="0"></div></div><canvas id="labs-canvas" tabindex="0" role="img" aria-label="Paparan interaktif makmal" aria-describedby="lab-caption">Model makmal diterangkan dalam penerangan dan keputusan di bawah.</canvas><p class="lab-drag-hint">Seret model untuk putar · Anak panah: putar · + / −: zum</p><div class="lab-camera camera-toolbar" role="group" aria-label="Kawalan kamera makmal"><div class="camera-group"><span class="camera-group-label">Putar</span><button id="lab-left" class="icon-button" aria-label="Putar model ke kiri" title="Putar ke kiri"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></button><button id="lab-right" class="icon-button" aria-label="Putar model ke kanan" title="Putar ke kanan"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m10 6 6 6-6 6"/></svg></button><button id="lab-up" class="icon-button" aria-label="Putar model ke atas" title="Putar ke atas"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 14 6-6 6 6"/></svg></button><button id="lab-down" class="icon-button" aria-label="Putar model ke bawah" title="Putar ke bawah"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 10 6 6 6-6"/></svg></button></div><div class="camera-group"><span class="camera-group-label">Zum</span><button id="lab-zoom-out" class="icon-button" aria-label="Zum keluar makmal" title="Zum keluar"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button><button id="lab-zoom-in" class="icon-button" aria-label="Zum masuk makmal" title="Zum masuk"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button></div><button id="lab-reset-camera"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5m-4-4a8 8 0 0 1 13-3l2 3M4 16l2 3a8 8 0 0 0 13-3"/></svg>Kamera asal</button></div></div><p id="lab-caption" class="lab-caption"></p>
+      <div class="lab-guide" aria-label="Langkah aktiviti"><ol id="lab-steps"></ol><p id="lab-next-step" role="status"></p></div><div class="lab-layout"><div class="lab-scene-column"><div class="lab-stage"><div class="lab-stage-header"><span id="lab-scene-label">BENTANGAN KUBUS</span><span id="lab-zoom-level">100%</span></div><div id="lab-playback" class="lab-playback"><div class="lab-tempo"><label for="lab-speed">Kelajuan<select id="lab-speed"><option value="0.5" selected>Perlahan · disyorkan</option><option value="0.25">Sangat perlahan</option><option value="1">Biasa</option></select></label><button id="lab-next" class="button">Langkah seterusnya</button><button id="lab-pause" class="button" disabled><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg><span>Jeda animasi</span></button></div><p id="lab-motion-state" class="lab-motion-state"></p><div id="lab-slider-wrap"><div class="timeline-label"><label id="lab-progress-label" for="lab-progress">Kemajuan</label><output id="lab-progress-value">0%</output></div><input id="lab-progress" type="range" min="0" max="1000" step="1" value="0"></div></div><canvas id="labs-canvas" tabindex="0" role="img" aria-label="Paparan interaktif makmal" aria-describedby="lab-caption">Model makmal diterangkan dalam penerangan dan keputusan di bawah.</canvas><p class="lab-drag-hint">Seret model untuk putar · Anak panah: putar · + / −: zum</p><div class="lab-camera camera-toolbar" role="group" aria-label="Kawalan kamera makmal"><div class="camera-group"><span class="camera-group-label">Putar</span><button id="lab-left" class="icon-button" aria-label="Putar model ke kiri" title="Putar ke kiri"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></button><button id="lab-right" class="icon-button" aria-label="Putar model ke kanan" title="Putar ke kanan"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m10 6 6 6-6 6"/></svg></button><button id="lab-up" class="icon-button" aria-label="Putar model ke atas" title="Putar ke atas"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 14 6-6 6 6"/></svg></button><button id="lab-down" class="icon-button" aria-label="Putar model ke bawah" title="Putar ke bawah"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 10 6 6 6-6"/></svg></button></div><div class="camera-group"><span class="camera-group-label">Zum</span><button id="lab-zoom-out" class="icon-button" aria-label="Zum keluar makmal" title="Zum keluar"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button><button id="lab-zoom-in" class="icon-button" aria-label="Zum masuk makmal" title="Zum masuk"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button></div><button id="lab-reset-camera"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5m-4-4a8 8 0 0 1 13-3l2 3M4 16l2 3a8 8 0 0 0 13-3"/></svg>Kamera asal</button></div></div><p id="lab-caption" class="lab-caption"></p>
         <p id="lab-outcome" class="lab-outcome" role="status"></p>
       </div><div class="lab-control-column">
+        <section id="guided-panel" class="guided-panel" aria-labelledby="guided-title"><h3 id="guided-title">Ramalkan → Cuba → Semak → Terangkan</h3><p id="guided-scope" class="lab-note"></p><p id="guided-challenge"></p><p id="guided-stage" role="status"></p><label for="guided-prediction">1. Ramalkan sebelum mencuba (maksimum 240 aksara)</label><textarea id="guided-prediction" maxlength="240" rows="2"></textarea><button id="guided-begin" class="button primary">Simpan ramalan &amp; mula cabaran</button><p id="guided-observation">2. Cuba menggunakan kawalan makmal di bawah.</p><label id="guided-question" for="guided-answer">3. Semak kefahaman</label><input id="guided-answer" type="text" inputmode="decimal" maxlength="80"><select id="guided-term" aria-label="Pilih sebab atau sebutan rumus"></select><button id="guided-check" class="button">Semak jawapan</button><label for="guided-explanation">4. Terangkan pemerhatian dengan ayat sendiri (maksimum 600 aksara)</label><textarea id="guided-explanation" maxlength="600" rows="3"></textarea><button id="guided-complete" class="button primary">Simpan penerangan &amp; selesai</button><p id="guided-feedback" role="status" aria-live="polite"></p><div class="lab-actions"><button id="lab-undo" class="button">Undur edit</button><button id="lab-retry" class="button">Ulang aktiviti</button></div></section>
         <section id="lab-net-panel" class="lab-control-panel" aria-label="Aktiviti bina bentangan"><div class="net-mode-switch" role="group" aria-label="Cara meneroka bentangan"><button id="net-mode-gallery" aria-pressed="true">Bentangan siap</button><button id="net-mode-editor" aria-pressed="false">Susun petak kubus</button><button id="net-mode-studio" aria-pressed="false">Studio sambungan muka</button></div><div id="net-preset-panel"><div class="lab-field"><label for="net-preset">Pilih bentangan siap</label><select id="net-preset"></select></div><p id="net-preset-tag" class="preset-tag"></p><p id="net-preset-summary"></p><div id="net-preset-faces" class="face-legend" role="group" aria-label="Jejaki muka bentangan siap"></div><p class="lab-note">Pilih contoh, kemudian tekan Lipat perlahan. Tukar contoh untuk kembali kepada bentangan rata. Untuk menyusun sendiri, pilih Susun petak kubus.</p></div><div id="net-editor-panel" hidden><p class="eyebrow">1 · SUSUN ENAM MUKA</p><p>Tekan petak untuk tambah atau buang muka. Seret muka bernombor ke petak kosong, atau gunakan butang arah di bawah grid.</p><div class="lab-field"><label for="net-example">Susunan contoh</label><select id="net-example"><option value="cross">Bentangan sah</option><option value="overlap">Susunan bertindih</option></select></div><div class="net-grid-heading"><b id="net-count">6 / 6 muka</b><button id="net-clear" class="text-button">Kosongkan grid</button></div><div id="net-drag-ghost" class="net-drag-ghost" aria-hidden="true" hidden></div><div id="net-grid" class="net-grid" role="group" aria-label="Grid bentangan kubus 6 kali 6"></div><div class="net-move"><label for="net-selected">Pindahkan muka</label><select id="net-selected" aria-label="Muka untuk dipindahkan"></select><div role="group" aria-label="Pindah muka satu petak"><button id="net-left" aria-label="Pindah muka ke kiri"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></button><button id="net-right" aria-label="Pindah muka ke kanan"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m10 6 6 6-6 6"/></svg></button><button id="net-up" aria-label="Pindah muka ke atas"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 14 6-6 6 6"/></svg></button><button id="net-down" aria-label="Pindah muka ke bawah"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 10 6 6 6-6"/></svg></button></div></div><p class="lab-note">Dua petak mesti bertemu pada satu sisi penuh. Enam petak sahaja belum tentu menghasilkan kubus. Aktiviti bina sendiri ini memfokuskan kubus.</p></div><div id="net-studio-mount" hidden></div><div class="lab-actions"><button id="net-fold" class="button primary">Lipat perlahan</button><button id="net-flat" class="button">Buka rata</button></div><p id="net-edit-note" class="lab-note"></p><p id="net-feedback" class="lab-feedback" role="status"></p><div id="net-print-mount"></div></section>
         <section id="lab-volume-panel" class="lab-control-panel" hidden aria-label="Aktiviti isi padu"><div class="lab-field"><label for="volume-kind">Cara meneroka isi padu</label><select id="volume-kind"><option value="compare">Isi satu / dua bongkah dan jumlahkan</option><option value="unit">Susun kiub unit dalam kuboid</option><option value="cone">Kon → silinder</option><option value="pyramid">Piramid → prisma bertapak segi empat sama</option></select></div>
           <div id="compare-controls"><div class="lab-field"><label for="compare-count">Bilangan bongkah</label><select id="compare-count"><option value="2">Dua bongkah · A dan B</option><option value="1">Satu bongkah · A sahaja</option></select></div><p>Tetapkan jumlah, tambah isi atau penuhkan bekas. Peluncur menunjukkan peratus isi padu, bukan peratus tinggi.</p><fieldset class="compare-amount"><legend>Jumlah setiap tambahan / pindahan</legend><div class="compare-amount-row"><label for="compare-amount">Nilai<input id="compare-amount" type="text" inputmode="decimal" value="1" maxlength="12" autocomplete="off" aria-describedby="compare-amount-error compare-amount-preview"></label><label for="compare-unit">Unit<select id="compare-unit"><option value="cm3">cm³</option><option value="ml">mL</option><option value="l">L</option></select></label></div><p id="compare-amount-preview" class="lab-note"></p><p id="compare-amount-error" class="measure-error" role="status"></p></fieldset><section id="compare-card-a" class="compare-card"><h4>Bongkah A</h4><div class="lab-field"><label for="compare-shape-a">Bentuk A</label><select id="compare-shape-a"></select></div><details class="compare-measures"><summary>Ubah ukuran A</summary><div class="lab-dimensions"><label id="compare-field-a-a" for="compare-a-a">a · sisi tapak / rusuk<output id="compare-a-a-value"></output><input id="compare-a-a" type="range" min="1" max="8" step="1" value="3"></label><label id="compare-field-a-p" for="compare-a-p">p · panjang<output id="compare-a-p-value"></output><input id="compare-a-p" type="range" min="1" max="8" step="1" value="3"></label><label id="compare-field-a-l" for="compare-a-l">l · lebar<output id="compare-a-l-value"></output><input id="compare-a-l" type="range" min="1" max="8" step="1" value="3"></label><label id="compare-field-a-t" for="compare-a-t">t · tinggi tegak<output id="compare-a-t-value"></output><input id="compare-a-t" type="range" min="1" max="8" step="1" value="3"></label><label id="compare-field-a-j" for="compare-a-j">j · jejari<output id="compare-a-j-value"></output><input id="compare-a-j" type="range" min="1" max="8" step="1" value="3"></label></div></details><p id="compare-dim-summary-a" class="lab-note"></p><label class="compare-level" for="compare-fill-a">Isi A<output id="compare-level-a">0%</output><input id="compare-fill-a" type="range" min="0" max="1000" value="0" step="1"></label><p id="compare-volume-a" class="compare-volume"></p><div class="lab-actions"><button id="compare-add-a" class="button">+1 cm³ ke A</button><button id="compare-full-a" class="button">Penuhkan A</button></div></section><section id="compare-card-b" class="compare-card"><h4>Bongkah B</h4><div class="lab-field"><label for="compare-shape-b">Bentuk B</label><select id="compare-shape-b"></select></div><details class="compare-measures"><summary>Ubah ukuran B</summary><div class="lab-dimensions"><label id="compare-field-b-a" for="compare-b-a">a · sisi tapak / rusuk<output id="compare-b-a-value"></output><input id="compare-b-a" type="range" min="1" max="8" step="1" value="3"></label><label id="compare-field-b-p" for="compare-b-p">p · panjang<output id="compare-b-p-value"></output><input id="compare-b-p" type="range" min="1" max="8" step="1" value="3"></label><label id="compare-field-b-l" for="compare-b-l">l · lebar<output id="compare-b-l-value"></output><input id="compare-b-l" type="range" min="1" max="8" step="1" value="3"></label><label id="compare-field-b-t" for="compare-b-t">t · tinggi tegak<output id="compare-b-t-value"></output><input id="compare-b-t" type="range" min="1" max="8" step="1" value="3"></label><label id="compare-field-b-j" for="compare-b-j">j · jejari<output id="compare-b-j-value"></output><input id="compare-b-j" type="range" min="1" max="8" step="1" value="3"></label></div></details><p id="compare-dim-summary-b" class="lab-note"></p><label class="compare-level" for="compare-fill-b">Isi B<output id="compare-level-b">0%</output><input id="compare-fill-b" type="range" min="0" max="1000" value="0" step="1"></label><p id="compare-volume-b" class="compare-volume"></p><div class="lab-actions"><button id="compare-add-b" class="button">+1 cm³ ke B</button><button id="compare-full-b" class="button">Penuhkan B</button></div></section><div id="compare-both-actions" class="lab-actions"><button id="compare-add-both" class="button">+1 cm³ ke A dan B</button><button id="compare-full-both" class="button primary">Penuhkan A dan B</button></div><details id="compare-transfer-panel" class="compare-transfer-panel"><summary>Pindahkan isi A ↔ B</summary><p>Gunakan jumlah di atas. Penerima dan sumber boleh mempunyai bentuk berbeza.</p><div class="lab-field"><label for="compare-overflow">Apabila penerima penuh</label><select id="compare-overflow"><option value="keep">Hentikan · simpan baki dalam sumber</option><option value="spill">Terus tuang · rekod lebihan</option></select></div><div class="lab-actions"><button id="compare-transfer-ab" class="button">Pindah A → B</button><button id="compare-transfer-ba" class="button">Pindah B → A</button></div><p id="compare-transfer-feedback" class="lab-feedback" role="status"></p><p id="compare-spill" class="lab-equation"></p><p id="compare-ledger" class="lab-note"></p></details><button id="compare-empty" class="button">Kosongkan isi · mula semula</button><p id="compare-both-note" class="lab-note">+1 cm³ ke A dan B bermaksud tambah sehingga 1 cm³ pada setiap bongkah.</p><fieldset class="compare-sum-choice"><legend>Pilih isi yang hendak dijumlahkan</legend><label><input id="compare-include-a" type="checkbox" checked>Isi A</label><label id="compare-include-b-label"><input id="compare-include-b" type="checkbox" checked>Isi B</label></fieldset><p id="compare-total" class="lab-equation" role="status"></p><p id="compare-capacity" class="lab-note"></p><p id="compare-formulas" class="lab-note"></p><p class="lab-note">Warna menunjukkan isi; garisan menunjukkan kapasiti penuh. A di kiri, B di kanan. Pada satu bongkah, A berada di tengah. Menukar bentuk atau ukurannya mengosongkan isi bongkah itu sahaja. Pengiraan menggunakan nilai sebelum pembundaran; bulatan menggunakan π ≈ 3.14159.</p></div><div id="unit-controls" hidden><p>Setiap kiub kecil bersisi 1 cm mempunyai isi padu <b>1 cm³</b>. Lengkapkan satu lapisan, kemudian penuhkan bekas.</p><div class="lab-dimensions"><label for="unit-p">p · panjang <output id="unit-p-value">3 cm</output><input id="unit-p" type="range" min="1" max="6" step="1" value="3"></label><label for="unit-l">l · lebar <output id="unit-l-value">2 cm</output><input id="unit-l" type="range" min="1" max="6" step="1" value="2"></label><label for="unit-t">t · tinggi <output id="unit-t-value">3 cm</output><input id="unit-t" type="range" min="1" max="6" step="1" value="3"></label></div><div class="lab-actions"><button id="unit-one" class="button primary">Tambah 1 kiub</button><button id="unit-layer" class="button">Lengkapkan lapisan</button><button id="unit-fill" class="button">Penuhkan beransur</button><button id="unit-empty" class="button">Kosongkan</button></div><p id="unit-result" class="lab-feedback" role="status"></p><p id="unit-equation" class="lab-equation"></p></div>
@@ -639,6 +671,7 @@ footer{max-width:var(--page-max);margin:auto;padding:var(--space-5) var(--space-
       <details id="curriculum"><summary>Rujukan KSSM / DSKP dan skop pembelajaran</summary><div class="curriculum-copy"><p><b>Tingkatan 2:</b> SP 6.1.1 (sifat geometri bongkah) dan SP 6.2.1 (bentangan dan model). Nota turut merangkumi luas permukaan (6.3.1–6.3.2), isi padu (6.4.1–6.4.3), contoh gabungan dan unit (6.3.3). Lima bongkah projek dikekalkan bersama enam bentuk tambahan. Studio dan makmal menggunakan contoh yang ditulis semula, bukan salinan latihan buku.</p><p><b>Pengayaan Tingkatan 3:</b> SP 7.1.1–7.1.2 (unjuran ortogon). Enam pandangan membantu membezakan objek dengan unjurannya; modul belum mengajar lukisan pelan/dongakan mengikut skala.</p><p>Bahasa dipermudah supaya murid Tingkatan 1 boleh mengikuti aktiviti. Contoh ini menggunakan bongkah tegak. Silinder dan kon mempunyai permukaan melengkung; istilah “muka” digunakan untuk permukaan rata.</p><p><a href="https://bpk.moe.gov.my/kurikulum/kssm/kssm-tingkatan-2/341-dskp-kssm-matematik-tingkatan-2/file" target="_blank" rel="noreferrer">DSKP Matematik Tingkatan 2 · BPK, KPM</a><br><a href="https://sman.pahang.edu.my/system/documents/attachments/000/000/168/original/002_DSKP_KSSM_MATEMATIK_TINGKATAN_3.pdf?1544929347=" target="_blank" rel="noreferrer">DSKP Matematik Tingkatan 3 · salinan dokumen KPM</a></p><p><b>Sumber setempat:</b> buku teks BM dan BI Tingkatan 2 Bab 6, halaman bercetak 98–119, serta Tingkatan 3 Bab 7, halaman 168–197; DSKP Tingkatan 2 halaman 51–54 dan Tingkatan 3 halaman 57–60. Tiada bab lain digunakan untuk kemas kini ini.</p><p>Semua aktiviti berfungsi tanpa Internet. Pautan rujukan memerlukan Internet.</p></div></details>
     </section>
   </main><section id="net-print-sheet" class="net-print-sheet" hidden></section>
+  <section class="speech-panel" aria-label="Penerangan suara pilihan"><b id="speech-heading">Penerangan suara pilihan</b><p id="speech-transcript">Pilih aktiviti untuk membaca penerangan.</p><div class="lab-actions"><button id="speech-play">Baca / ulang penerangan</button><button id="speech-stop">Hentikan suara</button></div><p id="speech-status" role="status">Teks sentiasa tersedia. Suara hanya dimainkan selepas arahan anda.</p></section>
   <footer><span>GeoDecoder Digital · Belajar melalui penerokaan.</span><span>Model ilustrasi · Ukuran relatif sepadan</span></footer>
   <div id="announcer" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
   <noscript><p class="noscript">Hidupkan JavaScript dalam pelayar untuk memutar model dan membuka bentangan. Semua penerangan ringkas tersedia selepas JavaScript dihidupkan.</p></noscript>
@@ -676,6 +709,13 @@ const UI_TOKENS=Object.freeze({
   'ease-ui':'cubic-bezier(.2,.7,.2,1)',
   ...Object.fromEntries(Object.entries(UI_MOTION).map(([key,value])=>['motion-'+key,value+'ms']))
 });
+const UI_DARK_TOKENS=Object.freeze({
+ primary:'#8BB5FF','primary-dark':'#BCD3FF','primary-pressed':'#A7C7FF','on-primary':'#152536',
+ ink:'#E1EAF4',bg:'#152536',surface:'#1E3349',success:'#88DFC0',danger:'#FFA9A6',muted:'#B3C5D8',
+ border:'#425C76','border-control':'#91A8BF','blue-soft':'#263F60','mint-soft':'#23483F','danger-soft':'#4B3038',
+ hover:'#263F60',selected:'#263F60','stage-bg':'#152536','stage-dot':'#425C76',
+ 'scroll-track':'#152536','scroll-thumb':'#91A8BF','scroll-hover':'#B3C5D8','scroll-active':'#E1EAF4'
+});
 // One 24×24, 1.8px stroke family; all geometry illustrations stay separate.
 const UI_ICONS=Object.freeze({
   play:'m8 5 11 7-11 7V5Z',pause:'M8 5v14M16 5v14',
@@ -692,7 +732,7 @@ const UI_ICONS=Object.freeze({
   info:'M12 10v7m0-10v.1M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0Z'
 });
 function designTokenCss(){
-  return '/* Generated by tools/build.mjs from src/design-system.mjs. */\n:root{\n'+Object.entries(UI_TOKENS).map(([name,value])=>'  --'+name+':'+value+';').join('\n')+'\n}\n';
+  return '/* Generated by tools/build.mjs from src/design-system.mjs. */\n:root{\n'+Object.entries(UI_TOKENS).map(([name,value])=>'  --'+name+':'+value+';').join('\n')+'\n}\n:root[data-theme="dark"]{color-scheme:dark;'+Object.entries(UI_DARK_TOKENS).map(([name,value])=>'--'+name+':'+value+';').join('')+'}\n';
 }
 function iconMarkup(name){
   if(!UI_ICONS[name])throw new Error('Unknown UI icon: '+name);
@@ -839,7 +879,7 @@ function meshBounds(mesh) {
 function faceCenter(f) {return f.vertices.reduce((sum,p)=>add3(sum,p),[0,0,0]).map(v=>v/f.vertices.length);}
 
 
-const MODULE_VERSION='1.4.0';
+const MODULE_VERSION='1.5.0';
 const MODEL_ORDER=['cube','cuboid','pyramid','cylinder','cone','triangular-prism','tetrahedron','pentagonal-prism','hexagonal-prism','sphere','hemisphere'];
 const MODEL_DATA={
   cube:{name:'Kubus',tag:'Enam muka, semuanya sama.',flat:6,curved:0,edges:12,vertices:8,
@@ -1294,19 +1334,19 @@ function workshopMesh(mode,d,{shape='cuboid',closed=true}={}){
 function swNode(tag,attrs={},text=''){const e=document.createElement(tag);for(const [k,v] of Object.entries(attrs))e.setAttribute(k,String(v));if(text)e.textContent=text;return e;}
 const swFmt=n=>new Intl.NumberFormat('ms-MY',{maximumFractionDigits:2,useGrouping:false}).format(n);
 class SurfaceWorkshop{
- constructor({mount,onChange,onView}){
-  this.mount=mount;this.onChange=onChange;this.onView=onView;this.mode='container';this.shape='cylinder';this.closed=true;this.d={p:6,l:5,t:4,j:3,u:2,v:1.5};this.selected=new Set();this.nodes={};
+ constructor({mount,onChange,onView,onBeforeChange=()=>{}}){
+  this.mount=mount;this.onChange=onChange;this.onBeforeChange=onBeforeChange;this.onView=onView;this.mode='container';this.shape='cylinder';this.closed=true;this.d={p:6,l:5,t:4,j:3,u:2,v:1.5};this.selected=new Set();this.nodes={};
   const add=(tag,id,attrs={},text='')=>{const e=swNode(tag,{...attrs,id},text);this.nodes[id]=e;return e;};
-  const label=swNode('label',{for:'workshop-shape'},'Bentuk bekas'),shape=add('select','workshop-shape');shape.append(swNode('option',{value:'cylinder'},'Silinder'),swNode('option',{value:'cuboid'},'Kuboid'));shape.addEventListener('change',()=>{this.shape=shape.value;this.changed();});
+  const label=swNode('label',{for:'workshop-shape'},'Bentuk bekas'),shape=add('select','workshop-shape');shape.append(swNode('option',{value:'cylinder'},'Silinder'),swNode('option',{value:'cuboid'},'Kuboid'));shape.addEventListener('change',()=>{this.onBeforeChange();this.shape=shape.value;this.changed();});
   const field=add('div','workshop-shape-field',{class:'lab-field'});field.append(label,shape);mount.append(field);
-  const lidLabel=add('label','workshop-lid-label',{class:'workshop-toggle'}),lid=add('input','workshop-lid',{type:'checkbox'});lid.checked=true;lidLabel.append(lid,swNode('span',{},'Sertakan penutup atas'));lid.addEventListener('change',()=>{this.closed=lid.checked;this.changed();});mount.append(lidLabel);
+  const lidLabel=add('label','workshop-lid-label',{class:'workshop-toggle'}),lid=add('input','workshop-lid',{type:'checkbox'});lid.checked=true;lidLabel.append(lid,swNode('span',{},'Sertakan penutup atas'));lid.addEventListener('change',()=>{this.onBeforeChange();this.closed=lid.checked;this.changed();});mount.append(lidLabel);
   const dimensions=swNode('div',{class:'lab-dimensions'});
   for(const [k,name,min,max,step] of [['p','p · panjang luar',3,10,1],['l','l · lebar luar',3,10,1],['t','t · tinggi',1,10,1],['j','j · jejari',1,8,1],['u','u · panjang bukaan rongga',.5,5.5,.5],['v','v · lebar bukaan rongga',.5,4.5,.5]]){
-   const wrap=add('label','workshop-field-'+k,{for:'workshop-'+k},name),value=add('output','workshop-value-'+k),input=add('input','workshop-'+k,{type:'range',min,max,step});wrap.append(value,input);dimensions.append(wrap);input.addEventListener('input',()=>{this.d[k]=Number(input.value);this.d.u=Math.min(this.d.u,this.d.p-.5);this.d.v=Math.min(this.d.v,this.d.l-.5);this.changed();});
+   const wrap=add('label','workshop-field-'+k,{for:'workshop-'+k},name),value=add('output','workshop-value-'+k),input=add('input','workshop-'+k,{type:'range',min,max,step});wrap.append(value,input);dimensions.append(wrap);input.addEventListener('input',()=>{this.onBeforeChange();this.d[k]=Number(input.value);this.d.u=Math.min(this.d.u,this.d.p-.5);this.d.v=Math.min(this.d.v,this.d.l-.5);this.changed();});
   }
   mount.append(dimensions,add('p','workshop-explanation',{class:'lab-note'}),add('div','workshop-parts',{class:'area-pieces',role:'group','aria-label':'Pilih bahagian luas'}));
   const actions=swNode('div',{class:'lab-actions'}),all=add('button','workshop-all',{type:'button',class:'button'},'Pilih semua bahagian'),clear=add('button','workshop-clear',{type:'button',class:'button'},'Kosongkan pilihan'),view=add('button','workshop-view',{type:'button',class:'button'},'Lihat dari atas');
-  all.addEventListener('click',()=>{this.selected=new Set(this.measures().parts.map(p=>p.key));this.render();this.onChange();});clear.addEventListener('click',()=>{this.selected.clear();this.render();this.onChange();});view.addEventListener('click',()=>this.onView());actions.append(all,clear,view);
+  all.addEventListener('click',()=>{this.onBeforeChange();this.selected=new Set(this.measures().parts.map(p=>p.key));this.render();this.onChange();});clear.addEventListener('click',()=>{this.onBeforeChange();this.selected.clear();this.render();this.onChange();});view.addEventListener('click',()=>this.onView());actions.append(all,clear,view);
   mount.append(actions,add('p','workshop-chosen',{class:'lab-sum'}),add('p','workshop-area',{class:'lab-equation',role:'status'}),add('p','workshop-volume',{class:'lab-feedback'}),add('p','workshop-equation',{class:'lab-note'}));
  }
  changed(){this.selected.clear();this.render();this.onChange();}
@@ -1317,7 +1357,7 @@ class SurfaceWorkshop{
   const n=this.nodes,cavity=this.mode==='cavity',r=this.measures();n['workshop-shape-field'].hidden=cavity;n['workshop-lid-label'].hidden=cavity;n['workshop-shape'].value=this.shape;n['workshop-lid'].checked=this.closed;
   for(const k of ['p','l','t','j','u','v']){const active=cavity?k!=='j':this.shape==='cylinder'?['j','t'].includes(k):['p','l','t'].includes(k);n['workshop-field-'+k].hidden=!active;n['workshop-'+k].value=String(this.d[k]);n['workshop-value-'+k].textContent=swFmt(this.d[k])+' cm';}n['workshop-u'].max=String(this.d.p-.5);n['workshop-v'].max=String(this.d.l-.5);
   n['workshop-explanation'].textContent=cavity?'Rongga segi empat tepat menembusi dari atas ke bawah. Dinding dalam yang terdedah juga mempunyai luas.':'Model mengabaikan ketebalan dinding. Membuka penutup mengubah luas bahan, sementara kapasiti ruang bekas kekal.';
-  n['workshop-parts'].replaceChildren(...r.parts.map(p=>{const b=swNode('button',{type:'button',class:'area-piece','aria-pressed':String(this.selected.has(p.key)),'data-workshop-part':p.key},p.label+' · '+swFmt(p.area)+' cm²');b.addEventListener('click',()=>{if(this.selected.has(p.key))this.selected.delete(p.key);else this.selected.add(p.key);this.render();this.onChange();[...n['workshop-parts'].children].find(e=>e.dataset.workshopPart===p.key)?.focus({preventScroll:true});});return b;}));
+  n['workshop-parts'].replaceChildren(...r.parts.map(p=>{const b=swNode('button',{type:'button',class:'area-piece','aria-pressed':String(this.selected.has(p.key)),'data-workshop-part':p.key},p.label+' · '+swFmt(p.area)+' cm²');b.addEventListener('click',()=>{this.onBeforeChange();if(this.selected.has(p.key))this.selected.delete(p.key);else this.selected.add(p.key);this.render();this.onChange();[...n['workshop-parts'].children].find(e=>e.dataset.workshopPart===p.key)?.focus({preventScroll:true});});return b;}));
   const chosen=r.parts.filter(p=>this.selected.has(p.key)),sum=chosen.reduce((s,p)=>s+p.area,0);n['workshop-chosen'].textContent='Jumlah bahagian dipilih = '+swFmt(sum)+' cm²';n['workshop-area'].textContent='Luas keseluruhan '+(Number.isInteger(r.area)?'= ':'≈ ')+swFmt(r.area)+' cm²';
   n['workshop-volume'].textContent=(cavity?'Isi padu bahan':'Kapasiti bekas')+' '+(Number.isInteger(r.volume)?'= ':'≈ ')+swFmt(r.volume)+' cm³';
   n['workshop-equation'].textContent=cavity?'V bahan = V luar − V rongga = '+swFmt(r.outerVolume)+' − '+swFmt(r.holeVolume)+' cm³. Luas = dua bingkai tapak + dinding luar + dinding dalam.':'Luas = '+(this.closed?'dua tapak':'satu tapak')+' + luas dinding. Kapasiti = luas satu tapak × tinggi.';
@@ -1456,19 +1496,19 @@ function nsNode(tag,attrs={},text=''){
 }
 /** Constrained edge editing keeps every face dimension and real adjacency. */
 class NetStudio{
- constructor({mount,onChange=()=>{}}){
-  this.mount=mount;this.onChange=onChange;this.shape='triangular-prism';this.parents=defaultStudioTree(this.shape);this.inside=this.parents.map(()=>false);this.dimensions=studioDimensionDefaults(this.shape);this.dirty=true;this.controls=[];this.openFace=1;
+ constructor({mount,onChange=()=>{},onBeforeChange=()=>{}}){
+  this.mount=mount;this.onChange=onChange;this.onBeforeChange=onBeforeChange;this.shape='triangular-prism';this.parents=defaultStudioTree(this.shape);this.inside=this.parents.map(()=>false);this.dimensions=studioDimensionDefaults(this.shape);this.dirty=true;this.controls=[];this.openFace=1;
   const heading=nsNode('p',{class:'eyebrow'},'STUDIO SAMBUNGAN MUKA'),intro=nsNode('p',{},'Pilih tempat setiap muka disambungkan. Muka 1 menjadi asas. Pilihan hanya menggunakan pasangan rusuk sebenar, supaya saiz muka kekal tepat.');
   this.shapeSelect=nsNode('select',{id:'studio-shape','aria-label':'Bongkah dalam studio sambungan'});
   this.shapeSelect.append(...STUDIO_SHAPES.map(s=>nsNode('option',{value:s.key},s.name)));this.shapeSelect.value=this.shape;
   const shapeLabel=nsNode('label',{for:'studio-shape'},'Bongkah');const field=nsNode('div',{class:'lab-field'});field.append(shapeLabel,this.shapeSelect);
   this.measureFields=nsNode('div',{class:'lab-dimensions'});this.measureControls={};
-  for(const [key,name] of [['a','a · sisi tapak / rusuk'],['p','p · panjang'],['l','l · lebar'],['t','t · tinggi tegak']]){const label=nsNode('label',{for:'studio-'+key},name),output=nsNode('output'),input=nsNode('input',{id:'studio-'+key,type:'range',min:'.5',max:'4',step:'.5'});label.append(output,input);input.addEventListener('input',()=>{if(this.locked)return;const value=Number(input.value);this.dimensions[key]=value;this.changed();});this.measureControls[key]={label,output,input};this.measureFields.append(label);}
-  this.exampleField=nsNode('div',{class:'lab-field'});this.exampleSelect=nsNode('select',{id:'studio-example','aria-label':'Contoh sebelas bentangan kubus'});this.exampleSelect.append(nsNode('option',{value:'custom'},'Susunan sendiri'),...Array.from({length:11},(_,i)=>nsNode('option',{value:i},'Bentangan kubus '+(i+1)+' daripada 11')));this.exampleField.append(nsNode('label',{for:'studio-example'},'11 bentangan kubus yang berbeza'),this.exampleSelect);this.exampleSelect.addEventListener('change',()=>{if(this.locked||this.exampleSelect.value==='custom')return;this.parents=cubeStudioExamples()[Number(this.exampleSelect.value)];this.inside=this.parents.map(()=>false);this.changed();});
+  for(const [key,name] of [['a','a · sisi tapak / rusuk'],['p','p · panjang'],['l','l · lebar'],['t','t · tinggi tegak']]){const label=nsNode('label',{for:'studio-'+key},name),output=nsNode('output'),input=nsNode('input',{id:'studio-'+key,type:'range',min:'.5',max:'4',step:'.5'});label.append(output,input);input.addEventListener('input',()=>{if(this.locked)return;this.onBeforeChange();const value=Number(input.value);this.dimensions[key]=value;this.changed();});this.measureControls[key]={label,output,input};this.measureFields.append(label);}
+  this.exampleField=nsNode('div',{class:'lab-field'});this.exampleSelect=nsNode('select',{id:'studio-example','aria-label':'Contoh sebelas bentangan kubus'});this.exampleSelect.append(nsNode('option',{value:'custom'},'Susunan sendiri'),...Array.from({length:11},(_,i)=>nsNode('option',{value:i},'Bentangan kubus '+(i+1)+' daripada 11')));this.exampleField.append(nsNode('label',{for:'studio-example'},'11 bentangan kubus yang berbeza'),this.exampleSelect);this.exampleSelect.addEventListener('change',()=>{if(this.locked||this.exampleSelect.value==='custom')return;this.onBeforeChange();this.parents=cubeStudioExamples()[Number(this.exampleSelect.value)];this.inside=this.parents.map(()=>false);this.changed();});
   this.connections=nsNode('div',{class:'studio-connections'});this.feedback=nsNode('p',{class:'lab-feedback',role:'status'});this.lockNote=nsNode('p',{class:'lab-note'});
   this.reset=nsNode('button',{type:'button',class:'button'},'Kembali ke contoh sah');
-  this.shapeSelect.addEventListener('change',()=>{if(this.locked)return;this.shape=this.shapeSelect.value;this.parents=defaultStudioTree(this.shape);this.inside=this.parents.map(()=>false);this.dimensions=studioDimensionDefaults(this.shape);this.changed();});
-  this.reset.addEventListener('click',()=>{if(this.locked)return;this.parents=defaultStudioTree(this.shape);this.inside=this.parents.map(()=>false);this.changed();});
+  this.shapeSelect.addEventListener('change',()=>{if(this.locked)return;this.onBeforeChange();this.shape=this.shapeSelect.value;this.parents=defaultStudioTree(this.shape);this.inside=this.parents.map(()=>false);this.dimensions=studioDimensionDefaults(this.shape);this.changed();});
+  this.reset.addEventListener('click',()=>{if(this.locked)return;this.onBeforeChange();this.parents=defaultStudioTree(this.shape);this.inside=this.parents.map(()=>false);this.changed();});
   mount.append(heading,intro,field,nsNode('p',{class:'lab-note'},'Ukuran menggunakan unit model. Pada skala cetak 1 unit = 1 cm, nilainya menjadi ukuran dalam cm.'),this.measureFields,this.exampleField,this.connections,this.reset,this.lockNote,this.feedback);this.render();
  }
  get state(){return netStudioState(this.shape,this.parents,this.dimensions,this.inside);}
@@ -1484,13 +1524,13 @@ class NetStudio{
    this.connections.replaceChildren(...adjacency.slice(1).map(face=>{
     const row=nsNode('details',{class:'studio-connection',name:'studio-face'}),summary=nsNode('summary',{},'Muka '+(face.id+1)+' · '+face.name+' → muka '+(this.parents[face.id]+1)),label=nsNode('label',{for:'studio-parent-'+face.id},'Muka induk'),select=nsNode('select',{id:'studio-parent-'+face.id,'aria-label':'Sambungkan muka '+(face.id+1)+' kepada'});row.open=face.id===this.openFace;row.append(summary);row.addEventListener('toggle',()=>{if(row.open)this.openFace=face.id;});
     for(const parent of face.neighbors){const next=[...this.parents];next[face.id]=parent;if(netStudioState(this.shape,next,this.dimensions).treeValid)select.append(nsNode('option',{value:parent},'Sambung ke muka '+(parent+1)+' · '+adjacency[parent].name));}
-    select.value=String(this.parents[face.id]);select.addEventListener('change',()=>{if(this.locked)return;this.parents[face.id]=Number(select.value);this.focusFace=face.id;this.openFace=face.id;this.focusSide=false;this.dirty=true;this.onChange();this.render();});const side=nsNode('select',{id:'studio-side-'+face.id,'aria-label':'Sisi bukaan muka '+(face.id+1)});side.append(nsNode('option',{value:'outside'},'Buka di luar muka induk'),nsNode('option',{value:'inside'},'Buka ke arah bertentangan'));side.value=this.inside[face.id]?'inside':'outside';side.addEventListener('change',()=>{if(this.locked)return;this.inside[face.id]=side.value==='inside';this.focusFace=face.id;this.openFace=face.id;this.focusSide=true;this.dirty=true;this.onChange();this.render();});row.append(label,select,nsNode('label',{for:'studio-side-'+face.id},'Sisi bukaan'),side);this.sideControls[face.id]=side;this.controls.push(select);return row;
+    select.value=String(this.parents[face.id]);select.addEventListener('change',()=>{if(this.locked)return;this.onBeforeChange();this.parents[face.id]=Number(select.value);this.focusFace=face.id;this.openFace=face.id;this.focusSide=false;this.dirty=true;this.onChange();this.render();});const side=nsNode('select',{id:'studio-side-'+face.id,'aria-label':'Sisi bukaan muka '+(face.id+1)});side.append(nsNode('option',{value:'outside'},'Buka di luar muka induk'),nsNode('option',{value:'inside'},'Buka ke arah bertentangan'));side.value=this.inside[face.id]?'inside':'outside';side.addEventListener('change',()=>{if(this.locked)return;this.onBeforeChange();this.inside[face.id]=side.value==='inside';this.focusFace=face.id;this.openFace=face.id;this.focusSide=true;this.dirty=true;this.onChange();this.render();});row.append(label,select,nsNode('label',{for:'studio-side-'+face.id},'Sisi bukaan'),side);this.sideControls[face.id]=side;this.controls.push(select);return row;
    }));if(this.focusFace){(this.focusSide?this.sideControls[this.focusFace]:this.controls[this.focusFace-1])?.focus({preventScroll:true});this.focusFace=null;}this.dirty=false;
   }
   for(const [key,control] of Object.entries(this.measureControls)){const active=studioFields(this.shape).includes(key);control.label.hidden=!active;control.input.disabled=locked||!active;control.input.value=String(this.dimensions[key]||1);control.output.textContent=(this.dimensions[key]||1)+' unit';}
   this.exampleField.hidden=this.shape!=='cube';this.exampleSelect.disabled=locked;
   if(this.shape==='cube'){const example=this.inside.some(Boolean)?-1:cubeStudioExamples().findIndex(p=>JSON.stringify(p)===JSON.stringify(this.parents));this.exampleSelect.value=example<0?'custom':String(example);}
-  this.shapeSelect.disabled=locked;this.reset.disabled=locked;for(const select of [...this.controls,...Object.values(this.sideControls||{})])select.disabled=locked;
+  this.shapeSelect.value=this.shape;this.shapeSelect.disabled=locked;this.reset.disabled=locked;for(const select of [...this.controls,...Object.values(this.sideControls||{})])select.disabled=locked;
   this.lockNote.textContent=locked?'Tekan Buka rata sebelum mengubah sambungan.':'Pilih muka induk dan sisi bukaan. Jika bertindih, ubah muka yang disorot merah atau pilih sisi bukaan yang lain.';
   this.feedback.textContent=state.message;this.feedback.dataset.success=state.valid?'true':'false';
  }
@@ -1612,7 +1652,7 @@ function drawBadge(ctx,p,text) {
 class ModelRenderer {
   constructor(canvas) {this.canvas=canvas;this.ctx=canvas.getContext('2d');this.hitFaces=[];this.meshKey='';this.mesh=null;}
   draw({shape,progress=0,yaw=.55,pitch=.35,zoom=1,labels=false,selected=null,mini=false,mesh:customMesh=null,fitMesh=null}) {
-    const ctx=this.ctx;if(!ctx)return;
+    const ctx=this.ctx;if(!ctx)return;const dark=globalThis.document?.documentElement?.getAttribute('data-theme')==='dark',edge=dark?'rgba(218,232,246,.8)':'rgba(24,51,75,.67)';
     const box=this.canvas.getBoundingClientRect(),w=box.width,h=box.height;
     if(w<=0||h<=0)return;
     const dpr=Math.min(2,window.devicePixelRatio||1),cw=Math.round(w*dpr),ch=Math.round(h*dpr);
@@ -1649,10 +1689,10 @@ class ModelRenderer {
       if(Math.abs(vNormal[2])<.00001)continue;
       trace(ctx,pts);ctx.fillStyle=shade(f.color,brightness);if(!f.wire)ctx.fill();
       if(!f.outline&&!f.wire) {ctx.strokeStyle=ctx.fillStyle;ctx.lineWidth=.65;ctx.stroke();}
-      if(f.outline) {ctx.strokeStyle=f.warning?UI_TOKENS.danger:activeFace(f.id)?UI_TOKENS.primary:'rgba(24,51,75,.67)';ctx.lineWidth=activeFace(f.id)?3:mini?1:1.45;ctx.stroke();}
+      if(f.outline) {ctx.strokeStyle=f.warning?UI_TOKENS.danger:activeFace(f.id)?UI_TOKENS.primary:edge;ctx.lineWidth=activeFace(f.id)?3:mini?1:1.45;ctx.stroke();}
       if(f.rim) {
         ctx.beginPath();for(const [a,b] of f.rim){ctx.moveTo(...pts[a].slice(0,2));ctx.lineTo(...pts[b].slice(0,2));}
-        ctx.strokeStyle=activeFace(f.id)?UI_TOKENS.primary:'rgba(24,51,75,.6)';ctx.lineWidth=activeFace(f.id)?2.7:mini?.9:1.25;ctx.stroke();
+        ctx.strokeStyle=activeFace(f.id)?UI_TOKENS.primary:edge;ctx.lineWidth=activeFace(f.id)?2.7:mini?.9:1.25;ctx.stroke();
       }
       if(f.cut) {ctx.beginPath();for(const [a,b] of f.cut){ctx.moveTo(...pts[a].slice(0,2));ctx.lineTo(...pts[b].slice(0,2));}if(f.cutUnderlay){ctx.strokeStyle='#F3F7FB';ctx.lineWidth=3.5;ctx.stroke();}ctx.strokeStyle='#526A7D';ctx.setLineDash([4,3]);ctx.lineWidth=1;ctx.stroke();ctx.setLineDash([]);}
       this.hitFaces.push({id:f.id,pts});
@@ -1672,9 +1712,9 @@ class ModelRenderer {
   }
   pick(x,y) {for(const f of [...this.hitFaces].reverse())if(polygonContains(f.pts,x,y))return f.id;return null;}
   drawCompass(ctx,w,h,yaw,pitch) {
-    const x=Math.min(64,w*.26),y=h-44;
+    const x=Math.min(64,w*.26),y=h-44,dark=globalThis.document?.documentElement?.getAttribute('data-theme')==='dark';
     ctx.font='12px "Segoe UI",sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
-    for(const [dir,name,color] of [[[1,0,0],'Kanan','#2C6BC5'],[[0,1,0],'Atas','#237E6C'],[[0,0,1],'Depan','#A84C78']]) {
+    for(const [dir,name,color] of [[[1,0,0],'Kanan',dark?'#8BB5FF':'#2C6BC5'],[[0,1,0],'Atas',dark?'#88DFC0':'#237E6C'],[[0,0,1],'Depan',dark?'#F5B5D5':'#A84C78']]) {
       const p=viewPoint(dir,yaw,pitch),end=[x+p[0]*22,y-p[1]*22];ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(...end);ctx.strokeStyle=color;ctx.lineWidth=1.6;ctx.stroke();ctx.fillStyle=color;ctx.fillText(name,end[0]+p[0]*7,end[1]-p[1]*7);
     }
   }
@@ -1791,13 +1831,87 @@ class LearningNotes{
 }
 
 
+/** Formative learning gates. Earned records and the current experiment are separate. */
+const GUIDED_KINDS=['net','volume','area','composite'];
+const guidedStages=['prediction','experiment','check','explanation'];
+function guidedCopy(value){return JSON.parse(JSON.stringify(value));}
+function validGuidedRecord(r){
+ if(!r||!GUIDED_KINDS.includes(r.activity)||!guidedStages.includes(r.stage)||typeof r.completed!=='boolean'||!['prediction','result','explanation'].every(k=>typeof r[k]==='string'&&r[k].length<=(k==='prediction'?240:600)))return false;
+ if(!r.prediction.trim()||(['experiment','check','explanation'].includes(r.stage)&&!r.result.trim())||(r.stage==='explanation'&&!r.explanation.trim()))return false;
+ return !r.completed||r.stage==='explanation';
+}
+class GuidedActivity{
+ constructor(activity){this.activity=activity;this.record={activity,stage:'prediction',prediction:'',result:'',explanation:'',completed:false};this.retry();}
+ retry(){this.draft={activity:this.activity,stage:'prediction',prediction:'',result:'',explanation:'',completed:false};this.observed=false;this.checked=false;}
+ predict(text){text=String(text).trim().slice(0,240);if(!text)return false;this.retry();this.draft.prediction=text;this.draft.stage='prediction';this.save();return true;}
+ invalidateCheck(){this.checked=false;this.draft.completed=false;this.draft.explanation='';if(this.observed)this.draft.stage='experiment';}
+ edit(){this.observed=false;this.invalidateCheck();this.draft.result='';if(this.draft.prediction)this.draft.stage='prediction';}
+ observe(result){result=String(result).trim().slice(0,600);if(!this.draft.prediction||!result)return false;this.invalidateCheck();this.observed=true;this.draft.result=result;this.draft.stage='experiment';this.save();return true;}
+ check(correct){this.invalidateCheck();this.checked=Boolean(this.observed&&correct);if(this.checked){this.draft.stage='check';this.save();}return this.checked;}
+ complete(text){text=String(text).trim().slice(0,600);if(!this.observed||!this.checked||!text)return false;this.draft.explanation=text;this.draft.stage='explanation';this.draft.completed=true;this.save();return true;}
+ save(){if(!validGuidedRecord(this.draft))return;if(!this.record.completed||this.draft.completed)this.record=guidedCopy(this.draft);}
+ restore(record){if(validGuidedRecord(record)&&record.activity===this.activity){this.record=guidedCopy(record);/* Restored self-report never unlocks the live experimental gate. */}}
+}
+class LabHistory{
+ constructor(limit=30){this.limit=limit;this.items=[];}
+ push(value){const copy=guidedCopy(value);if(JSON.stringify(copy)===JSON.stringify(this.items.at(-1)))return;this.items.push(copy);if(this.items.length>this.limit)this.items.shift();}
+ undo(){return this.items.length?guidedCopy(this.items.pop()):null;}
+ get size(){return this.items.length;}
+}
+/** Elapsed active time only: pause/resume and stepping share the same cursor. */
+class LabMotion{
+ constructor(get,set,to,duration,done=null,easing=t=>t){Object.assign(this,{get,set,to,duration:Math.max(1,duration),done,easing,from:get(),elapsed:0,finished:false});}
+ advance(dt,speed=1){if(this.finished)return;this.elapsed=Math.min(this.duration,this.elapsed+Math.max(0,dt)*speed);const t=this.elapsed/this.duration;this.set(this.from+(this.to-this.from)*this.easing(t));if(t===1){this.set(this.to);this.finished=true;const callback=this.done;this.done=null;if(callback)callback();}}
+}
+function acceptModuleContext(event,parentWindow){const d=event.data;if(event.source!==parentWindow||!d||d.type!=='geodecoder:module-context'||d.protocol!==1||typeof d.session!=='string'||!d.session.trim()||d.session.length>256||!['light','dark'].includes(d.theme)||!Array.isArray(d.progress))return null;return {session:d.session,theme:d.theme,progress:d.progress.filter(validGuidedRecord).map(guidedCopy)};}
+
+
+/** Optional parent bridge. Offline runtime has no browser persistence. */
+class ModuleAccess{
+ constructor({onTheme,onContext,onFocus}){Object.assign(this,{onTheme,onContext,onFocus});this.session=null;this.records=[];this.theme='light';this.focus=false;this.embedded=Boolean(window.parent&&window.parent!==window);this.transcript='';}
+ init(){
+  const get=id=>document.getElementById(id);
+  this.get=get;
+  get('module-theme').addEventListener('click',()=>{if(!this.session)this.applyTheme(this.theme==='light'?'dark':'light');});
+  get('module-focus').addEventListener('click',()=>{this.focus=!this.focus;document.documentElement?.setAttribute('data-focus',String(this.focus));get('module-focus').setAttribute('aria-pressed',String(this.focus));get('module-focus').textContent=this.focus?'Keluar fokus model':'Fokus model';this.onFocus();});
+  get('speech-play').addEventListener('click',()=>this.speak());get('speech-stop').addEventListener('click',()=>this.stopSpeech());
+  const receive=event=>{if(!this.embedded)return;const c=acceptModuleContext(event,window.parent);if(!c)return;const changed=this.session!==c.session;this.session=c.session;this.records=c.progress;get('module-theme').disabled=true;get('module-theme').textContent='Tema mengikut aplikasi';this.applyTheme(c.theme);this.onContext(c.progress,changed);this.summary();};
+  window.addEventListener?.('message',receive);
+  window.addEventListener?.('pagehide',()=>this.stopSpeech());
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)this.stopSpeech();});
+  window.speechSynthesis?.addEventListener?.('voiceschanged',()=>this.voiceAvailability());
+  this.voiceAvailability();this.summary();
+  if(this.embedded)window.parent.postMessage({type:'geodecoder:module-ready',protocol:1},'*');
+ }
+ applyTheme(theme){this.theme=theme;document.documentElement?.setAttribute('data-theme',theme);if(!this.session){this.get('module-theme').setAttribute('aria-pressed',String(theme==='dark'));this.get('module-theme').textContent=theme==='dark'?'Tema cerah':'Tema gelap';}this.onTheme();}
+ progress(record){const old=this.records.find(r=>r.activity===record.activity);if(!old?.completed||record.completed)this.records=[...this.records.filter(r=>r.activity!==record.activity),record];this.summary();if(this.embedded&&this.session)window.parent.postMessage({type:'geodecoder:module-progress',protocol:1,session:this.session,...record},'*');}
+ summary(){if(!this.get)return;const names={net:'Bentangan',volume:'Isi padu',area:'Luas',composite:'Gabungan'},stages={prediction:'ramalan disimpan',experiment:'eksperimen diperhatikan',check:'semakan tepat',explanation:'penerangan disimpan'};this.get('module-count').textContent=this.records.filter(r=>r.completed).length+' / 4 aktiviti selesai';this.get('module-summary').textContent=GUIDED_KINDS.map(k=>{const r=this.records.find(r=>r.activity===k);return names[k]+': '+(r?.completed?'selesai':r?stages[r.stage]:'belum');}).join(' · ');}
+ describe(text){if(this.transcript===text)return;this.stopSpeech();this.transcript=text;this.get('speech-transcript').textContent=text;}
+ language(){return window.__geodecoderModuleHost?.language==='en'?'en':'ms';}
+ audioEnabled(){return window.__geodecoderModuleHost?.audioEnabled!==false;}
+ localVoice(){try{const prefix=this.language();return window.speechSynthesis?.getVoices().find(v=>v.localService===true&&(v.lang||'').toLowerCase().split('-')[0]===prefix);}catch{return null;}}
+ voiceAvailability(){
+  const english=this.language()==='en',audio=this.audioEnabled(),available=Boolean(audio&&window.SpeechSynthesisUtterance&&this.localVoice());this.get('speech-play').disabled=!available;this.get('speech-stop').disabled=!available;
+  this.get('speech-heading').textContent=english?'Optional spoken explanation':'Penerangan suara pilihan';
+  this.get('speech-status').textContent=!audio?(english?'Audio is disabled in the application settings. The explanation text remains available.':'Audio dimatikan dalam tetapan aplikasi. Teks penerangan kekal tersedia.'):available?(english?'A local English voice is available. Press Read to listen; speech never starts automatically.':'Suara Melayu setempat tersedia. Tekan Baca untuk mendengar; tiada main automatik.'):(english?'No local English voice is available in this browser. Read the explanation text below.':'Suara Melayu setempat tidak tersedia pada pelayar ini. Baca teks penerangan yang sentiasa tersedia.');
+ }
+ speak(){
+  this.stopSpeech();const voice=this.localVoice(),english=this.language()==='en';if(!this.audioEnabled()||!voice||!window.SpeechSynthesisUtterance){this.voiceAvailability();return;}
+  const failed=()=>{this.get('speech-status').textContent=english?'Speech could not play. Use the explanation text.':'Suara tidak dapat dimainkan. Gunakan teks penerangan.';};
+  try{const utterance=new window.SpeechSynthesisUtterance(this.get('speech-transcript').textContent);utterance.lang=voice.lang;utterance.voice=voice;utterance.rate=.85;utterance.onerror=failed;window.speechSynthesis.speak(utterance);this.get('speech-status').textContent=english?'Reading the explanation. Press Stop speech to stop.':'Membaca penerangan. Tekan Hentikan suara untuk berhenti.';}catch{failed();}
+ }
+ stopSpeech(){try{window.speechSynthesis?.cancel();}catch{/* Text remains available. */}}
+}
+
+
 const labEl=id=>document.getElementById(id);
 const labNumberFormat=new Intl.NumberFormat('ms-MY',{maximumFractionDigits:2,useGrouping:false});
 const labFmt=n=>n>0&&n<.01?'< 0.01':labNumberFormat.format(n);
 const labNode=uiNode;
 const LAB_COPY={net:['Teroka dan bina bentangan','Pilih bentangan siap atau susun petak kubus. Lipat perlahan, jeda dan jejaki muka yang sama melalui warna serta nombor.'],volume:['Makmal isi padu','Isi satu atau dua bongkah dan jumlahkan isi pilihan. Anda juga boleh menyusun kiub unit atau membandingkan tiga tuangan pada bekas bertapak dan bertinggi sama.'],area:['Terbitkan rumus luas permukaan','Hubungkan setiap permukaan berwarna dengan luasnya. Jumlah bahagian yang dipilih akan membentuk rumus keseluruhan.'],composite:['Bongkah gabungan','Cantum dua bongkah pada tapak yang sama saiz. Tentukan permukaan yang terdedah dan tambah isi padunya.']};
 class LearningLabs{
- constructor({announce,prefersReduced}){
+ constructor({announce,prefersReduced,onProgress=()=>{},onActivity=()=>{},onDescribe=()=>{}}){
+  Object.assign(this,{onProgress,onActivity,onDescribe});this.guided=Object.fromEntries(['net','volume','area','composite'].map(k=>[k,new GuidedActivity(k)]));this.histories=Object.fromEntries(Object.keys(this.guided).map(k=>[k,new LabHistory()]));this.touched=new Set();this.guideFeedback='';this.lastProgressSent={};this.discoveries=new Set();
   this.announce=announce;this.prefersReduced=prefersReduced;this.ready=false;this.active=false;this.kind='net';this.raf=0;this.anim=null;this.paused=null;this.framing=null;this.step=time=>this.frame(time);
   this.speed=.5;this.suspended=new Map();this.guideKey='';
   this.camera={yaw:.48,pitch:.3,zoom:1};this.net={mode:'gallery',preset:'cube',presetFace:null,presetDirty:true,cells:NET_PRESETS.cross.map(p=>[...p]),progress:0,selected:0,dirty:true,notice:'',drag:null,suppressUntil:0};
@@ -1806,18 +1920,26 @@ class LearningLabs{
   this.area={mode:'closed',shape:'cube',d:{...LESSON_DATA.cube.defaults},progress:0,selected:new Set(),focus:null,dirty:true};
   this.comp={kind:'roof',size:6,h:6,t:4,joined:0,selected:new Set(),dirty:true,feedback:''};
  }
- bind(id,fn,type='click'){labEl(id).addEventListener(type,event=>{fn(event);this.render();});}
+ bind(id,fn,type='click'){
+  labEl(id).addEventListener(type,event=>{
+   const edits=/^(?:net-mode-|net-preset$|net-example$|net-clear$|net-fold$|net-flat$|volume-kind$|unit-|pour-|compare-|area-(?:mode|shape|[apltj]|open|close|all|clear)$|comp-(?:kind|size|body-height|roof-height|join|separate)$|lab-progress$)/.test(id);
+   const input=labEl(id),value=input.value,checked=input.checked;
+   if(edits){this.beginEdit();input.value=value;input.checked=checked;this.inEdit=true;}
+   try{fn(event);}finally{this.inEdit=false;}
+   this.render();
+  });
+ }
  init(){
   if(this.ready)return;this.ready=true;this.renderer=new ModelRenderer(labEl('labs-canvas'));
-  this.printDirty=true;this.studio=new NetStudio({mount:labEl('net-studio-mount'),onChange:()=>{this.stop();this.net.progress=0;this.printDirty=true;this.render();}});
+  this.printDirty=true;this.studio=new NetStudio({mount:labEl('net-studio-mount'),onBeforeChange:()=>this.beginEdit(),onChange:()=>{this.stop();this.net.progress=0;this.printDirty=true;this.render();}});
   this.printer=new NetPrinter({mount:labEl('net-print-mount'),printMount:labEl('net-print-sheet')});
-  this.workshop=new SurfaceWorkshop({mount:labEl('surface-workshop-mount'),onChange:()=>{this.stop();this.render();},onView:()=>{this.camera={yaw:.4,pitch:1.2,zoom:1};this.render();}});
+  this.workshop=new SurfaceWorkshop({mount:labEl('surface-workshop-mount'),onBeforeChange:()=>this.beginEdit(),onChange:()=>{this.stop();this.render();},onView:()=>{this.camera={yaw:.4,pitch:1.2,zoom:1};this.render();}});
   for(const kind of Object.keys(LAB_COPY))this.bind('lab-'+kind,()=>this.choose(kind));
   for(const mode of ['gallery','editor','studio'])this.bind('net-mode-'+mode,()=>{this.stop();this.net.mode=mode;this.net.progress=0;this.net.dirty=true;this.printDirty=true;});
   const choices=()=>PRESET_NETS.map(p=>labNode('option',{value:p.key},p.name));
   labEl('net-preset').replaceChildren(...choices());
   this.bind('net-preset',()=>{this.stop();this.net.preset=labEl('net-preset').value;this.net.progress=0;this.net.presetFace=null;this.net.presetDirty=true;this.printDirty=true;},'change');
-  this.bind('net-example',()=>{const preset=NET_PRESETS[labEl('net-example').value];if(preset){this.net.cells=preset.map(p=>[...p]);this.changedNet();}},'change');
+  this.bind('net-example',()=>{const preset=NET_PRESETS[labEl('net-example').value];if(preset){this.net.cells=preset.map(p=>[...p]);this.net.manualRepair=false;this.changedNet();}},'change');
   this.bind('net-clear',()=>{this.net.cells=[];this.changedNet();});this.bind('net-selected',()=>{this.net.selected=Number(labEl('net-selected').value);},'change');
   for(const [id,dx,dy] of [['net-left',-1,0],['net-right',1,0],['net-up',0,-1],['net-down',0,1]])this.bind(id,()=>{if(this.net.progress>0)return;const p=this.net.cells[this.net.selected];if(p)this.moveNet(this.net.selected,[p[0]+dx,p[1]+dy]);});
   this.bind('net-fold',()=>this.start(()=>this.net.progress,v=>this.net.progress=v,1,UI_MOTION.fold));
@@ -1860,6 +1982,11 @@ class LearningLabs{
   this.bind('lab-progress',()=>{const n=Number(labEl('lab-progress').value)/1000;this.stop();if(this.kind==='net')this.net.progress=n;if(this.kind==='area'&&this.area.mode==='closed'&&!MODEL_DATA[this.area.shape].noNet)this.area.progress=n;if(this.kind==='composite')this.comp.joined=n;},'input');
   this.bind('lab-pause',()=>{if(this.anim)this.pause();else this.resume();});
   this.bind('lab-speed',()=>{const value=Number(labEl('lab-speed').value);if([.25,.5,1].includes(value))this.speed=value;},'change');
+  this.bind('lab-next',()=>this.nextStep());
+  this.bind('guided-begin',()=>this.beginGuided());this.bind('guided-check',()=>this.checkGuided());this.bind('guided-complete',()=>this.completeGuided());
+  this.bind('guided-prediction',()=>{const a=this.guided[this.kind];if(a.draft.prediction&&labEl('guided-prediction').value.trim()!==a.draft.prediction){a.retry();this.guideFeedback='Ramalan berubah. Simpan ramalan baharu sebelum eksperimen.';}},'input');
+  for(const [id,type] of [['guided-answer','input'],['guided-term','change']])this.bind(id,()=>{const a=this.guided[this.kind];a.invalidateCheck();this.guideFeedback='Jawapan berubah. Semak semula sebelum menyimpan penerangan.';},type);
+  this.bind('lab-undo',()=>this.undo());this.bind('lab-retry',()=>this.retryActivity());
   for(const [id,key,amount] of [['lab-left','yaw',-.2],['lab-right','yaw',.2],['lab-up','pitch',.15],['lab-down','pitch',-.15],['lab-zoom-out','zoom',-.15],['lab-zoom-in','zoom',.15]])this.bind(id,()=>{this.camera[key]+=amount;this.boundCamera();});
   this.bind('lab-reset-camera',()=>this.camera={yaw:.48,pitch:.3,zoom:1});
   this.bind('lab-return',()=>this.revealStage());
@@ -1880,27 +2007,54 @@ class LearningLabs{
  resume(){if(this.paused){this.anim=this.paused;this.paused=null;this.anim.last=performance.now();this.revealStage();this.raf=requestAnimationFrame(this.step);}}
  revealStage(){const canvas=labEl('labs-canvas'),r=canvas.getBoundingClientRect();canvas.focus({preventScroll:true});if(r.top<80||r.bottom>(window.innerHeight||800)-50)canvas.scrollIntoView({behavior:this.prefersReduced()?'instant':'smooth',block:'center'});}
  start(get,set,to,baseDuration,done=null,reveal=true){
-  this.stop();if(reveal)this.revealStage();const from=get();if(from===to){if(done)done();this.render();return;}
-  this.anim={get,set,from,to,baseDuration,duration:Math.max(1,baseDuration*Math.abs(to-from)),elapsed:0,last:performance.now(),done};
+  if(!this.inEdit)this.beginEdit();this.stop();if(reveal)this.revealStage();const from=get();if(from===to){if(done)done();this.render();return;}
+  this.anim=new LabMotion(get,set,to,Math.max(1,baseDuration*Math.abs(to-from)),done,ease);this.anim.baseDuration=baseDuration;this.anim.last=performance.now();
   this.raf=requestAnimationFrame(this.step);this.refreshPlayback();
  }
  frame(time){
   this.raf=0;if(!this.active||document.hidden){this.pause();return;}const a=this.anim;if(!a)return;
   // Accumulate timeline time at the chosen speed; pause and speed changes keep
   // the original endpoints and easing rather than beginning a new acceleration.
-  a.elapsed+=Math.max(0,time-a.last)*this.speed;a.last=time;
-  const t=clamp01(a.elapsed/a.duration);a.set(a.from+(a.to-a.from)*ease(t));
-  if(t===1){a.set(a.to);this.anim=null;if(a.done)a.done();}
+  const dt=Math.max(0,time-a.last);a.last=time;this.advanceMotion(a,dt*this.speed);
   this.render();if(this.anim)this.raf=requestAnimationFrame(this.step);
  }
- choose(kind){if(!LAB_COPY[kind]||kind===this.kind)return;const old=this.kind,saved=this.anim||this.paused;this.stop();if(saved)this.suspended.set(old,saved);this.kind=kind;this.paused=this.suspended.get(kind)||null;this.suspended.delete(kind);this.camera={yaw:.48,pitch:.3,zoom:1};this.announce(LAB_COPY[kind][0]+' dipilih.');}
+ advanceMotion(a,dt){
+  a.advance(dt);if(a.finished){if(this.anim===a)this.anim=null;if(this.paused===a)this.paused=null;}
+ }
+ nextStep(){
+  if(!this.anim&&!this.paused){
+   if(this.kind==='volume'&&this.volume.kind==='unit'){this.beginEdit();this.volume.units=Math.min(this.unitCapacity(),this.volume.units+1);return;}
+   const id=this.kind==='net'?'net-fold':this.kind==='area'?'area-open':this.kind==='composite'?'comp-join':this.volume.kind==='compare'?'compare-add-a':'pour-one';
+   if(labEl(id).disabled)return;labEl(id).click();
+  }
+  const a=this.anim||this.paused;if(!a)return;this.stop(false);this.paused=a;this.advanceMotion(a,a.duration/10);
+ }
+ snapshot(){
+  const copy=value=>JSON.parse(JSON.stringify(value)),k=this.kind;
+  if(k==='net'){const net={...this.net};for(const key of ['drag','focusCell','suppressUntil','presetFocusPending'])delete net[key];return copy({net,studio:this.studio?{shape:this.studio.shape,parents:this.studio.parents,inside:this.studio.inside,dimensions:this.studio.dimensions,openFace:this.studio.openFace}:null});}
+  if(k==='volume')return copy({volume:this.volume,compare:this.compare});
+  if(k==='area')return copy({area:{...this.area,selected:[...this.area.selected]},workshop:this.workshop?{mode:this.workshop.mode,shape:this.workshop.shape,closed:this.workshop.closed,d:this.workshop.d,selected:[...this.workshop.selected]}:null});
+  return copy({comp:{...this.comp,selected:[...this.comp.selected]}});
+ }
+ remember(){this.histories[this.kind].push(this.snapshot());}
+ beginEdit(){this.remember();this.stop();this.suspended.delete(this.kind);this.guided[this.kind].edit();this.touched.add(this.kind);this.guideFeedback='';}
+ undo(){
+  const value=this.histories[this.kind].undo();if(!value)return;this.stop();this.suspended.delete(this.kind);this.guided[this.kind].edit();this.touched.add(this.kind);this.guideFeedback='';
+  if(value.net){Object.assign(this.net,value.net,{dirty:true,presetDirty:true,drag:null});if(value.studio)Object.assign(this.studio,value.studio,{dirty:true});this.printDirty=true;}
+  if(value.volume){Object.assign(this.volume,value.volume);Object.assign(this.compare,value.compare);}
+  if(value.area){Object.assign(this.area,value.area,{selected:new Set(value.area.selected),dirty:true});if(value.workshop)Object.assign(this.workshop,value.workshop,{selected:new Set(value.workshop.selected)});}
+  if(value.comp)Object.assign(this.comp,value.comp,{selected:new Set(value.comp.selected),dirty:true});
+  this.announce('Edit terakhir diundur. Semak eksperimen semula.');
+ }
+ guidedSupported(){return this.kind==='net'?this.net.mode==='editor':this.kind==='volume'?['unit','cone','pyramid'].includes(this.volume.kind):this.kind==='area'?this.area.mode==='closed'&&['cube','cuboid','pyramid','cylinder','cone'].includes(this.area.shape):true;}
+ choose(kind){if(!LAB_COPY[kind]||kind===this.kind)return;const old=this.kind,saved=this.anim||this.paused;this.stop();if(saved)this.suspended.set(old,saved);this.onActivity();this.kind=kind;this.guideOptionsKey=null;this.guideFeedback='';labEl('guided-prediction').value=this.guided[kind].draft.prediction;labEl('guided-explanation').value=this.guided[kind].draft.explanation;labEl('guided-answer').value='';this.paused=this.suspended.get(kind)||null;this.suspended.delete(kind);this.camera={yaw:.48,pitch:.3,zoom:1};this.announce(LAB_COPY[kind][0]+' dipilih.');}
  boundCamera(){this.camera.pitch=Math.max(-1.5,Math.min(1.5,this.camera.pitch));this.camera.zoom=Math.max(.6,Math.min(2,this.camera.zoom));}
  changedNet(){this.stop();this.net.progress=0;this.net.notice='';this.net.selected=Math.max(0,Math.min(this.net.selected,this.net.cells.length-1));this.net.dirty=true;this.printDirty=true;}
- moveNet(id,target){const n=this.net;if(target.some(v=>v<0||v>5)||n.cells.some((p,i)=>i!==id&&p[0]===target[0]&&p[1]===target[1])){n.notice='Pilih petak kosong dalam grid untuk memindahkan muka.';return;}n.cells[id]=target;this.changedNet();}
+ moveNet(id,target){const n=this.net;if(target.some(v=>v<0||v>5)||n.cells.some((p,i)=>i!==id&&p[0]===target[0]&&p[1]===target[1])){n.notice='Pilih petak kosong dalam grid untuk memindahkan muka.';return;}this.beginEdit();n.cells[id]=target;n.manualRepair=true;this.changedNet();}
  buildNetGrid(){
   const n=this.net;labEl('net-grid').replaceChildren(...Array.from({length:36},(_,i)=>{
    const x=i%6,y=Math.floor(i/6),id=n.cells.findIndex(p=>p[0]===x&&p[1]===y),b=labNode('button',{type:'button',class:'net-cell','data-cell':x+','+y,'aria-pressed':String(id>=0),'aria-label':`Baris ${y+1}, lajur ${x+1}`+(id>=0?`, muka ${id+1}`:', petak kosong')},id>=0?String(id+1):'');if(id>=0)b.style.backgroundColor=FACE_COLORS[id];
-   b.addEventListener('click',()=>{if(n.progress>0||this.anim||performance.now()<n.suppressUntil)return;if(id>=0)n.cells.splice(id,1);else if(n.cells.length<6)n.cells.push([x,y]);else{n.notice='Sudah ada 6 muka. Buang atau pindahkan satu muka dahulu.';this.render();return;}this.changedNet();n.focusCell=x+','+y;this.render();});
+   b.addEventListener('click',()=>{if(n.progress>0||this.anim||performance.now()<n.suppressUntil)return;if(id<0&&n.cells.length>=6){n.notice='Sudah ada 6 muka. Buang atau pindahkan satu muka dahulu.';this.render();return;}this.beginEdit();if(id>=0)n.cells.splice(id,1);else n.cells.push([x,y]);n.manualRepair=true;this.changedNet();n.focusCell=x+','+y;this.render();});
    b.addEventListener('pointerdown',e=>{if(n.progress>0||this.anim||id<0||(e.pointerType==='mouse'&&e.button!==0))return;n.selected=id;n.drag={id,x:e.clientX,y:e.clientY,moved:false};b.setPointerCapture(e.pointerId);});
    b.addEventListener('pointermove',e=>{const d=n.drag;if(!d||d.id!==id)return;if(Math.hypot(e.clientX-d.x,e.clientY-d.y)>6)d.moved=true;if(d.moved){e.preventDefault();const ghost=labEl('net-drag-ghost');ghost.hidden=false;ghost.textContent=String(id+1);ghost.style.backgroundColor=FACE_COLORS[id];ghost.style.left=e.clientX+7+'px';ghost.style.top=e.clientY+7+'px';}});
    b.addEventListener('pointerup',e=>{const d=n.drag;n.drag=null;labEl('net-drag-ghost').hidden=true;if(b.hasPointerCapture(e.pointerId))b.releasePointerCapture(e.pointerId);if(!d?.moved)return;n.suppressUntil=performance.now()+250;const target=document.elementFromPoint(e.clientX,e.clientY)?.closest('[data-cell]');if(target){const pos=target.dataset.cell.split(',').map(Number);this.moveNet(id,pos);this.render();}});
@@ -1925,6 +2079,33 @@ class LearningLabs{
   c.feedback='Pindahan '+(from?'B → A':'A → B')+': '+labFmt(plan.moved)+' cm³ keluar daripada sumber; '+labFmt(plan.accepted)+' cm³ diterima'+(plan.spilled?', '+labFmt(plan.spilled)+' cm³ melimpah.':'.');
   this.start(()=>c.transfer,n=>{c.transfer=n;const frame=transferFrame(plan,n);c.items=frame.items;c.spill=frame.spill;},1,UI_MOTION.pour,()=>this.announce(c.feedback));
  }
+ retryActivity(){this.remember();this.stop();this.suspended.delete(this.kind);this.guided[this.kind].retry();this.touched.delete(this.kind);this.guideFeedback='Aktiviti baharu. Pencapaian terdahulu dikekalkan.';labEl('guided-prediction').value='';labEl('guided-explanation').value='';labEl('guided-answer').value='';if(this.kind==='net'){this.net.cells=NET_PRESETS.overlap.map(p=>[...p]);this.net.challenge=true;this.net.manualRepair=false;this.changedNet();}if(this.kind==='volume'){this.volume.units=0;this.resetPour();}if(this.kind==='area'){this.area.progress=0;this.clearArea();}if(this.kind==='composite')this.changedComp();}
+ beginGuided(){if(!this.guidedSupported())return;this.suspended.delete(this.kind);const a=this.guided[this.kind],text=labEl('guided-prediction').value;if(!a.predict(text)){this.guideFeedback='Tulis ramalan terlebih dahulu.';return;}this.remember();this.stop();this.touched.delete(this.kind);labEl('guided-explanation').value='';labEl('guided-answer').value='';if(this.kind==='net'){this.net.cells=NET_PRESETS.overlap.map(p=>[...p]);this.changedNet();this.net.challenge=true;this.net.manualRepair=false;}if(this.kind==='volume'){this.volume.units=0;this.resetPour();}if(this.kind==='area'){this.area.progress=0;this.clearArea();}if(this.kind==='composite')this.changedComp();this.guideFeedback='Ramalan disimpan. Jalankan cabaran dan perhatikan hasilnya.';this.emitGuided();}
+ emitGuided(){const record=this.guided[this.kind].record,key=JSON.stringify(record);if(this.lastProgressSent[this.kind]===key)return;this.lastProgressSent[this.kind]=key;this.onProgress({...record});}
+ experimentReady(){if(!this.guidedSupported()||!this.touched.has(this.kind)||this.anim||this.paused)return false;if(this.kind==='net')return this.net.mode==='editor'&&this.net.progress===1&&cubeNetState(this.net.cells).valid&&(!this.net.challenge||this.net.manualRepair);if(this.kind==='volume')return this.volume.kind==='unit'?this.volume.units===this.unitCapacity():this.volume.pours===3;if(this.kind==='area')return this.area.progress===1&&this.area.selected.size===studySurfacePieces(this.area.shape,this.area.d).length;return this.comp.joined===1;}
+ observeGuided(){const a=this.guided[this.kind];if(!a.observed&&a.draft.prediction&&this.experimentReady()){a.observe(labEl('lab-outcome').textContent+' '+(this.kind==='net'?cubeNetState(this.net.cells).message:this.kind==='volume'?(this.volume.kind==='unit'?labEl('unit-equation').textContent:labEl('pour-equation').textContent):this.kind==='area'?labEl('area-total').textContent:labEl('comp-equation').textContent));if(this.kind==='net')this.discoveries.add(JSON.stringify(this.net.cells));this.emitGuided();}}
+ checkGuided(){const a=this.guided[this.kind];if(!this.guidedSupported()||!a.observed){this.guideFeedback='Lengkapkan eksperimen selepas menyimpan ramalan dahulu.';return;}const value=Number(labEl('guided-answer').value.replace(',','.'));let correct=false;if(this.kind==='net')correct=labEl('guided-term').value==='distinct'&&cubeNetState(this.net.cells).valid;
+  if(this.kind==='volume')correct=labEl('guided-answer').value.trim()!==''&&value===(this.volume.kind==='unit'?this.unitCapacity():3);
+  if(this.kind==='area')correct=labEl('guided-term').value===this.areaTerms()[0];
+  if(this.kind==='composite'){const r=compositionMeasures(this.comp.kind,this.compDims());correct=value===2&&r.groups.every(g=>this.comp.selected.has(g.key)===g.external);}
+  a.check(correct);this.guideFeedback=correct?'Tepat. Kini terangkan sebab pemerhatian dengan ayat sendiri.':this.kind==='composite'?'Tolak dua tapak, satu daripada setiap bongkah. Pilih semua permukaan luar sahaja.':this.kind==='area'?'Jejak permukaan 1 dan warnanya. Bezakan tinggi tegak t, tinggi sendeng s, dan luas tapak.':'Semak hubungan ukuran dan pemerhatian sebenar, kemudian cuba lagi.';if(correct)this.emitGuided();}
+ completeGuided(){if(!this.guidedSupported())return;const a=this.guided[this.kind];if(a.complete(labEl('guided-explanation').value)){this.guideFeedback='Aktiviti selesai. Rekod ini ialah refleksi latihan kendiri.';this.emitGuided();}else this.guideFeedback='Perlu ramalan, eksperimen lengkap, semakan tepat dan penerangan yang tidak kosong.';}
+ areaTerms(){const a=this.area;return a.shape==='cube'?Array(6).fill('a²'):a.shape==='cuboid'?['p × t','l × t','p × t','l × t','p × l','p × l']:a.shape==='pyramid'?['a²',...Array(4).fill('½as')]:a.shape==='cylinder'?['2πjt','πj²','πj²']:['πjs','πj²'];}
+ renderGuided(){
+  const a=this.guided[this.kind],names={prediction:'Ramalkan',experiment:'Cuba',check:'Semak',explanation:'Terangkan'};
+  const prompts={net:'Cabaran: baiki susunan bertindih menjadi bentangan sah. Pindah/buang/tambah muka; lipat hingga penuh. Cuba susunan lain untuk menemui bentangan sah lain.',volume:this.volume.kind==='unit'?'Ramalkan kapasiti kuboid, kemudian penuhkan dengan kiub unit.':'Ramalkan bilangan tuangan penuh. Lakukan tiga pemindahan dengan isi semula sumber di antaranya.',area:'Ramalkan jumlah luas. Buka bentangan sepenuhnya dan pilih setiap permukaan berwarna. Hubungkan sebutan rumus dengan muka bernombor.',composite:'Ramalkan permukaan yang menjadi dalaman. Pisah untuk melihat kedua-dua tapak; cantum dan pilih hanya permukaan luar.'};
+  const supported=this.guidedSupported();labEl('guided-scope').textContent=supported?'Latihan berpandu untuk mod ini. Rekod ialah refleksi kendiri, bukan gred TP.':this.kind==='net'?'Galeri dan studio kekal untuk penerokaan. Pilih Susun petak kubus untuk latihan pembaikan berpandu.':this.kind==='volume'?'Perbandingan A/B kekal untuk penerokaan. Pilih Kiub unit atau Tiga tuangan untuk latihan berpandu.':'Bentuk tambahan, bekas dan rongga kekal untuk penerokaan. Latihan berpandu meliputi lima bongkah tertutup asal.';
+  for(const id of ['guided-prediction','guided-begin','lab-retry'])labEl(id).disabled=!supported;
+  labEl('guided-challenge').textContent=prompts[this.kind]+(this.kind==='net'?' Susunan sah ditemui dalam sesi: '+this.discoveries.size+'.':'');
+  labEl('guided-stage').textContent='Tahap semasa: '+names[a.checked?'explanation':a.observed?'check':a.draft.prediction?'experiment':'prediction']+(a.record.completed?' · Pencapaian disimpan':'');labEl('guided-observation').textContent=a.observed?'2. Diperhatikan: '+a.draft.result:'2. Cuba menggunakan kawalan makmal. Hasil direkod selepas eksperimen lengkap.';
+  labEl('guided-check').disabled=!supported||!a.observed;labEl('guided-complete').disabled=!supported||!a.checked;labEl('guided-explanation').disabled=!supported||!a.checked;labEl('lab-undo').disabled=!this.histories[this.kind].size;
+  const select=this.kind==='net'||this.kind==='area';labEl('guided-answer').hidden=select;labEl('guided-term').hidden=!select;labEl('guided-answer').disabled=!supported;labEl('guided-term').disabled=!supported;
+  const options=this.kind==='net'?[['','Pilih sebab'],['distinct','Enam muka menutup enam arah berbeza tanpa bertindih'],['count','Asalkan ada enam petak, semua susunan sah'],['vertices','Bertemu pada bucu sahaja sudah mencukupi']]:[['','Pilih sebutan'],...['a²','p × t','l × t','p × l','½as','2πjt','πj²','πjs'].map(x=>[x,x])];
+  const key=this.kind+(this.kind==='area'?this.area.shape:'');if(this.guideOptionsKey!==key){labEl('guided-term').replaceChildren(...options.map(([value,text])=>labNode('option',{value},text)));labEl('guided-term').value='';this.guideOptionsKey=key;}
+  labEl('guided-question').textContent=this.kind==='net'?'3. Mengapa susunan yang dibaiki sah?':this.kind==='volume'?(this.volume.kind==='unit'?'3. Berapa kiub unit memenuhi kapasiti ini?':'3. Berapa tuangan sumber penuh mengisi penerima dengan tapak dan tinggi yang sama?'):this.kind==='area'?'3. Sebutan rumus manakah mewakili permukaan 1 ('+studySurfacePieces(this.area.shape,this.area.d)[0].name+')?':'3. Berapa permukaan tapak perlu ditolak daripada jumlah dua bongkah? Pilih juga permukaan luar di bawah.';
+  labEl('guided-question').setAttribute('for',select?'guided-term':'guided-answer');labEl('guided-feedback').textContent=this.guideFeedback;
+ }
+ restoreProgress(records){for(const r of records)this.guided[r.activity]?.restore(r);if(this.active)this.render();}
  areaReady(){return this.area.mode==='closed'&&(MODEL_DATA[this.area.shape].noNet||this.area.progress===1)&&!this.anim&&!this.paused;}
  compReady(){return this.comp.joined===1&&!this.anim&&!this.paused;}
  renderGuide(){
@@ -1950,7 +2131,8 @@ class LearningLabs{
  changedComp(){this.comp.joined=0;this.comp.selected.clear();this.comp.dirty=true;this.comp.feedback='';}
  refreshPlayback(){
   labEl('lab-playback').hidden=false;labEl('lab-speed').value=String(this.speed);
-  const slider=this.kind!=='volume'&&!(this.kind==='area'&&(this.area.mode!=='closed'||MODEL_DATA[this.area.shape].noNet)),pour=this.kind==='volume'&&!['unit','compare'].includes(this.volume.kind);labEl('lab-slider-wrap').hidden=!slider;labEl('lab-pause').disabled=!this.anim&&!this.paused;
+  labEl('lab-next').disabled=!this.anim&&!this.paused&&(this.kind==='area'&&(this.area.mode!=='closed'||MODEL_DATA[this.area.shape].noNet)||this.kind==='net'&&labEl('net-fold').disabled||this.kind==='volume'&&this.volume.kind==='unit'&&this.volume.units===this.unitCapacity()||this.kind==='volume'&&this.volume.kind==='compare'&&labEl('compare-add-a').disabled||this.kind==='volume'&&!['unit','compare'].includes(this.volume.kind)&&labEl('pour-one').disabled||this.kind==='composite'&&labEl('comp-join').disabled);
+   const slider=this.kind!=='volume'&&!(this.kind==='area'&&(this.area.mode!=='closed'||MODEL_DATA[this.area.shape].noNet)),pour=this.kind==='volume'&&!['unit','compare'].includes(this.volume.kind);labEl('lab-slider-wrap').hidden=!slider;labEl('lab-pause').disabled=!this.anim&&!this.paused;
   playbackButton(labEl('lab-pause'),this.paused?(pour?'Sambung tuangan':'Sambung animasi'):(pour?'Jeda tuangan':'Jeda animasi'),Boolean(this.anim));
   const progress=this.kind==='net'?this.net.progress:this.kind==='area'?this.area.progress:this.kind==='composite'?this.comp.joined:this.volume.kind==='compare'?this.compare.transfer:this.volume.progress,verb=this.kind==='net'?'dilipat':this.kind==='area'?'dibuka':'dicantum';
   labEl('lab-progress').value=String(Math.round(progress*1000));labEl('lab-progress-value').textContent=Math.round(progress*100)+'% '+verb;labEl('lab-progress').setAttribute('aria-valuetext',Math.round(progress*100)+' peratus '+verb);
@@ -1963,7 +2145,7 @@ class LearningLabs{
   labEl('lab-title').textContent=LAB_COPY[k][0];labEl('lab-intro').textContent=LAB_COPY[k][1];
   if(k==='net')this.renderNet();if(k==='volume')this.renderVolume();if(k==='area')this.renderArea();if(k==='composite')this.renderComposite();
   labEl('lab-zoom-level').textContent=Math.round(this.camera.zoom*100)+'%';labEl('lab-zoom-out').disabled=this.camera.zoom<=.6;labEl('lab-zoom-in').disabled=this.camera.zoom>=2;
-  this.refreshPlayback();this.renderGuide();this.draw();
+  this.observeGuided();this.renderGuided();this.onDescribe(LAB_COPY[k][0]+'. '+labEl('guided-scope').textContent+' '+labEl('lab-caption').textContent);this.refreshPlayback();this.renderGuide();this.draw();
  }
  renderNet(){
   const n=this.net,gallery=n.mode==='gallery',studio=n.mode==='studio',data=PRESET_NETS.find(p=>p.key===n.preset),status=cubeNetState(n.cells),locked=n.progress>0||Boolean(this.anim);
@@ -2032,7 +2214,7 @@ class LearningLabs{
   const parts=studySurfacePieces(a.shape,a.d),fields=MEASURE_FIELDS[a.shape];labEl('area-shape').value=a.shape;labEl('area-open').disabled=Boolean(MODEL_DATA[a.shape].noNet)||a.progress===1;labEl('area-close').disabled=Boolean(MODEL_DATA[a.shape].noNet)||a.progress===0;
   for(const key of ['a','p','l','t','j']){labEl('area-field-'+key).hidden=!fields.includes(key);labEl('area-'+key).value=String(a.d[key]||1);labEl('area-'+key+'-value').textContent=(a.d[key]||1)+' cm';}
   const measures=calculateMeasures(a.shape,a.d,'full');labEl('area-slant').textContent=measures.slant===null?'':'Tinggi sendeng s ≈ '+labFmt(measures.slant)+' cm, dikira daripada tinggi tegak dan '+(a.shape==='pyramid'?'separuh sisi tapak.':a.shape==='tetrahedron'?'apotem tapak segi tiga.':'jejari.');
-  if(a.dirty){labEl('area-pieces').replaceChildren(...parts.map(p=>{const b=labNode('button',{type:'button',class:'area-piece','data-piece':p.id,'aria-pressed':String(a.selected.has(p.id))});const swatch=labNode('i',{'aria-hidden':'true'});swatch.style.backgroundColor=p.color;b.append(swatch,labNode('span',{},(p.id+1)+'. '+p.name),labNode('b',{},labFmt(p.area)+' cm²'));b.addEventListener('click',()=>{if(!this.areaReady())return;if(a.selected.has(p.id))a.selected.delete(p.id);else a.selected.add(p.id);a.focus=p.id;a.focusPending=true;a.dirty=true;this.render();});return b;}));if(a.focusPending){[...labEl('area-pieces').children].find(b=>Number(b.dataset.piece)===a.focus)?.focus({preventScroll:true});a.focusPending=false;}a.dirty=false;}
+  if(a.dirty){labEl('area-pieces').replaceChildren(...parts.map(p=>{const b=labNode('button',{type:'button',class:'area-piece','data-piece':p.id,'aria-pressed':String(a.selected.has(p.id))});const swatch=labNode('i',{'aria-hidden':'true'});swatch.style.backgroundColor=p.color;b.append(swatch,labNode('span',{},(p.id+1)+'. '+p.name+(this.guidedSupported()?' · '+this.areaTerms()[p.id]:'')),labNode('b',{},labFmt(p.area)+' cm²'));b.addEventListener('click',()=>{if(!this.areaReady())return;this.beginEdit();if(a.selected.has(p.id))a.selected.delete(p.id);else a.selected.add(p.id);a.focus=p.id;a.focusPending=true;a.dirty=true;this.render();});return b;}));if(a.focusPending){[...labEl('area-pieces').children].find(b=>Number(b.dataset.piece)===a.focus)?.focus({preventScroll:true});a.focusPending=false;}a.dirty=false;}
   for(const button of labEl('area-pieces').children)button.disabled=!ready;labEl('area-all').disabled=!ready;labEl('area-clear').disabled=a.selected.size===0;
   const chosen=parts.filter(p=>a.selected.has(p.id)),sum=chosen.reduce((s,p)=>s+p.area,0);labEl('area-count').textContent=`${chosen.length} / ${parts.length} permukaan dipilih`;
   labEl('area-sum').textContent=chosen.length?chosen.map(p=>labFmt(p.area)).join(' + ')+' cm²':'Pilih permukaan berwarna untuk mengumpulkan luasnya.';
@@ -2045,12 +2227,12 @@ class LearningLabs{
   const c=this.comp,r=compositionMeasures(c.kind,this.compDims()),roof=c.kind==='roof';labEl('comp-kind').value=c.kind;labEl('comp-size-label').textContent=roof?'a · sisi tapak bersama':'j · jejari tapak bersama';labEl('comp-body-field').hidden=roof;
   labEl('comp-join').disabled=c.joined===1&&!this.anim;labEl('comp-separate').disabled=c.joined===0&&!this.anim;
   for(const [id,value] of [['comp-size',c.size],['comp-body-height',c.h],['comp-roof-height',c.t]]){labEl(id).value=String(value);labEl(id+'-value').textContent=value+' cm';}
-  if(c.dirty){labEl('comp-groups').replaceChildren(...r.groups.map(g=>{const b=labNode('button',{type:'button',class:'area-piece','data-group':g.key,'aria-pressed':String(c.selected.has(g.key))},g.label);b.addEventListener('click',()=>{if(!this.compReady())return;if(c.selected.has(g.key))c.selected.delete(g.key);else c.selected.add(g.key);c.dirty=true;c.focusPending=g.key;c.feedback='';this.render();});return b;}));if(c.focusPending){[...labEl('comp-groups').children].find(b=>b.dataset.group===c.focusPending)?.focus({preventScroll:true});c.focusPending=null;}c.dirty=false;}
+  if(c.dirty){labEl('comp-groups').replaceChildren(...r.groups.map(g=>{const b=labNode('button',{type:'button',class:'area-piece','data-group':g.key,'aria-pressed':String(c.selected.has(g.key))},g.label);b.addEventListener('click',()=>{if(!this.compReady())return;this.beginEdit();if(c.selected.has(g.key))c.selected.delete(g.key);else c.selected.add(g.key);c.dirty=true;c.focusPending=g.key;c.feedback='';this.render();});return b;}));if(c.focusPending){[...labEl('comp-groups').children].find(b=>b.dataset.group===c.focusPending)?.focus({preventScroll:true});c.focusPending=null;}c.dirty=false;}
   const ready=this.compReady();for(const button of labEl('comp-groups').children)button.disabled=!ready;labEl('comp-check').disabled=!ready;
   labEl('comp-feedback').textContent=c.feedback||'Pilih permukaan yang akan terdedah di luar selepas kedua-dua bongkah dicantum.';
   labEl('comp-feedback').setAttribute('data-success',c.feedback?String(c.feedback.startsWith('Tepat')):'');
   labEl('comp-area').textContent=c.joined===1?labFmt(r.area)+' cm²':'Cantum dahulu';labEl('comp-volume').textContent=labFmt(r.volume)+' cm³';
-  labEl('comp-equation').textContent=`Luas dua bongkah berasingan ${labFmt(r.separateArea)} cm² − 2 × luas tapak bersama ${labFmt(r.sharedArea)} cm² = ${labFmt(r.area)} cm². Tinggi sendeng bahagian atas s ≈ ${labFmt(r.slant)} cm.`;
+  labEl('comp-equation').textContent=`Langkah 1: ${labFmt(r.separateArea)} − ${labFmt(r.sharedArea)} = ${labFmt(r.separateArea-r.sharedArea)} cm². Langkah 2: ${labFmt(r.separateArea-r.sharedArea)} − ${labFmt(r.sharedArea)} = ${labFmt(r.area)} cm². Kedua-dua tapak dalaman ditolak. Tinggi sendeng bahagian atas s ≈ ${labFmt(r.slant)} cm.`;
   labEl('lab-scene-label').textContent=roof?'KUBUS + PIRAMID':'SILINDER + KON';labEl('lab-caption').textContent=c.joined===1?'Tapak bahagian atas menutup muka atas bahagian bawah. Kedua-duanya menjadi permukaan dalaman.':'Pisahkan untuk melihat kedua-dua tapak yang akan bertemu. Saiz tapaknya sentiasa sepadan.';
   labEl('lab-outcome').textContent='Isi padu gabungan ialah jumlah kedua-dua isi padu; luas luar mengecualikan kedua-dua muka yang bercantum.';
  }
@@ -2079,9 +2261,10 @@ class LearningLabs{
 
 hydrateIcons(document);
 const el=id=>document.getElementById(id);
-const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+const reduced=window.__geodecoderModuleHost?.media || window.matchMedia('(prefers-reduced-motion: reduce)');
+const initialHostSettings=window.__geodecoderModuleHost?.settings||{};
 const initial=MODEL_ORDER.includes(location.hash.slice(1))?location.hash.slice(1):'cube';
-const state={shape:initial,learningView:'explore',progress:0,yaw:.55,pitch:.35,zoom:1,mode:'model',view:'front',auto:!reduced.matches,labels:false,selected:null,playing:false,direction:1,kind:'cycle',hold:0,camera:null,manualOrbit:false,pausedAnimation:null};
+const state={shape:initial,learningView:'explore',progress:0,yaw:.55,pitch:.35,zoom:1,mode:'model',view:'front',auto:!reduced.matches&&initialHostSettings.autoRotate!==false,labels:initialHostSettings.showLabels===true,selected:null,playing:false,direction:1,kind:'cycle',hold:0,camera:null,manualOrbit:false,pausedAnimation:null,speed:1};
 const primaryLearningShapes=['cube','cuboid','pyramid','cylinder','cone'];
 const mainRenderer=new ModelRenderer(el('model-canvas'));
 const navRenderers=new Map(),viewRenderers=new Map();
@@ -2104,7 +2287,7 @@ function refreshControls() {
   el('auto-rotate').disabled=state.mode==='views';
   el('auto-rotate').querySelector('span').textContent=state.auto?'Hentikan putaran':'Putaran automatik';
   playbackButton(el('play'),state.playing?'Jeda animasi':state.pausedAnimation?'Sambung animasi':'Main animasi',state.playing);
-  const noNet=Boolean(MODEL_DATA[state.shape].noNet);el('animation-panel').hidden=state.mode!=='model'||noNet;el('no-net-note').hidden=!noNet||state.mode!=='model';el('no-net-note').textContent=noNet?MODEL_DATA[state.shape].net:'';el('guided-net').hidden=noNet;el('play').disabled=noNet;el('progress').disabled=noNet;el('replay').disabled=noNet;
+  const noNet=Boolean(MODEL_DATA[state.shape].noNet);el('animation-panel').hidden=state.mode!=='model'||noNet;el('no-net-note').hidden=!noNet||state.mode!=='model';el('no-net-note').textContent=noNet?MODEL_DATA[state.shape].net:'';el('guided-net').hidden=noNet;el('play').disabled=noNet;el('progress').disabled=noNet;el('replay').disabled=noNet;el('explore-next').disabled=noNet;el('explore-speed').disabled=noNet;
   el('open-net').disabled=noNet||state.progress>=1&&!state.playing;
   el('close-net').disabled=Boolean(MODEL_DATA[state.shape].noNet)||state.progress<=0&&!state.playing;
   el('labels').checked=state.labels;
@@ -2191,10 +2374,11 @@ function renderContent() {
   if(state.learningView==='notes')learningNotes.render(state.shape);
 }
 function selectShape(shape) {
+  moduleAccess.stopSpeech();
   stopAnimation();state.shape=shape;state.progress=0;state.zoom=1;state.selected=null;state.camera=null;state.manualOrbit=false;state.yaw=.55;state.pitch=.35;
   state.auto=false;lastPercent=-1;
   try{history.replaceState(null,'','#'+shape);}catch{/* Some file-origin policies restrict history; learning still works. */}
-  renderContent();if(state.mode==='views'&&state.learningView==='explore')selectView(state.view);
+  renderContent();moduleAccess.describe(MODEL_DATA[state.shape].intro+' '+MODEL_DATA[state.shape].net);if(state.mode==='views'&&state.learningView==='explore')selectView(state.view);
   announce(MODEL_DATA[shape].name+' dipilih. '+MODEL_DATA[shape].tag);wake();
 }
 function beginAnimation(target=null) {
@@ -2227,9 +2411,9 @@ function frame(time) {
     dirty=true;
   }
   if(state.playing){
-    if(state.hold>0){state.hold=Math.max(0,state.hold-dt);if(state.hold===0&&!state.manualOrbit)alignCamera(.48,.28);}
+    if(state.hold>0){state.hold=Math.max(0,state.hold-dt*state.speed);if(state.hold===0&&!state.manualOrbit)alignCamera(.48,.28);}
     else {
-      state.progress=clamp01(state.progress+state.direction*dt/UI_MOTION.unfold);
+      state.progress=clamp01(state.progress+state.direction*dt*state.speed/UI_MOTION.unfold);
       if((state.direction>0&&state.progress===1)||(state.direction<0&&state.progress===0)){
         if(state.mode==='model'&&!state.manualOrbit)alignCamera(state.progress===1?0:.55,state.progress===1?0:.35);
         if(state.kind==='cycle'&&state.direction>0){state.direction=-1;state.hold=UI_MOTION.hold;}
@@ -2250,6 +2434,7 @@ for(const shape of primaryLearningShapes){
 for(const shape of MODEL_ORDER.filter(s=>!primaryLearningShapes.includes(s)))el('extra-shape-select').append(element('option',{value:shape},MODEL_DATA[shape].name));
 el('extra-shape-select').addEventListener('change',()=>{const shape=el('extra-shape-select').value;if(MODEL_ORDER.includes(shape))selectShape(shape);});
 function switchLearningView(view) {
+  moduleAccess.stopSpeech();
   if(state.learningView===view)return;
   stopAnimation();state.auto=false;state.camera=null;
   if(state.learningView==='labs')learningLabs.close();
@@ -2258,11 +2443,16 @@ function switchLearningView(view) {
   el('explore-panel').hidden=view!=='explore';el('study-panel').hidden=view!=='notes';el('labs-panel').hidden=view!=='labs';el('shape-picker').hidden=view==='labs';el('extra-shape-field').hidden=view==='labs';
   el('learn-explore').setAttribute('aria-pressed',String(view==='explore'));el('learn-notes').setAttribute('aria-pressed',String(view==='notes'));el('learn-labs').setAttribute('aria-pressed',String(view==='labs'));
   document.title=(view==='notes'?'Nota ':'')+MODEL_DATA[state.shape].name+' — Modul GeoDecoder';
+  if(view!=='labs')moduleAccess.describe(MODEL_DATA[state.shape].intro+' '+MODEL_DATA[state.shape].net);
   if(view==='labs'){learningLabs.open();el('labs-title').focus({preventScroll:true});document.title='Makmal Interaktif — Modul GeoDecoder';}
   else if(view==='notes'){learningNotes.render(state.shape);el('study-title').focus({preventScroll:true});announce('Nota '+MODEL_DATA[state.shape].name.toLowerCase()+' dibuka.');}
   else {redrawSmallModels();el('model-title').focus({preventScroll:true});announce('Teroka 3D '+MODEL_DATA[state.shape].name.toLowerCase()+'.');}
 }
-const learningLabs=new LearningLabs({announce,prefersReduced:()=>reduced.matches});
+const moduleAccess=new ModuleAccess({onTheme:()=>{redrawSmallModels();if(learningLabs.active)learningLabs.draw();},onFocus:()=>{redrawSmallModels();if(learningLabs.active)learningLabs.draw();const target=el(state.learningView==='labs'?'labs-canvas':'model-canvas');if(state.learningView!=='notes'){target.focus({preventScroll:true});target.scrollIntoView({behavior:reduced.matches?'instant':'smooth',block:'center'});}},onContext:(records,changed)=>{
+ if(changed){learningLabs.lastProgressSent={};learningLabs.suspended.clear();learningLabs.touched.clear();for(const a of Object.values(learningLabs.guided)){a.retry();a.record={activity:a.activity,stage:'prediction',prediction:'',result:'',explanation:'',completed:false};}if(learningLabs.ready){learningLabs.stop();for(const id of ['guided-prediction','guided-explanation','guided-answer'])el(id).value='';}}
+ learningLabs.restoreProgress(records);
+}});
+const learningLabs=new LearningLabs({announce,prefersReduced:()=>reduced.matches,onProgress:r=>moduleAccess.progress(r),onActivity:()=>moduleAccess.stopSpeech(),onDescribe:text=>moduleAccess.describe(text)});
 const learningNotes=new LearningNotes({announce,prefersReduced:()=>reduced.matches,onExplore:mode=>{
   switchLearningView('explore');
   if(mode==='net')beginAnimation(1);
@@ -2279,6 +2469,17 @@ el('play').addEventListener('click',()=>{
   if(state.playing){const saved={direction:state.direction,kind:state.kind,hold:state.hold};stopAnimation();state.camera=null;lastFrame=0;state.pausedAnimation=saved;refreshControls();announce('Animasi dijeda.');wake();}
   else if(state.pausedAnimation){const saved=state.pausedAnimation;state.pausedAnimation=null;state.playing=true;state.direction=saved.direction;state.kind=saved.kind;state.hold=saved.hold;refreshControls();announce('Animasi disambung.');wake();}
   else beginAnimation();
+});
+el('explore-speed').addEventListener('change',()=>{state.speed=el('explore-speed').value==='0.5'?.5:1;lastFrame=0;});
+el('explore-next').addEventListener('click',()=>{
+ if(MODEL_DATA[state.shape].noNet)return;state.auto=false;state.camera=null;
+ if(!state.playing&&!state.pausedAnimation){state.kind='target';state.direction=state.progress===1?-1:1;state.hold=0;}
+ if(state.pausedAnimation){Object.assign(state,state.pausedAnimation);state.pausedAnimation=null;}
+ state.playing=false;
+ if(state.hold>0)state.hold=Math.max(0,state.hold-UI_MOTION.unfold/10);
+ else{state.progress=clamp01(Math.round((state.progress+state.direction*.1)*1e10)/1e10);if(state.progress===1||state.progress===0){if(state.kind==='cycle'&&state.direction>0){state.direction=-1;state.hold=UI_MOTION.hold;}else state.kind='target';}}
+ if((state.direction>0&&state.progress<1)||(state.direction<0&&state.progress>0)||state.hold>0)state.pausedAnimation={direction:state.direction,kind:state.kind,hold:state.hold};
+ lastFrame=0;lastPercent=-1;refreshControls();wake();
 });
 el('replay').addEventListener('click',()=>{state.progress=0;lastPercent=-1;beginAnimation();});
 el('guided-net').addEventListener('click',()=>{beginAnimation(1);el('stage').scrollIntoView({behavior:reduced.matches?'instant':'smooth',block:'center'});});
@@ -2348,7 +2549,17 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden){
 }else wake();});
 function redrawSmallModels(){for(const [shape,r] of navRenderers)r.draw({shape,yaw:.55,pitch:.35,mini:true});drawViews();wake();}
 if(typeof ResizeObserver!=='undefined'){const resize=new ResizeObserver(redrawSmallModels);resize.observe(el('shape-picker'));resize.observe(el('stage'));}else window.addEventListener('resize',redrawSmallModels);
-renderContent();redrawSmallModels();wake();
+renderContent();redrawSmallModels();moduleAccess.init();moduleAccess.describe(MODEL_DATA[state.shape].intro+' '+MODEL_DATA[state.shape].net);wake();
+let lastHostSettings={};
+/** Explicit host entry point: refresh presentation/preferences without replacing app source. */
+function refreshModuleHost(settings={}){
+ moduleAccess.stopSpeech();moduleAccess.voiceAvailability();
+ if(typeof settings.showLabels==='boolean'&&settings.showLabels!==lastHostSettings.showLabels)state.labels=settings.showLabels;
+ if(typeof settings.autoRotate==='boolean'&&settings.autoRotate!==lastHostSettings.autoRotate){state.auto=settings.autoRotate&&!reduced.matches&&state.mode==='model'&&state.learningView==='explore';if(state.auto){stopAnimation();state.camera=null;}}
+ lastHostSettings={...settings};refreshControls();redrawSmallModels();
+ if(learningLabs.active)learningLabs.render();else moduleAccess.describe(MODEL_DATA[state.shape].intro+' '+MODEL_DATA[state.shape].net);
+}
+window.__geodecoderModuleHost?.start(refreshModuleHost);
 
 })();
 </script>

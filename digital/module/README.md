@@ -1,6 +1,24 @@
 # Modul Pembelajaran GeoDecoder Digital V1
 
-Versi modul: **v1.4.0**. Branch kerja: **digitalize-module**.
+Versi modul: **v1.5.0**. Sasaran integrasi: **main-digitalized**.
+
+## Aktiviti berpandu v1.5.0
+
+Ramalkan → Cuba → Semak → Terangkan menambah refleksi kendiri kepada empat
+aktiviti asal. Bentangan menggunakan editor pembaikan kubus; isi padu menggunakan
+kiub unit atau tiga tuangan; luas menggunakan lima bongkah tertutup asal; kedua-dua
+gabungan disokong. Galeri, studio, perbandingan A/B, bentuk tambahan, bekas dan
+rongga terus tersedia sebagai penerokaan, dengan batas latihan dinyatakan pada UI.
+Undur edit merangkumi semua mod, termasuk lejar pindahan dan sambungan studio.
+
+Langkah seterusnya berkongsi garis masa easing dengan Main/Jeda/Sambung.
+Kamera asal tidak mereset eksperimen. Tema cerah/gelap dan Fokus model disediakan.
+Suara ialah pilihan selepas menekan Baca, menggunakan suara dipasang setempat
+mengikut bahasa aplikasi (BM/BI); teks sentiasa tersedia jika suara tiada atau
+audio dimatikan. Modul mandiri kekal BM dan tanpa storan/rangkaian. Semasa
+terbenam, aplikasi induk boleh menyimpan refleksi melalui protokol 1 bertoken sesi.
+
+Butiran sumber, skop dan ujian gabungan: [GUIDED_V1_5.md](docs/GUIDED_V1_5.md).
 
 ## Cuba terus
 

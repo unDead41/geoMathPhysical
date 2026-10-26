@@ -1,6 +1,8 @@
 # Kontrak interaksi Modul GeoDecoder
 
-Modul pembelajaran bebas, tiada skor, profil, penghantaran data atau storan.
+Modul pembelajaran bebas tanpa skor atau profil dalaman. Sesi mandiri tiada storan
+atau rangkaian; konteks terbenam boleh menukar refleksi kendiri melalui protokol 1
+dengan sumber induk dan token sesi yang sah.
 Sumber perniagaan: arahan pengguna dan docs/SOURCE.md. Rupa: ../DESIGN.md,
 dengan varian modul dalam DESIGN.md. Tidak mengubah kontrak kuiz Digital.
 
@@ -187,3 +189,23 @@ triangle labels. Existing timing, keyboard/native controls and focus apply.
 ## Integrasi reka bentuk pada MD (v1.3.1)
 
 All v1.3 controls use the shared design-system.mjs and ui.mjs owners. Speed changes change the rate of the same elapsed-time easing record; they do not restart interpolation. Suspended records retain progress and their destinations across activity/section changes. Direct inputs cancel the affected record. Gallery/editor and formula/exterior readiness gates remain from v1.3.
+
+## Gabungan latihan v1.5.0
+
+Aktiviti berpandu menilai lima bongkah permukaan asal, editor pembaikan kubus,
+kiub unit/tiga tuangan dan dua gabungan. Mod lain kekal untuk penerokaan dengan
+batas dinyatakan dan butang latihan dilumpuhkan. Rekod bukan gred atau bukti
+penguasaan. Mengubah eksperimen membatalkan pemerhatian/semakan draf, dan mengubah
+jawapan membatalkan semakan; pencapaian terdahulu kekal sehingga penyelesaian baharu.
+Pemulihan rekod tidak membuka gerbang eksperimen dan tidak menghantar echo.
+
+Sejarah berhad 30 keadaan setiap aktiviti merangkumi net/studio, volume/compare,
+area/workshop dan composite; kamera tidak termasuk. Undo, retry atau sesi induk
+baharu membatalkan callback tertunda yang terkesan. Langkah seterusnya dan rAF
+menggunakan satu fungsi advanceMotion serta endpoint/callback sekali sahaja.
+
+Tetapan induk masuk melalui window.__geodecoderModuleHost.media dan start(refresh).
+Callback menukar paparan/label/putaran hanya apabila nilai berkaitan berubah,
+mengekalkan input dan kedudukan jeda. Modul mandiri berfungsi tanpa host.
+Suara atas permintaan memerlukan voice.localService dan bahasa host yang sepadan;
+audio dimatikan menghentikan suara dan teks kekal tersedia. Tiada autoplay suara.

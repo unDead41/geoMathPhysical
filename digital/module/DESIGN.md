@@ -218,3 +218,12 @@ without changing their identity. The version badge is V1.4.0.
 ## Integrasi MD v1.3.1
 
 The v1.2.1 design system is integrated with all v1.3.0 gallery, pacing and volume controls. Their new guide, speed selector, comparison cards and sum choices use the same token recipes and 12/14/16px type scale. Volume A/B colour markers mirror the unchanged geometric fill colours through --volume-a/--volume-b. The source helpers preset-nets.mjs and volume-lab.mjs remain authoritative for their mathematical models.
+
+## Latihan dan akses v1.5.0
+
+The guided panel uses existing field, button and feedback primitives, with a visible
+scope explanation before the prediction. Exploration-only modes stay available.
+Undo and retry remain separate from camera reset. Dark values share the canonical
+src/design-system.mjs source and generated CSS with light tokens. Focus expands
+the real model and keeps control labels visible. The optional speech area always
+retains its transcript and reports local voice availability for the active language.

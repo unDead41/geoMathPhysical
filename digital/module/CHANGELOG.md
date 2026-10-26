@@ -2,6 +2,20 @@
 
 Versi modul berasingan daripada permainan Digital dan firmware ESP32.
 
+## v1.5.0 — 26 Oktober 2026
+
+- Satukan makmal v1.4.0 dengan aliran Ramalkan → Cuba → Semak → Terangkan,
+  pencapaian kekal, ringkasan empat aktiviti dan jambatan induk protokol 1.
+- Kekalkan 11 bentuk, galeri/studio/cetakan, bekas/rongga, perbandingan A/B,
+  pindahan serta sumber dua bab. Nyatakan skop latihan berpandu pada setiap mod.
+- Undur semua keadaan eksperimen, termasuk lejar, sambungan studio dan bengkel
+  luas; kamera berasingan, reset aktiviti, Fokus model dan tema berasaskan token.
+- Langkah seterusnya menggunakan garis masa easing/jeda/sambung sedia ada;
+  tambah kelajuan dan langkah penerokaan utama tanpa bentangan palsu bagi sfera.
+- Sambungan tetapan induk menggunakan antara muka runtime eksplisit. Suara
+  setempat mengikut BM/BI dan tetapan audio, tanpa main automatik.
+- Bukti serta batas ujian gabungan: docs/GUIDED_V1_5.md.
+
 ## v1.4.0 — 26 Oktober 2026
 
 - Lengkapkan nota, pengiraan, model dan enam pandangan bagi 11 bentuk pembelajaran.

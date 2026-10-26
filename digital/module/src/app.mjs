@@ -1,3 +1,4 @@
+import {ModuleAccess} from './accessibility.mjs';
 import {VIEWS,VIEW_ORDER,FACE_COLORS,clamp01,ease} from './geometry.mjs';
 import {MODULE_VERSION,MODEL_ORDER,MODEL_DATA} from './content.mjs';
 import {ModelRenderer} from './renderer.mjs';
@@ -7,9 +8,10 @@ import {UI_MOTION} from './design-system.mjs';
 import {uiNode,playbackButton,hydrateIcons} from './ui.mjs';
 hydrateIcons(document);
 const el=id=>document.getElementById(id);
-const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+const reduced=window.__geodecoderModuleHost?.media || window.matchMedia('(prefers-reduced-motion: reduce)');
+const initialHostSettings=window.__geodecoderModuleHost?.settings||{};
 const initial=MODEL_ORDER.includes(location.hash.slice(1))?location.hash.slice(1):'cube';
-const state={shape:initial,learningView:'explore',progress:0,yaw:.55,pitch:.35,zoom:1,mode:'model',view:'front',auto:!reduced.matches,labels:false,selected:null,playing:false,direction:1,kind:'cycle',hold:0,camera:null,manualOrbit:false,pausedAnimation:null};
+const state={shape:initial,learningView:'explore',progress:0,yaw:.55,pitch:.35,zoom:1,mode:'model',view:'front',auto:!reduced.matches&&initialHostSettings.autoRotate!==false,labels:initialHostSettings.showLabels===true,selected:null,playing:false,direction:1,kind:'cycle',hold:0,camera:null,manualOrbit:false,pausedAnimation:null,speed:1};
 const primaryLearningShapes=['cube','cuboid','pyramid','cylinder','cone'];
 const mainRenderer=new ModelRenderer(el('model-canvas'));
 const navRenderers=new Map(),viewRenderers=new Map();
@@ -32,7 +34,7 @@ function refreshControls() {
   el('auto-rotate').disabled=state.mode==='views';
   el('auto-rotate').querySelector('span').textContent=state.auto?'Hentikan putaran':'Putaran automatik';
   playbackButton(el('play'),state.playing?'Jeda animasi':state.pausedAnimation?'Sambung animasi':'Main animasi',state.playing);
-  const noNet=Boolean(MODEL_DATA[state.shape].noNet);el('animation-panel').hidden=state.mode!=='model'||noNet;el('no-net-note').hidden=!noNet||state.mode!=='model';el('no-net-note').textContent=noNet?MODEL_DATA[state.shape].net:'';el('guided-net').hidden=noNet;el('play').disabled=noNet;el('progress').disabled=noNet;el('replay').disabled=noNet;
+  const noNet=Boolean(MODEL_DATA[state.shape].noNet);el('animation-panel').hidden=state.mode!=='model'||noNet;el('no-net-note').hidden=!noNet||state.mode!=='model';el('no-net-note').textContent=noNet?MODEL_DATA[state.shape].net:'';el('guided-net').hidden=noNet;el('play').disabled=noNet;el('progress').disabled=noNet;el('replay').disabled=noNet;el('explore-next').disabled=noNet;el('explore-speed').disabled=noNet;
   el('open-net').disabled=noNet||state.progress>=1&&!state.playing;
   el('close-net').disabled=Boolean(MODEL_DATA[state.shape].noNet)||state.progress<=0&&!state.playing;
   el('labels').checked=state.labels;
@@ -119,10 +121,11 @@ function renderContent() {
   if(state.learningView==='notes')learningNotes.render(state.shape);
 }
 function selectShape(shape) {
+  moduleAccess.stopSpeech();
   stopAnimation();state.shape=shape;state.progress=0;state.zoom=1;state.selected=null;state.camera=null;state.manualOrbit=false;state.yaw=.55;state.pitch=.35;
   state.auto=false;lastPercent=-1;
   try{history.replaceState(null,'','#'+shape);}catch{/* Some file-origin policies restrict history; learning still works. */}
-  renderContent();if(state.mode==='views'&&state.learningView==='explore')selectView(state.view);
+  renderContent();moduleAccess.describe(MODEL_DATA[state.shape].intro+' '+MODEL_DATA[state.shape].net);if(state.mode==='views'&&state.learningView==='explore')selectView(state.view);
   announce(MODEL_DATA[shape].name+' dipilih. '+MODEL_DATA[shape].tag);wake();
 }
 function beginAnimation(target=null) {
@@ -155,9 +158,9 @@ function frame(time) {
     dirty=true;
   }
   if(state.playing){
-    if(state.hold>0){state.hold=Math.max(0,state.hold-dt);if(state.hold===0&&!state.manualOrbit)alignCamera(.48,.28);}
+    if(state.hold>0){state.hold=Math.max(0,state.hold-dt*state.speed);if(state.hold===0&&!state.manualOrbit)alignCamera(.48,.28);}
     else {
-      state.progress=clamp01(state.progress+state.direction*dt/UI_MOTION.unfold);
+      state.progress=clamp01(state.progress+state.direction*dt*state.speed/UI_MOTION.unfold);
       if((state.direction>0&&state.progress===1)||(state.direction<0&&state.progress===0)){
         if(state.mode==='model'&&!state.manualOrbit)alignCamera(state.progress===1?0:.55,state.progress===1?0:.35);
         if(state.kind==='cycle'&&state.direction>0){state.direction=-1;state.hold=UI_MOTION.hold;}
@@ -178,6 +181,7 @@ for(const shape of primaryLearningShapes){
 for(const shape of MODEL_ORDER.filter(s=>!primaryLearningShapes.includes(s)))el('extra-shape-select').append(element('option',{value:shape},MODEL_DATA[shape].name));
 el('extra-shape-select').addEventListener('change',()=>{const shape=el('extra-shape-select').value;if(MODEL_ORDER.includes(shape))selectShape(shape);});
 function switchLearningView(view) {
+  moduleAccess.stopSpeech();
   if(state.learningView===view)return;
   stopAnimation();state.auto=false;state.camera=null;
   if(state.learningView==='labs')learningLabs.close();
@@ -186,11 +190,16 @@ function switchLearningView(view) {
   el('explore-panel').hidden=view!=='explore';el('study-panel').hidden=view!=='notes';el('labs-panel').hidden=view!=='labs';el('shape-picker').hidden=view==='labs';el('extra-shape-field').hidden=view==='labs';
   el('learn-explore').setAttribute('aria-pressed',String(view==='explore'));el('learn-notes').setAttribute('aria-pressed',String(view==='notes'));el('learn-labs').setAttribute('aria-pressed',String(view==='labs'));
   document.title=(view==='notes'?'Nota ':'')+MODEL_DATA[state.shape].name+' — Modul GeoDecoder';
+  if(view!=='labs')moduleAccess.describe(MODEL_DATA[state.shape].intro+' '+MODEL_DATA[state.shape].net);
   if(view==='labs'){learningLabs.open();el('labs-title').focus({preventScroll:true});document.title='Makmal Interaktif — Modul GeoDecoder';}
   else if(view==='notes'){learningNotes.render(state.shape);el('study-title').focus({preventScroll:true});announce('Nota '+MODEL_DATA[state.shape].name.toLowerCase()+' dibuka.');}
   else {redrawSmallModels();el('model-title').focus({preventScroll:true});announce('Teroka 3D '+MODEL_DATA[state.shape].name.toLowerCase()+'.');}
 }
-const learningLabs=new LearningLabs({announce,prefersReduced:()=>reduced.matches});
+const moduleAccess=new ModuleAccess({onTheme:()=>{redrawSmallModels();if(learningLabs.active)learningLabs.draw();},onFocus:()=>{redrawSmallModels();if(learningLabs.active)learningLabs.draw();const target=el(state.learningView==='labs'?'labs-canvas':'model-canvas');if(state.learningView!=='notes'){target.focus({preventScroll:true});target.scrollIntoView({behavior:reduced.matches?'instant':'smooth',block:'center'});}},onContext:(records,changed)=>{
+ if(changed){learningLabs.lastProgressSent={};learningLabs.suspended.clear();learningLabs.touched.clear();for(const a of Object.values(learningLabs.guided)){a.retry();a.record={activity:a.activity,stage:'prediction',prediction:'',result:'',explanation:'',completed:false};}if(learningLabs.ready){learningLabs.stop();for(const id of ['guided-prediction','guided-explanation','guided-answer'])el(id).value='';}}
+ learningLabs.restoreProgress(records);
+}});
+const learningLabs=new LearningLabs({announce,prefersReduced:()=>reduced.matches,onProgress:r=>moduleAccess.progress(r),onActivity:()=>moduleAccess.stopSpeech(),onDescribe:text=>moduleAccess.describe(text)});
 const learningNotes=new LearningNotes({announce,prefersReduced:()=>reduced.matches,onExplore:mode=>{
   switchLearningView('explore');
   if(mode==='net')beginAnimation(1);
@@ -207,6 +216,17 @@ el('play').addEventListener('click',()=>{
   if(state.playing){const saved={direction:state.direction,kind:state.kind,hold:state.hold};stopAnimation();state.camera=null;lastFrame=0;state.pausedAnimation=saved;refreshControls();announce('Animasi dijeda.');wake();}
   else if(state.pausedAnimation){const saved=state.pausedAnimation;state.pausedAnimation=null;state.playing=true;state.direction=saved.direction;state.kind=saved.kind;state.hold=saved.hold;refreshControls();announce('Animasi disambung.');wake();}
   else beginAnimation();
+});
+el('explore-speed').addEventListener('change',()=>{state.speed=el('explore-speed').value==='0.5'?.5:1;lastFrame=0;});
+el('explore-next').addEventListener('click',()=>{
+ if(MODEL_DATA[state.shape].noNet)return;state.auto=false;state.camera=null;
+ if(!state.playing&&!state.pausedAnimation){state.kind='target';state.direction=state.progress===1?-1:1;state.hold=0;}
+ if(state.pausedAnimation){Object.assign(state,state.pausedAnimation);state.pausedAnimation=null;}
+ state.playing=false;
+ if(state.hold>0)state.hold=Math.max(0,state.hold-UI_MOTION.unfold/10);
+ else{state.progress=clamp01(Math.round((state.progress+state.direction*.1)*1e10)/1e10);if(state.progress===1||state.progress===0){if(state.kind==='cycle'&&state.direction>0){state.direction=-1;state.hold=UI_MOTION.hold;}else state.kind='target';}}
+ if((state.direction>0&&state.progress<1)||(state.direction<0&&state.progress>0)||state.hold>0)state.pausedAnimation={direction:state.direction,kind:state.kind,hold:state.hold};
+ lastFrame=0;lastPercent=-1;refreshControls();wake();
 });
 el('replay').addEventListener('click',()=>{state.progress=0;lastPercent=-1;beginAnimation();});
 el('guided-net').addEventListener('click',()=>{beginAnimation(1);el('stage').scrollIntoView({behavior:reduced.matches?'instant':'smooth',block:'center'});});
@@ -276,4 +296,14 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden){
 }else wake();});
 function redrawSmallModels(){for(const [shape,r] of navRenderers)r.draw({shape,yaw:.55,pitch:.35,mini:true});drawViews();wake();}
 if(typeof ResizeObserver!=='undefined'){const resize=new ResizeObserver(redrawSmallModels);resize.observe(el('shape-picker'));resize.observe(el('stage'));}else window.addEventListener('resize',redrawSmallModels);
-renderContent();redrawSmallModels();wake();
+renderContent();redrawSmallModels();moduleAccess.init();moduleAccess.describe(MODEL_DATA[state.shape].intro+' '+MODEL_DATA[state.shape].net);wake();
+let lastHostSettings={};
+/** Explicit host entry point: refresh presentation/preferences without replacing app source. */
+function refreshModuleHost(settings={}){
+ moduleAccess.stopSpeech();moduleAccess.voiceAvailability();
+ if(typeof settings.showLabels==='boolean'&&settings.showLabels!==lastHostSettings.showLabels)state.labels=settings.showLabels;
+ if(typeof settings.autoRotate==='boolean'&&settings.autoRotate!==lastHostSettings.autoRotate){state.auto=settings.autoRotate&&!reduced.matches&&state.mode==='model'&&state.learningView==='explore';if(state.auto){stopAnimation();state.camera=null;}}
+ lastHostSettings={...settings};refreshControls();redrawSmallModels();
+ if(learningLabs.active)learningLabs.render();else moduleAccess.describe(MODEL_DATA[state.shape].intro+' '+MODEL_DATA[state.shape].net);
+}
+window.__geodecoderModuleHost?.start(refreshModuleHost);

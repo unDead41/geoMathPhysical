@@ -79,3 +79,4 @@
   --motion-hold:1000ms;
   --motion-maxFrame:100ms;
 }
+:root[data-theme="dark"]{color-scheme:dark;--primary:#8BB5FF;--primary-dark:#BCD3FF;--primary-pressed:#A7C7FF;--on-primary:#152536;--ink:#E1EAF4;--bg:#152536;--surface:#1E3349;--success:#88DFC0;--danger:#FFA9A6;--muted:#B3C5D8;--border:#425C76;--border-control:#91A8BF;--blue-soft:#263F60;--mint-soft:#23483F;--danger-soft:#4B3038;--hover:#263F60;--selected:#263F60;--stage-bg:#152536;--stage-dot:#425C76;--scroll-track:#152536;--scroll-thumb:#91A8BF;--scroll-hover:#B3C5D8;--scroll-active:#E1EAF4;}

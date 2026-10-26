@@ -1,5 +1,5 @@
 import fs from 'node:fs';import path from 'node:path';import vm from 'node:vm';import assert from 'node:assert/strict';import {fileURLToPath} from 'node:url';import {MODULE_VERSION} from '../src/content.mjs';
-import {UI_TOKENS,designTokenCss} from '../src/design-system.mjs';
+import {UI_TOKENS,UI_DARK_TOKENS,designTokenCss} from '../src/design-system.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..'),html=fs.readFileSync(path.join(root,'GeoDecoder_Modul_V1.html'),'utf8');
 assert.ok(!/<script[^>]+src=|<link[^>]+rel="stylesheet"|@import|@font-face|\bfetch\s*\(|XMLHttpRequest|WebSocket|serviceWorker|localStorage|sessionStorage/.test(html),'Runtime must be self-contained and storage/network-independent');
 assert.ok(!/^import |^export /m.test(html));
@@ -19,4 +19,6 @@ const luminance=hex=>{const c=hex.slice(1).match(/../g).map(h=>parseInt(h,16)/25
 const contrast=(a,b)=>{const x=luminance(a),y=luminance(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05);};
 for(const [fg,bg] of [['ink','surface'],['muted','bg'],['primary','surface'],['on-primary','primary'],['primary-dark','blue-soft'],['success','mint-soft'],['danger','danger-soft']])assert.ok(contrast(UI_TOKENS[fg],UI_TOKENS[bg])>=4.5,`Text contrast ${fg}/${bg}`);
 assert.ok(contrast(UI_TOKENS['border-control'],UI_TOKENS.surface)>=3,'Control boundary contrast');
+for(const [fg,bg] of [['ink','surface'],['muted','bg'],['primary','surface'],['on-primary','primary'],['primary-dark','blue-soft'],['success','mint-soft'],['danger','danger-soft']])assert.ok(contrast(UI_DARK_TOKENS[fg],UI_DARK_TOKENS[bg])>=4.5,`Dark text contrast ${fg}/${bg}`);
+assert.ok(contrast(UI_DARK_TOKENS['border-control'],UI_DARK_TOKENS.surface)>=3,'Dark control boundary contrast');
 console.log('PASS: standalone syntax, no runtime network/storage/dependencies, IDs, reduced motion, module versions, generated token drift, SVG icons and text/control contrast');

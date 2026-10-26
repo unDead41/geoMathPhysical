@@ -142,3 +142,14 @@ Versi fungsi serasi baharu ialah v1.4.0, dipaparkan V1.4.0 berhampiran logo.
 Permainan, bank soalan, skor, analitik dan firmware tidak berubah. MODEL_ORDER
 sebelas bentuk hanya katalog pembelajaran tempatan; Shape ID kuiz kekal lima.
 Enam sumber PDF setempat serta julat dua bab dicatat dalam SOURCES_V1_4.md.
+
+## Integrasi latihan v1.5.0 — 26 Oktober 2026
+
+Sasaran yang dibenarkan ialah branch sedia ada `main-digitalized`, dibaca pada
+`5f577d63f17067a8488e17cafcbcb25d5872360b`. Subtree v1.4.0 pada SHA itu identik
+dengan `694c2c9623a76be1b885611e2c90575b734d0b00`. Latihan/akses daripada
+`4c3a165613fd310e5e7e889e793065d4818250b2` diport pada sumber ini; reka bentuk
+`2a62091fe72f88c59b2f3ca393a29fc3f1b47263` telah diserap dalam asas.
+Semua nota/bentuk/makmal luas kekal. Lihat GUIDED_V1_5.md untuk skop penilaian,
+kontrak induk dan bukti ujian gabungan. SHA penerbitan akhir ditetapkan pemilik
+integrasi selepas semakan dan tidak direka daripada snapshot tempatan.
