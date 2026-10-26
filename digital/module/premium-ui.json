@@ -7,7 +7,9 @@
   "canonicalMap": "UX-CONTRACT.md",
   "requiredCapabilities": [
     "Scrollbar",
-    "Toast"
+    "Toast",
+    "Select/Listbox",
+    "Form"
   ],
   "requiredCommands": [
     "build",
@@ -21,7 +23,8 @@
   },
   "evidence": {
     "failurePaths": "tests/app.test.mjs",
-    "browser": "docs/VERIFICATION.md"
+    "browser": "docs/DESIGN_V1_2_1.md",
+    "actionBindings": "tests/app.test.mjs"
   },
   "ownership": {
     "Select/Listbox": "native"

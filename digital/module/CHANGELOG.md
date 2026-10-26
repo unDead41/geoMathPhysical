@@ -2,6 +2,19 @@
 
 Versi modul berasingan daripada permainan Digital dan firmware ESP32.
 
+## v1.2.1 — 26 Oktober 2026
+
+- Pusatkan token, ikon SVG, pembinaan DOM dan resipi widget; besarkan teks dan
+  kawalan, seragamkan panel, keputusan serta keadaan interaksi.
+- Kemaskan responsif 320px, toolbar tanpa tindihan, butang arah model nyata dan
+  tindakan Lihat perubahan pada model selepas kawalan makmal.
+- Bekukan kamera ketika Jeda, kekalkan garis masa easing ketika Sambung, sediakan
+  sambung eksplisit selepas tab tersembunyi dan cegah tuangan bersaing.
+- Stabilkan framing makmal menggunakan mesh rujukan geometri yang sama sepanjang
+  gerakan, tanpa mengubah rumus, dimensi, warna muka atau sambungan bentangan.
+- Tambah pemeriksaan token dijana, kontras, versi, ikon dan regresi gerakan.
+- Penerbitan hanya ke digitalize-module-design mengikut arahan susulan pengguna.
+
 ## v1.2.0 — 26 Oktober 2026
 
 - Tambah empat Makmal interaktif: bina bentangan kubus sendiri, kiub unit dan

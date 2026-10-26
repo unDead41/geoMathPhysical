@@ -8,8 +8,10 @@ dengan varian modul dalam DESIGN.md. Tidak mengubah kontrak kuiz Digital.
 
 | Capability | Canonical owner | Source of truth | Allowed variants | Verification |
 |---|---|---|---|---|
-| Scrollbar | src/style.css global baseline | DESIGN.md | forced-colors native | source check + phone browser |
+| Scrollbar | design-system.mjs tokens + src/style.css global baseline | DESIGN.md | forced-colors native | source check + phone browser |
 | Toast | app.mjs announce + inline text | this contract | info, learning feedback | browser + tests/app.test.mjs |
+| Form | notes.mjs labelled fields + calculate | lessons.mjs measurement limits | inline validation / first-error focus | app tests + browser |
+| Select/Listbox | native select in index.html + shared field recipe | fixed lab choices; DESIGN.md | browser/OS-owned popup | keyboard and browser selection |
 | Direct manipulation | app.mjs Pointer Events controller | user brief | mouse/touch, two-pointer pinch, keyboard, direction buttons | browser drag/keys + cancellation handlers |
 | Range | native input range + progress state | this contract | drag, keyboard | browser Home/End/PageUp |
 | Selection | native buttons with aria-pressed | this contract | shape, view, face, answer | browser all choices |
@@ -87,3 +89,50 @@ All quantities are in cm/cm²/cm³. Lab circular values use Math.PI; notes retai
 their independent selectable π convention. Display rounds only after calculation.
 Wrong exterior choices produce explanation and allow retry, with no score or data
 collection. Shapes/dimensions change the lab mesh only; quiz/model defaults remain.
+
+
+## Penyatuan reka bentuk v1.2.1
+
+Arahan pengguna 26 Oktober 2026 mengehadkan pelaksanaan kepada modul, kemudian
+menetapkan penerbitan ke branch baharu digitalize-module-design. Source pembelajaran
+dan dasar kuiz tidak berubah. Lihat DESIGN.md untuk nilai visual dan pemetaan token.
+
+| Capability | Canonical owner | Source of truth | Allowed variants | Verification |
+|---|---|---|---|---|
+| Button/Playback | src/ui.mjs playbackButton + shared style.css | this contract | solid primary / outline support / labelled icon | shipped app tests + browser |
+| Form | notes.mjs calculate + labelled markup | lessons.mjs measurement limits | inline validation, first invalid focus | app tests + browser invalid input |
+| Select/Listbox | native select; shared field recipe | fixed lab choices | OS/browser popup | popup + keyboard browser check |
+| Design tokens | design-system.mjs → generated design-tokens.css | DESIGN.md token map | original GeoDecoder brand | build + check |
+
+Every action retains a visible label or BM accessible name. Shared button states
+are normal/hover/focus/active/selected/disabled. Hover never shifts target geometry.
+Selected shapes have a tick, selected surface pieces expose a tick plus name/number,
+and the net-face selector has text as well as an outline on the chosen cell.
+
+Exploration Pause freezes progress and the pending camera tween. It exposes
+Sambung animasi for the saved target/direction, not a fresh cycle. Camera-only
+reset leaves the geometric opening percentage intact. Range input cancels pending
+playback and directly inspects the chosen geometric frame. Direction buttons and
+canvas keyboard provide equivalent orbit controls.
+
+Labs keep one animation record with its elapsed time, easing, target and completion.
+Pause stores it; Resume continues that same timeline. A hidden tab suspends the lab
+record and does not resume automatically. Returning shows Sambung animasi.
+Section/lab/type/dimension changes cancel pending work; preference changes stop it.
+A paused transfer disables Tuang sekali and Isi semula so only the shared Resume
+action can continue. Mula semula always clears the transfer.
+
+Scene fit is cached for the full geometric animation path, keeping physical scale
+stable. It affects only the renderer camera frame, never vertices, face connectivity,
+units or totals. User orbit/zoom changes the view deliberately.
+
+Phone/tablet and short desktop layouts use normal document scroll. Long note
+references are not sticky. Only tall desktop can pin a fully visible lab column.
+Sliders, output and focus never sit under fixed controls. Explicit playback and
+Lihat perubahan pada model focus/reveal the model. Tables scroll within their
+labelled keyboard-focusable regions. No page-level horizontal overflow is accepted.
+
+All new code remains in the offline bundle. QA pointer/media-query fixtures live
+only in tools/qa.html; tests must identify them as simulations. Native popup style,
+physical touch, OS preferences and screen-reader operation require separate device
+tests before making broader accessibility/browser-support claims.

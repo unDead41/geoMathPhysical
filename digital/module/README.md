@@ -1,6 +1,13 @@
 # Modul Pembelajaran GeoDecoder Digital V1
 
-Versi modul: **v1.2.0**. Branch kerja: **digitalize-module**.
+Versi modul: **v1.2.1**. Branch kerja: **digitalize-module-design**.
+
+Asas: `digitalize-module` pada `931a0150397bfb3fd79ef3c8da6684167d1c6aad`.
+[Laporan reka bentuk dan ujian](docs/DESIGN_V1_2_1.md).
+
+**Asas branch ini v1.2.0.** Semasa kerja reka bentuk, chat lain menerbitkan v1.3.0
+ke digitalize-module. Fungsi baharu v1.3.0 kekal pada branch asal dan belum
+digabung di sini. [Handoff integrasi](docs/INTEGRATION_HANDOFF_V1_3.md).
 
 ## Cuba terus
 
@@ -37,7 +44,7 @@ Peluncur sentiasa membolehkan pemerhatian bingkai demi bingkai.
 
 ## Makmal interaktif v1.2.0
 
-Pilih **Makmal interaktif**, kemudian pilih aktiviti 01–04:
+Pilih **Makmal interaktif**, kemudian pilih salah satu daripada empat aktiviti:
 
 1. **Bina bentangan:** grid 6 × 6, tepat enam muka kubus. Tekan petak, seret muka,
    atau pilih muka dan gunakan butang arah. Lipat/buka, jeda/sambung dan peluncur
@@ -90,7 +97,10 @@ bukan pertukaran gambar atau panel poligon berengsel.
 | `src/labs.mjs` | Empat aktiviti, kamera bersama, seretan dan kitar hayat animasi |
 | `src/notes.mjs` | Paparan nota, rajah SVG, input ukuran, maklum balas dan navigasi |
 | `src/app.mjs` | Kawalan input, animasi, pandangan dan aktiviti pembelajaran |
-| `src/index.html`, `src/style.css` | Antara muka dan identiti visual |
+| `src/design-system.mjs` | Sumber utama token, tempoh gerakan dan ikon SVG |
+| `src/design-tokens.css` | Output token dijana; jangan edit secara manual |
+| `src/ui.mjs` | Primitif DOM/SVG dan butang playback bersama |
+| `src/index.html`, `src/style.css` | Susun atur dan resipi komponen bersama |
 | `tools/build.mjs` | Menggabungkan sumber menjadi HTML mandiri |
 | `tests/` | Geometri sebenar dan kitar hayat aplikasi daripada HTML keluaran |
 | `evidence/` | Output ujian dan screenshot sebenar; lihat manifest |
@@ -133,6 +143,6 @@ ukuran aktiviti; ukuran ini tidak mengubah model 3D ilustrasi.
 QA pilihan: `npm run qa` membuka workbench tempatan pada port 4173. Laluan
 `/qa.html` memaparkan fail HTML keluaran sebenar dalam iframe 320/390/768/1280px.
 Simulasi reduced motion di workbench ialah suntikan dependency untuk ujian sahaja,
-bukan perubahan tetapan OS. Borang evidence menerima screenshot daripada pelayar
-ujian dan menyimpannya dalam evidence/ tanpa menindih fail. Server ini hanya alat
-pembangunan dan tidak dimasukkan ke dalam HTML murid.
+bukan perubahan tetapan OS. Butang Semak paparan merekod overflow, sasaran dan saiz teks; butang pointer
+menggunakan event sintetik yang dilabel jelas. Screenshot sebenar diambil oleh
+pelayar. Server/fixture ini tidak dimasukkan ke dalam HTML murid.

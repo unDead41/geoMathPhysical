@@ -70,3 +70,25 @@ Semua perubahan kekal di digital/module/. Main/sharing/digitalize tidak diubah.
 
 Semakan sebelum push: digitalize bergerak kepada b0000bf8f9b969c5596f75e3af70c8dfc3fc1631 sementara kerja makmal berjalan. Branch modul masih pada asas 92c12c3a07ec250c03a73decaf52a654fc26d502 dan disambung tanpa mengubah branch permainan.
 Versi digitalize pada semakan b0000bf8f9b969c5596f75e3af70c8dfc3fc1631 ialah v2.1.0, disahkan daripada core.mjs.
+
+## Penyatuan reka bentuk v1.2.1 — 26 Oktober 2026
+
+Asas modul disahkan melalui GitHub pada 931a0150397bfb3fd79ef3c8da6684167d1c6aad,
+tree c1ced5c619397170a5bf7e0f601f6bbafed1a52f. Main masih
+ a059979d97926b82cafd4aa5cf3fe59da04a55bb (firmware 1.1.3). Arahan susulan pengguna
+menetapkan hasil pada branch baharu digitalize-<nama sesuai>; nama dipilih ialah
+**digitalize-module-design**, dan digitalize-module menjadi rujukan baca sahaja.
+
+Worktree tersendiri menggunakan commit Git asal yang disahkan hash. Tidak mengubah
+checkout chat lain. Semua source/build/dokumen/bukti baharu dalam digital/module/.
+Modul dinaikkan PATCH kepada 1.2.1 untuk penyatuan UI dan pembaikan gerakan serasi;
+rumus, geometri, ukuran dan pembelajaran asal tidak diubah. Lihat
+[laporan reka bentuk](DESIGN_V1_2_1.md) untuk keputusan dan batas ujian sebenar.
+
+Semakan akhir sebelum penerbitan mendapati digitalize-module sudah bergerak kepada
+**ee7c7ee983ce32bc9681c60424df184f29e8a80b** (modul v1.3.0), manakala
+digitalize berada pada **adc51627eaaace5d9543c7e033d2994986c8715d**.
+Itu kerja selari chat lain, bukan perubahan daripada branch reka bentuk ini.
+Asas parent branch reka bentuk kekal 931a0150397bfb3fd79ef3c8da6684167d1c6aad.
+Tiada force push, merge atau penggantian source v1.3.0. Handoff integrasi
+berasingan disediakan; HTML branch reka bentuk ialah edisi v1.2.1 pada asas v1.2.0.

@@ -20,7 +20,7 @@ function app(reduce=true){
  const html=fs.readFileSync(new URL('../GeoDecoder_Modul_V1.html',import.meta.url),'utf8'),code=html.match(/<script>([\s\S]*?)<\/script>/)[1],nodes={};
  for(const m of html.matchAll(/id="([^"]+)"/g))nodes[m[1]]=new NodePort();
  let clock=0,id=0,queue=new Map();const media={matches:reduce,addEventListener(k,fn){const old=this.change;this.change=old?()=>{old();fn();}:fn;}};
- const doc={hidden:false,events:{},getElementById:id=>nodes[id]??null,createElement:tag=>new NodePort(tag),createElementNS:(_,tag)=>new NodePort(tag),createTextNode:text=>({textContent:text}),addEventListener(k,fn){const old=this.events[k];this.events[k]=old?()=>{old();fn();}:fn;}};
+ const doc={hidden:false,events:{},querySelectorAll:()=>[],getElementById:id=>nodes[id]??null,createElement:tag=>new NodePort(tag),createElementNS:(_,tag)=>new NodePort(tag),createTextNode:text=>({textContent:text}),addEventListener(k,fn){const old=this.events[k];this.events[k]=old?()=>{old();fn();}:fn;}};
  const context={document:doc,window:{matchMedia:()=>media},location:{hash:''},history:{replaceState(){}},performance:{now:()=>clock},ResizeObserver:class{observe(){}},requestAnimationFrame:fn=>{queue.set(++id,fn);return id;},cancelAnimationFrame:k=>queue.delete(k),console};
  vm.runInNewContext(code,context,{timeout:2000});
  const tick=(ms=16)=>{clock+=ms;const work=[...queue.values()];queue.clear();for(const fn of work)fn(clock);};
@@ -135,4 +135,31 @@ test('every literal action button has a real shipped-script binding after lazy s
 });
 test('direct lab slider input keeps the new user value before cancelling playback',()=>{
  const a=app();a.click('learn-labs');for(const [kind,action,value] of [['net','net-fold','370'],['area','area-open','620'],['composite','comp-join','110']]){a.click('lab-'+kind);a.click(action);a.advance(700);a.nodes['lab-progress'].value=value;a.nodes['lab-progress'].emit('input');assert.equal(Number(a.nodes['labs-canvas'].dataset.progress),Number(value)/1000,kind+' slider was overwritten');assert.equal(a.pending(),0);assert.equal(a.nodes['lab-progress'].value,value);}
+});
+test('pausing exploration freezes camera as well as the net and exposes the resume action',()=>{
+ const a=app(false);a.click('open-net');a.advance(200);a.click('play');const before=a.state();a.advance(1500);
+ assert.equal(a.state().yaw,before.yaw,'camera kept moving after pause');assert.equal(a.state().pitch,before.pitch);
+ assert.equal(a.state().progress,before.progress);assert.equal(a.nodes.play.getAttribute('aria-label'),'Sambung animasi');
+ a.click('play');a.advance(7000);assert.equal(a.state().progress,'1');
+});
+test('paused volume transfer has one resume action and cannot start a competing pour',()=>{
+ const a=app();a.click('learn-labs');a.click('lab-volume');a.nodes['volume-kind'].value='cone';a.nodes['volume-kind'].emit('change');
+ a.click('pour-one');a.advance(800);a.click('lab-pause');const before=a.nodes['labs-canvas'].dataset.progress;
+ assert.equal(a.nodes['pour-one'].disabled,true,'paused transfer may only resume through the playback control');
+ a.advance(2000);assert.equal(a.nodes['labs-canvas'].dataset.progress,before);
+ a.click('lab-pause');a.advance(3000);assert.equal(a.nodes['labs-canvas'].dataset.pours,'1');assert.equal(a.pending(),0);
+});
+test('a hidden tab preserves the explicit lab target for a deliberate resume',()=>{
+ const a=app();a.click('learn-labs');a.click('net-fold');a.advance(1000);const before=a.nodes['labs-canvas'].dataset.progress;
+ a.doc.hidden=true;a.doc.events.visibilitychange();a.advance(10000);a.doc.hidden=false;a.doc.events.visibilitychange();
+ assert.equal(a.nodes['labs-canvas'].dataset.progress,before);assert.equal(a.nodes['lab-pause'].disabled,false);
+ a.click('lab-pause');a.advance(4500);assert.equal(a.nodes['labs-canvas'].dataset.progress,'1');
+});
+test('lab resume preserves the original easing timeline instead of starting a new acceleration',()=>{
+ const a=app();a.click('learn-labs');a.click('net-fold');a.advance(2000);a.click('lab-pause');a.advance(1500);a.click('lab-pause');a.advance(1000);
+ const p=Number(a.nodes['labs-canvas'].dataset.progress);assert.ok(Math.abs(p-.84375)<1e-8,'resume lost the original 4s smoothstep timeline: '+p);
+});
+test('backgrounding exploration preserves its one-way target for an explicit resume',()=>{
+ const a=app();a.click('open-net');a.advance(1400);a.doc.hidden=true;a.doc.events.visibilitychange();a.advance(10000);a.doc.hidden=false;a.doc.events.visibilitychange();a.tick();
+ assert.equal(a.nodes.play.getAttribute('aria-label'),'Sambung animasi');a.click('play');a.advance(7000);assert.equal(a.state().progress,'1');assert.equal(a.state().playing,'false');
 });

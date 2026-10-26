@@ -3,6 +3,9 @@ import {MODULE_VERSION,MODEL_ORDER,MODEL_DATA} from './content.mjs';
 import {ModelRenderer} from './renderer.mjs';
 import {LearningNotes} from './notes.mjs';
 import {LearningLabs} from './labs.mjs';
+import {UI_MOTION} from './design-system.mjs';
+import {uiNode,playbackButton,hydrateIcons} from './ui.mjs';
+hydrateIcons(document);
 const el=id=>document.getElementById(id);
 const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
 const initial=MODEL_ORDER.includes(location.hash.slice(1))?location.hash.slice(1):'cube';
@@ -10,12 +13,7 @@ const state={shape:initial,learningView:'explore',progress:0,yaw:.55,pitch:.35,z
 const mainRenderer=new ModelRenderer(el('model-canvas'));
 const navRenderers=new Map(),viewRenderers=new Map();
 let raf=0,lastFrame=0,dirty=true,lastPercent=-1;
-function element(tag,attrs={},text='') {
-  const node=document.createElement(tag);
-  for(const [name,value] of Object.entries(attrs))node.setAttribute(name,String(value));
-  if(text)node.textContent=text;
-  return node;
-}
+const element=uiNode;
 function announce(text) {el('announcer').textContent=text;}
 function wake() {dirty=true;if(!raf&&!document.hidden&&state.learningView==='explore')raf=requestAnimationFrame(frame);}
 function stopAnimation() {state.playing=false;state.hold=0;state.pausedAnimation=null;}
@@ -32,9 +30,7 @@ function refreshControls() {
   el('auto-rotate').setAttribute('aria-pressed',String(state.auto));
   el('auto-rotate').disabled=state.mode==='views';
   el('auto-rotate').querySelector('span').textContent=state.auto?'Hentikan putaran':'Putaran automatik';
-  el('play').querySelector('span').textContent=state.playing?'Jeda animasi':'Main animasi';
-  el('play').setAttribute('aria-label',state.playing?'Jeda animasi':'Main animasi');
-  el('play').querySelector('path').setAttribute('d',state.playing?'M8 5v14M16 5v14':'m8 5 11 7-11 7V5Z');
+  playbackButton(el('play'),state.playing?'Jeda animasi':state.pausedAnimation?'Sambung animasi':'Main animasi',state.playing);
   el('open-net').disabled=state.progress>=1&&!state.playing;
   el('close-net').disabled=state.progress<=0&&!state.playing;
   el('labels').checked=state.labels;
@@ -150,7 +146,7 @@ function frame(time) {
   raf=0;const dt=lastFrame?Math.max(0,time-lastFrame):0;lastFrame=time;
   if(document.hidden||state.learningView!=='explore'){lastFrame=0;return;}
   if(state.camera){
-    const c=state.camera,t=clamp01((time-c.time)/700),e=ease(t);
+    const c=state.camera,t=clamp01((time-c.time)/UI_MOTION.camera),e=ease(t);
     state.yaw=c.fromYaw+(c.toYaw-c.fromYaw)*e;state.pitch=c.fromPitch+(c.toPitch-c.fromPitch)*e;
     if(t===1){state.yaw=c.toYaw;state.pitch=c.toPitch;state.camera=null;}
     dirty=true;
@@ -158,10 +154,10 @@ function frame(time) {
   if(state.playing){
     if(state.hold>0){state.hold=Math.max(0,state.hold-dt);if(state.hold===0&&!state.manualOrbit)alignCamera(.48,.28);}
     else {
-      state.progress=clamp01(state.progress+state.direction*dt/5800);
+      state.progress=clamp01(state.progress+state.direction*dt/UI_MOTION.unfold);
       if((state.direction>0&&state.progress===1)||(state.direction<0&&state.progress===0)){
         if(state.mode==='model'&&!state.manualOrbit)alignCamera(state.progress===1?0:.55,state.progress===1?0:.35);
-        if(state.kind==='cycle'&&state.direction>0){state.direction=-1;state.hold=1000;}
+        if(state.kind==='cycle'&&state.direction>0){state.direction=-1;state.hold=UI_MOTION.hold;}
         else {stopAnimation();if(state.kind==='view-close')alignCamera(VIEWS[state.view].yaw,VIEWS[state.view].pitch);}
       }
       dirty=true;refreshControls();
@@ -203,7 +199,7 @@ el('version').textContent='V'+MODULE_VERSION;
 el('mode-model').addEventListener('click',()=>switchMode('model'));el('mode-views').addEventListener('click',()=>switchMode('views'));
 el('open-net').addEventListener('click',()=>beginAnimation(1));el('close-net').addEventListener('click',()=>beginAnimation(0));
 el('play').addEventListener('click',()=>{
-  if(state.playing){const saved={direction:state.direction,kind:state.kind,hold:state.hold};stopAnimation();state.pausedAnimation=saved;refreshControls();announce('Animasi dijeda.');wake();}
+  if(state.playing){const saved={direction:state.direction,kind:state.kind,hold:state.hold};stopAnimation();state.camera=null;lastFrame=0;state.pausedAnimation=saved;refreshControls();announce('Animasi dijeda.');wake();}
   else if(state.pausedAnimation){const saved=state.pausedAnimation;state.pausedAnimation=null;state.playing=true;state.direction=saved.direction;state.kind=saved.kind;state.hold=saved.hold;refreshControls();announce('Animasi disambung.');wake();}
   else beginAnimation();
 });
@@ -213,6 +209,11 @@ el('guided-view').addEventListener('click',()=>{switchMode('views');selectView(s
 el('auto-rotate').addEventListener('click',()=>setAuto(!state.auto));
 el('labels').addEventListener('change',()=>{state.labels=el('labels').checked;wake();});
 el('zoom-in').addEventListener('click',()=>zoomBy(.15));el('zoom-out').addEventListener('click',()=>zoomBy(-.15));el('reset').addEventListener('click',resetCamera);
+for(const [id,key,amount] of [['orbit-left','yaw',-.2],['orbit-right','yaw',.2],['orbit-up','pitch',.15],['orbit-down','pitch',-.15]])el(id).addEventListener('click',()=>{
+  if(state.mode==='views')switchMode('model');state.auto=false;state.manualOrbit=true;state.camera=null;
+  if(key==='yaw')state.yaw+=amount;else state.pitch=Math.max(-Math.PI/2,Math.min(Math.PI/2,state.pitch+amount));
+  refreshControls();wake();
+});
 el('progress').addEventListener('input',()=>{
   stopAnimation();state.auto=false;state.progress=Number(el('progress').value)/1000;
   if(!state.manualOrbit)alignCamera(state.progress===1?0:state.progress===0?.55:.48,state.progress===1?0:state.progress===0?.35:.28);
@@ -263,7 +264,11 @@ canvas.addEventListener('keydown',event=>{
   refreshControls();wake();
 });
 reduced.addEventListener('change',()=>{if(learningLabs.ready)learningLabs.stop();state.auto=false;stopAnimation();state.camera=null;refreshControls();wake();});
-document.addEventListener('visibilitychange',()=>{if(document.hidden){stopAnimation();state.auto=false;state.camera=null;if(raf)cancelAnimationFrame(raf);raf=0;lastFrame=0;refreshControls();}else wake();});
+document.addEventListener('visibilitychange',()=>{if(document.hidden){
+  const saved=state.playing?{direction:state.direction,kind:state.kind,hold:state.hold}:state.pausedAnimation;
+  stopAnimation();state.pausedAnimation=saved;state.auto=false;state.camera=null;
+  if(raf)cancelAnimationFrame(raf);raf=0;lastFrame=0;refreshControls();
+}else wake();});
 function redrawSmallModels(){for(const [shape,r] of navRenderers)r.draw({shape,yaw:.55,pitch:.35,mini:true});drawViews();wake();}
 if(typeof ResizeObserver!=='undefined'){const resize=new ResizeObserver(redrawSmallModels);resize.observe(el('shape-picker'));resize.observe(el('stage'));}else window.addEventListener('resize',redrawSmallModels);
 renderContent();redrawSmallModels();wake();

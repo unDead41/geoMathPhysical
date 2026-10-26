@@ -1,0 +1,837 @@
+{
+  "version": "1.2.1",
+  "bundleBytes": 173623,
+  "browser": "Cloud Chromium",
+  "viewportMethod": "CSS iframe widths 320/390/768/1280, settled width checked",
+  "pointerMethod": "synthetic PointerEvent fixture and real keyboard/button alternatives",
+  "reducedMotionMethod": "JS media-query dependency fixture; OS preference not changed",
+  "hiddenTabLimit": "Cloud pages reported document.hidden=false; hidden lifecycle verified by shipped-app tests",
+  "review": "Two read-only subagent reviews; source icon hydration, narrow selected tick and SVG label fixes verified",
+  "checks": [
+    {
+      "test": "five-shapes-keyboard-slider-endpoints",
+      "results": [
+        {
+          "shape": "cube",
+          "open": "Bentangan rata, 100 peratus terbuka",
+          "closed": "Bongkah tertutup, 0 peratus terbuka"
+        },
+        {
+          "shape": "cuboid",
+          "open": "Bentangan rata, 100 peratus terbuka",
+          "closed": "Bongkah tertutup, 0 peratus terbuka"
+        },
+        {
+          "shape": "pyramid",
+          "open": "Bentangan rata, 100 peratus terbuka",
+          "closed": "Bongkah tertutup, 0 peratus terbuka"
+        },
+        {
+          "shape": "cylinder",
+          "open": "Bentangan rata, 100 peratus terbuka",
+          "closed": "Bongkah tertutup, 0 peratus terbuka"
+        },
+        {
+          "shape": "cone",
+          "open": "Bentangan rata, 100 peratus terbuka",
+          "closed": "Bongkah tertutup, 0 peratus terbuka"
+        }
+      ]
+    },
+    {
+      "test": "six-orthographic-views",
+      "results": [
+        "Atas: Bulatan + titik puncak. Warna menunjukkan permukaan yang dilihat; warna tidak mengubah bentuk unjuran.",
+        "Bawah: Bulatan. Warna menunjukkan permukaan yang dilihat; warna tidak mengubah bentuk unjuran.",
+        "Depan: Segi tiga. Warna menunjukkan permukaan yang dilihat; warna tidak mengubah bentuk unjuran.",
+        "Belakang: Segi tiga. Warna menunjukkan permukaan yang dilihat; warna tidak mengubah bentuk unjuran.",
+        "Kiri: Segi tiga. Warna menunjukkan permukaan yang dilihat; warna tidak mengubah bentuk unjuran.",
+        "Kanan: Segi tiga. Warna menunjukkan permukaan yang dilihat; warna tidak mengubah bentuk unjuran."
+      ]
+    },
+    {
+      "test": "synthetic-orbit",
+      "before": {
+        "shape": "cone",
+        "learningView": "explore",
+        "progress": "0",
+        "yaw": "0.68",
+        "pitch": "0.35",
+        "zoom": "1.1",
+        "mode": "model",
+        "playing": "false",
+        "auto": "false",
+        "reducedMotion": "false"
+      },
+      "after": {
+        "auto": "false",
+        "learningView": "explore",
+        "mode": "model",
+        "pitch": "0.602",
+        "playing": "false",
+        "progress": "0",
+        "reducedMotion": "false",
+        "shape": "cone",
+        "yaw": "1.2650000000000001",
+        "zoom": "1.1"
+      }
+    },
+    {
+      "test": "five-note-defaults",
+      "results": [
+        {
+          "shape": "Kubus",
+          "area": "96 cm²",
+          "volume": "64 cm³"
+        },
+        {
+          "shape": "Kuboid",
+          "area": "108 cm²",
+          "volume": "72 cm³"
+        },
+        {
+          "shape": "Piramid",
+          "area": "96 cm²",
+          "volume": "48 cm³"
+        },
+        {
+          "shape": "Silinder",
+          "area": "748 cm²",
+          "volume": "1540 cm³"
+        },
+        {
+          "shape": "Kon",
+          "area": "75.43 cm²",
+          "volume": "37.71 cm³"
+        }
+      ]
+    },
+    {
+      "test": "notes-invalid-reset",
+      "invalid": {
+        "area": "—",
+        "message": "Masukkan ukuran dari 0.1 hingga 1000 cm.",
+        "focused": true
+      },
+      "resetArea": "96 cm²"
+    },
+    {
+      "viewport": 320,
+      "availableWidth": 310,
+      "scrollWidth": 310,
+      "overflow": [],
+      "smallTargets": [],
+      "smallText": [],
+      "activeSection": "notes",
+      "reduced": false,
+      "main": {
+        "shape": "cone",
+        "learningView": "notes",
+        "progress": "0",
+        "yaw": "1.2650000000000001",
+        "pitch": "0.602",
+        "zoom": "1.1",
+        "mode": "model",
+        "playing": "false",
+        "auto": "false",
+        "reducedMotion": "false"
+      },
+      "lab": {},
+      "externalResources": []
+    },
+    {
+      "test": "net-overlap",
+      "feedback": "Muka 4 dan 5 dan 6 bertindih apabila dilipat. Garis putus-putus ialah potongan tambahan yang digunakan dalam pratonton lipatan."
+    },
+    {
+      "test": "synthetic-grid",
+      "targetSelected": "true",
+      "sourceSelected": "false",
+      "feedback": "Bentangan sah: keenam-enam muka menutup kubus tanpa pertindihan."
+    },
+    {
+      "test": "final-net-pause-resume",
+      "held": "0.5063373491622186",
+      "final": "1"
+    },
+    {
+      "viewport": 320,
+      "availableWidth": 310,
+      "scrollWidth": 310,
+      "overflow": [],
+      "smallTargets": [],
+      "smallText": [],
+      "activeSection": "labs",
+      "reduced": false,
+      "main": {
+        "shape": "cube",
+        "learningView": "labs",
+        "progress": "0",
+        "yaw": "0.5881259999999998",
+        "pitch": "0.35",
+        "zoom": "1",
+        "mode": "model",
+        "playing": "false",
+        "auto": "false",
+        "reducedMotion": "false"
+      },
+      "lab": {
+        "lab": "net",
+        "progress": "1",
+        "valid": "true",
+        "units": "0",
+        "pours": "0",
+        "joined": "0",
+        "yaw": "0.48",
+        "pitch": "0.3",
+        "zoom": "1"
+      },
+      "externalResources": []
+    },
+    {
+      "test": "native-select-keyboard",
+      "value": "overlap",
+      "feedback": "Muka 4 dan 5 dan 6 bertindih apabila dilipat. Garis putus-putus ialah potongan tambahan yang digunakan dalam pratonton lipatan."
+    },
+    {
+      "test": "unit-volume",
+      "afterLayerAndOne": "7 / 18 kiub · 1 lapisan penuh daripada 3.",
+      "full": "18 / 18 kiub · 3 lapisan penuh daripada 3."
+    },
+    {
+      "viewport": 320,
+      "availableWidth": 310,
+      "scrollWidth": 310,
+      "overflow": [],
+      "smallTargets": [],
+      "smallText": [],
+      "activeSection": "labs",
+      "reduced": false,
+      "main": {
+        "shape": "cube",
+        "learningView": "labs",
+        "progress": "0",
+        "yaw": "0.5881259999999998",
+        "pitch": "0.35",
+        "zoom": "1",
+        "mode": "model",
+        "playing": "false",
+        "auto": "false",
+        "reducedMotion": "false"
+      },
+      "lab": {
+        "lab": "volume",
+        "progress": "0",
+        "valid": "false",
+        "units": "18",
+        "pours": "0",
+        "joined": "0",
+        "yaw": "0.48",
+        "pitch": "0.3",
+        "zoom": "1"
+      },
+      "externalResources": []
+    },
+    {
+      "test": "cone-three-pours-final",
+      "result": "3 / 3 tuangan lengkap · Penerima 100% penuh.",
+      "equation": "3 × V kon = V silinder ≈ 113.1 cm³",
+      "thirdPourDisabled": true
+    },
+    {
+      "test": "pyramid-three-pours",
+      "result": "3 / 3 tuangan lengkap · Penerima 100% penuh.",
+      "equation": "3 × V piramid = V prisma = 144 cm³"
+    },
+    {
+      "test": "surface-area-five-shapes",
+      "results": [
+        {
+          "shape": "cube",
+          "count": "6 / 6 permukaan dipilih",
+          "total": "Jumlah dipilih = 96 cm²",
+          "formula": "Rumus keseluruhan: L = 6a²"
+        },
+        {
+          "shape": "cuboid",
+          "count": "6 / 6 permukaan dipilih",
+          "total": "Jumlah dipilih = 108 cm²",
+          "formula": "Rumus keseluruhan: L = 2(pl + pt + lt)"
+        },
+        {
+          "shape": "pyramid",
+          "count": "5 / 5 permukaan dipilih",
+          "total": "Jumlah dipilih = 96 cm²",
+          "formula": "Rumus keseluruhan: L = a² + 2as"
+        },
+        {
+          "shape": "cylinder",
+          "count": "3 / 3 permukaan dipilih",
+          "total": "Jumlah dipilih ≈ 747.7 cm²",
+          "formula": "Rumus keseluruhan: L = 2πj² + 2πjt"
+        },
+        {
+          "shape": "cone",
+          "count": "2 / 2 permukaan dipilih",
+          "total": "Jumlah dipilih ≈ 75.4 cm²",
+          "formula": "Rumus keseluruhan: L = πj² + πjs"
+        }
+      ]
+    },
+    {
+      "viewport": 320,
+      "availableWidth": 310,
+      "scrollWidth": 310,
+      "overflow": [],
+      "smallTargets": [],
+      "smallText": [],
+      "activeSection": "labs",
+      "reduced": false,
+      "main": {
+        "shape": "cube",
+        "learningView": "labs",
+        "progress": "0",
+        "yaw": "0.5881259999999998",
+        "pitch": "0.35",
+        "zoom": "1",
+        "mode": "model",
+        "playing": "false",
+        "auto": "false",
+        "reducedMotion": "false"
+      },
+      "lab": {
+        "lab": "area",
+        "progress": "1",
+        "valid": "false",
+        "units": "18",
+        "pours": "3",
+        "joined": "0",
+        "yaw": "0.48",
+        "pitch": "0.3",
+        "zoom": "1"
+      },
+      "externalResources": []
+    },
+    {
+      "test": "composite-roof",
+      "area": "240 cm²",
+      "volume": "264 cm³",
+      "correctFeedback": "Tepat! Kedua-dua permukaan yang bercantum berada di dalam. Jumlahkan permukaan yang terdedah sahaja.",
+      "retryFeedback": "Semak semula. Pilih semua permukaan luar; dua permukaan yang bercantum tidak dikira. Pisahkan bongkah untuk melihatnya."
+    },
+    {
+      "test": "composite-rocket",
+      "area": "188.5 cm²",
+      "volume": "207.35 cm³",
+      "equation": "Luas dua bongkah berasingan 245.04 cm² − 2 × luas tapak bersama 28.27 cm² = 188.5 cm². Tinggi sendeng bahagian atas s ≈ 5 cm."
+    },
+    {
+      "test": "responsive-section-matrix",
+      "results": [
+        {
+          "viewport": 320,
+          "section": "explore",
+          "lab": "composite",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "scrollWidth": 310,
+          "availableWidth": 310
+        },
+        {
+          "viewport": 320,
+          "section": "notes",
+          "lab": "composite",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "scrollWidth": 310,
+          "availableWidth": 310
+        },
+        {
+          "viewport": 320,
+          "section": "labs",
+          "lab": "composite",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "scrollWidth": 310,
+          "availableWidth": 310
+        },
+        {
+          "viewport": 390,
+          "section": "explore",
+          "lab": "composite",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "scrollWidth": 380,
+          "availableWidth": 380
+        },
+        {
+          "viewport": 390,
+          "section": "notes",
+          "lab": "composite",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "scrollWidth": 380,
+          "availableWidth": 380
+        },
+        {
+          "viewport": 390,
+          "section": "labs",
+          "lab": "composite",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "scrollWidth": 380,
+          "availableWidth": 380
+        },
+        {
+          "viewport": 768,
+          "section": "explore",
+          "lab": "composite",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "scrollWidth": 758,
+          "availableWidth": 758
+        },
+        {
+          "viewport": 768,
+          "section": "notes",
+          "lab": "composite",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "scrollWidth": 758,
+          "availableWidth": 758
+        },
+        {
+          "viewport": 768,
+          "section": "labs",
+          "lab": "composite",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "scrollWidth": 758,
+          "availableWidth": 758
+        },
+        {
+          "viewport": 1280,
+          "section": "explore",
+          "lab": "composite",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "scrollWidth": 1270,
+          "availableWidth": 1270
+        },
+        {
+          "viewport": 1280,
+          "section": "notes",
+          "lab": "composite",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "scrollWidth": 1270,
+          "availableWidth": 1270
+        },
+        {
+          "viewport": 1280,
+          "section": "labs",
+          "lab": "composite",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "scrollWidth": 1270,
+          "availableWidth": 1270
+        }
+      ]
+    },
+    {
+      "test": "responsive-all-labs",
+      "results": [
+        {
+          "viewport": 320,
+          "lab": "net",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": []
+        },
+        {
+          "viewport": 320,
+          "lab": "volume",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": []
+        },
+        {
+          "viewport": 320,
+          "lab": "area",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": []
+        },
+        {
+          "viewport": 390,
+          "lab": "net",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": []
+        },
+        {
+          "viewport": 390,
+          "lab": "volume",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": []
+        },
+        {
+          "viewport": 390,
+          "lab": "area",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": []
+        },
+        {
+          "viewport": 768,
+          "lab": "net",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": []
+        },
+        {
+          "viewport": 768,
+          "lab": "volume",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": []
+        },
+        {
+          "viewport": 768,
+          "lab": "area",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": []
+        },
+        {
+          "viewport": 1280,
+          "lab": "net",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": []
+        },
+        {
+          "viewport": 1280,
+          "lab": "volume",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": []
+        },
+        {
+          "viewport": 1280,
+          "lab": "area",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": []
+        }
+      ]
+    },
+    {
+      "test": "reduced-motion-JS-fixture",
+      "initial": {
+        "auto": "false",
+        "learningView": "explore",
+        "mode": "model",
+        "pitch": "0.35",
+        "playing": "false",
+        "progress": "0",
+        "reducedMotion": "true",
+        "shape": "cube",
+        "yaw": "0.55",
+        "zoom": "1"
+      },
+      "pausedProgress": "0.3504610344827588",
+      "pauseLabel": "Sambung animasi"
+    },
+    {
+      "test": "real-tab-switch",
+      "result": {
+        "hidden": false,
+        "action": "Main animasi",
+        "progress": "1"
+      }
+    },
+    {
+      "test": "final-post-review-24-cases",
+      "results": [
+        {
+          "viewport": 320,
+          "section": "explore",
+          "lab": null,
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "smallDiagramText": [],
+          "selectedTick": {
+            "display": "grid",
+            "content": "\"✓\""
+          }
+        },
+        {
+          "viewport": 320,
+          "section": "notes",
+          "lab": null,
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "smallDiagramText": [],
+          "selectedTick": {
+            "display": "grid",
+            "content": "\"✓\""
+          }
+        },
+        {
+          "viewport": 320,
+          "section": "labs",
+          "lab": "net",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "smallDiagramText": [],
+          "selectedTick": null
+        },
+        {
+          "viewport": 320,
+          "section": "labs",
+          "lab": "volume",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "smallDiagramText": [],
+          "selectedTick": null
+        },
+        {
+          "viewport": 320,
+          "section": "labs",
+          "lab": "area",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "smallDiagramText": [],
+          "selectedTick": null
+        },
+        {
+          "viewport": 320,
+          "section": "labs",
+          "lab": "composite",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "smallDiagramText": [],
+          "selectedTick": null
+        },
+        {
+          "viewport": 390,
+          "section": "explore",
+          "lab": null,
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "smallDiagramText": [],
+          "selectedTick": {
+            "display": "grid",
+            "content": "\"✓\""
+          }
+        },
+        {
+          "viewport": 390,
+          "section": "notes",
+          "lab": null,
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "smallDiagramText": [],
+          "selectedTick": {
+            "display": "grid",
+            "content": "\"✓\""
+          }
+        },
+        {
+          "viewport": 390,
+          "section": "labs",
+          "lab": "net",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "smallDiagramText": [],
+          "selectedTick": null
+        },
+        {
+          "viewport": 390,
+          "section": "labs",
+          "lab": "volume",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "smallDiagramText": [],
+          "selectedTick": null
+        },
+        {
+          "viewport": 390,
+          "section": "labs",
+          "lab": "area",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "smallDiagramText": [],
+          "selectedTick": null
+        },
+        {
+          "viewport": 390,
+          "section": "labs",
+          "lab": "composite",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "smallDiagramText": [],
+          "selectedTick": null
+        },
+        {
+          "viewport": 768,
+          "section": "explore",
+          "lab": null,
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "smallDiagramText": [],
+          "selectedTick": {
+            "display": "grid",
+            "content": "\"✓\""
+          }
+        },
+        {
+          "viewport": 768,
+          "section": "notes",
+          "lab": null,
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "smallDiagramText": [],
+          "selectedTick": {
+            "display": "grid",
+            "content": "\"✓\""
+          }
+        },
+        {
+          "viewport": 768,
+          "section": "labs",
+          "lab": "net",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "smallDiagramText": [],
+          "selectedTick": null
+        },
+        {
+          "viewport": 768,
+          "section": "labs",
+          "lab": "volume",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "smallDiagramText": [],
+          "selectedTick": null
+        },
+        {
+          "viewport": 768,
+          "section": "labs",
+          "lab": "area",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "smallDiagramText": [],
+          "selectedTick": null
+        },
+        {
+          "viewport": 768,
+          "section": "labs",
+          "lab": "composite",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "smallDiagramText": [],
+          "selectedTick": null
+        },
+        {
+          "viewport": 1280,
+          "section": "explore",
+          "lab": null,
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "smallDiagramText": [],
+          "selectedTick": {
+            "display": "grid",
+            "content": "\"✓\""
+          }
+        },
+        {
+          "viewport": 1280,
+          "section": "notes",
+          "lab": null,
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "smallDiagramText": [],
+          "selectedTick": {
+            "display": "grid",
+            "content": "\"✓\""
+          }
+        },
+        {
+          "viewport": 1280,
+          "section": "labs",
+          "lab": "net",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "smallDiagramText": [],
+          "selectedTick": null
+        },
+        {
+          "viewport": 1280,
+          "section": "labs",
+          "lab": "volume",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "smallDiagramText": [],
+          "selectedTick": null
+        },
+        {
+          "viewport": 1280,
+          "section": "labs",
+          "lab": "area",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "smallDiagramText": [],
+          "selectedTick": null
+        },
+        {
+          "viewport": 1280,
+          "section": "labs",
+          "lab": "composite",
+          "overflow": [],
+          "smallTargets": [],
+          "smallText": [],
+          "smallDiagramText": [],
+          "selectedTick": null
+        }
+      ]
+    }
+  ]
+}
