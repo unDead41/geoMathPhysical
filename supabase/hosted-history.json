@@ -1,0 +1,70 @@
+{
+  "project_ref": "fkrlwzxvyufndavlpzbp",
+  "source_base_sha": "790d989d666e64f3beabb507cd4140b832696367",
+  "captured_date": "2026-10-26",
+  "migrations": [
+    {
+      "version": "20261025172311",
+      "name": "geodecoder_classroom_v2_01",
+      "file": "20261025172311_geodecoder_classroom_v2_01.sql",
+      "file_sha256": "edea48fa065a6f6af2c1ef490b8dd84f48d3ce91f18300822a02502f8d32d551",
+      "sql_sha256": "d3a7b6b1c261c6216d7833783f776b8cef5ad7fe4c8db1d5f6943990720852fe"
+    },
+    {
+      "version": "20261025172740",
+      "name": "geodecoder_classroom_v2_02",
+      "file": "20261025172740_geodecoder_classroom_v2_02.sql",
+      "file_sha256": "b765fdbd325438cbf5cb897b831778d858a804f542e379feedfd67d409be79ce",
+      "sql_sha256": "141abe010f09d30eaf91d2354ba40408f47af899012e9d697e498eb16d24b650"
+    },
+    {
+      "version": "20261025172928",
+      "name": "geodecoder_classroom_v2_03",
+      "file": "20261025172928_geodecoder_classroom_v2_03.sql",
+      "file_sha256": "e851cde1acee0c9100bb288d86cdc807b49548749b7be3940e5f93b67df9ff7f",
+      "sql_sha256": "9d93c70b4b924f5a476b838b44a1d6eb1e889d881d211bb9addd4f76ae65f233"
+    },
+    {
+      "version": "20261025173022",
+      "name": "geodecoder_classroom_v2_04",
+      "file": "20261025173022_geodecoder_classroom_v2_04.sql",
+      "file_sha256": "571ba9cebda89ee3eac8373ff5e35cdb52a94a430cd8946a1eb60aa7810e37ab",
+      "sql_sha256": "b6a3dff233263cdefcf15e9cef9bd011b7eb5f9e54faab255c2a48018b5495e1"
+    },
+    {
+      "version": "20261025173354",
+      "name": "geodecoder_classroom_v2_bank_alias",
+      "file": "20261025173354_geodecoder_classroom_v2_bank_alias.sql",
+      "file_sha256": "4c2bde2e4fc3c5a866cb8a1c8aeddabf990bc6b4fbb62641db45b32244ffad37",
+      "sql_sha256": "a1a8bc5ba5979715c7d86587ac463f98e1f34a4bcf2b7a249d02a7283db3e4be"
+    },
+    {
+      "version": "20261025175447",
+      "name": "geodecoder_room_membership_capability",
+      "file": "20261025175447_geodecoder_room_membership_capability.sql",
+      "file_sha256": "445498bfb114c04179bc5617d16d0d73c4d4282df91d0eb46248ee1e289563c9",
+      "sql_sha256": "d5be1fddf96afc188601afc5d9c394cb52ed9164a57284ec8fadaaf2153725bd"
+    },
+    {
+      "version": "20261025181814",
+      "name": "geodecoder_duel_v1",
+      "file": "20261025181814_geodecoder_duel_v1.sql",
+      "file_sha256": "00904f51c25a107a15f7da8fd7d138825f407ac2f177386d3a3d14b1aefe490a",
+      "sql_sha256": "66003625b958e741dfd4100bce2d24d06078c72584ccfa428efde25442449ae3"
+    },
+    {
+      "version": "20261025193222",
+      "name": "geodecoder_email_signup_v2_2",
+      "file": "20261025193222_geodecoder_email_signup_v2_2.sql",
+      "file_sha256": "53983fff74867150b40af54e4cfcf532a3e5ddbf2541f6eb0d2e41c424fd14a2",
+      "sql_sha256": "eb57ea7298c79d7e643eddd9d09e2fe4c9c8e9baae554dd2602647c5df9fdf23"
+    },
+    {
+      "version": "20261026050330",
+      "name": "geodecoder_profile_and_module_progress_v2_6",
+      "file": "20261026050330_geodecoder_profile_and_module_progress_v2_6.sql",
+      "file_sha256": "9406aa9bc0251ce551634b53ad2d03e8bd809251637e9c8aa74a04a02a95e24c",
+      "sql_sha256": "df953547585a39ca821e7c6c2b716787216d6c7bb79a6bb243f101929a1826ec"
+    }
+  ]
+}

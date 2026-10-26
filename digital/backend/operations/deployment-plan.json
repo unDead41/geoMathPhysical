@@ -1,0 +1,21 @@
+{
+  "project_ref": "fkrlwzxvyufndavlpzbp",
+  "source_repository": "unDead41/geodecoder",
+  "production_git_branch": "main-digitalized",
+  "working_directory": ".",
+  "work_branch": "digitalized-core-backend",
+  "automatic_branching": false,
+  "deploy_to_production": false,
+  "status": "review_required_before_enablement",
+  "public_frontend_repository": "unDead41/geodecoder-digital",
+  "public_frontend_branch": "main-digitalized",
+  "required_preconditions": [
+    "Merge reviewed backend package through integration handler",
+    "Confirm GitHub App repository permissions at authorization step",
+    "Compare all hosted migration versions, names and statement hashes",
+    "Confirm migration dry-run has no historical migrations pending",
+    "Validate CLI config and both function entrypoints in full checkout",
+    "Record independent data backup and a tested restore path",
+    "Review deployment diff and cost before enabling automation"
+  ]
+}
