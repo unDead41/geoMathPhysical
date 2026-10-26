@@ -1,0 +1,31 @@
+{
+  "digitalVersion": "2.8.0",
+  "moduleVersion": "1.6.0",
+  "firmwareVersion": "1.1.3",
+  "integrationBase": "2e5c70cf4176f99a82376697081c0b6ed4b1368a",
+  "runtimeSource": "9288d422bc34212fe5b7d6c0a2c6edb129bbd295",
+  "branches": {
+    "digitalized-ux-design-system": "eb42bb2ad1bbd2a362dfc04de387872017b913f5",
+    "digitalized-utility-help-support": "2b39f290f736f6cf324544c987bd2b30a22ab99f",
+    "digitalized-module-pelan-pengiraan": "afe35b3bf87182403405f062c5bcbe2242866056"
+  },
+  "verification": {
+    "appTests": 350,
+    "moduleTests": 328,
+    "designBrowserScenarios": 26,
+    "helpBrowserScenarios": 7,
+    "helpBadgeModes": 8,
+    "embeddedLearningToolsChecks": 10,
+    "embeddedLearningToolsLayouts": 4,
+    "duelBrowser": "PASS: invalid-PIN choice recovery, 10-9 match, replay/reconnect/forfeit/deadline",
+    "moduleBlob": "84b23a992e59e709bff7d1df9901f80b937a8471"
+  },
+  "artifacts": {
+    "websiteBytes": 1360334,
+    "websiteSHA256": "bff5e71a21aca1b9a2ba924c90b68d77f608c8d6d7534be44ca7dfb61e4d02c5",
+    "offlineBytes": 6917103,
+    "offlineSHA256": "ad40e2889833ce0f8f623a513249483c28b563763c9ab8d3d152b15168e44b8e"
+  },
+  "backendChanges": false,
+  "publication": "Prepared; deployment receipt follows live verification."
+}
