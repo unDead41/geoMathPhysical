@@ -10,6 +10,11 @@ Kata Laluan & Keselamatan serta Tetapan Penggunaan.
 Rujukan sumber, perubahan, syarat database dan bukti pengesahan gabungan:
 [RELEASE_V2_6.md](docs/RELEASE_V2_6.md).
 
+Pakej e-mel akaun: [Auth email v1.0.0](backend/email/README.md), pada branch
+`digitalized-utility-auth-email`. Lapan templat BM/English telah disediakan;
+dashboard masih memerlukan custom SMTP untuk mengaktifkan reka bentuk sendiri.
+Lihat [persediaan dan had penghantaran](docs/EMAIL_SETUP.md).
+
 ## Laman GitHub Pages
 
 Main terus: **[GeoDecoder Digital](https://undead41.github.io/geodecoder-digital/)**.

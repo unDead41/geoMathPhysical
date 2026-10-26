@@ -125,3 +125,15 @@ existing portal panels, visible native labels and the same light/dark tokens.
 Only one account subpage is active; leaving Security erases sensitive fields.
 The embedded v1.5 module uses a native startup bridge for current settings,
 with its independent progress channel and theme context kept source/session-scoped.
+
+## Account email templates v1.0.0
+
+`backend/email/templates.mjs` owns email copy and layout, with generated HTML
+and a dashboard-subject manifest beside it. Reuse primary #215FF0, ink #18334B,
+background #F3F7FB, muted #526A7D and accent #FFCB66. A 600px flexible table,
+inline styles, system fonts, large action and copyable fallback URL keep the
+message readable without remote imagery or scripts. BM and English appear in
+the same message because current Auth metadata does not carry a language choice.
+The English text has language attributes. Narrow clients reduce padding/type;
+the flexible base also wraps 254-character email addresses without media queries.
+Hosted email rendering is separate from application light/dark preferences.

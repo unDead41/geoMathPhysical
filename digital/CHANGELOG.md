@@ -1,5 +1,16 @@
 # GeoDecoder Digital changelog
 
+## Belum diaktifkan hosted — Auth email v1.0.0 — 26 Oktober 2026
+
+- Branch `digitalized-utility-auth-email`: lapan templat BM/English untuk e-mel
+  akaun, butang besar, pautan sandaran dan identiti GeoDecoder tanpa aset luar.
+- Sumber templat bersama, manifest subjek, pembina/semakan serta galeri fixture
+  setempat. Pautan `ConfirmationURL` dan kod OTP Auth dikekalkan.
+- Dokumentasi had SMTP/Gmail dan sekatan projek Free yang disahkan di dashboard.
+  Custom SMTP diperlukan sebelum templat ini boleh dipasang pada projek hosted.
+- Versi aplikasi, modul dan firmware dikekalkan; tiada perubahan aliran Auth,
+  SMTP credentials, pelan, toggle notifikasi atau Pages.
+
 ## v2.6.0 — 26 Oktober 2026 (main-digitalized)
 
 - Satukan branch digital: BM/English, rich text, latihan 15 soalan, Duel,

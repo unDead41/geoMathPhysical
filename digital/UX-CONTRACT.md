@@ -80,6 +80,18 @@ machine keys must not be shown to learners.
 
 The account entry is distinct from practice. Signup requires email, username, display name, password and teacher/student role; Auth verifies the email before login. A scoped Auth insert trigger validates and copies the initial role into an immutable private profile. Later metadata edits cannot change authorization. Login accepts email or username. Forgotten password requests an email link; reset takes priority over account dashboards only after an SDK-validated recovery session. Two matching 10–128-character passwords are required; successful reset signs out globally. Invalid/expired links offer a new request. Resend has a 60-second UI cooldown and provider errors remain visible. Request success uses generic copy and does not assert inbox delivery. Public delivery depends on configured SMTP and redirect URLs. Legacy username-only accounts retain secondary code recovery; email accounts cannot use legacy codes. No credentials or recovery codes are logged. Names are escaped. Session changes clear account/room caches; stale responses cannot overwrite current context. Recovery screens stop dashboard polling.
 
+## Account email presentation v1.0.0
+
+Confirm sign up and reset emails use the same GeoDecoder wordmark, palette,
+large action and BM/English message. `ConfirmationURL` remains the destination
+of both the action and copyable fallback. Reauthentication shows the Auth OTP;
+security notifications link to `SiteURL`. No template claims a fixed expiry
+or exposes passwords, tokens in subjects, roles or class membership. Additional
+templates do not enable application capabilities or notification toggles.
+The export contains subject/body keys only. It never changes auth settings.
+SMTP activation, hosted template saves and actual mailbox delivery need their
+own evidence. The current Free/default-SMTP restriction blocks template editing.
+
 ## Classroom timing and authorization
 
 Teachers create only their own classes and rooms, see roster presence, and invite a registered student by exact username. The student accepts invitations. A six-digit class PIN enrolls in the class; a room PIN enrolls in its class and room. Codes are server generated, unique, expire after 24 hours and can be regenerated even when no active code remains. Owners alone see PINs. Repeated invalid guesses are rate limited. Presence is an estimate based on a heartbeat within the last 45 seconds, not proof that the game tab has focus.
