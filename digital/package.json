@@ -1,6 +1,6 @@
 {
   "name": "geodecoder-digital",
-  "version": "2.6.0",
+  "version": "2.7.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -14,7 +14,8 @@
     "test:rich-text": "node tests/rich-text.browser.mjs",
     "preview:security": "node tools/security-preview.mjs",
     "prepare:pages": "node tools/prepare-publication.mjs",
-    "release:check": "npm test && npm run build && npm run prepare:pages && npm run check"
+    "release:check": "npm test && npm run build && npm run prepare:pages && npm run check",
+    "test:solo": "node tests/solo.browser.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.118.0"

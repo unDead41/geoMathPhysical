@@ -1,6 +1,14 @@
 # GeoDecoder Digital V2
 
-Versi Digital: **v2.6.0**. Branch integrasi: **main-digitalized**.
+Versi Digital: **v2.7.0** (calon branch `digitalized-utility-save-resume`).
+Asas integrasi: **main-digitalized v2.6.0**.
+
+Simpan & Sambung Permainan: [kontrak dan bukti](docs/SAVE_RESUME.md).
+Home → **Sambung permainan** memaparkan kemajuan sebelum memulihkan satu sesi
+solo dalam pelayar dan akaun yang sama. Kuiz10, Latihan15 dan latihan semula
+disokong. **Mula baharu** meminta pengesahan sebelum menggantikan sesi belum
+selesai. Simpanan ini tidak disegerakkan antara peranti. Jika storan disekat,
+kemajuan semasa hanya bertahan selagi halaman dibuka.
 Modul pembelajaran: **v1.5.0**. Firmware kekal **v1.1.3**.
 
 Keluaran ini menyatukan BM/English, rich text, kuiz/latihan/duel, kemudahan

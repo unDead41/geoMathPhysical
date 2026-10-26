@@ -51,6 +51,7 @@
     <div class="dialog-actions"><button type="button" class="button button-primary" data-dialog-action="close" data-i18n="ease.close">Tutup</button></div>
   </div></div>
 
+  <p id="solo-save-status" role="status" hidden></p>
   <main id="main" tabindex="-1">
     <section id="welcome" class="entry-screen" aria-labelledby="welcome-title">
       <div class="intro">
@@ -73,7 +74,7 @@
         <div class="entry-facts"><span><b>5</b> <span data-i18n="jenis bongkah">jenis bongkah</span></span><i></i><span><b id="entry-question-count">10</b> <span data-i18n="soalan setiap pusingan">soalan setiap pusingan</span></span><i></i><span><span class="fact-icon" data-icon="trophy"></span> <span data-i18n="Cabar skor sendiri">Cabar skor sendiri</span></span></div>
       </div>
       <div class="registration-card home-options ease-home-options">
-        <div class="home-choice"><span class="card-kicker" data-i18n="ease.main">Main</span><h2 data-i18n="ease.chooseGame">Pilih permainan</h2><p data-i18n="ease.mainNote">Pilih kuiz, latihan atau Duel. Nama panggilan sahaja diperlukan.</p><button id="guest-button" type="button" class="button button-primary"><span data-i18n="ease.main">Main</span><span data-icon="arrow"></span></button></div>
+        <div class="home-choice"><span class="card-kicker" data-i18n="ease.main">Main</span><h2 data-i18n="ease.chooseGame">Pilih permainan</h2><p data-i18n="ease.mainNote">Pilih kuiz, latihan atau Duel. Nama panggilan sahaja diperlukan.</p><button id="solo-resume-button" type="button" class="button button-outline" hidden>Sambung permainan</button><button id="guest-button" type="button" class="button button-primary"><span data-i18n="ease.main">Main</span><span data-icon="arrow"></span></button></div>
         <div class="home-choice"><h2 data-i18n="ease.learn">Belajar</h2><p data-i18n="ease.learnNote">Teroka bongkah 3D, nota dan empat makmal interaktif.</p><button id="module-button" type="button" class="button button-outline"><span data-icon="bulb"></span><span data-i18n="ease.openModule">Buka modul pembelajaran</span></button></div>
         <div class="home-choice home-classroom"><h2 data-i18n="ease.classes">Akaun &amp; kelas</h2><p data-i18n="ease.classesNote">Masuk kelas guru dan lihat keputusan permainan kelas.</p><button id="welcome-account-button" type="button" class="button button-quiet"><span data-icon="user"></span><span data-i18n="ease.classes">Akaun &amp; kelas</span></button></div>
       </div>

@@ -1,5 +1,16 @@
 # GeoDecoder Digital changelog
 
+## v2.7.0 — 26 Oktober 2026 (calon digitalized-utility-save-resume)
+
+- Simpan dan sambung Kuiz10, Latihan15 dan latihan semula melalui enjin Game.
+- Snapshot v1 berasingan bagi tetamu/setiap akaun; pengesahan bank/ruleset,
+  replay jawapan, warna/pilihan kad dan baki semakan dikekalkan.
+- Home memaparkan ringkasan sebelum sambung; pengesahan sebelum ganti sesi,
+  mesej storan gagal/rosak dalam BM/English. Masa ditutup tidak dikira.
+- ID keputusan stabil mengelakkan rekod kuiz berganda. Duel/classroom dan
+  kemajuan modul terus menggunakan pemilik storan/masa sedia ada.
+- Rujuk docs/SAVE_RESUME.md. Branch sahaja; tiada penerbitan awam.
+
 ## v2.6.0 — 26 Oktober 2026 (main-digitalized)
 
 - Satukan branch digital: BM/English, rich text, latihan 15 soalan, Duel,

@@ -1,3 +1,4 @@
+import {SoloStore,restoreSnapshot} from './solo-save.mjs';
 import {reviewQuestionIds} from './usability.mjs';
 import {createPreferences,PREFERENCES_KEY,textSize} from './preferences.mjs';
 import {ModuleProgress} from './module-progress.mjs';
@@ -48,6 +49,8 @@ let drag = null, suppressClickUntil = 0, hiddenPause = false, sound = preference
 let scoresExpanded = false, lastClock = '', lastLed = {}, visualPlan = null, motionPaused = false;
 let roomState=null,roomReceivedAt=0,roomPending=null,roomSending=false,roomPolling=null,roomEpoch=0,roomInFlight=null;
 const cloud=new ClassroomCloud();
+const soloStore=new SoloStore(storage,QUESTIONS);
+let soloActor=cloud.session?.user?.id||'guest',soloNotice='',soloNewAction=null;
 let moduleLaunchEpoch=0,moduleReturnToPortal=false;
 const moduleProgress=new ModuleProgress({storage,cloud,onChange:renderModuleSaveStatus});
 const portal=createPortal({cloud,onPlay:openRoomGame,onModule:()=>void openLearningModule(true),onExit:returnHome,onError:()=>{}});
@@ -106,6 +109,7 @@ function showScreen(next) {
   if(next!=='module'){moduleLaunchEpoch++;moduleProgress.close();moduleBridge?.clear();}
   void music.setScene(next==='duel'?'game':next);
   updateTitle(next);
+  updateSoloEntry();
   window.scrollTo({top:0,behavior:'instant'});
 }
 function updateTitle(next=screen) {
@@ -265,8 +269,9 @@ for (const [id,key] of [['player-name','name']]) {
 
 function beginSelectedMode(){if(playMode==='duel')openDuelLobby();else startGame();}
 function playerMeta(){return roomState?player.className:t(player.category)+(player.className?' · '+player.className:'');}
-function startGame() {
+function startGame(confirmed=false) {
   if (!player) return;
+  if(playMode!=='duel'&&!confirmed&&((soloStore.read(soloActor)?.state.status!=='finished'&&soloStore.status==='saved')||soloStore.status==='invalid')){soloNewAction=()=>startGame(true);openSolo();return;}
   cancelDrag();roomState=null;resetRoomRequests();cloud.setRoom(null);
   game = playMode==='duel'?Game.fromDuelSnapshot(QUESTIONS,{...player,name:duelClient.snapshot.me.name},duelClient.snapshot,now()):new Game(QUESTIONS, player, now(),Math.random,{mode:playMode,questionIds:playMode==='review'?reviewIds:undefined});
   if(playMode==='duel'){player={...player,name:duelClient.snapshot.me.name};duelAppliedSeq=duelClient.snapshot.me.seq;}
@@ -283,9 +288,8 @@ function startGame() {
   announce(t("mode.startAnnouncement",{mode:modeTitle(game.mode),total:game.total}));
 }
 
-function renderQuestion() {
-  acceptedSolid = null; acceptedNet = null; selected = null;
-  visualPlan=nextVisualPlan(visualPlan);
+function renderQuestion(restored=false) {
+  if(!restored){acceptedSolid = null; acceptedNet = null; selected = null;visualPlan=nextVisualPlan(visualPlan);}
   $('correction-panel').hidden=true;
   $('game-screen').classList.remove('is-review','is-correct');
   if(roomState){acceptedSolid=game.stage==='net'||game.attempts.solid===game.question.shape?game.question.shape:null;acceptedNet=game.attempts.net===game.question.shape?game.question.shape:null;}
@@ -391,6 +395,7 @@ function renderState() {
     pad.setAttribute('aria-label', t("scanner.label",{target:target.toUpperCase(),kind:target==='r1'?t("bongkah"):t("bentangan"),status})+(selected&&active===target?t("scanner.action"):''));
   }
   renderLeds(now());
+  saveSolo();
 }
 
 function scannerStatus(target,color){
@@ -564,6 +569,7 @@ window.addEventListener('message',event=>moduleProgress.handleMessage(event));
 document.addEventListener('geodecoder:theme',event=>moduleProgress.setTheme(event.detail?.theme));
 cloud.onSessionChange(()=>{
   const actor=cloud.session?.user?.id||'guest';
+  if(actor!==soloActor){saveSolo();soloActor=actor;soloNewAction=null;if(game&&!roomState&&game.mode!=='duel'){game=null;lastResult=null;returnHome();}if(['solo','solo-new'].includes(dialogMode))closeDialog();updateSoloEntry();}
   if(actor!==moduleProgress.state.actor){moduleProgress.setAccount(cloud.session?.user?.id?{id:actor,role:cloud.profile?.role}:null);if(screen==='module'&&$('module-frame').hasAttribute('srcdoc'))void openLearningModule(moduleReturnToPortal);}
 });
 $('online-retry').addEventListener('click',()=>{if(roomPending)sendRoomPending();});
@@ -572,6 +578,7 @@ $('online-room-back').addEventListener('click',()=>openAccounts(roomState?.roomI
 function stopRoomPolling(){if(roomPolling)clearInterval(roomPolling);roomPolling=null;}
 function resetRoomRequests(){roomEpoch++;roomPending=null;roomSending=false;roomInFlight=null;stopRoomPolling();}
 function returnHome(){
+  saveSolo();
   cancelDrag();resetRoomRequests();game=null;roomState=null;selected=null;acceptedSolid=null;acceptedNet=null;cloud.setRoom(null);
   dialogTrigger=null;if(dialog.open)closeDialog();
   showScreen('welcome');$('guest-button').focus({preventScroll:true});
@@ -582,6 +589,7 @@ function openGuest(){
 }
 function displayedGameTime(time=now()){return roomState?roomState.elapsed+(roomState.status==='running'?Math.max(0,time-roomReceivedAt):0):game.time(time);}
 async function openAccounts(roomId=null,target={}){
+  saveSolo();if(game&&!roomState&&game.mode!=='duel')game=null;
   cancelDrag();resetRoomRequests();
   if(dialog.open)closeDialog();
   showScreen('portal');await portal.open({...(!target.profile&&!target.security&&roomId?{roomId}:{}),...target});
@@ -591,7 +599,7 @@ function requestAccounts(target={}){
   requestedPortalTarget=target;
   if(screen==='game'&&game&&!roomState){
     if(game.mode==='duel'){requestHome();return;}
-    openDialog('portal-leave',t('ease.accountTitle'),`<p class="dialog-copy">${t('ease.accountLeave')}</p><div class="dialog-actions"><button class="button button-outline" data-dialog-action="close" data-autofocus>${t('Terus bermain')}</button><button class="button button-primary" data-dialog-action="open-portal">${t('ease.accountOpen')}</button></div>`);return;
+    openDialog('portal-leave',t('ease.accountTitle'),`<p class="dialog-copy">${sr('leave')}</p><div class="dialog-actions"><button class="button button-outline" data-dialog-action="close" data-autofocus>${t('Terus bermain')}</button><button class="button button-primary" data-dialog-action="open-portal">${t('ease.accountOpen')}</button></div>`);return;
   }
   void openAccounts(roomState?.roomId,target);
 }
@@ -718,6 +726,7 @@ function openDialog(mode,title,content){
   cancelDrag();
   if(!dialog.open)dialogTrigger=document.activeElement;
   if(game && screen==='game')game.pause(now());
+  saveSolo();
   dialogMode=mode;
   $('dialog-title').textContent=title;
   $('dialog-content').innerHTML=content;
@@ -742,6 +751,10 @@ dialog.addEventListener('cancel',event=>{event.preventDefault();closeDialog();})
 dialog.addEventListener('click',event=>{
   const action=event.target.closest('[data-dialog-action]')?.dataset.dialogAction;
   if(usabilityUI?.handleAction(action))return;
+  if(action==='solo-resume')resumeSolo();
+  if(action==='solo-new'){openDialog('solo-new',sr('new'),`<p class="dialog-copy">${sr('confirm')}</p><div class="dialog-actions"><button class="button button-outline" data-dialog-action="solo-back" data-autofocus>${sr('cancel')}</button><button class="button button-danger" data-dialog-action="solo-discard">${sr('new')}</button></div>`);}
+  if(action==='solo-back')openSolo();
+  if(action==='solo-discard'){const action=soloNewAction;soloNewAction=null;if(soloStore.clear(soloActor)){closeDialog();if(action)action();else openGuest();}else{soloNotice='failed';openSolo();}}
   if(action==='close')closeDialog();
   if(action==='home')returnHome();
   if(action==='open-portal')openAccounts(null,requestedPortalTarget);
@@ -776,7 +789,7 @@ function requestHome(){
     return;
   }
   if(screen==='game' && game && game.status!=='finished'){
-    openDialog('leave',t("Tamatkan pusingan ini?"),`<p class="dialog-copy">${t("leave.progress")} <b>${t("leave.count",{number:game.index+1,total:game.total})}</b>. ${t("Jika kembali ke mula, kemajuan pusingan ini dilepaskan dan skor pusingan ini tidak disimpan.")}</p><div class="dialog-actions"><button class="button button-outline" data-dialog-action="close" data-autofocus>${t("Terus bermain")}</button><button class="button button-danger" data-dialog-action="home">${t("Tamatkan pusingan")}</button></div>`);
+    openDialog('leave',t("Tamatkan pusingan ini?"),`<p class="dialog-copy">${t("leave.progress")} <b>${t("leave.count",{number:game.index+1,total:game.total})}</b>. ${sr('leave')}</p><div class="dialog-actions"><button class="button button-outline" data-dialog-action="close" data-autofocus>${t("Terus bermain")}</button><button class="button button-danger" data-dialog-action="home">${t("Tamatkan pusingan")}</button></div>`);
   }else returnHome();
 }
 
@@ -813,9 +826,10 @@ function finishGame(){
     game=Game.fromDuelSnapshot(QUESTIONS,player,duelClient.snapshot,now());
     if(dialog.open)closeDialog();
   }
-  lastResult=game.result(roundId);
+  lastResult=lastResult?.id===roundId?lastResult:game.result(roundId);
+  saveSolo();
   $('result-details').open=false;
-  if(!roomState&&lastResult.mode==='quiz')store.save(lastResult);
+  if(!roomState&&lastResult.mode==='quiz'&&!store.read().some(row=>row.id===roundId))store.save(lastResult);
   stopRoomPolling();
   storageStatus();
   renderResult();
@@ -924,6 +938,7 @@ document.addEventListener('visibilitychange',()=>{
   if(!game || screen!=='game')return;
   if(document.hidden && !game.paused){game.pause(now());hiddenPause=true;cancelDrag();}
   else if(!document.hidden && hiddenPause){hiddenPause=false;if(!dialog.open)openPause(true);}
+  saveSolo();
 });
 document.addEventListener('keydown',event=>{
   if(event.key!=='Escape')return;
@@ -956,6 +971,53 @@ function frame(time){
   }
   requestAnimationFrame(frame);
 }
+
+const soloCopy={
+ ms:{leave:'Anda boleh menyambung permainan melalui Home jika kemajuan berjaya disimpan.',resume:'Sambung permainan',new:'Mula baharu',confirm:'Buang permainan tersimpan yang belum selesai? Tindakan ini tidak boleh dibatalkan.',cancel:'Batal',saved:'Kemajuan disimpan pada pelayar ini.',failed:'Kemajuan belum dapat disimpan. Semak kebenaran atau ruang storan pelayar. Jangan tutup permainan jika mahu mengekalkan kemajuan semasa.',invalid:'Permainan tersimpan rosak atau tidak serasi dengan soalan dan peraturan semasa. Mula baharu untuk menggantikannya. Rekod lain dikekalkan.',empty:'Tiada permainan solo tersimpan.',summary:'soalan dijawab',score:'Markah',time:'Masa bermain',scope:'Pelayar dan akaun ini sahaja. Masa berhenti ketika ditutup.'},
+ en:{leave:'You can resume this game from Home if progress was saved successfully.',resume:'Resume game',new:'Start new',confirm:'Discard the saved unfinished game? This cannot be undone.',cancel:'Cancel',saved:'Progress saved in this browser.',failed:'Progress could not be saved. Check browser storage permission or available space. Keep this game open to retain current progress.',invalid:'The saved game is damaged or incompatible with the current questions and rules. Start new to replace it. Other records are preserved.',empty:'No saved solo game.',summary:'questions answered',score:'Score',time:'Play time',scope:'This browser and account only. Time stops while closed.'}
+};
+function sr(key){return soloCopy[locale.language==='en'?'en':'ms'][key];}
+function saveSolo(){
+ if(refreshingLanguage||!game||roomState||game.mode==='duel'||!visualPlan)return;
+ soloStore.save(game,{actor:soloActor,id:roundId,visualPlan,selected},now());
+ soloNotice=soloStore.status==='failed'?'failed':'saved';
+ const note=$('solo-save-status');note.hidden=false;note.textContent=sr(soloNotice);
+}
+function updateSoloEntry(){
+ const button=$('solo-resume-button');if(!button)return;
+ button.textContent=sr('resume');
+ // An explicit entry also explains blocked or incompatible storage.
+ const snapshot=soloStore.read(soloActor);
+ button.hidden=!snapshot&&!['failed','invalid'].includes(soloStore.status);
+ if(game&&!roomState&&game.mode!=='duel'){$('solo-save-status').textContent=sr(soloNotice||'saved');}
+ else $('solo-save-status').hidden=true;
+}
+function openSolo(){
+ const snapshot=soloStore.read(soloActor),status=soloStore.status;
+ const summary=snapshot?`<p><b>${escapeHtml(snapshot.player.name)}</b> · ${escapeHtml(modeTitle(snapshot.mode))}</p><p>${snapshot.state.answers.length} / ${snapshot.questionIds.length} ${sr('summary')} · ${snapshot.state.stage==='solid'?'R1':'R2'}</p><p>${sr('score')}: ${snapshot.state.score} · ${sr('time')}: ${formatTime(snapshot.elapsed)}</p>`:`<p>${sr(status==='empty'?'empty':status==='invalid'?'invalid':'failed')}</p>`;
+ openDialog('solo',sr('resume'),`<div class="dialog-copy">${summary}${soloNotice==='failed'?`<p role="status">${sr('failed')}</p>`:''}<p>${sr('scope')}</p></div><div class="dialog-actions"><button class="button button-outline" data-dialog-action="solo-new">${sr('new')}</button>${snapshot?`<button class="button button-primary" data-dialog-action="solo-resume" data-autofocus>${sr('resume')}</button>`:''}</div>`);
+}
+function resumeSolo(){
+ const snapshot=soloStore.read(soloActor);if(!snapshot){openSolo();return;}
+ let restored;try{restored=restoreSnapshot(snapshot,QUESTIONS,soloActor,now());}catch{soloStore.status='invalid';openSolo();return;}
+ closeDialog();cancelDrag();resetRoomRequests();roomState=null;cloud.setRoom(null);
+ game=restored.game;roundId=restored.id;visualPlan=restored.visualPlan;selected=restored.selected;
+ soloNewAction=null;lastResult=null;playMode=game.mode;player={...game.player};lastClock='';lastLed={};
+ acceptedSolid=game.attempts.solid===game.question.shape?game.question.shape:null;
+ acceptedNet=game.attempts.net===game.question.shape?game.question.shape:null;
+ $('player-initial').textContent=player.name[0];$('player-display').textContent=player.name;$('player-meta').textContent=playerMeta();
+ showScreen('game');if(game.status==='finished'){finishGame();return;}
+ renderQuestion(true);
+ if(game.reviewing)renderCorrection();
+ else if(game.status==='feedback'){$('game-screen').classList.add('is-correct');setStatus('Pasangan tepat! +1 markah. Bersedia untuk soalan seterusnya.','success','check');}
+ else if(game.stage==='net')setStatus('Bongkah betul! Sekarang seret kad bentangannya ke R2.','success','check');
+ $('question-title').focus({preventScroll:true});
+}
+$('solo-resume-button').addEventListener('click',()=>{soloNewAction=null;openSolo();});
+window.addEventListener('pagehide',()=>{if(game&&!roomState&&game.mode!=='duel')game.pause(now());saveSolo();});
+// A low-frequency checkpoint bounds unannounced termination loss, without frame writes.
+setInterval(()=>{if(screen==='game'&&!document.hidden)saveSolo();},5000);
+
 store.read();storageStatus();
 requestAnimationFrame(frame);
 
@@ -968,6 +1030,7 @@ function applyStaticLanguage(){
   $('language-select').value=locale.language;
   updateTitle();updateSound();updateMotion();updateModeChoice();renderDuelViews();renderMusicButton(music.state);portal.localize();
   renderModuleSaveStatus(moduleProgress.state);
+  updateSoloEntry();
   if(screen==='module')$('module-back-button').innerHTML=icon('home')+t(moduleReturnToPortal?'platform.backClass':'ease.backHome');
 }
 function applyLanguage(){
@@ -996,7 +1059,9 @@ function applyLanguage(){
     }
     if(screen==='result'&&lastResult)renderResult();
     if(dialog.open){
-      if(dialogMode==='settings'){$('dialog-title').textContent=t('ease.settings');usabilityUI.refreshSettings();}
+      if(dialogMode==='solo')openSolo();
+      else if(dialogMode==='solo-new'){$('dialog-title').textContent=sr('new');$('dialog-content').querySelector('p').textContent=sr('confirm');const buttons=$('dialog-content').querySelectorAll('button');buttons[0].textContent=sr('cancel');buttons[1].textContent=sr('new');}
+      else if(dialogMode==='settings'){$('dialog-title').textContent=t('ease.settings');usabilityUI.refreshSettings();}
       else if(dialogMode==='tutorial')usabilityUI.refreshTutorial();
       else if(dialogMode==='help')openHelp();
       else if(dialogMode==='pause')openPause(automaticPause);
@@ -1028,3 +1093,6 @@ window.addEventListener('storage',event=>{if(event.key===PREFERENCES_KEY||event.
 applyLanguage();
 
 if(cloud.hasAuthCallback||cloud.hasRecoveryIntent)void openAccounts();
+
+// Reuse the existing Auth lifecycle only when an account was already persisted.
+try{if(!cloud.hasAuthCallback&&!cloud.hasRecoveryIntent&&storage.getItem('geodecoder.cloud.auth'))void cloud.init().catch(()=>{});}catch{}

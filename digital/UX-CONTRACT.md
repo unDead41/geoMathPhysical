@@ -56,7 +56,8 @@ review, Duel and classroom results cannot enter the ten-question quiz board.
 
 Solo time pauses for feedback, answer review, dialogs, hidden tabs and results.
 Backgrounding offers explicit resume; reload returns Home. Incomplete solo
-rounds do not save. Completed quizzes save once per ID; ranking remains score,
+rounds now checkpoint locally using the versioned actor-scoped SoloStore; Home
+offers a progress summary and explicit resume. See docs/SAVE_RESUME.md. Completed quizzes save once per ID; ranking remains score,
 fewer mistakes, elapsed time and completion date, capped at50. Old retry scores
 stay separate. CSV localizes labels, quotes fields and neutralizes formulas.
 Malformed records are ignored; unavailable storage provides session-only play.
