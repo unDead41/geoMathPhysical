@@ -7,7 +7,7 @@ import {ClassroomCloud} from './cloud.mjs';
 import {createPortal} from './portal.mjs';
 import {initTheme} from './theme.mjs';
 import {createMusic} from './music.mjs';
-import moduleHtml from '../vendor/module-v1.1.0.html';
+import moduleHtml from '../vendor/module-v1.2.0.html';
 import {prepareModuleFrame} from './module-frame.mjs';
 
 const $ = id => document.getElementById(id);

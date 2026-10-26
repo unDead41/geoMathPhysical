@@ -49,6 +49,15 @@ main{max-width:1320px;margin:auto;padding:30px 32px 0}.intro{display:flex;align-
 @media(max-width:950px){.study-layout{grid-template-columns:minmax(0,1fr) 245px;gap:16px}.formula-reference{padding:20px}.lesson-block{padding:24px}.study-tag{display:none}.calculator-layout{gap:24px}.unit-facts{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:760px){.study-layout{display:flex;flex-direction:column}.study-reading{width:100%}.study-reference{position:static;display:grid;grid-template-columns:1fr 1fr;width:100%}.calculator-heading{flex-direction:column;gap:13px}.calculator-layout{grid-template-columns:1fr 1fr;gap:19px}.measure-fields{grid-template-columns:1fr}.view-note{align-items:flex-start;flex-direction:column;gap:16px}.study-heading h2{font-size:29px}.lesson-block>p,.lesson-block ul{font-size:13px}}
 @media(max-width:540px){.learning-navigation{margin:0 0 15px;gap:3px;padding-bottom:10px}.learning-nav-button{padding:10px 12px;font-size:12px}.learning-nav-button span{font-size:8px}.study-heading{margin-top:22px}.study-heading h2{font-size:28px}.study-heading>div>p:last-child{font-size:12px;line-height:1.8}.study-jumps{gap:6px}.study-jumps button{font-size:10px;padding:8px 10px;min-height:40px}.lesson-block{padding:22px 18px;border-radius:15px}.lesson-code{font-size:9px}.lesson-block h3{font-size:22px}.lesson-block>p,.lesson-block ul{font-size:13px}.note-table-wrap{margin-top:17px}.note-table{font-size:11px;min-width:380px}.note-table th,.note-table td{padding:10px}.note-table thead th{font-size:10px}.note-table caption{padding:10px}.lesson-formula{font-size:23px!important;padding:13px 14px}.worked-example summary{font-size:11px;padding:14px}.example-body{padding:17px 14px}.example-question,.example-body li,.example-answer{font-size:12px}.study-reference{grid-template-columns:1fr}.formula-reference{padding:22px}.quick-formula{font-size:23px}.formula-reference>span{margin-top:16px}.mistake-reference{padding:20px}.notes-calculator{padding:22px 18px}.calculator-heading h3{font-size:23px}.calculator-layout{grid-template-columns:1fr;gap:20px}.diagram-panel svg{height:220px}.measure-fields{grid-template-columns:1fr 1fr;gap:0 10px}.measure-field label{font-size:10px;min-height:33px}.measure-input input{font-size:14px}.measure-error{min-height:38px}.calculation-results{gap:9px}.calculation-results>div{padding:16px 13px}.calculation-results span{font-size:10px}.calculation-results output{font-size:22px;min-height:34px}.calculation-status{font-size:10px}.notes-summary{padding:22px 18px}.notes-summary h3{font-size:22px}.formula-table{min-width:470px}.unit-facts{gap:9px}.unit-facts>div{padding:11px}.unit-facts p{font-size:11px}.composite-example summary{font-size:12px;padding:16px 17px}.composite-example>div{padding:0 18px 19px;font-size:12px}.view-note{padding:22px 19px}.view-note h3{font-size:21px}.view-note .button{width:100%}.curriculum-scope{font-size:9px}.note-definition{font-size:11px!important}}
+/* Four labs share one stage, camera and native control family. */
+.learning-navigation{flex-wrap:wrap}.labs-heading{margin:25px 0 21px}.labs-heading h2{font-size:31px;letter-spacing:-.7px;margin:7px 0 10px}.labs-heading>p:last-child{font-size:13px;color:var(--muted)}.lab-choices{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.lab-choices button{display:flex;align-items:center;gap:12px;min-width:0;border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:16px;text-align:left;transition:transform .18s,background .18s,border-color .18s}.lab-choices button>b{font-family:var(--font-mono);font-size:17px;color:var(--primary);background:var(--blue-soft);border-radius:8px;padding:8px}.lab-choices button>span{font-size:13px;font-weight:700;line-height:1.5}.lab-choices small{display:block;font-size:10px;font-weight:400;color:var(--muted);margin-top:3px}.lab-choices button[aria-pressed="true"]{border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary);background:var(--blue-soft)}.lab-choices button:hover{transform:translateY(-2px);border-color:var(--primary)}.lab-intro{margin:24px 0 19px;max-width:85ch}.lab-intro h3{font-size:25px;margin-bottom:8px}.lab-intro p{font-size:13px;color:var(--muted);line-height:1.8}.lab-layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:22px;align-items:start}.lab-scene-column{position:sticky;top:16px;min-width:0}.lab-stage{background:var(--surface);border:1px solid var(--border);border-radius:18px;overflow:hidden}.lab-stage-header{display:flex;justify-content:space-between;gap:10px;padding:17px 21px;font-size:10px;font-weight:700;letter-spacing:1.1px;border-bottom:1px solid var(--border);color:var(--muted)}#labs-canvas{display:block;width:100%;height:410px;cursor:grab;touch-action:none;background:var(--bg)}#labs-canvas:active{cursor:grabbing}.lab-drag-hint{font-size:10px;color:var(--muted);text-align:center;padding:10px;background:var(--bg)}.lab-camera{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:7px;padding:13px;border-top:1px solid var(--border)}.lab-camera button,.net-move button{min-width:39px;min-height:39px;border:1px solid var(--border);background:var(--surface);border-radius:8px;font-size:15px;padding:6px 10px}.lab-camera button:hover,.net-move button:hover{border-color:var(--primary);color:var(--primary);background:var(--blue-soft)}.lab-camera button:last-child{font-size:11px}.lab-caption{font-size:12px;line-height:1.8;color:var(--muted);margin:13px 2px 12px;min-height:42px}.lab-playback{border:1px solid var(--border);background:var(--surface);border-radius:12px;padding:17px 19px}.lab-playback .button{width:100%;margin-top:10px}.lab-playback .timeline-label{font-size:11px}.lab-outcome{border-left:3px solid var(--primary);padding:6px 0 6px 13px;margin:15px 0 0;font-size:13px;line-height:1.8;min-height:43px}.lab-control-panel{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:24px;min-width:0}.lab-control-panel>p,.lab-control-panel>div>p{font-size:13px;line-height:1.8}.lab-control-panel>p+p{margin-top:10px}.lab-field{display:flex;flex-direction:column;gap:7px;margin:16px 0}.lab-field label,.net-move>label{font-size:11px;font-weight:700}.lab-field select,.net-move select{width:100%;min-width:0;min-height:44px;border:1px solid var(--border);border-radius:9px;color:var(--ink);background:var(--surface);padding:9px;font:12px var(--font-body)}select:focus-visible,.note-table-wrap:focus-visible{outline:3px solid var(--primary);outline-offset:3px}.net-grid-heading{display:flex;align-items:center;gap:12px;justify-content:space-between}.net-grid-heading>b{font-size:12px}.net-grid-heading .text-button{width:auto;font-size:10px}.net-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:5px;padding:8px;border:1px solid var(--border);border-radius:10px;background:var(--bg);touch-action:none}.net-cell{aspect-ratio:1;min-width:0;min-height:30px;border:1px dashed #B7C8D7;border-radius:5px;background:var(--surface);font-family:var(--font-mono);font-size:13px;user-select:none;touch-action:none}.net-cell[aria-pressed="true"]{border:1px solid #526A7D;font-weight:700;cursor:grab}.net-cell:active{cursor:grabbing}.net-cell:hover{outline:2px solid var(--primary);outline-offset:-2px}.net-move{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:14px 0}.net-move select{width:95px}.net-move>div{display:flex;gap:5px}.lab-actions{display:flex;gap:8px;flex-wrap:wrap;margin:17px 0 10px}.lab-actions .text-button{width:auto;font-size:10px;min-height:36px}.lab-control-panel .lab-feedback{font-size:12px;background:var(--bg);padding:12px 14px;border:1px solid var(--border);border-radius:9px;margin-top:14px;min-height:52px;line-height:1.85}.lab-feedback[data-success="true"]{color:var(--success);border-color:#B7D9CB;background:var(--mint-soft)}.lab-feedback[data-success="false"]{color:var(--danger)}.lab-control-panel .lab-note{font-size:11px;color:var(--muted);line-height:1.85;margin-top:13px}.lab-dimensions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:18px 0}.lab-dimensions label{font-size:11px;font-weight:650;line-height:1.7;min-width:0}.lab-dimensions label>span{display:block}.lab-dimensions output{display:block;color:var(--primary);font-family:var(--font-mono);font-size:12px;margin:3px 0 6px}.lab-dimensions input{width:100%}.lab-control-panel .lab-equation{font-family:var(--font-display);font-size:21px;line-height:1.6;font-weight:700;padding:14px 16px;background:var(--blue-soft);color:var(--primary);border-radius:10px;margin-top:14px;overflow-wrap:anywhere}.pour-key{display:flex;flex-wrap:wrap;gap:18px;font-size:11px;color:var(--muted);margin:17px 0}.pour-key i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px}.source-dot{background:#64CBB8}.receiver-dot{background:#94BDF7}.lab-group-title{font-size:12px!important;font-weight:700;margin:19px 0 10px}.area-pieces{display:flex;flex-direction:column;gap:7px;margin-bottom:14px}.area-piece{display:flex;align-items:center;gap:9px;justify-content:space-between;text-align:left;min-height:44px;padding:9px 11px;border:1px solid var(--border);border-radius:9px;background:var(--surface);font-size:11px;line-height:1.7}.area-piece>i{width:18px;height:18px;border:1px solid #526A7D;border-radius:4px;flex-shrink:0}.area-piece>span{flex:1}.area-piece>b{font-weight:500;font-family:var(--font-mono);font-size:10px}.area-piece[aria-pressed="true"]{background:var(--blue-soft);border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary)}.area-piece:hover{background:var(--bg);border-color:var(--primary)}.lab-sum{font-size:12px;line-height:1.8;overflow-wrap:anywhere}.derived-formula{font-size:21px!important;color:var(--success);font-family:var(--font-display);font-weight:700;line-height:1.6;margin-top:13px}.composite-totals{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}.composite-totals>span{padding:13px 14px;background:var(--blue-soft);border:1px solid var(--border);border-radius:10px;font-size:10px;min-width:0}.composite-totals>span+span{background:var(--mint-soft)}.composite-totals output{display:block;font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--primary);margin-top:7px;overflow-wrap:anywhere}.composite-totals>span+span output{color:var(--success)}
+@media(max-width:1000px){.lab-choices button{padding:12px;gap:8px}.lab-choices button>b{font-size:14px;padding:6px}.lab-choices button>span{font-size:11px}.lab-layout{gap:16px;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}.lab-control-panel{padding:19px}#labs-canvas{height:365px}}
+@media(max-width:760px){.lab-choices{grid-template-columns:repeat(2,minmax(0,1fr))}.lab-choices button{padding:14px}.lab-choices button>span{font-size:12px}.lab-layout{grid-template-columns:1fr}.lab-scene-column{position:static}.lab-control-panel{padding:24px}.lab-caption{min-height:0}.lab-intro h3{font-size:23px}.labs-heading h2{font-size:28px}.net-grid{max-width:380px}.lab-playback{padding:15px 17px}}
+@media(max-width:540px){.lab-choices{gap:8px}.lab-choices button{padding:11px;align-items:flex-start}.lab-choices small{font-size:9px}.lab-choices button>span{font-size:11px}.lab-choices button>b{padding:5px;font-size:12px}.lab-control-panel{padding:20px 17px}.lab-intro p{font-size:12px}.lab-stage-header{padding:14px 16px;font-size:9px}#labs-canvas{height:300px}.lab-camera{padding:10px;gap:4px}.lab-camera button{min-width:32px;min-height:38px;padding:4px 8px}.lab-drag-hint{font-size:9px}.lab-caption{font-size:11px}.lab-control-panel>p,.lab-control-panel>div>p{font-size:12px}.net-move{gap:7px}.net-move>div{width:100%;justify-content:space-between}.net-move button{width:23%}.net-cell{font-size:12px}.lab-actions .button{font-size:11px;flex:1;min-width:100px}.lab-control-panel .lab-equation{font-size:19px}.lab-dimensions label{font-size:10px}.composite-totals output{font-size:18px}.area-piece>b{font-size:9px}}
+
+.net-drag-ghost{position:fixed;z-index:50;pointer-events:none;width:38px;height:38px;display:grid;place-items:center;border:2px solid var(--primary);border-radius:6px;color:var(--ink);font-weight:700;box-shadow:0 4px 12px #18334B30}
+
+.net-grid{max-width:330px;margin:0 auto}
 
 </style>
 </head>
@@ -56,12 +65,12 @@ main{max-width:1320px;margin:auto;padding:30px 32px 0}.intro{display:flex;align-
   <a class="skip" href="#main">Terus ke modul</a>
   <header class="site-header">
     <a href="#main" class="brand" aria-label="GeoDecoder Digital, modul pembelajaran"><svg viewBox="0 0 40 44" aria-hidden="true"><path d="m20 2 17 10v20L20 42 3 32V12Z" fill="#215FF0"/><path d="m20 2 17 10-17 10L3 12Z" fill="#6EAAFF"/><path d="m20 22 17-10v20L20 42Z" fill="#1847B0"/><path d="m11 17 9 5 9-5M20 22v10" stroke="white" stroke-width="2" fill="none"/></svg><span>Geo<span class="brand-blue">Decoder</span><small>DIGITAL · MODUL PEMBELAJARAN</small></span></a>
-    <span id="version" class="version">V1.1.0</span>
+    <span id="version" class="version">V1.2.0</span>
     <div class="header-meta"><span class="offline"><i></i>Tanpa Internet</span><a href="#panduan" class="help-link">Panduan <span aria-hidden="true">↗</span></a></div>
   </header>
   <main id="main">
     <div class="intro"><div><p class="eyebrow">MAKMAL BONGKAH · KSSM</p><h1>Lihat. Buka. <span>Fahami.</span></h1><p>Teroka bongkah, bentangan dan pandangan 2D. Fahami luas permukaan serta isi padu melalui nota dan contoh.</p></div><span class="self-paced"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 5 9 3 9-3v14l-9 3-9-3V5Zm9 3v14"/></svg>Belajar ikut rentak sendiri</span></div>
-    <nav class="learning-navigation" aria-label="Bahagian pembelajaran"><button id="learn-explore" class="learning-nav-button" aria-pressed="true">Teroka 3D</button><button id="learn-notes" class="learning-nav-button" aria-pressed="false">Nota pembelajaran <span>KSSM</span></button></nav>
+    <nav class="learning-navigation" aria-label="Bahagian pembelajaran"><button id="learn-explore" class="learning-nav-button" aria-pressed="true">Teroka 3D</button><button id="learn-notes" class="learning-nav-button" aria-pressed="false">Nota pembelajaran <span>KSSM</span></button><button id="learn-labs" class="learning-nav-button" aria-pressed="false">Makmal interaktif <span>4 AKTIVITI</span></button></nav>
     <nav id="shape-picker" class="shape-picker" aria-label="Pilih bongkah"></nav>
     <div id="explore-panel" class="learning-layout">
       <section class="workspace" aria-labelledby="model-title">
@@ -118,6 +127,23 @@ main{max-width:1320px;margin:auto;padding:30px 32px 0}.intro{display:flex;align-
       <div class="view-note"><div><p class="eyebrow">PENGAYAAN · UNJURAN ORTOGON</p><h3>Pandangan 2D bukan bentangan</h3><p>Pandangan menunjukkan rupa bongkah dari satu arah. Bentangan membuka seluruh permukaan pada satu satah. Bandingkan kedua-duanya dengan model yang sama.</p></div><button id="note-explore-views" class="button">Bandingkan enam pandangan <span aria-hidden="true">↗</span></button></div>
       <p class="curriculum-scope">Nota ini ditulis semula untuk pembelajaran lima bongkah projek, berpandukan DSKP Matematik Tingkatan 2 SP 6.1.1, 6.2.1, 6.3.1 dan 6.4.1–6.4.3. Contoh gabungan dan unit menyokong 6.3.3. Pengayaan pandangan berkait Tingkatan 3 SP 7.1.1–7.1.2. Ia bukan liputan seluruh Bab 6, khususnya sfera dan prisma lain.</p>
     </section>
+    <section id="labs-panel" class="labs-panel" hidden aria-labelledby="labs-title">
+      <div class="labs-heading"><p class="eyebrow">BELAJAR MELALUI PERBUATAN · TANPA MARKAH</p><h2 id="labs-title" tabindex="-1">Makmal interaktif</h2><p>Pilih aktiviti. Bina, ubah ukuran dan terangkan apa yang anda perhatikan.</p></div>
+      <nav class="lab-choices" aria-label="Pilih makmal"><button id="lab-net" aria-pressed="true"><b>01</b><span>Bina bentangan<small>Susun dan lipat kubus</small></span></button><button id="lab-volume" aria-pressed="false"><b>02</b><span>Makmal isi padu<small>Kiub unit dan tiga tuangan</small></span></button><button id="lab-area" aria-pressed="false"><b>03</b><span>Terbitkan rumus<small>Jejaki setiap permukaan</small></span></button><button id="lab-composite" aria-pressed="false"><b>04</b><span>Bongkah gabungan<small>Cari permukaan luar</small></span></button></nav>
+      <div class="lab-intro"><h3 id="lab-title">Bina bentangan sendiri</h3><p id="lab-intro"></p></div>
+      <div class="lab-layout"><div class="lab-scene-column"><div class="lab-stage"><div class="lab-stage-header"><span id="lab-scene-label">BENTANGAN KUBUS</span><span id="lab-zoom-level">100%</span></div><canvas id="labs-canvas" tabindex="0" role="img" aria-label="Paparan interaktif makmal" aria-describedby="lab-caption">Model makmal diterangkan dalam penerangan dan keputusan di bawah.</canvas><p class="lab-drag-hint">Seret model untuk putar · Anak panah: putar · + / −: zum</p><div class="lab-camera" role="group" aria-label="Kawalan kamera makmal"><button id="lab-left" aria-label="Putar model ke kiri">←</button><button id="lab-right" aria-label="Putar model ke kanan">→</button><button id="lab-up" aria-label="Putar model ke atas">↑</button><button id="lab-down" aria-label="Putar model ke bawah">↓</button><button id="lab-zoom-out" aria-label="Zum keluar makmal">−</button><button id="lab-zoom-in" aria-label="Zum masuk makmal">+</button><button id="lab-reset-camera">Asal</button></div></div><p id="lab-caption" class="lab-caption"></p>
+        <div id="lab-playback" class="lab-playback"><div id="lab-slider-wrap"><div class="timeline-label"><label id="lab-progress-label" for="lab-progress">Kemajuan</label><output id="lab-progress-value">0%</output></div><input id="lab-progress" type="range" min="0" max="1000" step="1" value="0"></div><button id="lab-pause" class="button" disabled>Jeda animasi</button></div><p id="lab-outcome" class="lab-outcome" role="status"></p>
+      </div><div class="lab-controls">
+        <section id="lab-net-panel" class="lab-control-panel" aria-label="Aktiviti bina bentangan"><p class="eyebrow">1 · SUSUN ENAM MUKA</p><p>Tekan petak untuk tambah atau buang muka. Seret muka bernombor ke petak kosong, atau gunakan butang arah di bawah grid.</p><div class="lab-field"><label for="net-example">Susunan contoh</label><select id="net-example"><option value="cross">Bentangan sah</option><option value="overlap">Susunan bertindih</option></select></div><div class="net-grid-heading"><b id="net-count">6 / 6 muka</b><button id="net-clear" class="text-button">Kosongkan grid</button></div><div id="net-drag-ghost" class="net-drag-ghost" aria-hidden="true" hidden></div><div id="net-grid" class="net-grid" role="group" aria-label="Grid bentangan kubus 6 kali 6"></div><div class="net-move"><label for="net-selected">Pindahkan muka</label><select id="net-selected" aria-label="Muka untuk dipindahkan"></select><div role="group" aria-label="Pindah muka satu petak"><button id="net-left" aria-label="Pindah muka ke kiri">←</button><button id="net-right" aria-label="Pindah muka ke kanan">→</button><button id="net-up" aria-label="Pindah muka ke atas">↑</button><button id="net-down" aria-label="Pindah muka ke bawah">↓</button></div></div><div class="lab-actions"><button id="net-fold" class="button primary">Lipat dan semak</button><button id="net-flat" class="button">Buka semula</button></div><p id="net-feedback" class="lab-feedback" role="status"></p><p class="lab-note">Dua petak mesti bertemu pada satu sisi penuh. Enam petak sahaja belum tentu menghasilkan kubus. Aktiviti bina sendiri ini memfokuskan kubus.</p></section>
+        <section id="lab-volume-panel" class="lab-control-panel" hidden aria-label="Aktiviti isi padu"><div class="lab-field"><label for="volume-kind">Cara meneroka isi padu</label><select id="volume-kind"><option value="unit">Susun kiub unit dalam kuboid</option><option value="cone">Kon → silinder</option><option value="pyramid">Piramid → prisma bertapak segi empat sama</option></select></div>
+          <div id="unit-controls"><p>Setiap kiub kecil bersisi 1 cm mempunyai isi padu <b>1 cm³</b>. Lengkapkan satu lapisan, kemudian penuhkan bekas.</p><div class="lab-dimensions"><label for="unit-p">p · panjang <output id="unit-p-value">3 cm</output><input id="unit-p" type="range" min="1" max="6" step="1" value="3"></label><label for="unit-l">l · lebar <output id="unit-l-value">2 cm</output><input id="unit-l" type="range" min="1" max="6" step="1" value="2"></label><label for="unit-t">t · tinggi <output id="unit-t-value">3 cm</output><input id="unit-t" type="range" min="1" max="6" step="1" value="3"></label></div><div class="lab-actions"><button id="unit-one" class="button primary">Tambah 1 kiub</button><button id="unit-layer" class="button">Tambah 1 lapisan</button><button id="unit-fill" class="button">Penuhkan</button><button id="unit-empty" class="button">Kosongkan</button></div><p id="unit-result" class="lab-feedback" role="status"></p><p id="unit-equation" class="lab-equation"></p></div>
+          <div id="pour-controls" hidden><p id="pour-explanation"></p><div class="lab-dimensions"><label for="pour-size"><span id="pour-size-label">j · jejari</span><output id="pour-size-value">3 cm</output><input id="pour-size" type="range" min="1" max="8" step="1" value="3"></label><label for="pour-height">t · tinggi tegak kedua-dua bekas<output id="pour-height-value">4 cm</output><input id="pour-height" type="range" min="1" max="8" step="1" value="4"></label></div><div class="pour-key"><span><i class="source-dot"></i>Sumber di kiri</span><span><i class="receiver-dot"></i>Penerima di kanan</span></div><div class="lab-actions"><button id="pour-one" class="button primary">Tuang sekali</button><button id="pour-refill" class="button" disabled>Isi semula sumber</button><button id="pour-reset" class="button">Mula semula</button></div><p id="pour-result" class="lab-feedback" role="status"></p><p id="pour-equation" class="lab-equation"></p><p class="lab-note">Anggap tiada cecair tertumpah. Isi semula bekas sumber selepas setiap tuangan. Garisan menunjukkan bekas; warna menunjukkan isi. Untuk bulatan, pengiraan makmal menggunakan π ≈ 3.14159.</p></div>
+        </section>
+        <section id="lab-area-panel" class="lab-control-panel" hidden aria-label="Aktiviti terbitkan rumus"><p class="eyebrow">BUKA · PILIH · JUMLAHKAN</p><p>Buka bentangan, pilih setiap permukaan dan jumlahkan luasnya. Muka yang dipilih disorot pada model.</p><div class="lab-field"><label for="area-shape">Bongkah</label><select id="area-shape"><option value="cube">Kubus</option><option value="cuboid">Kuboid</option><option value="pyramid">Piramid bertapak segi empat sama</option><option value="cylinder">Silinder</option><option value="cone">Kon</option></select></div><div id="area-dimensions" class="lab-dimensions"><label id="area-field-a" for="area-a">a · sisi tapak / rusuk<output id="area-a-value"></output><input id="area-a" type="range" min="1" max="10" value="4" step="1"></label><label id="area-field-p" for="area-p" hidden>p · panjang<output id="area-p-value"></output><input id="area-p" type="range" min="1" max="10" value="6" step="1"></label><label id="area-field-l" for="area-l" hidden>l · lebar<output id="area-l-value"></output><input id="area-l" type="range" min="1" max="10" value="4" step="1"></label><label id="area-field-t" for="area-t" hidden>t · tinggi tegak<output id="area-t-value"></output><input id="area-t" type="range" min="1" max="10" value="4" step="1"></label><label id="area-field-j" for="area-j" hidden>j · jejari<output id="area-j-value"></output><input id="area-j" type="range" min="1" max="10" value="3" step="1"></label></div><p id="area-slant" class="lab-note"></p><div class="lab-actions"><button id="area-open" class="button primary">Buka bentangan</button><button id="area-close" class="button">Cantum semula</button></div><p id="area-count" class="lab-group-title">0 / 6 permukaan dipilih</p><div id="area-pieces" class="area-pieces" role="group" aria-label="Pilih permukaan untuk dijumlahkan"></div><div class="lab-actions"><button id="area-all" class="text-button">Pilih semua permukaan</button><button id="area-clear" class="text-button">Kosongkan pilihan</button></div><p id="area-sum" class="lab-sum"></p><p id="area-total" class="lab-equation" role="status"></p><p id="area-formula" class="derived-formula"></p><p class="lab-note">Rumus jumlah luas ini untuk bongkah tertutup dan tegak. Bagi kon/piramid, s ialah tinggi sendeng; t ialah tinggi tegak. Pengiraan bulatan menggunakan π ≈ 3.14159. Nilai dipaparkan hingga 2 tempat perpuluhan; jumlah dikira sebelum pembundaran.</p></section>
+        <section id="lab-composite-panel" class="lab-control-panel" hidden aria-label="Aktiviti bongkah gabungan"><p>Selepas dua bongkah dicantum pada tapak yang sama saiz, permukaan manakah masih berada di luar?</p><div class="lab-field"><label for="comp-kind">Pilih gabungan</label><select id="comp-kind"><option value="roof">Kubus + piramid bertapak segi empat sama</option><option value="rocket">Silinder + kon</option></select></div><div class="lab-dimensions"><label for="comp-size"><span id="comp-size-label">a · sisi tapak bersama</span><output id="comp-size-value">6 cm</output><input id="comp-size" type="range" min="1" max="8" step="1" value="6"></label><label id="comp-body-field" for="comp-body-height" hidden>h · tinggi silinder<output id="comp-body-height-value">6 cm</output><input id="comp-body-height" type="range" min="1" max="8" step="1" value="6"></label><label for="comp-roof-height">t · tinggi tegak piramid / kon<output id="comp-roof-height-value">4 cm</output><input id="comp-roof-height" type="range" min="1" max="8" step="1" value="4"></label></div><div class="lab-actions"><button id="comp-join" class="button primary">Cantum bongkah</button><button id="comp-separate" class="button">Pisahkan bongkah</button></div><p class="lab-group-title">Pilih semua permukaan luar selepas cantuman</p><div id="comp-groups" class="area-pieces" role="group" aria-label="Pilihan permukaan luar"></div><button id="comp-check" class="button primary">Semak pilihan</button><p id="comp-feedback" class="lab-feedback" role="status"></p><div class="composite-totals"><span>Luas permukaan luar<output id="comp-area">Cantum dahulu</output></span><span>Jumlah isi padu<output id="comp-volume">264 cm³</output></span></div><p id="comp-equation" class="lab-note"></p><p class="lab-note">Cantuman penuh tanpa ruang atau pertindihan isi. Dua permukaan yang bertemu menjadi permukaan dalaman. Gunakan tinggi tegak untuk isi padu. Nilai dipaparkan hingga 2 tempat perpuluhan; pengiraan menggunakan nilai sebelum pembundaran.</p></section>
+      </div></div>
+      <p class="curriculum-scope">Aktiviti berpandukan DSKP Matematik Tingkatan 2: bentangan dan pembinaan model (6.2.1), rumus luas permukaan (6.3.1), masalah gabungan (6.3.3), rumus serta masalah isi padu (6.4.1–6.4.3). Fokus pada bongkah tegak terpilih; tiada pentaksiran tahap penguasaan.</p>
+    </section>
     <section id="panduan" class="guide" aria-labelledby="guide-title"><div><p class="eyebrow">PANDUAN RINGKAS</p><h2 id="guide-title">Satu bongkah. Tiga cara memahami.</h2></div><div class="guide-columns"><article><span class="guide-icon" aria-hidden="true">3D</span><h3>Model bongkah</h3><p>Putar dan zum untuk melihat permukaan, rusuk dan bucu. Klik muka untuk menjejakinya.</p></article><article><span class="guide-icon" aria-hidden="true">↗</span><h3>Bentangan</h3><p>Buka seluruh permukaan menjadi bentuk rata. Cantum semula untuk memahami sambungannya.</p></article><article><span class="guide-icon" aria-hidden="true">2D</span><h3>Pandangan ortografik</h3><p>Lihat bongkah dari atas, bawah, depan, belakang, kiri atau kanan. Bongkah kekal tertutup.</p></article></div>
       <details id="curriculum"><summary>Rujukan KSSM / DSKP dan skop pembelajaran</summary><div class="curriculum-copy"><p><b>Tingkatan 2:</b> SP 6.1.1 (sifat geometri bongkah) dan SP 6.2.1 (bentangan dan model). Nota turut merangkumi luas permukaan (6.3.1), isi padu (6.4.1–6.4.3), contoh gabungan dan unit (6.3.3). Fokusnya lima bongkah projek, bukan liputan penuh Bab 6.</p><p><b>Pengayaan Tingkatan 3:</b> SP 7.1.1–7.1.2 (unjuran ortogon). Enam pandangan membantu membezakan objek dengan unjurannya; modul belum mengajar lukisan pelan/dongakan mengikut skala.</p><p>Bahasa dipermudah supaya murid Tingkatan 1 boleh mengikuti aktiviti. Contoh ini menggunakan bongkah tegak. Silinder dan kon mempunyai permukaan melengkung; istilah “muka” digunakan untuk permukaan rata.</p><p><a href="https://bpk.moe.gov.my/kurikulum/kssm/kssm-tingkatan-2/341-dskp-kssm-matematik-tingkatan-2/file" target="_blank" rel="noreferrer">DSKP Matematik Tingkatan 2 · BPK, KPM</a><br><a href="https://sman.pahang.edu.my/system/documents/attachments/000/000/168/original/002_DSKP_KSSM_MATEMATIK_TINGKATAN_3.pdf?1544929347=" target="_blank" rel="noreferrer">DSKP Matematik Tingkatan 3 · salinan dokumen KPM</a></p><p>Semua aktiviti berfungsi tanpa Internet. Pautan rujukan memerlukan Internet.</p></div></details>
     </section>
@@ -154,8 +180,8 @@ function viewPoint(v,yaw,pitch) { const a=ry(v,-yaw); return rx(a,pitch); }
 function panel(id,name,vertices,color=FACE_COLORS[id],extra={}) {
   return {id,name,vertices,color,outline:true,...extra};
 }
-function boxMesh(shape,t) {
-  const {w,h,d}=DIMENSIONS[shape], theta=(1-t)*Math.PI/2;
+function boxMesh(shape,t,dimensions=DIMENSIONS[shape]) {
+  const {w,h,d}=dimensions, theta=(1-t)*Math.PI/2;
   const right=v=>add3([w/2,0,0],ry(v,theta));
   const faces=[
     panel(0,'Depan',[[-w/2,-h/2,0],[w/2,-h/2,0],[w/2,h/2,0],[-w/2,h/2,0]]),
@@ -167,8 +193,8 @@ function boxMesh(shape,t) {
   ];
   return faces;
 }
-function pyramidMesh(t) {
-  const {a,h}=DIMENSIONS.pyramid, b=a/2, angle=Math.atan2(h,-b)*t;
+function pyramidMesh(t,dimensions=DIMENSIONS.pyramid) {
+  const {a,h}=dimensions, b=a/2, angle=Math.atan2(h,-b)*t;
   const base=[[-b,0,-b],[b,0,-b],[b,0,b],[-b,0,b]], tip=[0,h,0];
   const hinge=(verts,origin,rot,ang)=>verts.map(v=>add3(origin,rot(sub3(v,origin),ang)));
   const faces=[panel(0,'Tapak',base),
@@ -179,16 +205,16 @@ function pyramidMesh(t) {
   return faces.map(f=>({...f,vertices:f.vertices.map(v=>rx(v,-t*Math.PI/2))}));
 }
 /** u is material arc length. |dP/du| = 1 for every opening; no stretching. */
-function cylinderPoint(u,y,t) {
-  const {r}=DIMENSIONS.cylinder, developed=ease((t-.2)/.8), k=(1-developed)/r;
+function cylinderPoint(u,y,t,dimensions=DIMENSIONS.cylinder) {
+  const {r}=dimensions, developed=ease((t-.2)/.8), k=(1-developed)/r;
   if(Math.abs(k)<1e-6) return [u,y,-k*u*u/2];
   return [Math.sin(k*u)/k,y,-2*Math.sin(k*u/2)**2/k];
 }
-function cylinderMesh(t,n) {
-  const {r,h}=DIMENSIONS.cylinder, faces=[];
+function cylinderMesh(t,n,dimensions=DIMENSIONS.cylinder) {
+  const {r,h}=dimensions, faces=[];
   for(let i=0;i<n;i++) {
     const u0=-Math.PI*r+TAU*r*i/n,u1=-Math.PI*r+TAU*r*(i+1)/n;
-    faces.push(panel(0,'Permukaan melengkung',[cylinderPoint(u0,-h/2,t),cylinderPoint(u1,-h/2,t),cylinderPoint(u1,h/2,t),cylinderPoint(u0,h/2,t)],FACE_COLORS[0],{
+    faces.push(panel(0,'Permukaan melengkung',[cylinderPoint(u0,-h/2,t,dimensions),cylinderPoint(u1,-h/2,t,dimensions),cylinderPoint(u1,h/2,t,dimensions),cylinderPoint(u0,h/2,t,dimensions)],FACE_COLORS[0],{
       outline:false, rim:[[0,1],[2,3]], cut:t>.02?(i===0?[[0,3]]:i===n-1?[[1,2]]:null):null, label:i===Math.floor(n/2)-1?'1':null
     }));
   }
@@ -199,17 +225,17 @@ function cylinderMesh(t,n) {
   return faces;
 }
 /** beta is the material sector angle; metric ds²+s² dβ² at ALL frames. */
-function conePoint(s,beta,t) {
-  const {r,l}=DIMENSIONS.cone, start=Math.asin(r/l), developed=ease((t-.22)/.78);
+function conePoint(s,beta,t,dimensions=DIMENSIONS.cone) {
+  const {r,l}=dimensions, start=Math.asin(r/l), developed=ease((t-.22)/.78);
   const alpha=start+(Math.PI/2-start)*developed,a=Math.sin(alpha),q=Math.cos(alpha),phi=beta/a;
   const p=[s*a*Math.sin(phi),-s*(q*q+a*a*Math.cos(phi)),s*a*q*(Math.cos(phi)-1)];
   return rx(p,-start*(1-developed));
 }
-function coneMesh(t,n) {
-  const {r,l}=DIMENSIONS.cone, start=Math.asin(r/l), developed=ease((t-.22)/.78), sector=TAU*r/l,faces=[];
+function coneMesh(t,n,dimensions=DIMENSIONS.cone) {
+  const {r,l}=dimensions, start=Math.asin(r/l), developed=ease((t-.22)/.78), sector=TAU*r/l,faces=[];
   for(let i=0;i<n;i++) {
     const b0=-sector/2+sector*i/n,b1=-sector/2+sector*(i+1)/n;
-    faces.push(panel(0,'Permukaan melengkung',[[0,0,0],conePoint(l,b0,t),conePoint(l,b1,t)],FACE_COLORS[0],{
+    faces.push(panel(0,'Permukaan melengkung',[[0,0,0],conePoint(l,b0,t,dimensions),conePoint(l,b1,t,dimensions)],FACE_COLORS[0],{
       outline:false,rim:[[1,2]],cut:t>.02?(i===0?[[0,1]]:i===n-1?[[0,2]]:null):null,label:i===Math.floor(n/2)-1?'1':null
     }));
   }
@@ -222,12 +248,12 @@ function coneMesh(t,n) {
   faces.push(panel(1,'Tapak bulatan',disk,FACE_COLORS[1],{label:'2'}));
   return faces;
 }
-function buildMesh(shape,progress=0,segments=128) {
+function buildMesh(shape,progress=0,segments=128,dimensions=undefined) {
   const t=clamp01(progress),n=Math.max(24,Math.round(segments));
-  if(shape==='cube'||shape==='cuboid')return boxMesh(shape,t);
-  if(shape==='pyramid')return pyramidMesh(t);
-  if(shape==='cylinder')return cylinderMesh(t,n);
-  if(shape==='cone')return coneMesh(t,n);
+  if(shape==='cube'||shape==='cuboid')return boxMesh(shape,t,dimensions);
+  if(shape==='pyramid')return pyramidMesh(t,dimensions);
+  if(shape==='cylinder')return cylinderMesh(t,n,dimensions);
+  if(shape==='cone')return coneMesh(t,n,dimensions);
   throw new RangeError('Bongkah tidak diketahui: '+shape);
 }
 function meshBounds(mesh) {
@@ -238,7 +264,7 @@ function meshBounds(mesh) {
 function faceCenter(f) {return f.vertices.reduce((sum,p)=>add3(sum,p),[0,0,0]).map(v=>v/f.vertices.length);}
 
 
-const MODULE_VERSION='1.1.0';
+const MODULE_VERSION='1.2.0';
 const MODEL_ORDER=['cube','cuboid','pyramid','cylinder','cone'];
 const MODEL_DATA={
   cube:{name:'Kubus',tag:'Enam muka, semuanya sama.',flat:6,curved:0,edges:12,vertices:8,
@@ -332,6 +358,106 @@ const COMPOSITE_EXAMPLE={side:6,roofHeight:4,roofSlant:5,externalArea:240,volume
 const UNIT_FACTS=[['Panjang','1 m = 100 cm'],['Luas','1 m² = 10 000 cm²'],['Isi padu','1 m³ = 1 000 000 cm³'],['Kapasiti','1 L = 1000 cm³; 1 cm³ = 1 mL']];
 
 
+/** Pure lab mathematics. No DOM, runtime storage or network. */
+const NET_PRESETS={cross:[[1,0],[0,1],[1,1],[2,1],[3,1],[1,2]],overlap:[[0,0],[1,0],[2,0],[0,1],[1,1],[2,1]]};
+const labMul=(v,k)=>v.map(x=>x*k);
+const labBasis=(u,a,v,b)=>add3(labMul(u,a),labMul(v,b));
+function labNetFrames(cells,t){
+ const frames=Array(cells.length).fill(null);if(!cells.length)return frames;
+ frames[0]={center:[cells[0][0],-cells[0][1],0],u:[1,0,0],v:[0,1,0],n:[0,0,1],parent:null};
+ const queue=[0],c=Math.cos(clamp01(t)*Math.PI/2),s=Math.sin(clamp01(t)*Math.PI/2);
+ for(const i of queue)for(let j=0;j<cells.length;j++){
+  const dx=cells[j][0]-cells[i][0],dy=cells[i][1]-cells[j][1];if(frames[j]||Math.abs(dx)+Math.abs(dy)!==1)continue;
+  const p=frames[i],u=dx?labBasis(p.u,c,p.n,-dx*s):p.u,v=dy?labBasis(p.v,c,p.n,-dy*s):p.v;
+  const hinge=add3(p.center,labMul(dx?p.u:p.v,(dx||dy)/2)),center=add3(hinge,labMul(dx?u:v,(dx||dy)/2));
+  frames[j]={u,v,n:cross3(u,v),center,parent:i};queue.push(j);
+ }
+ return frames;
+}
+// A cyclic tile layout has more joins than a hinge tree. Mark extra joins as cuts
+// rather than pretending an uncut rectangular sheet can follow a tree fold.
+function labNetCuts(cells,frames){
+ const cuts=[];for(let i=0;i<cells.length;i++)for(let j=i+1;j<cells.length;j++){
+  if(!frames[i]||!frames[j]||frames[i].parent===j||frames[j].parent===i)continue;
+  const dx=cells[j][0]-cells[i][0],dy=cells[j][1]-cells[i][1];
+  if(Math.abs(dx)+Math.abs(dy)===1)cuts.push({i,j,edge:dx===1?[1,2]:dx===-1?[3,0]:dy===1?[0,1]:[2,3],other:dx===1?[3,0]:dx===-1?[1,2]:dy===1?[2,3]:[0,1]});
+ }return cuts;
+}
+function cubeNetState(cells){
+ const legal=Array.isArray(cells)&&cells.every(p=>Array.isArray(p)&&p.length===2&&p.every(n=>Number.isInteger(n)&&n>=0&&n<6));
+ if(!legal)return {valid:false,connected:false,overlaps:[],message:'Gunakan petak dalam grid 6 × 6.'};
+ if(new Set(cells.map(p=>p.join(','))).size!==cells.length)return {valid:false,connected:false,overlaps:[],message:'Dua muka tidak boleh berada pada petak yang sama.'};
+ const frames=labNetFrames(cells,1),connected=cells.length>0&&frames.every(Boolean),groups=new Map();
+ frames.forEach((f,id)=>{if(f){const key=f.n.map(n=>Math.round(n)).join(',');if(!groups.has(key))groups.set(key,[]);groups.get(key).push(id);}});
+ const overlaps=[...groups.values()].filter(a=>a.length>1),valid=cells.length===6&&connected&&overlaps.length===0;
+ let message=cells.length!==6?`Pilih tepat 6 muka. Kini ada ${cells.length}.`:!connected?'Sambungkan semua muka pada sisi penuh, bukan bucu sahaja.':overlaps.length?'Muka '+overlaps.map(a=>a.map(id=>id+1).join(' dan ')).join('; ')+' bertindih apabila dilipat.':'Bentangan sah: keenam-enam muka menutup kubus tanpa pertindihan.';
+ const cutCount=labNetCuts(cells,frames).length;if(cutCount)message+=' Garis putus-putus ialah potongan tambahan yang digunakan dalam pratonton lipatan.';
+ return {valid,connected,overlaps,message,cutCount};
+}
+function cubeNetMesh(cells,t=0){
+ const status=cubeNetState(cells),frames=labNetFrames(cells,t),warning=new Set(status.overlaps.flat()),cuts=labNetCuts(cells,frames);
+ return cells.map(([x,y],id)=>{const f=frames[id]||{center:[x,-y,0],u:[1,0,0],v:[0,1,0],parent:null};return {id,name:'Muka '+(id+1),color:FACE_COLORS[id%6],outline:true,parent:f.parent,cutUnderlay:true,cut:cuts.flatMap(c=>c.i===id?[c.edge]:c.j===id?[c.other]:[]),warning:t>.98&&warning.has(id),vertices:[[-.5,-.5],[.5,-.5],[.5,.5],[-.5,.5]].map(([a,b])=>add3(f.center,labBasis(f.u,a,f.v,b)))};});
+}
+function labMeasure(shape,d){const r=calculateMeasures(shape,d,'full');if(!r.valid)throw new RangeError('Ukuran bongkah tidak sah.');return r;}
+function labDimensions(shape,d){
+ labMeasure(shape,d);if(shape==='cube')return {w:d.a,h:d.a,d:d.a};if(shape==='cuboid')return {w:d.p,h:d.t,d:d.l};if(shape==='pyramid')return {a:d.a,h:d.t};return {r:d.j,h:d.t,l:Math.hypot(d.j,d.t)};
+}
+function surfacePieces(shape,d){
+ const m=labMeasure(shape,d),pi=Math.PI;let values,names;
+ if(shape==='cube'){values=Array(6).fill(d.a*d.a);names=['Depan','Kanan','Belakang','Kiri','Atas','Bawah'];}
+ if(shape==='cuboid'){values=[d.p*d.t,d.l*d.t,d.p*d.t,d.l*d.t,d.p*d.l,d.p*d.l];names=['Depan: p × t','Kanan: l × t','Belakang: p × t','Kiri: l × t','Atas: p × l','Bawah: p × l'];}
+ if(shape==='pyramid'){values=[d.a*d.a,...Array(4).fill(d.a*m.slant/2)];names=['Tapak: a²','Segi tiga depan','Segi tiga kanan','Segi tiga belakang','Segi tiga kiri'];}
+ if(shape==='cylinder'){values=[2*pi*d.j*d.t,pi*d.j*d.j,pi*d.j*d.j];names=['Melengkung: 2πjt','Tapak atas: πj²','Tapak bawah: πj²'];}
+ if(shape==='cone'){values=[pi*d.j*m.slant,pi*d.j*d.j];names=['Melengkung: πjs','Tapak bulatan: πj²'];}
+ return values.map((area,id)=>({id,area,name:names[id],color:FACE_COLORS[id]}));
+}
+function pourState(kind,d,pours=0,progress=0){
+ if(!['cone','pyramid'].includes(kind)||!Number.isInteger(pours)||pours<0||pours>2||!Number.isFinite(progress)||progress<0||progress>1)throw new RangeError('Keadaan tuangan tidak sah.');
+ const m=labMeasure(kind,d),oneVolume=m.volume,capacity=3*oneVolume;
+ return {oneVolume,capacity,sourceVolume:oneVolume*(1-progress),targetVolume:oneVolume*(pours+progress),sourceHeight:d.t*(1-Math.cbrt(progress)),targetHeight:d.t*(pours+progress)/3,fraction:(pours+progress)/3};
+}
+function compositionMeasures(kind,d){
+ if(!['roof','rocket'].includes(kind))throw new RangeError('Gabungan tidak diketahui.');
+ const roof=kind==='roof',r=labMeasure(roof?'pyramid':'cone',d);if(!roof&&(!Number.isFinite(d.h)||d.h<.1||d.h>1000))throw new RangeError('Tinggi silinder tidak sah.');
+ const base=roof?d.a*d.a:Math.PI*d.j*d.j,side=roof?4*base:2*Math.PI*d.j*d.h,roofSide=roof?2*d.a*r.slant:Math.PI*d.j*r.slant;
+ const groups=[{key:'side',label:roof?'4 muka sisi kubus':'Permukaan melengkung silinder',area:side,external:true},{key:'bottom',label:roof?'Muka bawah kubus':'Tapak bawah silinder',area:base,external:true},{key:'joinLower',label:roof?'Muka atas kubus':'Tapak atas silinder',area:base,external:false},{key:'joinUpper',label:roof?'Tapak piramid':'Tapak kon',area:base,external:false},{key:'roofSide',label:roof?'4 muka segi tiga piramid':'Permukaan melengkung kon',area:roofSide,external:true}];
+ return {groups,sharedArea:base,slant:r.slant,area:side+base+roofSide,separateArea:side+3*base+roofSide,volume:(roof?d.a**3:base*d.h)+r.volume};
+}
+function labMapMesh(mesh,offset=[0,0,0],idOffset=0,color=null,wire=false){return mesh.map(f=>({...f,id:f.id+idOffset,color:color||f.color,label:undefined,wire,vertices:f.vertices.map(v=>add3(v,offset))}));}
+function labSolidMesh(shape,d,offset=[0,0,0],idOffset=0,color=null,wire=false){
+ const mesh=buildMesh(shape,0,96,labDimensions(shape,d)),b=meshBounds(mesh),shift=[offset[0]-b.center[0],offset[1]-b.min[1],offset[2]-b.center[2]];
+ const result=labMapMesh(mesh,shift,idOffset,color,wire);
+ if(wire)result.forEach((f,i)=>{if(!f.outline){f.cut=i%24===0?(f.vertices.length===3?[[0,1]]:[[0,3]]):null;}});
+ return result;
+}
+function unitCubeMesh(d,count){
+ const {p,l,t}=d;labMeasure('cuboid',d);if(![p,l,t,count].every(Number.isInteger)||p>6||l>6||t>6||count<0||count>p*l*t)throw new RangeError('Bilangan kiub unit tidak sah.');
+ const mesh=[];for(let n=0;n<count;n++){const y=Math.floor(n/(p*l)),z=Math.floor(n/p)%l,x=n%p;mesh.push(...labSolidMesh('cube',{a:1},[x-(p-1)/2,y,z-(l-1)/2],n*6,FACE_COLORS[y%6]));}
+ mesh.push(...labSolidMesh('cuboid',{p,l,t},[0,0,0],2000,'#526A7D',true));return mesh;
+}
+function labFrustum(sides,rb,rt,h,offset,color,id){
+ if(h<1e-9)return [];
+ const ring=(r,y)=>Array.from({length:sides},(_,i)=>{const xz=sides===4?[[-r,-r],[r,-r],[r,r],[-r,r]][i]:[r*Math.sin(i*2*Math.PI/sides),r*Math.cos(i*2*Math.PI/sides)];return add3([xz[0],y,xz[1]],offset);});
+ const bottom=ring(rb,0),top=ring(rt,h),faces=[];
+ for(let i=0;i<sides;i++)faces.push({id,name:'Cecair',color,outline:sides===4,vertices:[bottom[i],bottom[(i+1)%sides],top[(i+1)%sides],top[i]]});
+ faces.push({id,name:'Paras cecair',color,outline:true,vertices:top},{id,name:'Dasar cecair',color,outline:true,vertices:bottom});return faces;
+}
+function pourMesh(kind,d,pours,progress,sourceFull=true){
+ const p=pourState(kind,d,Math.min(2,pours),progress),r=kind==='cone'?d.j:d.a/2,shift=r+1.5,targetKind=kind==='cone'?'cylinder':'cuboid',td=kind==='cone'?d:{p:d.a,l:d.a,t:d.t};
+ const source=sourceFull?p.sourceHeight:0,receiver=pours===3?d.t:p.targetHeight;
+ const mesh=[...labSolidMesh(kind,d,[-shift,0,0],1000,'#526A7D',true),...labSolidMesh(targetKind,td,[shift,0,0],2000,'#526A7D',true)];
+ mesh.push(...labFrustum(kind==='cone'?80:4,r,r*(1-source/d.t),source,[-shift,0,0],'#64CBB8',0));
+ mesh.push(...labFrustum(kind==='cone'?80:4,r,r,receiver,[shift,0,0],'#94BDF7',1));return mesh;
+}
+function compositionMesh(kind,d,joined=1){
+ const roof=kind==='roof',m=compositionMeasures(kind,d),height=roof?d.a:d.h,space=(roof?d.a:d.j*2)*.7*(1-clamp01(joined));
+ const lower=labSolidMesh(roof?'cube':'cylinder',roof?{a:d.a}:{j:d.j,t:d.h}),upper=labSolidMesh(roof?'pyramid':'cone',d,[0,height+space,0],10);
+ lower.forEach(f=>f.group=f.id===(roof?4:1)?'joinLower':f.id===(roof?5:2)?'bottom':'side');
+ upper.forEach(f=>f.group=f.id===(roof?10:11)?'joinUpper':'roofSide');
+ return [...lower,...upper];
+}
+
+
 function shade(hex,amount) {
   const c=hex.slice(1).match(/../g).map(v=>parseInt(v,16));
   return 'rgb('+c.map(v=>Math.round(Math.max(0,Math.min(255,v*amount)))).join(',')+')';
@@ -348,23 +474,31 @@ function drawBadge(ctx,p,text) {
 }
 class ModelRenderer {
   constructor(canvas) {this.canvas=canvas;this.ctx=canvas.getContext('2d');this.hitFaces=[];this.meshKey='';this.mesh=null;}
-  draw({shape,progress=0,yaw=.55,pitch=.35,zoom=1,labels=false,selected=null,mini=false}) {
+  draw({shape,progress=0,yaw=.55,pitch=.35,zoom=1,labels=false,selected=null,mini=false,mesh:customMesh=null}) {
     const ctx=this.ctx;if(!ctx)return;
     const box=this.canvas.getBoundingClientRect(),w=box.width,h=box.height;
     if(w<=0||h<=0)return;
     const dpr=Math.min(2,window.devicePixelRatio||1),cw=Math.round(w*dpr),ch=Math.round(h*dpr);
     if(this.canvas.width!==cw||this.canvas.height!==ch){this.canvas.width=cw;this.canvas.height=ch;}
     ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
+    if(customMesh&&customMesh.length===0){this.hitFaces=[];return;}
     const key=shape+':'+progress+':'+mini;
-    if(key!==this.meshKey){this.mesh=buildMesh(shape,progress,mini?64:144);this.bounds=meshBounds(this.mesh);this.meshKey=key;}
+    if(customMesh){this.mesh=customMesh;this.bounds=meshBounds(customMesh);this.meshKey='';}
+    else if(key!==this.meshKey){this.mesh=buildMesh(shape,progress,mini?64:144);this.bounds=meshBounds(this.mesh);this.meshKey=key;}
     const {center,radius}=this.bounds;
-    const scale=Math.min(w,h)/(2*radius)*(mini?.79:.78)*zoom;
-    const project=p=>{const v=viewPoint(sub3(p,center),yaw,pitch);return [w/2+v[0]*scale,h/2-v[1]*scale,v[2]];};
+    let scale=Math.min(w,h)/(2*radius)*(mini?.79:.78)*zoom,offsetX=0,offsetY=0;
+    if(customMesh){
+      const vs=this.mesh.flatMap(f=>f.vertices).map(p=>viewPoint(sub3(p,center),yaw,pitch));
+      const minX=Math.min(...vs.map(p=>p[0])),maxX=Math.max(...vs.map(p=>p[0])),minY=Math.min(...vs.map(p=>p[1])),maxY=Math.max(...vs.map(p=>p[1]));
+      scale=Math.min(w/(maxX-minX||1),h/(maxY-minY||1))*.76*zoom;offsetX=(minX+maxX)/2;offsetY=(minY+maxY)/2;
+    }
+    const project=p=>{const v=viewPoint(sub3(p,center),yaw,pitch);return [w/2+(v[0]-offsetX)*scale,h/2-(v[1]-offsetY)*scale,v[2]];};
     if(!mini) {
       const gradient=ctx.createRadialGradient(w/2,h*.72,0,w/2,h*.72,w*.3);
       gradient.addColorStop(0,'rgba(35,74,110,.08)');gradient.addColorStop(1,'rgba(35,74,110,0)');
       ctx.save();ctx.translate(0,h*.62);ctx.scale(1,.18);ctx.fillStyle=gradient;ctx.fillRect(0,-h*.5,w,h);ctx.restore();
     }
+    const activeFace=id=>Array.isArray(selected)?selected.includes(id):selected===id;
     const projected=this.mesh.map(f=>{
       const pts=f.vertices.map(project),normal=cross3(sub3(f.vertices[1],f.vertices[0]),sub3(f.vertices[2],f.vertices[0]));
       const nLen=length3(normal)||1,n=normal.map(v=>v/nLen),vNormal=viewPoint(n,yaw,pitch);
@@ -375,14 +509,14 @@ class ModelRenderer {
     this.hitFaces=[];const curveLabels=[];
     for(const {f,pts,brightness,vNormal} of projected) {
       if(Math.abs(vNormal[2])<.00001)continue;
-      trace(ctx,pts);ctx.fillStyle=shade(f.color,brightness);ctx.fill();
-      if(!f.outline) {ctx.strokeStyle=ctx.fillStyle;ctx.lineWidth=.65;ctx.stroke();}
-      if(f.outline) {ctx.strokeStyle=selected===f.id?'#215FF0':'rgba(24,51,75,.67)';ctx.lineWidth=selected===f.id?3:mini?1:1.45;ctx.stroke();}
+      trace(ctx,pts);ctx.fillStyle=shade(f.color,brightness);if(!f.wire)ctx.fill();
+      if(!f.outline&&!f.wire) {ctx.strokeStyle=ctx.fillStyle;ctx.lineWidth=.65;ctx.stroke();}
+      if(f.outline) {ctx.strokeStyle=f.warning?'#B9403E':activeFace(f.id)?'#215FF0':'rgba(24,51,75,.67)';ctx.lineWidth=activeFace(f.id)?3:mini?1:1.45;ctx.stroke();}
       if(f.rim) {
         ctx.beginPath();for(const [a,b] of f.rim){ctx.moveTo(...pts[a].slice(0,2));ctx.lineTo(...pts[b].slice(0,2));}
-        ctx.strokeStyle=selected===f.id?'#215FF0':'rgba(24,51,75,.6)';ctx.lineWidth=selected===f.id?2.7:mini?.9:1.25;ctx.stroke();
+        ctx.strokeStyle=activeFace(f.id)?'#215FF0':'rgba(24,51,75,.6)';ctx.lineWidth=activeFace(f.id)?2.7:mini?.9:1.25;ctx.stroke();
       }
-      if(f.cut) {ctx.beginPath();for(const [a,b] of f.cut){ctx.moveTo(...pts[a].slice(0,2));ctx.lineTo(...pts[b].slice(0,2));}ctx.strokeStyle='#526A7D';ctx.setLineDash([4,3]);ctx.lineWidth=1;ctx.stroke();ctx.setLineDash([]);}
+      if(f.cut) {ctx.beginPath();for(const [a,b] of f.cut){ctx.moveTo(...pts[a].slice(0,2));ctx.lineTo(...pts[b].slice(0,2));}if(f.cutUnderlay){ctx.strokeStyle='#F3F7FB';ctx.lineWidth=3.5;ctx.stroke();}ctx.strokeStyle='#526A7D';ctx.setLineDash([4,3]);ctx.lineWidth=1;ctx.stroke();ctx.setLineDash([]);}
       this.hitFaces.push({id:f.id,pts});
       if(labels&&!mini&&(f.label||f.outline)&&Math.abs(vNormal[2])>.17) {
         const p=project(faceCenter(f)),text=f.label||String(f.id+1);
@@ -495,6 +629,170 @@ class LearningNotes{
     noteEl('area-breakdown').replaceChildren(...r.areaParts.map(part=>noteNode('li',{},part.label+': '+noteNumber(part.value)+' cm²')));
     drawNoteDiagram(this.shape,r);return r;
   }
+}
+
+
+const labEl=id=>document.getElementById(id);
+const labNumberFormat=new Intl.NumberFormat('ms-MY',{maximumFractionDigits:2,useGrouping:false});
+const labFmt=n=>labNumberFormat.format(n);
+function labNode(tag,attrs={},text=''){const n=document.createElement(tag);for(const [k,v] of Object.entries(attrs))n.setAttribute(k,String(v));if(text)n.textContent=text;return n;}
+const LAB_COPY={net:['Bina bentangan sendiri','Susun enam segi empat sama, ramalkan hasilnya, kemudian lipat untuk menyemak. Muka kekal bersambung pada sisi yang dipilih.'],volume:['Makmal isi padu','Kira kiub unit atau pindahkan isi daripada kon/piramid ke bekas yang mempunyai luas tapak dan tinggi tegak yang sama.'],area:['Terbitkan rumus luas permukaan','Hubungkan setiap permukaan berwarna dengan luasnya. Jumlah bahagian yang dipilih akan membentuk rumus keseluruhan.'],composite:['Bongkah gabungan','Cantum dua bongkah pada tapak yang sama saiz. Tentukan permukaan yang terdedah dan tambah isi padunya.']};
+class LearningLabs{
+ constructor({announce,prefersReduced}){
+  this.announce=announce;this.prefersReduced=prefersReduced;this.ready=false;this.active=false;this.kind='net';this.raf=0;this.anim=null;this.paused=null;
+  this.camera={yaw:.48,pitch:.3,zoom:1};this.net={cells:NET_PRESETS.cross.map(p=>[...p]),progress:0,selected:0,dirty:true,notice:'',drag:null,suppressUntil:0};
+  this.volume={kind:'unit',units:0,d:{p:3,l:2,t:3},size:3,height:4,pours:0,progress:0,full:true};
+  this.area={shape:'cube',d:{...LESSON_DATA.cube.defaults},progress:0,selected:new Set(),focus:null,dirty:true};
+  this.comp={kind:'roof',size:6,h:6,t:4,joined:0,selected:new Set(),dirty:true,feedback:''};
+ }
+ bind(id,fn,type='click'){labEl(id).addEventListener(type,event=>{fn(event);this.render();});}
+ init(){
+  if(this.ready)return;this.ready=true;this.renderer=new ModelRenderer(labEl('labs-canvas'));
+  for(const kind of Object.keys(LAB_COPY))this.bind('lab-'+kind,()=>this.choose(kind));
+  this.bind('net-example',()=>{const preset=NET_PRESETS[labEl('net-example').value];if(preset){this.net.cells=preset.map(p=>[...p]);this.changedNet();}},'change');
+  this.bind('net-clear',()=>{this.net.cells=[];this.changedNet();});this.bind('net-selected',()=>{this.net.selected=Number(labEl('net-selected').value);},'change');
+  for(const [id,dx,dy] of [['net-left',-1,0],['net-right',1,0],['net-up',0,-1],['net-down',0,1]])this.bind(id,()=>{const p=this.net.cells[this.net.selected];if(p)this.moveNet(this.net.selected,[p[0]+dx,p[1]+dy]);});
+  this.bind('net-fold',()=>this.start(()=>this.net.progress,v=>this.net.progress=v,1,4000));
+  this.bind('net-flat',()=>this.start(()=>this.net.progress,v=>this.net.progress=v,0,4000));
+  this.bind('volume-kind',()=>{this.stop();this.volume.kind=labEl('volume-kind').value;this.volume.size=this.volume.kind==='pyramid'?6:3;this.resetPour();},'change');
+  for(const key of ['p','l','t'])this.bind('unit-'+key,()=>{this.volume.d[key]=Number(labEl('unit-'+key).value);this.volume.units=0;},'input');
+  this.bind('unit-one',()=>this.volume.units=Math.min(this.unitCapacity(),this.volume.units+1));
+  this.bind('unit-layer',()=>this.volume.units=Math.min(this.unitCapacity(),this.volume.units+this.volume.d.p*this.volume.d.l));
+  this.bind('unit-fill',()=>this.volume.units=this.unitCapacity());this.bind('unit-empty',()=>this.volume.units=0);
+  this.bind('pour-size',()=>{this.volume.size=Number(labEl('pour-size').value);this.resetPour();},'input');
+  this.bind('pour-height',()=>{this.volume.height=Number(labEl('pour-height').value);this.resetPour();},'input');
+  this.bind('pour-reset',()=>this.resetPour());this.bind('pour-refill',()=>{this.volume.full=true;this.volume.progress=0;});
+  this.bind('pour-one',()=>{const v=this.volume;if(v.pours>=3||!v.full)return;this.start(()=>v.progress,n=>v.progress=n,1,2600,()=>{v.pours++;v.progress=0;v.full=false;this.announce('Tuangan '+v.pours+' selesai.');});});
+  this.bind('area-shape',()=>{this.stop();this.area.shape=labEl('area-shape').value;this.area.d={...LESSON_DATA[this.area.shape].defaults};this.area.progress=0;this.clearArea();},'change');
+  for(const key of ['a','p','l','t','j'])this.bind('area-'+key,()=>{this.stop();this.area.d[key]=Number(labEl('area-'+key).value);this.clearArea();},'input');
+  this.bind('area-open',()=>this.start(()=>this.area.progress,v=>this.area.progress=v,1,4000));
+  this.bind('area-close',()=>this.start(()=>this.area.progress,v=>this.area.progress=v,0,4000));
+  this.bind('area-all',()=>{this.area.selected=new Set(surfacePieces(this.area.shape,this.area.d).map(p=>p.id));this.area.dirty=true;});
+  this.bind('area-clear',()=>this.clearArea());
+  this.bind('comp-kind',()=>{this.stop();this.comp.kind=labEl('comp-kind').value;this.comp.size=this.comp.kind==='roof'?6:3;this.changedComp();},'change');
+  for(const [id,key] of [['comp-size','size'],['comp-body-height','h'],['comp-roof-height','t']])this.bind(id,()=>{this.stop();this.comp[key]=Number(labEl(id).value);this.changedComp();},'input');
+  this.bind('comp-join',()=>this.start(()=>this.comp.joined,v=>this.comp.joined=v,1,1600));
+  this.bind('comp-separate',()=>this.start(()=>this.comp.joined,v=>this.comp.joined=v,0,1600));
+  this.bind('comp-check',()=>{const c=this.comp,r=compositionMeasures(c.kind,this.compDims());if(c.joined<1){c.feedback='Cantum bongkah dahulu, kemudian semak permukaan luar.';return;}
+   const correct=r.groups.every(g=>c.selected.has(g.key)===g.external);c.feedback=correct?'Tepat! Kedua-dua permukaan yang bercantum berada di dalam. Jumlahkan permukaan yang terdedah sahaja.':'Semak semula. Pilih semua permukaan luar; dua permukaan yang bercantum tidak dikira. Pisahkan bongkah untuk melihatnya.';this.announce(c.feedback);
+  });
+  this.bind('lab-progress',()=>{const n=Number(labEl('lab-progress').value)/1000;this.stop();if(this.kind==='net')this.net.progress=n;if(this.kind==='area')this.area.progress=n;if(this.kind==='composite')this.comp.joined=n;},'input');
+  this.bind('lab-pause',()=>{if(this.anim){this.paused=this.anim;this.stop(false);}else if(this.paused){const a=this.paused;this.start(a.get,a.set,a.to,a.duration*Math.abs(a.to-a.get())/(Math.abs(a.to-a.from)||1),a.done);}});
+  for(const [id,key,amount] of [['lab-left','yaw',-.2],['lab-right','yaw',.2],['lab-up','pitch',.15],['lab-down','pitch',-.15],['lab-zoom-out','zoom',-.15],['lab-zoom-in','zoom',.15]])this.bind(id,()=>{this.camera[key]+=amount;this.boundCamera();});
+  this.bind('lab-reset-camera',()=>this.camera={yaw:.48,pitch:.3,zoom:1});
+  const canvas=labEl('labs-canvas');let pointer=null;
+  canvas.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'&&e.button!==0)return;pointer={id:e.pointerId,x:e.clientX,y:e.clientY};canvas.setPointerCapture(e.pointerId);});
+  canvas.addEventListener('pointermove',e=>{if(!pointer||pointer.id!==e.pointerId)return;this.camera.yaw+=(e.clientX-pointer.x)*.009;this.camera.pitch+=(e.clientY-pointer.y)*.009;pointer.x=e.clientX;pointer.y=e.clientY;this.boundCamera();this.draw();});
+  const release=e=>{if(pointer?.id===e.pointerId){pointer=null;if(canvas.hasPointerCapture(e.pointerId))canvas.releasePointerCapture(e.pointerId);}};
+  canvas.addEventListener('pointerup',release);canvas.addEventListener('pointercancel',release);canvas.addEventListener('lostpointercapture',()=>pointer=null);
+  canvas.addEventListener('wheel',e=>{e.preventDefault();this.camera.zoom+=e.deltaY<0?.08:-.08;this.boundCamera();this.render();},{passive:false});
+  canvas.addEventListener('keydown',e=>{if(e.isComposing)return;const controls={ArrowLeft:'lab-left',ArrowRight:'lab-right',ArrowUp:'lab-up',ArrowDown:'lab-down','+':'lab-zoom-in','=':'lab-zoom-in','-':'lab-zoom-out',Home:'lab-reset-camera'};if(controls[e.key]){e.preventDefault();labEl(controls[e.key]).click();}});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)this.stop();});
+  if(typeof ResizeObserver!=='undefined'){this.resize=new ResizeObserver(()=>{if(this.active)this.draw();});this.resize.observe(canvas);}
+ }
+ open(){this.init();this.active=true;this.render();}
+ close(){this.active=false;this.stop();this.net.drag=null;labEl('net-drag-ghost').hidden=true;}
+ stop(clear=true){if(this.raf)cancelAnimationFrame(this.raf);this.raf=0;this.anim=null;if(clear)this.paused=null;if(this.ready)this.refreshPlayback();}
+ revealStage(){const canvas=labEl('labs-canvas');canvas.focus({preventScroll:true});canvas.scrollIntoView({behavior:this.prefersReduced()?'instant':'smooth',block:'center'});}
+ start(get,set,to,duration,done=null){
+  this.stop();this.revealStage();const from=get();if(from===to){if(done)done();this.render();return;}
+  this.anim={get,set,from,to,duration:Math.max(1,duration),start:performance.now(),done};
+  const step=time=>{this.raf=0;if(!this.active||document.hidden){this.stop();return;}const a=this.anim;if(!a)return;const t=clamp01((time-a.start)/a.duration);a.set(a.from+(a.to-a.from)*ease(t));if(t===1){a.set(a.to);this.anim=null;if(a.done)a.done();}this.render();if(this.anim)this.raf=requestAnimationFrame(step);};
+  this.raf=requestAnimationFrame(step);this.refreshPlayback();
+ }
+ choose(kind){if(!LAB_COPY[kind])return;this.stop();this.kind=kind;this.camera={yaw:.48,pitch:.3,zoom:1};this.announce(LAB_COPY[kind][0]+' dipilih.');}
+ boundCamera(){this.camera.pitch=Math.max(-1.5,Math.min(1.5,this.camera.pitch));this.camera.zoom=Math.max(.6,Math.min(2,this.camera.zoom));}
+ changedNet(){this.stop();this.net.progress=0;this.net.notice='';this.net.selected=Math.max(0,Math.min(this.net.selected,this.net.cells.length-1));this.net.dirty=true;}
+ moveNet(id,target){const n=this.net;if(target.some(v=>v<0||v>5)||n.cells.some((p,i)=>i!==id&&p[0]===target[0]&&p[1]===target[1])){n.notice='Pilih petak kosong dalam grid untuk memindahkan muka.';return;}n.cells[id]=target;this.changedNet();}
+ buildNetGrid(){
+  const n=this.net;labEl('net-grid').replaceChildren(...Array.from({length:36},(_,i)=>{
+   const x=i%6,y=Math.floor(i/6),id=n.cells.findIndex(p=>p[0]===x&&p[1]===y),b=labNode('button',{type:'button',class:'net-cell','data-cell':x+','+y,'aria-pressed':String(id>=0),'aria-label':`Baris ${y+1}, lajur ${x+1}`+(id>=0?`, muka ${id+1}`:', petak kosong')},id>=0?String(id+1):'');if(id>=0)b.style.backgroundColor=FACE_COLORS[id];
+   b.addEventListener('click',()=>{if(performance.now()<n.suppressUntil)return;if(id>=0)n.cells.splice(id,1);else if(n.cells.length<6)n.cells.push([x,y]);else{n.notice='Sudah ada 6 muka. Buang atau pindahkan satu muka dahulu.';this.render();return;}this.changedNet();n.focusCell=x+','+y;this.render();});
+   b.addEventListener('pointerdown',e=>{if(id<0||(e.pointerType==='mouse'&&e.button!==0))return;n.selected=id;n.drag={id,x:e.clientX,y:e.clientY,moved:false};b.setPointerCapture(e.pointerId);});
+   b.addEventListener('pointermove',e=>{const d=n.drag;if(!d||d.id!==id)return;if(Math.hypot(e.clientX-d.x,e.clientY-d.y)>6)d.moved=true;if(d.moved){e.preventDefault();const ghost=labEl('net-drag-ghost');ghost.hidden=false;ghost.textContent=String(id+1);ghost.style.backgroundColor=FACE_COLORS[id];ghost.style.left=e.clientX+7+'px';ghost.style.top=e.clientY+7+'px';}});
+   b.addEventListener('pointerup',e=>{const d=n.drag;n.drag=null;labEl('net-drag-ghost').hidden=true;if(b.hasPointerCapture(e.pointerId))b.releasePointerCapture(e.pointerId);if(!d?.moved)return;n.suppressUntil=performance.now()+250;const target=document.elementFromPoint(e.clientX,e.clientY)?.closest('[data-cell]');if(target){const pos=target.dataset.cell.split(',').map(Number);this.moveNet(id,pos);this.render();}});
+   b.addEventListener('pointercancel',()=>{n.drag=null;labEl('net-drag-ghost').hidden=true;});return b;
+  }));
+  labEl('net-selected').replaceChildren(...n.cells.map((p,id)=>labNode('option',{value:id},'Muka '+(id+1))));labEl('net-selected').value=String(n.selected);if(n.focusCell){[...labEl('net-grid').children].find(b=>b.dataset.cell===n.focusCell)?.focus({preventScroll:true});n.focusCell=null;}n.dirty=false;
+ }
+ unitCapacity(){const d=this.volume.d;return d.p*d.l*d.t;}
+ resetPour(){this.stop();Object.assign(this.volume,{pours:0,progress:0,full:true});}
+ pourDims(){const v=this.volume;return v.kind==='cone'?{j:v.size,t:v.height}:{a:v.size,t:v.height};}
+ clearArea(){this.area.selected.clear();this.area.focus=null;this.area.dirty=true;}
+ compDims(){const c=this.comp;return c.kind==='roof'?{a:c.size,t:c.t}:{j:c.size,h:c.h,t:c.t};}
+ changedComp(){this.comp.joined=0;this.comp.selected.clear();this.comp.dirty=true;this.comp.feedback='';}
+ refreshPlayback(){
+  labEl('lab-playback').hidden=this.kind==='volume'&&this.volume.kind==='unit';
+  const slider=this.kind!=='volume';labEl('lab-slider-wrap').hidden=!slider;labEl('lab-pause').disabled=!this.anim&&!this.paused;labEl('lab-pause').textContent=this.paused?'Sambung animasi':'Jeda animasi';
+  const progress=this.kind==='net'?this.net.progress:this.kind==='area'?this.area.progress:this.kind==='composite'?this.comp.joined:this.volume.progress;
+  labEl('lab-progress').value=String(Math.round(progress*1000));labEl('lab-progress-value').textContent=Math.round(progress*100)+'%';
+  labEl('lab-progress-label').textContent=this.kind==='net'?'Rata → dilipat':this.kind==='area'?'Bongkah → bentangan':'Terpisah → bercantum';
+ }
+ render(){
+  if(!this.ready||!this.active)return;
+  const k=this.kind;for(const kind of Object.keys(LAB_COPY)){labEl('lab-'+kind).setAttribute('aria-pressed',String(k===kind));labEl('lab-'+kind+'-panel').hidden=k!==kind;}
+  labEl('lab-title').textContent=LAB_COPY[k][0];labEl('lab-intro').textContent=LAB_COPY[k][1];
+  if(k==='net')this.renderNet();if(k==='volume')this.renderVolume();if(k==='area')this.renderArea();if(k==='composite')this.renderComposite();
+  labEl('lab-zoom-level').textContent=Math.round(this.camera.zoom*100)+'%';this.refreshPlayback();this.draw();
+ }
+ renderNet(){
+  const n=this.net,s=cubeNetState(n.cells);if(n.dirty)this.buildNetGrid();labEl('net-count').textContent=n.cells.length+' / 6 muka';labEl('net-fold').disabled=n.cells.length!==6||!s.connected;labEl('net-flat').disabled=n.progress===0;
+  for(const id of ['net-selected','net-left','net-right','net-up','net-down'])labEl(id).disabled=n.cells.length===0;
+  labEl('net-feedback').textContent=n.notice||s.message;labEl('net-feedback').dataset.success=String(s.valid&&!n.notice);
+  labEl('lab-scene-label').textContent='BENTANGAN KUBUS · MUKA BERNOMBOR';labEl('lab-caption').textContent=n.progress===0?'Rata: setiap segi empat sama ialah satu muka kubus. Warna dan nombor kekal sepanjang lipatan.'+(s.cutCount?' Garis putus-putus menunjukkan potongan tambahan.':''):n.progress===1?'Dilipat sepenuhnya. '+s.message:'Perhatikan setiap muka berputar pada satu sisi yang bersambung.';
+  labEl('lab-outcome').textContent='Ramalkan dahulu: adakah keenam-enam muka akan menutup kubus tanpa bertindih?';
+ }
+ renderVolume(){
+  const v=this.volume,unit=v.kind==='unit';labEl('volume-kind').value=v.kind;labEl('unit-controls').hidden=!unit;labEl('pour-controls').hidden=unit;
+  labEl('lab-scene-label').textContent=unit?'KIUB UNIT · SETIAP KIUB = 1 cm³':'SUMBER DI KIRI → PENERIMA DI KANAN';
+  if(unit){const {p,l,t}=v.d,total=this.unitCapacity(),layer=p*l;for(const key of ['p','l','t']){labEl('unit-'+key).value=String(v.d[key]);labEl('unit-'+key+'-value').textContent=v.d[key]+' cm';}
+   labEl('unit-one').disabled=v.units===total;labEl('unit-layer').disabled=v.units===total;labEl('unit-fill').disabled=v.units===total;labEl('unit-empty').disabled=v.units===0;
+   labEl('unit-result').textContent=`${v.units} / ${total} kiub · ${Math.floor(v.units/layer)} lapisan penuh daripada ${t}.`;
+   labEl('unit-equation').textContent=`V = p × l × t = ${p} × ${l} × ${t} = ${total} cm³`;
+   labEl('lab-caption').textContent=`Satu lapisan memuatkan ${p} × ${l} = ${layer} kiub. Warna membezakan lapisan. Garisan luar menunjukkan sempadan kuboid.`;
+   labEl('lab-outcome').textContent=`Isi yang telah dimasukkan: ${v.units} cm³. Kapasiti penuh: ${total} cm³.`;
+  }else{const cone=v.kind==='cone',d=this.pourDims(),p=pourState(v.kind,d,Math.min(2,v.pours),v.progress),fraction=v.pours===3?1:p.fraction;
+   labEl('pour-explanation').textContent=(cone?'Kon dan silinder mempunyai tapak bulatan sama saiz.':'Piramid dan prisma mempunyai tapak segi empat sama sama saiz.')+' Kedua-dua bekas mempunyai tinggi tegak yang sama. Ramalkan bilangan tuangan untuk memenuhi penerima.';
+   labEl('pour-size-label').textContent=cone?'j · jejari kedua-dua tapak':'a · sisi kedua-dua tapak';for(const [id,value] of [['pour-size',v.size],['pour-height',v.height]]){labEl(id).value=String(value);labEl(id+'-value').textContent=value+' cm';}
+   labEl('pour-one').disabled=v.pours>=3||!v.full||Boolean(this.anim);labEl('pour-one').textContent=v.progress>0?'Sambung tuangan':'Tuang sekali';labEl('pour-refill').disabled=v.pours>=3||v.full||Boolean(this.anim);
+   labEl('pour-result').textContent=`${v.pours} / 3 tuangan lengkap · Penerima ${labFmt(fraction*100)}% penuh.`;
+   labEl('pour-equation').textContent=`3 × ${cone?'V kon':'V piramid'} = ${cone?'V silinder':'V prisma'} ${Number.isInteger(p.capacity)?'=':'≈'} ${labFmt(p.capacity)} cm³`;
+   labEl('lab-caption').textContent=`Kiri: ${cone?'kon':'piramid'}. Kanan: ${cone?'silinder':'prisma'}. Paras di kiri mengikut bentuk yang mengecil ke puncak; paras di kanan mengikut isi yang dipindahkan.`;
+   labEl('lab-outcome').textContent=`Isi penerima: ${labFmt(p.capacity*fraction)} / ${labFmt(p.capacity)} cm³. `+(v.pours===3?'Tiga tuangan memenuhi penerima.':v.full?'Tekan Tuang sekali untuk memindahkan isi.':'Isi semula sumber untuk tuangan seterusnya.');
+  }
+ }
+ renderArea(){
+  const a=this.area,parts=surfacePieces(a.shape,a.d),fields=MEASURE_FIELDS[a.shape];labEl('area-shape').value=a.shape;
+  for(const key of ['a','p','l','t','j']){labEl('area-field-'+key).hidden=!fields.includes(key);labEl('area-'+key).value=String(a.d[key]||1);labEl('area-'+key+'-value').textContent=(a.d[key]||1)+' cm';}
+  const measures=calculateMeasures(a.shape,a.d,'full');labEl('area-slant').textContent=measures.slant===null?'':'Tinggi sendeng s ≈ '+labFmt(measures.slant)+' cm, dikira daripada tinggi tegak dan '+(a.shape==='pyramid'?'separuh sisi tapak.':'jejari.');
+  if(a.dirty){labEl('area-pieces').replaceChildren(...parts.map(p=>{const b=labNode('button',{type:'button',class:'area-piece','data-piece':p.id,'aria-pressed':String(a.selected.has(p.id))});const swatch=labNode('i',{'aria-hidden':'true'});swatch.style.backgroundColor=p.color;b.append(swatch,labNode('span',{},(p.id+1)+'. '+p.name),labNode('b',{},labFmt(p.area)+' cm²'));b.addEventListener('click',()=>{if(a.selected.has(p.id))a.selected.delete(p.id);else a.selected.add(p.id);a.focus=p.id;a.focusPending=true;a.dirty=true;this.render();});return b;}));if(a.focusPending){[...labEl('area-pieces').children].find(b=>Number(b.dataset.piece)===a.focus)?.focus({preventScroll:true});a.focusPending=false;}a.dirty=false;}
+  const chosen=parts.filter(p=>a.selected.has(p.id)),sum=chosen.reduce((s,p)=>s+p.area,0);labEl('area-count').textContent=`${chosen.length} / ${parts.length} permukaan dipilih`;
+  labEl('area-sum').textContent=chosen.length?chosen.map(p=>labFmt(p.area)).join(' + ')+' cm²':'Pilih permukaan berwarna untuk mengumpulkan luasnya.';
+  labEl('area-total').textContent='Jumlah dipilih '+(Number.isInteger(sum)?'= ':'≈ ')+labFmt(sum)+' cm²';labEl('area-formula').textContent=chosen.length===parts.length?'Rumus keseluruhan: '+LESSON_DATA[a.shape].surface.formula:'Rumus keseluruhan akan muncul selepas semua permukaan dipilih.';
+  labEl('lab-scene-label').textContent=MODEL_DATA[a.shape].name.toUpperCase()+' · LUAS SETIAP PERMUKAAN';
+  labEl('lab-caption').textContent=LESSON_DATA[a.shape].surface.why;
+  labEl('lab-outcome').textContent=chosen.length===parts.length?'Semua permukaan telah dikira sekali. Jumlahnya ialah luas permukaan bongkah tertutup.':'Setiap permukaan mesti dikira tepat sekali, termasuk tapak.';
+ }
+ renderComposite(){
+  const c=this.comp,r=compositionMeasures(c.kind,this.compDims()),roof=c.kind==='roof';labEl('comp-kind').value=c.kind;labEl('comp-size-label').textContent=roof?'a · sisi tapak bersama':'j · jejari tapak bersama';labEl('comp-body-field').hidden=roof;
+  for(const [id,value] of [['comp-size',c.size],['comp-body-height',c.h],['comp-roof-height',c.t]]){labEl(id).value=String(value);labEl(id+'-value').textContent=value+' cm';}
+  if(c.dirty){labEl('comp-groups').replaceChildren(...r.groups.map(g=>{const b=labNode('button',{type:'button',class:'area-piece','data-group':g.key,'aria-pressed':String(c.selected.has(g.key))},g.label);b.addEventListener('click',()=>{if(c.selected.has(g.key))c.selected.delete(g.key);else c.selected.add(g.key);c.dirty=true;c.focusPending=g.key;c.feedback='';this.render();});return b;}));if(c.focusPending){[...labEl('comp-groups').children].find(b=>b.dataset.group===c.focusPending)?.focus({preventScroll:true});c.focusPending=null;}c.dirty=false;}
+  labEl('comp-feedback').textContent=c.feedback||'Pilih permukaan yang akan terdedah di luar selepas kedua-dua bongkah dicantum.';
+  labEl('comp-area').textContent=c.joined===1?labFmt(r.area)+' cm²':'Cantum dahulu';labEl('comp-volume').textContent=labFmt(r.volume)+' cm³';
+  labEl('comp-equation').textContent=`Luas dua bongkah berasingan ${labFmt(r.separateArea)} cm² − 2 × luas tapak bersama ${labFmt(r.sharedArea)} cm² = ${labFmt(r.area)} cm². Tinggi sendeng bahagian atas s ≈ ${labFmt(r.slant)} cm.`;
+  labEl('lab-scene-label').textContent=roof?'KUBUS + PIRAMID':'SILINDER + KON';labEl('lab-caption').textContent=c.joined===1?'Tapak bahagian atas menutup muka atas bahagian bawah. Kedua-duanya menjadi permukaan dalaman.':'Pisahkan untuk melihat kedua-dua tapak yang akan bertemu. Saiz tapaknya sentiasa sepadan.';
+  labEl('lab-outcome').textContent='Isi padu gabungan ialah jumlah kedua-dua isi padu; luas luar mengecualikan kedua-dua muka yang bercantum.';
+ }
+ draw(){
+  if(!this.ready||!this.active)return;const k=this.kind;let mesh,progress=0,labels=false,selected=null;
+  if(k==='net'){progress=this.net.progress;mesh=cubeNetMesh(this.net.cells,progress);labels=true;}
+  if(k==='volume'){const v=this.volume;progress=v.progress;mesh=v.kind==='unit'?unitCubeMesh(v.d,v.units):pourMesh(v.kind,this.pourDims(),v.pours,v.progress,v.full);}
+  if(k==='area'){const a=this.area;progress=a.progress;mesh=buildMesh(a.shape,progress,144,labDimensions(a.shape,a.d));labels=true;selected=[...a.selected];}
+  if(k==='composite'){progress=this.comp.joined;mesh=compositionMesh(this.comp.kind,this.compDims(),progress);}
+  this.renderer.draw({shape:'lab',mesh,progress,...this.camera,labels,selected});const canvas=labEl('labs-canvas');
+  Object.assign(canvas.dataset,{lab:k,progress:String(progress),valid:String(cubeNetState(this.net.cells).valid),units:String(this.volume.units),pours:String(this.volume.pours),joined:String(this.comp.joined),yaw:String(this.camera.yaw),pitch:String(this.camera.pitch),zoom:String(this.camera.zoom)});
+  canvas.setAttribute('aria-label',LAB_COPY[k][0]+'. '+labEl('lab-caption').textContent);
+ }
 }
 
 
@@ -674,14 +972,17 @@ for(const shape of MODEL_ORDER){
 function switchLearningView(view) {
   if(state.learningView===view)return;
   stopAnimation();state.auto=false;state.camera=null;
+  if(state.learningView==='labs')learningLabs.close();
   if(raf)cancelAnimationFrame(raf);raf=0;lastFrame=0;state.learningView=view;
   refreshControls();drawMain();
-  el('explore-panel').hidden=view!=='explore';el('study-panel').hidden=view!=='notes';
-  el('learn-explore').setAttribute('aria-pressed',String(view==='explore'));el('learn-notes').setAttribute('aria-pressed',String(view==='notes'));
+  el('explore-panel').hidden=view!=='explore';el('study-panel').hidden=view!=='notes';el('labs-panel').hidden=view!=='labs';el('shape-picker').hidden=view==='labs';
+  el('learn-explore').setAttribute('aria-pressed',String(view==='explore'));el('learn-notes').setAttribute('aria-pressed',String(view==='notes'));el('learn-labs').setAttribute('aria-pressed',String(view==='labs'));
   document.title=(view==='notes'?'Nota ':'')+MODEL_DATA[state.shape].name+' — Modul GeoDecoder';
-  if(view==='notes'){learningNotes.render(state.shape);el('study-title').focus({preventScroll:true});announce('Nota '+MODEL_DATA[state.shape].name.toLowerCase()+' dibuka.');}
+  if(view==='labs'){learningLabs.open();el('labs-title').focus({preventScroll:true});document.title='Makmal Interaktif — Modul GeoDecoder';}
+  else if(view==='notes'){learningNotes.render(state.shape);el('study-title').focus({preventScroll:true});announce('Nota '+MODEL_DATA[state.shape].name.toLowerCase()+' dibuka.');}
   else {redrawSmallModels();el('model-title').focus({preventScroll:true});announce('Teroka 3D '+MODEL_DATA[state.shape].name.toLowerCase()+'.');}
 }
+const learningLabs=new LearningLabs({announce,prefersReduced:()=>reduced.matches});
 const learningNotes=new LearningNotes({announce,prefersReduced:()=>reduced.matches,onExplore:mode=>{
   switchLearningView('explore');
   if(mode==='net')beginAnimation(1);
@@ -690,6 +991,7 @@ const learningNotes=new LearningNotes({announce,prefersReduced:()=>reduced.match
   el('stage').scrollIntoView({behavior:reduced.matches?'instant':'smooth',block:'center'});
 }});
 el('learn-explore').addEventListener('click',()=>switchLearningView('explore'));el('learn-notes').addEventListener('click',()=>switchLearningView('notes'));
+el('learn-labs').addEventListener('click',()=>switchLearningView('labs'));
 el('version').textContent='V'+MODULE_VERSION;
 el('mode-model').addEventListener('click',()=>switchMode('model'));el('mode-views').addEventListener('click',()=>switchMode('views'));
 el('open-net').addEventListener('click',()=>beginAnimation(1));el('close-net').addEventListener('click',()=>beginAnimation(0));
@@ -753,7 +1055,7 @@ canvas.addEventListener('keydown',event=>{
   if(event.key==='ArrowUp')state.pitch=Math.min(Math.PI/2,state.pitch+.13);if(event.key==='ArrowDown')state.pitch=Math.max(-Math.PI/2,state.pitch-.13);
   refreshControls();wake();
 });
-reduced.addEventListener('change',()=>{state.auto=false;stopAnimation();state.camera=null;refreshControls();wake();});
+reduced.addEventListener('change',()=>{if(learningLabs.ready)learningLabs.stop();state.auto=false;stopAnimation();state.camera=null;refreshControls();wake();});
 document.addEventListener('visibilitychange',()=>{if(document.hidden){stopAnimation();state.auto=false;state.camera=null;if(raf)cancelAnimationFrame(raf);raf=0;lastFrame=0;refreshControls();}else wake();});
 function redrawSmallModels(){for(const [shape,r] of navRenderers)r.draw({shape,yaw:.55,pitch:.35,mini:true});drawViews();wake();}
 if(typeof ResizeObserver!=='undefined'){const resize=new ResizeObserver(redrawSmallModels);resize.observe(el('shape-picker'));resize.observe(el('stage'));}else window.addEventListener('resize',redrawSmallModels);

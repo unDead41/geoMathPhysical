@@ -36,7 +36,7 @@ The account entry is distinct from practice. Signup requires email, username, di
 
 One looping background Audio element plays the supplied rest-site track on Home, Guest, accounts and results, and the supplied map track during games and the module. Initial playback waits for a trusted user gesture. Track changes pause the old source before playing the new one. A dedicated, labelled header toggle persists the preference; game sound effects are independent. Hidden tabs pause music. Playback failure does not block learning or scoring. Website assets load on demand; downloadable HTML embeds both full tracks.
 
-Home opens the pinned module v1.1.0 in an opaque-origin iframe with scripts and optional popups. Its canonical artifact is unchanged; the embedding adapter rewrites fragment links to about:srcdoc so Guide/Skip stay within the module. A labelled parent Back button unloads the frame, stopping its animation, and restores menu music. The module keeps its independent layout and learning controls.
+Home opens the pinned module v1.2.0 in an opaque-origin iframe with scripts and optional popups. Its canonical artifact is unchanged; the embedding adapter rewrites fragment links to about:srcdoc so Guide/Skip stay within the module. A labelled parent Back button unloads the frame, stopping its animation, and restores menu music. The module keeps its independent layout and learning controls.
 
 Teachers create only their own classes and rooms, see roster presence, and invite a registered student by exact username. The student accepts invitations. A six-digit class PIN enrolls in the class; a room PIN enrolls in its class and room. Codes are server generated, unique, expire after 24 hours and can be regenerated even when no active code remains. Owners alone see PINs. Repeated invalid guesses are rate limited. Presence is an estimate based on a heartbeat within the last 45 seconds, not proof that the game tab has focus.
 
@@ -47,3 +47,5 @@ The server timer continues during dialogs, UI pause, hidden tabs and disconnecti
 The teacher board subscribes to authorized room_progress changes. Only a confirmed SUBSCRIBED status is labelled live; fallback refresh is 15 seconds. Student/dashboard polling is 15 seconds, heartbeat 20 seconds. Polls do not overlap or overwrite edited form drafts. Search/pagination bound roster/board display to 20 rows. Read failures preserve labelled last-known data with retry.
 
 The theme button applies light/dark across entry, game, dialogs, results and portal, persists the preference and respects the system choice before an explicit selection. Both themes preserve visible text, focus outlines and non-colour state labels.
+
+The v1.2.0 module includes four interactive labs reachable from its own Makmal interaktif tab. Parent navigation still owns the iframe lifetime and the map music; classroom Auth and scoring remain in the parent application.

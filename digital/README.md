@@ -1,8 +1,8 @@
 # GeoDecoder Digital V2
 
-Versi Digital semasa: **v2.2.1**. Kata laluan 10–128 aksara menerima huruf besar/kecil, nombor dan simbol; penerangan borang telah diperjelas.
+Versi Digital semasa: **v2.3.0**. Modul pembelajaran **v1.2.0** kini mempunyai empat Makmal interaktif.
 
-Versi digital **2.1.0**, branch **digitalize**. Permainan geometri R1 → R2 kini mempunyai akaun guru/pelajar, kelas dan room dengan skor langsung. Firmware v1.1.3 menggunakan versi berasingan.
+Versi digital **2.3.0**, branch **digitalize**. Permainan geometri R1 → R2 kini mempunyai akaun guru/pelajar, kelas dan room dengan skor langsung. Firmware v1.1.3 menggunakan versi berasingan.
 
 ## Laman GitHub Pages
 
@@ -76,8 +76,12 @@ Panduan database/RPC: `backend/README.md`. Untuk projek baharu, gunakan `backend
 
 Jalankan `backend/verify.sql` sebagai database owner: seluruh ujian dibatalkan melalui rollback. `GEODECODER_LIVE_TEST=yes node tools/verify-cloud.mjs` ialah ujian integrasi opt-in yang **mencipta akaun/kelas/bilik sintetik sebenar** pada projek dikonfigurasi. Fail credential dalam `artifacts/` adalah sementara dan tidak boleh dicommit. Bersihkan fixture berdasarkan UUID yang direkodkan selepas ujian. Jangan jalankan secara membuta tuli pada projek pengguna lain.
 
-Rujukan bank/SHA: `docs/SOURCE.md`. Keputusan dan had ujian: `docs/VERIFICATION.md`. Modul v1.1.0 daripada `digitalize-module` dipinkan tanpa perubahan sebagai `vendor/module-v1.1.0.html` (commit `92c12c3a07ec250c03a73decaf52a654fc26d502`), dibuka dalam iframe terasing daripada Home. Branch modul asal tidak diubah.
+Rujukan bank/SHA: `docs/SOURCE.md`. Keputusan dan had ujian: `docs/VERIFICATION.md`. Modul v1.2.0 daripada `digitalize-module` dipinkan tanpa perubahan sebagai `vendor/module-v1.2.0.html` (commit `931a0150397bfb3fd79ef3c8da6684167d1c6aad`), dibuka dalam iframe terasing daripada Home. Branch modul asal tidak diubah.
 
 ## Muzik latar
 
 `rest_site_bg` memainkan menu/Home/akaun/keputusan. `when_open_map_bg` memainkan modul dan permainan. Muzik bermula selepas interaksi pertama, bertukar tanpa pertindihan, berhenti ketika tab tersembunyi dan menyimpan pilihan hidup/mati. Bunyi kesan kuiz menggunakan butang berasingan. Kedua-dua lagu dibekalkan pengguna, dikekalkan durasi penuh dan dioptimumkan kepada MP3 stereo 96 kbps; cover/metadata dibuang. Website memuat audio apabila diperlukan; HTML muat turun membenamkan kedua-dua lagu serta modul.
+
+## Makmal interaktif
+
+Dari Home, pilih **Teroka modul pembelajaran → Makmal interaktif**. Empat aktiviti: **Bina Bentangan**, **Makmal Isi Padu**, **Terbitkan Rumus** dan **Bongkah Gabungan**. Aktiviti menggunakan geometri dan kawalan modul asal; muzik map berjalan sepanjang modul dibuka. Pin tepat direkodkan dalam `vendor/module-release.json`.

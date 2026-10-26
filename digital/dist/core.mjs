@@ -1,4 +1,4 @@
-export const VERSION = '2.2.1';
+export const VERSION = '2.3.0';
 export const RULESET = 'single-attempt-v1';
 export const SHAPES = ['cube', 'cuboid', 'pyramid', 'cylinder', 'cone'];
 export const ROUND_SIZE = 10;

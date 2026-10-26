@@ -3,6 +3,7 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {build} from 'esbuild';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const moduleRelease=JSON.parse(fs.readFileSync(path.join(root,'vendor/module-release.json'),'utf8'));
 const template=fs.readFileSync(path.join(root,'dist/index.html'),'utf8');
 const css=['style','portal'].map(name=>fs.readFileSync(path.join(root,`dist/${name}.css`),'utf8')).join('\n');
 const options={entryPoints:[path.join(root,'dist/app.mjs')],bundle:true,write:false,platform:'browser',format:'iife',target:['es2022'],minify:true,legalComments:'eof',loader:{'.html':'text'}};
@@ -29,4 +30,4 @@ fs.writeFileSync(canonical,html);
 for(const target of ['artifacts/GeoDecoder_Digital_V1.html','dist/GeoDecoder_Digital_V1.html','dist/GeoDecoder_Digital_V2.html']){
   const destination=path.join(root,target);fs.rmSync(destination,{force:true});fs.linkSync(canonical,destination);
 }
-console.log(`GeoDecoder Digital: website ${Buffer.byteLength(page(javascript))} bytes; offline HTML ${Buffer.byteLength(html)} bytes including both complete music tracks and module v1.1.0.`);
+console.log(`GeoDecoder Digital: website ${Buffer.byteLength(page(javascript))} bytes; offline HTML ${Buffer.byteLength(html)} bytes including both complete music tracks and module v${moduleRelease.version}.`);

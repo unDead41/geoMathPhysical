@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import {createHash} from 'node:crypto';
 import path from 'node:path';
 import vm from 'node:vm';
 import assert from 'node:assert/strict';
@@ -8,6 +9,11 @@ import {shapeArt} from '../dist/art.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const read=p=>fs.readFileSync(path.join(root,p),'utf8');
 const html=read('dist/index.html'),css=read('dist/style.css'),design=read('DESIGN.md'),app=read('dist/app.mjs');
+const moduleRelease=JSON.parse(read('vendor/module-release.json'));
+const moduleBytes=fs.readFileSync(path.join(root,'vendor',moduleRelease.path));
+assert.equal(createHash('sha1').update(Buffer.concat([Buffer.from('blob '+moduleBytes.length+'\0'),moduleBytes])).digest('hex'),moduleRelease.blob,'Vendored module differs from its pinned source');
+assert.ok(app.includes("../vendor/"+moduleRelease.path),'App must import the pinned module');
+assert.ok(moduleBytes.toString('utf8').includes('V'+moduleRelease.version),'Module version mismatch');
 const ids=[...html.matchAll(/\sid="([^"]+)"/g)].map(m=>m[1]);
 assert.equal(new Set(ids).size,ids.length,'Duplicate HTML IDs');
 for(const m of app.matchAll(/\$\('([\w-]+)'\)/g)) assert.ok(ids.includes(m[1]),`Missing element #${m[1]}`);
