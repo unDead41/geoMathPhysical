@@ -1,0 +1,15 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {build} from 'esbuild';
+const here=path.dirname(fileURLToPath(import.meta.url)),root=path.resolve(here,'../../..');
+const template=fs.readFileSync(path.join(here,'index.html'),'utf8');
+const javascript=(await build({entryPoints:[path.join(here,'browser.mjs')],bundle:true,write:false,platform:'browser',format:'iife',target:'es2022',minify:true,legalComments:'eof'})).outputFiles[0].text;
+if(javascript.toLowerCase().includes('</script'))throw Error('Unsafe script terminator');
+let html=template;
+for(const name of ['style','portal'])html=html.replace(`<link rel="stylesheet" href="../../../dist/${name}.css">`,()=>'<style>'+fs.readFileSync(path.join(root,'dist',name+'.css'),'utf8')+'</style>');
+html=html.replace('<script type="module" src="./browser.mjs"></script>',()=>'<script type="module">'+javascript+'</script>');
+if(/(?:src|href)="\.\.?\//.test(html))throw Error('Portable QA must contain no relative assets');
+const destination=path.join(root,'artifacts/GeoDecoder_Session_QA.html');fs.mkdirSync(path.dirname(destination),{recursive:true});fs.writeFileSync(destination,html);
+fs.writeFileSync(path.join(here,'GeoDecoder_Session_QA.html'),html);
+console.log('Portable live QA built: '+Buffer.byteLength(html)+' bytes; actual hosted Auth only, no embedded credentials.');

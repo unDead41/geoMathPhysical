@@ -7,10 +7,11 @@
   "candidate": "2.7.0",
   "unit": {
     "command": "node --test --test-concurrency=1 tests/*.test.mjs",
-    "passed": 267,
+    "passed": 272,
     "failed": 0,
-    "new_session_tests": 19,
-    "kind": "controlled SDK HTTP responses, JSDOM, actual PostgreSQL PGlite synthetic Auth tables"
+    "new_session_tests": 24,
+    "kind": "controlled SDK HTTP responses, JSDOM, actual PostgreSQL PGlite synthetic Auth tables",
+    "latest_log": "unit-resume.txt"
   },
   "checks": {
     "build": "pass",
@@ -58,6 +59,20 @@
     "digital/GeoDecoder_Digital_V2.html": {
       "bytes": 6668556,
       "sha256": "8b0671a11406e37a1a4dc9dbc7fbb5c3b2614b2c7912d9c8639ed4e82c07038b"
+    },
+    "digital/backend/security/qa/GeoDecoder_Session_QA.html": {
+      "bytes": 561327,
+      "sha256": "96719a28d1776ba994d17bdbdf8e1685fb9def61c71e368e8407ef0896ddfacf"
     }
+  },
+  "resume": {
+    "from_commit": "af2a76f6c036713d204d399bf7c1dff458c23402",
+    "remote_heads_and_hosted_grants_rechecked": true,
+    "new_hosted_changes": false,
+    "new_account_setup_attempted": false,
+    "portable_tool": "digital/backend/security/qa/GeoDecoder_Session_QA.html",
+    "controlled_qa_tests": 5,
+    "browser_execution_verified": false,
+    "notes": "Portable test-only page, actual hosted Auth responses only when an operator signs in; no accounts or credentials embedded."
   }
 }

@@ -70,3 +70,9 @@ other account boundary, then checks actual refresh rejection after `others`.
 It emits no tokens or credentials and does not create/delete users. Admin-created
 QA users must be removed by the same authorized admin after testing. Browser
 profiles, native keyboard and rendered 320px checks are separate from this script.
+
+For those manual browser checks without a workspace server, download the portable
+[GeoDecoder_Session_QA.html](qa/GeoDecoder_Session_QA.html). Read
+[qa/README.md](qa/README.md) for approved-account setup, rebuild instructions,
+privacy boundaries and the two-profile sequence. It creates no accounts and
+uses no controlled session responses.

@@ -169,3 +169,31 @@ BM/English session copy is also covered by the DOM tests.
 
 The result branch alone may be pushed. Frontend integration/public Pages
 publication and a production release number belong to the integration chat.
+
+## Resume: portable acceptance page
+
+Resumed from implementation commit
+`af2a76f6c036713d204d399bf7c1dff458c23402`; remote result/integration heads and
+hosted migration/grants were rechecked. They still match the delivery above.
+No additional migration, Auth setting, user or session was created or changed
+during this resume. The internal-Auth insert rejection was not retried.
+
+`backend/security/qa/GeoDecoder_Session_QA.html` now packages the real Security
+UI and Auth client as a portable test-only HTML. It can be downloaded and opened
+on the operator's own device in two profiles without exposing a workspace server
+or publishing a site. Only approved dedicated QA addresses are accepted; the
+operator enters credentials directly on their device. Clients use memory-only
+sessions and exported observations omit credentials, email, IDs and device data.
+The page never asserts that all acceptance tests passed. Normal account creation
+and password-change routes are disabled in this wrapper. Source, rebuild command
+and manual acceptance instructions are in `backend/security/qa/README.md`.
+
+Resume verification: **272/272 controlled tests passed**, including five new QA
+controller/privacy checks. The portable build and application static checks passed;
+firmware version remains v1.1.3. Original production source/bundles are unchanged.
+See `session-evidence/unit-resume.txt` and the updated verification JSON.
+
+Two actual browser profiles, successful live-user list/revocation/refresh, native
+keyboard at 320px and screenshots remain **unverified** until the approved QA
+accounts and manual acceptance steps are available. A standalone artifact removes
+the workspace-server prerequisite; its creation is not browser-execution proof.
