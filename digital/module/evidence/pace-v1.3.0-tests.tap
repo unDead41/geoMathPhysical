@@ -1,0 +1,844 @@
+TAP version 13
+# Subtest: open from a stationary closed solid survives its zero-time first frame and reaches the flat net
+ok 1 - open from a stationary closed solid survives its zero-time first frame and reaches the flat net
+  ---
+  duration_ms: 35.697662
+  type: 'test'
+  ...
+# Subtest: close from a stationary flat net survives its zero-time first frame and reaches the solid
+ok 2 - close from a stationary flat net survives its zero-time first frame and reaches the solid
+  ---
+  duration_ms: 6.346408
+  type: 'test'
+  ...
+# Subtest: pause holds progress; resume completes an open/close cycle; replay restarts
+ok 3 - pause holds progress; resume completes an open/close cycle; replay restarts
+  ---
+  duration_ms: 8.660279
+  type: 'test'
+  ...
+# Subtest: reduced motion starts stationary, allows explicit playback and stops on preference changes
+ok 4 - reduced motion starts stationary, allows explicit playback and stops on preference changes
+  ---
+  duration_ms: 4.196946
+  type: 'test'
+  ...
+# Subtest: hidden tabs stop animation and rotation without jumping or resuming on return
+ok 5 - hidden tabs stop animation and rotation without jumping or resuming on return
+  ---
+  duration_ms: 4.196136
+  type: 'test'
+  ...
+# Subtest: choosing orthographic views closes the net, freezes rotation and aligns the chosen direction
+ok 6 - choosing orthographic views closes the net, freezes rotation and aligns the chosen direction
+  ---
+  duration_ms: 5.43531
+  type: 'test'
+  ...
+# Subtest: rapid shape changes cancel pending playback and clear the previous learning response
+ok 7 - rapid shape changes cancel pending playback and clear the previous learning response
+  ---
+  duration_ms: 4.26595
+  type: 'test'
+  ...
+# Subtest: resuming a paused one-way opening retains its destination and stops at the net
+ok 8 - resuming a paused one-way opening retains its destination and stops at the net
+  ---
+  duration_ms: 4.072033
+  type: 'test'
+  ...
+# Subtest: resuming during the closing half continues closing instead of reversing direction
+ok 9 - resuming during the closing half continues closing instead of reversing direction
+  ---
+  duration_ms: 4.516389
+  type: 'test'
+  ...
+# Subtest: camera changes inside an animation keep exactly one scheduled frame loop
+ok 10 - camera changes inside an animation keep exactly one scheduled frame loop
+  ---
+  duration_ms: 7.844076
+  type: 'test'
+  ...
+# Subtest: opening notes stops motion and returning to exploration preserves progress without resuming
+ok 11 - opening notes stops motion and returning to exploration preserves progress without resuming
+  ---
+  duration_ms: 6.191505
+  type: 'test'
+  ...
+# Subtest: notes show each shape with correct default results, fields and slant height
+ok 12 - notes show each shape with correct default results, fields and slant height
+  ---
+  duration_ms: 7.559
+  type: 'test'
+  ...
+# Subtest: notes update from decimal input and reset to the worked example
+ok 13 - notes update from decimal input and reset to the worked example
+  ---
+  duration_ms: 6.965661
+  type: 'test'
+  ...
+# Subtest: notes reject invalid measurements, clear stale answers and focus the invalid field on submit
+ok 14 - notes reject invalid measurements, clear stale answers and focus the invalid field on submit
+  ---
+  duration_ms: 3.103962
+  type: 'test'
+  ...
+# Subtest: pi selection recalculates curved solids and notes state survives a round trip to 3D
+ok 15 - pi selection recalculates curved solids and notes state survives a round trip to 3D
+  ---
+  duration_ms: 3.749085
+  type: 'test'
+  ...
+# Subtest: notes actions open the matching net and orthographic view using existing controls
+ok 16 - notes actions open the matching net and orthographic view using existing controls
+  ---
+  duration_ms: 4.481562
+  type: 'test'
+  ...
+# Subtest: small positive volumes are never displayed as a zero-volume solid
+ok 17 - small positive volumes are never displayed as a zero-volume solid
+  ---
+  duration_ms: 2.690796
+  type: 'test'
+  ...
+# Subtest: lab navigation stops exploration motion and hides the unrelated shape picker
+ok 18 - lab navigation stops exploration motion and hides the unrelated shape picker
+  ---
+  duration_ms: 4.995702
+  type: 'test'
+  ...
+# Subtest: cube builder folds a valid layout, shows overlap and handles an empty grid
+ok 19 - cube builder folds a valid layout, shows overlap and handles an empty grid
+  ---
+  duration_ms: 34.244157
+  type: 'test'
+  ...
+# Subtest: builder directional alternative moves a chosen face without adding or losing squares
+ok 20 - builder directional alternative moves a chosen face without adding or losing squares
+  ---
+  duration_ms: 4.42502
+  type: 'test'
+  ...
+# Subtest: unit-volume lab adds cubes, layers and fills exactly the displayed capacity
+ok 21 - unit-volume lab adds cubes, layers and fills exactly the displayed capacity
+  ---
+  duration_ms: 27.22555
+  type: 'test'
+  ...
+# Subtest: three explicit transfers fill the matching receiver, with refill and a bounded final state
+ok 22 - three explicit transfers fill the matching receiver, with refill and a bounded final state
+  ---
+  duration_ms: 375.847224
+  type: 'test'
+  ...
+# Subtest: surface lab derives the total only after all real surfaces are selected
+ok 23 - surface lab derives the total only after all real surfaces are selected
+  ---
+  duration_ms: 104.633978
+  type: 'test'
+  ...
+# Subtest: composite lab checks exposed groups and excludes joined faces
+ok 24 - composite lab checks exposed groups and excludes joined faces
+  ---
+  duration_ms: 13.032232
+  type: 'test'
+  ...
+# Subtest: switching lab, opening notes and hiding the page cancel pending lab frames
+ok 25 - switching lab, opening notes and hiding the page cancel pending lab frames
+  ---
+  duration_ms: 8.125375
+  type: 'test'
+  ...
+# Subtest: lab pause holds progress, resume reaches its target and reduced-motion changes stop motion
+ok 26 - lab pause holds progress, resume reaches its target and reduced-motion changes stop motion
+  ---
+  duration_ms: 14.180047
+  type: 'test'
+  ...
+# Subtest: editing a grid cell keeps keyboard focus on the replacement cell
+ok 27 - editing a grid cell keeps keyboard focus on the replacement cell
+  ---
+  duration_ms: 4.263405
+  type: 'test'
+  ...
+# Subtest: toggling surface and composite buttons preserves their keyboard focus
+ok 28 - toggling surface and composite buttons preserves their keyboard focus
+  ---
+  duration_ms: 16.953538
+  type: 'test'
+  ...
+# Subtest: every literal action button has a real shipped-script binding after lazy sections are opened
+ok 29 - every literal action button has a real shipped-script binding after lazy sections are opened
+  ---
+  duration_ms: 3.593571
+  type: 'test'
+  ...
+# Subtest: direct lab slider input keeps the new user value before cancelling playback
+ok 30 - direct lab slider input keeps the new user value before cancelling playback
+  ---
+  duration_ms: 8.070596
+  type: 'test'
+  ...
+# Subtest: labs start with slow pacing and a ready-made net gallery
+ok 31 - labs start with slow pacing and a ready-made net gallery
+  ---
+  duration_ms: 12.685646
+  type: 'test'
+  ...
+# Subtest: all nine ready-made nets can be selected, folded and reset independently of cube editing
+ok 32 - all nine ready-made nets can be selected, folded and reset independently of cube editing
+  ---
+  duration_ms: 242.755197
+  type: 'test'
+  ...
+# Subtest: speed changes preserve pose and progress sliders retain direction-specific labels
+ok 33 - speed changes preserve pose and progress sliders retain direction-specific labels
+  ---
+  duration_ms: 18.866874
+  type: 'test'
+  ...
+# Subtest: completing a unit layer fills the current partial layer slowly without skipping cubes
+ok 34 - completing a unit layer fills the current partial layer slowly without skipping cubes
+  ---
+  duration_ms: 8.953208
+  type: 'test'
+  ...
+# Subtest: guidance gates surface selection and exterior checks until the model is ready
+ok 35 - guidance gates surface selection and exterior checks until the model is ready
+  ---
+  duration_ms: 17.158561
+  type: 'test'
+  ...
+# Subtest: paused transfers have one resume control and survive leaving and returning to the lab
+ok 36 - paused transfers have one resume control and survive leaving and returning to the lab
+  ---
+  duration_ms: 145.923478
+  type: 'test'
+  ...
+# Subtest: cube editing is locked while partially folded and restored after reopening flat
+ok 37 - cube editing is locked while partially folded and restored after reopening flat
+  ---
+  duration_ms: 8.599714
+  type: 'test'
+  ...
+# Subtest: volume comparison adds one cubic centimetre to one or both solids and sums selected contents
+ok 38 - volume comparison adds one cubic centimetre to one or both solids and sums selected contents
+  ---
+  duration_ms: 20.896924
+  type: 'test'
+  ...
+# Subtest: comparison supports nine solids, direct contents control and capacity-safe full filling
+ok 39 - comparison supports nine solids, direct contents control and capacity-safe full filling
+  ---
+  duration_ms: 36.369479
+  type: 'test'
+  ...
+# Subtest: ready-made face tracking keeps keyboard focus after updating its highlight
+ok 40 - ready-made face tracking keeps keyboard focus after updating its highlight
+  ---
+  duration_ms: 3.507798
+  type: 'test'
+  ...
+# Subtest: comparison resume preserves both captured destinations and supports a direct override
+ok 41 - comparison resume preserves both captured destinations and supports a direct override
+  ---
+  duration_ms: 41.824273
+  type: 'test'
+  ...
+# Subtest: tiny positive contents stay visible and have a unit-aware accessible slider value
+ok 42 - tiny positive contents stay visible and have a unit-aware accessible slider value
+  ---
+  duration_ms: 4.980859
+  type: 'test'
+  ...
+# Subtest: valid ready-made layouts use neutral instructions before closing, never an error colour
+ok 43 - valid ready-made layouts use neutral instructions before closing, never an error colour
+  ---
+  duration_ms: 12.564702
+  type: 'test'
+  ...
+# Subtest: cube: closed topology has the correct vertices, edges and faces
+ok 44 - cube: closed topology has the correct vertices, edges and faces
+  ---
+  duration_ms: 1.969678
+  type: 'test'
+  ...
+# Subtest: cube: every panel remains rigid through 101 opening frames
+ok 45 - cube: every panel remains rigid through 101 opening frames
+  ---
+  duration_ms: 6.790064
+  type: 'test'
+  ...
+# Subtest: cube: flat net is planar, has no overlapping faces and preserves total area
+ok 46 - cube: flat net is planar, has no overlapping faces and preserves total area
+  ---
+  duration_ms: 0.679731
+  type: 'test'
+  ...
+# Subtest: cube: opening keeps one connected hinge tree
+ok 47 - cube: opening keeps one connected hinge tree
+  ---
+  duration_ms: 2.206605
+  type: 'test'
+  ...
+# Subtest: cuboid: closed topology has the correct vertices, edges and faces
+ok 48 - cuboid: closed topology has the correct vertices, edges and faces
+  ---
+  duration_ms: 0.238169
+  type: 'test'
+  ...
+# Subtest: cuboid: every panel remains rigid through 101 opening frames
+ok 49 - cuboid: every panel remains rigid through 101 opening frames
+  ---
+  duration_ms: 4.510359
+  type: 'test'
+  ...
+# Subtest: cuboid: flat net is planar, has no overlapping faces and preserves total area
+ok 50 - cuboid: flat net is planar, has no overlapping faces and preserves total area
+  ---
+  duration_ms: 0.246542
+  type: 'test'
+  ...
+# Subtest: cuboid: opening keeps one connected hinge tree
+ok 51 - cuboid: opening keeps one connected hinge tree
+  ---
+  duration_ms: 0.522764
+  type: 'test'
+  ...
+# Subtest: pyramid: closed topology has the correct vertices, edges and faces
+ok 52 - pyramid: closed topology has the correct vertices, edges and faces
+  ---
+  duration_ms: 0.457838
+  type: 'test'
+  ...
+# Subtest: pyramid: every panel remains rigid through 101 opening frames
+ok 53 - pyramid: every panel remains rigid through 101 opening frames
+  ---
+  duration_ms: 7.104206
+  type: 'test'
+  ...
+# Subtest: pyramid: flat net is planar, has no overlapping faces and preserves total area
+ok 54 - pyramid: flat net is planar, has no overlapping faces and preserves total area
+  ---
+  duration_ms: 0.205716
+  type: 'test'
+  ...
+# Subtest: pyramid: opening keeps one connected hinge tree
+ok 55 - pyramid: opening keeps one connected hinge tree
+  ---
+  duration_ms: 0.187626
+  type: 'test'
+  ...
+# Subtest: cylinder: closed shell is circular with matching top and bottom
+ok 56 - cylinder: closed shell is circular with matching top and bottom
+  ---
+  duration_ms: 0.341407
+  type: 'test'
+  ...
+# Subtest: cylinder: continuous development preserves arc-length and vertical distances
+ok 57 - cylinder: continuous development preserves arc-length and vertical distances
+  ---
+  duration_ms: 0.295533
+  type: 'test'
+  ...
+# Subtest: cylinder: flat rectangle width equals 2πr, height equals h, disks are tangent and planar
+ok 58 - cylinder: flat rectangle width equals 2πr, height equals h, disks are tangent and planar
+  ---
+  duration_ms: 5.339298
+  type: 'test'
+  ...
+# Subtest: cylinder: flat area equals 2πrh + 2πr² within tessellation tolerance
+ok 59 - cylinder: flat area equals 2πrh + 2πr² within tessellation tolerance
+  ---
+  duration_ms: 5.070104
+  type: 'test'
+  ...
+# Subtest: cone: the closed surface is the right circular cone used by the module
+ok 60 - cone: the closed surface is the right circular cone used by the module
+  ---
+  duration_ms: 0.845391
+  type: 'test'
+  ...
+# Subtest: cone: the entire changing curved surface preserves its intrinsic metric
+ok 61 - cone: the entire changing curved surface preserves its intrinsic metric
+  ---
+  duration_ms: 4.026068
+  type: 'test'
+  ...
+# Subtest: cone: flat sector has slant radius s and arc exactly equal to the base circumference
+ok 62 - cone: flat sector has slant radius s and arc exactly equal to the base circumference
+  ---
+  duration_ms: 0.318621
+  type: 'test'
+  ...
+# Subtest: cone: the circular base remains rigid and touches the sector at its midpoint
+ok 63 - cone: the circular base remains rigid and touches the sector at its midpoint
+  ---
+  duration_ms: 4.730428
+  type: 'test'
+  ...
+# Subtest: cone: flat sector and base areas match πrs + πr²
+ok 64 - cone: flat sector and base areas match πrs + πr²
+  ---
+  duration_ms: 1.301527
+  type: 'test'
+  ...
+# Subtest: cube: 1001 frames are finite and continuous, with stable face IDs and colours
+ok 65 - cube: 1001 frames are finite and continuous, with stable face IDs and colours
+  ---
+  duration_ms: 25.148517
+  type: 'test'
+  ...
+# Subtest: cube: all six camera directions have the expected orthographic extents
+ok 66 - cube: all six camera directions have the expected orthographic extents
+  ---
+  duration_ms: 0.389356
+  type: 'test'
+  ...
+# Subtest: cuboid: 1001 frames are finite and continuous, with stable face IDs and colours
+ok 67 - cuboid: 1001 frames are finite and continuous, with stable face IDs and colours
+  ---
+  duration_ms: 11.689022
+  type: 'test'
+  ...
+# Subtest: cuboid: all six camera directions have the expected orthographic extents
+ok 68 - cuboid: all six camera directions have the expected orthographic extents
+  ---
+  duration_ms: 0.274949
+  type: 'test'
+  ...
+# Subtest: pyramid: 1001 frames are finite and continuous, with stable face IDs and colours
+ok 69 - pyramid: 1001 frames are finite and continuous, with stable face IDs and colours
+  ---
+  duration_ms: 9.231362
+  type: 'test'
+  ...
+# Subtest: pyramid: all six camera directions have the expected orthographic extents
+ok 70 - pyramid: all six camera directions have the expected orthographic extents
+  ---
+  duration_ms: 0.145798
+  type: 'test'
+  ...
+# Subtest: cylinder: 1001 frames are finite and continuous, with stable face IDs and colours
+ok 71 - cylinder: 1001 frames are finite and continuous, with stable face IDs and colours
+  ---
+  duration_ms: 53.729802
+  type: 'test'
+  ...
+# Subtest: cylinder: all six camera directions have the expected orthographic extents
+ok 72 - cylinder: all six camera directions have the expected orthographic extents
+  ---
+  duration_ms: 1.953421
+  type: 'test'
+  ...
+# Subtest: cone: 1001 frames are finite and continuous, with stable face IDs and colours
+ok 73 - cone: 1001 frames are finite and continuous, with stable face IDs and colours
+  ---
+  duration_ms: 41.141857
+  type: 'test'
+  ...
+# Subtest: cone: all six camera directions have the expected orthographic extents
+ok 74 - cone: all six camera directions have the expected orthographic extents
+  ---
+  duration_ms: 1.042223
+  type: 'test'
+  ...
+# Subtest: view labels correspond to the visible side, including top and bottom
+ok 75 - view labels correspond to the visible side, including top and bottom
+  ---
+  duration_ms: 0.186424
+  type: 'test'
+  ...
+# Subtest: curriculum content covers exactly five project shapes and accurate surface/edge/vertex counts
+ok 76 - curriculum content covers exactly five project shapes and accurate surface/edge/vertex counts
+  ---
+  duration_ms: 0.233962
+  type: 'test'
+  ...
+# Subtest: a cross folds into six different cube faces; a 2x3 rectangle overlaps
+ok 77 - a cross folds into six different cube faces; a 2x3 rectangle overlaps
+  ---
+  duration_ms: 1.843482
+  type: 'test'
+  ...
+# Subtest: nets reject disconnected, duplicate, missing and out-of-grid squares
+ok 78 - nets reject disconnected, duplicate, missing and out-of-grid squares
+  ---
+  duration_ms: 0.433909
+  type: 'test'
+  ...
+# Subtest: exhaustive free-hexomino enumeration finds exactly 11 of 35 cube nets
+ok 79 - exhaustive free-hexomino enumeration finds exactly 11 of 35 cube nets
+  ---
+  duration_ms: 14.342182
+  type: 'test'
+  ...
+# Subtest: cube-net folding keeps every square rigid and all parent hinge endpoints coincident
+ok 80 - cube-net folding keeps every square rigid and all parent hinge endpoints coincident
+  ---
+  duration_ms: 5.275368
+  type: 'test'
+  ...
+# Subtest: cube: labelled surface pieces sum to the independently verified area
+ok 81 - cube: labelled surface pieces sum to the independently verified area
+  ---
+  duration_ms: 1.446844
+  type: 'test'
+  ...
+# Subtest: cuboid: labelled surface pieces sum to the independently verified area
+ok 82 - cuboid: labelled surface pieces sum to the independently verified area
+  ---
+  duration_ms: 0.374602
+  type: 'test'
+  ...
+# Subtest: pyramid: labelled surface pieces sum to the independently verified area
+ok 83 - pyramid: labelled surface pieces sum to the independently verified area
+  ---
+  duration_ms: 0.39835
+  type: 'test'
+  ...
+# Subtest: cylinder: labelled surface pieces sum to the independently verified area
+ok 84 - cylinder: labelled surface pieces sum to the independently verified area
+  ---
+  duration_ms: 2.413633
+  type: 'test'
+  ...
+# Subtest: cone: labelled surface pieces sum to the independently verified area
+ok 85 - cone: labelled surface pieces sum to the independently verified area
+  ---
+  duration_ms: 4.779549
+  type: 'test'
+  ...
+# Subtest: custom solid dimensions do not mutate canonical geometry
+ok 86 - custom solid dimensions do not mutate canonical geometry
+  ---
+  duration_ms: 0.619231
+  type: 'test'
+  ...
+# Subtest: cone: transfers conserve volume and three full pours fill the matching receiver
+ok 87 - cone: transfers conserve volume and three full pours fill the matching receiver
+  ---
+  duration_ms: 0.363174
+  type: 'test'
+  ...
+# Subtest: pyramid: transfers conserve volume and three full pours fill the matching receiver
+ok 88 - pyramid: transfers conserve volume and three full pours fill the matching receiver
+  ---
+  duration_ms: 0.151538
+  type: 'test'
+  ...
+# Subtest: half of cone volume uses a nonlinear source fill height
+ok 89 - half of cone volume uses a nonlinear source fill height
+  ---
+  duration_ms: 0.13491
+  type: 'test'
+  ...
+# Subtest: composite cube and pyramid exclude BOTH mating faces and add volumes
+ok 90 - composite cube and pyramid exclude BOTH mating faces and add volumes
+  ---
+  duration_ms: 0.199035
+  type: 'test'
+  ...
+# Subtest: composite cylinder and cone use matching circular bases
+ok 91 - composite cylinder and cone use matching circular bases
+  ---
+  duration_ms: 0.119334
+  type: 'test'
+  ...
+# Subtest: lab math rejects impossible dimensions and transfer indices
+ok 92 - lab math rejects impossible dimensions and transfer indices
+  ---
+  duration_ms: 1.642423
+  type: 'test'
+  ...
+# Subtest: cone: rendered liquid meshes match conserved volumes at intermediate transfer frames
+ok 93 - cone: rendered liquid meshes match conserved volumes at intermediate transfer frames
+  ---
+  duration_ms: 42.415481
+  type: 'test'
+  ...
+# Subtest: pyramid: rendered liquid meshes match conserved volumes at intermediate transfer frames
+ok 94 - pyramid: rendered liquid meshes match conserved volumes at intermediate transfer frames
+  ---
+  duration_ms: 1.726872
+  type: 'test'
+  ...
+# Subtest: cyclic hexomino previews explicitly mark the two cuts needed beyond the five hinges
+ok 95 - cyclic hexomino previews explicitly mark the two cuts needed beyond the five hinges
+  ---
+  duration_ms: 0.475557
+  type: 'test'
+  ...
+# Subtest: cube: original worked example has correct total surface area and volume
+ok 96 - cube: original worked example has correct total surface area and volume
+  ---
+  duration_ms: 1.441075
+  type: 'test'
+  ...
+# Subtest: cuboid: original worked example has correct total surface area and volume
+ok 97 - cuboid: original worked example has correct total surface area and volume
+  ---
+  duration_ms: 0.127428
+  type: 'test'
+  ...
+# Subtest: pyramid: original worked example has correct total surface area and volume
+ok 98 - pyramid: original worked example has correct total surface area and volume
+  ---
+  duration_ms: 0.102447
+  type: 'test'
+  ...
+# Subtest: cylinder: original worked example has correct total surface area and volume
+ok 99 - cylinder: original worked example has correct total surface area and volume
+  ---
+  duration_ms: 0.18981
+  type: 'test'
+  ...
+# Subtest: cone: original worked example has correct total surface area and volume
+ok 100 - cone: original worked example has correct total surface area and volume
+  ---
+  duration_ms: 0.119646
+  type: 'test'
+  ...
+# Subtest: slant heights use perpendicular height and the correct half-base/radius
+ok 101 - slant heights use perpendicular height and the correct half-base/radius
+  ---
+  duration_ms: 0.134169
+  type: 'test'
+  ...
+# Subtest: cones and pyramids have one-third the volume of matching cylinders/prisms
+ok 102 - cones and pyramids have one-third the volume of matching cylinders/prisms
+  ---
+  duration_ms: 0.142934
+  type: 'test'
+  ...
+# Subtest: doubling every length quadruples area and multiplies volume by eight
+ok 103 - doubling every length quadruples area and multiplies volume by eight
+  ---
+  duration_ms: 0.451637
+  type: 'test'
+  ...
+# Subtest: pi conventions affect curved solids and are stated independently of rounding
+ok 104 - pi conventions affect curved solids and are stated independently of rounding
+  ---
+  duration_ms: 0.221442
+  type: 'test'
+  ...
+# Subtest: invalid, missing, zero, negative and oversized dimensions clear numerical results
+ok 105 - invalid, missing, zero, negative and oversized dimensions clear numerical results
+  ---
+  duration_ms: 0.545141
+  type: 'test'
+  ...
+# Subtest: Malay decimal comma and decimal point are accepted without treating a diameter as radius
+ok 106 - Malay decimal comma and decimal point are accepted without treating a diameter as radius
+  ---
+  duration_ms: 0.14634
+  type: 'test'
+  ...
+# Subtest: unknown shape/pi and missing required dimensions cannot yield misleading answers
+ok 107 - unknown shape/pi and missing required dimensions cannot yield misleading answers
+  ---
+  duration_ms: 0.143204
+  type: 'test'
+  ...
+# Subtest: worked-example defaults match independently known results and include reasoning and units
+ok 108 - worked-example defaults match independently known results and include reasoning and units
+  ---
+  duration_ms: 1.462129
+  type: 'test'
+  ...
+# Subtest: composite example excludes both joined faces and adds volumes
+ok 109 - composite example excludes both joined faces and adds volumes
+  ---
+  duration_ms: 0.120917
+  type: 'test'
+  ...
+# Subtest: boundary dimensions remain valid and strictly positive without early rounding
+ok 110 - boundary dimensions remain valid and strictly positive without early rounding
+  ---
+  duration_ms: 0.225529
+  type: 'test'
+  ...
+# Subtest: ready-made gallery includes five canonical shapes and four named enrichment solids
+ok 111 - ready-made gallery includes five canonical shapes and four named enrichment solids
+  ---
+  duration_ms: 6.532042
+  type: 'test'
+  ...
+# Subtest: triangular-prism: closed shell has correct topology and exactly two faces at each edge
+ok 112 - triangular-prism: closed shell has correct topology and exactly two faces at each edge
+  ---
+  duration_ms: 0.497072
+  type: 'test'
+  ...
+# Subtest: triangular-prism: every face remains rigid and each hinge stays connected through 101 frames
+ok 113 - triangular-prism: every face remains rigid and each hinge stays connected through 101 frames
+  ---
+  duration_ms: 8.181597
+  type: 'test'
+  ...
+# Subtest: triangular-prism: unfolded faces lie on one plane without overlapping areas
+ok 114 - triangular-prism: unfolded faces lie on one plane without overlapping areas
+  ---
+  duration_ms: 0.512838
+  type: 'test'
+  ...
+# Subtest: tetrahedron: closed shell has correct topology and exactly two faces at each edge
+ok 115 - tetrahedron: closed shell has correct topology and exactly two faces at each edge
+  ---
+  duration_ms: 0.237438
+  type: 'test'
+  ...
+# Subtest: tetrahedron: every face remains rigid and each hinge stays connected through 101 frames
+ok 116 - tetrahedron: every face remains rigid and each hinge stays connected through 101 frames
+  ---
+  duration_ms: 6.575994
+  type: 'test'
+  ...
+# Subtest: tetrahedron: unfolded faces lie on one plane without overlapping areas
+ok 117 - tetrahedron: unfolded faces lie on one plane without overlapping areas
+  ---
+  duration_ms: 0.162445
+  type: 'test'
+  ...
+# Subtest: pentagonal-prism: closed shell has correct topology and exactly two faces at each edge
+ok 118 - pentagonal-prism: closed shell has correct topology and exactly two faces at each edge
+  ---
+  duration_ms: 0.155423
+  type: 'test'
+  ...
+# Subtest: pentagonal-prism: every face remains rigid and each hinge stays connected through 101 frames
+ok 119 - pentagonal-prism: every face remains rigid and each hinge stays connected through 101 frames
+  ---
+  duration_ms: 20.854171
+  type: 'test'
+  ...
+# Subtest: pentagonal-prism: unfolded faces lie on one plane without overlapping areas
+ok 120 - pentagonal-prism: unfolded faces lie on one plane without overlapping areas
+  ---
+  duration_ms: 1.501213
+  type: 'test'
+  ...
+# Subtest: hexagonal-prism: closed shell has correct topology and exactly two faces at each edge
+ok 121 - hexagonal-prism: closed shell has correct topology and exactly two faces at each edge
+  ---
+  duration_ms: 0.297747
+  type: 'test'
+  ...
+# Subtest: hexagonal-prism: every face remains rigid and each hinge stays connected through 101 frames
+ok 122 - hexagonal-prism: every face remains rigid and each hinge stays connected through 101 frames
+  ---
+  duration_ms: 7.917676
+  type: 'test'
+  ...
+# Subtest: hexagonal-prism: unfolded faces lie on one plane without overlapping areas
+ok 123 - hexagonal-prism: unfolded faces lie on one plane without overlapping areas
+  ---
+  duration_ms: 0.153901
+  type: 'test'
+  ...
+# Subtest: unknown ready-made net is rejected instead of drawing a substitute
+ok 124 - unknown ready-made net is rejected instead of drawing a substitute
+  ---
+  duration_ms: 0.373169
+  type: 'test'
+  ...
+# Subtest: cylinder: numbered curved-surface label is not painted over by adjacent strips
+ok 125 - cylinder: numbered curved-surface label is not painted over by adjacent strips
+  ---
+  duration_ms: 16.773555
+  type: 'test'
+  ...
+# Subtest: cone: numbered curved-surface label is not painted over by adjacent strips
+ok 126 - cone: numbered curved-surface label is not painted over by adjacent strips
+  ---
+  duration_ms: 7.586264
+  type: 'test'
+  ...
+# Subtest: a wide custom lab scene uses the available canvas width without distorting geometry
+ok 127 - a wide custom lab scene uses the available canvas width without distorting geometry
+  ---
+  duration_ms: 0.626874
+  type: 'test'
+  ...
+# Subtest: cube: arbitrary valid dimensions and actual clipped geometry have the right volume
+ok 128 - cube: arbitrary valid dimensions and actual clipped geometry have the right volume
+  ---
+  duration_ms: 13.256898
+  type: 'test'
+  ...
+# Subtest: cuboid: arbitrary valid dimensions and actual clipped geometry have the right volume
+ok 129 - cuboid: arbitrary valid dimensions and actual clipped geometry have the right volume
+  ---
+  duration_ms: 0.861317
+  type: 'test'
+  ...
+# Subtest: cylinder: arbitrary valid dimensions and actual clipped geometry have the right volume
+ok 130 - cylinder: arbitrary valid dimensions and actual clipped geometry have the right volume
+  ---
+  duration_ms: 22.151571
+  type: 'test'
+  ...
+# Subtest: cone: arbitrary valid dimensions and actual clipped geometry have the right volume
+ok 131 - cone: arbitrary valid dimensions and actual clipped geometry have the right volume
+  ---
+  duration_ms: 11.747072
+  type: 'test'
+  ...
+# Subtest: pyramid: arbitrary valid dimensions and actual clipped geometry have the right volume
+ok 132 - pyramid: arbitrary valid dimensions and actual clipped geometry have the right volume
+  ---
+  duration_ms: 0.665057
+  type: 'test'
+  ...
+# Subtest: triangular-prism: arbitrary valid dimensions and actual clipped geometry have the right volume
+ok 133 - triangular-prism: arbitrary valid dimensions and actual clipped geometry have the right volume
+  ---
+  duration_ms: 1.477995
+  type: 'test'
+  ...
+# Subtest: tetrahedron: arbitrary valid dimensions and actual clipped geometry have the right volume
+ok 134 - tetrahedron: arbitrary valid dimensions and actual clipped geometry have the right volume
+  ---
+  duration_ms: 0.597676
+  type: 'test'
+  ...
+# Subtest: pentagonal-prism: arbitrary valid dimensions and actual clipped geometry have the right volume
+ok 135 - pentagonal-prism: arbitrary valid dimensions and actual clipped geometry have the right volume
+  ---
+  duration_ms: 0.333165
+  type: 'test'
+  ...
+# Subtest: hexagonal-prism: arbitrary valid dimensions and actual clipped geometry have the right volume
+ok 136 - hexagonal-prism: arbitrary valid dimensions and actual clipped geometry have the right volume
+  ---
+  duration_ms: 0.40963
+  type: 'test'
+  ...
+# Subtest: one or both selected volumes count only their actual contents
+ok 137 - one or both selected volumes count only their actual contents
+  ---
+  duration_ms: 0.301682
+  type: 'test'
+  ...
+# Subtest: impossible volumes are rejected
+ok 138 - impossible volumes are rejected
+  ---
+  duration_ms: 0.399602
+  type: 'test'
+  ...
+# Subtest: comparison defaults fit their actual 1–8 cm native range controls
+ok 139 - comparison defaults fit their actual 1–8 cm native range controls
+  ---
+  duration_ms: 0.23843
+  type: 'test'
+  ...
+1..139
+# tests 139
+# suites 0
+# pass 139
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1464.996966

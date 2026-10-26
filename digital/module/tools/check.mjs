@@ -1,0 +1,13 @@
+import fs from 'node:fs';import path from 'node:path';import vm from 'node:vm';import assert from 'node:assert/strict';import {fileURLToPath} from 'node:url';import {MODULE_VERSION} from '../src/content.mjs';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..'),html=fs.readFileSync(path.join(root,'GeoDecoder_Modul_V1.html'),'utf8');
+assert.ok(!/<script[^>]+src=|<link[^>]+rel="stylesheet"|@import|@font-face|\bfetch\s*\(|XMLHttpRequest|WebSocket|serviceWorker|localStorage|sessionStorage/.test(html),'Runtime must be self-contained and storage/network-independent');
+assert.ok(!/^import |^export /m.test(html));
+const script=html.match(/<script>([\s\S]*?)<\/script>/)[1];new vm.Script(script);
+const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);assert.equal(new Set(ids).size,ids.length,'Duplicate IDs');
+for(const match of html.matchAll(/\b(?:el|noteEl|labEl)\('([^']+)'\)/g))assert.ok(ids.includes(match[1]),'Missing DOM target '+match[1]);
+assert.ok(html.includes("connect-src 'none'"));assert.ok(html.includes('prefers-reduced-motion:reduce'));assert.ok(html.includes('canvas.addEventListener(\'pointercancel\''));assert.ok(html.includes('visibilitychange'));
+assert.equal(JSON.parse(fs.readFileSync(path.join(root,'package.json'),'utf8')).version,MODULE_VERSION);
+assert.ok(html.includes('V'+MODULE_VERSION));
+const tokens={primary:'#215FF0',ink:'#18334B',bg:'#F3F7FB',surface:'#FFFFFF',success:'#127957',danger:'#B9403E',accent:'#FFCB66',muted:'#526A7D',border:'#D9E4ED'};
+for(const [name,value] of Object.entries(tokens))assert.ok(html.includes(`--${name}:${value}`),'Token drift '+name);
+console.log('PASS: standalone syntax, no runtime network/storage/dependencies, IDs, reduced motion, version, event lifecycle and design tokens');

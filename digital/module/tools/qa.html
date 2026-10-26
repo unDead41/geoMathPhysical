@@ -1,0 +1,9 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>GeoDecoder module — browser evidence workbench</title><style>body{font:14px sans-serif;margin:16px;background:#e5eaf1}label{display:block;margin:10px 0}input,textarea,button{font:inherit;padding:7px}textarea{width:95%;height:70px}iframe{display:block;border:1px solid #8096ad;background:white;width:390px;height:844px}nav{display:flex;gap:9px;align-items:center;margin-bottom:14px}button{cursor:pointer}form{max-width:900px}</style><h1>Browser evidence workbench</h1><p>QA only. The iframe loads the exact downloadable HTML. Width controls test actual CSS breakpoints inside the iframe.</p><nav><button id="phone">Phone 390</button><button id="small">Phone 320</button><button id="tablet">Tablet 768</button><button id="desktop">Desktop 1280</button><label><input type="checkbox" id="motion"> Reduced-motion dependency simulation</label></nav><iframe id="preview" src="../GeoDecoder_Modul_V1.html" title="GeoDecoder module preview"></iframe><h2>Save an actual browser screenshot</h2><form method="POST" action="/__capture"><label>Evidence filename <input name="name" id="name" required pattern="[a-z0-9_-]+\.(png|jpg)"></label><label>Screenshot image (base64)<textarea id="image" name="image" required></textarea></label><button type="submit">Save evidence</button></form><script>
+const frame=document.getElementById('preview');
+for(const [id,width] of [['phone',390],['small',320],['tablet',768],['desktop',1280]])document.getElementById(id).onclick=()=>{frame.style.width=width+'px';frame.style.height=width<500?'844px':'960px';};
+document.getElementById('motion').onchange=async event=>{
+ const res=await fetch('../GeoDecoder_Modul_V1.html');let html=await res.text();
+ if(event.target.checked)html=html.replace("'use strict';","'use strict';window.matchMedia=()=>({matches:true,addEventListener(){}});");
+ frame.srcdoc=html;
+};
+</script></html>

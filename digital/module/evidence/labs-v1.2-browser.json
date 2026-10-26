@@ -1,0 +1,207 @@
+{
+  "moduleVersion": "1.2.0",
+  "dateMalaysia": "2026-10-26",
+  "finalHtmlSha256": "9179f854c270430f345876a711a7a48ef495427e72094c92f96bba808260b14e",
+  "htmlBytes": 164499,
+  "method": "Actual Chrome screenshots during v1.2.0 verification. No image edits. Final slider read-order correction has its own post-fix screenshot; it does not alter the other pictured static geometry. Phone/tablet screenshots use actual CSS-sized iframes in a QA workbench.",
+  "automated": {
+    "passed": 100,
+    "failed": 0,
+    "geometry": 33,
+    "lessons": 15,
+    "labs": 19,
+    "app": 30,
+    "renderer": 3
+  },
+  "math": {
+    "freeHexominoes": 35,
+    "validCubeNets": 11,
+    "liquidMeshVolumeTolerance": 0.002
+  },
+  "browser": {
+    "netDrag": {
+      "from": [
+        1,
+        0
+      ],
+      "to": [
+        0,
+        0
+      ],
+      "count": 6,
+      "sourceEmpty": true,
+      "targetFilled": true
+    },
+    "unitVolumes": [
+      18,
+      216
+    ],
+    "conePoursPercent": [
+      33.33,
+      66.67,
+      100
+    ],
+    "pyramidPoursPercent": [
+      33.33,
+      66.67,
+      100
+    ],
+    "surfaceAreasWithFullPi": {
+      "cube": 96,
+      "cuboid": 108,
+      "pyramid": 96,
+      "cylinder": 747.7,
+      "cone": 75.4
+    },
+    "composites": {
+      "roof": {
+        "area": 240,
+        "volume": 264,
+        "correctAndWrongFeedback": true
+      },
+      "rocket": {
+        "area": 188.5,
+        "volume": 207.35
+      }
+    },
+    "sliderAfterFix": {
+      "mouseValue": 500,
+      "netProgress": 0.5,
+      "areaKeyboardEnd": 1,
+      "compositeKeyboardEnd": 1
+    },
+    "orbitAfterMouseDragYaw": 0.9750000000000001,
+    "responsive": [
+      {
+        "iframe": 320,
+        "client": 310,
+        "scroll": 310,
+        "labs": [
+          "net",
+          "volume",
+          "area",
+          "composite"
+        ]
+      },
+      {
+        "iframe": 390,
+        "client": 380,
+        "scroll": 380,
+        "labs": [
+          "net",
+          "volume",
+          "area",
+          "composite"
+        ]
+      },
+      {
+        "iframe": 768,
+        "client": 758,
+        "scroll": 758,
+        "labs": [
+          "net",
+          "volume",
+          "area",
+          "composite"
+        ]
+      }
+    ],
+    "reducedMotion": {
+      "method": "QA matchMedia dependency injection, not actual OS preference",
+      "flag": true,
+      "pausedBefore": "0.9999789697192677",
+      "pausedAfter": "0.9999789697192677"
+    },
+    "appErrorsInExaminedLog": []
+  },
+  "notTested": [
+    "Cold file:// open: cloud browser policy blocks protocol",
+    "Edge",
+    "Physical touch",
+    "Real OS reduced motion",
+    "Screen reader",
+    "Measured FPS"
+  ],
+  "screenshots": [
+    {
+      "path": "screenshots/labs-v1-2-net.jpg",
+      "description": "Bentangan kubus sah selepas lipatan",
+      "dimensions": [
+        1353,
+        929
+      ],
+      "bytes": 91227,
+      "sha256": "ad392ae9609c9db8421419842b147ad9ede0a0fe78c356ac46cf8146ee307cc7"
+    },
+    {
+      "path": "screenshots/labs-v1-2-unit-volume.jpg",
+      "description": "Kiub unit: 18 daripada 18",
+      "dimensions": [
+        1353,
+        929
+      ],
+      "bytes": 82315,
+      "sha256": "e297be1e0ce10fb930390df1b0a65b2fd68c24fe616d5bdf9f9d63dd60a072df"
+    },
+    {
+      "path": "screenshots/labs-v1-2-cone-transfer.jpg",
+      "description": "Satu tuangan kon: penerima satu pertiga penuh",
+      "dimensions": [
+        1353,
+        929
+      ],
+      "bytes": 95964,
+      "sha256": "1ee508f92d43a8b237c6e1d62ed8a8409ed5c96918e4edac43daae19f0db3ab7"
+    },
+    {
+      "path": "screenshots/labs-v1-2-pyramid-transfer.jpg",
+      "description": "Tiga tuangan piramid: penerima penuh, workbench tablet",
+      "dimensions": [
+        1348,
+        926
+      ],
+      "bytes": 90017,
+      "sha256": "fd21b5736a8e1f4e19cc5b2e253e28ac46c18509a055516946b98a9f136c3ee2"
+    },
+    {
+      "path": "screenshots/labs-v1-2-surface-area.jpg",
+      "description": "Bentangan silinder, bahagian luas dan rumus",
+      "dimensions": [
+        1353,
+        929
+      ],
+      "bytes": 96988,
+      "sha256": "c5cb459b6adaf91a7f0678eda28f6ff9fe50f239fa5e043fc8427c0cada89a7f"
+    },
+    {
+      "path": "screenshots/labs-v1-2-composite.jpg",
+      "description": "Pemilihan permukaan luar gabungan: 240 cm² dan 264 cm³",
+      "dimensions": [
+        1353,
+        929
+      ],
+      "bytes": 96672,
+      "sha256": "d335a98e27f58884fc5c3371fea0a06b2f633acfa440018e571f2301128ef86f"
+    },
+    {
+      "path": "screenshots/labs-v1-2-phone-320.jpg",
+      "description": "Gabungan dalam viewport iframe 320px",
+      "dimensions": [
+        1348,
+        926
+      ],
+      "bytes": 53730,
+      "sha256": "d2697f57db00c8ac6d4dbcb84c6b80f724c717c37d5d29132320614d2965ab52"
+    },
+    {
+      "path": "screenshots/labs-v1-2-net-cuts-slider.jpg",
+      "description": "Selepas pembaikan slider: progress 0.5, potongan tambahan jelas",
+      "dimensions": [
+        1353,
+        929
+      ],
+      "bytes": 90902,
+      "sha256": "a572230fc96d609be0c5c3e5763779b782d40dd428a9cc2c12d328dffbe0068b"
+    }
+  ]
+}

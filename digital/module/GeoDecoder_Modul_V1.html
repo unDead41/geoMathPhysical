@@ -1,0 +1,1171 @@
+<!doctype html>
+<html lang="ms">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#215FF0">
+  <meta name="description" content="Teroka lima bongkah GeoDecoder: putar model 3D, buka bentangan dan bandingkan enam pandangan 2D. Nota, rumus dan aktiviti pengiraan offline berpandukan KSSM / DSKP.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src data:; connect-src 'none'; font-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>GeoDecoder — Modul pembelajaran bongkah</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 44'%3E%3Cpath d='m20 2 17 10v20L20 42 3 32V12Z' fill='%23215FF0'/%3E%3Cpath d='m20 2 17 10-17 10L3 12Z' fill='%236EAAFF'/%3E%3C/svg%3E">
+  <style>
+:root{
+  --primary:#215FF0;--primary-dark:#194AC0;--ink:#18334B;--bg:#F3F7FB;--surface:#FFFFFF;--success:#127957;--danger:#B9403E;--accent:#FFCB66;--muted:#526A7D;--border:#D9E4ED;
+  --blue-soft:#EAF1FF;--mint-soft:#EAF7F1;--radius:1rem;--radius-lg:1.5rem;
+  --font-display:"Trebuchet MS","Avenir Next",sans-serif;--font-body:"Segoe UI",Arial,sans-serif;--font-mono:"SFMono-Regular",Consolas,monospace;
+  --scroll-thumb:#96ACBF;--scroll-track:#EAF0F6;--scroll-hover:#617E96;--scroll-active:#3C5C76;
+  color-scheme:light;scrollbar-color:var(--scroll-thumb) var(--scroll-track);scrollbar-width:thin;
+}
+*{box-sizing:border-box;scrollbar-color:var(--scroll-thumb) var(--scroll-track);scrollbar-width:thin}
+*::-webkit-scrollbar{width:9px;height:9px}*::-webkit-scrollbar-track{background:var(--scroll-track)}*::-webkit-scrollbar-thumb{background:var(--scroll-thumb);border:2px solid var(--scroll-track);border-radius:8px}*::-webkit-scrollbar-thumb:hover{background:var(--scroll-hover)}*::-webkit-scrollbar-thumb:active{background:var(--scroll-active)}
+html{min-width:0;scrollbar-gutter:stable;scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:15px;line-height:1.55}button,input{font:inherit}button,a,input,summary{-webkit-tap-highlight-color:transparent}button{cursor:pointer;color:inherit}button:disabled{cursor:not-allowed;opacity:.45}a{color:var(--primary)}button,fieldset{margin:0}button{border:0}h1,h2,h3,p{margin:0}h1,h2,h3{font-family:var(--font-display);line-height:1.2}button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible,canvas:focus-visible{outline:3px solid var(--primary);outline-offset:4px}
+/* The hidden attribute must take precedence over layout utilities. */
+[hidden]{display:none!important}.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;clip:rect(0,0,0,0);overflow:hidden;white-space:nowrap}.skip{position:fixed;top:-80px;left:16px;background:var(--surface);padding:12px;z-index:20}.skip:focus{top:8px}
+.site-header{display:flex;align-items:center;gap:14px;max-width:1320px;padding:24px 32px 18px;margin:auto;border-bottom:1px solid var(--border)}.brand{display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none;font-family:var(--font-display);font-weight:750;font-size:22px;line-height:1.15}.brand>svg{width:34px;height:38px}.brand-blue{color:var(--primary)}.brand small{display:block;font-family:var(--font-body);font-size:9px;letter-spacing:1.7px;margin-top:5px}.version{align-self:flex-start;margin-top:2px;border:1px solid var(--border);background:var(--surface);padding:3px 8px;border-radius:6px;font-family:var(--font-mono);font-size:11px}.header-meta{display:flex;gap:24px;align-items:center;margin-left:auto;font-size:12px;font-weight:600}.offline{display:flex;align-items:center;gap:7px;color:var(--success)}.offline i{width:6px;height:6px;border-radius:50%;background:var(--success)}.help-link{text-decoration:none;min-height:44px;display:flex;align-items:center;gap:8px}.help-link:hover{text-decoration:underline}
+main{max-width:1320px;margin:auto;padding:30px 32px 0}.intro{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:25px}.eyebrow{font-size:10px;font-weight:750;letter-spacing:1.65px;color:var(--muted)}h1{font-size:clamp(27px,3vw,39px);letter-spacing:-1.4px;margin:8px 0}h1 span{color:var(--primary)}.intro>div>p:last-child{font-size:14px;color:var(--muted)}.self-paced{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--muted)}.self-paced svg{width:23px;height:23px;fill:none;stroke:var(--muted);stroke-width:1.5}
+.shape-picker{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-bottom:20px}.shape-choice{min-width:0;display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:13px;min-height:66px;padding:10px 17px;text-align:left;font-weight:700;transition:transform .18s,border-color .18s,box-shadow .18s}.shape-choice>svg{width:42px;height:42px;flex-shrink:0}.shape-choice .shape-name{flex:1}.shape-choice .choice-dot{height:6px;width:6px;border-radius:50%;background:transparent;flex-shrink:0}.shape-choice[aria-pressed="true"]{border-color:var(--primary);background:var(--blue-soft);box-shadow:inset 0 0 0 1px var(--primary)}.shape-choice[aria-pressed="true"] .choice-dot{background:var(--primary)}.shape-choice:hover{transform:translateY(-2px);border-color:var(--primary)}.shape-choice:active{transform:translateY(0)}
+.learning-layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:start}.workspace{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;min-width:0}.workspace-top{padding:22px 22px 18px;display:flex;align-items:center;justify-content:space-between;gap:16px}.mini-label{font-size:9px;letter-spacing:1.4px;font-weight:700;color:var(--muted)}.workspace-top h2{font-size:25px;margin-top:3px}.mode-switch{display:flex;border:1px solid var(--border);border-radius:10px;background:var(--bg);padding:4px;gap:3px}.mode-switch button{min-height:40px;border-radius:7px;font-size:12px;font-weight:650;padding:8px 12px;background:transparent;transition:background .16s}.mode-switch button:hover{background:#DEE9FC}.mode-switch button[aria-pressed="true"]{background:var(--surface);box-shadow:0 1px 4px #18334b14;color:var(--primary)}
+.stage{margin:0 12px;background-color:#F1F6FC;background-image:radial-gradient(#B6CBE180 .8px,transparent .8px);background-size:19px 19px;border:1px solid #E3ECF6;border-radius:17px;position:relative}.stage-top{position:absolute;top:14px;left:16px;right:14px;display:flex;justify-content:space-between;align-items:center;gap:12px;pointer-events:none;z-index:2}.stage-label{font-size:11px;color:var(--muted);font-weight:650;background:var(--surface);border:1px solid #E1EAF4;border-radius:7px;padding:5px 9px;max-width:55%}.stage-tools{display:flex;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:10px;pointer-events:auto}.icon-button{width:37px;min-height:38px;background:transparent;font-size:21px;border-radius:9px;display:grid;place-items:center;transition:background .15s}.icon-button:hover{background:var(--blue-soft)}.icon-button svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.stage-tools output{font-size:10px;min-width:35px;text-align:center;font-family:var(--font-mono)}.stage-tools #reset{border-left:1px solid var(--border);border-radius:0 9px 9px 0}
+#model-canvas{display:block;width:100%;height:420px;touch-action:none;cursor:grab;margin-top:39px}#model-canvas:active{cursor:grabbing}.canvas-help{position:absolute;bottom:58px;left:85px;right:85px;text-align:center;font-size:10px;color:var(--muted);pointer-events:none}.canvas-help span{display:block;font-size:9px;opacity:.8;margin-top:2px}.stage-bottom{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-top:1px solid #D9E5F2;background:#FFFFFF9C;gap:8px;border-radius:0 0 16px 16px;min-height:52px}.toggle{display:flex;gap:8px;align-items:center;font-size:11px;min-height:32px;cursor:pointer}.toggle input{width:16px;height:16px;accent-color:var(--primary);cursor:pointer}.rotate-toggle{display:flex;align-items:center;gap:5px;background:transparent;min-height:32px;border-radius:6px;font-size:11px;padding:3px 6px;color:var(--muted)}.rotate-toggle:hover{background:var(--blue-soft);color:var(--primary)}.rotate-toggle svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round}.rotate-toggle[aria-pressed="true"]{color:var(--primary)}
+.animation-panel{padding:21px 23px 17px}.timeline-label{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:650;margin-bottom:9px;gap:12px}.timeline-label label span{margin:0 6px;color:var(--primary)}.timeline-label output{font-family:var(--font-mono);font-size:10px;font-weight:400;color:var(--muted)}input[type="range"]{width:100%;height:24px;accent-color:var(--primary);cursor:pointer;display:block;margin:0}.animation-actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}.button{display:flex;align-items:center;justify-content:center;gap:7px;min-height:44px;border:1px solid var(--border);background:var(--surface);border-radius:10px;font-size:12px;font-weight:650;padding:9px 13px;transition:background .16s,transform .16s}.button:hover{background:var(--blue-soft);border-color:#B7CFFA;transform:translateY(-1px)}.button:active{transform:translateY(1px)}.button.primary{background:var(--primary);border-color:var(--primary);color:white;min-width:138px}.button.primary:hover{background:var(--primary-dark)}.button svg{width:16px;height:16px;stroke:currentColor;fill:currentColor;stroke-width:1.4}.button.replay{margin-left:auto}.button.replay>span{font-size:18px;line-height:1}.animation-caption{font-size:11px;color:var(--muted);margin-top:12px;min-height:34px;line-height:1.6}.motion-note{font-size:11px;line-height:1.5;padding:12px 22px;color:var(--muted);background:var(--mint-soft)}
+.face-key{padding:18px 23px 21px;border-top:1px solid var(--border)}.face-key-title{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:11px}.face-key-title span{color:var(--muted);font-size:10px}.face-legend{display:flex;flex-wrap:wrap;gap:7px;margin-top:11px}.face-chip{display:flex;align-items:center;gap:6px;font-size:10px;background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:6px 8px;min-height:33px;transition:background .16s}.face-chip:hover{background:var(--blue-soft)}.face-chip[aria-pressed="true"]{border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary);background:var(--blue-soft)}.face-number{display:grid;place-items:center;width:19px;height:19px;border-radius:5px;font-weight:700;border:1px solid #18334B30;color:var(--ink)}#face-description{font-size:10px;color:var(--muted);margin-top:9px;min-height:16px}
+.learning-notes{display:flex;flex-direction:column;gap:14px}.notes-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px}.notes-card h2{font-size:25px;margin-top:7px}.shape-tag{color:var(--muted);font-size:12px;margin-top:7px}.properties{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin:18px 0 15px;padding:13px 0;gap:8px}.property>b{display:block;font-size:24px;font-family:var(--font-display);line-height:1.1}.property>span{font-size:10px;color:var(--muted);display:block;margin-top:5px}.property>small{display:block;color:var(--muted);font-size:9px;min-height:14px}.body-copy{font-size:12px;color:var(--muted);line-height:1.75}.edge-note{font-size:10px;line-height:1.6;border-left:2px solid var(--primary);padding-left:9px;margin-top:12px;color:var(--muted)}.notes-card h3{font-size:17px;line-height:1.4;margin:8px 0 10px}.text-button{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;min-height:42px;background:transparent;color:var(--primary);font-size:11px;font-weight:700;padding:8px 0;text-align:left;border-radius:5px}.text-button:hover{background:var(--blue-soft);padding-left:7px;padding-right:7px}.observation{display:flex;gap:9px;margin:9px 0 3px;padding:12px 0 0;border-top:1px solid var(--border);font-size:11px;line-height:1.7;color:var(--muted)}.observation>span{font-size:20px;color:#A56E18;line-height:1.5}.think-card{background:#FDFCF8;border-color:#E8E1CF}.think-options{display:flex;flex-direction:column;gap:7px}.think-options button{display:flex;align-items:center;gap:8px;min-height:42px;border:1px solid #E0DECE;background:var(--surface);border-radius:8px;padding:8px 10px;text-align:left;font-size:11px;transition:background .15s}.think-options button:hover{background:#FBF4DB}.think-options button[aria-pressed="true"]{border-color:var(--primary);background:var(--blue-soft)}.think-feedback{margin-top:11px;font-size:10px;line-height:1.7;color:var(--muted);min-height:34px}.think-feedback.correct{color:var(--success)}
+.views-panel{padding:19px 23px}.views-panel>p{font-size:11px;color:var(--muted);line-height:1.7}.views-panel>p b{color:var(--ink)}.view-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:14px 0}.view-choice{min-width:0;display:flex;flex-direction:column;align-items:center;border:1px solid var(--border);background:var(--bg);border-radius:10px;padding:4px 5px 9px;font-size:11px;transition:border-color .16s,background .16s}.view-choice canvas{display:block;width:100%;height:90px;pointer-events:none}.view-choice:hover{border-color:var(--primary);background:var(--blue-soft)}.view-choice[aria-pressed="true"]{border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary);background:var(--blue-soft)}.view-choice small{font-size:8px;color:var(--muted);min-height:25px;margin-top:2px;padding:0 3px;line-height:1.4}.view-description{min-height:38px}
+.guide{margin:36px 0 18px;border-top:1px solid var(--border);padding-top:28px}.guide h2{font-size:23px;margin-top:6px}.guide-columns{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px;margin:22px 0}.guide-columns article{position:relative;padding-left:43px}.guide-icon{position:absolute;left:0;top:0;width:30px;height:32px;display:grid;place-items:center;color:var(--primary);background:var(--blue-soft);border:1px solid #D0DFFC;border-radius:8px;font-size:12px;font-weight:750}.guide-columns h3{font-size:13px;margin:3px 0 8px}.guide-columns p{font-size:11px;line-height:1.8;color:var(--muted)}details{border-top:1px solid var(--border);padding:15px 0}summary{cursor:pointer;font-size:11px;font-weight:650;min-height:30px;align-content:center}summary:hover{color:var(--primary)}.curriculum-copy{max-width:830px;padding:9px 0 4px;font-size:11px;line-height:1.8;color:var(--muted)}.curriculum-copy p+p{margin-top:10px}footer{max-width:1320px;margin:auto;padding:18px 32px 26px;border-top:1px solid var(--border);font-size:10px;color:var(--muted);display:flex;justify-content:space-between;gap:18px}.noscript{padding:20px;background:#FFF0EF;color:var(--danger)}
+@media(min-width:1400px){#model-canvas{height:468px}}
+@media(max-width:1050px){.learning-layout{grid-template-columns:minmax(0,1fr) 260px}.notes-card{padding:18px}.workspace-top{padding:18px}.workspace-top h2{font-size:22px}.mode-switch button{font-size:10px;padding:7px 9px}.button{font-size:11px;padding:9px 10px}.button.primary{min-width:127px}.shape-choice{padding:9px 12px;gap:8px}.shape-choice>svg{width:32px;height:32px}.shape-choice .choice-dot{display:none}.animation-panel{padding-left:18px;padding-right:18px}}
+@media(max-width:850px){.site-header{padding:20px 20px 17px}main{padding:25px 20px 0}.learning-layout{grid-template-columns:1fr}.learning-notes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}.think-card{grid-column:1/-1}.think-options{display:grid;grid-template-columns:1fr 1fr}.self-paced{display:none}.workspace-top h2{font-size:25px}.mode-switch button{font-size:12px}.shape-choice{font-size:12px;padding:10px}.shape-choice>svg{width:28px;height:28px}.shape-picker{gap:7px}.shape-choice{gap:7px}#model-canvas{height:400px}.guide-columns{gap:18px}footer{padding-left:20px;padding-right:20px}.button{font-size:12px}.button.primary{min-width:140px}.button.replay{margin-left:auto}}
+@media(max-width:540px){.site-header{padding:16px 14px 14px;gap:8px}.brand{font-size:19px;gap:7px}.brand>svg{width:28px;height:32px}.brand small{font-size:7px;letter-spacing:1.1px}.version{font-size:9px;padding:2px 5px}.header-meta{gap:6px;font-size:10px}.offline{display:none}.help-link{min-height:36px}main{padding:23px 14px 0}.intro{margin-bottom:20px}h1{letter-spacing:-.9px;font-size:30px}.intro>div>p:last-child{font-size:12px;max-width:290px;line-height:1.6}.eyebrow{font-size:9px}.shape-picker{gap:5px;margin-bottom:14px}.shape-choice{display:flex;flex-direction:column;justify-content:center;padding:7px 2px;gap:3px;min-height:65px;border-radius:10px;font-size:10px}.shape-choice>svg{width:28px;height:28px}.shape-choice .shape-name{flex:0}.workspace{border-radius:18px}.workspace-top{padding:16px 13px 14px;gap:8px;align-items:flex-end}.workspace-top h2{font-size:21px}.mini-label{font-size:7px;letter-spacing:.8px}.mode-switch{padding:3px;gap:1px;border-radius:8px}.mode-switch button{font-size:9px;padding:6px 7px;min-height:35px;border-radius:5px}.stage{margin:0 7px;border-radius:12px}.stage-top{top:10px;left:9px;right:9px;gap:6px}.stage-label{font-size:9px;padding:4px 6px;max-width:52%}.icon-button{width:29px;min-height:33px;font-size:18px}.icon-button svg{width:15px;height:15px}.stage-tools output{font-size:8px;min-width:29px}#model-canvas{height:310px;margin-top:35px}.canvas-help{left:57px;right:30px;bottom:55px;font-size:8px}.canvas-help span{font-size:7px}.stage-bottom{padding:8px 9px;min-height:46px;border-radius:0 0 11px 11px}.toggle{font-size:9px;gap:5px}.toggle input{width:15px;height:15px}.rotate-toggle{font-size:9px;gap:4px;padding:3px}.rotate-toggle svg{width:13px;height:13px}.animation-panel{padding:17px 14px 13px}.timeline-label{font-size:11px}.timeline-label output{font-size:9px}.animation-actions{gap:6px;display:grid;grid-template-columns:1fr 1fr}.button{font-size:11px;min-height:42px;padding:8px 7px}.button.primary{min-width:0}.button.replay{margin:0}.animation-caption{font-size:10px;min-height:48px;line-height:1.65}.face-key{padding:15px 14px}.face-key-title{align-items:start}.face-key-title b{font-size:10px}.face-key-title span{font-size:8px}.face-legend{gap:5px}.face-chip{font-size:9px;padding:5px 7px;min-height:34px}.face-number{width:17px;height:17px;font-size:9px}#face-description{font-size:9px;min-height:28px}.learning-notes{display:flex;gap:12px}.notes-card{padding:20px}.notes-card h2{font-size:25px}.body-copy{font-size:13px}.shape-tag{font-size:12px}.property>span{font-size:11px}.property>small{font-size:10px}.property>b{font-size:26px}.notes-card h3{font-size:18px}.text-button{font-size:12px;min-height:44px}.observation{font-size:12px}.think-options{display:flex}.think-options button{font-size:12px;min-height:44px}.think-feedback{font-size:11px}.views-panel{padding:17px 14px}.view-grid{gap:7px}.view-choice canvas{height:74px}.view-choice{font-size:10px}.view-choice small{font-size:8px;min-height:28px}.view-description{font-size:10px}.guide{margin-top:28px}.guide h2{font-size:21px;max-width:280px}.guide-columns{grid-template-columns:1fr;gap:19px}.guide-columns p{font-size:12px}.guide-columns h3{font-size:14px}.guide-columns article{padding-left:43px}.curriculum-copy{font-size:11px}summary{font-size:11px}footer{padding:18px 14px 24px;flex-direction:column;gap:6px;font-size:9px}.motion-note{font-size:10px;padding:10px 14px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}/* Educational movement occurs only after an explicit Play action. */*,*::before,*::after{animation:none!important;transition:none!important}.shape-choice:hover,.button:hover{transform:none}}
+@media(forced-colors:active){*{scrollbar-color:auto}.shape-choice[aria-pressed="true"],.face-chip[aria-pressed="true"],.view-choice[aria-pressed="true"]{outline:2px solid Highlight}.stage{border:1px solid CanvasText}.offline i{background:CanvasText}}
+/* Picker diagrams are rendered from the same geometry as the main model. */
+.shape-choice>canvas{width:42px;height:42px;flex-shrink:0;pointer-events:none}
+@media(max-width:1050px){.shape-choice>canvas{width:32px;height:32px}}
+@media(max-width:850px){.shape-choice>canvas{width:28px;height:28px}}
+/* Learning notes extend the same GeoDecoder classroom workbench. */
+.learning-navigation{display:flex;gap:5px;align-items:center;margin:0 0 19px;border-bottom:1px solid var(--border);padding-bottom:12px}.learning-nav-button{display:flex;align-items:center;gap:8px;min-height:44px;padding:10px 17px;border-radius:10px;background:transparent;font-weight:700;font-size:13px;color:var(--muted);border:1px solid transparent;transition:background .16s,border-color .16s}.learning-nav-button span{font-size:9px;padding:2px 5px;border-radius:4px;background:#DDE9FF;color:#194AC0}.learning-nav-button:hover{background:var(--blue-soft);color:var(--ink)}.learning-nav-button[aria-pressed="true"]{background:var(--surface);border-color:var(--primary);color:var(--primary)}
+.study-panel{margin-top:8px}.study-heading{display:flex;align-items:center;justify-content:space-between;gap:20px;margin:26px 0 20px}.study-heading h2{font-size:32px;letter-spacing:-.8px;margin:7px 0 9px}.study-heading>div>p:last-child{color:var(--muted);font-size:13px;max-width:650px}.study-tag{color:var(--success);background:var(--mint-soft);border:1px solid #CAE5D9;border-radius:8px;padding:7px 10px;font-size:11px;white-space:nowrap}.study-jumps{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:20px}.study-jumps button{border:1px solid var(--border);background:var(--surface);padding:9px 13px;border-radius:9px;min-height:42px;font-size:12px;font-weight:650}.study-jumps button:hover{border-color:var(--primary);background:var(--blue-soft);color:var(--primary)}.study-layout{display:grid;grid-template-columns:minmax(0,1fr) 285px;gap:22px;align-items:start}.study-reading{display:flex;flex-direction:column;gap:18px;min-width:0}.lesson-block{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:27px 29px;scroll-margin-top:20px}.lesson-code{font-size:10px;font-weight:750;letter-spacing:1.3px;color:var(--primary)}.lesson-block h3{font-size:23px;margin:8px 0 14px;scroll-margin-top:24px}.lesson-block>p{font-size:14px;line-height:1.85;max-width:75ch}.lesson-block>p+p{margin-top:10px}.note-context{color:var(--muted)}.note-table-wrap{max-width:100%;overflow-x:auto;margin:20px 0 8px;border:1px solid var(--border);border-radius:10px}.note-table{width:100%;border-collapse:collapse;font-size:12px;text-align:left}.note-table caption{text-align:left;font-size:11px;letter-spacing:.1px;font-weight:700;background:var(--bg);padding:11px 13px;color:var(--muted)}.note-table th,.note-table td{padding:11px 13px;border-top:1px solid var(--border);vertical-align:top}.note-table thead th{background:var(--bg);font-size:11px;color:var(--muted);white-space:nowrap}.note-table tbody th{font-weight:650}.note-table tbody tr:nth-child(even){background:#F8FAFD}.table-hint{font-size:10px!important;color:var(--muted);margin-top:7px!important}.note-definition{font-size:12px!important;line-height:1.8;color:var(--muted);border-left:3px solid var(--primary);padding-left:12px;margin-top:16px!important}.lesson-block ul{font-size:14px;padding-left:20px;margin:13px 0;line-height:1.9}.lesson-block li+li{margin-top:4px}.note-discovery{padding:17px 18px;margin-top:18px;background:var(--blue-soft);border-radius:11px;border:1px solid #D9E5FB;font-size:13px;line-height:1.8}.note-discovery b{font-size:12px;color:var(--primary)}.note-discovery .text-button{max-width:280px;font-size:12px}.lesson-formula{font-family:var(--font-display);font-size:27px!important;line-height:1.4!important;letter-spacing:.3px;background:var(--blue-soft);color:var(--primary);padding:15px 19px;border-radius:10px;margin:18px 0!important;font-weight:700;overflow-wrap:anywhere}.lesson-formula.volume-formula{background:var(--mint-soft);color:var(--success)}.worked-example{border:1px solid var(--border);border-radius:11px;margin-top:21px;padding:0}.worked-example summary{padding:15px 17px;font-size:12px;color:var(--primary);min-height:48px}.worked-example[open] summary{border-bottom:1px solid var(--border);background:var(--bg);border-radius:10px 10px 0 0}.example-body{padding:19px 20px}.example-question{font-size:13px;line-height:1.8}.example-body ol{padding:0;list-style:none;counter-reset:example-step;display:flex;flex-direction:column;gap:10px;margin:17px 0}.example-body li{position:relative;padding-left:35px;counter-increment:example-step;font-size:13px;line-height:1.85;margin:0}.example-body li::before{content:counter(example-step);position:absolute;left:0;top:2px;display:grid;place-items:center;width:23px;height:23px;background:var(--blue-soft);color:var(--primary);border-radius:7px;font-size:11px;font-weight:700}.example-answer{background:var(--mint-soft);color:var(--success);border:1px solid #D0E7DA;border-radius:8px;font-size:13px;padding:10px 13px;font-weight:700}.study-reference{position:sticky;top:18px;display:flex;flex-direction:column;gap:15px}.formula-reference{padding:24px;background:var(--surface);border:1px solid var(--border);border-radius:18px}.formula-reference>span{display:block;font-size:11px;color:var(--muted);margin-top:20px}.quick-formula{font-family:var(--font-display);font-size:22px;font-weight:700;margin-top:4px;overflow-wrap:anywhere;color:var(--primary)}.symbol-heading{border-top:1px solid var(--border);margin-top:21px;padding-top:18px;font-weight:700;font-size:12px}.formula-reference dl{display:flex;flex-direction:column;gap:10px;margin:14px 0}.formula-reference dl>div{display:flex;gap:10px;align-items:flex-start}.formula-reference dt{min-width:18px;font-family:var(--font-mono);font-size:14px;font-weight:700;color:var(--primary)}.formula-reference dd{margin:0;font-size:12px;color:var(--muted);line-height:1.7}.symbol-note{font-size:11px;line-height:1.8;color:var(--muted);padding-top:9px}.formula-reference .button{width:100%;margin-top:19px;white-space:normal;text-align:center}.mistake-reference{padding:21px;background:#FDFCF8;border:1px solid #E8E1CF;border-radius:16px}.mistake-reference ul{padding-left:18px;margin:11px 0 0;font-size:12px;line-height:1.8}.mistake-reference li+li{margin-top:9px}
+.notes-calculator{margin-top:24px;padding:28px 29px;background:var(--surface);border:1px solid var(--border);border-radius:18px}.calculator-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}.calculator-heading h3{font-size:24px;margin:7px 0 9px;scroll-margin-top:20px}.calculator-heading>div>p:last-child{font-size:13px;color:var(--muted)}.calculator-heading .button{font-size:11px;flex-shrink:0}.calculator-layout{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:35px;margin:25px 0 18px;align-items:start}.diagram-panel{border-radius:13px;background:var(--bg);border:1px solid var(--border);padding:12px 18px 18px}.diagram-panel svg{display:block;width:100%;height:240px}.diagram-panel>p{font-size:11px;line-height:1.65;color:var(--muted);text-align:center;margin-top:8px}.diagram-panel .diagram-note{font-size:10px}.diagram-panel .slant-result{font-size:16px;color:var(--primary);font-weight:700}.measure-help{font-size:11px;color:var(--muted);line-height:1.8;margin:0 0 15px}.measure-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 15px}.measure-field label{display:block;font-size:12px;font-weight:650;line-height:1.6;min-height:30px}.measure-input{position:relative;display:flex;align-items:center}.measure-input input{min-width:0;width:100%;height:46px;padding:10px 43px 10px 12px;border-radius:9px;border:1px solid var(--border);background:var(--surface);color:var(--ink);font-size:15px;font-family:var(--font-mono)}.measure-input input:hover{border-color:#9AB7D9}.measure-input input[aria-invalid="true"]{border-color:var(--danger)}.measure-input span{position:absolute;right:12px;font-size:12px;color:var(--muted);pointer-events:none}.measure-error{min-height:32px;font-size:10px;line-height:1.5;color:var(--danger);padding-top:4px}.notes-pi{border:0;padding:0;margin:6px 0 17px}.notes-pi legend{font-size:12px;font-weight:650;margin-bottom:7px}.pi-options{display:flex;gap:6px}.pi-options button{min-height:39px;min-width:58px;padding:7px 12px;border:1px solid var(--border);background:var(--surface);border-radius:8px;font-size:12px}.pi-options button:hover{background:var(--blue-soft)}.pi-options button[aria-pressed="true"]{background:var(--blue-soft);border-color:var(--primary);color:var(--primary);font-weight:700}.notes-pi>p{font-size:10px;line-height:1.7;color:var(--muted);margin-top:7px}.notes-calculator form>.button{font-size:12px;width:100%;max-width:300px}.calculation-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.calculation-results>div{padding:19px 22px;background:var(--blue-soft);border:1px solid #D6E3FC;border-radius:12px;min-width:0}.calculation-results>div+div{background:var(--mint-soft);border-color:#CFE7DC}.calculation-results span{display:block;font-size:12px;color:var(--muted)}.calculation-results output{display:block;color:var(--primary);font-family:var(--font-display);font-size:28px;font-weight:700;margin-top:7px;overflow-wrap:anywhere;min-height:40px}.calculation-results>div+div output{color:var(--success)}.calculation-status{font-size:11px;line-height:1.7;color:var(--muted);min-height:28px;margin-top:11px}.area-breakdown{padding-bottom:0;margin-top:10px}.area-breakdown ul{padding-left:21px;font-size:12px;line-height:1.9;color:var(--muted)}.notes-summary{margin-top:24px;padding:27px 29px;border:1px solid var(--border);border-radius:18px;background:var(--surface);min-width:0}.notes-summary h3{font-size:24px;margin:7px 0 10px}.notes-summary>div>p:last-child{font-size:13px;color:var(--muted)}.formula-table{min-width:510px}.math-copy{font-size:14px;font-family:var(--font-display);white-space:nowrap}.unit-facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:20px}.unit-facts>div{padding:13px;border-radius:10px;background:var(--bg);border:1px solid var(--border)}.unit-facts b{font-size:11px;color:var(--primary)}.unit-facts p{font-size:12px;line-height:1.8;margin-top:5px}.composite-example{margin:24px 0;border:1px solid #E4D9BA;background:#FFFCF3;border-radius:14px;padding:0}.composite-example summary{padding:17px 21px;font-size:13px;line-height:1.6;min-height:52px}.composite-example>div{padding:0 22px 22px;font-size:13px;line-height:1.9}.composite-example p+p{margin-top:13px}.view-note{display:flex;align-items:center;justify-content:space-between;gap:27px;padding:24px 27px;background:var(--blue-soft);border:1px solid #D6E3FC;border-radius:15px}.view-note h3{font-size:20px;margin:6px 0 9px}.view-note>div>p:last-child{font-size:12px;color:var(--muted);max-width:75ch;line-height:1.9}.view-note .button{min-width:190px;font-size:11px}.curriculum-scope{font-size:10px;line-height:1.9;color:var(--muted);margin-top:18px;max-width:110ch}
+@media(max-width:950px){.study-layout{grid-template-columns:minmax(0,1fr) 245px;gap:16px}.formula-reference{padding:20px}.lesson-block{padding:24px}.study-tag{display:none}.calculator-layout{gap:24px}.unit-facts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.study-layout{display:flex;flex-direction:column}.study-reading{width:100%}.study-reference{position:static;display:grid;grid-template-columns:1fr 1fr;width:100%}.calculator-heading{flex-direction:column;gap:13px}.calculator-layout{grid-template-columns:1fr 1fr;gap:19px}.measure-fields{grid-template-columns:1fr}.view-note{align-items:flex-start;flex-direction:column;gap:16px}.study-heading h2{font-size:29px}.lesson-block>p,.lesson-block ul{font-size:13px}}
+@media(max-width:540px){.learning-navigation{margin:0 0 15px;gap:3px;padding-bottom:10px}.learning-nav-button{padding:10px 12px;font-size:12px}.learning-nav-button span{font-size:8px}.study-heading{margin-top:22px}.study-heading h2{font-size:28px}.study-heading>div>p:last-child{font-size:12px;line-height:1.8}.study-jumps{gap:6px}.study-jumps button{font-size:10px;padding:8px 10px;min-height:40px}.lesson-block{padding:22px 18px;border-radius:15px}.lesson-code{font-size:9px}.lesson-block h3{font-size:22px}.lesson-block>p,.lesson-block ul{font-size:13px}.note-table-wrap{margin-top:17px}.note-table{font-size:11px;min-width:380px}.note-table th,.note-table td{padding:10px}.note-table thead th{font-size:10px}.note-table caption{padding:10px}.lesson-formula{font-size:23px!important;padding:13px 14px}.worked-example summary{font-size:11px;padding:14px}.example-body{padding:17px 14px}.example-question,.example-body li,.example-answer{font-size:12px}.study-reference{grid-template-columns:1fr}.formula-reference{padding:22px}.quick-formula{font-size:23px}.formula-reference>span{margin-top:16px}.mistake-reference{padding:20px}.notes-calculator{padding:22px 18px}.calculator-heading h3{font-size:23px}.calculator-layout{grid-template-columns:1fr;gap:20px}.diagram-panel svg{height:220px}.measure-fields{grid-template-columns:1fr 1fr;gap:0 10px}.measure-field label{font-size:10px;min-height:33px}.measure-input input{font-size:14px}.measure-error{min-height:38px}.calculation-results{gap:9px}.calculation-results>div{padding:16px 13px}.calculation-results span{font-size:10px}.calculation-results output{font-size:22px;min-height:34px}.calculation-status{font-size:10px}.notes-summary{padding:22px 18px}.notes-summary h3{font-size:22px}.formula-table{min-width:470px}.unit-facts{gap:9px}.unit-facts>div{padding:11px}.unit-facts p{font-size:11px}.composite-example summary{font-size:12px;padding:16px 17px}.composite-example>div{padding:0 18px 19px;font-size:12px}.view-note{padding:22px 19px}.view-note h3{font-size:21px}.view-note .button{width:100%}.curriculum-scope{font-size:9px}.note-definition{font-size:11px!important}}
+/* Four labs share one stage, camera and native control family. */
+.learning-navigation{flex-wrap:wrap}.labs-heading{margin:25px 0 21px}.labs-heading h2{font-size:31px;letter-spacing:-.7px;margin:7px 0 10px}.labs-heading>p:last-child{font-size:13px;color:var(--muted)}.lab-choices{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.lab-choices button{display:flex;align-items:center;gap:12px;min-width:0;border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:16px;text-align:left;transition:transform .18s,background .18s,border-color .18s}.lab-choices button>b{font-family:var(--font-mono);font-size:17px;color:var(--primary);background:var(--blue-soft);border-radius:8px;padding:8px}.lab-choices button>span{font-size:13px;font-weight:700;line-height:1.5}.lab-choices small{display:block;font-size:10px;font-weight:400;color:var(--muted);margin-top:3px}.lab-choices button[aria-pressed="true"]{border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary);background:var(--blue-soft)}.lab-choices button:hover{transform:translateY(-2px);border-color:var(--primary)}.lab-intro{margin:24px 0 19px;max-width:85ch}.lab-intro h3{font-size:25px;margin-bottom:8px}.lab-intro p{font-size:13px;color:var(--muted);line-height:1.8}.lab-layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:22px;align-items:start}.lab-scene-column{position:sticky;top:16px;min-width:0}.lab-stage{background:var(--surface);border:1px solid var(--border);border-radius:18px;overflow:hidden}.lab-stage-header{display:flex;justify-content:space-between;gap:10px;padding:17px 21px;font-size:10px;font-weight:700;letter-spacing:1.1px;border-bottom:1px solid var(--border);color:var(--muted)}#labs-canvas{display:block;width:100%;height:410px;cursor:grab;touch-action:none;background:var(--bg)}#labs-canvas:active{cursor:grabbing}.lab-drag-hint{font-size:10px;color:var(--muted);text-align:center;padding:10px;background:var(--bg)}.lab-camera{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:7px;padding:13px;border-top:1px solid var(--border)}.lab-camera button,.net-move button{min-width:39px;min-height:39px;border:1px solid var(--border);background:var(--surface);border-radius:8px;font-size:15px;padding:6px 10px}.lab-camera button:hover,.net-move button:hover{border-color:var(--primary);color:var(--primary);background:var(--blue-soft)}.lab-camera button:last-child{font-size:11px}.lab-caption{font-size:12px;line-height:1.8;color:var(--muted);margin:13px 2px 12px;min-height:42px}.lab-playback{border:1px solid var(--border);background:var(--surface);border-radius:12px;padding:17px 19px}.lab-playback .button{width:100%;margin-top:10px}.lab-playback .timeline-label{font-size:11px}.lab-outcome{border-left:3px solid var(--primary);padding:6px 0 6px 13px;margin:15px 0 0;font-size:13px;line-height:1.8;min-height:43px}.lab-control-panel{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:24px;min-width:0}.lab-control-panel>p,.lab-control-panel>div>p{font-size:13px;line-height:1.8}.lab-control-panel>p+p{margin-top:10px}.lab-field{display:flex;flex-direction:column;gap:7px;margin:16px 0}.lab-field label,.net-move>label{font-size:11px;font-weight:700}.lab-field select,.net-move select{width:100%;min-width:0;min-height:44px;border:1px solid var(--border);border-radius:9px;color:var(--ink);background:var(--surface);padding:9px;font:12px var(--font-body)}select:focus-visible,.note-table-wrap:focus-visible{outline:3px solid var(--primary);outline-offset:3px}.net-grid-heading{display:flex;align-items:center;gap:12px;justify-content:space-between}.net-grid-heading>b{font-size:12px}.net-grid-heading .text-button{width:auto;font-size:10px}.net-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:5px;padding:8px;border:1px solid var(--border);border-radius:10px;background:var(--bg);touch-action:none}.net-cell{aspect-ratio:1;min-width:0;min-height:30px;border:1px dashed #B7C8D7;border-radius:5px;background:var(--surface);font-family:var(--font-mono);font-size:13px;user-select:none;touch-action:none}.net-cell[aria-pressed="true"]{border:1px solid #526A7D;font-weight:700;cursor:grab}.net-cell:active{cursor:grabbing}.net-cell:hover{outline:2px solid var(--primary);outline-offset:-2px}.net-move{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:14px 0}.net-move select{width:95px}.net-move>div{display:flex;gap:5px}.lab-actions{display:flex;gap:8px;flex-wrap:wrap;margin:17px 0 10px}.lab-actions .text-button{width:auto;font-size:10px;min-height:36px}.lab-control-panel .lab-feedback{font-size:12px;background:var(--bg);padding:12px 14px;border:1px solid var(--border);border-radius:9px;margin-top:14px;min-height:52px;line-height:1.85}.lab-feedback[data-success="true"]{color:var(--success);border-color:#B7D9CB;background:var(--mint-soft)}.lab-feedback[data-success="false"]{color:var(--danger)}.lab-control-panel .lab-note{font-size:11px;color:var(--muted);line-height:1.85;margin-top:13px}.lab-dimensions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:18px 0}.lab-dimensions label{font-size:11px;font-weight:650;line-height:1.7;min-width:0}.lab-dimensions label>span{display:block}.lab-dimensions output{display:block;color:var(--primary);font-family:var(--font-mono);font-size:12px;margin:3px 0 6px}.lab-dimensions input{width:100%}.lab-control-panel .lab-equation{font-family:var(--font-display);font-size:21px;line-height:1.6;font-weight:700;padding:14px 16px;background:var(--blue-soft);color:var(--primary);border-radius:10px;margin-top:14px;overflow-wrap:anywhere}.pour-key{display:flex;flex-wrap:wrap;gap:18px;font-size:11px;color:var(--muted);margin:17px 0}.pour-key i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px}.source-dot{background:#64CBB8}.receiver-dot{background:#94BDF7}.lab-group-title{font-size:12px!important;font-weight:700;margin:19px 0 10px}.area-pieces{display:flex;flex-direction:column;gap:7px;margin-bottom:14px}.area-piece{display:flex;align-items:center;gap:9px;justify-content:space-between;text-align:left;min-height:44px;padding:9px 11px;border:1px solid var(--border);border-radius:9px;background:var(--surface);font-size:11px;line-height:1.7}.area-piece>i{width:18px;height:18px;border:1px solid #526A7D;border-radius:4px;flex-shrink:0}.area-piece>span{flex:1}.area-piece>b{font-weight:500;font-family:var(--font-mono);font-size:10px}.area-piece[aria-pressed="true"]{background:var(--blue-soft);border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary)}.area-piece:hover{background:var(--bg);border-color:var(--primary)}.lab-sum{font-size:12px;line-height:1.8;overflow-wrap:anywhere}.derived-formula{font-size:21px!important;color:var(--success);font-family:var(--font-display);font-weight:700;line-height:1.6;margin-top:13px}.composite-totals{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}.composite-totals>span{padding:13px 14px;background:var(--blue-soft);border:1px solid var(--border);border-radius:10px;font-size:10px;min-width:0}.composite-totals>span+span{background:var(--mint-soft)}.composite-totals output{display:block;font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--primary);margin-top:7px;overflow-wrap:anywhere}.composite-totals>span+span output{color:var(--success)}
+@media(max-width:1000px){.lab-choices button{padding:12px;gap:8px}.lab-choices button>b{font-size:14px;padding:6px}.lab-choices button>span{font-size:11px}.lab-layout{gap:16px;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}.lab-control-panel{padding:19px}#labs-canvas{height:365px}}
+@media(max-width:760px){.lab-choices{grid-template-columns:repeat(2,minmax(0,1fr))}.lab-choices button{padding:14px}.lab-choices button>span{font-size:12px}.lab-layout{grid-template-columns:1fr}.lab-scene-column{position:static}.lab-control-panel{padding:24px}.lab-caption{min-height:0}.lab-intro h3{font-size:23px}.labs-heading h2{font-size:28px}.net-grid{max-width:380px}.lab-playback{padding:15px 17px}}
+@media(max-width:540px){.lab-choices{gap:8px}.lab-choices button{padding:11px;align-items:flex-start}.lab-choices small{font-size:9px}.lab-choices button>span{font-size:11px}.lab-choices button>b{padding:5px;font-size:12px}.lab-control-panel{padding:20px 17px}.lab-intro p{font-size:12px}.lab-stage-header{padding:14px 16px;font-size:9px}#labs-canvas{height:300px}.lab-camera{padding:10px;gap:4px}.lab-camera button{min-width:32px;min-height:38px;padding:4px 8px}.lab-drag-hint{font-size:9px}.lab-caption{font-size:11px}.lab-control-panel>p,.lab-control-panel>div>p{font-size:12px}.net-move{gap:7px}.net-move>div{width:100%;justify-content:space-between}.net-move button{width:23%}.net-cell{font-size:12px}.lab-actions .button{font-size:11px;flex:1;min-width:100px}.lab-control-panel .lab-equation{font-size:19px}.lab-dimensions label{font-size:10px}.composite-totals output{font-size:18px}.area-piece>b{font-size:9px}}
+
+.net-drag-ghost{position:fixed;z-index:50;pointer-events:none;width:38px;height:38px;display:grid;place-items:center;border:2px solid var(--primary);border-radius:6px;color:var(--ink);font-weight:700;box-shadow:0 4px 12px #18334B30}
+
+.net-grid{max-width:330px;margin:0 auto}
+/* Guided pacing and ready-made nets keep one visible next step. */
+.lab-guide{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:15px 18px;margin:0 0 18px}.lab-guide ol{display:flex;flex-wrap:wrap;gap:8px 15px;list-style:none;padding:0;margin:0;counter-reset:labstep}.lab-guide li{counter-increment:labstep;font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px}.lab-guide li:before{content:counter(labstep);display:grid;place-items:center;width:22px;height:22px;border-radius:6px;background:var(--bg);border:1px solid var(--border);font-size:10px}.lab-guide li[aria-current="step"]{font-weight:700;color:var(--primary)}.lab-guide li[aria-current="step"]:before{background:var(--primary);color:var(--surface);border-color:var(--primary)}.lab-guide li.step-done:before{background:var(--mint-soft);color:var(--success)}#lab-next-step{font-size:12px;line-height:1.8;margin-top:11px;color:var(--ink)}.lab-stage .lab-playback{border:0;border-bottom:1px solid var(--border);border-radius:0;padding:13px 18px;background:var(--surface)}.lab-tempo{display:flex;justify-content:space-between;gap:12px;align-items:end;margin-bottom:9px}.lab-tempo label{font-size:10px;font-weight:700;display:flex;gap:8px;align-items:center}.lab-tempo select{border:1px solid var(--border);border-radius:8px;padding:8px;min-height:40px;font:11px var(--font-body);background:var(--surface);color:var(--ink);max-width:200px}.lab-tempo .button{margin:0;width:auto;min-width:130px}.lab-motion-state{font-size:10px;color:var(--muted);line-height:1.6;margin:7px 0 10px}.net-mode-switch{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:18px}.net-mode-switch button{border:1px solid var(--border);background:var(--surface);border-radius:9px;padding:9px 12px;min-height:42px;font-size:11px}.net-mode-switch button[aria-pressed="true"]{background:var(--blue-soft);border-color:var(--primary);color:var(--primary);font-weight:700}.preset-tag{display:inline-block;font-size:10px!important;font-weight:700;color:var(--primary);background:var(--blue-soft);border-radius:6px;padding:4px 8px;margin:0 0 10px}.preset-swatch{display:inline-block;width:13px;height:13px;border:1px solid var(--muted);border-radius:3px;margin-left:5px}.compare-card{border:1px solid var(--border);border-left:4px solid #64CBB8;border-radius:11px;padding:14px 16px;margin:17px 0}.compare-card+ .compare-card{border-left-color:#94BDF7}.compare-card h4{font-size:14px;margin:0 0 9px}.compare-card .lab-field{margin:8px 0 12px}.compare-measures{border:0;margin:0;padding:0}.compare-measures summary{padding:7px 0;font-size:11px;min-height:32px}.compare-measures .lab-dimensions{margin:10px 0}.compare-level{display:block;font-size:11px;margin:12px 0 8px}.compare-level output{float:right;font-family:var(--font-mono);color:var(--primary)}.compare-level input{clear:both}.compare-volume{font-size:13px!important;font-weight:700;margin-top:7px}.compare-card .lab-actions{margin:10px 0 0}.compare-card .button{font-size:11px;min-height:40px}.compare-sum-choice{padding:13px 15px;border:1px solid var(--border);border-radius:9px;margin:17px 0 0}.compare-sum-choice legend{font-size:11px;font-weight:700;padding:0 5px}.compare-sum-choice label{display:inline-flex;gap:6px;align-items:center;font-size:12px;margin-right:16px}.compare-sum-choice input{accent-color:var(--primary);width:16px;height:16px}.net-cell:disabled{cursor:default;opacity:.75}.area-piece:disabled{cursor:default;opacity:.6}
+@media(max-width:540px){.lab-guide{padding:14px}.lab-guide ol{gap:8px}.lab-guide li{font-size:10px}.lab-guide li:before{width:19px;height:19px}#lab-next-step{font-size:11px}.lab-stage .lab-playback{padding:12px}.lab-tempo{align-items:stretch;gap:7px}.lab-tempo label{flex-direction:column;align-items:stretch;gap:5px;min-width:0;flex:1}.lab-tempo select{font-size:10px;max-width:100%;width:100%}.lab-tempo .button{min-width:0;font-size:10px;align-self:end;padding:8px 10px}.compare-card{padding:13px}.compare-card .button{font-size:10px;min-width:0}.net-mode-switch button{font-size:10px;padding:8px 10px}}
+
+</style>
+</head>
+<body>
+  <a class="skip" href="#main">Terus ke modul</a>
+  <header class="site-header">
+    <a href="#main" class="brand" aria-label="GeoDecoder Digital, modul pembelajaran"><svg viewBox="0 0 40 44" aria-hidden="true"><path d="m20 2 17 10v20L20 42 3 32V12Z" fill="#215FF0"/><path d="m20 2 17 10-17 10L3 12Z" fill="#6EAAFF"/><path d="m20 22 17-10v20L20 42Z" fill="#1847B0"/><path d="m11 17 9 5 9-5M20 22v10" stroke="white" stroke-width="2" fill="none"/></svg><span>Geo<span class="brand-blue">Decoder</span><small>DIGITAL · MODUL PEMBELAJARAN</small></span></a>
+    <span id="version" class="version">V1.3.0</span>
+    <div class="header-meta"><span class="offline"><i></i>Tanpa Internet</span><a href="#panduan" class="help-link">Panduan <span aria-hidden="true">↗</span></a></div>
+  </header>
+  <main id="main">
+    <div class="intro"><div><p class="eyebrow">MAKMAL BONGKAH · KSSM</p><h1>Lihat. Buka. <span>Fahami.</span></h1><p>Teroka bongkah, bentangan dan pandangan 2D. Fahami luas permukaan serta isi padu melalui nota dan contoh.</p></div><span class="self-paced"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 5 9 3 9-3v14l-9 3-9-3V5Zm9 3v14"/></svg>Belajar ikut rentak sendiri</span></div>
+    <nav class="learning-navigation" aria-label="Bahagian pembelajaran"><button id="learn-explore" class="learning-nav-button" aria-pressed="true">Teroka 3D</button><button id="learn-notes" class="learning-nav-button" aria-pressed="false">Nota pembelajaran <span>KSSM</span></button><button id="learn-labs" class="learning-nav-button" aria-pressed="false">Makmal interaktif <span>4 AKTIVITI</span></button></nav>
+    <nav id="shape-picker" class="shape-picker" aria-label="Pilih bongkah"></nav>
+    <div id="explore-panel" class="learning-layout">
+      <section class="workspace" aria-labelledby="model-title">
+        <div class="workspace-top"><div><span class="mini-label">RUANG PENEROKAAN</span><h2 id="model-title" tabindex="-1">Kubus</h2></div><div class="mode-switch" role="group" aria-label="Jenis penerokaan"><button id="mode-model" aria-pressed="true">Model &amp; bentangan</button><button id="mode-views" aria-pressed="false">Pandangan 2D</button></div></div>
+        <div id="stage" class="stage">
+          <div class="stage-top"><span id="stage-label" class="stage-label">Bongkah 3D</span><div class="stage-tools"><button id="zoom-out" class="icon-button" aria-label="Zum keluar" title="Zum keluar">−</button><output id="zoom-level" aria-live="off">100%</output><button id="zoom-in" class="icon-button" aria-label="Zum masuk" title="Zum masuk">+</button><button id="reset" class="icon-button" aria-label="Kedudukan asal" title="Kedudukan asal"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5m-4-4a8 8 0 0 1 13-3l2 3M4 16l2 3a8 8 0 0 0 13-3"/></svg></button></div></div>
+          <canvas id="model-canvas" tabindex="0" role="img" aria-label="Model interaktif kubus" aria-describedby="canvas-help">Model bongkah boleh diteroka menggunakan kawalan di bawah. Penerangan muka tersedia di sebelah model.</canvas>
+          <p id="canvas-help" class="canvas-help">Seret untuk putar · Cubit atau roda tetikus untuk zum<span>Anak panah: putar · + / −: zum · Home: asal</span></p>
+          <div class="stage-bottom"><label class="toggle"><input id="labels" type="checkbox"><span>Label pada model</span></label><button id="auto-rotate" class="rotate-toggle" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5m-4-4a8 8 0 0 1 13-3l2 3M4 16l2 3a8 8 0 0 0 13-3"/></svg><span>Hentikan putaran</span></button></div>
+        </div>
+        <p id="reduced-note" class="motion-note" hidden>Gerakan dikurangkan: putaran automatik dimatikan. Peluncur mengawal bentangan secara terus; animasi hanya bergerak apabila anda menekan Main.</p>
+        <div id="animation-panel" class="animation-panel">
+          <div class="timeline-label"><label for="progress">Bongkah <span aria-hidden="true">⟷</span> Bentangan</label><output id="progress-value" for="progress">0% terbuka</output></div>
+          <input id="progress" type="range" min="0" max="1000" step="1" value="0" aria-valuetext="Bongkah tertutup, 0 peratus terbuka">
+          <div class="animation-actions"><button id="play" class="button primary"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7V5Z"/></svg><span>Main animasi</span></button><button id="open-net" class="button">Buka bentangan</button><button id="close-net" class="button">Cantum semula</button><button id="replay" class="button replay"><span aria-hidden="true">↻</span> Ulang</button></div>
+          <p id="animation-caption" class="animation-caption">Muka kekal bersambung pada rusuk. Warna yang sama menandakan muka yang sama.</p>
+        </div>
+        <div id="views-panel" class="views-panel" hidden><p><b>Pandangan 2D bukan bentangan.</b> Lihat bongkah yang masih tertutup dari satu arah. Tiada kesan perspektif.</p><div id="view-grid" class="view-grid" role="group" aria-label="Enam pandangan ortografik"></div><p id="view-description" class="view-description"></p></div>
+        <div class="face-key"><div class="face-key-title"><b>Jejaki permukaan</b><span>Klik model atau pilih label.</span></div><div id="face-legend" class="face-legend" role="group" aria-label="Pilih muka atau permukaan"></div><p id="face-description" aria-live="polite">Pilih permukaan untuk melihatnya pada model.</p></div>
+      </section>
+      <aside class="learning-notes" aria-labelledby="notes-title">
+        <section class="notes-card"><p class="eyebrow">KENALI BONGKAH</p><h2 id="notes-title">Kubus</h2><p id="shape-tag" class="shape-tag"></p><div id="properties" class="properties"></div><p id="shape-intro" class="body-copy"></p><p id="edge-note" class="edge-note" hidden>Rusuk melengkung ialah sempadan antara permukaan rata dengan permukaan melengkung.</p></section>
+        <section class="notes-card explore-card"><p class="eyebrow">CUBA SENDIRI</p><h3>Dari bongkah ke bentangan</h3><p id="net-explanation" class="body-copy"></p><button id="guided-net" class="text-button">Buka dan perhatikan <span aria-hidden="true">↗</span></button><div class="observation"><span aria-hidden="true">✧</span><p id="observation"></p></div><button id="guided-view" class="text-button">Bandingkan pandangan <span aria-hidden="true">↗</span></button></section>
+        <section class="notes-card think-card" aria-labelledby="think-title"><p class="eyebrow">CUBA FIKIR · TANPA MARKAH</p><h3 id="think-title"></h3><div id="think-options" class="think-options" role="group" aria-label="Pilihan pemahaman"></div><p id="think-feedback" class="think-feedback" role="status">Pilih satu jawapan untuk melihat penerangan.</p></section>
+      </aside>
+    </div>
+    <section id="study-panel" class="study-panel" hidden aria-labelledby="study-title">
+      <div class="study-heading"><div><p class="eyebrow">KSSM · TINGKATAN 2 · BAB 6</p><h2 id="study-title" tabindex="-1">Nota kubus</h2><p id="study-description"></p></div><span class="study-tag">Bentuk geometri tiga dimensi</span></div>
+      <nav class="study-jumps" aria-label="Pergi ke bahagian nota"><button id="jump-concept">6.1 Sifat</button><button id="jump-net">6.2 Bentangan</button><button id="jump-area">6.3 Luas permukaan</button><button id="jump-volume">6.4 Isi padu</button><button id="jump-calculate">Cuba ukuran</button></nav>
+      <div class="study-layout">
+        <div class="study-reading">
+          <article class="lesson-block"><span class="lesson-code">6.1 · KENALI BONGKAH</span><h3 id="note-concept-title" tabindex="-1">Sifat geometri</h3><p id="note-classification"></p><p id="note-everyday" class="note-context"></p>
+            <div class="note-table-wrap" tabindex="0" role="region" aria-label="Perbandingan sifat lima bongkah"><table class="note-table"><caption>Bandingkan lima bongkah GeoDecoder</caption><thead><tr><th scope="col">Bongkah</th><th scope="col">Muka / permukaan</th><th scope="col">Rusuk</th><th scope="col">Bucu</th></tr></thead><tbody id="shape-comparison-body"></tbody></table></div><p class="table-hint">Pada skrin kecil, leret jadual ke kiri atau kanan.</p><p class="note-definition"><b>Muka</b> ialah permukaan rata. <b>Rusuk melengkung</b> ialah sempadan bulatan tempat permukaan rata bertemu permukaan melengkung.</p>
+          </article>
+          <article class="lesson-block"><span class="lesson-code">6.2 · LIHAT SAMBUNGANNYA</span><h3 id="note-net-title" tabindex="-1">Daripada bongkah kepada bentangan</h3><p>Bentangan menunjukkan seluruh permukaan bongkah yang dibuka pada satu satah. Sisi yang sepadan akan bercantum semula apabila dilipat.</p><div id="note-net-list"></div><div class="note-discovery"><b>Teroka sendiri</b><p id="note-task"></p><button id="note-explore-net" class="text-button">Lihat animasi bentangan <span aria-hidden="true">↗</span></button></div></article>
+          <article class="lesson-block"><span class="lesson-code">6.3 · JUMLAH LUAS DI LUAR</span><h3 id="note-area-title" tabindex="-1">Luas permukaan, L</h3><p>Jumlahkan luas semua permukaan yang berada di luar bongkah. Untuk nota ini, rumus jumlah luas melibatkan bongkah tertutup.</p><p id="note-area-formula" class="lesson-formula"></p><p id="note-area-why"></p><div id="area-example"></div></article>
+          <article class="lesson-block"><span class="lesson-code">6.4 · RUANG DI DALAM</span><h3 id="note-volume-title" tabindex="-1">Isi padu, V</h3><p>Isi padu mengukur ruang yang dipenuhi oleh bongkah. Satu kiub bersisi 1 cm mempunyai isi padu 1 cm³.</p><p id="note-volume-formula" class="lesson-formula volume-formula"></p><p id="note-volume-why"></p><div id="volume-example"></div></article>
+        </div>
+        <aside class="study-reference" aria-label="Rujukan pantas nota"><div class="formula-reference"><p class="eyebrow">RUMUS PANTAS</p><span>Luas permukaan</span><p id="quick-area" class="quick-formula"></p><span>Isi padu</span><p id="quick-volume" class="quick-formula"></p><p class="symbol-heading">Maksud simbol</p><dl id="symbol-list"></dl><p class="symbol-note">L: luas permukaan · V: isi padu<br>cm²: unit luas · cm³: unit isi padu</p><button id="note-explore-solid" class="button">Teroka bongkah ini dalam 3D <span aria-hidden="true">↗</span></button></div><div class="mistake-reference"><p class="eyebrow">ELAK KELIRU</p><div id="mistake-list"></div></div></aside>
+      </div>
+      <section class="notes-calculator" aria-labelledby="note-calculate-title"><div class="calculator-heading"><div><p class="eyebrow">AKTIVITI PENEROKAAN · TANPA MARKAH</p><h3 id="note-calculate-title" tabindex="-1">Cuba ukuran sendiri</h3><p>Ubah ukuran dan perhatikan perubahan luas permukaan serta isi padu.</p></div><button id="reset-measures" class="button">Gunakan nombor contoh <span aria-hidden="true">↻</span></button></div>
+        <div class="calculator-layout"><div class="diagram-panel"><svg id="notes-diagram" viewBox="0 0 280 240" role="img" aria-label="Rajah ukuran bongkah"></svg><p id="diagram-caption"></p><p class="diagram-note">Rajah ini mengikut ukuran aktiviti; model Teroka 3D menunjukkan bentuk umum.</p><p id="slant-result" class="slant-result" hidden><output id="calculated-slant"></output></p></div>
+          <form id="notes-form" novalidate><p id="measure-help" class="measure-help">Semua ukuran dalam cm, dari 0.1 hingga 1000. Titik atau koma perpuluhan diterima.</p><div class="measure-fields">
+            <div id="measure-field-a" class="measure-field"><label id="measure-label-a" for="measure-a">a · panjang rusuk</label><div class="measure-input"><input id="measure-a" name="a" type="text" inputmode="decimal" maxlength="10" autocomplete="off" aria-describedby="measure-help measure-error-a"><span aria-hidden="true">cm</span></div><p id="measure-error-a" class="measure-error"></p></div>
+            <div id="measure-field-p" class="measure-field" hidden><label id="measure-label-p" for="measure-p">p · panjang</label><div class="measure-input"><input id="measure-p" name="p" type="text" inputmode="decimal" maxlength="10" autocomplete="off" aria-describedby="measure-help measure-error-p"><span aria-hidden="true">cm</span></div><p id="measure-error-p" class="measure-error"></p></div>
+            <div id="measure-field-l" class="measure-field" hidden><label id="measure-label-l" for="measure-l">l · lebar</label><div class="measure-input"><input id="measure-l" name="l" type="text" inputmode="decimal" maxlength="10" autocomplete="off" aria-describedby="measure-help measure-error-l"><span aria-hidden="true">cm</span></div><p id="measure-error-l" class="measure-error"></p></div>
+            <div id="measure-field-t" class="measure-field" hidden><label id="measure-label-t" for="measure-t">t · tinggi tegak</label><div class="measure-input"><input id="measure-t" name="t" type="text" inputmode="decimal" maxlength="10" autocomplete="off" aria-describedby="measure-help measure-error-t"><span aria-hidden="true">cm</span></div><p id="measure-error-t" class="measure-error"></p></div>
+            <div id="measure-field-j" class="measure-field" hidden><label id="measure-label-j" for="measure-j">j · jejari tapak</label><div class="measure-input"><input id="measure-j" name="j" type="text" inputmode="decimal" maxlength="10" autocomplete="off" aria-describedby="measure-help measure-error-j"><span aria-hidden="true">cm</span></div><p id="measure-error-j" class="measure-error"></p></div>
+          </div><fieldset id="notes-pi" class="notes-pi" hidden><legend>Nilai π untuk aktiviti ini</legend><div class="pi-options" role="group" aria-label="Pilih nilai pi"><button type="button" id="pi-ratio" aria-pressed="true">22/7</button><button type="button" id="pi-decimal" aria-pressed="false">3.142</button><button type="button" id="pi-full" aria-pressed="false">π</button></div><p id="notes-pi-description"></p></fieldset><button type="submit" id="calculate-measures" class="button primary">Kira dan semak ukuran</button></form>
+        </div><div class="calculation-results" aria-live="polite" aria-atomic="true"><div><span>Luas permukaan</span><output id="calculated-area">—</output></div><div><span>Isi padu</span><output id="calculated-volume">—</output></div></div><p id="calculation-status" class="calculation-status" role="status"></p><details class="area-breakdown"><summary>Dari mana datangnya jumlah luas ini?</summary><ul id="area-breakdown"></ul></details>
+      </section>
+      <section class="notes-summary"><div><p class="eyebrow">SIMPAN DALAM INGATAN</p><h3>Rumus dan unit</h3><p>Luas permukaan menggunakan unit persegi. Isi padu menggunakan unit padu.</p></div><div class="note-table-wrap" tabindex="0" role="region" aria-label="Ringkasan rumus lima bongkah"><table class="note-table formula-table"><caption>Rumus untuk bongkah tertutup dalam GeoDecoder</caption><thead><tr><th scope="col">Bongkah</th><th scope="col">Luas permukaan</th><th scope="col">Isi padu</th></tr></thead><tbody id="formula-summary-body"></tbody></table></div><div id="unit-facts" class="unit-facts"></div><p class="note-definition">Jangan darab 100 sahaja apabila menukar m² kepada cm². Luas melibatkan dua ukuran; isi padu melibatkan tiga ukuran.</p></section>
+      <details class="composite-example"><summary>Cabar diri · kotak hadiah berbumbung piramid</summary><div><p>Sebuah kubus bersisi 6 cm dicantum dengan piramid tegak bertapak segi empat sama di atasnya. Tinggi piramid 4 cm dan tinggi sendengnya 5 cm. Kedua-dua tapak yang bercantum sama saiz.</p><p><b>Luas permukaan luar:</b> 5 muka kubus + 4 muka segi tiga = (5 × 6²) + (4 × ½ × 6 × 5) = <b>240 cm²</b>. Dua muka tapak yang bercantum berada di dalam, jadi tidak dikira sebagai permukaan luar.</p><p><b>Jumlah isi padu:</b> 6³ + (⅓ × 6² × 4) = 216 + 48 = <b>264 cm³</b> = 264 mL = 0.264 L.</p></div></details>
+      <div class="view-note"><div><p class="eyebrow">PENGAYAAN · UNJURAN ORTOGON</p><h3>Pandangan 2D bukan bentangan</h3><p>Pandangan menunjukkan rupa bongkah dari satu arah. Bentangan membuka seluruh permukaan pada satu satah. Bandingkan kedua-duanya dengan model yang sama.</p></div><button id="note-explore-views" class="button">Bandingkan enam pandangan <span aria-hidden="true">↗</span></button></div>
+      <p class="curriculum-scope">Nota ini ditulis semula untuk pembelajaran lima bongkah projek, berpandukan DSKP Matematik Tingkatan 2 SP 6.1.1, 6.2.1, 6.3.1 dan 6.4.1–6.4.3. Contoh gabungan dan unit menyokong 6.3.3. Pengayaan pandangan berkait Tingkatan 3 SP 7.1.1–7.1.2. Ia bukan liputan seluruh Bab 6, khususnya sfera dan prisma lain.</p>
+    </section>
+    <section id="labs-panel" class="labs-panel" hidden aria-labelledby="labs-title">
+      <div class="labs-heading"><p class="eyebrow">BELAJAR MELALUI PERBUATAN · TANPA MARKAH</p><h2 id="labs-title" tabindex="-1">Makmal interaktif</h2><p>Pilih aktiviti. Bina, ubah ukuran dan terangkan apa yang anda perhatikan.</p></div>
+      <nav class="lab-choices" aria-label="Pilih makmal"><button id="lab-net" aria-pressed="true"><b>01</b><span>Bina bentangan<small>9 bentangan siap + kubus</small></span></button><button id="lab-volume" aria-pressed="false"><b>02</b><span>Makmal isi padu<small>Isi A, B atau kedua-dua</small></span></button><button id="lab-area" aria-pressed="false"><b>03</b><span>Terbitkan rumus<small>Jejaki setiap permukaan</small></span></button><button id="lab-composite" aria-pressed="false"><b>04</b><span>Bongkah gabungan<small>Cari permukaan luar</small></span></button></nav>
+      <div class="lab-intro"><h3 id="lab-title">Teroka dan bina bentangan</h3><p id="lab-intro"></p></div>
+      <div class="lab-guide" aria-label="Langkah aktiviti"><ol id="lab-steps"></ol><p id="lab-next-step" role="status"></p></div><div class="lab-layout"><div class="lab-scene-column"><div class="lab-stage"><div class="lab-stage-header"><span id="lab-scene-label">BENTANGAN KUBUS</span><span id="lab-zoom-level">100%</span></div><div id="lab-playback" class="lab-playback"><div class="lab-tempo"><label for="lab-speed">Kelajuan<select id="lab-speed"><option value="0.5" selected>Perlahan · disyorkan</option><option value="0.25">Sangat perlahan</option><option value="1">Biasa</option></select></label><button id="lab-pause" class="button" disabled>Jeda animasi</button></div><p id="lab-motion-state" class="lab-motion-state"></p><div id="lab-slider-wrap"><div class="timeline-label"><label id="lab-progress-label" for="lab-progress">Kemajuan</label><output id="lab-progress-value">0%</output></div><input id="lab-progress" type="range" min="0" max="1000" step="1" value="0"></div></div><canvas id="labs-canvas" tabindex="0" role="img" aria-label="Paparan interaktif makmal" aria-describedby="lab-caption">Model makmal diterangkan dalam penerangan dan keputusan di bawah.</canvas><p class="lab-drag-hint">Seret model untuk putar · Anak panah: putar · + / −: zum</p><div class="lab-camera" role="group" aria-label="Kawalan kamera makmal"><button id="lab-left" aria-label="Putar model ke kiri">←</button><button id="lab-right" aria-label="Putar model ke kanan">→</button><button id="lab-up" aria-label="Putar model ke atas">↑</button><button id="lab-down" aria-label="Putar model ke bawah">↓</button><button id="lab-zoom-out" aria-label="Zum keluar makmal">−</button><button id="lab-zoom-in" aria-label="Zum masuk makmal">+</button><button id="lab-reset-camera">Asal</button></div></div><p id="lab-caption" class="lab-caption"></p>
+        <p id="lab-outcome" class="lab-outcome" role="status"></p>
+      </div><div class="lab-controls">
+        <section id="lab-net-panel" class="lab-control-panel" aria-label="Aktiviti bina bentangan"><div class="net-mode-switch" role="group" aria-label="Cara meneroka bentangan"><button id="net-mode-gallery" aria-pressed="true">Bentangan siap</button><button id="net-mode-editor" aria-pressed="false">Susun petak kubus</button></div><div id="net-preset-panel"><div class="lab-field"><label for="net-preset">Pilih bentangan siap</label><select id="net-preset"></select></div><p id="net-preset-tag" class="preset-tag"></p><p id="net-preset-summary"></p><div id="net-preset-faces" class="face-legend" role="group" aria-label="Jejaki muka bentangan siap"></div><p class="lab-note">Pilih contoh, kemudian tekan Lipat perlahan. Tukar contoh untuk kembali kepada bentangan rata. Untuk menyusun sendiri, pilih Susun petak kubus.</p></div><div id="net-editor-panel" hidden><p class="eyebrow">1 · SUSUN ENAM MUKA</p><p>Tekan petak untuk tambah atau buang muka. Seret muka bernombor ke petak kosong, atau gunakan butang arah di bawah grid.</p><div class="lab-field"><label for="net-example">Susunan contoh</label><select id="net-example"><option value="cross">Bentangan sah</option><option value="overlap">Susunan bertindih</option></select></div><div class="net-grid-heading"><b id="net-count">6 / 6 muka</b><button id="net-clear" class="text-button">Kosongkan grid</button></div><div id="net-drag-ghost" class="net-drag-ghost" aria-hidden="true" hidden></div><div id="net-grid" class="net-grid" role="group" aria-label="Grid bentangan kubus 6 kali 6"></div><div class="net-move"><label for="net-selected">Pindahkan muka</label><select id="net-selected" aria-label="Muka untuk dipindahkan"></select><div role="group" aria-label="Pindah muka satu petak"><button id="net-left" aria-label="Pindah muka ke kiri">←</button><button id="net-right" aria-label="Pindah muka ke kanan">→</button><button id="net-up" aria-label="Pindah muka ke atas">↑</button><button id="net-down" aria-label="Pindah muka ke bawah">↓</button></div></div><p class="lab-note">Dua petak mesti bertemu pada satu sisi penuh. Enam petak sahaja belum tentu menghasilkan kubus. Aktiviti bina sendiri ini memfokuskan kubus.</p></div><div class="lab-actions"><button id="net-fold" class="button primary">Lipat perlahan</button><button id="net-flat" class="button">Buka rata</button></div><p id="net-edit-note" class="lab-note"></p><p id="net-feedback" class="lab-feedback" role="status"></p></section>
+        <section id="lab-volume-panel" class="lab-control-panel" hidden aria-label="Aktiviti isi padu"><div class="lab-field"><label for="volume-kind">Cara meneroka isi padu</label><select id="volume-kind"><option value="compare">Isi satu / dua bongkah dan jumlahkan</option><option value="unit">Susun kiub unit dalam kuboid</option><option value="cone">Kon → silinder</option><option value="pyramid">Piramid → prisma bertapak segi empat sama</option></select></div>
+          <div id="compare-controls"><div class="lab-field"><label for="compare-count">Bilangan bongkah</label><select id="compare-count"><option value="2">Dua bongkah · A dan B</option><option value="1">Satu bongkah · A sahaja</option></select></div><p>Tambah 1 cm³, penuhkan satu bongkah atau isi kedua-duanya. Peluncur menunjukkan peratus isi padu, bukan peratus tinggi.</p><section id="compare-card-a" class="compare-card"><h4>Bongkah A</h4><div class="lab-field"><label for="compare-shape-a">Bentuk A</label><select id="compare-shape-a"></select></div><details class="compare-measures"><summary>Ubah ukuran A</summary><div class="lab-dimensions"><label id="compare-field-a-a" for="compare-a-a">a · sisi tapak / rusuk<output id="compare-a-a-value"></output><input id="compare-a-a" type="range" min="1" max="8" step="1" value="3"></label><label id="compare-field-a-p" for="compare-a-p">p · panjang<output id="compare-a-p-value"></output><input id="compare-a-p" type="range" min="1" max="8" step="1" value="3"></label><label id="compare-field-a-l" for="compare-a-l">l · lebar<output id="compare-a-l-value"></output><input id="compare-a-l" type="range" min="1" max="8" step="1" value="3"></label><label id="compare-field-a-t" for="compare-a-t">t · tinggi tegak<output id="compare-a-t-value"></output><input id="compare-a-t" type="range" min="1" max="8" step="1" value="3"></label><label id="compare-field-a-j" for="compare-a-j">j · jejari<output id="compare-a-j-value"></output><input id="compare-a-j" type="range" min="1" max="8" step="1" value="3"></label></div></details><p id="compare-dim-summary-a" class="lab-note"></p><label class="compare-level" for="compare-fill-a">Isi A<output id="compare-level-a">0%</output><input id="compare-fill-a" type="range" min="0" max="1000" value="0" step="1"></label><p id="compare-volume-a" class="compare-volume"></p><div class="lab-actions"><button id="compare-add-a" class="button">+1 cm³ ke A</button><button id="compare-full-a" class="button">Penuhkan A</button></div></section><section id="compare-card-b" class="compare-card"><h4>Bongkah B</h4><div class="lab-field"><label for="compare-shape-b">Bentuk B</label><select id="compare-shape-b"></select></div><details class="compare-measures"><summary>Ubah ukuran B</summary><div class="lab-dimensions"><label id="compare-field-b-a" for="compare-b-a">a · sisi tapak / rusuk<output id="compare-b-a-value"></output><input id="compare-b-a" type="range" min="1" max="8" step="1" value="3"></label><label id="compare-field-b-p" for="compare-b-p">p · panjang<output id="compare-b-p-value"></output><input id="compare-b-p" type="range" min="1" max="8" step="1" value="3"></label><label id="compare-field-b-l" for="compare-b-l">l · lebar<output id="compare-b-l-value"></output><input id="compare-b-l" type="range" min="1" max="8" step="1" value="3"></label><label id="compare-field-b-t" for="compare-b-t">t · tinggi tegak<output id="compare-b-t-value"></output><input id="compare-b-t" type="range" min="1" max="8" step="1" value="3"></label><label id="compare-field-b-j" for="compare-b-j">j · jejari<output id="compare-b-j-value"></output><input id="compare-b-j" type="range" min="1" max="8" step="1" value="3"></label></div></details><p id="compare-dim-summary-b" class="lab-note"></p><label class="compare-level" for="compare-fill-b">Isi B<output id="compare-level-b">0%</output><input id="compare-fill-b" type="range" min="0" max="1000" value="0" step="1"></label><p id="compare-volume-b" class="compare-volume"></p><div class="lab-actions"><button id="compare-add-b" class="button">+1 cm³ ke B</button><button id="compare-full-b" class="button">Penuhkan B</button></div></section><div id="compare-both-actions" class="lab-actions"><button id="compare-add-both" class="button">+1 cm³ ke A dan B</button><button id="compare-full-both" class="button primary">Penuhkan A dan B</button></div><button id="compare-empty" class="button">Kosongkan isi · mula semula</button><p id="compare-both-note" class="lab-note">+1 cm³ ke A dan B bermaksud tambah sehingga 1 cm³ pada setiap bongkah.</p><fieldset class="compare-sum-choice"><legend>Pilih isi yang hendak dijumlahkan</legend><label><input id="compare-include-a" type="checkbox" checked>Isi A</label><label id="compare-include-b-label"><input id="compare-include-b" type="checkbox" checked>Isi B</label></fieldset><p id="compare-total" class="lab-equation" role="status"></p><p id="compare-capacity" class="lab-note"></p><p id="compare-formulas" class="lab-note"></p><p class="lab-note">Warna menunjukkan isi; garisan menunjukkan kapasiti penuh. A di kiri, B di kanan. Pada satu bongkah, A berada di tengah. Menukar bentuk atau ukurannya mengosongkan isi bongkah itu sahaja. Pengiraan menggunakan nilai sebelum pembundaran; bulatan menggunakan π ≈ 3.14159.</p></div><div id="unit-controls" hidden><p>Setiap kiub kecil bersisi 1 cm mempunyai isi padu <b>1 cm³</b>. Lengkapkan satu lapisan, kemudian penuhkan bekas.</p><div class="lab-dimensions"><label for="unit-p">p · panjang <output id="unit-p-value">3 cm</output><input id="unit-p" type="range" min="1" max="6" step="1" value="3"></label><label for="unit-l">l · lebar <output id="unit-l-value">2 cm</output><input id="unit-l" type="range" min="1" max="6" step="1" value="2"></label><label for="unit-t">t · tinggi <output id="unit-t-value">3 cm</output><input id="unit-t" type="range" min="1" max="6" step="1" value="3"></label></div><div class="lab-actions"><button id="unit-one" class="button primary">Tambah 1 kiub</button><button id="unit-layer" class="button">Lengkapkan lapisan</button><button id="unit-fill" class="button">Penuhkan beransur</button><button id="unit-empty" class="button">Kosongkan</button></div><p id="unit-result" class="lab-feedback" role="status"></p><p id="unit-equation" class="lab-equation"></p></div>
+          <div id="pour-controls" hidden><p id="pour-explanation"></p><div class="lab-dimensions"><label for="pour-size"><span id="pour-size-label">j · jejari</span><output id="pour-size-value">3 cm</output><input id="pour-size" type="range" min="1" max="8" step="1" value="3"></label><label for="pour-height">t · tinggi tegak kedua-dua bekas<output id="pour-height-value">4 cm</output><input id="pour-height" type="range" min="1" max="8" step="1" value="4"></label></div><div class="pour-key"><span><i class="source-dot"></i>Sumber di kiri</span><span><i class="receiver-dot"></i>Penerima di kanan</span></div><div class="lab-actions"><button id="pour-one" class="button primary">Tuang satu bekas</button><button id="pour-refill" class="button" disabled>Isi semula sumber</button><button id="pour-reset" class="button">Mula semula</button></div><p id="pour-result" class="lab-feedback" role="status"></p><p id="pour-equation" class="lab-equation"></p><p class="lab-note">Anggap tiada cecair tertumpah. Isi semula bekas sumber selepas setiap tuangan. Garisan menunjukkan bekas; warna menunjukkan isi. Untuk bulatan, pengiraan makmal menggunakan π ≈ 3.14159.</p></div>
+        </section>
+        <section id="lab-area-panel" class="lab-control-panel" hidden aria-label="Aktiviti terbitkan rumus"><p class="eyebrow">BUKA · PILIH · JUMLAHKAN</p><p>Buka bentangan, pilih setiap permukaan dan jumlahkan luasnya. Muka yang dipilih disorot pada model.</p><div class="lab-field"><label for="area-shape">Bongkah</label><select id="area-shape"><option value="cube">Kubus</option><option value="cuboid">Kuboid</option><option value="pyramid">Piramid bertapak segi empat sama</option><option value="cylinder">Silinder</option><option value="cone">Kon</option></select></div><div id="area-dimensions" class="lab-dimensions"><label id="area-field-a" for="area-a">a · sisi tapak / rusuk<output id="area-a-value"></output><input id="area-a" type="range" min="1" max="10" value="4" step="1"></label><label id="area-field-p" for="area-p" hidden>p · panjang<output id="area-p-value"></output><input id="area-p" type="range" min="1" max="10" value="6" step="1"></label><label id="area-field-l" for="area-l" hidden>l · lebar<output id="area-l-value"></output><input id="area-l" type="range" min="1" max="10" value="4" step="1"></label><label id="area-field-t" for="area-t" hidden>t · tinggi tegak<output id="area-t-value"></output><input id="area-t" type="range" min="1" max="10" value="4" step="1"></label><label id="area-field-j" for="area-j" hidden>j · jejari<output id="area-j-value"></output><input id="area-j" type="range" min="1" max="10" value="3" step="1"></label></div><p id="area-slant" class="lab-note"></p><div class="lab-actions"><button id="area-open" class="button primary">Buka bentangan</button><button id="area-close" class="button">Cantum semula</button></div><p id="area-count" class="lab-group-title">0 / 6 permukaan dipilih</p><div id="area-pieces" class="area-pieces" role="group" aria-label="Pilih permukaan untuk dijumlahkan"></div><div class="lab-actions"><button id="area-all" class="text-button">Pilih semua permukaan</button><button id="area-clear" class="text-button">Kosongkan pilihan</button></div><p id="area-sum" class="lab-sum"></p><p id="area-total" class="lab-equation" role="status"></p><p id="area-formula" class="derived-formula"></p><p class="lab-note">Rumus jumlah luas ini untuk bongkah tertutup dan tegak. Bagi kon/piramid, s ialah tinggi sendeng; t ialah tinggi tegak. Pengiraan bulatan menggunakan π ≈ 3.14159. Nilai dipaparkan hingga 2 tempat perpuluhan; jumlah dikira sebelum pembundaran.</p></section>
+        <section id="lab-composite-panel" class="lab-control-panel" hidden aria-label="Aktiviti bongkah gabungan"><p>Selepas dua bongkah dicantum pada tapak yang sama saiz, permukaan manakah masih berada di luar?</p><div class="lab-field"><label for="comp-kind">Pilih gabungan</label><select id="comp-kind"><option value="roof">Kubus + piramid bertapak segi empat sama</option><option value="rocket">Silinder + kon</option></select></div><div class="lab-dimensions"><label for="comp-size"><span id="comp-size-label">a · sisi tapak bersama</span><output id="comp-size-value">6 cm</output><input id="comp-size" type="range" min="1" max="8" step="1" value="6"></label><label id="comp-body-field" for="comp-body-height" hidden>h · tinggi silinder<output id="comp-body-height-value">6 cm</output><input id="comp-body-height" type="range" min="1" max="8" step="1" value="6"></label><label for="comp-roof-height">t · tinggi tegak piramid / kon<output id="comp-roof-height-value">4 cm</output><input id="comp-roof-height" type="range" min="1" max="8" step="1" value="4"></label></div><div class="lab-actions"><button id="comp-join" class="button primary">Cantum bongkah</button><button id="comp-separate" class="button">Pisahkan bongkah</button></div><p class="lab-group-title">Pilih semua permukaan luar selepas cantuman</p><div id="comp-groups" class="area-pieces" role="group" aria-label="Pilihan permukaan luar"></div><button id="comp-check" class="button primary">Semak pilihan</button><p id="comp-feedback" class="lab-feedback" role="status"></p><div class="composite-totals"><span>Luas permukaan luar<output id="comp-area">Cantum dahulu</output></span><span>Jumlah isi padu<output id="comp-volume">264 cm³</output></span></div><p id="comp-equation" class="lab-note"></p><p class="lab-note">Cantuman penuh tanpa ruang atau pertindihan isi. Dua permukaan yang bertemu menjadi permukaan dalaman. Gunakan tinggi tegak untuk isi padu. Nilai dipaparkan hingga 2 tempat perpuluhan; pengiraan menggunakan nilai sebelum pembundaran.</p></section>
+      </div></div>
+      <p class="curriculum-scope">Aktiviti berpandukan DSKP Matematik Tingkatan 2: bentangan dan pembinaan model (6.2.1), rumus luas permukaan (6.3.1), masalah gabungan (6.3.3), rumus serta masalah isi padu (6.4.1–6.4.3). Fokus pada bongkah tegak terpilih. Prisma tambahan bertapak poligon sekata; tapak segi tiga ialah segi tiga sama sisi. Ini penerokaan, bukan pentaksiran tahap penguasaan.</p>
+    </section>
+    <section id="panduan" class="guide" aria-labelledby="guide-title"><div><p class="eyebrow">PANDUAN RINGKAS</p><h2 id="guide-title">Satu bongkah. Tiga cara memahami.</h2></div><div class="guide-columns"><article><span class="guide-icon" aria-hidden="true">3D</span><h3>Model bongkah</h3><p>Putar dan zum untuk melihat permukaan, rusuk dan bucu. Klik muka untuk menjejakinya.</p></article><article><span class="guide-icon" aria-hidden="true">↗</span><h3>Bentangan</h3><p>Buka seluruh permukaan menjadi bentuk rata. Cantum semula untuk memahami sambungannya.</p></article><article><span class="guide-icon" aria-hidden="true">2D</span><h3>Pandangan ortografik</h3><p>Lihat bongkah dari atas, bawah, depan, belakang, kiri atau kanan. Bongkah kekal tertutup.</p></article></div>
+      <details id="curriculum"><summary>Rujukan KSSM / DSKP dan skop pembelajaran</summary><div class="curriculum-copy"><p><b>Tingkatan 2:</b> SP 6.1.1 (sifat geometri bongkah) dan SP 6.2.1 (bentangan dan model). Nota turut merangkumi luas permukaan (6.3.1), isi padu (6.4.1–6.4.3), contoh gabungan dan unit (6.3.3). Fokusnya lima bongkah projek, bukan liputan penuh Bab 6.</p><p><b>Pengayaan Tingkatan 3:</b> SP 7.1.1–7.1.2 (unjuran ortogon). Enam pandangan membantu membezakan objek dengan unjurannya; modul belum mengajar lukisan pelan/dongakan mengikut skala.</p><p>Bahasa dipermudah supaya murid Tingkatan 1 boleh mengikuti aktiviti. Contoh ini menggunakan bongkah tegak. Silinder dan kon mempunyai permukaan melengkung; istilah “muka” digunakan untuk permukaan rata.</p><p><a href="https://bpk.moe.gov.my/kurikulum/kssm/kssm-tingkatan-2/341-dskp-kssm-matematik-tingkatan-2/file" target="_blank" rel="noreferrer">DSKP Matematik Tingkatan 2 · BPK, KPM</a><br><a href="https://sman.pahang.edu.my/system/documents/attachments/000/000/168/original/002_DSKP_KSSM_MATEMATIK_TINGKATAN_3.pdf?1544929347=" target="_blank" rel="noreferrer">DSKP Matematik Tingkatan 3 · salinan dokumen KPM</a></p><p>Semua aktiviti berfungsi tanpa Internet. Pautan rujukan memerlukan Internet.</p></div></details>
+    </section>
+  </main>
+  <footer><span>GeoDecoder Digital · Belajar melalui penerokaan.</span><span>Model ilustrasi · Ukuran relatif sepadan</span></footer>
+  <div id="announcer" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+  <noscript><p class="noscript">Hidupkan JavaScript dalam pelayar untuk memutar model dan membuka bentangan. Semua penerangan ringkas tersedia selepas JavaScript dihidupkan.</p></noscript>
+  <script>
+'use strict';
+(()=>{
+/** Exact rigid panels and continuous isometric developments. No rendering dependency. */
+const TAU = Math.PI * 2;
+const clamp01 = v => Math.max(0, Math.min(1, v));
+const ease = v => { const t = clamp01(v); return t * t * (3 - 2 * t); };
+const VIEWS = {
+  front: {name:'Depan', yaw:0, pitch:0}, back:{name:'Belakang',yaw:Math.PI,pitch:0},
+  left:{name:'Kiri',yaw:-Math.PI/2,pitch:0}, right:{name:'Kanan',yaw:Math.PI/2,pitch:0},
+  top:{name:'Atas',yaw:0,pitch:Math.PI/2}, bottom:{name:'Bawah',yaw:0,pitch:-Math.PI/2}
+};
+const VIEW_ORDER = ['top','bottom','front','back','left','right'];
+const FACE_COLORS = ['#64CBB8','#94BDF7','#F2A1C2','#BCADF0','#FFD17D','#FFAD8F'];
+const DIMENSIONS = {
+  cube:{w:2,h:2,d:2},cuboid:{w:3,h:1.5,d:2},pyramid:{a:2.4,h:2.6},
+  cylinder:{r:1,h:2.5},cone:{r:1,h:2.4,l:2.6}
+};
+function rx([x,y,z],a) { return [x,y*Math.cos(a)-z*Math.sin(a),y*Math.sin(a)+z*Math.cos(a)]; }
+function ry([x,y,z],a) { return [x*Math.cos(a)+z*Math.sin(a),y,-x*Math.sin(a)+z*Math.cos(a)]; }
+function rz([x,y,z],a) { return [x*Math.cos(a)-y*Math.sin(a),x*Math.sin(a)+y*Math.cos(a),z]; }
+const add3 = (a,b) => a.map((v,i)=>v+b[i]);
+const sub3 = (a,b) => a.map((v,i)=>v-b[i]);
+const length3 = a => Math.hypot(...a);
+const cross3 = (a,b) => [a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+function viewPoint(v,yaw,pitch) { const a=ry(v,-yaw); return rx(a,pitch); }
+function panel(id,name,vertices,color=FACE_COLORS[id],extra={}) {
+  return {id,name,vertices,color,outline:true,...extra};
+}
+function boxMesh(shape,t,dimensions=DIMENSIONS[shape]) {
+  const {w,h,d}=dimensions, theta=(1-t)*Math.PI/2;
+  const right=v=>add3([w/2,0,0],ry(v,theta));
+  const faces=[
+    panel(0,'Depan',[[-w/2,-h/2,0],[w/2,-h/2,0],[w/2,h/2,0],[-w/2,h/2,0]]),
+    panel(1,'Kanan',[[0,-h/2,0],[d,-h/2,0],[d,h/2,0],[0,h/2,0]].map(right)),
+    panel(2,'Belakang',[[0,-h/2,0],[w,-h/2,0],[w,h/2,0],[0,h/2,0]].map(v=>right(add3([d,0,0],ry(v,theta))))),
+    panel(3,'Kiri',[[-d,-h/2,0],[0,-h/2,0],[0,h/2,0],[-d,h/2,0]].map(v=>add3([-w/2,0,0],ry(v,-theta)))),
+    panel(4,'Atas',[[-w/2,0,0],[w/2,0,0],[w/2,d,0],[-w/2,d,0]].map(v=>add3([0,h/2,0],rx(v,-theta)))),
+    panel(5,'Bawah',[[-w/2,-d,0],[w/2,-d,0],[w/2,0,0],[-w/2,0,0]].map(v=>add3([0,-h/2,0],rx(v,theta))))
+  ];
+  return faces;
+}
+function pyramidMesh(t,dimensions=DIMENSIONS.pyramid) {
+  const {a,h}=dimensions, b=a/2, angle=Math.atan2(h,-b)*t;
+  const base=[[-b,0,-b],[b,0,-b],[b,0,b],[-b,0,b]], tip=[0,h,0];
+  const hinge=(verts,origin,rot,ang)=>verts.map(v=>add3(origin,rot(sub3(v,origin),ang)));
+  const faces=[panel(0,'Tapak',base),
+    panel(1,'Sisi depan',hinge([base[3],base[2],tip],[0,0,b],rx,angle)),
+    panel(2,'Sisi kanan',hinge([base[2],base[1],tip],[b,0,0],rz,-angle)),
+    panel(3,'Sisi belakang',hinge([base[1],base[0],tip],[0,0,-b],rx,-angle)),
+    panel(4,'Sisi kiri',hinge([base[0],base[3],tip],[-b,0,0],rz,angle))];
+  return faces.map(f=>({...f,vertices:f.vertices.map(v=>rx(v,-t*Math.PI/2))}));
+}
+/** u is material arc length. |dP/du| = 1 for every opening; no stretching. */
+function cylinderPoint(u,y,t,dimensions=DIMENSIONS.cylinder) {
+  const {r}=dimensions, developed=ease((t-.2)/.8), k=(1-developed)/r;
+  if(Math.abs(k)<1e-6) return [u,y,-k*u*u/2];
+  return [Math.sin(k*u)/k,y,-2*Math.sin(k*u/2)**2/k];
+}
+function cylinderMesh(t,n,dimensions=DIMENSIONS.cylinder) {
+  const {r,h}=dimensions, faces=[];
+  for(let i=0;i<n;i++) {
+    const u0=-Math.PI*r+TAU*r*i/n,u1=-Math.PI*r+TAU*r*(i+1)/n;
+    faces.push(panel(0,'Permukaan melengkung',[cylinderPoint(u0,-h/2,t,dimensions),cylinderPoint(u1,-h/2,t,dimensions),cylinderPoint(u1,h/2,t,dimensions),cylinderPoint(u0,h/2,t,dimensions)],FACE_COLORS[0],{
+      outline:false, rim:[[0,1],[2,3]], cut:t>.02?(i===0?[[0,3]]:i===n-1?[[1,2]]:null):null, label:i===Math.floor(n/2)-1?'1':null
+    }));
+  }
+  for(const [id,sign] of [[1,1],[2,-1]]) {
+    const vertices=Array.from({length:n},(_,i)=>add3([0,sign*h/2,0],rx([r*Math.sin(TAU*i/n),0,r*(Math.cos(TAU*i/n)-1)],sign*ease(t/.2)*Math.PI/2)));
+    faces.push(panel(id,sign===1?'Tapak atas':'Tapak bawah',vertices,FACE_COLORS[id],{label:String(id+1)}));
+  }
+  return faces;
+}
+/** beta is the material sector angle; metric ds²+s² dβ² at ALL frames. */
+function conePoint(s,beta,t,dimensions=DIMENSIONS.cone) {
+  const {r,l}=dimensions, start=Math.asin(r/l), developed=ease((t-.22)/.78);
+  const alpha=start+(Math.PI/2-start)*developed,a=Math.sin(alpha),q=Math.cos(alpha),phi=beta/a;
+  const p=[s*a*Math.sin(phi),-s*(q*q+a*a*Math.cos(phi)),s*a*q*(Math.cos(phi)-1)];
+  return rx(p,-start*(1-developed));
+}
+function coneMesh(t,n,dimensions=DIMENSIONS.cone) {
+  const {r,l}=dimensions, start=Math.asin(r/l), developed=ease((t-.22)/.78), sector=TAU*r/l,faces=[];
+  for(let i=0;i<n;i++) {
+    const b0=-sector/2+sector*i/n,b1=-sector/2+sector*(i+1)/n;
+    faces.push(panel(0,'Permukaan melengkung',[[0,0,0],conePoint(l,b0,t,dimensions),conePoint(l,b1,t,dimensions)],FACE_COLORS[0],{
+      outline:false,rim:[[1,2]],cut:t>.02?(i===0?[[0,1]]:i===n-1?[[0,2]]:null):null,label:i===Math.floor(n/2)-1?'1':null
+    }));
+  }
+  const disk=Array.from({length:n},(_,i)=>{
+    const phi=TAU*i/n;
+    let p=[r*Math.sin(phi),r*(1-Math.cos(phi))*Math.sin(start),-r*(1-Math.cos(phi))*Math.cos(start)];
+    p=rx(p,-(Math.PI/2+start)*ease(t/.22));
+    return rx(add3([0,-l,0],p),-start*(1-developed));
+  });
+  faces.push(panel(1,'Tapak bulatan',disk,FACE_COLORS[1],{label:'2'}));
+  return faces;
+}
+function buildMesh(shape,progress=0,segments=128,dimensions=undefined) {
+  const t=clamp01(progress),n=Math.max(24,Math.round(segments));
+  if(shape==='cube'||shape==='cuboid')return boxMesh(shape,t,dimensions);
+  if(shape==='pyramid')return pyramidMesh(t,dimensions);
+  if(shape==='cylinder')return cylinderMesh(t,n,dimensions);
+  if(shape==='cone')return coneMesh(t,n,dimensions);
+  throw new RangeError('Bongkah tidak diketahui: '+shape);
+}
+function meshBounds(mesh) {
+  const v=mesh.flatMap(f=>f.vertices),min=[0,1,2].map(i=>Math.min(...v.map(p=>p[i]))),max=[0,1,2].map(i=>Math.max(...v.map(p=>p[i])));
+  const center=min.map((x,i)=>(x+max[i])/2),radius=Math.max(...v.map(p=>length3(sub3(p,center))));
+  return {min,max,center,radius};
+}
+function faceCenter(f) {return f.vertices.reduce((sum,p)=>add3(sum,p),[0,0,0]).map(v=>v/f.vertices.length);}
+
+
+const MODULE_VERSION='1.3.0';
+const MODEL_ORDER=['cube','cuboid','pyramid','cylinder','cone'];
+const MODEL_DATA={
+  cube:{name:'Kubus',tag:'Enam muka, semuanya sama.',flat:6,curved:0,edges:12,vertices:8,
+    intro:'Kubus mempunyai 6 muka segi empat sama. Semua muka sama bentuk dan sama saiz. Kesemua 12 rusuknya sama panjang.',
+    net:'Enam segi empat sama bercantum pada rusuk. Jejaki muka berwarna yang sama semasa bentangan dibuka dan dicantum semula.',
+    observe:'Cari dua muka yang berhadapan. Muka itu tidak berkongsi rusuk.',
+    labels:['Depan','Kanan','Belakang','Kiri','Atas','Bawah'],views:['Segi empat sama','Segi empat sama','Segi empat sama','Segi empat sama','Segi empat sama','Segi empat sama'],
+    question:'Adakah pandangan atas menunjukkan semua 6 muka kubus?',options:['Tidak, hanya rupa dari atas.','Ya, semua muka dibuka.'],answer:0,
+    feedback:'Pandangan atas hanya melihat bongkah dari satu arah. Bentangan membuka kesemua 6 muka pada satu satah.'},
+  cuboid:{name:'Kuboid',tag:'Tiga pasang muka yang sepadan.',flat:6,curved:0,edges:12,vertices:8,
+    intro:'Kuboid mempunyai 6 muka segi empat tepat. Muka berhadapan sama bentuk dan sama saiz. Contoh ini mewakili kotak 6 cm × 4 cm × 3 cm dalam bank GeoDecoder.',
+    net:'Bentangan ini mempunyai tiga pasang segi empat tepat: 6 × 4, 6 × 3 dan 4 × 3. Sisi yang dicantum mesti sama panjang.',
+    observe:'Bandingkan muka atas, depan dan kanan. Ukuran yang berbeza menghasilkan rupa yang berbeza.',
+    labels:['Depan','Kanan','Belakang','Kiri','Atas','Bawah'],views:['Segi empat tepat · 6 × 4','Segi empat tepat · 6 × 4','Segi empat tepat · 6 × 3','Segi empat tepat · 6 × 3','Segi empat tepat · 4 × 3','Segi empat tepat · 4 × 3'],
+    question:'Adakah semua 6 muka kuboid contoh ini sama saiz?',options:['Ya, semua sama saiz.','Tidak, ada 3 pasang saiz.'],answer:1,
+    feedback:'Panjang, lebar dan tinggi contoh ini berbeza. Ada 3 pasang muka berhadapan yang sama saiz, bukan 6 muka yang semuanya sama saiz.'},
+  pyramid:{name:'Piramid',tag:'Tapak segi empat sama, satu puncak.',flat:5,curved:0,edges:8,vertices:5,
+    intro:'Piramid dalam GeoDecoder ialah piramid tegak bertapak segi empat sama. Empat muka segi tiga bertemu pada satu puncak. Puncak ialah salah satu daripada 5 bucu.',
+    net:'Satu segi empat sama menjadi tapak. Empat segi tiga kekal bersambung pada sisi tapak dan bertemu semula pada puncak apabila dilipat.',
+    observe:'Dari atas, tapak kelihatan segi empat sama dengan garisan rusuk menuju ke puncak. Dari depan, rupanya segi tiga.',
+    labels:['Tapak','Sisi depan','Sisi kanan','Sisi belakang','Sisi kiri'],views:['Segi empat sama + rusuk','Segi empat sama','Segi tiga','Segi tiga','Segi tiga','Segi tiga'],
+    question:'Apakah bentuk tapak piramid yang digunakan dalam GeoDecoder?',options:['Segi tiga.','Segi empat sama.'],answer:1,
+    feedback:'Tapaknya segi empat sama. Empat muka sisinya berbentuk segi tiga. Piramid lain boleh mempunyai bentuk tapak yang berbeza.'},
+  cylinder:{name:'Silinder',tag:'Dua tapak bulatan, satu permukaan melengkung.',flat:2,curved:1,edges:2,vertices:0,
+    intro:'Silinder tegak mempunyai 2 permukaan rata berbentuk bulatan yang sama saiz dan 1 permukaan melengkung. Ada 2 rusuk melengkung dan tiada bucu.',
+    net:'Dua bulatan menjadi tapak. Permukaan melengkung dibuka menjadi segi empat tepat: panjangnya 2πj dan lebarnya t. j ialah jejari; t ialah tinggi silinder.',
+    observe:'Dari atas atau bawah, rupanya bulatan. Dari sisi, rupanya segi empat tepat. Permukaan dibuka secara melengkung, bukan dilipat seperti panel rata.',
+    labels:['Permukaan melengkung','Tapak atas','Tapak bawah'],views:['Bulatan','Bulatan','Segi empat tepat','Segi empat tepat','Segi empat tepat','Segi empat tepat'],
+    question:'Apakah bentuk permukaan melengkung silinder apabila dibuka rata?',options:['Segi empat tepat.','Bulatan.'],answer:0,
+    feedback:'Permukaan melengkung menjadi segi empat tepat. Dua bulatan berasingan ialah tapak atas dan tapak bawah.',curvedEdges:true},
+  cone:{name:'Kon',tag:'Satu tapak bulatan, satu puncak.',flat:1,curved:1,edges:1,vertices:1,
+    intro:'Kon tegak mempunyai 1 permukaan rata berbentuk bulatan dan 1 permukaan melengkung. Ada 1 rusuk melengkung dan 1 bucu pada puncak.',
+    net:'Permukaan melengkung dibuka menjadi sektor bulatan. Jejari sektor ialah tinggi sendeng s. Panjang lengkoknya sama dengan lilitan tapak, 2πj.',
+    observe:'Sektor bulatan bukan segi tiga. Lengkoknya melengkung dan panjangnya sepadan dengan lilitan tapak. θ = 360° × j/s.',
+    labels:['Permukaan melengkung','Tapak bulatan'],views:['Bulatan + titik puncak','Bulatan','Segi tiga','Segi tiga','Segi tiga','Segi tiga'],
+    question:'Apakah bentuk permukaan melengkung kon apabila dibuka rata?',options:['Segi tiga.','Sektor bulatan.'],answer:1,
+    feedback:'Permukaan itu menjadi sektor bulatan, bukan segi tiga. Lengkok sektor menutup tepat sekeliling tapak bulatan apabila dicantum.',curvedEdges:true}
+};
+
+
+const PI_MODES={'22/7':22/7,'3.142':3.142,full:Math.PI};
+const MEASURE_FIELDS={cube:['a'],cuboid:['p','l','t'],pyramid:['a','t'],cylinder:['j','t'],cone:['j','t']};
+const FIELD_LABELS={a:'a · panjang sisi tapak',p:'p · panjang',l:'l · lebar',t:'t · tinggi tegak',j:'j · jejari tapak'};
+function readDimension(raw) {
+  if(typeof raw==='number')return Number.isFinite(raw)?raw:NaN;
+  if(typeof raw!=='string'||!/^\s*(?:\d+(?:[.,]\d*)?|[.,]\d+)\s*$/.test(raw))return NaN;
+  return Number(raw.trim().replace(',','.'));
+}
+function calculateMeasures(shape,input={},piMode='22/7') {
+  const errors={},dimensions={},pi=PI_MODES[piMode];
+  if(!MODEL_ORDER.includes(shape))errors.shape='Pilih salah satu daripada lima bongkah.';
+  if(!Object.hasOwn(PI_MODES,piMode))errors.pi='Pilih nilai anggaran π yang tersedia.';
+  for(const field of MEASURE_FIELDS[shape]||[]){const n=readDimension(input[field]);if(!Number.isFinite(n)||n<.1||n>1000)errors[field]='Masukkan ukuran dari 0.1 hingga 1000 cm.';else dimensions[field]=n;}
+  if(Object.keys(errors).length)return {valid:false,errors,area:null,volume:null,slant:null,areaParts:[],dimensions};
+  const {a,p,l,t,j}=dimensions;let areaParts=[],volume,slant=null;
+  if(shape==='cube'){areaParts=[{label:'6 muka segi empat sama',value:6*a*a}];volume=a**3;}
+  if(shape==='cuboid'){areaParts=[{label:'2 muka p × l',value:2*p*l},{label:'2 muka p × t',value:2*p*t},{label:'2 muka l × t',value:2*l*t}];volume=p*l*t;}
+  if(shape==='pyramid'){slant=Math.hypot(t,a/2);areaParts=[{label:'1 tapak segi empat sama',value:a*a},{label:'4 muka segi tiga',value:2*a*slant}];volume=a*a*t/3;}
+  if(shape==='cylinder'){areaParts=[{label:'2 tapak bulatan',value:2*pi*j*j},{label:'1 permukaan melengkung',value:2*pi*j*t}];volume=pi*j*j*t;}
+  if(shape==='cone'){slant=Math.hypot(j,t);areaParts=[{label:'1 tapak bulatan',value:pi*j*j},{label:'1 permukaan melengkung',value:pi*j*slant}];volume=pi*j*j*t/3;}
+  return {valid:true,errors,area:areaParts.reduce((sum,part)=>sum+part.value,0),volume,slant,areaParts,dimensions,pi,piMode};
+}
+const LESSON_DATA={
+ cube:{classification:'Kubus ialah prisma tegak dengan enam muka segi empat sama yang sama saiz.',everyday:'Bayangkan dadu atau kiub mainan. Putarkannya untuk mencari muka yang berhadapan.',defaults:{a:4},
+  symbols:[['a','panjang rusuk kubus']],netParts:['6 segi empat sama yang sama saiz','Rusuk yang dicantum mesti sepadan panjangnya','Muka tidak boleh bertindih apabila dilipat'],
+  surface:{formula:'L = 6a²',why:'Satu muka mempunyai luas a × a = a². Jumlahkan enam muka yang sama: L = 6 × a².',question:'Sebuah kiub tertutup mempunyai panjang rusuk 4 cm. Berapakah luas seluruh permukaannya?',steps:['Diberi a = 4 cm. Terdapat 6 muka yang sama saiz.','L = 6a²','L = 6 × 4² = 6 × 16','L = 96 cm²'],answer:'96 cm²'},
+  volume:{formula:'V = a³',why:'Isi padu ialah ruang di dalam bongkah. Untuk kubus: panjang × lebar × tinggi = a × a × a.',question:'Berapa cm³ ruang dalam kubus yang bersisi 4 cm?',steps:['Diberi a = 4 cm. Semua tiga ukuran sama.','V = a³','V = 4 × 4 × 4','V = 64 cm³'],answer:'64 cm³'},
+  mistakes:['6a² ialah luas permukaan, bukan isi padu.','Muka berhadapan tidak berkongsi rusuk.'],task:'Buka bentangan. Pilih satu muka, kemudian cari muka yang akan berhadapan dengannya apabila kubus dicantum.'},
+ cuboid:{classification:'Kuboid ialah prisma tegak. Muka berhadapan sama bentuk dan sama saiz. Kubus ialah kes khas kuboid dengan semua ukuran sama.',everyday:'Kotak kasut atau kotak hadiah biasanya menyerupai kuboid. Contoh GeoDecoder menggunakan tiga ukuran yang berbeza.',defaults:{p:6,l:4,t:3},
+  symbols:[['p','panjang'],['l','lebar (huruf kecil)'],['t','tinggi tegak']],netParts:['3 pasang muka segi empat tepat','Pasangan p × l, p × t dan l × t','Sisi yang bertemu mesti sama panjang'],
+  surface:{formula:'L = 2(pl + pt + lt)',why:'Ada dua muka bagi setiap pasangan ukuran. Jumlahnya ialah 2pl + 2pt + 2lt.',question:'Sebuah kotak tertutup berukuran 6 cm × 4 cm × 3 cm. Cari luas seluruh permukaan kotak.',steps:['p = 6 cm, l = 4 cm, t = 3 cm.','L = 2(pl + pt + lt)','L = 2[(6 × 4) + (6 × 3) + (4 × 3)]','L = 2(24 + 18 + 12) = 108 cm²'],answer:'108 cm²'},
+  volume:{formula:'V = plt',why:'Luas tapak p × l didarab dengan tinggi t. Bayangkan susunan beberapa lapisan kiub unit.',question:'Cari isi padu kuboid berukuran 6 cm × 4 cm × 3 cm.',steps:['p = 6 cm, l = 4 cm, t = 3 cm.','V = plt','V = 6 × 4 × 3','V = 72 cm³'],answer:'72 cm³'},
+  mistakes:['Jangan jumlahkan panjang + lebar + tinggi untuk mencari isi padu.','L ialah luas permukaan; l (huruf kecil) ialah lebar.'],task:'Bandingkan pandangan atas, depan dan kanan. Padankan setiap pandangan dengan pasangan ukuran p × l, p × t atau l × t.'},
+ pyramid:{classification:'Piramid GeoDecoder ialah piramid tegak bertapak segi empat sama. Puncaknya terletak tegak di atas pusat tapak.',everyday:'Bayangkan model bumbung piramid. Empat muka segi tiga bertemu pada satu puncak.',defaults:{a:6,t:4},
+  symbols:[['a','panjang sisi tapak segi empat sama'],['t','tinggi tegak, dari pusat tapak ke puncak'],['s','tinggi sendeng muka segi tiga']],netParts:['1 tapak segi empat sama','4 muka segi tiga','Muka sisi bertemu pada puncak apabila dilipat'],
+  surface:{formula:'L = a² + 2as',why:'Luas tapak ialah a². Empat muka segi tiga berjumlah 4 × ½ × a × s = 2as. Rumus ini untuk piramid tegak bertapak segi empat sama.',question:'Piramid bertapak segi empat sama mempunyai sisi tapak 6 cm dan tinggi tegak 4 cm. Cari luas permukaannya.',steps:['a = 6 cm, t = 4 cm. Tinggi sendeng s = √(4² + 3²) = 5 cm.','L = a² + 2as','L = 6² + (2 × 6 × 5)','L = 36 + 60 = 96 cm²'],answer:'96 cm²'},
+  volume:{formula:'V = ⅓a²t',why:'Isi padu piramid ialah satu pertiga daripada prisma yang mempunyai luas tapak dan tinggi yang sama.',question:'Cari isi padu piramid yang sisi tapaknya 6 cm dan tinggi tegaknya 4 cm.',steps:['Luas tapak = 6² = 36 cm². Tinggi tegak t = 4 cm.','V = ⅓ × luas tapak × tinggi tegak','V = ⅓ × 36 × 4','V = 48 cm³'],answer:'48 cm³'},
+  mistakes:['Gunakan s untuk luas muka segi tiga, tetapi t untuk isi padu.','Untuk mencari s: gunakan a/2, bukan a, dalam Teorem Pythagoras.'],task:'Hidupkan label dan buka bentangan. Kenal pasti tapak, kemudian jejaki keempat-empat muka segi tiga.'},
+ cylinder:{classification:'Silinder tegak mempunyai dua tapak bulatan sama saiz yang selari dan satu permukaan melengkung. Silinder bukan prisma kerana tapaknya bukan poligon.',everyday:'Tin minuman menyerupai silinder. Dalam nota ini, kedua-dua tapak diambil kira kerana silinder tertutup.',defaults:{j:7,t:10},
+  symbols:[['j','jejari tapak (separuh diameter)'],['t','tinggi tegak'],['π','gunakan anggaran yang dinyatakan dalam soalan']],netParts:['2 bulatan sama saiz','1 segi empat tepat berukuran 2πj × t','Panjang segi empat tepat sama dengan lilitan tapak'],
+  surface:{formula:'L = 2πj² + 2πjt',why:'Dua bulatan menyumbang 2πj². Permukaan melengkung dibuka menjadi segi empat tepat: luasnya 2πj × t.',question:'Silinder tertutup berjejari 7 cm dan tinggi 10 cm. Cari luas permukaan; ambil π ≈ 22/7.',steps:['j = 7 cm, t = 10 cm. Terdapat 2 tapak bulatan.','L = 2πj² + 2πjt','L ≈ [2 × (22/7) × 7²] + [2 × (22/7) × 7 × 10]','L ≈ 308 + 440 = 748 cm²'],answer:'748 cm²'},
+  volume:{formula:'V = πj²t',why:'Darab luas satu tapak bulatan, πj², dengan tinggi t. Bandingkan dengan kon yang mempunyai tapak dan tinggi sama.',question:'Silinder berjejari 7 cm dan tinggi 10 cm. Cari isi padu; ambil π ≈ 22/7.',steps:['j = 7 cm, t = 10 cm.','V = πj²t','V ≈ (22/7) × 7² × 10','V ≈ 1540 cm³'],answer:'1540 cm³'},
+  mistakes:['Jika diameter diberi, bahagi dua dahulu untuk mendapatkan j.','Luas permukaan silinder tertutup merangkumi dua bulatan, bukan satu.'],task:'Buka bentangan. Perhatikan bagaimana satu permukaan melengkung menjadi segi empat tepat, bukannya beberapa muka berengsel.'},
+ cone:{classification:'Kon tegak mempunyai satu tapak bulatan, satu permukaan melengkung dan satu puncak. Tinggi tegak dan tinggi sendeng berbeza.',everyday:'Bayangkan model kon tertutup. Kon ais krim tanpa penutup ialah contoh berbeza kerana tapaknya terbuka; rumus jumlah luas di sini termasuk tapak.',defaults:{j:3,t:4},
+  symbols:[['j','jejari tapak'],['t','tinggi tegak, tegak lurus kepada tapak'],['s','tinggi sendeng, sepanjang sisi ke puncak']],netParts:['1 bulatan sebagai tapak','1 sektor bulatan, bukannya segi tiga','Jejari sektor ialah s; panjang lengkoknya 2πj'],
+  surface:{formula:'L = πj² + πjs',why:'Jumlahkan luas tapak bulatan, πj², dan luas permukaan melengkung, πjs. Permukaan melengkung membentuk sektor apabila dibuka.',question:'Kon tertutup berjejari 3 cm dan tinggi tegak 4 cm. Cari luas permukaannya; ambil π ≈ 22/7 untuk nilai perpuluhan.',steps:['j = 3 cm, t = 4 cm; s = √(3² + 4²) = 5 cm.','L = πj² + πjs','L = π(3²) + π(3)(5) = 24π','L = 24π cm² ≈ 75.43 cm²'],answer:'24π cm² ≈ 75.43 cm²'},
+  volume:{formula:'V = ⅓πj²t',why:'Kon mempunyai satu pertiga isi padu silinder yang luas tapak dan tinggi tegaknya sama.',question:'Kon berjejari 3 cm dan tinggi tegak 4 cm. Cari isi padu; ambil π ≈ 22/7 untuk nilai perpuluhan.',steps:['j = 3 cm, t = 4 cm. Gunakan t, bukan tinggi sendeng s.','V = ⅓πj²t','V = ⅓ × π × 3² × 4 = 12π','V = 12π cm³ ≈ 37.71 cm³'],answer:'12π cm³ ≈ 37.71 cm³'},
+  mistakes:['Sektor bulatan bukan segi tiga; lengkoknya mesti sepadan lilitan tapak.','Tinggi sendeng s digunakan untuk luas, manakala tinggi tegak t digunakan untuk isi padu.'],task:'Buka bentangan. Jejaki lengkok sektor yang akan bercantum semula di sekeliling tapak bulatan.'}
+};
+const COMPOSITE_EXAMPLE={side:6,roofHeight:4,roofSlant:5,externalArea:240,volume:264};
+const UNIT_FACTS=[['Panjang','1 m = 100 cm'],['Luas','1 m² = 10 000 cm²'],['Isi padu','1 m³ = 1 000 000 cm³'],['Kapasiti','1 L = 1000 cm³; 1 cm³ = 1 mL']];
+
+
+/** Pure lab mathematics. No DOM, runtime storage or network. */
+const NET_PRESETS={cross:[[1,0],[0,1],[1,1],[2,1],[3,1],[1,2]],overlap:[[0,0],[1,0],[2,0],[0,1],[1,1],[2,1]]};
+const labMul=(v,k)=>v.map(x=>x*k);
+const labBasis=(u,a,v,b)=>add3(labMul(u,a),labMul(v,b));
+function labNetFrames(cells,t){
+ const frames=Array(cells.length).fill(null);if(!cells.length)return frames;
+ frames[0]={center:[cells[0][0],-cells[0][1],0],u:[1,0,0],v:[0,1,0],n:[0,0,1],parent:null};
+ const queue=[0],c=Math.cos(clamp01(t)*Math.PI/2),s=Math.sin(clamp01(t)*Math.PI/2);
+ for(const i of queue)for(let j=0;j<cells.length;j++){
+  const dx=cells[j][0]-cells[i][0],dy=cells[i][1]-cells[j][1];if(frames[j]||Math.abs(dx)+Math.abs(dy)!==1)continue;
+  const p=frames[i],u=dx?labBasis(p.u,c,p.n,-dx*s):p.u,v=dy?labBasis(p.v,c,p.n,-dy*s):p.v;
+  const hinge=add3(p.center,labMul(dx?p.u:p.v,(dx||dy)/2)),center=add3(hinge,labMul(dx?u:v,(dx||dy)/2));
+  frames[j]={u,v,n:cross3(u,v),center,parent:i};queue.push(j);
+ }
+ return frames;
+}
+// A cyclic tile layout has more joins than a hinge tree. Mark extra joins as cuts
+// rather than pretending an uncut rectangular sheet can follow a tree fold.
+function labNetCuts(cells,frames){
+ const cuts=[];for(let i=0;i<cells.length;i++)for(let j=i+1;j<cells.length;j++){
+  if(!frames[i]||!frames[j]||frames[i].parent===j||frames[j].parent===i)continue;
+  const dx=cells[j][0]-cells[i][0],dy=cells[j][1]-cells[i][1];
+  if(Math.abs(dx)+Math.abs(dy)===1)cuts.push({i,j,edge:dx===1?[1,2]:dx===-1?[3,0]:dy===1?[0,1]:[2,3],other:dx===1?[3,0]:dx===-1?[1,2]:dy===1?[2,3]:[0,1]});
+ }return cuts;
+}
+function cubeNetState(cells){
+ const legal=Array.isArray(cells)&&cells.every(p=>Array.isArray(p)&&p.length===2&&p.every(n=>Number.isInteger(n)&&n>=0&&n<6));
+ if(!legal)return {valid:false,connected:false,overlaps:[],message:'Gunakan petak dalam grid 6 × 6.'};
+ if(new Set(cells.map(p=>p.join(','))).size!==cells.length)return {valid:false,connected:false,overlaps:[],message:'Dua muka tidak boleh berada pada petak yang sama.'};
+ const frames=labNetFrames(cells,1),connected=cells.length>0&&frames.every(Boolean),groups=new Map();
+ frames.forEach((f,id)=>{if(f){const key=f.n.map(n=>Math.round(n)).join(',');if(!groups.has(key))groups.set(key,[]);groups.get(key).push(id);}});
+ const overlaps=[...groups.values()].filter(a=>a.length>1),valid=cells.length===6&&connected&&overlaps.length===0;
+ let message=cells.length!==6?`Pilih tepat 6 muka. Kini ada ${cells.length}.`:!connected?'Sambungkan semua muka pada sisi penuh, bukan bucu sahaja.':overlaps.length?'Muka '+overlaps.map(a=>a.map(id=>id+1).join(' dan ')).join('; ')+' bertindih apabila dilipat.':'Bentangan sah: keenam-enam muka menutup kubus tanpa pertindihan.';
+ const cutCount=labNetCuts(cells,frames).length;if(cutCount)message+=' Garis putus-putus ialah potongan tambahan yang digunakan dalam pratonton lipatan.';
+ return {valid,connected,overlaps,message,cutCount};
+}
+function cubeNetMesh(cells,t=0){
+ const status=cubeNetState(cells),frames=labNetFrames(cells,t),warning=new Set(status.overlaps.flat()),cuts=labNetCuts(cells,frames);
+ return cells.map(([x,y],id)=>{const f=frames[id]||{center:[x,-y,0],u:[1,0,0],v:[0,1,0],parent:null};return {id,name:'Muka '+(id+1),color:FACE_COLORS[id%6],outline:true,parent:f.parent,cutUnderlay:true,cut:cuts.flatMap(c=>c.i===id?[c.edge]:c.j===id?[c.other]:[]),warning:t>.98&&warning.has(id),vertices:[[-.5,-.5],[.5,-.5],[.5,.5],[-.5,.5]].map(([a,b])=>add3(f.center,labBasis(f.u,a,f.v,b)))};});
+}
+function labMeasure(shape,d){const r=calculateMeasures(shape,d,'full');if(!r.valid)throw new RangeError('Ukuran bongkah tidak sah.');return r;}
+function labDimensions(shape,d){
+ labMeasure(shape,d);if(shape==='cube')return {w:d.a,h:d.a,d:d.a};if(shape==='cuboid')return {w:d.p,h:d.t,d:d.l};if(shape==='pyramid')return {a:d.a,h:d.t};return {r:d.j,h:d.t,l:Math.hypot(d.j,d.t)};
+}
+function surfacePieces(shape,d){
+ const m=labMeasure(shape,d),pi=Math.PI;let values,names;
+ if(shape==='cube'){values=Array(6).fill(d.a*d.a);names=['Depan','Kanan','Belakang','Kiri','Atas','Bawah'];}
+ if(shape==='cuboid'){values=[d.p*d.t,d.l*d.t,d.p*d.t,d.l*d.t,d.p*d.l,d.p*d.l];names=['Depan: p × t','Kanan: l × t','Belakang: p × t','Kiri: l × t','Atas: p × l','Bawah: p × l'];}
+ if(shape==='pyramid'){values=[d.a*d.a,...Array(4).fill(d.a*m.slant/2)];names=['Tapak: a²','Segi tiga depan','Segi tiga kanan','Segi tiga belakang','Segi tiga kiri'];}
+ if(shape==='cylinder'){values=[2*pi*d.j*d.t,pi*d.j*d.j,pi*d.j*d.j];names=['Melengkung: 2πjt','Tapak atas: πj²','Tapak bawah: πj²'];}
+ if(shape==='cone'){values=[pi*d.j*m.slant,pi*d.j*d.j];names=['Melengkung: πjs','Tapak bulatan: πj²'];}
+ return values.map((area,id)=>({id,area,name:names[id],color:FACE_COLORS[id]}));
+}
+function pourState(kind,d,pours=0,progress=0){
+ if(!['cone','pyramid'].includes(kind)||!Number.isInteger(pours)||pours<0||pours>2||!Number.isFinite(progress)||progress<0||progress>1)throw new RangeError('Keadaan tuangan tidak sah.');
+ const m=labMeasure(kind,d),oneVolume=m.volume,capacity=3*oneVolume;
+ return {oneVolume,capacity,sourceVolume:oneVolume*(1-progress),targetVolume:oneVolume*(pours+progress),sourceHeight:d.t*(1-Math.cbrt(progress)),targetHeight:d.t*(pours+progress)/3,fraction:(pours+progress)/3};
+}
+function compositionMeasures(kind,d){
+ if(!['roof','rocket'].includes(kind))throw new RangeError('Gabungan tidak diketahui.');
+ const roof=kind==='roof',r=labMeasure(roof?'pyramid':'cone',d);if(!roof&&(!Number.isFinite(d.h)||d.h<.1||d.h>1000))throw new RangeError('Tinggi silinder tidak sah.');
+ const base=roof?d.a*d.a:Math.PI*d.j*d.j,side=roof?4*base:2*Math.PI*d.j*d.h,roofSide=roof?2*d.a*r.slant:Math.PI*d.j*r.slant;
+ const groups=[{key:'side',label:roof?'4 muka sisi kubus':'Permukaan melengkung silinder',area:side,external:true},{key:'bottom',label:roof?'Muka bawah kubus':'Tapak bawah silinder',area:base,external:true},{key:'joinLower',label:roof?'Muka atas kubus':'Tapak atas silinder',area:base,external:false},{key:'joinUpper',label:roof?'Tapak piramid':'Tapak kon',area:base,external:false},{key:'roofSide',label:roof?'4 muka segi tiga piramid':'Permukaan melengkung kon',area:roofSide,external:true}];
+ return {groups,sharedArea:base,slant:r.slant,area:side+base+roofSide,separateArea:side+3*base+roofSide,volume:(roof?d.a**3:base*d.h)+r.volume};
+}
+function labMapMesh(mesh,offset=[0,0,0],idOffset=0,color=null,wire=false){return mesh.map(f=>({...f,id:f.id+idOffset,color:color||f.color,label:undefined,wire,vertices:f.vertices.map(v=>add3(v,offset))}));}
+function labSolidMesh(shape,d,offset=[0,0,0],idOffset=0,color=null,wire=false){
+ const mesh=buildMesh(shape,0,96,labDimensions(shape,d)),b=meshBounds(mesh),shift=[offset[0]-b.center[0],offset[1]-b.min[1],offset[2]-b.center[2]];
+ const result=labMapMesh(mesh,shift,idOffset,color,wire);
+ if(wire)result.forEach((f,i)=>{if(!f.outline){f.cut=i%24===0?(f.vertices.length===3?[[0,1]]:[[0,3]]):null;}});
+ return result;
+}
+function unitCubeMesh(d,count){
+ const {p,l,t}=d;labMeasure('cuboid',d);if(![p,l,t,count].every(Number.isInteger)||p>6||l>6||t>6||count<0||count>p*l*t)throw new RangeError('Bilangan kiub unit tidak sah.');
+ const mesh=[];for(let n=0;n<count;n++){const y=Math.floor(n/(p*l)),z=Math.floor(n/p)%l,x=n%p;mesh.push(...labSolidMesh('cube',{a:1},[x-(p-1)/2,y,z-(l-1)/2],n*6,FACE_COLORS[y%6]));}
+ mesh.push(...labSolidMesh('cuboid',{p,l,t},[0,0,0],2000,'#526A7D',true));return mesh;
+}
+function labFrustum(sides,rb,rt,h,offset,color,id){
+ if(h<1e-9)return [];
+ const ring=(r,y)=>Array.from({length:sides},(_,i)=>{const xz=sides===4?[[-r,-r],[r,-r],[r,r],[-r,r]][i]:[r*Math.sin(i*2*Math.PI/sides),r*Math.cos(i*2*Math.PI/sides)];return add3([xz[0],y,xz[1]],offset);});
+ const bottom=ring(rb,0),top=ring(rt,h),faces=[];
+ for(let i=0;i<sides;i++)faces.push({id,name:'Cecair',color,outline:sides===4,vertices:[bottom[i],bottom[(i+1)%sides],top[(i+1)%sides],top[i]]});
+ faces.push({id,name:'Paras cecair',color,outline:true,vertices:top},{id,name:'Dasar cecair',color,outline:true,vertices:bottom});return faces;
+}
+function pourMesh(kind,d,pours,progress,sourceFull=true){
+ const p=pourState(kind,d,Math.min(2,pours),progress),r=kind==='cone'?d.j:d.a/2,shift=r+1.5,targetKind=kind==='cone'?'cylinder':'cuboid',td=kind==='cone'?d:{p:d.a,l:d.a,t:d.t};
+ const source=sourceFull?p.sourceHeight:0,receiver=pours===3?d.t:p.targetHeight;
+ const mesh=[...labSolidMesh(kind,d,[-shift,0,0],1000,'#526A7D',true),...labSolidMesh(targetKind,td,[shift,0,0],2000,'#526A7D',true)];
+ mesh.push(...labFrustum(kind==='cone'?80:4,r,r*(1-source/d.t),source,[-shift,0,0],'#64CBB8',0));
+ mesh.push(...labFrustum(kind==='cone'?80:4,r,r,receiver,[shift,0,0],'#94BDF7',1));return mesh;
+}
+function compositionMesh(kind,d,joined=1){
+ const roof=kind==='roof',m=compositionMeasures(kind,d),height=roof?d.a:d.h,space=(roof?d.a:d.j*2)*.7*(1-clamp01(joined));
+ const lower=labSolidMesh(roof?'cube':'cylinder',roof?{a:d.a}:{j:d.j,t:d.h}),upper=labSolidMesh(roof?'pyramid':'cone',d,[0,height+space,0],10);
+ lower.forEach(f=>f.group=f.id===(roof?4:1)?'joinLower':f.id===(roof?5:2)?'bottom':'side');
+ upper.forEach(f=>f.group=f.id===(roof?10:11)?'joinUpper':'roofSide');
+ return [...lower,...upper];
+}
+
+
+/** Ready-made, valid nets; enrichment does not alter quiz Shape IDs. */
+const PRESET_COLORS=[...FACE_COLORS,'#83D0EA','#DAAE8D'];
+const presetPolygonNames={3:'segi tiga',5:'segi lima',6:'segi enam'};
+const PRESET_NETS=[...['cube','cuboid','pyramid','cylinder','cone'].map(key=>({key,name:key==='pyramid'?'Piramid bertapak segi empat sama':MODEL_DATA[key].name,labels:MODEL_DATA[key].labels,project:true,description:MODEL_DATA[key].net})),...[[3,'triangular-prism'],[5,'pentagonal-prism'],[6,'hexagonal-prism']].map(([n,key])=>({key,n,name:'Prisma '+presetPolygonNames[n],labels:[...Array.from({length:n},(_,i)=>'Muka segi empat tepat '+(i+1)),'Tapak '+presetPolygonNames[n]+' atas','Tapak '+presetPolygonNames[n]+' bawah'],project:false,description:`Prisma tegak: dua tapak ${presetPolygonNames[n]} sekata yang sama saiz dan ${n} muka segi empat tepat. Lipat jalur muka sisi dahulu, kemudian tutup kedua-dua tapak.`})),{key:'tetrahedron',name:'Piramid bertapak segi tiga',labels:['Tapak segi tiga','Muka sisi 1','Muka sisi 2','Muka sisi 3'],project:false,description:'Tapaknya segi tiga sama sisi. Juga dikenali sebagai tetrahedron. Model ini mempunyai 4 muka segi tiga, 6 rusuk dan 4 bucu. Tiga muka sisi bertemu pada satu puncak.'}];
+function presetPanel(id,vertices,parent=null){return {id,name:String(id+1),color:PRESET_COLORS[id],outline:true,vertices,parent};}
+function presetPrism(n,fold,d={}){
+ const r=d.a?d.a/(2*Math.sin(Math.PI/n)):1.3,h=d.t||2.4,s=2*r*Math.sin(Math.PI/n),angle=2*Math.PI/n*ease(fold/.72),cap=(1-ease((fold-.68)/.32))*Math.PI/2,faces=[];
+ let start=[-s/2,0,0];
+ for(let i=0;i<n;i++){const end=add3(start,[s*Math.cos(i*angle),0,-s*Math.sin(i*angle)]);faces.push(presetPanel(i,[[start[0],-h/2,start[2]],[end[0],-h/2,end[2]],[end[0],h/2,end[2]],[start[0],h/2,start[2]]],i?i-1:null));start=end;}
+ let p=[-s/2,0,0];const polygon=[];for(let i=0;i<n;i++){polygon.push([...p]);p=add3(p,[s*Math.cos(i*2*Math.PI/n),0,-s*Math.sin(i*2*Math.PI/n)]);}
+ faces.push(presetPanel(n,polygon.map(v=>add3(rx(v,cap),[0,h/2,0])),0),presetPanel(n+1,polygon.map(v=>add3(rx(v,-cap),[0,-h/2,0])),0));return faces;
+}
+function presetRotateAxis(point,origin,axis,angle){const v=sub3(point,origin),c=Math.cos(angle),s=Math.sin(angle),cross=cross3(axis,v),dot=axis.reduce((a,x,i)=>a+x*v[i],0);return add3(origin,v.map((x,i)=>x*c+cross[i]*s+axis[i]*dot*(1-c)));}
+function presetTetrahedron(fold,d={}){
+ const r=d.a?d.a/Math.sqrt(3):1.5,h=d.t||r*Math.SQRT2,base=Array.from({length:3},(_,i)=>[r*Math.sin(i*2*Math.PI/3),0,r*Math.cos(i*2*Math.PI/3)]),tip=[0,h,0],faces=[presetPanel(0,base)];
+ for(let i=0;i<3;i++){const a=base[i],b=base[(i+1)%3],edge=sub3(b,a),axis=edge.map(x=>x/length3(edge)),mid=a.map((x,j)=>(x+b[j])/2),closed=sub3(tip,mid),out=[mid[0],0,mid[2]],target=out.map(x=>x*length3(closed)/length3(out));const cross=cross3(closed,target),signed=Math.atan2(axis.reduce((s,x,j)=>s+x*cross[j],0),closed.reduce((s,x,j)=>s+x*target[j],0));faces.push(presetPanel(i+1,[a,b,tip].map(p=>presetRotateAxis(p,a,axis,signed*(1-fold))),0));}
+ return faces.map(f=>({...f,vertices:f.vertices.map(v=>rx(v,-(1-fold)*Math.PI/2))}));
+}
+function presetNetMesh(key,fold=0,dimensions=undefined){
+ const data=PRESET_NETS.find(p=>p.key===key);if(!data||!Number.isFinite(fold))throw new RangeError('Bentangan siap tidak diketahui.');const t=clamp01(fold);
+ if(data.project)return buildMesh(key,1-t,144,dimensions?labDimensions(key,dimensions):undefined);if(key==='tetrahedron')return presetTetrahedron(t,dimensions);return presetPrism(data.n,t,dimensions);
+}
+
+
+function volumeFields(key){return MEASURE_FIELDS[key]||(['triangular-prism','pentagonal-prism','hexagonal-prism','tetrahedron'].includes(key)?['a','t']:[]);}
+function volumeDefaults(key){return Object.fromEntries(Object.entries(LESSON_DATA[key]?.defaults||{a:3,t:4}).map(([k,v])=>[k,Math.max(1,Math.min(8,v))]));}
+function volumeInfo(key,d){
+ const data=PRESET_NETS.find(x=>x.key===key);if(!data)throw new RangeError('Pilih bongkah isi padu yang tersedia.');
+ let volume,baseArea,formula;
+ if(data.project){const m=calculateMeasures(key,d,'full');if(!m.valid)throw new RangeError('Ukuran isi padu tidak sah.');volume=m.volume;formula=LESSON_DATA[key].volume.formula;}
+ else {for(const k of ['a','t'])if(!Number.isFinite(d[k])||d[k]<.1||d[k]>1000)throw new RangeError('Ukuran isi padu tidak sah.');const n=key==='tetrahedron'?3:data.n;baseArea=n*d.a*d.a/(4*Math.tan(Math.PI/n));volume=baseArea*d.t/(key==='tetrahedron'?3:1);formula=key==='tetrahedron'?'V = ⅓ × luas tapak × tinggi tegak':'V = luas tapak × tinggi tegak';}
+ return {name:data.name,volume,baseArea,formula};
+}
+function comparisonTotal(items,included=[true,true],count=2){return items.slice(0,count).reduce((s,item,i)=>s+(included[i]?volumeInfo(item.key,item.d).volume*clamp01(item.fill):0),0);}
+function volumeShell(item){const data=PRESET_NETS.find(x=>x.key===item.key);volumeInfo(item.key,item.d);if(data.project)return labSolidMesh(item.key,item.d);const mesh=presetNetMesh(item.key,1,item.d),b=meshBounds(mesh);return mesh.map(f=>({...f,vertices:f.vertices.map(p=>[p[0]-b.center[0],p[1]-b.min[1],p[2]-b.center[2]])}));}
+function volumeClip(mesh,level,color,id){
+ const faces=[],cap=new Map();for(const f of mesh){const out=[];for(let i=0;i<f.vertices.length;i++){const p=f.vertices[i],q=f.vertices[(i+1)%f.vertices.length],a=p[1]<=level+1e-9,b=q[1]<=level+1e-9;if(a)out.push(p);if(a!==b){const t=(level-p[1])/(q[1]-p[1]),v=p.map((x,k)=>x+t*(q[k]-x));out.push(v);cap.set(v.map(x=>Math.round(x*1e8)).join(','),v);}}if(out.length>=3)faces.push({...f,id,color,label:undefined,cut:null,vertices:out});}
+ const ps=[...cap.values()];if(ps.length>=3){const c=[0,2].map(k=>ps.reduce((s,p)=>s+p[k],0)/ps.length);ps.sort((a,b)=>Math.atan2(a[2]-c[1],a[0]-c[0])-Math.atan2(b[2]-c[1],b[0]-c[0]));faces.push({id,color,outline:true,vertices:ps});}return faces;
+}
+function volumeComparisonMesh(items,count=2){
+ const solids=items.slice(0,count).map(volumeShell),bounds=solids.map(meshBounds),offsets=count===1?[0]:[-(bounds[0].max[0]-bounds[0].min[0])/2-1,(bounds[1].max[0]-bounds[1].min[0])/2+1],result=[];
+ solids.forEach((shell,i)=>{const item=items[i],b=bounds[i],f=clamp01(item.fill),pyramidal=['cone','pyramid','tetrahedron'].includes(item.key),height=(b.max[1]-b.min[1])*(pyramidal?1-Math.cbrt(1-f):f),shift=[offsets[i],0,0],color=i?'#94BDF7':'#64CBB8';
+  if(f>0){const fluid=f===1?shell.map(face=>({...face,id:i,color,label:undefined,cut:null})):volumeClip(shell,b.min[1]+height,color,i);result.push(...fluid.map(face=>({...face,vertices:face.vertices.map(v=>add3(v,shift))})));}
+  result.push(...shell.map((face,j)=>({...face,id:1000+i*100+face.id,color:'#526A7D',label:undefined,wire:true,cut:!face.outline&&j%24===0?(face.vertices.length===3?[[0,1]]:[[0,3]]):null,vertices:face.vertices.map(v=>add3(v,shift))})));
+ });return result;
+}
+
+
+function shade(hex,amount) {
+  const c=hex.slice(1).match(/../g).map(v=>parseInt(v,16));
+  return 'rgb('+c.map(v=>Math.round(Math.max(0,Math.min(255,v*amount)))).join(',')+')';
+}
+function trace(ctx,pts) {ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.closePath();}
+function polygonContains(pts,x,y) {
+  let inside=false;
+  for(let i=0,j=pts.length-1;i<pts.length;j=i++) if((pts[i][1]>y)!==(pts[j][1]>y)&&x<(pts[j][0]-pts[i][0])*(y-pts[i][1])/(pts[j][1]-pts[i][1])+pts[i][0])inside=!inside;
+  return inside;
+}
+function drawBadge(ctx,p,text) {
+  ctx.beginPath();ctx.arc(p[0],p[1],13,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,.94)';ctx.fill();ctx.strokeStyle='rgba(24,51,75,.3)';ctx.lineWidth=1;ctx.stroke();
+  ctx.font='bold 12px "Segoe UI",sans-serif';ctx.fillStyle='#18334B';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(text,p[0],p[1]+.5);
+}
+class ModelRenderer {
+  constructor(canvas) {this.canvas=canvas;this.ctx=canvas.getContext('2d');this.hitFaces=[];this.meshKey='';this.mesh=null;}
+  draw({shape,progress=0,yaw=.55,pitch=.35,zoom=1,labels=false,selected=null,mini=false,mesh:customMesh=null}) {
+    const ctx=this.ctx;if(!ctx)return;
+    const box=this.canvas.getBoundingClientRect(),w=box.width,h=box.height;
+    if(w<=0||h<=0)return;
+    const dpr=Math.min(2,window.devicePixelRatio||1),cw=Math.round(w*dpr),ch=Math.round(h*dpr);
+    if(this.canvas.width!==cw||this.canvas.height!==ch){this.canvas.width=cw;this.canvas.height=ch;}
+    ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
+    if(customMesh&&customMesh.length===0){this.hitFaces=[];return;}
+    const key=shape+':'+progress+':'+mini;
+    if(customMesh){this.mesh=customMesh;this.bounds=meshBounds(customMesh);this.meshKey='';}
+    else if(key!==this.meshKey){this.mesh=buildMesh(shape,progress,mini?64:144);this.bounds=meshBounds(this.mesh);this.meshKey=key;}
+    const {center,radius}=this.bounds;
+    let scale=Math.min(w,h)/(2*radius)*(mini?.79:.78)*zoom,offsetX=0,offsetY=0;
+    if(customMesh){
+      const vs=this.mesh.flatMap(f=>f.vertices).map(p=>viewPoint(sub3(p,center),yaw,pitch));
+      const minX=Math.min(...vs.map(p=>p[0])),maxX=Math.max(...vs.map(p=>p[0])),minY=Math.min(...vs.map(p=>p[1])),maxY=Math.max(...vs.map(p=>p[1]));
+      scale=Math.min(w/(maxX-minX||1),h/(maxY-minY||1))*.76*zoom;offsetX=(minX+maxX)/2;offsetY=(minY+maxY)/2;
+    }
+    const project=p=>{const v=viewPoint(sub3(p,center),yaw,pitch);return [w/2+(v[0]-offsetX)*scale,h/2-(v[1]-offsetY)*scale,v[2]];};
+    if(!mini) {
+      const gradient=ctx.createRadialGradient(w/2,h*.72,0,w/2,h*.72,w*.3);
+      gradient.addColorStop(0,'rgba(35,74,110,.08)');gradient.addColorStop(1,'rgba(35,74,110,0)');
+      ctx.save();ctx.translate(0,h*.62);ctx.scale(1,.18);ctx.fillStyle=gradient;ctx.fillRect(0,-h*.5,w,h);ctx.restore();
+    }
+    const activeFace=id=>Array.isArray(selected)?selected.includes(id):selected===id;
+    const projected=this.mesh.map(f=>{
+      const pts=f.vertices.map(project),normal=cross3(sub3(f.vertices[1],f.vertices[0]),sub3(f.vertices[2],f.vertices[0]));
+      const nLen=length3(normal)||1,n=normal.map(v=>v/nLen),vNormal=viewPoint(n,yaw,pitch);
+      // Double-sided paper. Rear side is lit consistently when a face opens.
+      const sign=vNormal[2]>=0?1:-1,light=(n[0]*-.35+n[1]*.65+n[2]*.68)*sign;
+      return {f,pts,depth:pts.reduce((s,p)=>s+p[2],0)/pts.length,brightness:.82+.2*Math.max(-.45,light),vNormal};
+    }).sort((a,b)=>a.depth-b.depth);
+    this.hitFaces=[];const curveLabels=[];
+    for(const {f,pts,brightness,vNormal} of projected) {
+      if(Math.abs(vNormal[2])<.00001)continue;
+      trace(ctx,pts);ctx.fillStyle=shade(f.color,brightness);if(!f.wire)ctx.fill();
+      if(!f.outline&&!f.wire) {ctx.strokeStyle=ctx.fillStyle;ctx.lineWidth=.65;ctx.stroke();}
+      if(f.outline) {ctx.strokeStyle=f.warning?'#B9403E':activeFace(f.id)?'#215FF0':'rgba(24,51,75,.67)';ctx.lineWidth=activeFace(f.id)?3:mini?1:1.45;ctx.stroke();}
+      if(f.rim) {
+        ctx.beginPath();for(const [a,b] of f.rim){ctx.moveTo(...pts[a].slice(0,2));ctx.lineTo(...pts[b].slice(0,2));}
+        ctx.strokeStyle=activeFace(f.id)?'#215FF0':'rgba(24,51,75,.6)';ctx.lineWidth=activeFace(f.id)?2.7:mini?.9:1.25;ctx.stroke();
+      }
+      if(f.cut) {ctx.beginPath();for(const [a,b] of f.cut){ctx.moveTo(...pts[a].slice(0,2));ctx.lineTo(...pts[b].slice(0,2));}if(f.cutUnderlay){ctx.strokeStyle='#F3F7FB';ctx.lineWidth=3.5;ctx.stroke();}ctx.strokeStyle='#526A7D';ctx.setLineDash([4,3]);ctx.lineWidth=1;ctx.stroke();ctx.setLineDash([]);}
+      this.hitFaces.push({id:f.id,pts});
+      if(labels&&!mini&&(f.label||f.outline)&&Math.abs(vNormal[2])>.17) {
+        const p=project(faceCenter(f)),text=f.label||String(f.id+1);
+        if(f.outline)drawBadge(ctx,p,text);
+        else if(vNormal[2]>.17)curveLabels.push({id:f.id,p,text});
+      }
+    }
+    // Draw curved-surface badges after all strips; keep real face occlusion.
+    for(const {id,p,text} of curveLabels)if(this.pick(p[0],p[1])===id)drawBadge(ctx,p,text);
+    // The tip projects to the centre in the top view of a closed cone.
+    if(shape==='cone'&&progress===0&&Math.abs(pitch-Math.PI/2)<.001) {
+      const p=project([0,0,0]);ctx.fillStyle='#18334B';ctx.beginPath();ctx.arc(p[0],p[1],mini?1.8:3,0,Math.PI*2);ctx.fill();
+    }
+    if(!mini) this.drawCompass(ctx,w,h,yaw,pitch);
+  }
+  pick(x,y) {for(const f of [...this.hitFaces].reverse())if(polygonContains(f.pts,x,y))return f.id;return null;}
+  drawCompass(ctx,w,h,yaw,pitch) {
+    const x=45,y=h-44;
+    ctx.font='10px "Segoe UI",sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+    for(const [dir,name,color] of [[[1,0,0],'Kanan','#2C6BC5'],[[0,1,0],'Atas','#237E6C'],[[0,0,1],'Depan','#A84C78']]) {
+      const p=viewPoint(dir,yaw,pitch),end=[x+p[0]*26,y-p[1]*26];ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(...end);ctx.strokeStyle=color;ctx.lineWidth=1.6;ctx.stroke();ctx.fillStyle=color;ctx.fillText(name,end[0]+p[0]*10,end[1]-p[1]*10);
+    }
+  }
+}
+
+
+const noteEl=id=>document.getElementById(id);
+function noteNode(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node;}
+// A small positive volume must never appear to be a zero-volume solid.
+const noteNumber=n=>n>0&&n<.01?'< 0.01':new Intl.NumberFormat('ms-MY',{maximumFractionDigits:2,useGrouping:false}).format(n);
+function noteList(items,ordered=false){const list=noteNode(ordered?'ol':'ul');for(const text of items)list.append(noteNode('li',{},text));return list;}
+function noteExample(example,label){
+  const card=noteNode('details',{class:'worked-example'}),summary=noteNode('summary',{},'Contoh berpandu · '+label);
+  const body=noteNode('div',{class:'example-body'});body.append(noteNode('p',{class:'example-question'},example.question),noteList(example.steps,true),noteNode('p',{class:'example-answer'},'Jawapan: '+example.answer));card.append(summary,body);return card;
+}
+function noteSvg(tag,attrs={},text=''){const node=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node;}
+function drawNoteDiagram(shape,result){
+  const svg=noteEl('notes-diagram');svg.replaceChildren();
+  const line=(x1,y1,x2,y2,color='#215FF0',dash=false)=>svg.append(noteSvg('line',{x1,y1,x2,y2,stroke:color,'stroke-width':1.7,...(dash?{'stroke-dasharray':'5 4'}:{})}));
+  const text=(x,y,value,color='#18334B')=>svg.append(noteSvg('text',{x,y,fill:color,'font-size':13,'font-family':'Segoe UI, Arial, sans-serif','text-anchor':'middle'},value));
+  const poly=(points,fill)=>svg.append(noteSvg('polygon',{points:points.map(p=>p.join(',')).join(' '),fill,stroke:'#526A7D','stroke-width':1.3,'stroke-linejoin':'round'}));
+  if(!result.valid){text(140,110,'Masukkan ukuran yang sah.','#B9403E');svg.setAttribute('aria-label','Rajah menunggu ukuran yang sah.');return;}
+  const d=result.dimensions;
+  svg.setAttribute('aria-label',shape==='cone'||shape==='pyramid'?'Keratan rentas menunjukkan tinggi tegak t, tinggi sendeng s dan '+(shape==='cone'?'jejari j.':'separuh sisi tapak a/2.'):'Rajah ukuran '+MODEL_DATA[shape].name.toLowerCase()+'.');
+  if(shape==='cube'||shape==='cuboid'){
+    const w=d.a??d.p,h=d.a??d.t,depth=d.a??d.l,k=Math.min(178/(w+.45*depth),145/(h+.35*depth));
+    const x=40,y=190,W=w*k,H=h*k,dx=.45*depth*k,dy=-.35*depth*k;
+    poly([[x,y],[x+W,y],[x+W,y-H],[x,y-H]],'#64CBB8');poly([[x,y-H],[x+dx,y-H+dy],[x+W+dx,y-H+dy],[x+W,y-H]],'#FFD17D');poly([[x+W,y],[x+W+dx,y+dy],[x+W+dx,y-H+dy],[x+W,y-H]],'#94BDF7');
+    line(x,y+12,x+W,y+12);text(x+W/2,y+31,shape==='cube'?'a':'p');text(x-17,y-H/2,shape==='cube'?'a':'t');text(x+W+dx/2+14,y-H+dy/2,shape==='cube'?'a':'l');
+  }else if(shape==='cylinder'){
+    const k=Math.min(66/d.j,132/d.t),r=d.j*k,h=d.t*k,x=132,bottom=190,top=bottom-h,ry=Math.max(3,r*.25);
+    svg.append(noteSvg('path',{d:`M ${x-r} ${top} L ${x-r} ${bottom} A ${r} ${ry} 0 0 0 ${x+r} ${bottom} L ${x+r} ${top} Z`,fill:'#64CBB8',stroke:'#526A7D','stroke-width':1.3}));
+    svg.append(noteSvg('ellipse',{cx:x,cy:top,rx:r,ry,fill:'#94BDF7',stroke:'#526A7D','stroke-width':1.3}));
+    line(x,top,x+r,top,'#A66C18');text(x+r/2,top-10,'j','#825213');line(x+r+17,top,x+r+17,bottom);text(x+r+30,(top+bottom)/2,'t','#215FF0');
+  }else{
+    const half=shape==='cone'?d.j:d.a/2,k=Math.min(72/half,145/d.t),w=half*k,h=d.t*k,x=140,y=190,top=y-h;
+    poly([[x-w,y],[x,top],[x+w,y]],'#B5E8DF');poly([[x,top],[x,y],[x+w,y]],'#64CBB8');
+    line(x,top,x,y,'#215FF0',true);line(x,top,x+w,y,'#A34975');text(x-15,(top+y)/2,'t','#215FF0');text(x+w/2+17,(top+y)/2,'s','#A34975');
+    const mark=Math.min(8,w/2,h/2);svg.append(noteSvg('path',{d:`M ${x} ${y-mark} h ${mark} v ${mark}`,fill:'none',stroke:'#215FF0','stroke-width':1.3}));
+    line(x,y+11,x+w,y+11,'#A66C18');text(x+w/2,y+32,shape==='cone'?'j':'a/2','#825213');
+  }
+}
+class LearningNotes{
+  constructor({onExplore,announce,prefersReduced}){this.onExplore=onExplore;this.announce=announce;this.prefersReduced=prefersReduced;this.ready=false;this.shape=null;this.piMode='22/7';}
+  init(){
+    if(this.ready)return;this.ready=true;
+    for(const field of ['a','p','l','t','j'])noteEl('measure-'+field).addEventListener('input',()=>this.calculate());
+    noteEl('notes-form').addEventListener('submit',event=>{event.preventDefault();const r=this.calculate();if(!r.valid){const first=MEASURE_FIELDS[this.shape].find(k=>r.errors[k]);if(first)noteEl('measure-'+first).focus();}});
+    noteEl('reset-measures').addEventListener('click',()=>{this.fillDefaults();this.calculate();this.announce('Ukuran contoh dikembalikan.');});
+    for(const [id,mode] of [['pi-ratio','22/7'],['pi-decimal','3.142'],['pi-full','full']])noteEl(id).addEventListener('click',()=>{this.piMode=mode;this.calculate();});
+    for(const [id,target] of [['jump-concept','note-concept-title'],['jump-net','note-net-title'],['jump-area','note-area-title'],['jump-volume','note-volume-title'],['jump-calculate','note-calculate-title']])noteEl(id).addEventListener('click',()=>{noteEl(target).focus({preventScroll:true});noteEl(target).scrollIntoView({behavior:this.prefersReduced()?'instant':'smooth',block:'start'});});
+    for(const [id,mode] of [['note-explore-solid','model'],['note-explore-net','net'],['note-explore-views','views']])noteEl(id).addEventListener('click',()=>this.onExplore(mode));
+    this.buildTables();
+  }
+  buildTables(){
+    const rows=MODEL_ORDER.map(shape=>{const d=MODEL_DATA[shape],row=noteNode('tr');row.append(noteNode('th',{scope:'row'},d.name),...[(d.flat+' rata'+(d.curved?' + '+d.curved+' melengkung':'')),String(d.edges)+(d.curvedEdges?' melengkung':''),String(d.vertices)].map(x=>noteNode('td',{},x)));return row;});
+    noteEl('shape-comparison-body').replaceChildren(...rows);
+    noteEl('formula-summary-body').replaceChildren(...MODEL_ORDER.map(shape=>{const row=noteNode('tr');row.append(noteNode('th',{scope:'row'},MODEL_DATA[shape].name),noteNode('td',{class:'math-copy'},LESSON_DATA[shape].surface.formula),noteNode('td',{class:'math-copy'},LESSON_DATA[shape].volume.formula));return row;}));
+    noteEl('unit-facts').replaceChildren(...UNIT_FACTS.map(([label,formula])=>{const box=noteNode('div');box.append(noteNode('b',{},label),noteNode('p',{},formula));return box;}));
+  }
+  fillDefaults(){for(const field of MEASURE_FIELDS[this.shape])noteEl('measure-'+field).value=String(LESSON_DATA[this.shape].defaults[field]);}
+  render(shape){
+    this.init();if(this.shape===shape)return;this.shape=shape;
+    const d=MODEL_DATA[shape],lesson=LESSON_DATA[shape];
+    noteEl('study-title').textContent='Nota '+d.name.toLowerCase();noteEl('study-description').textContent='Kenali bentuknya, fahami bentangannya, kemudian hubungkan luas permukaan dengan isi padu.';
+    noteEl('note-classification').textContent=lesson.classification;noteEl('note-everyday').textContent=lesson.everyday;
+    noteEl('note-net-list').replaceChildren(noteList(lesson.netParts));noteEl('note-task').textContent=lesson.task;
+    noteEl('note-area-formula').textContent=lesson.surface.formula;noteEl('note-area-why').textContent=lesson.surface.why;
+    noteEl('note-volume-formula').textContent=lesson.volume.formula;noteEl('note-volume-why').textContent=lesson.volume.why;
+    noteEl('area-example').replaceChildren(noteExample(lesson.surface,'luas permukaan'));noteEl('volume-example').replaceChildren(noteExample(lesson.volume,'isi padu'));
+    noteEl('quick-area').textContent=lesson.surface.formula;noteEl('quick-volume').textContent=lesson.volume.formula;
+    noteEl('symbol-list').replaceChildren(...lesson.symbols.map(([symbol,meaning])=>{const box=noteNode('div');box.append(noteNode('dt',{},symbol),noteNode('dd',{},meaning));return box;}));
+    noteEl('mistake-list').replaceChildren(noteList(lesson.mistakes));
+    for(const field of ['a','p','l','t','j']){
+      const active=MEASURE_FIELDS[shape].includes(field);noteEl('measure-field-'+field).hidden=!active;noteEl('measure-'+field).disabled=!active;
+      noteEl('measure-label-'+field).textContent=field==='a'&&shape==='cube'?'a · panjang rusuk':FIELD_LABELS[field];noteEl('measure-error-'+field).textContent='';noteEl('measure-'+field).setAttribute('aria-invalid','false');
+    }
+    noteEl('notes-pi').hidden=!['cylinder','cone'].includes(shape);noteEl('slant-result').hidden=!['pyramid','cone'].includes(shape);
+    noteEl('diagram-caption').textContent=['pyramid','cone'].includes(shape)?'Keratan rentas: t tegak lurus kepada tapak; s mengikut sisi condong.':'Rajah ukuran bagi aktiviti ini. Label merujuk kepada nilai dalam kotak ukuran.';
+    this.fillDefaults();this.calculate();
+  }
+  calculate(){
+    const values=Object.fromEntries(MEASURE_FIELDS[this.shape].map(k=>[k,noteEl('measure-'+k).value])),r=calculateMeasures(this.shape,values,this.piMode);
+    for(const key of MEASURE_FIELDS[this.shape]){noteEl('measure-error-'+key).textContent=r.errors[key]||'';noteEl('measure-'+key).setAttribute('aria-invalid',String(Boolean(r.errors[key])));}
+    for(const [id,mode] of [['pi-ratio','22/7'],['pi-decimal','3.142'],['pi-full','full']])noteEl(id).setAttribute('aria-pressed',String(this.piMode===mode));
+    noteEl('notes-pi-description').textContent=this.piMode==='full'?'Gunakan π; jawapan perpuluhan dipaparkan hingga 2 tempat perpuluhan.':'Untuk aktiviti ini, ambil π ≈ '+this.piMode+'.';
+    noteEl('calculated-area').textContent=r.valid?noteNumber(r.area)+' cm²':'—';noteEl('calculated-volume').textContent=r.valid?noteNumber(r.volume)+' cm³':'—';
+    noteEl('calculated-slant').textContent=r.valid&&r.slant!==null?'s ≈ '+noteNumber(r.slant)+' cm':'';
+    noteEl('calculation-status').textContent=r.valid?'Nilai penuh digunakan dalam pengiraan; paparan dibundar hingga 2 tempat perpuluhan.'+(r.volume<.01?' Isi padu positif yang sangat kecil dipaparkan sebagai < 0.01 cm³.':''):'Betulkan ukuran yang ditandakan untuk melihat jawapan.';
+    noteEl('area-breakdown').replaceChildren(...r.areaParts.map(part=>noteNode('li',{},part.label+': '+noteNumber(part.value)+' cm²')));
+    drawNoteDiagram(this.shape,r);return r;
+  }
+}
+
+
+const LAB_TIME={fold:4000,open:4000,pour:2600,join:1600,layer:600,compareAdd:1200,compareFill:2600};
+const labEl=id=>document.getElementById(id);
+const labNumberFormat=new Intl.NumberFormat('ms-MY',{maximumFractionDigits:2,useGrouping:false});
+const labFmt=n=>n>0&&n<.01?'< 0.01':labNumberFormat.format(n);
+function labNode(tag,attrs={},text=''){const n=document.createElement(tag);for(const [k,v] of Object.entries(attrs))n.setAttribute(k,String(v));if(text)n.textContent=text;return n;}
+const LAB_COPY={net:['Teroka dan bina bentangan','Pilih bentangan siap atau susun petak kubus. Lipat perlahan, jeda dan jejaki muka yang sama melalui warna serta nombor.'],volume:['Makmal isi padu','Isi satu atau dua bongkah dan jumlahkan isi pilihan. Anda juga boleh menyusun kiub unit atau membandingkan tiga tuangan pada bekas bertapak dan bertinggi sama.'],area:['Terbitkan rumus luas permukaan','Hubungkan setiap permukaan berwarna dengan luasnya. Jumlah bahagian yang dipilih akan membentuk rumus keseluruhan.'],composite:['Bongkah gabungan','Cantum dua bongkah pada tapak yang sama saiz. Tentukan permukaan yang terdedah dan tambah isi padunya.']};
+class LearningLabs{
+ constructor({announce,prefersReduced}){
+  this.announce=announce;this.prefersReduced=prefersReduced;this.ready=false;this.active=false;this.kind='net';this.raf=0;this.anim=null;this.paused=null;
+  this.speed=.5;this.suspended=new Map();this.guideKey='';
+  this.camera={yaw:.48,pitch:.3,zoom:1};this.net={mode:'gallery',preset:'cube',presetFace:null,presetDirty:true,cells:NET_PRESETS.cross.map(p=>[...p]),progress:0,selected:0,dirty:true,notice:'',drag:null,suppressUntil:0};
+  this.volume={kind:'compare',units:0,d:{p:3,l:2,t:3},size:3,height:4,pours:0,progress:0,full:true};
+  this.compare={count:2,transfer:0,included:[true,true],items:[{key:'cube',d:{a:3},fill:0},{key:'cuboid',d:{p:4,l:3,t:2},fill:0}]};
+  this.area={shape:'cube',d:{...LESSON_DATA.cube.defaults},progress:0,selected:new Set(),focus:null,dirty:true};
+  this.comp={kind:'roof',size:6,h:6,t:4,joined:0,selected:new Set(),dirty:true,feedback:''};
+ }
+ bind(id,fn,type='click'){labEl(id).addEventListener(type,event=>{fn(event);this.render();});}
+ init(){
+  if(this.ready)return;this.ready=true;this.renderer=new ModelRenderer(labEl('labs-canvas'));
+  for(const kind of Object.keys(LAB_COPY))this.bind('lab-'+kind,()=>this.choose(kind));
+  for(const mode of ['gallery','editor'])this.bind('net-mode-'+mode,()=>{this.stop();this.net.mode=mode;this.net.progress=0;this.net.dirty=true;});
+  const choices=()=>PRESET_NETS.map(p=>labNode('option',{value:p.key},p.name));
+  labEl('net-preset').replaceChildren(...choices());
+  this.bind('net-preset',()=>{this.stop();this.net.preset=labEl('net-preset').value;this.net.progress=0;this.net.presetFace=null;this.net.presetDirty=true;},'change');
+  this.bind('net-example',()=>{const preset=NET_PRESETS[labEl('net-example').value];if(preset){this.net.cells=preset.map(p=>[...p]);this.changedNet();}},'change');
+  this.bind('net-clear',()=>{this.net.cells=[];this.changedNet();});this.bind('net-selected',()=>{this.net.selected=Number(labEl('net-selected').value);},'change');
+  for(const [id,dx,dy] of [['net-left',-1,0],['net-right',1,0],['net-up',0,-1],['net-down',0,1]])this.bind(id,()=>{if(this.net.progress>0)return;const p=this.net.cells[this.net.selected];if(p)this.moveNet(this.net.selected,[p[0]+dx,p[1]+dy]);});
+  this.bind('net-fold',()=>this.start(()=>this.net.progress,v=>this.net.progress=v,1,LAB_TIME.fold));
+  this.bind('net-flat',()=>this.start(()=>this.net.progress,v=>this.net.progress=v,0,LAB_TIME.fold));
+  this.bind('volume-kind',()=>{const kind=labEl('volume-kind').value;this.stop();this.volume.kind=kind;this.volume.size=kind==='pyramid'?6:3;this.resetPour();},'change');
+  for(const key of ['p','l','t'])this.bind('unit-'+key,()=>{const value=Number(labEl('unit-'+key).value);this.stop();this.volume.d[key]=value;this.volume.units=0;this.announce('Ukuran berubah. Bekas kiub unit dikosongkan.');},'input');
+  this.bind('unit-one',()=>{if(!this.anim&&!this.paused)this.volume.units=Math.min(this.unitCapacity(),this.volume.units+1);});
+  this.bind('unit-layer',()=>this.fillUnits(Math.min(this.unitCapacity(),(Math.floor(this.volume.units/(this.volume.d.p*this.volume.d.l))+1)*this.volume.d.p*this.volume.d.l)));
+  this.bind('unit-fill',()=>this.fillUnits(this.unitCapacity()));this.bind('unit-empty',()=>{this.stop();this.volume.units=0;});
+  this.bind('pour-size',()=>{this.volume.size=Number(labEl('pour-size').value);this.resetPour();},'input');
+  this.bind('pour-height',()=>{this.volume.height=Number(labEl('pour-height').value);this.resetPour();},'input');
+  this.bind('pour-reset',()=>this.resetPour());this.bind('pour-refill',()=>{this.volume.full=true;this.volume.progress=0;});
+  this.bind('pour-one',()=>{const v=this.volume;if(v.pours>=3||!v.full||v.progress>0||this.anim||this.paused)return;this.start(()=>v.progress,n=>v.progress=n,1,LAB_TIME.pour,()=>{v.pours++;v.progress=0;v.full=false;this.announce('Tuangan '+v.pours+' selesai. Perhatikan paras isi sebelum meneruskan.');});});
+  for(const [i,letter] of ['a','b'].entries()){
+   labEl('compare-shape-'+letter).replaceChildren(...choices());
+   this.bind('compare-shape-'+letter,()=>{this.stop();const key=labEl('compare-shape-'+letter).value;this.compare.items[i]={key,d:volumeDefaults(key),fill:0};},'change');
+   for(const field of ['a','p','l','t','j'])this.bind('compare-'+letter+'-'+field,()=>{const value=Number(labEl('compare-'+letter+'-'+field).value);this.stop();this.compare.items[i].d[field]=value;this.compare.items[i].fill=0;},'input');
+   this.bind('compare-fill-'+letter,()=>{const value=Number(labEl('compare-fill-'+letter).value)/1000;this.stop();this.compare.items[i].fill=clamp01(value);},'input');
+   this.bind('compare-include-'+letter,()=>{this.compare.included[i]=labEl('compare-include-'+letter).checked;},'change');
+   this.bind('compare-add-'+letter,()=>this.fillCompare([i],false));this.bind('compare-full-'+letter,()=>this.fillCompare([i],true));
+  }
+  this.bind('compare-count',()=>{const count=Number(labEl('compare-count').value);this.stop();this.compare.count=count===1?1:2;this.compare.included=[true,true];},'change');
+  this.bind('compare-add-both',()=>this.fillCompare([0,1],false));this.bind('compare-full-both',()=>this.fillCompare([0,1],true));
+  this.bind('compare-empty',()=>{this.stop();this.compare.items.forEach(x=>x.fill=0);this.compare.transfer=0;});
+  this.bind('area-shape',()=>{this.stop();this.area.shape=labEl('area-shape').value;this.area.d={...LESSON_DATA[this.area.shape].defaults};this.area.progress=0;this.clearArea();},'change');
+  for(const key of ['a','p','l','t','j'])this.bind('area-'+key,()=>{const value=Number(labEl('area-'+key).value);this.stop();this.area.d[key]=value;this.clearArea();},'input');
+  this.bind('area-open',()=>this.start(()=>this.area.progress,v=>this.area.progress=v,1,LAB_TIME.open));
+  this.bind('area-close',()=>this.start(()=>this.area.progress,v=>this.area.progress=v,0,LAB_TIME.open));
+  this.bind('area-all',()=>{if(!this.areaReady())return;this.area.selected=new Set(surfacePieces(this.area.shape,this.area.d).map(p=>p.id));this.area.dirty=true;});this.bind('area-clear',()=>this.clearArea());
+  this.bind('comp-kind',()=>{this.stop();this.comp.kind=labEl('comp-kind').value;this.comp.size=this.comp.kind==='roof'?6:3;this.changedComp();},'change');
+  for(const [id,key] of [['comp-size','size'],['comp-body-height','h'],['comp-roof-height','t']])this.bind(id,()=>{const value=Number(labEl(id).value);this.stop();this.comp[key]=value;this.changedComp();},'input');
+  this.bind('comp-join',()=>this.start(()=>this.comp.joined,v=>this.comp.joined=v,1,LAB_TIME.join));this.bind('comp-separate',()=>this.start(()=>this.comp.joined,v=>this.comp.joined=v,0,LAB_TIME.join));
+  this.bind('comp-check',()=>{const c=this.comp,r=compositionMeasures(c.kind,this.compDims());if(!this.compReady())return;const correct=r.groups.every(g=>c.selected.has(g.key)===g.external);c.feedback=correct?'Tepat! Kedua-dua permukaan yang bercantum berada di dalam. Jumlahkan permukaan yang terdedah sahaja.':'Semak semula. Pilih semua permukaan luar; dua permukaan yang bercantum tidak dikira. Pisahkan bongkah untuk melihatnya.';this.announce(c.feedback);});
+  this.bind('lab-progress',()=>{const n=Number(labEl('lab-progress').value)/1000;this.stop();if(this.kind==='net')this.net.progress=n;if(this.kind==='area')this.area.progress=n;if(this.kind==='composite')this.comp.joined=n;},'input');
+  this.bind('lab-pause',()=>{if(this.anim)this.pause();else this.resume();});
+  this.bind('lab-speed',()=>{const value=Number(labEl('lab-speed').value);if(![.25,.5,1].includes(value))return;const a=this.anim;this.speed=value;if(a)this.start(a.get,a.set,a.to,a.baseDuration,a.done,false);},'change');
+  for(const [id,key,amount] of [['lab-left','yaw',-.2],['lab-right','yaw',.2],['lab-up','pitch',.15],['lab-down','pitch',-.15],['lab-zoom-out','zoom',-.15],['lab-zoom-in','zoom',.15]])this.bind(id,()=>{this.camera[key]+=amount;this.boundCamera();});
+  this.bind('lab-reset-camera',()=>this.camera={yaw:.48,pitch:.3,zoom:1});
+  const canvas=labEl('labs-canvas');let pointer=null;
+  canvas.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'&&e.button!==0)return;pointer={id:e.pointerId,x:e.clientX,y:e.clientY};canvas.setPointerCapture(e.pointerId);});
+  canvas.addEventListener('pointermove',e=>{if(!pointer||pointer.id!==e.pointerId)return;this.camera.yaw+=(e.clientX-pointer.x)*.009;this.camera.pitch+=(e.clientY-pointer.y)*.009;pointer.x=e.clientX;pointer.y=e.clientY;this.boundCamera();this.draw();});
+  const release=e=>{if(pointer?.id===e.pointerId){pointer=null;if(canvas.hasPointerCapture(e.pointerId))canvas.releasePointerCapture(e.pointerId);}};
+  canvas.addEventListener('pointerup',release);canvas.addEventListener('pointercancel',release);canvas.addEventListener('lostpointercapture',()=>pointer=null);
+  canvas.addEventListener('wheel',e=>{e.preventDefault();this.camera.zoom+=e.deltaY<0?.08:-.08;this.boundCamera();this.render();},{passive:false});
+  canvas.addEventListener('keydown',e=>{if(e.isComposing)return;const controls={ArrowLeft:'lab-left',ArrowRight:'lab-right',ArrowUp:'lab-up',ArrowDown:'lab-down','+':'lab-zoom-in','=':'lab-zoom-in','-':'lab-zoom-out',Home:'lab-reset-camera'};if(controls[e.key]){e.preventDefault();labEl(controls[e.key]).click();}});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)this.pause();else if(this.active)this.render();});
+  if(typeof ResizeObserver!=='undefined'){this.resize=new ResizeObserver(()=>{if(this.active)this.draw();});this.resize.observe(canvas);}
+ }
+ open(){this.init();this.active=true;this.render();}
+ close(){this.pause();this.active=false;this.net.drag=null;labEl('net-drag-ghost').hidden=true;}
+ stop(clear=true){if(this.raf)cancelAnimationFrame(this.raf);this.raf=0;this.anim=null;if(clear)this.paused=null;if(this.ready)this.refreshPlayback();}
+ pause(){if(this.anim){const a=this.anim;this.stop(false);this.paused=a;}if(this.ready){this.refreshPlayback();this.render();}}
+ resume(){if(this.paused){const a=this.paused;this.start(a.get,a.set,a.to,a.baseDuration,a.done);}}
+ revealStage(){const canvas=labEl('labs-canvas'),r=canvas.getBoundingClientRect();canvas.focus({preventScroll:true});if(r.top<80||r.bottom>(window.innerHeight||800)-50)canvas.scrollIntoView({behavior:this.prefersReduced()?'instant':'smooth',block:'center'});}
+ start(get,set,to,baseDuration,done=null,reveal=true){
+  this.stop();if(reveal)this.revealStage();const from=get();if(from===to){if(done)done();this.render();return;}
+  this.anim={get,set,from,to,baseDuration,duration:Math.max(1,baseDuration*Math.abs(to-from)/this.speed),start:performance.now(),done};
+  const step=time=>{this.raf=0;if(!this.active||document.hidden){this.pause();return;}const a=this.anim;if(!a)return;const t=clamp01((time-a.start)/a.duration);a.set(a.from+(a.to-a.from)*ease(t));if(t===1){a.set(a.to);this.anim=null;if(a.done)a.done();}this.render();if(this.anim)this.raf=requestAnimationFrame(step);};
+  this.raf=requestAnimationFrame(step);this.refreshPlayback();
+ }
+ choose(kind){if(!LAB_COPY[kind]||kind===this.kind)return;const old=this.kind,saved=this.anim||this.paused;this.stop();if(saved)this.suspended.set(old,saved);this.kind=kind;this.paused=this.suspended.get(kind)||null;this.suspended.delete(kind);this.camera={yaw:.48,pitch:.3,zoom:1};this.announce(LAB_COPY[kind][0]+' dipilih.');}
+ boundCamera(){this.camera.pitch=Math.max(-1.5,Math.min(1.5,this.camera.pitch));this.camera.zoom=Math.max(.6,Math.min(2,this.camera.zoom));}
+ changedNet(){this.stop();this.net.progress=0;this.net.notice='';this.net.selected=Math.max(0,Math.min(this.net.selected,this.net.cells.length-1));this.net.dirty=true;}
+ moveNet(id,target){const n=this.net;if(target.some(v=>v<0||v>5)||n.cells.some((p,i)=>i!==id&&p[0]===target[0]&&p[1]===target[1])){n.notice='Pilih petak kosong dalam grid untuk memindahkan muka.';return;}n.cells[id]=target;this.changedNet();}
+ buildNetGrid(){
+  const n=this.net;labEl('net-grid').replaceChildren(...Array.from({length:36},(_,i)=>{
+   const x=i%6,y=Math.floor(i/6),id=n.cells.findIndex(p=>p[0]===x&&p[1]===y),b=labNode('button',{type:'button',class:'net-cell','data-cell':x+','+y,'aria-pressed':String(id>=0),'aria-label':`Baris ${y+1}, lajur ${x+1}`+(id>=0?`, muka ${id+1}`:', petak kosong')},id>=0?String(id+1):'');if(id>=0)b.style.backgroundColor=FACE_COLORS[id];
+   b.addEventListener('click',()=>{if(n.progress>0||this.anim||performance.now()<n.suppressUntil)return;if(id>=0)n.cells.splice(id,1);else if(n.cells.length<6)n.cells.push([x,y]);else{n.notice='Sudah ada 6 muka. Buang atau pindahkan satu muka dahulu.';this.render();return;}this.changedNet();n.focusCell=x+','+y;this.render();});
+   b.addEventListener('pointerdown',e=>{if(n.progress>0||this.anim||id<0||(e.pointerType==='mouse'&&e.button!==0))return;n.selected=id;n.drag={id,x:e.clientX,y:e.clientY,moved:false};b.setPointerCapture(e.pointerId);});
+   b.addEventListener('pointermove',e=>{const d=n.drag;if(!d||d.id!==id)return;if(Math.hypot(e.clientX-d.x,e.clientY-d.y)>6)d.moved=true;if(d.moved){e.preventDefault();const ghost=labEl('net-drag-ghost');ghost.hidden=false;ghost.textContent=String(id+1);ghost.style.backgroundColor=FACE_COLORS[id];ghost.style.left=e.clientX+7+'px';ghost.style.top=e.clientY+7+'px';}});
+   b.addEventListener('pointerup',e=>{const d=n.drag;n.drag=null;labEl('net-drag-ghost').hidden=true;if(b.hasPointerCapture(e.pointerId))b.releasePointerCapture(e.pointerId);if(!d?.moved)return;n.suppressUntil=performance.now()+250;const target=document.elementFromPoint(e.clientX,e.clientY)?.closest('[data-cell]');if(target){const pos=target.dataset.cell.split(',').map(Number);this.moveNet(id,pos);this.render();}});
+   b.addEventListener('pointercancel',()=>{n.drag=null;labEl('net-drag-ghost').hidden=true;});return b;
+  }));
+  labEl('net-selected').replaceChildren(...n.cells.map((p,id)=>labNode('option',{value:id},'Muka '+(id+1))));labEl('net-selected').value=String(n.selected);if(n.focusCell){[...labEl('net-grid').children].find(b=>b.dataset.cell===n.focusCell)?.focus({preventScroll:true});n.focusCell=null;}n.dirty=false;
+ }
+ fillUnits(target){if(this.anim||this.paused)return;const v=this.volume,perUnit=LAB_TIME.layer/(v.d.p*v.d.l);this.start(()=>v.units,n=>v.units=Math.round(n),target,perUnit);}
+ fillCompare(indices,full){if(this.anim||this.paused)return;const c=this.compare,from=c.items.map(x=>x.fill),targets=from.map((f,i)=>indices.includes(i)?Math.min(1,full?1:f+1/volumeInfo(c.items[i].key,c.items[i].d).volume):f);if(targets.every((n,i)=>n===from[i]))return;c.transfer=0;this.start(()=>c.transfer,n=>{c.transfer=n;c.items.forEach((x,i)=>x.fill=from[i]+(targets[i]-from[i])*n);},1,full?LAB_TIME.compareFill:LAB_TIME.compareAdd);}
+ areaReady(){return this.area.progress===1&&!this.anim&&!this.paused;}
+ compReady(){return this.comp.joined===1&&!this.anim&&!this.paused;}
+ renderGuide(){
+  const k=this.kind,v=this.volume;let labels,index=0,next='';
+  if(k==='net'){labels=[this.net.mode==='gallery'?'Pilih bentangan':'Susun 6 muka','Lipat perlahan','Periksa hasil'];index=this.net.progress===0?0:this.net.progress===1?2:1;next=this.net.progress===0?'Tekan Lipat perlahan. Jejaki satu muka dahulu.':this.net.progress===1?'Periksa hasilnya. Tekan Buka rata untuk melihat bentangan semula.':'Perhatikan sambungan muka. Anda boleh Jeda atau gerakkan peluncur.';}
+  if(k==='area'){labels=['Pilih ukuran','Buka bentangan','Pilih permukaan','Baca rumus'];const count=surfacePieces(this.area.shape,this.area.d).length;index=this.area.progress<1?1:this.area.selected.size===count?3:2;next=index===1?'Buka bentangan dahulu. Tunggu sehingga rata, kemudian pilih permukaan.':index===2?'Pilih satu permukaan pada satu masa. Jumlah luas akan bertambah.':'Pilihan lengkap. Bandingkan jumlah bahagian dengan rumus keseluruhan.';}
+  if(k==='composite'){labels=['Pilih ukuran','Cantum','Pilih muka luar','Semak'];index=this.comp.joined<1?1:this.comp.feedback?3:2;next=index===1?'Cantum bongkah dahulu. Tunggu sehingga kedua-duanya rapat.':index===2?'Pilih semua muka luar, kemudian tekan Semak pilihan.':'Baca maklum balas. Anda boleh ubah pilihan dan semak semula.';}
+  if(k==='volume'&&v.kind==='unit'){labels=['Pilih ukuran','Susun lapisan','Bandingkan jumlah'];index=v.units===this.unitCapacity()?2:1;next=index===2?'Bekas penuh. Kira lapisan dan bandingkan dengan rumus.':'Tambah satu kiub, lengkapkan lapisan atau pilih Penuhkan beransur.';}
+  if(k==='volume'&&v.kind==='compare'){labels=['Pilih 1 / 2 bongkah','Isi satu / kedua-dua','Pilih isi dijumlahkan'];index=this.compare.items.slice(0,this.compare.count).some(x=>x.fill>0)&&!this.anim?2:1;next=index===1?'Pilih +1 cm³ atau Penuhkan untuk A, B atau kedua-duanya.':'Tandakan Isi A, Isi B atau kedua-duanya untuk melihat jumlah isi.';}
+  if(k==='volume'&&!['unit','compare'].includes(v.kind)){labels=['Isi sumber','Tuang satu bekas','Isi semula','Ulang hingga 3'];index=v.pours===3?3:!v.full?2:1;next=v.pours===3?'Penerima penuh. Bandingkan 3 isi sumber dengan 1 isi penerima.':!v.full?'Perhatikan paras penerima. Kemudian tekan Isi semula sumber.':'Tekan Tuang satu bekas. Tunggu satu tuangan selesai dahulu.';}
+  if(this.paused)next='Gerakan dijeda. Tekan '+(k==='volume'&&!['unit','compare'].includes(v.kind)?'Sambung tuangan':'Sambung animasi')+' untuk meneruskan dari tempat yang sama.';
+  const key=labels.join('|')+index;if(key!==this.guideKey){labEl('lab-steps').replaceChildren(...labels.map((label,i)=>labNode('li',{'aria-current':i===index?'step':'false',class:i<index?'step-done':''},label)));this.guideKey=key;}
+  if(labEl('lab-next-step').textContent!==next)labEl('lab-next-step').textContent=next;
+ }
+ unitCapacity(){const d=this.volume.d;return d.p*d.l*d.t;}
+ resetPour(){this.stop();Object.assign(this.volume,{pours:0,progress:0,full:true});}
+ pourDims(){const v=this.volume;return v.kind==='cone'?{j:v.size,t:v.height}:{a:v.size,t:v.height};}
+ clearArea(){this.area.selected.clear();this.area.focus=null;this.area.dirty=true;}
+ compDims(){const c=this.comp;return c.kind==='roof'?{a:c.size,t:c.t}:{j:c.size,h:c.h,t:c.t};}
+ changedComp(){this.comp.joined=0;this.comp.selected.clear();this.comp.dirty=true;this.comp.feedback='';}
+ refreshPlayback(){
+  labEl('lab-playback').hidden=false;labEl('lab-speed').value=String(this.speed);
+  const slider=this.kind!=='volume',pour=this.kind==='volume'&&!['unit','compare'].includes(this.volume.kind);labEl('lab-slider-wrap').hidden=!slider;labEl('lab-pause').disabled=!this.anim&&!this.paused;labEl('lab-pause').textContent=this.paused?(pour?'Sambung tuangan':'Sambung animasi'):(pour?'Jeda tuangan':'Jeda animasi');
+  const progress=this.kind==='net'?this.net.progress:this.kind==='area'?this.area.progress:this.kind==='composite'?this.comp.joined:this.volume.kind==='compare'?this.compare.transfer:this.volume.progress,verb=this.kind==='net'?'dilipat':this.kind==='area'?'dibuka':'dicantum';
+  labEl('lab-progress').value=String(Math.round(progress*1000));labEl('lab-progress-value').textContent=Math.round(progress*100)+'% '+verb;labEl('lab-progress').setAttribute('aria-valuetext',Math.round(progress*100)+' peratus '+verb);
+  labEl('lab-progress-label').textContent=this.kind==='net'?'Bentangan rata → bongkah':this.kind==='area'?'Bongkah → bentangan rata':'Terpisah → bercantum';
+  const status=this.paused?'Dijeda · sambung apabila bersedia':this.anim?'Sedang bergerak · boleh dijeda':'Sedia · bergerak selepas anda menekan butang';if(labEl('lab-motion-state').textContent!==status)labEl('lab-motion-state').textContent=status;
+ }
+ render(){
+  if(!this.ready||!this.active)return;
+  const k=this.kind;for(const kind of Object.keys(LAB_COPY)){labEl('lab-'+kind).setAttribute('aria-pressed',String(k===kind));labEl('lab-'+kind+'-panel').hidden=k!==kind;}
+  labEl('lab-title').textContent=LAB_COPY[k][0];labEl('lab-intro').textContent=LAB_COPY[k][1];
+  if(k==='net')this.renderNet();if(k==='volume')this.renderVolume();if(k==='area')this.renderArea();if(k==='composite')this.renderComposite();
+  labEl('lab-zoom-level').textContent=Math.round(this.camera.zoom*100)+'%';this.refreshPlayback();this.renderGuide();this.draw();
+ }
+ renderNet(){
+  const n=this.net,gallery=n.mode==='gallery',data=PRESET_NETS.find(p=>p.key===n.preset),status=cubeNetState(n.cells),locked=n.progress>0||Boolean(this.anim);
+  labEl('net-mode-gallery').setAttribute('aria-pressed',String(gallery));labEl('net-mode-editor').setAttribute('aria-pressed',String(!gallery));labEl('net-preset-panel').hidden=!gallery;labEl('net-editor-panel').hidden=gallery;
+  labEl('net-preset').value=n.preset;labEl('net-preset').disabled=Boolean(this.anim);
+  labEl('net-fold').disabled=(gallery?false:n.cells.length!==6||!status.connected)||n.progress===1;labEl('net-flat').disabled=n.progress===0;
+  if(gallery){labEl('net-preset-tag').textContent=data.project?'Bongkah GeoDecoder':'Pengayaan · contoh tambahan';labEl('net-preset-summary').textContent=data.description;
+   if(n.presetDirty){const mesh=presetNetMesh(n.preset,0),colors=new Map(mesh.map(f=>[f.id,f.color]));labEl('net-preset-faces').replaceChildren(...data.labels.map((name,id)=>{const b=labNode('button',{type:'button',class:'face-chip','aria-pressed':String(n.presetFace===id)},(id+1)+'. '+name),swatch=labNode('i',{'aria-hidden':'true',class:'preset-swatch'});swatch.style.backgroundColor=colors.get(id);b.append(swatch);b.addEventListener('click',()=>{n.presetFace=n.presetFace===id?null:id;n.presetFocusPending=id;n.presetDirty=true;this.render();});return b;}));if(n.presetFocusPending!==undefined){labEl('net-preset-faces').children[n.presetFocusPending]?.focus({preventScroll:true});delete n.presetFocusPending;}n.presetDirty=false;}
+   labEl('net-feedback').textContent=this.paused?'Gerakan dijeda. Tekan Sambung animasi apabila bersedia.':this.anim?'Perhatikan muka yang sedang bergerak. Gunakan Jeda untuk memeriksa sambungannya.':n.progress===1?data.name+' telah terbentuk. Buka rata untuk menjejaki muka semula.':'Bentangan siap yang sah. Tekan Lipat perlahan untuk membentuk '+data.name.toLowerCase()+'.';labEl('net-feedback').dataset.success=n.progress===1?'true':'neutral';
+  }else{if(n.dirty)this.buildNetGrid();for(const b of labEl('net-grid').children)b.disabled=locked;labEl('net-count').textContent=n.cells.length+' / 6 muka';for(const id of ['net-selected','net-left','net-right','net-up','net-down'])labEl(id).disabled=locked||n.cells.length===0;labEl('net-example').disabled=Boolean(this.anim);labEl('net-clear').disabled=Boolean(this.anim);
+   labEl('net-feedback').textContent=n.notice||(n.progress===1?status.message:n.cells.length!==6||!status.connected?status.message:'Enam muka bersambung. Tekan Lipat perlahan untuk menyemak hasil.');labEl('net-feedback').dataset.success=n.progress===1?String(status.valid&&!n.notice):'neutral';
+  }
+  labEl('net-edit-note').textContent=!gallery&&locked?'Untuk mengubah petak, tekan Buka rata dahulu.':'Warna dan nombor menjejak muka yang sama sepanjang proses.';
+  labEl('lab-scene-label').textContent=gallery?data.name.toUpperCase()+' · BENTANGAN SIAP':'KUBUS · SUSUNAN SENDIRI';labEl('lab-caption').textContent=gallery?data.description:n.progress===0?'Setiap petak ialah satu muka kubus. Garis putus-putus, jika ada, menandakan potongan dalam pratonton.':n.progress===1?status.message:'Setiap muka bergerak pada sambungan sisi yang ditetapkan.';labEl('lab-outcome').textContent=gallery?data.labels.length+' muka / permukaan. Pilih label untuk menjejaknya.':'Ramalkan dahulu: adakah susunan ini menutup kubus tanpa pertindihan?';
+ }
+ renderCompare(){
+  const c=this.compare,busy=Boolean(this.anim||this.paused);labEl('compare-count').value=String(c.count);labEl('compare-count').disabled=Boolean(this.anim);labEl('compare-card-b').hidden=c.count===1;labEl('compare-both-actions').hidden=c.count===1;labEl('compare-both-note').hidden=c.count===1;labEl('compare-include-b-label').hidden=c.count===1;
+  c.items.forEach((item,i)=>{const letter=i?'b':'a',fields=volumeFields(item.key),info=volumeInfo(item.key,item.d);labEl('compare-shape-'+letter).value=item.key;labEl('compare-shape-'+letter).disabled=Boolean(this.anim);
+   for(const key of ['a','p','l','t','j']){labEl('compare-field-'+letter+'-'+key).hidden=!fields.includes(key);labEl('compare-'+letter+'-'+key).value=String(item.d[key]||1);labEl('compare-'+letter+'-'+key).disabled=Boolean(this.anim);labEl('compare-'+letter+'-'+key+'-value').textContent=(item.d[key]||1)+' cm';}
+   labEl('compare-dim-summary-'+letter).textContent=fields.map(k=>k+' = '+item.d[k]+' cm').join(' · ');labEl('compare-fill-'+letter).value=String(Math.round(item.fill*1000));labEl('compare-fill-'+letter).setAttribute('aria-valuetext',labFmt(item.fill*100)+' peratus isi padu; '+labFmt(info.volume*item.fill)+' cm³');labEl('compare-level-'+letter).textContent=labFmt(item.fill*100)+'% isi';labEl('compare-volume-'+letter).textContent='Isi '+letter.toUpperCase()+': '+labFmt(info.volume*item.fill)+' / '+labFmt(info.volume)+' cm³';labEl('compare-include-'+letter).checked=c.included[i];for(const id of ['compare-add-','compare-full-'])labEl(id+letter).disabled=busy||item.fill===1;
+  });
+  const full=c.items.slice(0,c.count).every(x=>x.fill===1);labEl('compare-add-both').disabled=busy||full;labEl('compare-full-both').disabled=busy||full;
+  const total=comparisonTotal(c.items,c.included,c.count),capacity=comparisonTotal(c.items.map(x=>({...x,fill:1})),c.included,c.count);labEl('compare-total').textContent='Jumlah isi dipilih '+(Number.isInteger(total)?'= ':'≈ ')+labFmt(total)+' cm³';labEl('compare-capacity').textContent='Kapasiti penuh bagi pilihan itu '+(Number.isInteger(capacity)?'= ':'≈ ')+labFmt(capacity)+' cm³.';labEl('compare-formulas').textContent=c.items.slice(0,c.count).map((x,i)=>(i?'B: ':'A: ')+volumeInfo(x.key,x.d).formula).join(' · ');
+  labEl('lab-scene-label').textContent=c.count===1?'SATU BONGKAH · A':'DUA BONGKAH · A DI KIRI, B DI KANAN';labEl('lab-caption').textContent='Warna menunjukkan isi semasa; garisan luar menunjukkan saiz penuh. Bentuk dan ukuran boleh dipilih secara berasingan.';labEl('lab-outcome').textContent=c.items.slice(0,c.count).map((x,i)=>(i?'B':'A')+': '+labFmt(volumeInfo(x.key,x.d).volume*x.fill)+' cm³'+(c.included[i]?' · dikira':' · tidak dikira')).join(' | ')+'. Jumlah isi dipilih '+(Number.isInteger(total)?'= ':'≈ ')+labFmt(total)+' cm³.';
+ }
+ renderVolume(){
+  const v=this.volume,unit=v.kind==='unit',compare=v.kind==='compare',busy=Boolean(this.anim||this.paused);labEl('volume-kind').value=v.kind;labEl('unit-controls').hidden=!unit;labEl('compare-controls').hidden=!compare;labEl('pour-controls').hidden=unit||compare;if(compare){this.renderCompare();return;}
+  labEl('lab-scene-label').textContent=unit?'KIUB UNIT · SETIAP KIUB = 1 cm³':'SUMBER DI KIRI → PENERIMA DI KANAN';
+  if(unit){const {p,l,t}=v.d,total=this.unitCapacity(),layer=p*l;for(const key of ['p','l','t']){labEl('unit-'+key).disabled=Boolean(this.anim);labEl('unit-'+key).value=String(v.d[key]);labEl('unit-'+key+'-value').textContent=v.d[key]+' cm';}
+   labEl('unit-one').disabled=busy||v.units===total;labEl('unit-layer').disabled=busy||v.units===total;labEl('unit-fill').disabled=busy||v.units===total;labEl('unit-empty').disabled=v.units===0;
+   labEl('unit-result').textContent=`${v.units} / ${total} kiub · ${Math.floor(v.units/layer)} lapisan penuh daripada ${t}.`;
+   labEl('unit-equation').textContent=`V = p × l × t = ${p} × ${l} × ${t} = ${total} cm³`;
+   labEl('lab-caption').textContent=`Satu lapisan memuatkan ${p} × ${l} = ${layer} kiub. Warna membezakan lapisan. Garisan luar menunjukkan sempadan kuboid.`;
+   labEl('lab-outcome').textContent=`Isi yang telah dimasukkan: ${v.units} cm³. Kapasiti penuh: ${total} cm³.`;
+  }else{const cone=v.kind==='cone',d=this.pourDims(),p=pourState(v.kind,d,Math.min(2,v.pours),v.progress),fraction=v.pours===3?1:p.fraction;
+   labEl('pour-explanation').textContent=(cone?'Kon dan silinder mempunyai tapak bulatan sama saiz.':'Piramid dan prisma mempunyai tapak segi empat sama sama saiz.')+' Kedua-dua bekas mempunyai tinggi tegak yang sama. Ramalkan bilangan tuangan untuk memenuhi penerima.';
+   labEl('pour-size-label').textContent=cone?'j · jejari kedua-dua tapak':'a · sisi kedua-dua tapak';for(const [id,value] of [['pour-size',v.size],['pour-height',v.height]]){labEl(id).value=String(value);labEl(id+'-value').textContent=value+' cm';}
+   labEl('pour-one').disabled=v.pours>=3||!v.full||v.progress>0||busy;labEl('pour-one').textContent='Tuang satu bekas';labEl('pour-refill').disabled=v.pours>=3||v.full||busy;labEl('pour-refill').textContent='Isi semula '+(cone?'kon':'piramid');
+   labEl('pour-result').textContent=(v.progress>0?'Tuangan '+(v.pours+1)+' daripada 3 sedang '+(this.paused?'dijeda':'berlangsung')+'. ':v.pours+' / 3 tuangan lengkap. ')+'Penerima '+labFmt(fraction*100)+'% penuh.';
+   labEl('pour-equation').textContent=`3 × ${cone?'V kon':'V piramid'} = ${cone?'V silinder':'V prisma'} ${Number.isInteger(p.capacity)?'=':'≈'} ${labFmt(p.capacity)} cm³`;
+   labEl('lab-caption').textContent=`Kiri: ${cone?'kon':'piramid'}. Kanan: ${cone?'silinder':'prisma'}. Paras di kiri mengikut bentuk yang mengecil ke puncak; paras di kanan mengikut isi yang dipindahkan.`;
+   labEl('lab-outcome').textContent=`Isi penerima: ${labFmt(p.capacity*fraction)} / ${labFmt(p.capacity)} cm³. `+(v.pours===3?'Tiga tuangan memenuhi penerima.':v.full?'Tekan Tuang satu bekas untuk memindahkan isi.':'Isi semula sumber untuk tuangan seterusnya.');
+  }
+ }
+ renderArea(){
+  const ready=this.areaReady();const a=this.area,parts=surfacePieces(a.shape,a.d),fields=MEASURE_FIELDS[a.shape];labEl('area-shape').value=a.shape;
+  for(const key of ['a','p','l','t','j']){labEl('area-field-'+key).hidden=!fields.includes(key);labEl('area-'+key).value=String(a.d[key]||1);labEl('area-'+key+'-value').textContent=(a.d[key]||1)+' cm';}
+  const measures=calculateMeasures(a.shape,a.d,'full');labEl('area-slant').textContent=measures.slant===null?'':'Tinggi sendeng s ≈ '+labFmt(measures.slant)+' cm, dikira daripada tinggi tegak dan '+(a.shape==='pyramid'?'separuh sisi tapak.':'jejari.');
+  if(a.dirty){labEl('area-pieces').replaceChildren(...parts.map(p=>{const b=labNode('button',{type:'button',class:'area-piece','data-piece':p.id,'aria-pressed':String(a.selected.has(p.id))});const swatch=labNode('i',{'aria-hidden':'true'});swatch.style.backgroundColor=p.color;b.append(swatch,labNode('span',{},(p.id+1)+'. '+p.name),labNode('b',{},labFmt(p.area)+' cm²'));b.addEventListener('click',()=>{if(!this.areaReady())return;if(a.selected.has(p.id))a.selected.delete(p.id);else a.selected.add(p.id);a.focus=p.id;a.focusPending=true;a.dirty=true;this.render();});return b;}));if(a.focusPending){[...labEl('area-pieces').children].find(b=>Number(b.dataset.piece)===a.focus)?.focus({preventScroll:true});a.focusPending=false;}a.dirty=false;}
+  for(const button of labEl('area-pieces').children)button.disabled=!ready;labEl('area-all').disabled=!ready;labEl('area-clear').disabled=a.selected.size===0;
+  const chosen=parts.filter(p=>a.selected.has(p.id)),sum=chosen.reduce((s,p)=>s+p.area,0);labEl('area-count').textContent=`${chosen.length} / ${parts.length} permukaan dipilih`;
+  labEl('area-sum').textContent=chosen.length?chosen.map(p=>labFmt(p.area)).join(' + ')+' cm²':'Pilih permukaan berwarna untuk mengumpulkan luasnya.';
+  labEl('area-total').textContent='Jumlah dipilih '+(Number.isInteger(sum)?'= ':'≈ ')+labFmt(sum)+' cm²';labEl('area-formula').textContent=chosen.length===parts.length?'Rumus keseluruhan: '+LESSON_DATA[a.shape].surface.formula:'Rumus keseluruhan akan muncul selepas semua permukaan dipilih.';
+  labEl('lab-scene-label').textContent=MODEL_DATA[a.shape].name.toUpperCase()+' · LUAS SETIAP PERMUKAAN';
+  labEl('lab-caption').textContent=LESSON_DATA[a.shape].surface.why;
+  labEl('lab-outcome').textContent=chosen.length===parts.length?'Semua permukaan telah dikira sekali. Jumlahnya ialah luas permukaan bongkah tertutup.':'Setiap permukaan mesti dikira tepat sekali, termasuk tapak.';
+ }
+ renderComposite(){
+  const c=this.comp,r=compositionMeasures(c.kind,this.compDims()),roof=c.kind==='roof';labEl('comp-kind').value=c.kind;labEl('comp-size-label').textContent=roof?'a · sisi tapak bersama':'j · jejari tapak bersama';labEl('comp-body-field').hidden=roof;
+  for(const [id,value] of [['comp-size',c.size],['comp-body-height',c.h],['comp-roof-height',c.t]]){labEl(id).value=String(value);labEl(id+'-value').textContent=value+' cm';}
+  if(c.dirty){labEl('comp-groups').replaceChildren(...r.groups.map(g=>{const b=labNode('button',{type:'button',class:'area-piece','data-group':g.key,'aria-pressed':String(c.selected.has(g.key))},g.label);b.addEventListener('click',()=>{if(!this.compReady())return;if(c.selected.has(g.key))c.selected.delete(g.key);else c.selected.add(g.key);c.dirty=true;c.focusPending=g.key;c.feedback='';this.render();});return b;}));if(c.focusPending){[...labEl('comp-groups').children].find(b=>b.dataset.group===c.focusPending)?.focus({preventScroll:true});c.focusPending=null;}c.dirty=false;}
+  const ready=this.compReady();for(const button of labEl('comp-groups').children)button.disabled=!ready;labEl('comp-check').disabled=!ready;
+  labEl('comp-feedback').textContent=c.feedback||'Pilih permukaan yang akan terdedah di luar selepas kedua-dua bongkah dicantum.';
+  labEl('comp-area').textContent=c.joined===1?labFmt(r.area)+' cm²':'Cantum dahulu';labEl('comp-volume').textContent=labFmt(r.volume)+' cm³';
+  labEl('comp-equation').textContent=`Luas dua bongkah berasingan ${labFmt(r.separateArea)} cm² − 2 × luas tapak bersama ${labFmt(r.sharedArea)} cm² = ${labFmt(r.area)} cm². Tinggi sendeng bahagian atas s ≈ ${labFmt(r.slant)} cm.`;
+  labEl('lab-scene-label').textContent=roof?'KUBUS + PIRAMID':'SILINDER + KON';labEl('lab-caption').textContent=c.joined===1?'Tapak bahagian atas menutup muka atas bahagian bawah. Kedua-duanya menjadi permukaan dalaman.':'Pisahkan untuk melihat kedua-dua tapak yang akan bertemu. Saiz tapaknya sentiasa sepadan.';
+  labEl('lab-outcome').textContent='Isi padu gabungan ialah jumlah kedua-dua isi padu; luas luar mengecualikan kedua-dua muka yang bercantum.';
+ }
+ draw(){
+  if(!this.ready||!this.active)return;const k=this.kind;let mesh,progress=0,labels=false,selected=null;
+  if(k==='net'){progress=this.net.progress;mesh=this.net.mode==='gallery'?presetNetMesh(this.net.preset,progress):cubeNetMesh(this.net.cells,progress);labels=true;selected=this.net.mode==='gallery'?this.net.presetFace:null;}
+  if(k==='volume'){const v=this.volume;progress=v.kind==='compare'?this.compare.transfer:v.kind==='unit'?v.units/this.unitCapacity():v.progress;mesh=v.kind==='compare'?volumeComparisonMesh(this.compare.items,this.compare.count):v.kind==='unit'?unitCubeMesh(v.d,v.units):pourMesh(v.kind,this.pourDims(),v.pours,v.progress,v.full);}
+  if(k==='area'){const a=this.area;progress=a.progress;mesh=buildMesh(a.shape,progress,144,labDimensions(a.shape,a.d));labels=true;selected=[...a.selected];}
+  if(k==='composite'){progress=this.comp.joined;mesh=compositionMesh(this.comp.kind,this.compDims(),progress);}
+  this.renderer.draw({shape:'lab',mesh,progress,...this.camera,labels,selected});const canvas=labEl('labs-canvas');
+  Object.assign(canvas.dataset,{lab:k,progress:String(progress),valid:String(cubeNetState(this.net.cells).valid),units:String(this.volume.units),pours:String(this.volume.pours),joined:String(this.comp.joined),yaw:String(this.camera.yaw),pitch:String(this.camera.pitch),zoom:String(this.camera.zoom),preset:this.net.mode==='gallery'?this.net.preset:'editor',volumeMode:this.volume.kind,fillA:String(this.compare.items[0].fill),fillB:String(this.compare.items[1].fill),totalVolume:String(comparisonTotal(this.compare.items,this.compare.included,this.compare.count))});
+  canvas.setAttribute('aria-label',LAB_COPY[k][0]+'. '+labEl('lab-caption').textContent);
+ }
+}
+
+
+const el=id=>document.getElementById(id);
+const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+const initial=MODEL_ORDER.includes(location.hash.slice(1))?location.hash.slice(1):'cube';
+const state={shape:initial,learningView:'explore',progress:0,yaw:.55,pitch:.35,zoom:1,mode:'model',view:'front',auto:!reduced.matches,labels:false,selected:null,playing:false,direction:1,kind:'cycle',hold:0,camera:null,manualOrbit:false,pausedAnimation:null};
+const mainRenderer=new ModelRenderer(el('model-canvas'));
+const navRenderers=new Map(),viewRenderers=new Map();
+let raf=0,lastFrame=0,dirty=true,lastPercent=-1;
+function element(tag,attrs={},text='') {
+  const node=document.createElement(tag);
+  for(const [name,value] of Object.entries(attrs))node.setAttribute(name,String(value));
+  if(text)node.textContent=text;
+  return node;
+}
+function announce(text) {el('announcer').textContent=text;}
+function wake() {dirty=true;if(!raf&&!document.hidden&&state.learningView==='explore')raf=requestAnimationFrame(frame);}
+function stopAnimation() {state.playing=false;state.hold=0;state.pausedAnimation=null;}
+function setAuto(value) {state.auto=Boolean(value)&&state.mode==='model';if(state.auto){stopAnimation();state.camera=null;}refreshControls();wake();}
+function alignCamera(yaw,pitch) {
+  if(reduced.matches){state.yaw=yaw;state.pitch=pitch;state.camera=null;}
+  else {
+    const delta=((yaw-state.yaw+Math.PI*3)%(Math.PI*2)+Math.PI*2)%(Math.PI*2)-Math.PI;
+    state.camera={time:performance.now(),fromYaw:state.yaw,fromPitch:state.pitch,toYaw:state.yaw+delta,toPitch:pitch};
+  }
+  wake();
+}
+function refreshControls() {
+  el('auto-rotate').setAttribute('aria-pressed',String(state.auto));
+  el('auto-rotate').disabled=state.mode==='views';
+  el('auto-rotate').querySelector('span').textContent=state.auto?'Hentikan putaran':'Putaran automatik';
+  el('play').querySelector('span').textContent=state.playing?'Jeda animasi':'Main animasi';
+  el('play').setAttribute('aria-label',state.playing?'Jeda animasi':'Main animasi');
+  el('play').querySelector('path').setAttribute('d',state.playing?'M8 5v14M16 5v14':'m8 5 11 7-11 7V5Z');
+  el('open-net').disabled=state.progress>=1&&!state.playing;
+  el('close-net').disabled=state.progress<=0&&!state.playing;
+  el('labels').checked=state.labels;
+  el('zoom-level').textContent=Math.round(state.zoom*100)+'%';
+  el('zoom-in').disabled=state.zoom>=2.2;
+  el('zoom-out').disabled=state.zoom<=.6;
+  el('reduced-note').hidden=!reduced.matches;
+  const percent=Math.round(state.progress*100);
+  if(percent!==lastPercent){
+    el('progress').value=String(Math.round(state.progress*1000));
+    el('progress-value').textContent=percent+'% terbuka';
+    el('progress').setAttribute('aria-valuetext',percent===0?'Bongkah tertutup, 0 peratus terbuka':percent===100?'Bentangan rata, 100 peratus terbuka':percent+' peratus terbuka');
+    lastPercent=percent;
+  }
+  el('stage-label').textContent=state.mode==='views'?(state.progress>0?'Mencantum untuk pandangan':`Pandangan ${VIEWS[state.view].name.toLowerCase()} · Ortografik`):state.progress===0?'Bongkah 3D':state.progress===1?'Bentangan rata':state.playing?(state.direction>0?'Membuka bentangan…':'Mencantum bongkah…'):'Bentangan separa terbuka';
+  const canvas=el('model-canvas');
+  canvas.setAttribute('aria-label',MODEL_DATA[state.shape].name+', '+el('stage-label').textContent+'. '+(state.mode==='views'?'Pilih arah pada kad pandangan.':'Gunakan anak panah untuk putar dan tambah atau tolak untuk zum.'));
+  el('canvas-help').firstChild.textContent=state.mode==='views'?'Pilih arah di bawah · Cubit atau roda tetikus untuk zum':'Seret untuk putar · Cubit atau roda tetikus untuk zum';
+}
+function renderLegend() {
+  el('face-legend').replaceChildren(...MODEL_DATA[state.shape].labels.map((name,id)=>{
+    const button=element('button',{class:'face-chip',type:'button','aria-pressed':String(state.selected===id),'data-face':id});
+    const number=element('span',{class:'face-number','aria-hidden':'true'},String(id+1));number.style.backgroundColor=FACE_COLORS[id];
+    button.append(number,document.createTextNode(name));button.addEventListener('click',()=>selectFace(id));return button;
+  }));
+}
+function selectFace(id) {
+  state.selected=state.selected===id?null:id;state.labels=true;state.auto=false;
+  renderLegend();refreshControls();
+  el('face-description').textContent=state.selected===null?'Pilih permukaan untuk melihatnya pada model.':`Permukaan ${id+1}: ${MODEL_DATA[state.shape].labels[id]}. Jika terlindung, putar bongkah untuk mencarinya.`;
+  announce(el('face-description').textContent);wake();
+}
+function renderViews() {
+  el('view-grid').replaceChildren();viewRenderers.clear();
+  VIEW_ORDER.forEach((key,i)=>{
+    const view=VIEWS[key],button=element('button',{class:'view-choice','data-view':key,'aria-pressed':String(state.view===key),'aria-label':'Pandangan '+view.name.toLowerCase()}),canvas=element('canvas',{'aria-hidden':'true'});
+    button.append(canvas,element('b',{},view.name),element('small',{},MODEL_DATA[state.shape].views[i]));
+    button.addEventListener('click',()=>selectView(key));el('view-grid').append(button);viewRenderers.set(key,new ModelRenderer(canvas));
+  });
+  drawViews();updateViewDescription();
+}
+function drawViews() {if(state.mode==='views')for(const [key,renderer] of viewRenderers)renderer.draw({shape:state.shape,...VIEWS[key],mini:true});}
+function updateViewDescription() {
+  const i=VIEW_ORDER.indexOf(state.view);
+  el('view-description').textContent=VIEWS[state.view].name+': '+MODEL_DATA[state.shape].views[i]+'. Warna menunjukkan permukaan yang dilihat; warna tidak mengubah bentuk unjuran.';
+}
+function selectView(key) {
+  state.view=key;state.auto=false;state.manualOrbit=false;
+  if(state.progress>0){state.playing=true;state.direction=-1;state.kind='view-close';}
+  else alignCamera(VIEWS[key].yaw,VIEWS[key].pitch);
+  for(const button of el('view-grid').querySelectorAll('button'))button.setAttribute('aria-pressed',String(button.dataset.view===key));
+  updateViewDescription();refreshControls();announce(`Pandangan ${VIEWS[key].name.toLowerCase()} dipilih. ${MODEL_DATA[state.shape].views[VIEW_ORDER.indexOf(key)]}.`);wake();
+}
+function switchMode(mode) {
+  if(state.mode===mode)return;
+  stopAnimation();state.mode=mode;state.auto=false;state.manualOrbit=false;
+  el('mode-model').setAttribute('aria-pressed',String(mode==='model'));el('mode-views').setAttribute('aria-pressed',String(mode==='views'));
+  el('animation-panel').hidden=mode!=='model';el('views-panel').hidden=mode!=='views';
+  if(mode==='views'){drawViews();selectView(state.view);}
+  else alignCamera(.55,.35);
+  refreshControls();announce(mode==='views'?'Pandangan 2D: bongkah kekal tertutup, dilihat dari satu arah.':'Model dan bentangan. Seret untuk memutar bongkah.');wake();
+}
+function renderContent() {
+  const data=MODEL_DATA[state.shape];
+  document.title=(state.learningView==='notes'?'Nota ':'')+data.name+' — Modul GeoDecoder';
+  el('model-title').textContent=data.name;el('notes-title').textContent=data.name;el('shape-tag').textContent=data.tag;
+  el('shape-intro').textContent=data.intro;el('net-explanation').textContent=data.net;el('observation').textContent=data.observe;
+  el('edge-note').hidden=!data.curvedEdges;
+  const stats=[[data.flat+data.curved,data.curved?'permukaan':'muka rata',data.curved?`${data.flat} rata + ${data.curved} melengkung`:'semuanya rata'],[data.edges,'rusuk',data.curvedEdges?'melengkung':'lurus'],[data.vertices,'bucu',state.shape==='cone'?'puncak':state.shape==='pyramid'?'termasuk puncak':'']];
+  el('properties').replaceChildren(...stats.map(([count,label,detail])=>{const box=element('div',{class:'property'});box.append(element('b',{},String(count)),element('span',{},label),element('small',{},detail));return box;}));
+  el('think-title').textContent=data.question;el('think-feedback').textContent='Pilih satu jawapan untuk melihat penerangan.';el('think-feedback').className='think-feedback';
+  el('think-options').replaceChildren(...data.options.map((text,i)=>{
+    const button=element('button',{'aria-pressed':'false','data-answer':i},text);
+    button.addEventListener('click',()=>{
+      for(const b of el('think-options').children)b.setAttribute('aria-pressed',String(b===button));
+      el('think-feedback').textContent=(i===data.answer?'Tepat! ':'Perhatikan semula. ')+data.feedback;
+      el('think-feedback').className='think-feedback'+(i===data.answer?' correct':'');
+    });return button;
+  }));
+  el('animation-caption').textContent=data.curved?'Tapak dibuka dahulu. '+(state.shape==='cone'?'Permukaan melengkung dibuka menjadi sektor bulatan; panjang lengkok kekal sepadan dengan lilitan tapak.':'Permukaan melengkung dibuka menjadi segi empat tepat; panjangnya kekal sama dengan lilitan tapak.'):'Muka kekal bersambung pada rusuk. Warna yang sama menandakan muka yang sama.';
+  el('face-description').textContent='Pilih permukaan untuk melihatnya pada model.';
+  for(const button of el('shape-picker').children)button.setAttribute('aria-pressed',String(button.dataset.shape===state.shape));
+  renderLegend();renderViews();refreshControls();
+  if(state.learningView==='notes')learningNotes.render(state.shape);
+}
+function selectShape(shape) {
+  stopAnimation();state.shape=shape;state.progress=0;state.zoom=1;state.selected=null;state.camera=null;state.manualOrbit=false;state.yaw=.55;state.pitch=.35;
+  state.auto=false;lastPercent=-1;
+  try{history.replaceState(null,'','#'+shape);}catch{/* Some file-origin policies restrict history; learning still works. */}
+  renderContent();if(state.mode==='views'&&state.learningView==='explore')selectView(state.view);
+  announce(MODEL_DATA[shape].name+' dipilih. '+MODEL_DATA[shape].tag);wake();
+}
+function beginAnimation(target=null) {
+  if(state.mode!=='model')switchMode('model');
+  state.auto=false;state.playing=true;state.hold=0;state.manualOrbit=false;state.pausedAnimation=null;
+  state.kind=target===null?'cycle':'target';state.direction=target===null?(state.progress>=1?-1:1):(target>state.progress?1:-1);
+  if(target!==null&&state.progress===target)stopAnimation();
+  alignCamera(.48,.28);refreshControls();announce(state.direction>0?'Membuka bentangan.':'Mencantum semula bongkah.');wake();
+}
+function resetCamera() {
+  stopAnimation();state.auto=false;state.zoom=1;state.manualOrbit=false;
+  const view=state.mode==='views'?VIEWS[state.view]:state.progress===1?{yaw:0,pitch:0}:{yaw:.55,pitch:.35};
+  alignCamera(view.yaw,view.pitch);refreshControls();announce('Kedudukan dan zum dikembalikan kepada asal.');wake();
+}
+function zoomBy(amount) {state.zoom=Math.max(.6,Math.min(2.2,Math.round((state.zoom+amount)*1000)/1000));refreshControls();wake();}
+function drawMain() {
+  mainRenderer.draw(state);
+  const canvas=el('model-canvas');
+  for(const key of ['shape','learningView','progress','yaw','pitch','zoom','mode','playing','auto'])canvas.dataset[key]=String(state[key]);
+  canvas.dataset.reducedMotion=String(reduced.matches);
+}
+function frame(time) {
+  raf=0;const dt=lastFrame?Math.max(0,time-lastFrame):0;lastFrame=time;
+  if(document.hidden||state.learningView!=='explore'){lastFrame=0;return;}
+  if(state.camera){
+    const c=state.camera,t=clamp01((time-c.time)/700),e=ease(t);
+    state.yaw=c.fromYaw+(c.toYaw-c.fromYaw)*e;state.pitch=c.fromPitch+(c.toPitch-c.fromPitch)*e;
+    if(t===1){state.yaw=c.toYaw;state.pitch=c.toPitch;state.camera=null;}
+    dirty=true;
+  }
+  if(state.playing){
+    if(state.hold>0){state.hold=Math.max(0,state.hold-dt);if(state.hold===0&&!state.manualOrbit)alignCamera(.48,.28);}
+    else {
+      state.progress=clamp01(state.progress+state.direction*dt/5800);
+      if((state.direction>0&&state.progress===1)||(state.direction<0&&state.progress===0)){
+        if(state.mode==='model'&&!state.manualOrbit)alignCamera(state.progress===1?0:.55,state.progress===1?0:.35);
+        if(state.kind==='cycle'&&state.direction>0){state.direction=-1;state.hold=1000;}
+        else {stopAnimation();if(state.kind==='view-close')alignCamera(VIEWS[state.view].yaw,VIEWS[state.view].pitch);}
+      }
+      dirty=true;refreshControls();
+    }
+  }
+  if(state.auto){state.yaw=(state.yaw+Math.min(dt,80)*.00011)%(Math.PI*2);dirty=true;}
+  if(dirty){drawMain();dirty=false;}
+  if(state.auto||state.playing||state.camera){if(!raf)raf=requestAnimationFrame(frame);}else lastFrame=0;
+}
+for(const shape of MODEL_ORDER){
+  const button=element('button',{class:'shape-choice','data-shape':shape,'aria-pressed':String(shape===state.shape)}),canvas=element('canvas',{'aria-hidden':'true'});
+  button.append(canvas,element('span',{class:'shape-name'},MODEL_DATA[shape].name),element('span',{class:'choice-dot','aria-hidden':'true'}));
+  button.addEventListener('click',()=>selectShape(shape));el('shape-picker').append(button);navRenderers.set(shape,new ModelRenderer(canvas));
+}
+function switchLearningView(view) {
+  if(state.learningView===view)return;
+  stopAnimation();state.auto=false;state.camera=null;
+  if(state.learningView==='labs')learningLabs.close();
+  if(raf)cancelAnimationFrame(raf);raf=0;lastFrame=0;state.learningView=view;
+  refreshControls();drawMain();
+  el('explore-panel').hidden=view!=='explore';el('study-panel').hidden=view!=='notes';el('labs-panel').hidden=view!=='labs';el('shape-picker').hidden=view==='labs';
+  el('learn-explore').setAttribute('aria-pressed',String(view==='explore'));el('learn-notes').setAttribute('aria-pressed',String(view==='notes'));el('learn-labs').setAttribute('aria-pressed',String(view==='labs'));
+  document.title=(view==='notes'?'Nota ':'')+MODEL_DATA[state.shape].name+' — Modul GeoDecoder';
+  if(view==='labs'){learningLabs.open();el('labs-title').focus({preventScroll:true});document.title='Makmal Interaktif — Modul GeoDecoder';}
+  else if(view==='notes'){learningNotes.render(state.shape);el('study-title').focus({preventScroll:true});announce('Nota '+MODEL_DATA[state.shape].name.toLowerCase()+' dibuka.');}
+  else {redrawSmallModels();el('model-title').focus({preventScroll:true});announce('Teroka 3D '+MODEL_DATA[state.shape].name.toLowerCase()+'.');}
+}
+const learningLabs=new LearningLabs({announce,prefersReduced:()=>reduced.matches});
+const learningNotes=new LearningNotes({announce,prefersReduced:()=>reduced.matches,onExplore:mode=>{
+  switchLearningView('explore');
+  if(mode==='net')beginAnimation(1);
+  else if(mode==='views'){switchMode('views');selectView('top');}
+  else switchMode('model');
+  el('stage').scrollIntoView({behavior:reduced.matches?'instant':'smooth',block:'center'});
+}});
+el('learn-explore').addEventListener('click',()=>switchLearningView('explore'));el('learn-notes').addEventListener('click',()=>switchLearningView('notes'));
+el('learn-labs').addEventListener('click',()=>switchLearningView('labs'));
+el('version').textContent='V'+MODULE_VERSION;
+el('mode-model').addEventListener('click',()=>switchMode('model'));el('mode-views').addEventListener('click',()=>switchMode('views'));
+el('open-net').addEventListener('click',()=>beginAnimation(1));el('close-net').addEventListener('click',()=>beginAnimation(0));
+el('play').addEventListener('click',()=>{
+  if(state.playing){const saved={direction:state.direction,kind:state.kind,hold:state.hold};stopAnimation();state.pausedAnimation=saved;refreshControls();announce('Animasi dijeda.');wake();}
+  else if(state.pausedAnimation){const saved=state.pausedAnimation;state.pausedAnimation=null;state.playing=true;state.direction=saved.direction;state.kind=saved.kind;state.hold=saved.hold;refreshControls();announce('Animasi disambung.');wake();}
+  else beginAnimation();
+});
+el('replay').addEventListener('click',()=>{state.progress=0;lastPercent=-1;beginAnimation();});
+el('guided-net').addEventListener('click',()=>{beginAnimation(1);el('stage').scrollIntoView({behavior:reduced.matches?'instant':'smooth',block:'center'});});
+el('guided-view').addEventListener('click',()=>{switchMode('views');selectView(state.view==='top'?'front':'top');el('views-panel').scrollIntoView({behavior:reduced.matches?'instant':'smooth',block:'nearest'});});
+el('auto-rotate').addEventListener('click',()=>setAuto(!state.auto));
+el('labels').addEventListener('change',()=>{state.labels=el('labels').checked;wake();});
+el('zoom-in').addEventListener('click',()=>zoomBy(.15));el('zoom-out').addEventListener('click',()=>zoomBy(-.15));el('reset').addEventListener('click',resetCamera);
+el('progress').addEventListener('input',()=>{
+  stopAnimation();state.auto=false;state.progress=Number(el('progress').value)/1000;
+  if(!state.manualOrbit)alignCamera(state.progress===1?0:state.progress===0?.55:.48,state.progress===1?0:state.progress===0?.35:.28);
+  lastPercent=-1;refreshControls();wake();
+});
+const pointers=new Map();let dragStart=null,wasPinch=false,pinchDistance=0,pinchZoom=1,moved=false;
+const canvas=el('model-canvas');
+canvas.addEventListener('pointerdown',event=>{
+  if(event.pointerType==='mouse'&&event.button!==0)return;
+  canvas.setPointerCapture(event.pointerId);pointers.set(event.pointerId,{x:event.clientX,y:event.clientY});
+  dragStart={x:event.clientX,y:event.clientY};moved=false;
+  if(pointers.size===2){const [a,b]=[...pointers.values()];pinchDistance=Math.hypot(a.x-b.x,a.y-b.y);pinchZoom=state.zoom;wasPinch=true;}
+  else wasPinch=false;
+  state.auto=false;state.camera=null;refreshControls();
+});
+canvas.addEventListener('pointermove',event=>{
+  if(!pointers.has(event.pointerId))return;
+  const before=pointers.get(event.pointerId);pointers.set(event.pointerId,{x:event.clientX,y:event.clientY});
+  if(pointers.size===2){const [a,b]=[...pointers.values()];state.zoom=Math.max(.6,Math.min(2.2,pinchZoom*Math.hypot(a.x-b.x,a.y-b.y)/(pinchDistance||1)));moved=true;}
+  else {
+    const dx=event.clientX-before.x,dy=event.clientY-before.y;
+    if(dragStart&&Math.hypot(event.clientX-dragStart.x,event.clientY-dragStart.y)>4)moved=true;
+    if(moved){
+      if(state.mode==='views')switchMode('model');
+      state.camera=null;state.manualOrbit=true;state.yaw+=dx*.009;state.pitch=Math.max(-Math.PI/2,Math.min(Math.PI/2,state.pitch+dy*.009));
+    }
+  }
+  refreshControls();wake();
+});
+function releasePointer(event) {
+  if(!pointers.has(event.pointerId))return;
+  if(event.type==='pointerup'&&!moved&&!wasPinch&&pointers.size===1){const box=canvas.getBoundingClientRect(),face=mainRenderer.pick(event.clientX-box.left,event.clientY-box.top);if(face!==null)selectFace(face);}
+  pointers.delete(event.pointerId);if(canvas.hasPointerCapture(event.pointerId))canvas.releasePointerCapture(event.pointerId);
+  if(pointers.size===0){wasPinch=false;dragStart=null;}
+}
+canvas.addEventListener('pointerup',releasePointer);canvas.addEventListener('pointercancel',releasePointer);canvas.addEventListener('lostpointercapture',event=>pointers.delete(event.pointerId));
+canvas.addEventListener('wheel',event=>{event.preventDefault();zoomBy(event.deltaY<0?.08:-.08);},{passive:false});
+canvas.addEventListener('keydown',event=>{
+  if(event.isComposing)return;
+  if(event.key==='Home'){event.preventDefault();resetCamera();return;}
+  if(['+','=','-','_'].includes(event.key)){event.preventDefault();zoomBy(event.key==='-'||event.key==='_'?-.1:.1);return;}
+  if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key))return;
+  event.preventDefault();state.auto=false;
+  if(state.mode==='views')switchMode('model');
+  state.camera=null;state.manualOrbit=true;
+  if(event.key==='ArrowLeft')state.yaw-=.13;if(event.key==='ArrowRight')state.yaw+=.13;
+  if(event.key==='ArrowUp')state.pitch=Math.min(Math.PI/2,state.pitch+.13);if(event.key==='ArrowDown')state.pitch=Math.max(-Math.PI/2,state.pitch-.13);
+  refreshControls();wake();
+});
+reduced.addEventListener('change',()=>{if(learningLabs.ready)learningLabs.pause();state.auto=false;stopAnimation();state.camera=null;refreshControls();wake();});
+document.addEventListener('visibilitychange',()=>{if(document.hidden){stopAnimation();state.auto=false;state.camera=null;if(raf)cancelAnimationFrame(raf);raf=0;lastFrame=0;refreshControls();}else wake();});
+function redrawSmallModels(){for(const [shape,r] of navRenderers)r.draw({shape,yaw:.55,pitch:.35,mini:true});drawViews();wake();}
+if(typeof ResizeObserver!=='undefined'){const resize=new ResizeObserver(redrawSmallModels);resize.observe(el('shape-picker'));resize.observe(el('stage'));}else window.addEventListener('resize',redrawSmallModels);
+renderContent();redrawSmallModels();wake();
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+
+> geodecoder-module@1.0.0 test
+> node --test tests/*.test.mjs
+
+✔ open from a stationary closed solid survives its zero-time first frame and reaches the flat net (7.780356ms)
+✔ close from a stationary flat net survives its zero-time first frame and reaches the solid (4.392032ms)
+✔ pause holds progress; resume completes an open/close cycle; replay restarts (3.590109ms)
+✔ reduced motion starts stationary, allows explicit playback and stops on preference changes (4.013931ms)
+✔ hidden tabs stop animation and rotation without jumping or resuming on return (2.330595ms)
+✔ choosing orthographic views closes the net, freezes rotation and aligns the chosen direction (2.567162ms)
+✔ rapid shape changes cancel pending playback and clear the previous learning response (3.06092ms)
+✔ resuming a paused one-way opening retains its destination and stops at the net (3.760727ms)
+✔ resuming during the closing half continues closing instead of reversing direction (5.543965ms)
+✔ camera changes inside an animation keep exactly one scheduled frame loop (6.279406ms)
+✔ cube: closed topology has the correct vertices, edges and faces (2.260108ms)
+✔ cube: every panel remains rigid through 101 opening frames (5.860403ms)
+✔ cube: flat net is planar, has no overlapping faces and preserves total area (0.590323ms)
+✔ cube: opening keeps one connected hinge tree (0.826581ms)
+✔ cuboid: closed topology has the correct vertices, edges and faces (0.19152ms)
+✔ cuboid: every panel remains rigid through 101 opening frames (3.0215ms)
+✔ cuboid: flat net is planar, has no overlapping faces and preserves total area (0.221665ms)
+✔ cuboid: opening keeps one connected hinge tree (0.50952ms)
+✔ pyramid: closed topology has the correct vertices, edges and faces (0.4228ms)
+✔ pyramid: every panel remains rigid through 101 opening frames (2.36035ms)
+✔ pyramid: flat net is planar, has no overlapping faces and preserves total area (0.210018ms)
+✔ pyramid: opening keeps one connected hinge tree (0.200092ms)
+✔ cylinder: closed shell is circular with matching top and bottom (0.326694ms)
+✔ cylinder: continuous development preserves arc-length and vertical distances (0.312653ms)
+✔ cylinder: flat rectangle width equals 2πr, height equals h, disks are tangent and planar (1.918722ms)
+✔ cylinder: flat area equals 2πrh + 2πr² within tessellation tolerance (2.375633ms)
+✔ cone: the closed surface is the right circular cone used by the module (1.023748ms)
+✔ cone: the entire changing curved surface preserves its intrinsic metric (1.563886ms)
+✔ cone: flat sector has slant radius s and arc exactly equal to the base circumference (0.335347ms)
+✔ cone: the circular base remains rigid and touches the sector at its midpoint (2.636317ms)
+✔ cone: flat sector and base areas match πrs + πr² (2.55259ms)
+✔ cube: 1001 frames are finite and continuous, with stable face IDs and colours (15.086246ms)
+✔ cube: all six camera directions have the expected orthographic extents (0.373495ms)
+✔ cuboid: 1001 frames are finite and continuous, with stable face IDs and colours (10.95657ms)
+✔ cuboid: all six camera directions have the expected orthographic extents (0.314896ms)
+✔ pyramid: 1001 frames are finite and continuous, with stable face IDs and colours (9.090619ms)
+✔ pyramid: all six camera directions have the expected orthographic extents (0.135665ms)
+✔ cylinder: 1001 frames are finite and continuous, with stable face IDs and colours (61.227737ms)
+✔ cylinder: all six camera directions have the expected orthographic extents (1.950139ms)
+✔ cone: 1001 frames are finite and continuous, with stable face IDs and colours (43.199903ms)
+✔ cone: all six camera directions have the expected orthographic extents (0.981114ms)
+✔ view labels correspond to the visible side, including top and bottom (0.314265ms)
+✔ curriculum content covers exactly five project shapes and accurate surface/edge/vertex counts (0.199081ms)
+✔ cylinder: numbered curved-surface label is not painted over by adjacent strips (13.07921ms)
+✔ cone: numbered curved-surface label is not painted over by adjacent strips (3.69586ms)
+ℹ tests 45
+ℹ suites 0
+ℹ pass 45
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 276.697682
