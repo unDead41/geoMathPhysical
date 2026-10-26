@@ -1,42 +1,86 @@
 # GeoDecoder Digital V2 UX contract
 
-Business sources: user request (25 October 2026), docs/SOURCE.md and docs/UPGRADE_V1_1.md. User requested name, category, class, drag to R1/R2 and ten-mark high score, followed by single-attempt questions, animated corrections, changing colours/order and final learning analytics. Digital game is independent from the firmware five-question round.
+Current candidate: v2.4.0, digitalize-ease-of-use. Source of change: the eight
+ease-of-use recommendations accepted on 26 October 2026. Reference design:
+[approved specification](../docs/superpowers/specs/2026-10-26-ease-of-use-design.md).
+Firmware rounds remain a separate contract.
 
-## Canonical UI Map
+## Canonical UI map
 
-| Capability | Canonical owner | Source of truth | Allowed variants | Verification |
-|---|---|---|---|---|
-| Form | registration markup + validatePlayer in core.mjs | user request | new player | core tests, browser empty/valid submit |
-| Scrollbar | style.css global baseline | DESIGN.md | native forced colours | narrow screen inspection |
-| Toast | app.mjs announce() and inline #game-status | this contract | info/success/error | browser wrong/stage/skip |
-| Dialog | app.mjs openDialog/closeDialog, native dialog | this contract | help/pause/scores/leave/erase | Escape/focus/browser |
-| Direct manipulation | app.mjs Pointer Events controller | user request | pointer/touch/tap/keyboard | browser drag + keyboard |
-| CRUD | storage.mjs score repository | local-only decision | save/list/export/erase | storage tests, browser persistence |
+| Capability | Owner | Variants | Verification |
+|---|---|---|---|
+| Guest form | index.html + validateGuest/validatePlayer | nickname-only guest, old/classroom profiles | core/storage/browser |
+| Dialog/settings/tutorial | usability-ui.mjs + app dialog owner | Settings, three-step guide, pause, scores, leave | browser/focus/state |
+| Text and math | i18n.mjs + local copy modules + format.mjs | BM/English, SVG/MathML | catalog/bank/browser |
+| Direct manipulation | app Pointer Events controller | pointer, touch, click, keyboard | browser stage/selection |
+| Scores | storage.mjs | save, list, CSV, erase, legacy | storage tests/browser |
+| Modes | one Game engine | quiz10, practice15, review subset, Duel10 | core/browser |
+| Classroom | existing cloud.mjs + portal.mjs | accounts, roster, rooms | existing cloud/auth tests + portal UI |
+| Duel | duel.mjs + isolated existing service | PIN, ready, live/result, reconnect | two real browser contexts |
 
-## Home and guest navigation
+## Home, guest and settings
 
-Home presents the geometry illustration, account/classroom access, **Play as a Guest**, and a secondary learning-module action. Guest opens a separate screen with name, category and class fields. Starting local practice requires no Auth session or cloud initialization. Back returns to Home and focuses the Guest action. Leaving an unfinished practice round keeps the existing confirmation. Results link back to Home; replay preserves the current practice player. Portal exit returns to Home. Both themes apply to Home and Guest.
+Home groups Main, Belajar and Akaun/Kelas. Main opens nickname and mode
+selection: quiz10, practice15, Duel. A guest has category Tetamu and an empty
+class. Old Murid/Pelajar profiles still require a class and remain valid.
+Solo play does not initialize Auth or call Duel. Back/Home focuses Main;
+unfinished solo play still confirms leaving. Account role and class fields
+are unchanged.
 
-## Practice behavior
-Entry validates trimmed name and class, category required. Practice creates no account. All five solids and five net cards are available every question; each shelf independently deranged so every shape changes position. Colours change per shape each question, independently across solid/net shelves. Click/tap/Enter selects; click/Enter on the active scanner scans; pointer dragging drops directly. Incorrect type/target is routing feedback and consumes no attempt. R1 correct locks R1 green; matching R2 gives +1 exactly once. A wrong shape at either stage ends the only attempt with +0. Wrong/skipped answers show an animated correct pair plus explanation; inputs/hints/skips remain blocked, time freezes, and Continue becomes available after 1800ms. Success advances after 900ms. Hint counts once per question without mark penalty. No retry on a settled question.
+The first guest start offers a skippable three-step illustrated guide before
+the solo clock starts. Cara main reopens it. Native dialog Escape/close and
+focus restoration remain available. Settings groups the single language
+selector, light/dark/system theme, music, scan sounds, text100/125/150% and
+motion. Existing language/theme/music keys remain; the versioned device-only
+preferences key stores no profile, credential or answer. Denied storage keeps
+preferences working in memory and does not block play.
 
-Round: ten unique question IDs, two per shape, max 10 points. Stopwatch runs during decisions; paused for success, correction/skip review, dialogs, hidden tabs and results. Backgrounding pauses with an explicit resume. Reload starts entry; incomplete rounds do not enter high scores. Completed result written once by unique session ID. Ranking: score descending, mistakes ascending, elapsed milliseconds ascending, completion date ascending. Display and explain this order. Each scoreboard contains at most 50 records; stored and displayed results scope: same browser only. No cross-device claims.
+## Gameplay and input
 
-Storage failure leaves play working with a persistent message and session-only scores. Malformed/incompatible records are ignored rather than crashing. Merge by round ID and re-read on save; refresh boards on storage events. The single-attempt board uses its own storage key and ruleset, retains per-question results, and accepts future semantic app versions with the same ruleset. Original retry scores remain under the old key and are readable in a separately labelled disclosure. They never enter the new ranking. Erasing all scores confirms and removes both groups. CSV exports the current board, quotes names, neutralizes spreadsheet formulas and handles Unicode BOM. Practice does not send results to the server. No profile prefill persisted by app.
+Guest nicknames are trimmed, 2–60 characters. All five solids and five net
+cards remain visible. Each shelf is independently deranged and recoloured;
+colour/position never becomes an answer key. The prominent step label changes
+R1→R2. Touch instructions prioritize tap-card then tap-scanner; pointer drag,
+Tab, Enter and Space remain. Selecting a card submits nothing. The selected
+state and active scanner identify the next scan action. Wrong type/target
+consumes no attempt. Correct R1 locks green; a matching R2 earns +1 once.
+Wrong R1 or R2 ends the single attempt at +0. Wrong/skip shows a correct pair
+and explanation; review input locks for at least1800ms. Correct feedback is
+900ms. Hints count once per question without a score penalty.
 
-Final learning analysis: two questions per shape; correctness, wrong, skipped, hints, real stage attempts, and topic categories derived from actual prompt content. Unreached R2 is not a wrong R2; no attempts means no percentage. Hint use does not make an answer wrong. Explain weakness only from actual wrong answers; skipped-only rounds prompt the player to attempt questions. Show denominators, suggested practice and all ten question/choice/correct-answer records.
+Quiz: ten unique IDs, two per shape, max10. Practice: all15 IDs, three per
+shape, max15. Latih soalan salah selects only original wrong/skipped IDs once,
+producing a validated local review subset of1–15 IDs. All-correct results do
+not expose an empty review. The original result is never mutated. Practice,
+review, Duel and classroom results cannot enter the ten-question quiz board.
 
-Dialogs remember trigger focus, use native showModal inertness and Escape, pause active play and restore after close. Leave requires confirmation; default focus on continue. Keyboard arrows not overridden. Reduced motion removes decorative motion/flashing. Labels + text accompany colour. Non-drag equivalent is always printed. At narrow widths use document scrolling and keep every action available.
+Solo time pauses for feedback, answer review, dialogs, hidden tabs and results.
+Backgrounding offers explicit resume; reload returns Home. Incomplete solo
+rounds do not save. Completed quizzes save once per ID; ranking remains score,
+fewer mistakes, elapsed time and completion date, capped at50. Old retry scores
+stay separate. CSV localizes labels, quotes fields and neutralizes formulas.
+Malformed records are ignored; unavailable storage provides session-only play.
+
+## Results, language and errors
+
+Results lead with score and actions, followed by a native details disclosure
+for analysis and all question records. Analysis uses actual session totals,
+including subset denominators in review. Unreached R2 is not wrong; no attempts
+means no percentage. Hints do not count as mistakes. Advice uses real outcomes.
+
+Changing language/settings keeps card order, selection, attempts, hint use,
+score, progress and disclosure state. Authored portal literals are translated
+before rendering. Dynamic user names/usernames/class names/PINs remain literal.
+No translated text determines correctness or analytics keys. Display errors
+give a next action. Pending server actions remain unconfirmed and locked;
+retry preserves the same operation ID/sequence. Internal SQL details and raw
+machine keys must not be shown to learners.
 
 ## Account and classroom behavior
 
 The account entry is distinct from practice. Signup requires email, username, display name, password and teacher/student role; Auth verifies the email before login. A scoped Auth insert trigger validates and copies the initial role into an immutable private profile. Later metadata edits cannot change authorization. Login accepts email or username. Forgotten password requests an email link; reset takes priority over account dashboards only after an SDK-validated recovery session. Two matching 10–128-character passwords are required; successful reset signs out globally. Invalid/expired links offer a new request. Resend has a 60-second UI cooldown and provider errors remain visible. Request success uses generic copy and does not assert inbox delivery. Public delivery depends on configured SMTP and redirect URLs. Legacy username-only accounts retain secondary code recovery; email accounts cannot use legacy codes. No credentials or recovery codes are logged. Names are escaped. Session changes clear account/room caches; stale responses cannot overwrite current context. Recovery screens stop dashboard polling.
 
-## Music and learning module
-
-One looping background Audio element plays the supplied rest-site track on Home, Guest, accounts and results, and the supplied map track during games and the module. Initial playback waits for a trusted user gesture. Track changes pause the old source before playing the new one. A dedicated, labelled header toggle persists the preference; game sound effects are independent. Hidden tabs pause music. Playback failure does not block learning or scoring. Website assets load on demand; downloadable HTML embeds both full tracks.
-
-Home opens the pinned module v1.2.0 in an opaque-origin iframe with scripts and optional popups. Its canonical artifact is unchanged; the embedding adapter rewrites fragment links to about:srcdoc so Guide/Skip stay within the module. A labelled parent Back button unloads the frame, stopping its animation, and restores menu music. The module keeps its independent layout and learning controls.
+## Classroom timing and authorization
 
 Teachers create only their own classes and rooms, see roster presence, and invite a registered student by exact username. The student accepts invitations. A six-digit class PIN enrolls in the class; a room PIN enrolls in its class and room. Codes are server generated, unique, expire after 24 hours and can be regenerated even when no active code remains. Owners alone see PINs. Repeated invalid guesses are rate limited. Presence is an estimate based on a heartbeat within the last 45 seconds, not proof that the game tab has focus.
 
@@ -46,6 +90,32 @@ The server timer continues during dialogs, UI pause, hidden tabs and disconnecti
 
 The teacher board subscribes to authorized room_progress changes. Only a confirmed SUBSCRIBED status is labelled live; fallback refresh is 15 seconds. Student/dashboard polling is 15 seconds, heartbeat 20 seconds. Polls do not overlap or overwrite edited form drafts. Search/pagination bound roster/board display to 20 rows. Read failures preserve labelled last-known data with retry.
 
-The theme button applies light/dark across entry, game, dialogs, results and portal, persists the preference and respects the system choice before an explicit selection. Both themes preserve visible text, focus outlines and non-colour state labels.
+## Duel boundary
 
-The v1.2.0 module includes four interactive labs reachable from its own Makmal interaktif tab. Parent navigation still owns the iframe lifetime and the map music; classroom Auth and scoring remain in the parent application.
+Duel retains ten common ordered IDs, two slots, an opaque sessionStorage token,
+server-authoritative scores and idempotent retry. Higher score wins, then server
+wall-clock finish time. Its clock includes menus, corrections, hidden tabs and
+disconnection; classroom answering time excludes settled-answer review. PIN10min,
+match15min; leaving incomplete play forfeits. A complete Duel can start local
+wrong-question practice: the token is forgotten, polling stops and neither
+the original server result nor local quiz board changes. API access expires24h;
+physical cleanup is bounded/lazy. Existing backend deployment is reused.
+
+## Music, theme and pinned module
+
+One looping background Audio element plays the supplied menu track on Home,
+Guest, accounts and results; the map track plays during games, Duel lobby and
+the module. A trusted gesture unlocks playback. Changes pause the old source
+first; hidden tabs pause music. The labelled Settings music toggle persists its
+preference; scan sounds are independent. Audio failures cannot block play.
+Website music loads on demand; downloaded HTML embeds both complete tracks.
+No new spoken BM/English audio is claimed.
+
+Settings applies light/dark/system and scaled text across the parent UI while
+leaving mathematical SVG geometry unchanged. Focus and text state labels remain.
+The pinned v1.2.0 module opens in an opaque-origin iframe; its canonical bytes
+and source hash are unchanged. The embedding adapter keeps fragment navigation
+inside about:srcdoc. Parent Back unloads its animation and restores menu music.
+The module retains its own layout, language and accessibility controls, with
+Teroka3D, notes and four interactive labs. Parent settings do not claim to
+replace those internal controls.

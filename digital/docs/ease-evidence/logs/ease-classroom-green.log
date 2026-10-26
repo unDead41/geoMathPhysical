@@ -1,0 +1,21 @@
+EASE browser cases: classroom-fixture, classroom-errors-fixture, classroom-review-fixture, review-one-fixture, account
+EVIDENCE_DIRECTORY /workspace/scratch/dd6ea0c4da20/geodecoder-ease/digital/docs/ease-evidence/2026-10-26T01-43-04-649Z
+RUN classroom-fixture
+EVIDENCE docs/ease-evidence/2026-10-26T01-43-04-649Z/classroom-teacher-fixture-en-320.png
+EVIDENCE docs/ease-evidence/2026-10-26T01-43-04-649Z/classroom-student-fixture-en-320.png
+DETAIL classroom views used read-only fixture transport; no live classroom account/backend/email
+PASS classroom-fixture
+RUN classroom-errors-fixture
+PASS classroom-errors-fixture
+RUN classroom-review-fixture
+DETAIL completed classroom-result fixture → exact wrong/skipped local review; no score/answer backend action
+PASS classroom-review-fixture
+RUN review-one-fixture
+EVIDENCE docs/ease-evidence/2026-10-26T01-43-04-649Z/review-one-question-result-en-mobile.png
+EVIDENCE docs/ease-evidence/2026-10-26T01-43-04-649Z/review-one-question-result-en-320-150.png
+DETAIL completed classroom-result fixture → exact wrong/skipped local review; no score/answer backend action
+PASS review-one-fixture
+RUN account
+EVIDENCE docs/ease-evidence/2026-10-26T01-43-04-649Z/account-invalid-en-password-preserved.png
+PASS account
+RESULT 5/5 browser cases passed; 0 failures

@@ -43,7 +43,12 @@ components:
 A real classroom geometry kit translated into a bright digital workbench. The signature is the two scanner pads: R1 takes a solid, R2 takes its net. Exact SVG models serve learning and are never decorative AI geometry.
 
 ### Product context and register
-Malaysian Murid/Pelajar, readable at Tingkatan 1 level, using mouse, keyboard or touchscreen. All product language is BM. Practice sessions are self-paced, ten questions, local high scores; classroom accounts add teacher rosters and live rooms. Product register throughout registration, game and scoreboard. Keep classroom screens readable and avoid neon arcade treatments and tiny LCD-only text.
+Malaysian pupils/students, readable at Tingkatan1 level, using mouse,
+keyboard or touch. BM is default with English available. Home groups Main,
+Belajar and Akaun/Kelas; guest entry needs a nickname only. Quiz10, practice15
+and missed-question review share one geometry workbench. Accounts/classrooms
+and two-player Duel retain separate server rules. Preserve the physical kit
+identity and exact solid/net illustrations.
 
 ### Token ownership/runtime mapping
 Model B: `dist/style.css :root` owns runtime tokens. This document mirrors the accepted palette. Primary→--primary→buttons/focus; ink→--ink→text; background→--bg→body; surface→--surface→panels; success→--success→correct; danger→--danger→wrong; accent→--accent→milestone; muted→--muted→secondary text; border→--border→all controls. Type→--font-display/--font-body/--font-mono. Corners→--radius/--radius-lg. `tools/check.mjs` checks exact drift for palette.
@@ -72,7 +77,11 @@ Hover raises choices 3px; focus is a 3px blue outline; active selections use out
 Solid primary for start/replay/scan, outline neutral for secondary, outline danger for erase/leave. Labels describe actions. Icon buttons have accessible BM names. Fixed minimum 44px height.
 
 ### Navigation and data display
-Top header keeps brand and Cara main/Papan skor actions. Scores table is bounded to 50 completed sessions and top ten initially, with an explicit show-all action. Local-only scope is visible.
+Header keeps brand, Tetapan, Cara main and Papan skor. Settings groups
+language, theme, audio, text size and animation. Home separates play, learning
+and class accounts. The quiz board stays bounded to50 records with show-all.
+Results show score/actions before expandable detailed analysis. Storage scope
+and classroom/Duel authority remain explicit.
 
 ### Forms and overlays
 All fields have visible labels, inline errors and first-error focus, no native validation bubbles. Category is a radio pair. Shared native `<dialog>` provides authored contents, modal inertness, Escape and restored focus. Confirm before abandoning an active round or erasing scores.
@@ -101,4 +110,9 @@ Teacher entry uses a class sidebar, selected-class PIN/invitation panel, searcha
 
 ## Home and guest entry V2.1
 
-Preserve the supplied Home hero, geometry kit and two-column desktop layout. The right panel contains classroom account access and a prominent **Play as a Guest** action. Guest opens the supplied local-player form in a separate card, max-width 520px, with a visible Back to Home action. Use existing panel, button, text and focus tokens in both themes; no new colour system. On phones, Home stacks and the guest card fits document width.
+Preserve the supplied Home hero, geometry kit and two-column desktop
+layout. The right panel groups Main, Belajar and Akaun/Kelas. Guest opens a
+nickname/mode card with a visible Back to Home action. Keep the existing
+colours and focus tokens in both themes. On phones use document scrolling,
+wrapping actions and readable tap targets; selected-card→active-scanner is
+explicit. The first-play guide uses three short steps and the same SVG models.

@@ -1,0 +1,11 @@
+EASE browser cases: navigation
+EVIDENCE_DIRECTORY /workspace/scratch/dd6ea0c4da20/geodecoder-ease/digital/docs/ease-evidence/2026-10-26T01-47-29-436Z
+RUN navigation
+EVIDENCE docs/ease-evidence/2026-10-26T01-47-29-436Z/home-bm-desktop.png
+EVIDENCE docs/ease-evidence/2026-10-26T01-47-29-436Z/home-en-mobile.png
+EVIDENCE docs/ease-evidence/2026-10-26T01-47-29-436Z/tutorial-bm-mobile.png
+EVIDENCE docs/ease-evidence/2026-10-26T01-47-29-436Z/settings-en-mobile-150.png
+EVIDENCE docs/ease-evidence/2026-10-26T01-47-29-436Z/game-r1-bm-mobile.png
+EVIDENCE docs/ease-evidence/2026-10-26T01-47-29-436Z/game-r2-bm-mobile.png
+PASS navigation
+RESULT 1/1 browser cases passed; 0 failures

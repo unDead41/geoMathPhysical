@@ -2,6 +2,8 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
+import {translate} from '../dist/i18n.mjs';
+const pt=key=>translate('ms',key)||key;
 
 // Exercise the portal's actual form validator without adding a browser/DOM
 // dependency. The shim records only field errors, normalized values and focus.
@@ -12,7 +14,7 @@ function functionSource(name, next) {
   assert.ok(start >= 0 && end > start, `Portal ${name} was not found`);
   return source.slice(start, end).trim();
 }
-const validate = vm.runInNewContext(`(${functionSource('function validate(form, values, type) {', 'async function handleAuth(')})`);
+const validate = vm.runInNewContext(`(${functionSource('function validate(form, values, type) {', 'async function handleAuth(')})`,{pt});
 function formFor(values) {
   let focused = '';
   const fields = new Map(Object.entries(values).map(([name, value]) => [name, {
@@ -133,7 +135,7 @@ test('reset rejects mismatched or out-of-range confirmation and focuses the mark
 });
 
 test('actual auth rendering exposes email forms and derives reset exclusively from a verified recovery session', () => {
-  const context = vm.createContext({
+  const context = vm.createContext({pt,
     cloud: {ready: true, recoveryRequired: false}, authMode: 'signup', authEmail: 'nama@contoh.com',
     document: {title: ''}, callbackError: () => '', emailCooldownSeconds: () => 60,
     geometryKit: () => '', icon: () => '', esc: value => String(value).replace(/[&<>"']/g, '')
@@ -175,7 +177,7 @@ test('actual auth rendering exposes email forms and derives reset exclusively fr
 
 test('recovery and invalid callback screens take precedence over signed-in dashboards and legacy codes', () => {
   const content = {innerHTML: '', querySelector: () => null};
-  const context = vm.createContext({
+  const context = vm.createContext({pt,
     cloud: {session: {user: {id: 'verified-user'}}, recoveryRequired: true},
     active: true, destroyed: false, composing: false, renderDeferred: false, initializing: false,
     callbackErrorDismissed: false, authOnly: false, recoveryCode: 'old-code', snapshot: {}, profile: {}, roomId: null,
@@ -202,7 +204,7 @@ test('actual auth handler sends the email API payloads, surfaces provider errors
   function harness({session = null, recovery = false, result = {}, failure = ''} = {}) {
     const calls = [], notices = [];
     const message = {textContent: '', setAttribute() {}, focus() { this.focused = true; }};
-    const context = vm.createContext({
+    const context = vm.createContext({pt,
       active: true, epoch: 0, operation: 0, pending: '', authPending: false, refreshAgain: false,
       authMode: 'login', authOnly: false, authEmail: '', callbackErrorDismissed: false,
       knownSession: '', knownRecovery: false, knownCallbackError: '', profile: null,

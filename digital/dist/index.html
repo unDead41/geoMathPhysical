@@ -4,133 +4,162 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#215FF0">
-  <meta name="description" content="Main GeoDecoder Digital: seret bongkah 3D ke R1, padankan bentangannya di R2 dan kumpulkan 10 markah.">
-  <title>GeoDecoder Digital — Jom main geometri</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 44'%3E%3Cpath d='m20 2 17 10v20L20 42 3 32V12Z' fill='%23215FF0'/%3E%3Cpath d='m20 2 17 10-17 10L3 12Z' fill='%236EAAFF'/%3E%3C/svg%3E">
+  <meta name="description" content="Main kuiz 10 soalan atau Latihan Pengukuhan semua 15 soalan GeoDecoder Digital." data-i18n-content="mode.meta">
+  <title data-i18n="GeoDecoder Digital — Jom main geometri">GeoDecoder Digital — Jom main geometri</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 40 44&#x27;%3E%3Cpath d=&#x27;m20 2 17 10v20L20 42 3 32V12Z&#x27; fill=&#x27;%23215FF0&#x27;/%3E%3Cpath d=&#x27;m20 2 17 10-17 10L3 12Z&#x27; fill=&#x27;%236EAAFF&#x27;/%3E%3C/svg%3E">
   <script>try{const t=localStorage.getItem('geodecoder.theme.v1');document.documentElement.dataset.theme=(t==='dark'||t==='light')?t:matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}catch{}</script>
   <link rel="stylesheet" href="./style.css">
   <link rel="stylesheet" href="./portal.css">
+  <link rel="stylesheet" href="./usability.css">
 </head>
 <body>
-  <a class="skip-link" href="#main">Terus ke kandungan</a>
+  <a class="skip-link" href="#main" data-i18n="Terus ke kandungan">Terus ke kandungan</a>
   <header class="site-header">
-    <a href="#" class="brand" id="brand-home" aria-label="GeoDecoder Digital, halaman mula"><span data-brand></span><span>Geo<span class="brand-blue">Decoder</span><small>DIGITAL EDITION <b class="brand-version" id="app-version">V2.3.0</b></small></span></a>
-    <nav aria-label="Menu utama">
-      <button type="button" class="nav-button" id="account-button" aria-label="Akaun dan kelas"><span data-icon="user"></span><span>Akaun &amp; kelas</span></button>
-      <button type="button" class="nav-button" id="theme-button" aria-label="Tukar kepada tema gelap" aria-pressed="false"></button>
-      <button type="button" class="nav-button" id="music-button" aria-label="Matikan muzik latar" aria-pressed="true" title="Matikan muzik latar"><span data-icon="sound"></span></button>
-      <button class="nav-button motion-button" id="motion-button" aria-label="Jeda animasi" aria-pressed="false" title="Jeda animasi"><span data-icon="pause"></span></button>
-      <button class="nav-button" data-action="help" aria-label="Cara main"><span data-icon="help"></span><span>Cara main</span></button>
-      <button class="nav-button score-nav" data-action="scores" aria-label="Papan skor"><span data-icon="trophy"></span><span>Papan skor</span></button>
+    <a href="#" class="brand" id="brand-home" aria-label="GeoDecoder Digital, halaman mula" data-i18n-aria-label="GeoDecoder Digital, halaman mula"><span data-brand></span><span>Geo<span class="brand-blue">Decoder</span><small><span data-i18n="DIGITAL EDITION">DIGITAL EDITION</span> <b class="brand-version" id="app-version">V2.4.0</b></small></span></a>
+    <nav aria-label="Menu utama" data-i18n-aria-label="Menu utama">
+      <button type="button" class="nav-button" id="settings-button" aria-label="Tetapan" data-i18n-aria-label="ease.settings"><span data-icon="settings"></span><span data-i18n="ease.settings">Tetapan</span></button>
+      <button type="button" class="nav-button" data-action="help" aria-label="Cara main" data-i18n-aria-label="Cara main"><span data-icon="help"></span><span data-i18n="Cara main">Cara main</span></button>
+      <button type="button" class="nav-button score-nav" data-action="scores" aria-label="Papan skor" data-i18n-aria-label="Papan skor"><span data-icon="trophy"></span><span data-i18n="Papan skor">Papan skor</span></button>
     </nav>
   </header>
+
+
+  <div id="settings-home" hidden><div id="settings-panel" class="settings-panel" hidden>
+    <div class="settings-fields">
+      <label class="language-control settings-field" id="language-control"><span data-i18n="language.label">Bahasa</span><select id="language-select" aria-label="Bahasa / Language"><option value="ms" lang="ms">Bahasa Melayu</option><option value="en" lang="en">English</option></select></label>
+      <label class="settings-field" for="theme-select"><span data-i18n="ease.theme">Tema</span><select id="theme-select"><option value="system" data-i18n="ease.themeSystem">Ikut peranti</option><option value="light" data-i18n="ease.themeLight">Cerah</option><option value="dark" data-i18n="ease.themeDark">Gelap</option></select></label>
+      <label class="settings-field" for="text-size-select"><span data-i18n="ease.textSize">Saiz teks</span><select id="text-size-select"><option value="100" data-i18n="ease.textNormal">Biasa · 100%</option><option value="125" data-i18n="ease.textLarge">Besar · 125%</option><option value="150" data-i18n="ease.textLargest">Lebih besar · 150%</option></select></label>
+    </div>
+    <div class="settings-row"><div><b data-i18n="ease.music">Muzik latar</b><p data-i18n="ease.musicNote">Lagu menu dan permainan.</p></div><button type="button" id="music-button" class="icon-button" aria-label="Matikan muzik latar" aria-pressed="true"><span data-icon="sound"></span></button></div>
+    <div class="settings-row"><div><b data-i18n="ease.soundEffects">Bunyi imbasan</b><p data-i18n="ease.soundNote">Bunyi untuk imbasan dan maklum balas.</p></div><button type="button" id="sound-button" class="icon-button" aria-label="Hidupkan bunyi" aria-pressed="false"><span data-icon="mute"></span></button></div>
+    <div class="settings-row"><div><b data-i18n="ease.motion">Animasi</b><p data-i18n="ease.motionNote">Jeda gerakan hiasan tanpa menukar peraturan permainan.</p></div><button type="button" id="motion-button" class="icon-button" aria-label="Jeda animasi" aria-pressed="false"><span data-icon="pause"></span></button></div>
+    <button type="button" class="button button-outline" data-dialog-action="tutorial-open"><span data-icon="help"></span><span data-i18n="ease.tutorialOpen">Buka panduan tiga langkah</span></button>
+    <p id="settings-notice" class="settings-notice" role="status"></p>
+    <div class="dialog-actions"><button type="button" class="button button-primary" data-dialog-action="close" data-i18n="ease.close">Tutup</button></div>
+  </div></div>
 
   <main id="main" tabindex="-1">
     <section id="welcome" class="entry-screen" aria-labelledby="welcome-title">
       <div class="intro">
-        <div class="eyebrow"><span class="tiny-cube"></span> MAKMAL GEOMETRI ANDA</div>
-        <h1 id="welcome-title">Kenali bentuk.<br><span>Temui padanannya.</span></h1>
-        <p class="intro-copy">Bongkah 3D, kad bentangan dan dua pengimbas.<br class="desktop-only"> Pengalaman GeoDecoder, kini boleh dimainkan di skrin.</p>
-        <div class="lab-scene" aria-label="Ilustrasi bongkah dan bentangan di atas dua pengimbas digital" role="img">
+        <div class="eyebrow"><span class="tiny-cube"></span> <span data-i18n="MAKMAL GEOMETRI ANDA">MAKMAL GEOMETRI ANDA</span></div>
+        <h1 id="welcome-title"><span class="intro-base" data-i18n="Kenali bentuk.">Kenali bentuk.</span><br><span data-i18n="Temui padanannya.">Temui padanannya.</span></h1>
+        <p class="intro-copy"><span data-i18n="Bongkah 3D, kad bentangan dan dua pengimbas.">Bongkah 3D, kad bentangan dan dua pengimbas.</span><br class="desktop-only"> <span data-i18n="Pengalaman GeoDecoder, kini boleh dimainkan di skrin.">Pengalaman GeoDecoder, kini boleh dimainkan di skrin.</span></p>
+        <div class="lab-scene" aria-label="Ilustrasi bongkah dan bentangan di atas dua pengimbas digital" role="img" data-i18n-aria-label="Ilustrasi bongkah dan bentangan di atas dua pengimbas digital">
           <div class="scene-grid"></div>
-          <div class="scene-note"><span data-icon="cursor"></span> Seret. Imbas. Padankan.</div>
+          <div class="scene-note"><span data-icon="cursor"></span> <span data-i18n="Seret. Imbas. Padankan.">Seret. Imbas. Padankan.</span></div>
           <div class="scene-object scene-cube" data-art="cube"></div>
           <div class="scene-object scene-cone" data-art="cone" data-tone="orange"></div>
           <div class="scene-object scene-pyramid" data-art="pyramid" data-tone="violet"></div>
           <div class="scene-net" data-art="cube" data-kind="net" data-tone="pink"></div>
-          <div class="scene-pad pad-one"><span class="led-dot blue"></span><b>R1</b><span>BONGKAH</span><div class="scanner-rings"></div></div>
-          <div class="scene-pad pad-two"><span class="led-dot green"></span><b>R2</b><span>BENTANGAN</span><div class="scanner-rings"></div></div>
+          <div class="scene-pad pad-one"><span class="led-dot blue"></span><b>R1</b><span data-i18n="BONGKAH">BONGKAH</span><div class="scanner-rings"></div></div>
+          <div class="scene-pad pad-two"><span class="led-dot green"></span><b>R2</b><span data-i18n="BENTANGAN">BENTANGAN</span><div class="scanner-rings"></div></div>
           <span class="scene-connector" data-icon="arrow"></span>
           <span class="scene-star star-one">✦</span><span class="scene-star star-two">✦</span>
-          <div class="scene-score"><span data-icon="spark"></span><b>+1</b><span>Pasangan tepat!</span></div>
+          <div class="scene-score"><span data-icon="spark"></span><b>+1</b><span data-i18n="Pasangan tepat!">Pasangan tepat!</span></div>
         </div>
-        <div class="entry-facts"><span><b>5</b> jenis bongkah</span><i></i><span><b>10</b> soalan setiap pusingan</span><i></i><span><span class="fact-icon" data-icon="trophy"></span> Cabar skor sendiri</span></div>
+        <div class="entry-facts"><span><b>5</b> <span data-i18n="jenis bongkah">jenis bongkah</span></span><i></i><span><b id="entry-question-count">10</b> <span data-i18n="soalan setiap pusingan">soalan setiap pusingan</span></span><i></i><span><span class="fact-icon" data-icon="trophy"></span> <span data-i18n="Cabar skor sendiri">Cabar skor sendiri</span></span></div>
       </div>
-      <div class="registration-card home-options">
-        <div class="account-entry"><span class="card-kicker">BELAJAR BERSAMA KELAS</span><h2>Guru atau pelajar?</h2><p>Log masuk untuk kelas, jemputan PIN dan pertandingan room.</p><button id="welcome-account-button" type="button" class="button button-outline">Buka akaun &amp; kelas <span data-icon="arrow"></span></button></div>
-        <div class="guest-entry"><span class="card-kicker">MAIN SENDIRI</span><h2>Teruskan sebagai tetamu.</h2><p>Tidak perlukan akaun. Isi nama panggilan dan kelas untuk mencuba permainan serta menyimpan skor pada peranti ini.</p><button id="guest-button" type="button" class="button button-primary">Play as a Guest <span data-icon="arrow"></span></button><small>Tiada pendaftaran akaun. Boleh dimainkan tanpa Internet.</small></div>
-        <button id="module-button" type="button" class="button button-quiet module-entry"><span data-icon="bulb"></span>Teroka modul pembelajaran<span data-icon="arrow"></span></button>
+      <div class="registration-card home-options ease-home-options">
+        <div class="home-choice"><span class="card-kicker" data-i18n="ease.main">Main</span><h2 data-i18n="ease.chooseGame">Pilih permainan</h2><p data-i18n="ease.mainNote">Pilih kuiz, latihan atau Duel. Nama panggilan sahaja diperlukan.</p><button id="guest-button" type="button" class="button button-primary"><span data-i18n="ease.main">Main</span><span data-icon="arrow"></span></button></div>
+        <div class="home-choice"><h2 data-i18n="ease.learn">Belajar</h2><p data-i18n="ease.learnNote">Teroka bongkah 3D, nota dan empat makmal interaktif.</p><button id="module-button" type="button" class="button button-outline"><span data-icon="bulb"></span><span data-i18n="ease.openModule">Buka modul pembelajaran</span></button></div>
+        <div class="home-choice home-classroom"><h2 data-i18n="ease.classes">Akaun &amp; kelas</h2><p data-i18n="ease.classesNote">Masuk kelas guru dan lihat keputusan permainan kelas.</p><button id="welcome-account-button" type="button" class="button button-quiet"><span data-icon="user"></span><span data-i18n="ease.classes">Akaun &amp; kelas</span></button></div>
       </div>
     </section>
 
     <section id="guest-screen" class="guest-screen" hidden aria-labelledby="guest-title">
-      <button id="guest-back-button" type="button" class="button button-quiet guest-back"><span data-icon="arrow"></span>Kembali ke Home</button>
+      <button id="guest-back-button" type="button" class="button button-quiet guest-back"><span data-icon="arrow"></span><span data-i18n="ease.backHome">Kembali ke Home</span></button>
       <div class="registration-card guest-card">
         <span class="card-kicker">SEDIA UNTUK MENCUBA?</span>
-        <h1 id="guest-title">Jom kenalkan diri.</h1>
-        <p>Main sebagai tetamu tanpa akaun atau kata laluan. Setiap soalan ada satu percubaan.</p>
+        <h1 id="guest-title" data-i18n="ease.guestTitle">Pilih permainan anda.</h1>
+        <p data-i18n="ease.guestIntro">Main tanpa akaun atau kata laluan. Gunakan nama panggilan.</p>
         <form id="player-form" novalidate>
-          <div class="field"><label for="player-name">Nama pemain</label><input id="player-name" name="name" type="text" maxlength="60" autocomplete="off" placeholder="Contoh: Aisyah" aria-describedby="name-error"><span class="field-error" id="name-error"></span></div>
-          <fieldset class="category-field"><legend>Saya seorang</legend><div class="radio-options"><label class="radio-card"><input type="radio" name="category" value="Murid" checked><span><span data-icon="user"></span>Murid</span></label><label class="radio-card"><input type="radio" name="category" value="Pelajar"><span><span data-icon="user"></span>Pelajar</span></label></div><span class="field-error" id="category-error"></span></fieldset>
-          <div class="field"><label for="player-class">Kelas</label><input id="player-class" name="className" type="text" maxlength="40" autocomplete="off" placeholder="Contoh: 1 Bestari" aria-describedby="className-error"><span class="field-error" id="className-error"></span></div>
-          <button type="submit" class="button button-primary start-button">Mulakan permainan <span data-icon="arrow"></span></button>
-          <p class="privacy-note"><span data-icon="lock"></span><span>Nama dan skor disimpan dalam pelayar ini sahaja. Anda boleh gunakan nama panggilan.</span></p>
+          <div class="field"><label for="player-name" data-i18n="ease.nickname">Nama panggilan</label><input id="player-name" name="name" type="text" maxlength="60" autocomplete="off" placeholder="Contoh: Aisyah" data-i18n-placeholder="Contoh: Aisyah" aria-describedby="name-error"><span class="field-error" id="name-error"></span></div>
+          <div class="field mode-field"><label for="play-mode" data-i18n="mode.label">Mod permainan</label><select id="play-mode" name="mode" aria-describedby="mode-description"><option value="quiz" data-i18n="mode.quiz">Kuiz — 10 soalan</option><option value="practice" data-i18n="mode.practice">Latihan Pengukuhan · 15</option><option value="duel" data-i18n="duel.mode">Duel · 2 pemain</option></select><p id="mode-description" class="mode-description"></p></div>
+          <button type="submit" class="button button-primary start-button"><span id="start-label">Mulakan permainan</span> <span data-icon="arrow"></span></button>
+          <p class="privacy-note"><span data-icon="lock"></span><span id="privacy-note-text">Nama dan skor disimpan dalam pelayar ini sahaja. Anda boleh gunakan nama panggilan.</span></p>
         </form>
       </div>
     </section>
 
     <section id="portal-screen" hidden></section>
     <section id="module-screen" class="module-screen" hidden aria-labelledby="module-title">
-      <div class="module-heading"><button id="module-back-button" type="button" class="button button-quiet"><span data-icon="home"></span>Kembali ke Home</button><h1 id="module-title" tabindex="-1">Modul pembelajaran</h1></div>
-      <iframe id="module-frame" title="Modul GeoDecoder: Teroka 3D dan nota pembelajaran" sandbox="allow-scripts allow-popups" referrerpolicy="no-referrer"></iframe>
+      <div class="module-heading"><button id="module-back-button" type="button" class="button button-quiet"><span data-icon="home"></span><span data-i18n="ease.backHome">Kembali ke Home</span></button><h1 id="module-title" tabindex="-1" data-i18n="ease.moduleTitle">Modul pembelajaran</h1></div>
+      <iframe id="module-frame" title="Modul GeoDecoder: Teroka 3D dan nota pembelajaran" data-i18n-title="ease.moduleFrame" sandbox="allow-scripts allow-popups" referrerpolicy="no-referrer"></iframe>
     </section>
+    <section id="duel-screen" class="duel-screen" hidden aria-labelledby="duel-title">
+      <div class="duel-heading"><span class="eyebrow">GEODECODER DUEL</span><h1 id="duel-title" tabindex="-1" data-i18n="duel.title">Duel bersama kawan</h1><p data-i18n="duel.modeNote"></p></div>
+      <ol class="duel-steps"><li data-i18n="ease.duelStep1">1 · Cipta atau sertai Duel</li><li data-i18n="ease.duelStep2">2 · Kongsi PIN dengan kawan</li><li data-i18n="ease.duelStep3">3 · Kedua-duanya tekan Sedia</li></ol>
+      <p id="duel-connection" class="duel-connection" role="status"></p><p id="duel-message" class="duel-message" role="status"></p>
+      <div id="duel-entry" class="duel-entry">
+        <div class="duel-card"><h2 data-i18n="duel.create">Cipta PIN</h2><p data-i18n="duel.share"></p><button class="button button-primary" id="duel-create" type="button" data-i18n="duel.create">Cipta PIN</button></div>
+        <form id="duel-join-form" class="duel-card" novalidate><h2 data-i18n="duel.join">Masuk bilik</h2><div class="field"><label for="duel-pin" data-i18n="duel.pinLabel">PIN enam digit</label><input id="duel-pin" aria-describedby="duel-message" type="text" inputmode="numeric" autocomplete="off" maxlength="6" pattern="[0-9]{6}" required data-i18n-placeholder="duel.pinPlaceholder" placeholder="Contoh: 123456"></div><button class="button button-primary" id="duel-join" type="submit" data-i18n="duel.join">Masuk bilik</button></form>
+      </div>
+      <div id="duel-room" class="duel-room" hidden><div class="duel-pin-row"><label for="duel-room-code" data-i18n="duel.pinLabel">PIN enam digit</label><input id="duel-room-code" readonly aria-label="PIN enam digit" data-i18n-aria-label="duel.pinLabel"><button id="duel-copy" class="button button-outline" type="button" data-i18n="duel.copy">Salin PIN</button></div><p data-i18n="duel.share"></p><div id="duel-lobby-players" class="duel-players"></div><p id="duel-countdown" class="duel-countdown" role="status"></p><button id="duel-ready" class="button button-primary" type="button" data-i18n="duel.ready">Saya sedia</button></div>
+      <div class="duel-footer"><button id="duel-retry" class="button button-outline" type="button" data-i18n="duel.retry" hidden>Sambung semula</button><button id="duel-new-room" class="button button-outline" type="button" data-i18n="duel.new" hidden>Duel baharu</button><button id="duel-home" class="button button-quiet" type="button" data-i18n="Kembali ke mula">Kembali ke mula</button></div>
+      <p class="duel-rules" data-i18n="duel.rules"></p><p class="duel-rules" data-i18n="duel.clockNote"></p>
+    </section>
+
     <section id="game-screen" class="game-screen" hidden aria-labelledby="question-title">
-      <div id="online-game-bar" class="online-game-bar" hidden><span id="online-game-status"></span><button id="online-retry" type="button" class="button button-outline" hidden>Hantar semula</button><button id="online-room-back" type="button" class="button button-outline">Ke room</button></div>
+      <div id="online-game-bar" class="online-game-bar" hidden><span id="online-game-status"></span><button id="online-retry" data-i18n="ease.roomRetry" type="button" class="button button-outline" hidden>Hantar semula</button><button id="online-room-back" data-i18n="platform.backRoom" type="button" class="button button-outline">Ke room</button></div>
       <div class="session-bar">
-        <div class="player-chip"><span class="player-avatar" id="player-initial">A</span><span><b id="player-display"></b><small id="player-meta"></small></span></div>
-        <div class="session-stats"><div class="stat score-stat"><span data-icon="trophy"></span><span><small>Markah</small><b><span id="score-value">0</span><span class="stat-total"> / 10</span></b></span></div><div class="stat time-stat"><span data-icon="clock"></span><span><small>Masa</small><b id="time-value">00:00</b></span></div></div>
-        <div class="session-actions"><button id="sound-button" class="icon-button" aria-label="Hidupkan bunyi" aria-pressed="false" title="Hidupkan bunyi"><span data-icon="mute"></span></button><button class="icon-button" id="pause-button" aria-label="Jeda permainan" title="Jeda permainan"><span data-icon="pause"></span></button><button class="icon-button leave-button" data-action="home" aria-label="Kembali ke mula" title="Kembali ke mula"><span data-icon="home"></span></button></div>
+        <div class="player-chip"><span class="player-avatar" id="player-initial">A</span><span><b id="player-display"></b><small id="player-meta"></small><small id="session-mode" class="session-mode"></small></span></div>
+        <div class="session-stats"><div class="stat score-stat"><span data-icon="trophy"></span><span><small data-i18n="Markah">Markah</small><b><span id="score-value">0</span><span id="score-total" class="stat-total"> / 10</span></b></span></div><div class="stat time-stat"><span data-icon="clock"></span><span><small data-i18n="Masa">Masa</small><b id="time-value">00:00</b></span></div></div>
+        <div class="session-actions"><button class="icon-button" id="pause-button" aria-label="Jeda permainan" title="Jeda permainan" data-i18n-aria-label="Jeda permainan" data-i18n-title="Jeda permainan"><span data-icon="pause"></span></button><button class="icon-button leave-button" data-action="home" aria-label="Kembali ke mula" title="Kembali ke mula" data-i18n-aria-label="Kembali ke mula" data-i18n-title="Kembali ke mula"><span data-icon="home"></span></button></div>
       </div>
 
+      <section id="duel-live" class="duel-live" hidden aria-label="Duel"><div class="duel-live-heading"><b>GEODECODER DUEL</b><span id="duel-live-code"></span><span id="duel-live-connection"></span></div><div id="duel-live-players" class="duel-players"></div><p id="duel-live-note" class="duel-rules"></p><button id="duel-live-retry" class="button button-outline" type="button" data-i18n="duel.retry" hidden>Sambung semula</button></section>
       <div class="question-panel">
-        <div class="question-side"><span class="question-counter" id="question-counter">SOALAN 01 / 10</span><span class="question-topic" id="question-topic">Kenali bongkah</span><div class="progress-dots" id="progress-dots" aria-label="Kemajuan soalan"></div></div>
+        <div class="question-side"><span class="question-counter" id="question-counter" data-i18n="SOALAN 01 / 10">SOALAN 01 / 10</span><span class="question-topic" id="question-topic" data-i18n="Kenali bongkah">Kenali bongkah</span><div class="progress-dots" id="progress-dots" aria-label="Kemajuan soalan" data-i18n-aria-label="Kemajuan soalan"></div></div>
         <div class="question-content"><h1 id="question-title" tabindex="-1"></h1><p id="question-detail"></p><div id="formula-key" class="formula-key" hidden></div></div>
-        <button id="hint-button" class="button button-hint" aria-expanded="false" aria-controls="hint-panel"><span data-icon="bulb"></span> <span id="hint-label">Beri petunjuk</span></button>
+        <button id="hint-button" class="button button-hint" aria-expanded="false" aria-controls="hint-panel"><span data-icon="bulb"></span> <span id="hint-label" data-i18n="Beri petunjuk">Beri petunjuk</span></button>
       </div>
-      <div id="hint-panel" class="hint-panel" hidden><span data-icon="bulb"></span><p id="hint-text"></p><span>Tiada potongan markah</span></div>
+      <div id="hint-panel" class="hint-panel" hidden><span data-icon="bulb"></span><p id="hint-text"></p><span data-i18n="Tiada potongan markah">Tiada potongan markah</span></div>
 
-      <div class="workbench-heading"><div><span class="live-indicator"></span><h2 id="stage-instruction">Pilih bongkah yang betul</h2></div><p>Seret ke pengimbas, atau klik kad kemudian klik pengimbas.</p></div>
+      <div class="workbench-heading"><div><span id="step-progress" class="step-progress"></span><span class="live-indicator"></span><h2 id="stage-instruction" data-i18n="Pilih bongkah yang betul">Pilih bongkah yang betul</h2></div><p id="input-instruction"></p></div>
       <div class="scanners">
-        <button class="scanner" id="r1" data-target="r1" aria-label="Pengimbas R1, imbas bongkah" type="button">
-          <span class="scanner-top"><b>R1 <span>BONGKAH 3D</span></b><span class="scanner-led"><span class="led-dot blue" id="led-r1"></span><span id="status-r1">Sedia diimbas</span></span></span>
-          <span class="scanner-body" id="scanner-body-r1"><span class="scan-target"><span class="target-corner tl"></span><span class="target-corner tr"></span><span class="target-corner bl"></span><span class="target-corner br"></span><span data-icon="cursor"></span></span><span class="scanner-placeholder">Letak bongkah di sini</span></span>
-          <span class="scanner-bottom" id="scanner-bottom-r1">LANGKAH 1 · PILIH BONGKAH</span>
+        <button class="scanner" id="r1" data-target="r1" aria-label="Pengimbas R1, imbas bongkah" type="button" data-i18n-aria-label="Pengimbas R1, imbas bongkah">
+          <span class="scanner-top"><b>R1 <span data-i18n="BONGKAH 3D">BONGKAH 3D</span></b><span class="scanner-led"><span class="led-dot blue" id="led-r1"></span><span id="status-r1" data-i18n="Sedia diimbas">Sedia diimbas</span></span></span>
+          <span class="scanner-body" id="scanner-body-r1"><span class="scan-target"><span class="target-corner tl"></span><span class="target-corner tr"></span><span class="target-corner bl"></span><span class="target-corner br"></span><span data-icon="cursor"></span></span><span class="scanner-placeholder" data-i18n="Letak bongkah di sini">Letak bongkah di sini</span></span>
+          <span class="scanner-bottom" id="scanner-bottom-r1" data-i18n="LANGKAH 1 · PILIH BONGKAH">LANGKAH 1 · PILIH BONGKAH</span>
         </button>
         <div class="stage-connector" aria-hidden="true"><span data-icon="arrow"></span></div>
-        <button class="scanner scanner-locked" id="r2" data-target="r2" aria-disabled="true" aria-label="Pengimbas R2, jawab R1 dahulu" type="button">
-          <span class="scanner-top"><b>R2 <span>BENTANGAN 2D</span></b><span class="scanner-led"><span class="led-dot off" id="led-r2"></span><span id="status-r2">Jawab R1 dahulu</span></span></span>
-          <span class="scanner-body" id="scanner-body-r2"><span class="scan-target"><span class="target-corner tl"></span><span class="target-corner tr"></span><span class="target-corner bl"></span><span class="target-corner br"></span><span data-icon="lock"></span></span><span class="scanner-placeholder">Kemudian letak bentangan</span></span>
-          <span class="scanner-bottom" id="scanner-bottom-r2">LANGKAH 2 · PADANKAN BENTANGAN</span>
+        <button class="scanner scanner-locked" id="r2" data-target="r2" aria-disabled="true" aria-label="Pengimbas R2, jawab R1 dahulu" type="button" data-i18n-aria-label="Pengimbas R2, jawab R1 dahulu">
+          <span class="scanner-top"><b>R2 <span data-i18n="BENTANGAN 2D">BENTANGAN 2D</span></b><span class="scanner-led"><span class="led-dot off" id="led-r2"></span><span id="status-r2" data-i18n="Jawab R1 dahulu">Jawab R1 dahulu</span></span></span>
+          <span class="scanner-body" id="scanner-body-r2"><span class="scan-target"><span class="target-corner tl"></span><span class="target-corner tr"></span><span class="target-corner bl"></span><span class="target-corner br"></span><span data-icon="lock"></span></span><span class="scanner-placeholder" data-i18n="Kemudian letak bentangan">Kemudian letak bentangan</span></span>
+          <span class="scanner-bottom" id="scanner-bottom-r2" data-i18n="LANGKAH 2 · PADANKAN BENTANGAN">LANGKAH 2 · PADANKAN BENTANGAN</span>
         </button>
       </div>
-      <div class="game-feedback" id="game-status" role="status" aria-live="polite"><span data-icon="cursor"></span><span id="feedback-text">Baca soalan, kemudian pilih satu bongkah untuk R1.</span></div>
+      <div class="game-feedback" id="game-status" role="status" aria-live="polite"><span data-icon="cursor"></span><span id="feedback-text" data-i18n="Baca soalan, kemudian pilih satu bongkah untuk R1.">Baca soalan, kemudian pilih satu bongkah untuk R1.</span></div>
 
       <section class="correction-panel" id="correction-panel" hidden aria-labelledby="correction-title">
-        <div class="correction-copy"><span class="card-kicker" id="correction-outcome">JAWAPAN SEBENAR</span><h2 id="correction-title" tabindex="-1"></h2><p id="correction-attempt"></p><p id="correction-explanation"></p></div>
+        <div class="correction-copy"><span class="card-kicker" id="correction-outcome" data-i18n="JAWAPAN SEBENAR">JAWAPAN SEBENAR</span><h2 id="correction-title" tabindex="-1"></h2><p id="correction-attempt"></p><p id="correction-explanation"></p></div>
         <div class="correction-pair" id="correction-pair"></div>
-        <div class="correction-actions"><span>Fahami padanannya dahulu. Masa dijeda.</span><button class="button button-primary" id="continue-button" disabled>Perhatikan jawapan…</button></div>
+        <div class="correction-actions"><span data-i18n="Fahami padanannya dahulu. Masa dijeda.">Fahami padanannya dahulu. Masa dijeda.</span><button class="button button-primary" id="continue-button" disabled data-i18n="Perhatikan jawapan…">Perhatikan jawapan…</button></div>
       </section>
 
       <div class="answer-shelves">
-        <section class="shelf" aria-labelledby="solid-shelf-title"><div class="shelf-heading"><h3 id="solid-shelf-title"><span class="shelf-badge">R1</span> Koleksi bongkah</h3><span>5 pilihan · seret atau klik</span></div><div class="choices" id="solid-choices"></div></section>
-        <section class="shelf" aria-labelledby="net-shelf-title"><div class="shelf-heading"><h3 id="net-shelf-title"><span class="shelf-badge net-badge">R2</span> Kad bentangan</h3><span>5 pilihan · kad tanpa nama</span></div><div class="choices" id="net-choices"></div></section>
+        <section class="shelf" aria-labelledby="solid-shelf-title"><div class="shelf-heading"><h3 id="solid-shelf-title"><span class="shelf-badge">R1</span> <span data-i18n="Koleksi bongkah">Koleksi bongkah</span></h3><span data-i18n="5 pilihan · seret atau klik">5 pilihan · seret atau klik</span></div><div class="choices" id="solid-choices"></div></section>
+        <section class="shelf" aria-labelledby="net-shelf-title"><div class="shelf-heading"><h3 id="net-shelf-title"><span class="shelf-badge net-badge">R2</span> <span data-i18n="Kad bentangan">Kad bentangan</span></h3><span data-i18n="5 pilihan · kad tanpa nama">5 pilihan · kad tanpa nama</span></div><div class="choices" id="net-choices"></div></section>
       </div>
-      <div class="round-bottom"><p><span class="led-dot blue"></span> Sedia <span class="led-dot green"></span> Betul <span class="led-dot red"></span> Salah <span class="led-dot purple"></span> Petunjuk</p><button id="skip-button" class="button button-quiet"><span data-icon="skip"></span> Langkau soalan <small>+0 markah</small></button></div>
+      <div class="round-bottom"><p><span class="led-dot blue"></span> <span data-i18n="Sedia">Sedia</span> <span class="led-dot green"></span> <span data-i18n="Betul">Betul</span> <span class="led-dot red"></span> <span data-i18n="Salah">Salah</span> <span class="led-dot purple"></span> <span data-i18n="Petunjuk">Petunjuk</span></p><button id="skip-button" class="button button-quiet"><span data-icon="skip"></span> <span data-i18n="Langkau soalan">Langkau soalan</span> <small data-i18n="+0 markah">+0 markah</small></button></div>
     </section>
 
     <section id="result-screen" class="result-screen" hidden aria-labelledby="result-title">
-      <div class="result-heading"><span class="eyebrow">PUSINGAN SELESAI</span><h1 id="result-title" tabindex="-1">Bagus, teruskan meneroka!</h1><p id="result-player"></p></div>
-      <div class="result-layout"><div class="result-main"><div class="result-medal"><span data-icon="trophy"></span><div><b id="result-score">10</b><span>/ 10 markah</span></div><span class="medal-spark">✦</span></div><div class="result-level" id="result-level">Pakar padanan</div><p id="result-message"></p><div class="result-metrics"><div><span data-icon="clock"></span><b id="result-time"></b><small>Masa bermain</small></div><div><b id="result-first"></b><small>Bongkah R1 betul</small></div><div><b id="result-mistakes"></b><small>Soalan salah</small></div><div><b id="result-hints"></b><small>Soalan guna petunjuk</small></div></div><div class="result-actions"><button class="button button-primary" id="replay-button"><span data-icon="refresh"></span> Main lagi</button><button class="button button-outline" data-action="home">Kembali ke Home</button></div></div><div class="result-side"><div class="mini-title"><span data-icon="trophy"></span><h2>Papan skor</h2><span>PERANTI INI</span></div><div id="result-leaderboard"></div><button class="button button-quiet" data-action="scores">Lihat semua skor <span data-icon="arrow"></span></button><p class="score-scope">Satu percubaan. Skor lebih tinggi dahulu, kemudian soalan salah lebih sedikit dan masa lebih pantas.</p></div></div>
-      <section class="analysis-section" aria-labelledby="analysis-title"><div class="analysis-heading"><span class="eyebrow">KENALI KEKUATAN ANDA</span><h2 id="analysis-title">Apa yang perlu dilatih lagi?</h2><p>Analisis berdasarkan 10 soalan pusingan ini. Dua soalan bagi setiap bongkah.</p></div><div id="analysis-summary" class="analysis-summary"></div><div class="analysis-grid"><section class="analysis-card"><h3>Padanan mengikut bongkah</h3><p>Pasangan betul daripada soalan yang diberi.</p><div id="analysis-shapes"></div></section><section class="analysis-card"><h3>Bongkah atau bentangan?</h3><p>Ketepatan daripada imbasan yang benar-benar dicuba.</p><div id="analysis-stages"></div><h3 class="topic-heading">Jenis soalan</h3><div id="analysis-topics"></div></section></div><div id="analysis-advice" class="analysis-advice"></div></section>
-      <div class="review-section"><h2>Lihat semula pusingan anda</h2><p>Semak pilihan anda, jawapan betul dan soalan yang dilangkau.</p><div class="review-list" id="review-list"></div></div>
+      <section id="duel-result" class="duel-result" hidden aria-live="polite"><div id="duel-result-content"></div><button id="duel-result-retry" class="button button-outline" type="button" data-i18n="duel.retry" hidden>Sambung semula</button></section>
+      <div class="result-heading"><span class="eyebrow" data-i18n="PUSINGAN SELESAI">PUSINGAN SELESAI</span><h1 id="result-title" tabindex="-1" data-i18n="Bagus, teruskan meneroka!">Bagus, teruskan meneroka!</h1><p id="result-player"></p></div>
+      <div class="result-layout"><div class="result-main"><div class="result-medal"><span data-icon="trophy"></span><div><b id="result-score">10</b><span id="result-total">/ 10 markah</span></div><span class="medal-spark">✦</span></div><div class="result-level" id="result-level" data-i18n="Pakar padanan">Pakar padanan</div><p id="result-message"></p><p id="retry-wrong-note" class="retry-wrong-note"></p><p id="practice-result-note" class="practice-result-note" hidden></p><div class="result-metrics"><div><span data-icon="clock"></span><b id="result-time"></b><small data-i18n="Masa bermain">Masa bermain</small></div><div><b id="result-first"></b><small data-i18n="Bongkah R1 betul">Bongkah R1 betul</small></div><div><b id="result-mistakes"></b><small data-i18n="Soalan salah">Soalan salah</small></div><div><b id="result-hints"></b><small data-i18n="Soalan guna petunjuk">Soalan guna petunjuk</small></div></div><div class="result-actions"><button type="button" class="button button-primary" id="retry-wrong-button" hidden><span data-icon="bulb"></span><span data-i18n="ease.retryWrong">Latih soalan salah</span></button><button class="button button-primary" id="replay-button"><span data-icon="refresh"></span> <span id="replay-label">Main lagi</span></button><button class="button button-outline" data-action="home" data-i18n="Tukar pemain">Tukar pemain</button></div></div><div class="result-side"><div class="mini-title"><span data-icon="trophy"></span><h2 data-i18n="mode.quizBoard">Papan skor kuiz · 10 soalan</h2><span data-i18n="PERANTI INI">PERANTI INI</span></div><div id="result-leaderboard"></div><button class="button button-quiet" data-action="scores"><span data-i18n="Lihat semua skor">Lihat semua skor</span> <span data-icon="arrow"></span></button><p class="score-scope" data-i18n="Satu percubaan. Skor lebih tinggi dahulu, kemudian soalan salah lebih sedikit dan masa lebih pantas.">Satu percubaan. Skor lebih tinggi dahulu, kemudian soalan salah lebih sedikit dan masa lebih pantas.</p></div></div>
+      <details id="result-details" class="result-details"><summary data-i18n="ease.details">Lihat analisis dan semakan jawapan</summary>
+      <section class="analysis-section" aria-labelledby="analysis-title"><div class="analysis-heading"><span class="eyebrow" data-i18n="KENALI KEKUATAN ANDA">KENALI KEKUATAN ANDA</span><h2 id="analysis-title" data-i18n="Apa yang perlu dilatih lagi?">Apa yang perlu dilatih lagi?</h2><p id="analysis-description">Analisis berdasarkan 10 soalan pusingan ini. Dua soalan bagi setiap bongkah.</p></div><div id="analysis-summary" class="analysis-summary"></div><div class="analysis-grid"><section class="analysis-card"><h3 data-i18n="Padanan mengikut bongkah">Padanan mengikut bongkah</h3><p data-i18n="Pasangan betul daripada soalan yang diberi.">Pasangan betul daripada soalan yang diberi.</p><div id="analysis-shapes"></div></section><section class="analysis-card"><h3 data-i18n="Bongkah atau bentangan?">Bongkah atau bentangan?</h3><p data-i18n="Ketepatan daripada imbasan yang benar-benar dicuba.">Ketepatan daripada imbasan yang benar-benar dicuba.</p><div id="analysis-stages"></div><h3 class="topic-heading" data-i18n="Jenis soalan">Jenis soalan</h3><div id="analysis-topics"></div></section></div><div id="analysis-advice" class="analysis-advice"></div></section>
+      <div class="review-section"><h2 data-i18n="Lihat semula pusingan anda">Lihat semula pusingan anda</h2><p data-i18n="Semak pilihan anda, jawapan betul dan soalan yang dilangkau.">Semak pilihan anda, jawapan betul dan soalan yang dilangkau.</p><div class="review-list" id="review-list"></div></div>
+      </details>
     </section>
 
-    <div class="storage-warning" id="storage-warning" hidden role="status">Simpanan pelayar tidak tersedia. Anda masih boleh bermain; skor sesi ini boleh dieksport sebelum halaman ditutup.</div>
+    <div class="storage-warning" id="storage-warning" hidden role="status" data-i18n="Simpanan pelayar tidak tersedia. Anda masih boleh bermain; skor sesi ini boleh dieksport sebelum halaman ditutup.">Simpanan pelayar tidak tersedia. Anda masih boleh bermain; skor sesi ini boleh dieksport sebelum halaman ditutup.</div>
   </main>
-  <footer class="site-footer"><span>GeoDecoder <b>Digital V2</b></span><span>Belajar bentuk. Bina kefahaman.</span><span>Serasi tetikus, sentuhan &amp; papan kekunci</span></footer>
+  <footer class="site-footer"><span>GeoDecoder <b data-i18n="Digital V2">Digital V2</b></span><span data-i18n="Belajar bentuk. Bina kefahaman.">Belajar bentuk. Bina kefahaman.</span><span data-i18n="Serasi tetikus, sentuhan &amp; papan kekunci">Serasi tetikus, sentuhan &amp; papan kekunci</span></footer>
   <div id="announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
-  <dialog id="app-dialog" aria-labelledby="dialog-title"><div class="dialog-shell"><div class="dialog-header"><h2 id="dialog-title"></h2><button class="icon-button" id="dialog-close" aria-label="Tutup tetingkap"><span data-icon="close"></span></button></div><div id="dialog-content"></div></div></dialog>
-  <noscript><div class="noscript">Hidupkan JavaScript dalam pelayar untuk bermain GeoDecoder Digital.</div></noscript>
+  <dialog id="app-dialog" aria-labelledby="dialog-title"><div class="dialog-shell"><div class="dialog-header"><h2 id="dialog-title"></h2><button class="icon-button" id="dialog-close" aria-label="Tutup tetingkap" data-i18n-aria-label="Tutup tetingkap"><span data-icon="close"></span></button></div><div id="dialog-content"></div></div></dialog>
+  <noscript><div class="noscript" data-i18n="Hidupkan JavaScript dalam pelayar untuk bermain GeoDecoder Digital.">Hidupkan JavaScript dalam pelayar untuk bermain GeoDecoder Digital.</div></noscript>
   <script type="module" src="./app.bundle.js"></script>
 </body>
 </html>

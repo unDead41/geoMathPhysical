@@ -1,12 +1,16 @@
 # GeoDecoder Digital V2
 
-Versi Digital semasa: **v2.3.0**. Modul pembelajaran **v1.2.0** kini mempunyai empat Makmal interaktif.
+Versi Digital branch ini: **v2.4.0** — **digitalize-ease-of-use**. Menggabungkan platform v2.3.0 dengan BM/BI, rich text, latihan 15 soalan, Duel dan lapan penambahbaikan kemudahan penggunaan. Modul pembelajaran kekal **v1.2.0**.
 
-Versi digital **2.3.0**, branch **digitalize**. Permainan geometri R1 → R2 kini mempunyai akaun guru/pelajar, kelas dan room dengan skor langsung. Firmware v1.1.3 menggunakan versi berasingan.
+Asas `digitalize` v2.3.0: `adc51627eaaace5d9543c7e033d2994986c8715d`. Ciri dwibahasa/permainan diambil daripada `digital-richText` v1.5.0, `8373fd4bae11847c3a3099ee6f61e2756d99349b`. Firmware v1.1.3 menggunakan versi berasingan. Kerja ini hanya dipush ke branch baharu, tanpa menerbitkan semula laman awam.
 
 ## Laman GitHub Pages
 
 Main terus: **https://undead41.github.io/geodecoder-digital/**.
+
+Pautan itu ialah laman penerbitan berasingan; ia belum menerima perubahan branch
+`digitalize-ease-of-use` daripada kerja ini. Untuk mencuba v2.4.0, gunakan HTML
+daripada branch ini. Bukti dan had ujian: [EASE_OF_USE.md](docs/EASE_OF_USE.md).
 
 Penerbitan menggunakan repository public `unDead41/geodecoder-digital`, branch `main-digital`, folder akar. Repository asal ini kekal private. Fail laman mengandungi frontend sahaja; database/Auth/Realtime kekal pada Supabase. Lihat `docs/GITHUB_PAGES.md` untuk rekod keluaran dan cara kemas kini laman.
 
@@ -16,12 +20,38 @@ Muat turun `GeoDecoder_Digital_V2.html` dan buka dengan Chrome atau Edge terkini
 
 ## Home dan mod tetamu
 
-Halaman awal ialah Home dengan ilustrasi GeoDecoder dan dua pilihan:
+Halaman awal ialah Home dengan ilustrasi GeoDecoder dan tiga tindakan:
 
-- **Play as a Guest** membuka borang ringkas nama, Murid/Pelajar dan kelas. Tekan **Mulakan permainan** untuk latihan sendiri. Tiada akaun, username atau kata laluan diperlukan. Nama panggilan diterima; rekod hanya pada pelayar/peranti ini. Mod ini boleh dimainkan tanpa Internet.
-- **Buka akaun & kelas** membuka log masuk/daftar untuk kelas, PIN, room dan keputusan guru. Mod kelas memerlukan Internet.
+- **Main** membuka borang nama panggilan dan pilihan mod: **Kuiz 10 Soalan**,
+  **Latihan Pengukuhan 15 Soalan** atau **Duel**. Tetamu tidak perlu mengisi
+  kategori atau kelas. Kuiz/latihan boleh dimainkan offline; Duel memerlukan Internet.
+- **Belajar** membuka modul 3D, nota dan empat Makmal interaktif.
+- **Akaun & kelas** membuka log masuk/daftar untuk kelas, PIN, room dan keputusan
+  guru. Mod kelas memerlukan Internet.
 
-Borang tetamu mempunyai **Kembali ke Home**. Home tidak memaparkan borang nama/kelas sebelum pemain memilih Guest. Selepas keputusan latihan, pemain boleh main lagi atau kembali ke Home. Header tema cerah/gelap kekal tersedia pada setiap halaman.
+Borang tetamu mempunyai **Kembali ke Home**. Tutorial tiga langkah ditunjukkan
+sebelum permainan tetamu pertama; boleh dilangkau atau dibuka semula melalui
+**Cara main**. Jam solo bermula selepas panduan itu. Semua tetapan berada dalam
+**Tetapan**: Bahasa Melayu/English, tema, muzik, bunyi imbasan, saiz teks
+100/125/150% dan animasi. Pilihan bahasa/paparan tidak memulakan semula permainan.
+Pilihan peranti disimpan jika storan dibenarkan. Iframe modul kekal menggunakan
+kawalan pembelajaran dan bahasa dalamannya sendiri.
+
+## Duel dengan kawan
+
+Pilih **Main → Duel**, isi nama panggilan dan buka lobi. Pemain pertama cipta
+Duel, salin PIN enam digit dan kongsi kepada kawannya. Pemain kedua masukkan
+PIN itu. Kedua-duanya tekan **Sedia** untuk kira detik tiga saat. Dua pemain
+menerima sepuluh ID soalan dalam susunan yang sama. Markah tertinggi menang;
+jika sama, masa tamat pelayan yang lebih pantas menang. Seri disokong.
+
+PIN lobi sah sepuluh minit; had perlawanan 15 minit. Jam Duel terus berjalan
+semasa menu, semakan, tab tersembunyi dan sambungan terputus. Keluar sebelum
+selesai bermaksud menyerah kalah. SessionStorage membolehkan sambung semula
+selepas reload apabila dibenarkan pelayar. Alias dan tindakan Duel dihantar ke
+pelayan; kelas/kategori tidak dihantar. Keputusan Duel tidak masuk papan skor
+kuiz. Backend Duel sedia ada digunakan tanpa deployment baharu; kontrak dan
+sejarah pengesahan v1.5.0 berada dalam [DUEL.md](docs/DUEL.md).
 
 ## Guru
 
@@ -42,15 +72,41 @@ Jika sambungan gagal selepas memilih jawapan, **Hantar semula** menghantar ID ti
 
 ## Peraturan dan masa
 
-Sepuluh soalan unik, dua bagi setiap lima bongkah daripada bank firmware 15 soalan. Semua pelajar dalam bilik menerima susunan sepuluh soalan yang sama. Semua lima bongkah dan lima bentangan tersedia; susunan dan warna berubah setiap soalan. Pilih bentuk, bukan warna.
+Kuiz mempunyai sepuluh soalan unik, dua bagi setiap lima bongkah. Latihan
+Pengukuhan menggunakan semua 15 soalan sekali, tiga bagi setiap bongkah.
+Semua pelajar dalam bilik menerima susunan sepuluh soalan yang sama. Semua
+lima bongkah dan lima bentangan tersedia; susunan dan warna berubah setiap
+soalan. Pilih bentuk, bukan warna.
 
 Imbas bongkah di R1 dahulu, kemudian bentangan di R2. Pasangan betul +1; salah R1/R2 menamatkan satu-satunya percubaan dengan +0. Langkau +0. Petunjuk percuma dikira sekali setiap soalan. Betul mempunyai 900 ms maklum balas; salah/langkau memerlukan semakan sekurang-kurangnya 1.8 saat. Analisis akhir menunjukkan bongkah, R1/R2, topik dan setiap jawapan. R2 yang belum dicuba tidak dikira salah.
 
 **Room:** database menentukan jawapan, markah dan masa. Masa menjawab terus berjalan ketika dialog/jeda dibuka, tab ditinggalkan atau Internet terputus. Masa menunggu mula dan semakan jawapan dikecualikan. Kedudukan: markah tertinggi, kemudian masa menjawab paling singkat. Masa pada paparan dianggarkan antara kemas kini server.
 
-**Latihan sendiri:** nama/kategori/kelas dan maksimum 50 skor disimpan dalam pelayar yang sama; jam dijeda ketika dialog atau tab tersembunyi. Ranking latihan: markah, kurang salah, masa. CSV dan skor retry V1 terdahulu kekal berasingan. Jika storan pelayar disekat, latihan masih boleh dimainkan dengan rekod sesi sementara. Keputusan room tidak dimasukkan ke papan skor latihan.
+**Kuiz sendiri:** nama panggilan dan maksimum 50 skor disimpan dalam pelayar
+yang sama; jam dijeda ketika dialog atau tab tersembunyi. Ranking kuiz:
+markah, kurang salah, masa. Profil Murid/Pelajar lama dengan kelas dan skor
+retry V1 kekal serasi/berasingan. CSV menggunakan bahasa paparan. Jika storan
+disekat, permainan masih berfungsi dengan rekod sesi sementara. Keputusan
+Latihan 15, latihan semula, room dan Duel tidak masuk papan skor kuiz.
 
-Klik/sentuh kad kemudian pengimbas sebagai alternatif seretan. Tab, Enter dan Space turut disokong. Jeda animasi dan reduced motion mengurangkan gerakan. Butang tema menukar **cerah/gelap** dan menyimpan pilihan pada peranti.
+Keputusan mendahulukan markah dan tindakan **Latih soalan salah**, **Main lagi**
+dan **Home**. Buka **Lihat analisis dan semakan jawapan** untuk butiran. Latihan
+semula menggunakan hanya ID soalan salah/dilangkau daripada keputusan asal,
+tanpa menukar skor asal. Semua betul tidak menghasilkan latihan kosong.
+
+Klik/sentuh kad kemudian pengimbas sebagai alternatif seretan. Arahan **R1 —
+Pilih bongkah** bertukar kepada **R2 — Padankan bentangan**. Memilih kad belum
+menggunakan percubaan. Tab, Enter dan Space turut disokong. Jeda animasi dan
+reduced motion mengurangkan gerakan. Tema dan saiz teks dikawal dalam Tetapan.
+
+## BM/English dan rich text
+
+Kamus bahasa dibekalkan bersama aplikasi. Tukar bahasa dalam Tetapan tanpa
+menukar soalan, susunan kad, pilihan, percubaan, hint, markah atau masa sesi.
+Rumus MathML, istilah geometri dan label kebolehcapaian menggunakan renderer
+yang sama. ID soalan dan kunci analitik kekal stabil. Nama pemain, nama kelas,
+username dan PIN dipaparkan secara literal. Lihat [glosari](docs/DWI_GLOSSARY.md)
+dan [kontrak rich text](docs/RICH_TEXT.md).
 
 ## Backend hosted
 

@@ -8,7 +8,7 @@ function fixture(){
   let writes=0,unlocks=0;const attrs={};
   const button={dataset:{},set innerHTML(value){writes++;},setAttribute:(name,value)=>attrs[name]=value};
   const music={state:{unlocked:false,blocked:true},unlock(){unlocks++;}};
-  const api=vm.runInNewContext('(function(){'+source.slice(start,end)+';return {renderMusicButton,unlockMusic};})()',{$:()=>button,icon:name=>name,music});
+  const api=vm.runInNewContext('(function(){'+source.slice(start,end)+';return {renderMusicButton,unlockMusic};})()',{$:()=>button,icon:name=>name,music,t:key=>key});
   return {...api,button,attrs,get writes(){return writes;},get unlocks(){return unlocks;}};
 }
 test('playback progress keeps the music icon stable between pointerdown and click',()=>{

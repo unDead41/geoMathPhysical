@@ -5,13 +5,13 @@ import {build} from 'esbuild';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const moduleRelease=JSON.parse(fs.readFileSync(path.join(root,'vendor/module-release.json'),'utf8'));
 const template=fs.readFileSync(path.join(root,'dist/index.html'),'utf8');
-const css=['style','portal'].map(name=>fs.readFileSync(path.join(root,`dist/${name}.css`),'utf8')).join('\n');
+const css=['style','portal','usability'].map(name=>fs.readFileSync(path.join(root,`dist/${name}.css`),'utf8')).join('\n');
 const options={entryPoints:[path.join(root,'dist/app.mjs')],bundle:true,write:false,platform:'browser',format:'iife',target:['es2022'],minify:true,legalComments:'eof',loader:{'.html':'text'}};
 const javascript=(await build(options)).outputFiles[0].text;
 fs.writeFileSync(path.join(root,'dist/app.bundle.js'),javascript);
 function page(script){
   if(script.includes('</script'))throw new Error('Unsafe inline script terminator');
-  return template.replace('<link rel="stylesheet" href="./style.css">',()=>`<style>\n${css}\n</style>`).replace('<link rel="stylesheet" href="./portal.css">','').replace('<script type="module" src="./app.bundle.js"></script>',()=>`<script type="module">\n${script}\n</script>`);
+  return template.replace('<link rel="stylesheet" href="./style.css">',()=>`<style>\n${css}\n</style>`).replace('<link rel="stylesheet" href="./portal.css">','').replace('<link rel="stylesheet" href="./usability.css">','').replace('<script type="module" src="./app.bundle.js"></script>',()=>`<script type="module">\n${script}\n</script>`);
 }
 fs.mkdirSync(path.join(root,'artifacts'),{recursive:true});
 // Pages loads music on demand, keeping the first Home download small.
