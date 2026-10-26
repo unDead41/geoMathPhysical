@@ -1,8 +1,8 @@
 # GeoDecoder Digital — GitHub Pages
 
-Laman: https://undead41.github.io/geodecoder-digital/ . Repository public `unDead41/geodecoder-digital`, branch `main-digital`, source Pages `/(root)`, HTTPS. Pakej ini v2.2.0. `release.json` pada repository laman merekodkan SHA sumber/penerbitan serta hash HTML/aset.
+Laman: https://undead41.github.io/geodecoder-digital/ . Repository public `unDead41/geodecoder-digital`, branch `main-digital`, source Pages `/(root)`, HTTPS. Pakej ini v2.3.0. `release.json` pada repository laman merekodkan SHA sumber/penerbitan serta hash HTML/aset.
 
-Sumber pembangunan kekal pada repository private `unDead41/geodecoder`, branch `digitalize`. Branch `main-digital` dalam repository private ialah persediaan lama, bukan source Pages live. Visibility repository asal tidak perlu diubah. Modul dipinkan daripada commit `92c12c3a07ec250c03a73decaf52a654fc26d502` pada `digitalize-module`; branch modul asal tidak diubah.
+Sumber pembangunan kekal pada repository private `unDead41/geodecoder`, branch `digitalize`. Branch `main-digital` dalam repository private ialah persediaan lama, bukan source Pages live. Visibility repository asal tidak perlu diubah. Modul v1.2.0 dipinkan daripada commit `931a0150397bfb3fd79ef3c8da6684167d1c6aad` pada `digitalize-module`; branch modul asal tidak diubah.
 
 ## Fail penerbitan
 
@@ -28,3 +28,11 @@ Chrome pada URL live memaparkan V2.2.0. Guest berjaya bermain dan satu pasangan 
 Kod sumber: `390ab00fec1997efe2ad15188f2148ecd5f1b630`. Public: `686a4593d28522f2b7de960c252771f9b654f55c`. Workflow https://github.com/unDead41/geodecoder-digital/actions/runs/40229448318 completed/success. HTML live200/570119bytes/SHA256 `442ab480d7881f2f340a4557913f6805509eb6ff2427daeb5efc50d7b0f3881c` sepadan binaan. Semua62fail sumber sepadan dan repository asal kekal private.
 
 Chrome sebenar pada keluaran akhir: klik pertama Matikan muzik menghasilkan off; Hidupkan muzik menghasilkan playing. Borang login email/username, terlupa kata laluan email-only, dan signup dengan email dipaparkan. Screenshot akhir blank signup disimpan sebagai bukti; tiada credential pengguna dimasukkan. Guest1markah serta menu/map game/module telah disahkan pada penerbitan awal dengan controller muzik yang sama; hotfix akhir membetulkan gesture toggle sahaja. 81/81 ujian dan pemeriksa statik lulus. SMTP serta Site URL/redirect dashboard masih perlu diselesaikan oleh pemilik selepas log masuk; inbox delivery tidak diuji atau didakwa.
+
+## Semakan penerbitan sebenar
+
+Kod digitalize: `01696af497cd7fca8e299f9c1b8a6407333ce276`. Penerbitan public main-digital: `8cce135102618ffad2c1de46063fcb5042ba0907`. Workflow https://github.com/unDead41/geodecoder-digital/actions/runs/40249504326 completed/success. HTTP200, HTML625381bytes, SHA256 `18bb17822161439fd4566a1c81e0871494f9e9d0a1053b36ab4757d935cfc999` sepadan dengan binaan. Branch digitalize-module masih pada pin931a0150397bfb3fd79ef3c8da6684167d1c6aad; tiada perubahan di luar digital/ pada branch integrasi.
+
+Chrome sebenar pada URL HTTPS live memaparkan DigitalV2.3.0 dan modulV1.2.0. Home → Teroka modul → Makmal interaktif membuka semua empat pilihan. Bina Bentangan memulakan lipatan dan melaporkan susunan sah; tab seterusnya menghentikan playback. Penuhkan pada ukuran3×2×3 memberikan18/18kiub dan18cm³; Pilih semua permukaan pada kubus sisi4 memberikan96cm² danL=6a². Bongkah Gabungan dibuka dengan hasil264cm³ serta penerangan240cm² pada contoh asal. State parent menunjukkan map/playing sepanjang modul. Satu screenshot sebenar menunjukkan versi, empat pilihan makmal, model dan grid.
+
+Semakan ini ialah smoke test integrasi desktop, berasingan daripada100ujian modul dan81ujian aplikasi. Ia tidak mengulangi seluruh audit sentuhan/mobile atau mendakwa ujian fizikal. SMTP/redirect email masih status tetapan pemilik daripada keluaran sebelumnya; integrasi modul ini tidak mengubahnya.
