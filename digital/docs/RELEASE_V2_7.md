@@ -1,3 +1,13 @@
+# Digital v2.7.0 — deployment record
+
+Production activation was explicitly authorized after the initial integration. Migration `20261026110959_geodecoder_digital_v2_7_integration` applied successfully. Hosted Duel v2 rollback verification passed. Edge `geodecoder-duel` v2 is ACTIVE with `verify_jwt=true`; its three deployed files match source. Live simultaneous join race passed; the synthetic room was cancelled and removed.
+
+Public frontend commit: `0486388a9c94942ab0973af5609be0168d27323c`; workflow [40313690820](https://github.com/unDead41/geodecoder-digital/actions/runs/40313690820). Website SHA256: `d924bf8709dc04b946cdc64b27f1a271d56380beef4fa82390256f4ae2631f0c`. Runtime source remains `123704bd1265df05854be0f7905fb710fc04533b`; later source receipts change documentation/history only.
+
+Canonical migration history now matches all eleven hosted versions. The original prepared timestamp `20261026105248` was replaced with the actual hosted timestamp; do not apply the nested feature migration again. App/module verification:345+244 tests, plus browser suites. SMTP/Auth email template setup is independently maintained; this deployment did not change those settings.
+
+## Historical integration and initial activation gate
+
 # Digital v2.7.0 integration — activation pending
 
 Seven feature heads are integrated into `main-digitalized`: backend operations,
@@ -21,8 +31,7 @@ is emulation, not a physical-device or independent PostgreSQL contention test.
 The new production migration was rejected by automatic approval review and was
 **not applied**. Hosted security sessions already exist as version
 `20261026091211`; root migration history now matches those ten applied versions.
-The canonical pending migration is
-`supabase/migrations/20261026105248_geodecoder_digital_v2_7_integration.sql`.
+The then-pending migration was `20261026105248`; after authorization it was applied and recorded as `supabase/migrations/20261026110959_geodecoder_digital_v2_7_integration.sql`.
 It adds the profile class teacher field and durable Duel review protocol.
 
 Do not publish these candidate HTML files to Pages until that migration and all

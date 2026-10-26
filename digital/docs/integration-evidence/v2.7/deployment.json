@@ -1,0 +1,29 @@
+{
+  "runtimeSource": "123704bd1265df05854be0f7905fb710fc04533b",
+  "publicCommit": "0486388a9c94942ab0973af5609be0168d27323c",
+  "workflow": 40313690820,
+  "migration": {
+    "version": "20261026110959",
+    "name": "geodecoder_digital_v2_7_integration",
+    "applied": true
+  },
+  "duelEdge": {
+    "version": 2,
+    "protocol": 2,
+    "verify_jwt": true,
+    "sourceFilesMatch": true
+  },
+  "verification": {
+    "hostedRollback": "PASS",
+    "liveJoinRace": "PASS",
+    "fixtureRemoved": true,
+    "appTests": 345,
+    "moduleTests": 244,
+    "historyReplayTests": 4
+  },
+  "websiteSHA256": "d924bf8709dc04b946cdc64b27f1a271d56380beef4fa82390256f4ae2631f0c",
+  "motionAuditBranch": {
+    "head": "cd451b98972d159217300fcb4824476c1d4cabef",
+    "scope": "audit/evidence only; runtime upgrade pending design-system dependency"
+  }
+}

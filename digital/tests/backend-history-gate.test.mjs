@@ -7,7 +7,7 @@ import {spawnSync} from 'node:child_process';
 const root=new URL('../../',import.meta.url);
 const gate=new URL('../backend/operations/check-history.mjs',import.meta.url);
 const manifest=JSON.parse(fs.readFileSync(new URL('supabase/hosted-history.json',root)));
-const rows=()=>manifest.migrations.map(m=>{const content=fs.readFileSync(new URL('supabase/migrations/'+m.file,root),'utf8');return {version:m.version,name:m.name,statements:[m.version==='20261026091211'?content:content.slice(0,-1)]};});
+const rows=()=>manifest.migrations.map(m=>{const content=fs.readFileSync(new URL('supabase/migrations/'+m.file,root),'utf8');return {version:m.version,name:m.name,statements:[m.file_sha256===m.sql_sha256?content:content.slice(0,-1)]};});
 function run(value){const dir=fs.mkdtempSync(path.join(os.tmpdir(),'geo-history-'));try{const p=path.join(dir,'history.json');fs.writeFileSync(p,JSON.stringify(value));return spawnSync(process.execPath,[gate.pathname,p],{encoding:'utf8'});}finally{fs.rmSync(dir,{recursive:true,force:true});}}
 test('history gate accepts the exact archived statement history',()=>assert.equal(run(rows()).status,0));
 test('history gate rejects missing, added, renamed or edited hosted migrations',()=>{

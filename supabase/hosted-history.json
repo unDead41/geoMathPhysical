@@ -72,6 +72,13 @@
       "file": "20261026091211_geodecoder_security_sessions.sql",
       "file_sha256": "8d574b4df326e8664bb6d436ceeb36d3184e89c6180b481a843d1e154a064b86",
       "sql_sha256": "8d574b4df326e8664bb6d436ceeb36d3184e89c6180b481a843d1e154a064b86"
+    },
+    {
+      "version": "20261026110959",
+      "name": "geodecoder_digital_v2_7_integration",
+      "file": "20261026110959_geodecoder_digital_v2_7_integration.sql",
+      "file_sha256": "e1a7570ebe2bda4d3173b49782abd309dcc88ce6b1065f1d5f2cce585f55eb3a",
+      "sql_sha256": "e1a7570ebe2bda4d3173b49782abd309dcc88ce6b1065f1d5f2cce585f55eb3a"
     }
   ]
 }

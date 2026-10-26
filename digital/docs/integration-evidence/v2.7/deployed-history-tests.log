@@ -1,0 +1,12 @@
+✔ history gate accepts the exact archived statement history (73.257873ms)
+✔ history gate rejects missing, added, renamed or edited hosted migrations (323.080225ms)
+✔ history gate fails closed without a fresh hosted export (63.839366ms)
+✔ archived hosted history replays in order and passes all five SQL contracts (2274.80796ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2408.141312

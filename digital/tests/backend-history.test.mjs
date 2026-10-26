@@ -15,15 +15,16 @@ test('archived hosted history replays in order and passes all five SQL contracts
  const dir=new URL('../../supabase/migrations/',import.meta.url);
  const history=JSON.parse(fs.readFileSync(new URL('../../supabase/hosted-history.json',import.meta.url),'utf8'));
  const files=history.migrations.map(m=>m.file);
- assert.equal(files.length,10,'Review and update hosted baseline only after actual deployment');
- for(const f of files)await db.exec(fs.readFileSync(new URL(f,dir),'utf8'));
+ assert.equal(files.length,11,'Review and update hosted baseline only after actual deployment');
+ for(const f of files.filter(f=>!f.includes('digital_v2_7_integration')))await db.exec(fs.readFileSync(new URL(f,dir),'utf8'));
  for(const f of ['verify.sql','verify_email.sql','verify_profile.sql','verify_module_progress.sql','duel/verify.sql']) {
   let sql=fs.readFileSync(new URL('../backend/'+f,import.meta.url),'utf8');
   if(f==='verify_module_progress.sql')sql='begin;\n'+sql;
   await db.exec(sql);
  }
  const pending=fs.readdirSync(dir).filter(f=>f.endsWith('.sql')&&!files.includes(f)).sort();
- assert.deepEqual(pending,['20261026105248_geodecoder_digital_v2_7_integration.sql']);
+ assert.deepEqual(pending,[]);
+ for(const f of files.filter(f=>f.includes('digital_v2_7_integration')))await db.exec(fs.readFileSync(new URL(f,dir),'utf8'));
  for(const f of pending)await db.exec(fs.readFileSync(new URL(f,dir),'utf8'));
  await db.exec(fs.readFileSync(new URL('../backend/duel/verify-v2.sql',import.meta.url),'utf8'));
  await db.exec(fs.readFileSync(new URL('../backend/verify_profile.sql',import.meta.url),'utf8'));

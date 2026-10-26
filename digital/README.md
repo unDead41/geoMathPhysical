@@ -1,6 +1,6 @@
 # GeoDecoder Digital V2
 
-> v2.7.0 is integrated source/candidate only. Production activation is pending explicit authorization for its new migration and Duel Edge deployment; live Pages remains v2.6.0. See [RELEASE_V2_7.md](docs/RELEASE_V2_7.md).
+> v2.7.0 backend activated after explicit authorization: migration `20261026110959`, Duel Edge v2/protocol2. Public release commit `0486388a9c94942ab0973af5609be0168d27323c`. See [RELEASE_V2_7.md](docs/RELEASE_V2_7.md).
 
 Versi Digital: **v2.7.0**. Branch integrasi: **main-digitalized**.
 Asas keluaran terdahulu: v2.6.0. Penggabungan kod tidak membuktikan penerbitan Pages atau deployment backend baharu.
