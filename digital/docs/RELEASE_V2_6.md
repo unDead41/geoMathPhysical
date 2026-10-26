@@ -63,9 +63,32 @@ kelas atau sebaliknya. Security/preferences tidak memerlukan perubahan Auth
 dashboard baharu. SMTP dan URL redirect email ialah keperluan deployment
 terdahulu yang berasingan.
 
-Tugasan penyelarasan ini menyediakan kod/migration dan menguji fixture.
-Ia tidak menukar kata laluan akaun sebenar atau memasang migration hosted
-secara tersembunyi. Kegagalan cloud mengekalkan rekod setempat dan boleh dicuba semula.
+Kod dan kedua-dua migration sudah diuji pada fixture. Semakan baca sahaja pada
+projek hosted **GeoDecoder Digital** (`fkrlwzxvyufndavlpzbp`) mengesahkan
+schema kelas/email terdahulu tersedia, tetapi kolum avatar dan kontrak rekod
+modul belum dipasang. Tiada kata laluan akaun sebenar diubah.
+
+Percubaan migration gabungan `geodecoder_profile_and_module_progress_v2_6`
+**ditolak oleh semakan kelulusan automatik sebelum dilaksanakan**. Sebab yang
+dinyatakan: perubahan database hosted meliputi jadual, fungsi, grants dan RLS
+belum mendapat kebenaran pengguna yang jelas. Tiada workaround atau operasi SQL
+tulis lain digunakan. Pemasangan menunggu kelulusan khusus pengguna untuk projek
+ini; pengaktifan Pages v2.6 ditangguhkan sehingga database bersedia.
+
+Perubahan yang disediakan menambah avatar profil dan jadual kemajuan modul,
+mengemas kini dispatcher/snapshot serta fungsi RPC dan kebenaran pelaksanaannya.
+Ia tidak mengandungi arahan memadam jadual atau rekod sedia ada. Semakan fixture
+tidak menghapuskan risiko perubahan kontrak/kebenaran pada database hosted.
+
+| Migration yang menunggu kelulusan | SHA256 fail yang diuji |
+|---|---|
+| [profile_v2_3.sql](../backend/profile_v2_3.sql) | `d73f8dbe5c451140b5c718c3009bd100a81ae5029ee85cfe60bcd5f84972200f` |
+| [module_progress_v2_4.sql](../backend/module_progress_v2_4.sql) | `f22ab14e1298a36c0ce27400b76472218b40e04b0689a1813b708e5df7c6cf2b` |
+
+Selepas kelulusan, pasang kedua-duanya dalam satu migration transaksi, muat
+semula cache schema PostgREST, sahkan struktur/RPC/grants dan rekod migration,
+kemudian aktifkan sumber Pages. Kegagalan cloud pada frontend mengekalkan rekod
+setempat dan boleh dicuba semula.
 
 ## Binaan yang boleh diulang
 
@@ -132,9 +155,32 @@ Nama pembangunan canonical mengikuti `digitalized-<kategori>-<subkategori>`;
 status operasi sebenar. Rename memelihara SHA dan sejarah; tiada pemadaman ref
 atau salinan alias digunakan untuk menyamar sebagai rename.
 
+Kesemua **11 native rename sudah selesai** dan disahkan semula melalui senarai
+remote penuh: semua SHA asal sepadan, semua nama lama tiada, dan tujuh ref
+firmware/perkakasan tidak berubah. Pemetaan beku kekal; head branch kerja tidak
+direset kepada hasil integrasi. Resit lengkap:
+[branch-migration-final.json](integration-evidence/branch-migration-final.json).
+
 Repository sumber private dan repository frontend public kekal berasingan.
 GitHub Pages awam memerlukan source branch `main-digitalized` ditetapkan pada
 repository frontend. Push sumber sahaja tidak menukar tetapan Pages.
+
+## Resit penerbitan kod
+
+| Operasi | Hasil disahkan |
+|---|---|
+| Integrasi sumber `unDead41/geodecoder` / `main-digitalized` | `6246d06ab492a5b0ab3edb3d5ee7b25bcc84b081`; tree `839b68bfb6323bac386eed9b4b33a68e873a0808` |
+| Ancestry sumber | Kesemua 11 head sumber dalam jadual beku ialah parent tambahan commit integrasi; sejarah MD terdahulu melalui commit modul `fc9bda734f8b59825271a7cc4b91c101cb30bdde` |
+| Frontend `unDead41/geodecoder-digital` / `main-digitalized` | `2058c89ff77521be0d57115744554b44372ec3aa`; HTML website yang diuji, audio terdahulu dan `.nojekyll` disahkan |
+| Tetapan Pages sebenar | `Deploy from a branch`, **main-digital**, **/(root)**; diperiksa pada 26 Oktober 2026, workflow terakhir `40249504326` |
+| Pilihan Pages yang disediakan | **main-digitalized**, **/(root)** dipilih dalam borang, **Save belum ditekan**; menunggu kelulusan migration |
+| Database hosted | Migration belum dijalankan; ditolak semakan kelulusan automatik, menunggu kebenaran khusus pengguna |
+
+Commit dokumentasi/resit susulan boleh memajukan head sumber tanpa mengubah
+blob aplikasi yang diuji. SHA di atas mengenal pasti penerbitan kod v2.6, bukan
+SHA dokumentasi yang belum wujud semasa resit ini ditulis. `release.json` public
+masih menandakan migration dan pertukaran Pages sebagai belum dilaksanakan;
+kod yang sudah dipush bukan bukti laman v2.6 sudah live.
 
 ## Had bukti
 

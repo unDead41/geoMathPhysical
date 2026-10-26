@@ -1,10 +1,38 @@
 # GeoDecoder Digital — penerbitan semasa
 
-Destinasi sumber gabungan: **main-digitalized**. Digital **v2.6.0**,
-modul **v1.5.0**, firmware **v1.1.3**. Tarikh: 26 Oktober 2026 (Malaysia).
+Kod gabungan Digital **v2.6.0** dan modul **v1.5.0** telah diterbitkan ke sumber
+private `unDead41/geodecoder`, branch **main-digitalized**. Frontend pada branch
+bernama sama dalam mirror awam sudah disediakan. **Pengaktifan Pages baharu dan
+migration hosted masih ditangguhkan.** Firmware kekal **v1.1.3**.
+Tarikh semakan: 26 Oktober 2026 (Malaysia).
 
-Root `index.html` dan setiap alias HTML digital mesti byte-identik dengan
-`digital/artifacts/GeoDecoder_Digital_V2.html`. Jalankan:
+## Rekod keluaran dan status sebenar
+
+| Perkara | Rekod disahkan | Status |
+|---|---|---|
+| Kod integrasi private | `unDead41/geodecoder` / `main-digitalized` / `6246d06ab492a5b0ab3edb3d5ee7b25bcc84b081` | Push sumber selesai; commit dokumentasi susulan boleh memajukan head tanpa menukar identiti payload ini. |
+| Sumber modul canonical | `fc9bda734f8b59825271a7cc4b91c101cb30bdde` | Modul v1.5.0 dipin dalam keluaran gabungan. |
+| Frontend awam disediakan | `unDead41/geodecoder-digital` / `main-digitalized` / `2058c89ff77521be0d57115744554b44372ec3aa` | Commit tersedia; belum menjadi sumber Pages aktif. |
+| Tetapan Pages yang dibaca | Repository awam, `main-digital`, `/(root)` | Masih sumber aktif. Pilihan `main-digitalized` dalam borang belum disimpan. |
+| Workflow Pages terakhir yang disahkan | [40249504326](https://github.com/unDead41/geodecoder-digital/actions/runs/40249504326) | Keluaran lama v2.3.0 pada `8cce135102618ffad2c1de46063fcb5042ba0907`; bukan bukti deployment v2.6.0. |
+| Migration profile/progress hosted | `profile_v2_3.sql`, `module_progress_v2_4.sql` | Belum dipasang; tindakan hosted ditolak oleh semakan kelulusan automatik. |
+
+Semakan kelulusan automatik menolak perubahan schema, fungsi, grant dan RLS
+hosted kerana belum ada kebenaran pengguna yang jelas untuk perubahan database
+itu. Tiada penulisan database dilakukan dan tiada laluan lain digunakan untuk
+memintas keputusan itu. Pengaktifan Pages sudah dibenarkan pengguna dan ditahan
+sehingga kelulusan migration hosted serta prasyarat backend diselesaikan.
+
+URL awam kekal [GeoDecoder Digital](https://undead41.github.io/geodecoder-digital/).
+Push ke repository private atau kewujudan branch mirror tidak mengubah tetapan
+Pages. Sumber private kekal private; mirror mengandungi frontend sahaja. Backend,
+fixture akaun, credential server dan rekod pengguna tidak disalin ke mirror.
+
+## Binaan dan sumber artifak
+
+Bina modul dahulu apabila sumber modul berubah, sahkan hasilnya dan kemas kini
+pin/provenance vendor mengikut prosedur integrasi. Kemudian jalankan dari akar
+repository sumber:
 
 ```sh
 cd digital
@@ -15,89 +43,59 @@ npm run prepare:pages
 npm run check
 ```
 
-Repository `unDead41/geodecoder` menyimpan sumber, schema dan sejarah firmware.
-Repository public `unDead41/geodecoder-digital` ialah mirror frontend sahaja.
-Branch penerbitan yang dikehendaki pada kedua-duanya ialah **main-digitalized**.
-Jangan menyalin backend, fixture akaun atau key server ke mirror frontend.
+`prepare:pages` menyediakan root `index.html` dalam repository sumber; ia tidak
+menolak fail ke mirror awam atau menukar tetapan GitHub Pages.
 
-URL laman awam: https://undead41.github.io/geodecoder-digital/ .
-Perubahan branch sumber tidak mengubah repository mirror atau tetapan Pages
-secara automatik. Rekod status sebenar terakhir, sumber beku dan bukti gabungan:
-[digital/docs/RELEASE_V2_6.md](../digital/docs/RELEASE_V2_6.md).
-Pemetaan nama branch: [BRANCH_ARCHITECTURE.md](../digital/docs/BRANCH_ARCHITECTURE.md).
+| Artifak | Kegunaan | Rekod payload v2.6.0 |
+|---|---|---|
+| `digital/artifacts/GeoDecoder_Digital_V2.html` | Fail offline canonical; root `index.html` private dan semua alias HTML mesti byte-identik dengannya | 6,654,237 bait; SHA256 `aef9b6e51c7b02fb80aa0a10a9ef154e3b81edffadda5bbe634c4bb9d437ea34` |
+| `digital/artifacts/site-index.html` | `index.html` pada mirror Pages; audio dimuat selepas interaksi | 1,097,468 bait; SHA256 `c37c2b1fcac5abb51263a67a14332779b9b01cdb96d39e264465b2934c306960` |
+| Modul canonical | HTML modul v1.5.0 yang dipin | 315,817 bait; SHA256 `45bfc66bd7f1edaca7672c618ce6833c3f1e87a38ba3a334df18a0b11413d5c7` |
 
-Migration profile/progress mesti dipasang sebelum frontend cloud baharu.
-Tetapan SMTP/redirect email kekal keperluan berasingan. Tiada visibility
-repository atau langganan diubah untuk membolehkan Pages.
+Mirror awam menyertakan `index.html`, `assets/audio/menu.mp3`,
+`assets/audio/map.mp3`, `.nojekyll`, README penerbitan dan `release.json`.
+Versi offline membenamkan kedua-dua audio; payload Pages menggunakan fail audio
+berasingan. Oleh itu hash index private dan index mirror memang berbeza.
 
----
+## Melengkapkan penerbitan
 
-## Rekod sejarah sebelum integrasi ini
+1. Sahkan head remote dan payload sumber yang hendak diterbitkan. Jalankan ujian,
+   build/check serta senario pelayar yang berkaitan. Rekod versi, SHA dan hash.
+2. Selepas migration hosted diberi kebenaran, pasang migration profile/progress
+   yang diperlukan dan sahkan kontrak akhirnya. Database baharu menggunakan
+   schema lengkap; database sedia ada menggunakan migration yang berkenaan.
+   Backend Duel kekal berasingan. SMTP dan redirect email masih prasyarat
+   berasingan, bukan hasil daripada push frontend.
+3. Pastikan commit mirror `main-digitalized` mengandungi payload frontend yang
+   betul. Gunakan expected-head ketika mengemas kini mirror; jangan menimpa head
+   yang berubah. `release.json` merekodkan SHA sumber dan hash payload. SHA commit
+   penerbitan direkodkan selepas commit itu wujud.
+4. Selepas kelulusan migration hosted dan prasyarat backend selesai, simpan
+   Settings → Pages pada repository
+   **awam**: Source **Deploy from a branch**, branch **main-digitalized**, folder
+   **/(root)**. Membuka pemilih atau menukar pilihan tanpa Save tidak mengaktifkannya.
+5. Tunggu workflow bagi SHA mirror baharu selesai berjaya. Semak URL HTTPS,
+   versi, hash HTML/aset dan aliran pengguna yang berkenaan. Catat ujian hosted
+   sebenar berasingan daripada fixture dan pratonton.
 
-# GeoDecoder Digital — publication branch
+Kod telah lulus **248 ujian aplikasi +244 ujian modul**, build/check dan senario
+Chrome yang direkodkan dalam [RELEASE_V2_6.md](../digital/docs/RELEASE_V2_6.md).
+Bukti itu tidak membuktikan migration hosted, penghantaran email atau deployment
+Pages baharu telah berlaku. Pemetaan branch dan pemilik komponen berada dalam
+[BRANCH_ARCHITECTURE.md](../digital/docs/BRANCH_ARCHITECTURE.md); rekod Pages serta
+bukti keluaran terdahulu berada dalam [GITHUB_PAGES.md](../digital/docs/GITHUB_PAGES.md).
 
-Branch penerbitan: **main-digital**.
-Tarikh persediaan: **26 Oktober 2026 (Malaysia)**.
-Versi aplikasi digital: **v1.2.0**. Firmware rujukan kekal **v1.1.3**.
+## Bukti sejarah persediaan lama
 
-## Sumber keluaran
+Persediaan private terdahulu menggunakan branch `main-digital`, kini dipetakan
+kepada `digitalized-release-legacy`. Sumber BM/English ialah `digital-dwi` pada
+`b8f7360fc15cb7b23666b092ade8e1d2058878bb`, berasaskan `digitalize` v1.1.0 pada
+`55a79849d5007ec53a9b877cd20877c9bf15aa8d`. Artifak digital ketika itu v1.2.0;
+firmware rujukan v1.1.3. Rekod DWI menyatakan 45 ujian dan lapan senario Chrome.
 
-- Branch sumber BM/BI: `digital-dwi`.
-- SHA sumber: `b8f7360fc15cb7b23666b092ade8e1d2058878bb`.
-- Asas permainan: `digitalize` v1.1.0 / `55a79849d5007ec53a9b877cd20877c9bf15aa8d`.
-- `index.html` di akar branch menggunakan blob yang sama tepat dengan `digital/GeoDecoder_Digital_V1.html`.
-- `.nojekyll` mematikan pemprosesan Jekyll; HTML sudah mengandungi semua JS, CSS, soalan dan terjemahan.
-- `main-digital` ialah branch penerbitan sahaja. Pembangunan kekal di branch skop masing-masing; semak dan integrasikan perubahan yang diluluskan sebelum menerbitkan semula.
-
-Tiada branch main, sharing, digitalize, digital-dwi atau digitalize-module diubah ketika menyediakan branch penerbitan ini. Versi aplikasi tidak dinaikkan untuk salinan artifak penerbitan yang identik.
-
-## Status GitHub Pages ketika persediaan
-
-GitHub Settings → Pages pada repository ini memaparkan:
-
-> Upgrade or make this repository public to enable Pages
-
-Repository masih **private**, dan Pages belum dapat diaktifkan dengan pelan semasa. Mencipta branch tidak mengaktifkan hosting. Tiada perubahan kepada visibility repository atau langganan dibuat.
-
-Pilihan untuk diterbitkan kemudian:
-
-1. Gunakan pelan GitHub yang menyokong Pages untuk repository private, kemudian pilih sumber di bawah.
-2. Terbitkan hanya fail laman dalam repository public khusus untuk Pages, sambil menyimpan repository firmware ini private.
-3. Jika pengguna memang mahu keseluruhan repository ini public, ubah visibility secara jelas terlebih dahulu, kemudian pilih sumber di bawah.
-
-Jangan menukar visibility keseluruhan repository hanya untuk menyelesaikan konfigurasi Pages tanpa arahan pengguna.
-
-## Tetapan sumber apabila Pages tersedia
-
-- Settings → Pages → Build and deployment.
-- Source: **Deploy from a branch**.
-- Branch: **main-digital**.
-- Folder: **/(root)**.
-- Save; tunggu build/deployment Pages berjaya.
-- Gunakan URL sebenar yang GitHub paparkan selepas deployment. Tiada URL laman live disahkan pada masa persediaan ini.
-
-Dokumentasi rasmi: https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site
-
-## Kemas kini keluaran seterusnya
-
-Jalankan pada checkout `main-digital` yang bersih selepas perubahan sumber yang diluluskan telah diintegrasikan. Dalam terminal dari akar repo:
-
-```sh
-cd digital
-npm test
-npm run standalone
-```
-
-Kemudian jalankan Python dari akar repo untuk menyelaraskan artifak digital dan halaman penerbitan:
-
-```sh
-python -c "from pathlib import Path; p=Path('digital/artifacts/GeoDecoder_Digital_V1.html').read_bytes(); Path('digital/GeoDecoder_Digital_V1.html').write_bytes(p); Path('index.html').write_bytes(p); Path('.nojekyll').write_bytes(b'')"
-cd digital
-npm run check
-```
-
-Pastikan SHA sumber, versi dan bukti ujian dikemas kini. Commit/push hanya ke `main-digital`; jangan menerbitkan terus daripada branch pembangunan. Apabila Pages sudah diaktifkan untuk branch ini, push seterusnya ke branch penerbitan akan menggunakan sumber yang dipilih itu.
-
-## Pengesahan
-
-Artifak sumber BM/BI telah lulus 45 ujian dan 8 senario Chrome sebagaimana direkodkan dalam `digital/docs/DWI_VERIFICATION.md`. Persediaan penerbitan menyemak kesamaan byte root index dengan artifak sumber, sintaks HTML/JS setempat dan kemasukan pada URL akar pelayan statik. Ini bukan bukti deployment GitHub Pages; hosting masih disekat seperti status di atas.
+Ketika persediaan itu, Settings Pages repository private menunjukkan keperluan
+naik taraf pelan atau menjadikan repository public. Branch sahaja tidak
+mengaktifkan hosting. Penyelesaian yang diterima ialah mirror frontend public
+berasingan; visibility sumber dan langganan tidak diubah. Rekod lama itu bukan
+arahan menggunakan `main-digital` bagi keluaran baharu dan bukan dakwaan pelan
+GitHub semasa.

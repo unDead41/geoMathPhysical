@@ -1,0 +1,297 @@
+{
+  "schemaVersion": 1,
+  "repository": "unDead41/geodecoder",
+  "status": "completed_assigned_scope",
+  "method": "native_github_branch_rename_ui",
+  "verifiedAt": "2026-10-26T04:42:27.745Z",
+  "scope": {
+    "assignedCount": 5,
+    "globalPlannedCount": 11,
+    "remainingGroupsHandledSeparately": [
+      "module",
+      "utility"
+    ]
+  },
+  "preflight": [
+    {
+      "from": "digitalize",
+      "to": "digitalized-core-portal",
+      "sha": "adc51627eaaace5d9543c7e033d2994986c8715d",
+      "currentSource": "adc51627eaaace5d9543c7e033d2994986c8715d",
+      "currentTarget": null,
+      "ok": true
+    },
+    {
+      "from": "digital-dwi",
+      "to": "digitalized-game-language",
+      "sha": "b8f7360fc15cb7b23666b092ade8e1d2058878bb",
+      "currentSource": "b8f7360fc15cb7b23666b092ade8e1d2058878bb",
+      "currentTarget": null,
+      "ok": true
+    },
+    {
+      "from": "digital-richText",
+      "to": "digitalized-game-duel",
+      "sha": "8373fd4bae11847c3a3099ee6f61e2756d99349b",
+      "currentSource": "8373fd4bae11847c3a3099ee6f61e2756d99349b",
+      "currentTarget": null,
+      "ok": true
+    },
+    {
+      "from": "digitalize-ease-of-use",
+      "to": "digitalized-ux-usability",
+      "sha": "51a0a0f852c1796e6e491c9abd91c2b776ecfffe",
+      "currentSource": "51a0a0f852c1796e6e491c9abd91c2b776ecfffe",
+      "currentTarget": null,
+      "ok": true
+    },
+    {
+      "from": "digitalize-module",
+      "to": "digitalized-module-content",
+      "sha": "694c2c9623a76be1b885611e2c90575b734d0b00",
+      "currentSource": "694c2c9623a76be1b885611e2c90575b734d0b00",
+      "currentTarget": null,
+      "ok": true
+    },
+    {
+      "from": "digitalize-module-design",
+      "to": "digitalized-module-design",
+      "sha": "2a62091fe72f88c59b2f3ca393a29fc3f1b47263",
+      "currentSource": "2a62091fe72f88c59b2f3ca393a29fc3f1b47263",
+      "currentTarget": null,
+      "ok": true
+    },
+    {
+      "from": "digitalize-module-upgrade",
+      "to": "digitalized-module-guided",
+      "sha": "4c3a165613fd310e5e7e889e793065d4818250b2",
+      "currentSource": "4c3a165613fd310e5e7e889e793065d4818250b2",
+      "currentTarget": null,
+      "ok": true
+    },
+    {
+      "from": "digitalize-utility-profile",
+      "to": "digitalized-utility-profile",
+      "sha": "3e48d322e146f75a7407afcc9467b12561700646",
+      "currentSource": "3e48d322e146f75a7407afcc9467b12561700646",
+      "currentTarget": null,
+      "ok": true
+    },
+    {
+      "from": "digitalize-utility-security",
+      "to": "digitalized-utility-security",
+      "sha": "80309ab7bdcddd6a96317f3088d0d8378d121a1f",
+      "currentSource": "80309ab7bdcddd6a96317f3088d0d8378d121a1f",
+      "currentTarget": null,
+      "ok": true
+    },
+    {
+      "from": "digitalize-utility-preferences",
+      "to": "digitalized-utility-preferences",
+      "sha": "5c9699a1962103c1edcb906f383015c60dbad21c",
+      "currentSource": "5c9699a1962103c1edcb906f383015c60dbad21c",
+      "currentTarget": null,
+      "ok": true
+    },
+    {
+      "from": "main-digital",
+      "to": "digitalized-release-legacy",
+      "sha": "71db77c0206de664e50fa57ff57e1825af13f938",
+      "currentSource": "71db77c0206de664e50fa57ff57e1825af13f938",
+      "currentTarget": null,
+      "ok": true
+    }
+  ],
+  "preservedBranches": [
+    {
+      "name": "main-digitalized",
+      "beforeSha": "6246d06ab492a5b0ab3edb3d5ee7b25bcc84b081",
+      "currentSha": "6246d06ab492a5b0ab3edb3d5ee7b25bcc84b081",
+      "unchanged": true
+    },
+    {
+      "name": "main",
+      "beforeSha": "a059979d97926b82cafd4aa5cf3fe59da04a55bb",
+      "currentSha": "a059979d97926b82cafd4aa5cf3fe59da04a55bb",
+      "unchanged": true
+    },
+    {
+      "name": "sharing",
+      "beforeSha": "01b549a26861ef5f093d4c2c630700de37008d6b",
+      "currentSha": "01b549a26861ef5f093d4c2c630700de37008d6b",
+      "unchanged": true
+    },
+    {
+      "name": "codex/game-flow-rgb",
+      "beforeSha": "e457b0536987d35042da4d47337fea65a0ad5d77",
+      "currentSha": "e457b0536987d35042da4d47337fea65a0ad5d77",
+      "unchanged": true
+    },
+    {
+      "name": "codex/question-audio-elevenlabs",
+      "beforeSha": "09122e801b91041237b897c021229721a4bbcd6c",
+      "currentSha": "09122e801b91041237b897c021229721a4bbcd6c",
+      "unchanged": true
+    },
+    {
+      "name": "codex/question-bank-harmonised-lcd",
+      "beforeSha": "d241ea5683c2af24d418af468cff3cdf394226ba",
+      "currentSha": "d241ea5683c2af24d418af468cff3cdf394226ba",
+      "unchanged": true
+    },
+    {
+      "name": "codex/serial-unassign",
+      "beforeSha": "797a21f01ebcd47966aef5316aa813f2834e9347",
+      "currentSha": "797a21f01ebcd47966aef5316aa813f2834e9347",
+      "unchanged": true
+    },
+    {
+      "name": "testing/components",
+      "beforeSha": "36d999a9016cf0389005cede7567b654c462b03d",
+      "currentSha": "36d999a9016cf0389005cede7567b654c462b03d",
+      "unchanged": true
+    }
+  ],
+  "operationReceipts": [
+    {
+      "event": "receipt",
+      "repository": "unDead41/geodecoder",
+      "from": "digitalize",
+      "to": "digitalized-core-portal",
+      "sha": "adc51627eaaace5d9543c7e033d2994986c8715d",
+      "status": "renamed",
+      "method": "native_github_branch_rename_ui",
+      "verifiedAt": "2026-10-26T04:33:47.432Z",
+      "sourceRefAbsent": true,
+      "targetSha": "adc51627eaaace5d9543c7e033d2994986c8715d"
+    },
+    {
+      "event": "receipt",
+      "repository": "unDead41/geodecoder",
+      "from": "digital-dwi",
+      "to": "digitalized-game-language",
+      "sha": "b8f7360fc15cb7b23666b092ade8e1d2058878bb",
+      "status": "renamed",
+      "method": "native_github_branch_rename_ui",
+      "verifiedAt": "2026-10-26T04:35:34.434Z",
+      "sourceRefAbsent": true,
+      "targetSha": "b8f7360fc15cb7b23666b092ade8e1d2058878bb"
+    },
+    {
+      "event": "receipt",
+      "repository": "unDead41/geodecoder",
+      "from": "digital-richText",
+      "to": "digitalized-game-duel",
+      "sha": "8373fd4bae11847c3a3099ee6f61e2756d99349b",
+      "status": "renamed",
+      "method": "native_github_branch_rename_ui",
+      "verifiedAt": "2026-10-26T04:38:09.250Z",
+      "sourceRefAbsent": true,
+      "targetSha": "8373fd4bae11847c3a3099ee6f61e2756d99349b"
+    },
+    {
+      "event": "receipt",
+      "repository": "unDead41/geodecoder",
+      "from": "digitalize-ease-of-use",
+      "to": "digitalized-ux-usability",
+      "sha": "51a0a0f852c1796e6e491c9abd91c2b776ecfffe",
+      "status": "renamed",
+      "method": "native_github_branch_rename_ui",
+      "verifiedAt": "2026-10-26T04:41:06.683Z",
+      "sourceRefAbsent": true,
+      "targetSha": "51a0a0f852c1796e6e491c9abd91c2b776ecfffe"
+    },
+    {
+      "event": "receipt",
+      "repository": "unDead41/geodecoder",
+      "from": "main-digital",
+      "to": "digitalized-release-legacy",
+      "sha": "71db77c0206de664e50fa57ff57e1825af13f938",
+      "status": "renamed",
+      "method": "native_github_branch_rename_ui",
+      "verifiedAt": "2026-10-26T04:42:27.745Z",
+      "sourceRefAbsent": true,
+      "targetSha": "71db77c0206de664e50fa57ff57e1825af13f938"
+    }
+  ],
+  "verifiedCount": 5,
+  "pendingInAssignedScope": 0,
+  "finalReadback": [
+    {
+      "name": "codex/game-flow-rgb",
+      "sha": "e457b0536987d35042da4d47337fea65a0ad5d77"
+    },
+    {
+      "name": "codex/question-audio-elevenlabs",
+      "sha": "09122e801b91041237b897c021229721a4bbcd6c"
+    },
+    {
+      "name": "codex/question-bank-harmonised-lcd",
+      "sha": "d241ea5683c2af24d418af468cff3cdf394226ba"
+    },
+    {
+      "name": "codex/serial-unassign",
+      "sha": "797a21f01ebcd47966aef5316aa813f2834e9347"
+    },
+    {
+      "name": "digitalize-module",
+      "sha": "694c2c9623a76be1b885611e2c90575b734d0b00"
+    },
+    {
+      "name": "digitalize-module-design",
+      "sha": "2a62091fe72f88c59b2f3ca393a29fc3f1b47263"
+    },
+    {
+      "name": "digitalize-module-upgrade",
+      "sha": "4c3a165613fd310e5e7e889e793065d4818250b2"
+    },
+    {
+      "name": "digitalize-utility-preferences",
+      "sha": "5c9699a1962103c1edcb906f383015c60dbad21c"
+    },
+    {
+      "name": "digitalize-utility-profile",
+      "sha": "3e48d322e146f75a7407afcc9467b12561700646"
+    },
+    {
+      "name": "digitalize-utility-security",
+      "sha": "80309ab7bdcddd6a96317f3088d0d8378d121a1f"
+    },
+    {
+      "name": "digitalized-core-portal",
+      "sha": "adc51627eaaace5d9543c7e033d2994986c8715d"
+    },
+    {
+      "name": "digitalized-game-duel",
+      "sha": "8373fd4bae11847c3a3099ee6f61e2756d99349b"
+    },
+    {
+      "name": "digitalized-game-language",
+      "sha": "b8f7360fc15cb7b23666b092ade8e1d2058878bb"
+    },
+    {
+      "name": "digitalized-release-legacy",
+      "sha": "71db77c0206de664e50fa57ff57e1825af13f938"
+    },
+    {
+      "name": "digitalized-ux-usability",
+      "sha": "51a0a0f852c1796e6e491c9abd91c2b776ecfffe"
+    },
+    {
+      "name": "main",
+      "sha": "a059979d97926b82cafd4aa5cf3fe59da04a55bb"
+    },
+    {
+      "name": "main-digitalized",
+      "sha": "6246d06ab492a5b0ab3edb3d5ee7b25bcc84b081"
+    },
+    {
+      "name": "sharing",
+      "sha": "01b549a26861ef5f093d4c2c630700de37008d6b"
+    },
+    {
+      "name": "testing/components",
+      "sha": "36d999a9016cf0389005cede7567b654c462b03d"
+    }
+  ]
+}

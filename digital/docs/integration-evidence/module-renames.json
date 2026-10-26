@@ -1,0 +1,20 @@
+[
+  {
+    "source": "digitalize-module",
+    "target": "digitalized-module-content",
+    "sha": "694c2c9623a76be1b885611e2c90575b734d0b00",
+    "verifiedAt": "2026-10-26T04:43:39.616Z"
+  },
+  {
+    "source": "digitalize-module-design",
+    "target": "digitalized-module-design",
+    "sha": "2a62091fe72f88c59b2f3ca393a29fc3f1b47263",
+    "verifiedAt": "2026-10-26T04:44:51.647Z"
+  },
+  {
+    "source": "digitalize-module-upgrade",
+    "target": "digitalized-module-guided",
+    "sha": "4c3a165613fd310e5e7e889e793065d4818250b2",
+    "verifiedAt": "2026-10-26T04:45:49.436Z"
+  }
+]

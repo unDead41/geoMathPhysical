@@ -1,0 +1,67 @@
+{
+  "repository": "unDead41/geodecoder",
+  "scope": "Private utility branches only",
+  "startedAt": "2026-10-26T04:40:54.043Z",
+  "completedAt": "2026-10-26T04:45:45.518Z",
+  "receipts": [
+    {
+      "repository": "unDead41/geodecoder",
+      "operation": "native_branch_rename",
+      "method": "GitHub authenticated native Rename branch UI",
+      "source": "digitalize-utility-profile",
+      "destination": "digitalized-utility-profile",
+      "beforeSha": "3e48d322e146f75a7407afcc9467b12561700646",
+      "afterSha": "3e48d322e146f75a7407afcc9467b12561700646",
+      "preflightAt": "2026-10-26T04:42:02.656Z",
+      "verifiedAt": "2026-10-26T04:42:38.996Z",
+      "destinationAbsentBefore": true,
+      "oldRefAbsentAfter": true,
+      "targetShaPreserved": true,
+      "uiTabId": "40",
+      "verification": "GitHub connector GET git/ref/heads endpoints"
+    },
+    {
+      "repository": "unDead41/geodecoder",
+      "operation": "native_branch_rename",
+      "method": "GitHub authenticated native Rename branch UI",
+      "source": "digitalize-utility-security",
+      "destination": "digitalized-utility-security",
+      "beforeSha": "80309ab7bdcddd6a96317f3088d0d8378d121a1f",
+      "afterSha": "80309ab7bdcddd6a96317f3088d0d8378d121a1f",
+      "preflightAt": "2026-10-26T04:44:09.238Z",
+      "verifiedAt": "2026-10-26T04:44:37.035Z",
+      "destinationAbsentBefore": true,
+      "oldRefAbsentAfter": true,
+      "targetShaPreserved": true,
+      "uiTabId": "40",
+      "verification": "GitHub connector GET git/ref/heads endpoints"
+    },
+    {
+      "repository": "unDead41/geodecoder",
+      "operation": "native_branch_rename",
+      "method": "GitHub authenticated native Rename branch UI",
+      "source": "digitalize-utility-preferences",
+      "destination": "digitalized-utility-preferences",
+      "beforeSha": "5c9699a1962103c1edcb906f383015c60dbad21c",
+      "afterSha": "5c9699a1962103c1edcb906f383015c60dbad21c",
+      "preflightAt": "2026-10-26T04:45:16.010Z",
+      "verifiedAt": "2026-10-26T04:45:45.518Z",
+      "destinationAbsentBefore": true,
+      "oldRefAbsentAfter": true,
+      "targetShaPreserved": true,
+      "uiTabId": "40",
+      "verification": "GitHub connector GET git/ref/heads endpoints"
+    }
+  ],
+  "uiVerification": {
+    "url": "https://github.com/unDead41/geodecoder/branches/all?query=digitalized-utility",
+    "verifiedAt": "2026-10-26T04:46:51.012Z",
+    "visibleBranches": [
+      "digitalized-utility-profile",
+      "digitalized-utility-security",
+      "digitalized-utility-preferences"
+    ],
+    "browser": "Chrome",
+    "tabId": "40"
+  }
+}

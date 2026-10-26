@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "status": "code_published_activation_waiting_for_database_authorization",
+  "applicationVersion": "2.6.0",
+  "moduleVersion": "1.5.0",
+  "source": {
+    "repository": "unDead41/geodecoder",
+    "branch": "main-digitalized",
+    "codeCommit": "6246d06ab492a5b0ab3edb3d5ee7b25bcc84b081",
+    "codeTree": "839b68bfb6323bac386eed9b4b33a68e873a0808",
+    "verifiedSourceHeads": 11,
+    "commitParents": 12,
+    "moduleSourceCommit": "fc9bda734f8b59825271a7cc4b91c101cb30bdde",
+    "note": "Later documentation and operation-receipt commits may advance the source branch without changing these tested application blobs."
+  },
+  "publicFrontend": {
+    "repository": "unDead41/geodecoder-digital",
+    "branch": "main-digitalized",
+    "commit": "2058c89ff77521be0d57115744554b44372ec3aa",
+    "websiteBlob": "fb91b41ab062ace14acd9589c2c463774b4b0593",
+    "websiteSha256": "c37c2b1fcac5abb51263a67a14332779b9b01cdb96d39e264465b2934c306960",
+    "websiteBytes": 1097468,
+    "preservedAudioBlobs": {
+      "assets/audio/menu.mp3": "84aa7525f2c4a04cfd8ac750ad79fec77353e32f",
+      "assets/audio/map.mp3": "0ef77140fbee08967839da0b1a1fa6770e337c18"
+    }
+  },
+  "validation": {
+    "applicationTestsPassed": 248,
+    "moduleTestsPassed": 244,
+    "failures": 0,
+    "skipped": 0,
+    "applicationBuildAndCheck": "passed",
+    "moduleBuildAndCheck": "passed",
+    "browser": "Chrome representative gameplay, module and preferences; CSS viewports 320/390, not physical-device or hosted Auth verification"
+  },
+  "database": {
+    "projectName": "GeoDecoder Digital",
+    "projectId": "fkrlwzxvyufndavlpzbp",
+    "migrationName": "geodecoder_profile_and_module_progress_v2_6",
+    "applied": false,
+    "approvalState": "auto_review_rejected_missing_explicit_user_authorization",
+    "blockedAction": "Apply combined hosted schema/function/grant/RLS migration",
+    "noWriteFallbackAttempted": true,
+    "preparedChanges": [
+      "Add avatar column and update profile snapshot/action functions",
+      "Add module-progress table and authenticated RPC with ownership checks and restricted table grants"
+    ],
+    "containsDropTableOrDeleteStatements": false,
+    "migrations": [
+      {
+        "path": "digital/backend/profile_v2_3.sql",
+        "sha256": "d73f8dbe5c451140b5c718c3009bd100a81ae5029ee85cfe60bcd5f84972200f"
+      },
+      {
+        "path": "digital/backend/module_progress_v2_4.sql",
+        "sha256": "f22ab14e1298a36c0ce27400b76472218b40e04b0689a1813b708e5df7c6cf2b"
+      }
+    ]
+  },
+  "pages": {
+    "repository": "unDead41/geodecoder-digital",
+    "settingsReadDate": "2026-10-26",
+    "actualSource": "Deploy from a branch",
+    "actualBranch": "main-digital",
+    "actualPath": "/",
+    "lastObservedWorkflow": "40249504326",
+    "requestedBranch": "main-digitalized",
+    "requestedPath": "/",
+    "formSelectionPrepared": true,
+    "saveSubmitted": false,
+    "activationHold": "Await explicit approval and successful database migration before publishing v2.6",
+    "url": "https://undead41.github.io/geodecoder-digital/"
+  }
+}

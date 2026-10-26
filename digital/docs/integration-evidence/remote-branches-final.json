@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "repository": "unDead41/geodecoder",
+  "verifiedAt": "2026-10-26T04:46:21.269Z",
+  "phase": "after_all_native_renames_before_documentation_receipt_commit",
+  "branchCount": 19,
+  "branches": [
+    {
+      "name": "codex/game-flow-rgb",
+      "sha": "e457b0536987d35042da4d47337fea65a0ad5d77"
+    },
+    {
+      "name": "codex/question-audio-elevenlabs",
+      "sha": "09122e801b91041237b897c021229721a4bbcd6c"
+    },
+    {
+      "name": "codex/question-bank-harmonised-lcd",
+      "sha": "d241ea5683c2af24d418af468cff3cdf394226ba"
+    },
+    {
+      "name": "codex/serial-unassign",
+      "sha": "797a21f01ebcd47966aef5316aa813f2834e9347"
+    },
+    {
+      "name": "digitalized-core-portal",
+      "sha": "adc51627eaaace5d9543c7e033d2994986c8715d"
+    },
+    {
+      "name": "digitalized-game-duel",
+      "sha": "8373fd4bae11847c3a3099ee6f61e2756d99349b"
+    },
+    {
+      "name": "digitalized-game-language",
+      "sha": "b8f7360fc15cb7b23666b092ade8e1d2058878bb"
+    },
+    {
+      "name": "digitalized-module-content",
+      "sha": "694c2c9623a76be1b885611e2c90575b734d0b00"
+    },
+    {
+      "name": "digitalized-module-design",
+      "sha": "2a62091fe72f88c59b2f3ca393a29fc3f1b47263"
+    },
+    {
+      "name": "digitalized-module-guided",
+      "sha": "4c3a165613fd310e5e7e889e793065d4818250b2"
+    },
+    {
+      "name": "digitalized-release-legacy",
+      "sha": "71db77c0206de664e50fa57ff57e1825af13f938"
+    },
+    {
+      "name": "digitalized-utility-preferences",
+      "sha": "5c9699a1962103c1edcb906f383015c60dbad21c"
+    },
+    {
+      "name": "digitalized-utility-profile",
+      "sha": "3e48d322e146f75a7407afcc9467b12561700646"
+    },
+    {
+      "name": "digitalized-utility-security",
+      "sha": "80309ab7bdcddd6a96317f3088d0d8378d121a1f"
+    },
+    {
+      "name": "digitalized-ux-usability",
+      "sha": "51a0a0f852c1796e6e491c9abd91c2b776ecfffe"
+    },
+    {
+      "name": "main",
+      "sha": "a059979d97926b82cafd4aa5cf3fe59da04a55bb"
+    },
+    {
+      "name": "main-digitalized",
+      "sha": "6246d06ab492a5b0ab3edb3d5ee7b25bcc84b081"
+    },
+    {
+      "name": "sharing",
+      "sha": "01b549a26861ef5f093d4c2c630700de37008d6b"
+    },
+    {
+      "name": "testing/components",
+      "sha": "36d999a9016cf0389005cede7567b654c462b03d"
+    }
+  ],
+  "sourceCodeCommit": "6246d06ab492a5b0ab3edb3d5ee7b25bcc84b081",
+  "sourceCodeParents": [
+    "fc9bda734f8b59825271a7cc4b91c101cb30bdde",
+    "adc51627eaaace5d9543c7e033d2994986c8715d",
+    "71db77c0206de664e50fa57ff57e1825af13f938",
+    "b8f7360fc15cb7b23666b092ade8e1d2058878bb",
+    "8373fd4bae11847c3a3099ee6f61e2756d99349b",
+    "51a0a0f852c1796e6e491c9abd91c2b776ecfffe",
+    "694c2c9623a76be1b885611e2c90575b734d0b00",
+    "2a62091fe72f88c59b2f3ca393a29fc3f1b47263",
+    "4c3a165613fd310e5e7e889e793065d4818250b2",
+    "3e48d322e146f75a7407afcc9467b12561700646",
+    "80309ab7bdcddd6a96317f3088d0d8378d121a1f",
+    "5c9699a1962103c1edcb906f383015c60dbad21c"
+  ],
+  "publicFrontend": {
+    "repository": "unDead41/geodecoder-digital",
+    "branch": "main-digitalized",
+    "sha": "2058c89ff77521be0d57115744554b44372ec3aa"
+  }
+}
