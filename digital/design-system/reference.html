@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ms" data-theme="light" data-contrast="standard" data-text-size="normal">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>GeoDecoder — Rujukan komponen</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../dist/design-tokens.css">
+  <link rel="stylesheet" href="../dist/style.css">
+  <link rel="stylesheet" href="../dist/portal.css">
+  <link rel="stylesheet" href="../dist/usability.css">
+  <link rel="stylesheet" href="../dist/foundation.css">
+  <link rel="stylesheet" href="./reference.css">
+</head>
+<body class="ds-reference">
+  <a href="#main" class="skip-link" data-copy="skip">Terus ke kandungan</a>
+  <header class="ds-header">
+    <a class="brand" href="#main" aria-label="GeoDecoder, rujukan komponen" data-copy-aria="brandLabel">
+      <svg class="ds-brand-cube" viewBox="0 0 40 44" aria-hidden="true"><path d="m20 2 17 10v20L20 42 3 32V12Z" fill="currentColor"/><path d="m20 2 17 10-17 10L3 12Z" fill="var(--accent)"/><path d="M20 22v20" fill="none" stroke="var(--on-primary)" stroke-width="2"/></svg>
+      <span>Geo<span class="brand-blue">Decoder</span><small data-copy="kit">KIT REKA BENTUK</small></span>
+    </a>
+    <span class="ds-edition" data-copy="edition">Rujukan komponen · v1</span>
+  </header>
+
+  <main id="main" class="ds-main" tabindex="-1">
+    <section class="ds-intro" aria-labelledby="ds-title">
+      <div>
+        <p class="eyebrow" data-copy="eyebrow">GEOMETRI, DALAM SATU BAHASA VISUAL</p>
+        <h1 id="ds-title" data-copy="title">Satu kit, semua halaman.</h1>
+        <p class="ds-lead" data-copy="lead">Komponen sebenar untuk Home, akaun, permainan dan modul GeoDecoder. Cuba kawalan, tukar tema dan gunakan papan kekunci.</p>
+      </div>
+      <div class="ds-signature" aria-hidden="true"><span>R1</span><svg viewBox="0 0 100 100"><path d="m50 10 35 20v40L50 90 15 70V30Z" fill="var(--blue-soft)" stroke="var(--primary)" stroke-width="2"/><path d="m15 30 35 20 35-20M50 50v40M50 10v40" fill="none" stroke="var(--primary)" stroke-width="2"/></svg><span>R2</span><svg viewBox="0 0 100 100"><path d="M40 5h20v20h20v20H60v20H40V45H20V25h20Zm0 60h20v20H40Z" fill="var(--mint-soft)" stroke="var(--success)" stroke-width="2"/><path d="M40 25h20v20H40ZM40 45h20M40 65h20M40 25v20M60 25v20" fill="none" stroke="var(--success)" stroke-width="1.2"/></svg></div>
+    </section>
+
+    <section class="gd-panel ds-preview-panel" aria-labelledby="preview-title">
+      <div class="ds-section-heading"><h2 id="preview-title" data-copy="preview">Paparan rujukan</h2><p data-copy="previewNote">Pilihan di sini hanya untuk pratonton ini.</p></div>
+      <div class="ds-preview-controls">
+        <div class="gd-field"><label for="ds-language" data-copy="language">Bahasa</label><select id="ds-language"><option value="ms" lang="ms">Bahasa Melayu</option><option value="en" lang="en">English</option></select></div>
+        <div class="gd-field"><label for="ds-theme" data-copy="theme">Tema</label><select id="ds-theme"><option value="light" data-copy="light">Cerah</option><option value="dark" data-copy="dark">Gelap</option></select></div>
+        <div class="gd-field"><label for="ds-contrast" data-copy="contrast">Kontras</label><select id="ds-contrast"><option value="standard" data-copy="standard">Biasa</option><option value="strong" data-copy="strong">Tinggi</option></select></div>
+        <div class="gd-field"><label for="ds-text" data-copy="textSize">Saiz teks</label><select id="ds-text"><option value="normal">100%</option><option value="large">125%</option><option value="largest">150%</option></select></div>
+        <label class="gd-toggle ds-motion"><input id="ds-motion" type="checkbox" role="switch"><span data-copy="reduceMotion">Kurangkan animasi</span></label>
+      </div>
+    </section>
+
+    <nav class="ds-section-nav" aria-label="Bahagian komponen" data-copy-aria="sections">
+      <a href="#ds-actions" data-copy="actions">Tindakan</a><a href="#ds-fields" data-copy="fields">Input</a><a href="#ds-selection" data-copy="selection">Pilihan</a><a href="#ds-layout" data-copy="layout">Kad & tab</a><a href="#ds-feedback" data-copy="feedback">Maklum balas</a><a href="#ds-overlays" data-copy="overlays">Dialog</a>
+    </nav>
+
+    <section id="ds-actions" class="ds-section" aria-labelledby="actions-title">
+      <div class="ds-section-heading"><h2 id="actions-title" data-copy="actions">Tindakan</h2><p data-copy="actionsNote">Satu tindakan utama bagi setiap keputusan. Hover dan tekan tidak mengubah saiz sasaran.</p></div>
+      <div class="gd-panel ds-sample">
+        <div class="ds-row"><button type="button" class="button button-primary" data-copy="start">Mula belajar</button><button type="button" class="button button-outline" data-copy="back">Kembali</button><button type="button" class="button button-quiet" data-copy="readMore">Baca lanjut</button><button type="button" class="button button-danger" id="ds-danger" data-copy="deleteSample">Padam contoh</button><button type="button" class="icon-button" id="ds-icon" aria-label="Tetapan contoh" data-copy-aria="settingsSample"><svg viewBox="0 0 24 24" class="icon" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 17h16M8 4v6M16 14v6"/></svg></button></div>
+        <p class="ds-sample-note" data-copy="sampleNote">Semua tindakan di halaman ini menggunakan data contoh sahaja.</p>
+      </div>
+      <h3 class="ds-subtitle" data-copy="states">Keadaan interaksi</h3>
+      <p class="ds-description" data-copy="statesNote">Pratonton hover, fokus dan ditekan ialah contoh visual. Gunakan Tab, Enter dan Space untuk mencuba keadaan sebenar.</p>
+      <div class="ds-state-grid">
+        <div class="gd-card"><span data-copy="normal">Biasa</span><button type="button" class="button button-primary" data-copy="continue">Teruskan</button></div>
+        <div class="gd-card"><span data-copy="hover">Hover</span><button type="button" class="button button-primary" data-preview="hover" data-copy="continue">Teruskan</button></div>
+        <div class="gd-card"><span data-copy="focus">Fokus</span><button type="button" class="button button-primary" data-preview="focus" data-copy="continue">Teruskan</button></div>
+        <div class="gd-card"><span data-copy="active">Ditekan</span><button type="button" class="button button-primary" data-preview="active" data-copy="continue">Teruskan</button></div>
+        <div class="gd-card"><span data-copy="selected">Dipilih</span><button type="button" class="button button-outline" aria-pressed="true" id="ds-selected" data-copy="labelsOn">Label ditunjukkan</button></div>
+        <div class="gd-card"><span data-copy="busy">Sibuk</span><button type="button" class="button button-primary" data-gd-busy aria-busy="true" disabled data-copy="saving">Menyimpan…</button></div>
+        <div class="gd-card"><span data-copy="disabled">Dilumpuhkan</span><button type="button" class="button button-outline" disabled data-copy="unavailable">Belum tersedia</button></div>
+        <div class="gd-card"><span data-copy="retry">Ralat / cuba semula</span><button type="button" class="button button-outline" id="ds-retry" data-copy="tryAgain">Cuba semula</button></div>
+      </div>
+      <p class="gd-feedback" data-tone="info" role="status" id="ds-action-status" data-copy="actionReady">Pilih mana-mana tindakan untuk melihat maklum balas.</p>
+    </section>
+
+    <section id="ds-fields" class="ds-section" aria-labelledby="fields-title">
+      <div class="ds-section-heading"><h2 id="fields-title" data-copy="fields">Input</h2><p data-copy="fieldsNote">Label kekal kelihatan. Ralat diterangkan melalui teks dan dikaitkan dengan medan.</p></div>
+      <div class="ds-two-columns">
+        <form id="ds-form" class="gd-panel ds-form" novalidate>
+          <h3 data-copy="formTitle">Cuba borang</h3>
+          <div class="gd-field"><label for="ds-name" data-copy="displayName">Nama paparan</label><input id="ds-name" name="sampleName" autocomplete="off" maxlength="60" aria-describedby="ds-name-help ds-name-error"><small id="ds-name-help" data-copy="nameHelp">Contoh: Ijamm. Nama ini tidak disimpan.</small><span class="field-error" id="ds-name-error"></span></div>
+          <div class="gd-field"><label for="ds-topic" data-copy="topic">Topik</label><select id="ds-topic" aria-describedby="ds-topic-help"><option value="solids" data-copy="solids">Bongkah tiga dimensi</option><option value="nets" data-copy="nets">Bentangan</option><option value="views" data-copy="views">Pandangan ortogon</option></select><small id="ds-topic-help" data-copy="nativeSelect">Senarai pilihan menggunakan kawalan asli pelayar.</small></div>
+          <button class="button button-primary" type="submit" id="ds-save" data-gd-busy data-copy="saveSample">Simpan contoh</button>
+          <p class="gd-feedback" data-tone="info" role="status" id="ds-form-status" data-copy="formReady">Cuba simpan tanpa nama untuk melihat ralat.</p>
+        </form>
+        <div class="gd-panel ds-form">
+          <h3 data-copy="fieldStates">Variasi medan</h3>
+          <div class="gd-field"><label for="ds-readonly" data-copy="readOnly">Baca sahaja</label><input id="ds-readonly" value="GeoDecoder" readonly aria-describedby="ds-readonly-note"><small id="ds-readonly-note" data-copy="readOnlyNote">Nilai boleh dipilih dan disalin.</small></div>
+          <div class="gd-field"><label for="ds-invalid" data-copy="invalidField">Medan dengan ralat</label><input id="ds-invalid" value="A" aria-invalid="true" aria-describedby="ds-invalid-note"><span id="ds-invalid-note" class="field-error" data-copy="invalidNote">Contoh ralat: gunakan sekurang-kurangnya dua aksara.</span></div>
+          <div class="gd-field"><label for="ds-disabled" data-copy="disabledField">Medan dilumpuhkan</label><input id="ds-disabled" value="GeoDecoder" disabled aria-describedby="ds-disabled-note"><small id="ds-disabled-note" data-copy="disabledNote">Contoh kawalan yang belum tersedia.</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="ds-selection" class="ds-section" aria-labelledby="selection-title">
+      <div class="ds-section-heading"><h2 id="selection-title" data-copy="selection">Pilihan</h2><p data-copy="selectionNote">Kawalan asli menyokong papan kekunci dan sentuhan. Keadaan dipilih sentiasa mempunyai tanda atau label.</p></div>
+      <div class="ds-two-columns">
+        <div class="gd-panel ds-form">
+          <h3 data-copy="checkboxToggle">Checkbox & toggle</h3>
+          <label class="ds-check"><input type="checkbox" id="ds-labels" checked><span data-copy="faceLabels">Tunjukkan label muka</span></label>
+          <label class="gd-toggle"><input type="checkbox" role="switch" id="ds-switch" checked><span data-copy="autoRotate">Putar model secara automatik</span></label>
+          <label class="ds-check"><input type="checkbox" disabled><span data-copy="disabledOption">Pilihan belum tersedia</span></label>
+          <p class="ds-sample-note" data-copy="noModelChange">Kawalan contoh ini tidak mengubah model permainan.</p>
+        </div>
+        <div class="gd-panel ds-form">
+          <fieldset class="ds-radio"><legend data-copy="studyMode">Mod pembelajaran</legend><label class="ds-check"><input type="radio" name="sampleMode" value="explore" checked><span data-copy="explore">Teroka</span></label><label class="ds-check"><input type="radio" name="sampleMode" value="practice"><span data-copy="practice">Latihan</span></label></fieldset>
+          <div class="gd-field"><label for="ds-range"><span data-copy="sampleVolume">Kelantangan contoh</span> <output id="ds-range-output" for="ds-range">50%</output></label><input type="range" id="ds-range" min="0" max="100" value="50" aria-describedby="ds-range-help"><small id="ds-range-help" data-copy="rangeHelp">Gunakan kekunci anak panah, Home atau End. Tiada bunyi dimainkan.</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="ds-layout" class="ds-section" aria-labelledby="layout-title">
+      <div class="ds-section-heading"><h2 id="layout-title" data-copy="layout">Kad & tab</h2><p data-copy="layoutNote">Kad memisahkan kandungan. Tab menukar bahagian yang berkaitan tanpa memindahkan konteks.</p></div>
+      <div class="ds-two-columns">
+        <article class="gd-card ds-learning-card"><span class="eyebrow" data-copy="learn">BELAJAR</span><h3 data-copy="geometryTitle">Kenali bongkah dan bentangan</h3><p data-copy="geometryNote">Perhatikan model, pilih satu muka dan terangkan apa yang berubah apabila model dibuka.</p><button type="button" class="button button-outline" id="ds-card-action" data-copy="exploreSample">Teroka contoh</button></article>
+        <div class="gd-panel">
+          <div class="gd-tabs" role="tablist" aria-label="Paparan pembelajaran contoh" data-copy-aria="tabLabel"><button type="button" role="tab" id="ds-tab-explore" aria-controls="ds-panel-explore" aria-selected="true" tabindex="0" data-copy="explore">Teroka</button><button type="button" role="tab" id="ds-tab-notes" aria-controls="ds-panel-notes" aria-selected="false" tabindex="-1" data-copy="notes">Nota</button></div>
+          <div class="ds-tab-panel" role="tabpanel" id="ds-panel-explore" aria-labelledby="ds-tab-explore" tabindex="0"><h3 data-copy="explorePanelTitle">Lihat dari pelbagai arah</h3><p data-copy="explorePanelNote">Putar model secara sengaja dan perhatikan muka, bucu serta tepinya.</p></div>
+          <div class="ds-tab-panel" role="tabpanel" id="ds-panel-notes" aria-labelledby="ds-tab-notes" tabindex="0" hidden><h3 data-copy="notesPanelTitle">Catat pemerhatian</h3><p data-copy="notesPanelNote">Bentangan menunjukkan muka pada permukaan rata. Gunakan model untuk menyemak sambungan muka.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="ds-feedback" class="ds-section" aria-labelledby="feedback-title">
+      <div class="ds-section-heading"><h2 id="feedback-title" data-copy="feedback">Maklum balas</h2><p data-copy="feedbackNote">Warna menyokong mesej. Teks menerangkan keadaan serta tindakan seterusnya.</p></div>
+      <div class="ds-feedback-list"><p class="gd-feedback" data-tone="info"><b data-copy="infoTitle">Maklumat</b> <span data-copy="infoNote">Pilih satu bongkah untuk mula meneroka.</span></p><p class="gd-feedback" data-tone="success"><b data-copy="successTitle">Berjaya</b> <span data-copy="successNote">Pilihan contoh telah dikemas kini.</span></p><p class="gd-feedback" data-tone="warning"><b data-copy="warningTitle">Perhatian</b> <span data-copy="warningNote">Ini ialah contoh sahaja. Perubahan tidak disimpan.</span></p><p class="gd-feedback" data-tone="error"><b data-copy="dangerTitle">Perlu disemak</b> <span data-copy="dangerNote">Nama contoh masih kosong. Isikan nama sebelum mencuba lagi.</span></p></div>
+    </section>
+
+    <section id="ds-overlays" class="ds-section" aria-labelledby="overlays-title">
+      <div class="ds-section-heading"><h2 id="overlays-title" data-copy="overlays">Dialog</h2><p data-copy="overlaysNote">Dialog memusatkan satu keputusan. Escape menutupnya dan fokus kembali ke butang pembuka.</p></div>
+      <div class="gd-panel ds-row"><button type="button" class="button button-primary" id="ds-open-dialog" data-copy="openDialog">Buka dialog contoh</button><p class="ds-description" data-copy="dialogKeys">Cuba Tab, Shift+Tab dan Escape.</p></div>
+    </section>
+    <footer class="ds-footer"><p data-copy="footer">GeoDecoder Digital · Satu sumber token, komponen bersama dan model geometri yang tepat.</p><a href="#main" data-copy="top">Kembali ke atas</a></footer>
+  </main>
+
+  <dialog id="ds-dialog" aria-labelledby="ds-dialog-title" aria-describedby="ds-dialog-description"><div class="dialog-shell"><div class="dialog-header"><h2 id="ds-dialog-title" data-copy="dialogTitle">Padam data contoh?</h2><button type="button" class="icon-button" id="ds-close-dialog" aria-label="Tutup dialog" data-copy-aria="closeDialog"><span aria-hidden="true">×</span></button></div><p id="ds-dialog-description" class="dialog-copy" data-copy="dialogDescription">Dialog ini menunjukkan pengesahan tindakan. Tiada akaun, markah atau rekod permainan akan dipadam.</p><div class="dialog-actions"><button type="button" class="button button-outline" id="ds-cancel-dialog" autofocus data-copy="cancel">Batal</button><button type="button" class="button button-danger" id="ds-confirm-dialog" data-copy="confirmSample">Padam contoh</button></div></div></dialog>
+  <script type="module" src="./reference.mjs"></script>
+</body>
+</html>

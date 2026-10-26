@@ -1,0 +1,168 @@
+/* GeoDecoder shared recipes. Values belong to design-system/tokens.mjs.
+   Loaded after feature layout CSS; legacy classes adapt to these same recipes. */
+html {color-scheme:light;scrollbar-color:var(--scroll-thumb) var(--scroll-track);scrollbar-width:thin;scroll-padding-block:var(--space-6)}
+html[data-theme="dark"] {color-scheme:dark}
+body {font-family:var(--font-body);line-height:var(--leading-body)}
+:where(button,input,select,textarea) {font:inherit}
+:where(button,a,input,select,textarea,summary) {-webkit-tap-highlight-color:transparent}
+:where(button,a,input,select,textarea,summary,[tabindex]):focus-visible {outline:var(--focus-width) solid var(--focus-color);outline-offset:var(--focus-offset)}
+:where(h1,h2,h3,[tabindex="-1"]) {scroll-margin-block:var(--space-6)}
+:where(h1,h2,h3,p,button,label,summary) {overflow-wrap:anywhere}
+:where(button,[role="button"],summary) {touch-action:manipulation}
+:where(button,a,summary):not(:disabled):not([aria-disabled="true"]) {cursor:pointer}
+:where(button,input,select,textarea):disabled {cursor:not-allowed}
+:where(input,select,textarea) {accent-color:var(--primary-fill)}
+:where(textarea) {resize:none;min-height:8rem}
+:where(a:not(.brand):not(.button)) {text-underline-offset:.18em}
+:where(a:not(.brand):not(.button)):hover {text-decoration-thickness:2px}
+:where(a:not(.brand):not(.button)):active {color:var(--primary-dark)}
+
+/* One button recipe, including old portal selectors. Hit boxes never move. */
+:is(body,.portal-screen,dialog,.settings-panel,.gd-reference) :is(.button,.icon-button) {
+  position:relative;display:inline-flex;align-items:center;justify-content:center;
+  gap:var(--space-2);min-height:var(--control-size);height:auto;max-width:100%;
+  padding:var(--space-3) var(--space-5);border:var(--border-width) solid transparent;
+  border-radius:var(--radius-control);font-family:var(--font-body);font-size:var(--text-small);
+  font-weight:650;line-height:1.45;white-space:normal;text-decoration:none;
+  transition:background-color var(--motion-fast) var(--ease-ui),border-color var(--motion-fast) var(--ease-ui),box-shadow var(--motion-fast) var(--ease-ui),color var(--motion-fast) var(--ease-ui);
+  transform:none;
+}
+:is(body,.portal-screen,dialog,.settings-panel) :is(.button,.icon-button):focus-visible {
+  outline:var(--focus-width) solid var(--focus-color);outline-offset:var(--focus-offset)
+}
+:is(body,.portal-screen,dialog) .button-primary {
+  background:var(--primary-fill);border-color:var(--primary-fill);color:var(--on-primary-fill)
+}
+:is(body,.portal-screen,dialog) .button-primary:is(:hover,[data-preview="hover"]):not(:disabled):not([aria-busy="true"]) {
+  background:var(--primary-fill-hover);border-color:var(--primary-fill-hover);color:var(--on-primary-fill);transform:none
+}
+:is(body,.portal-screen,dialog) .button-primary:is(:active,[data-preview="active"]):not(:disabled) {
+  background:var(--primary-fill-pressed);border-color:var(--primary-fill-pressed);transform:none
+}
+:is(body,.portal-screen,dialog) :is(.button-outline,.icon-button) {background:var(--surface);color:var(--ink);border-color:var(--border-control)}
+:is(body,.portal-screen,dialog) :is(.button-outline,.icon-button):is(:hover,[data-preview="hover"]):not(:disabled):not([aria-busy="true"]) {
+  background:var(--hover);border-color:var(--border-hover);color:var(--primary-dark)
+}
+:is(body,.portal-screen,dialog) :is(.button-outline,.icon-button):is(:active,[data-preview="active"]):not(:disabled) {background:var(--selected);border-color:var(--primary)}
+:is(body,.portal-screen,dialog) .button-quiet {background:transparent;color:var(--muted)}
+:is(body,.portal-screen,dialog) .button-quiet:hover:not(:disabled) {background:var(--hover);color:var(--ink)}
+:is(body,.portal-screen,dialog) .button-danger {background:var(--danger-fill);color:var(--on-danger);border-color:var(--danger-fill)}
+:is(body,.portal-screen,dialog) .button-danger:hover:not(:disabled) {background:var(--danger-fill-hover);border-color:var(--danger-fill-hover);color:var(--on-danger)}
+:is(body,.portal-screen,dialog) .button-danger:active:not(:disabled) {background:var(--danger-fill-pressed);border-color:var(--danger-fill-pressed)}
+:is(body,.portal-screen,dialog) .button-danger-outline {background:var(--surface);color:var(--danger);border-color:var(--danger)}
+:is(body,.portal-screen,dialog) .button-danger-outline:hover:not(:disabled) {background:var(--danger-soft)}
+:is(body,.portal-screen,dialog) :is(.button,.icon-button)[aria-pressed="true"] {
+  background:var(--selected);color:var(--primary-dark);border-color:var(--primary);box-shadow:inset 0 0 0 var(--border-width) var(--primary)
+}
+:is(body,.portal-screen,dialog) :is(.button,.icon-button):is(:disabled,[aria-disabled="true"]) {opacity:.55;box-shadow:none;transform:none;cursor:not-allowed}
+:is(body,.portal-screen,dialog) :is(.button,.icon-button)[aria-busy="true"] {cursor:progress;opacity:.8}
+:is(body,.portal-screen,dialog) .icon-button {width:var(--control-size);min-width:var(--control-size);padding:var(--space-2);flex-shrink:0}
+:is(body,.portal-screen,dialog) .icon-button :is(.icon,svg) {width:var(--icon-size);height:var(--icon-size)}
+/* Busy actions reserve the indicator slot while idle, retaining label geometry. */
+:is(body,.portal-screen,dialog) .button:is([data-block-while-busy],[data-gd-busy]) {padding-inline-end:var(--space-10)}
+:is(body,.portal-screen,dialog) .button[aria-busy="true"]::after {
+  content:"";position:absolute;inset-inline-end:var(--space-3);top:calc(50% - .4375rem);
+  width:.875rem;height:.875rem;border:2px solid currentColor;border-inline-end-color:transparent;border-radius:50%;animation:gd-spin var(--motion-spin) linear infinite
+}
+@keyframes gd-spin {to{rotate:360deg}}
+
+/* Form adapters retain native control and autofill behaviour. */
+:is(.field,.portal-field,.portal-search,.portal-code-copy,.gd-field) :is(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),select,textarea),
+:is(.preferences,.settings-panel) select {
+  box-sizing:border-box;width:100%;min-width:0;max-width:100%;height:auto;min-height:var(--control-size);
+  padding:var(--space-3);font-family:var(--font-body);font-size:var(--text-small);line-height:1.5;
+  border:var(--border-width) solid var(--border-control);border-radius:var(--radius-control);
+  background:var(--field-bg);color:var(--ink);
+  transition:border-color var(--motion-fast) var(--ease-ui),background-color var(--motion-fast) var(--ease-ui)
+}
+:is(.field,.portal-field,.portal-search,.portal-code-copy,.gd-field) :is(input,select,textarea)::placeholder {color:var(--muted);opacity:1}
+:is(.field,.portal-field,.portal-search,.gd-field) :is(input,select,textarea):hover:not(:disabled) {border-color:var(--border-hover)}
+:is(.field,.portal-field,.portal-search,.gd-field) :is(input,select,textarea):focus {background:var(--surface);border-color:var(--focus-color)}
+:is(.field,.portal-field,.portal-search,.gd-field) :is(input,select,textarea):focus-visible,
+:is(.settings-panel,.preferences) :is(input,select):focus-visible {outline:var(--focus-width) solid var(--focus-color);outline-offset:var(--focus-offset)}
+:is(.field,.portal-field,.gd-field) :is(input,select,textarea)[aria-invalid="true"] {border-color:var(--danger);background:var(--danger-soft)}
+:is(.field,.portal-field,.gd-field) :is(input,select,textarea):disabled {opacity:.6;background:var(--bg)}
+:is(.field,.portal-field,.gd-field) label,.gd-field>span {display:block;font-size:var(--text-small);font-weight:650;margin-bottom:var(--space-2)}
+:is(.field-error,.portal-field-error,.portal-form-error,.gd-field-error) {display:block;color:var(--danger);font-size:var(--text-caption);line-height:var(--leading-body);min-height:1.25em}
+:is(.portal-field-help,.gd-field-help) {display:block;font-size:var(--text-caption);line-height:var(--leading-body);color:var(--muted);padding-top:var(--space-1)}
+.portal-field input.portal-password {padding-inline-end:6.25rem}
+.portal-password-toggle {top:var(--space-1);right:var(--space-1);font-size:var(--text-caption);min-height:calc(var(--control-size) - var(--space-2));padding-inline:var(--space-2)}
+:is(.preferences,.settings-panel,.gd-field) :is(input[type="checkbox"],input[type="radio"]) {width:1.25rem;height:1.25rem;flex-shrink:0;accent-color:var(--primary-fill)}
+:is(.preferences,.settings-panel,.gd-field) input[type="range"] {min-height:var(--control-size);max-width:100%;accent-color:var(--primary-fill)}
+.gd-toggle {display:flex;align-items:center;gap:var(--space-3);min-height:var(--control-size);cursor:pointer}
+.gd-toggle input[type="checkbox"] {appearance:none;position:relative;width:2.75rem;height:1.5rem;flex:none;border:var(--border-width) solid var(--border-control);border-radius:2rem;background:var(--bg);cursor:pointer;transition:background-color var(--motion-fast) var(--ease-ui)}
+.gd-toggle input::before {content:"";position:absolute;inset-block-start:.1875rem;inset-inline-start:.1875rem;width:1rem;height:1rem;border-radius:50%;background:var(--muted);transition:translate var(--motion-fast) var(--ease-ui)}
+.gd-toggle input:checked {background:var(--primary-fill);border-color:var(--primary-fill)}
+.gd-toggle input:checked::before {translate:1.1875rem 0;background:var(--on-primary-fill)}
+.gd-toggle input:disabled {opacity:.55;cursor:not-allowed}
+
+/* Containers and navigation share visual grammar; feature CSS owns layout. */
+:is(.registration-card,.portal-panel,.gd-card,.gd-panel) {
+  min-width:0;background:var(--surface);color:var(--ink);border:var(--border-width) solid var(--border);
+  border-radius:var(--radius-lg);padding:var(--space-6);box-shadow:var(--shadow-panel)
+}
+:is(.portal-auth-card,.portal-recovery-card,.gd-panel) {padding:var(--space-8)}
+:is(.portal-panel,.gd-card,.gd-panel) h2 {font-size:var(--text-heading);line-height:var(--leading-heading)}
+:is(.portal-panel,.gd-card,.gd-panel) h3 {font-size:var(--text-subheading);line-height:var(--leading-heading)}
+.portal-page-heading h1 {font-size:var(--text-title)}
+:is(.portal-panel-title p,.portal-security-note,.portal-security-sessions p,.gd-muted) {font-size:var(--text-small);line-height:var(--leading-body);color:var(--muted)}
+:is(.portal-auth-modes,.gd-tabs) {display:flex;flex-wrap:wrap;gap:var(--space-1);padding:var(--space-1);border:var(--border-width) solid var(--border);border-radius:var(--radius-control);background:var(--bg)}
+:is(.portal-auth-modes,.gd-tabs) button {flex:1;min-height:var(--control-size);padding:var(--space-2) var(--space-3);background:transparent;color:var(--muted);border:var(--border-width) solid transparent;border-radius:var(--radius-small);font-size:var(--text-small);font-weight:650}
+:is(.portal-auth-modes,.gd-tabs) button:hover:not(:disabled) {background:var(--hover);color:var(--primary-dark)}
+:is(.portal-auth-modes,.gd-tabs) button:is([aria-pressed="true"],[aria-selected="true"]) {background:var(--surface);color:var(--primary-dark);border-color:var(--border-control);box-shadow:var(--shadow-control)}
+:is(.site-header,.gd-navigation) :is(.nav-button,a:not(.brand)) {min-height:var(--control-size);border-radius:var(--radius-control)}
+.site-header .nav-button {font-size:var(--text-small)}
+.site-header .nav-button:hover:not(:disabled) {background:var(--hover)}
+.site-header .nav-button:active:not(:disabled) {background:var(--selected)}
+:is(.nav-button,.gd-navigation a)[aria-current="page"] {background:var(--selected);color:var(--primary-dark);box-shadow:inset 0 -2px var(--primary)}
+.gd-navigation {display:flex;flex-wrap:wrap;gap:var(--space-2)}
+.gd-navigation a {display:inline-flex;align-items:center;padding:var(--space-2) var(--space-3);color:var(--muted);text-decoration:none}
+.gd-navigation a:hover {background:var(--hover);color:var(--ink)}
+
+/* Feedback remains inline; existing controllers still own announcements. */
+:is(.portal-notice,.gd-feedback) {padding:var(--space-3) var(--space-4);border:var(--border-width) solid var(--border);border-radius:var(--radius-control);font-size:var(--text-small);line-height:var(--leading-body);background:var(--surface);color:var(--ink)}
+.gd-feedback[data-tone="info"] {background:var(--blue-soft);border-color:var(--primary);color:var(--primary-dark)}
+:is(.portal-notice-success,.gd-feedback[data-tone="success"]) {background:var(--mint-soft);border-color:var(--success);color:var(--success)}
+:is(.portal-notice-error,.gd-feedback[data-tone="error"]) {background:var(--danger-soft);border-color:var(--danger);color:var(--danger)}
+:is(.portal-inline-warning,.gd-feedback[data-tone="warning"]) {background:var(--warning-soft);border-color:var(--warning-border);color:var(--warning-ink)}
+.gd-feedback strong {display:block}
+
+/* Native dialog owns inertness, focus containment, Escape and restoration. */
+dialog {border:var(--border-width) solid var(--border-control);border-radius:var(--radius-lg);background:var(--surface);color:var(--ink);box-shadow:var(--shadow-dialog);max-width:calc(100% - var(--space-6));max-height:calc(100dvh - var(--space-8))}
+dialog::backdrop {background:var(--backdrop)}
+.dialog-shell {padding:var(--space-6)}
+.dialog-header {gap:var(--space-3);margin-bottom:var(--space-5)}
+.dialog-header h2 {font-size:var(--text-heading)}
+.dialog-actions {gap:var(--space-3);margin-top:var(--space-6)}
+.settings-panel :is(.settings-row b,.settings-field,.preference-row,.learning-preferences legend) {font-size:var(--text-small)}
+.settings-panel :is(.settings-row p,.settings-notice) {font-size:var(--text-caption);line-height:var(--leading-body)}
+.settings-panel .preference-row {gap:var(--space-3)}
+:where(.icon,.ui-icon) {width:var(--icon-size);height:var(--icon-size)}
+@media(max-width:600px) {
+  :is(.registration-card,.portal-panel,.portal-auth-card,.portal-recovery-card,.gd-card,.gd-panel) {padding:var(--space-4)}
+  .dialog-shell {padding:var(--space-4)}
+  .portal-auth-intro h1 {font-size:var(--text-title)}
+  .portal-auth-modes button {flex-basis:7rem}
+  .portal-auth-links {gap:var(--space-2)}
+}
+@media(prefers-reduced-motion:reduce) {
+  :is(.button,.icon-button,.gd-toggle input,.gd-toggle input::before) {transition:none!important}
+  .button[aria-busy="true"]::after {animation:none!important;border-style:dotted}
+}
+.motion-paused .button[aria-busy="true"]::after,html[data-motion-paused="true"] .button[aria-busy="true"]::after {animation:none!important;border-style:dotted}
+@media(forced-colors:active) {
+  * {scrollbar-color:auto}
+  :is(.button,.icon-button,.gd-toggle input,dialog) {border-color:ButtonText}
+  :is(button,input,select,a):focus-visible {outline-color:Highlight}
+  .gd-toggle input[type="checkbox"] {appearance:auto}
+}
+
+.button[data-preview="focus"] {outline:var(--focus-width) solid var(--focus-color);outline-offset:var(--focus-offset)}
+
+/* Hint is a semantic game action, separate from mathematical face colours. */
+:is(body,.portal-screen,dialog) .button-hint {background:var(--purple-soft);color:var(--purple);border-color:var(--purple-border)}
+:is(body,.portal-screen,dialog) .button-hint:is(:hover,:active,[aria-expanded="true"]):not(:disabled) {background:var(--purple-soft);color:var(--purple);border-color:var(--purple);box-shadow:inset 0 0 0 var(--border-width) var(--purple)}
+
+/* Wide exact formulae retain the chosen text size inside a keyboard scroll region. */
+.formula-line>span {min-width:0;max-width:100%;overflow-x:auto;padding-block:var(--space-1)}
+.formula-scroll:focus-visible {outline:var(--focus-width) solid var(--focus-color);outline-offset:var(--focus-offset)}

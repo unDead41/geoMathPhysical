@@ -204,3 +204,12 @@ kontrak lama, migration sumber ialah `backend/profile_v2_3.sql` dan
 frontend gabungan. Pemasangan baharu menggunakan `backend/schema.sql`. Backend
 Duel kekal dalam `backend/duel/`. Push branch tidak memasang migration atau
 mengubah SMTP/Auth secara automatik.
+
+## Design system pusat (branch calon)
+
+Panduan pemilik token, komponen, adapter modul dan handoff layout/motion:
+[DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md). Dari folder `digital`, jalankan
+`npm run build`, kemudian buka `artifacts/GeoDecoder_Design_System.html` untuk
+rujukan komponen BM/English yang berfungsi offline. `npm run design:check`
+mengesan drift; `npm run test:design` menguji komponen dan permukaan aplikasi.
+Branch kerja `digitalized-ux-design-system` belum menjadi keluaran main.

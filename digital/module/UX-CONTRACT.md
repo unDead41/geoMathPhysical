@@ -10,7 +10,7 @@ dengan varian modul dalam DESIGN.md. Tidak mengubah kontrak kuiz Digital.
 
 | Capability | Canonical owner | Source of truth | Allowed variants | Verification |
 |---|---|---|---|---|
-| Scrollbar | design-system.mjs tokens + src/style.css global baseline | DESIGN.md | forced-colors native | source check + phone browser |
+| Scrollbar | ../design-system/tokens.mjs adapter + src/style.css global baseline | DESIGN.md | forced-colors native | source check + phone browser |
 | Toast | app.mjs announce + inline text | this contract | info, learning feedback | browser + tests/app.test.mjs |
 | Form | notes.mjs labelled fields + calculate | lessons.mjs measurement limits | inline validation / first-error focus | app tests + browser |
 | Select/Listbox | native select in index.html + shared field recipe | fixed lab choices; DESIGN.md | browser/OS-owned popup | keyboard and browser selection |
@@ -104,7 +104,7 @@ dan dasar kuiz tidak berubah. Lihat DESIGN.md untuk nilai visual dan pemetaan to
 | Button/Playback | src/ui.mjs playbackButton + shared style.css | this contract | solid primary / outline support / labelled icon | shipped app tests + browser |
 | Form | notes.mjs calculate + labelled markup | lessons.mjs measurement limits | inline validation, first invalid focus | app tests + browser invalid input |
 | Select/Listbox | native select; shared field recipe | fixed lab choices | OS/browser popup | popup + keyboard browser check |
-| Design tokens | design-system.mjs → generated design-tokens.css | DESIGN.md token map | original GeoDecoder brand | build + check |
+| Design tokens | ../design-system/tokens.mjs → generated module adapter/CSS | DESIGN.md token map | original GeoDecoder brand | build + check |
 
 Every action retains a visible label or BM accessible name. Shared button states
 are normal/hover/focus/active/selected/disabled. Hover never shifts target geometry.

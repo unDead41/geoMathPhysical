@@ -1,1 +1,36 @@
-{"profile":"product-admin","sourceRoots":["dist"],"locale":"ms-MY","canonicalMap":"UX-CONTRACT.md","requiredCapabilities":["Form","Scrollbar","Toast","CRUD"],"commands":{"unit":"npm test","check":"npm run check"},"requiredCommands":["unit","check"]}
+{
+  "profile": "product-admin",
+  "sourceRoots": [
+    "dist"
+  ],
+  "locale": "ms-MY",
+  "canonicalMap": "UX-CONTRACT.md",
+  "requiredCapabilities": [
+    "Form",
+    "Select/Listbox",
+    "Scrollbar",
+    "Toast",
+    "CRUD"
+  ],
+  "commands": {
+    "unit": "npm test",
+    "check": "npm run check",
+    "tokens": "npm run design:check",
+    "build": "npm run build",
+    "browser": "npm run test:design"
+  },
+  "requiredCommands": [
+    "unit",
+    "build",
+    "tokens",
+    "check",
+    "browser"
+  ],
+  "ownership": {
+    "Select/Listbox": "native"
+  },
+  "evidence": {
+    "browser": "docs/DESIGN_SYSTEM_VERIFICATION.md",
+    "failurePaths": "tests/portal-auth-validation.test.mjs"
+  }
+}

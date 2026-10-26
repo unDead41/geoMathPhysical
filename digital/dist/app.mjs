@@ -313,7 +313,7 @@ function renderQuestionContent() {
     const parts=q.lines.flatMap(line=>line.split(';')).map(part=>part.trim());
     const formulaLines = parts.filter(line => /^(?:V|L)=/.test(line));
     const rest = parts.filter(line => !/^(?:V|L)=/.test(line)).join(' ').replace(/Bongkah apakah ini\?|Bentuk apa\?|Which solid is this\?|Which shape is it\?/g,'').trim().replace(/ (?=[a-z]=)/g,' · ');
-    $('question-detail').innerHTML = `<span class="formula-line">${formulaLines.map(line=>`<span>${pretty(line)}</span>`).join('')}</span>${pretty(rest)}`;
+    $('question-detail').innerHTML = `<span class="formula-line">${formulaLines.map(line=>`<span class="formula-scroll" tabindex="0">${pretty(line)}</span>`).join('')}</span>${pretty(rest)}`;
   } else $('question-detail').innerHTML = pretty(detail);
   $('formula-key').hidden = true;
   if (q.id === 'S2') { $('formula-key').innerHTML = pretty(t("V = isi padu · L = luas permukaan · j = jejari · t = tinggi")); $('formula-key').hidden = false; }

@@ -1,5 +1,13 @@
 # GeoDecoder Digital changelog
 
+## Belum diterbitkan — design system pusat v1
+
+- Satu pemilik token dan adapter terjana untuk portal serta modul offline.
+- Komponen bersama, tema/kontras, tipografi, kawalan, fokus dan keadaan interaksi.
+- Rujukan komponen BM/English, semakan drift dan bukti pelayar sebelum/selepas.
+- Kandidat `digitalized-ux-design-system`; nombor keluaran aplikasi/firmware kekal
+  sehingga integrasi. Tiada perubahan backend, pemarkahan atau geometri.
+
 ## v2.6.0 — 26 Oktober 2026 (main-digitalized)
 
 - Satukan branch digital: BM/English, rich text, latihan 15 soalan, Duel,

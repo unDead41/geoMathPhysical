@@ -1,0 +1,12 @@
+/* Module adapter for the shared foundation; geometry and learning layout stay module-owned. */
+.button.primary {background:var(--primary-fill);border-color:var(--primary-fill);color:var(--on-primary-fill)}
+.button.primary:not(:disabled):hover {background:var(--primary-fill-hover);border-color:var(--primary-fill-hover);color:var(--on-primary-fill)}
+.button.primary:not(:disabled):active {background:var(--primary-fill-pressed);border-color:var(--primary-fill-pressed)}
+:is(button,a,input,select,summary,canvas,[tabindex]):focus-visible {outline:var(--focus-width) solid var(--focus-color);outline-offset:var(--focus-offset)}
+button {transition:background-color var(--motion-fast) var(--ease-ui),border-color var(--motion-fast) var(--ease-ui),box-shadow var(--motion-fast) var(--ease-ui),color var(--motion-fast) var(--ease-ui)}
+:is(input:not([type=checkbox]):not([type=range]),select) {border-color:var(--border-control);border-radius:var(--radius-control);background:var(--field-bg);color:var(--ink)}
+:is(input,select):disabled {cursor:not-allowed}
+:is(input,select)[aria-invalid=true] {border-color:var(--danger);background:var(--danger-soft)}
+@media(forced-colors:active) {* {scrollbar-color:auto}:is(button,a,input,select,canvas,[tabindex]):focus-visible {outline-color:Highlight}}
+
+.guided-panel textarea {resize:none;min-height:8rem;max-height:20rem;overflow:auto}

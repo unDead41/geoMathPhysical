@@ -6,9 +6,11 @@ import assert from 'node:assert/strict';
 import {fileURLToPath} from 'node:url';
 import {QUESTIONS} from '../dist/questions.mjs';
 import {shapeArt} from '../dist/art.mjs';
+import {execFileSync} from 'node:child_process';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const read=p=>fs.readFileSync(path.join(root,p),'utf8');
-const html=read('dist/index.html'),css=read('dist/style.css'),design=read('DESIGN.md'),app=read('dist/app.mjs');
+execFileSync(process.execPath,[path.join(root,'tools/design-tokens.mjs'),'--check'],{stdio:'inherit'});
+const html=read('dist/index.html'),css=read('dist/design-tokens.css')+'\n'+read('dist/style.css')+'\n'+read('dist/foundation.css'),design=read('DESIGN.md'),app=read('dist/app.mjs');
 const moduleRelease=JSON.parse(read('vendor/module-release.json'));
 const moduleBytes=fs.readFileSync(path.join(root,'vendor',moduleRelease.path));
 assert.equal(createHash('sha1').update(Buffer.concat([Buffer.from('blob '+moduleBytes.length+'\0'),moduleBytes])).digest('hex'),moduleRelease.blob,'Vendored module differs from its pinned source');
@@ -43,3 +45,5 @@ assert.equal((standalone.match(/data:audio\/mpeg;base64,/g)||[]).length,2,'Offli
 assert.ok(standalone.includes('sandbox="allow-scripts allow-popups"'),'Module needs an isolated frame');
 assert.ok(read('artifacts/site-index.html').includes('./assets/audio/menu.mp3'),'Website must load menu audio on demand');
 console.log(`PASS: standalone syntax/assets, ${ids.length} unique IDs, ARIA references, bank fidelity, 10 SVG diagrams, design-token drift and accessibility baselines.`);
+
+assert.equal(read('artifacts/GeoDecoder_Design_System.html'),read('docs/design-system-evidence/GeoDecoder_Design_System.html'),'Design reference review artifact is stale');

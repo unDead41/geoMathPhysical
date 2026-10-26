@@ -5,18 +5,25 @@ ease-of-use recommendations and shared game/module settings accepted on 26 Octob
 [approved specification](../docs/superpowers/specs/2026-10-26-ease-of-use-design.md).
 Firmware rounds remain a separate contract.
 
-## Canonical UI map
+## Canonical UI Map
 
-| Capability | Owner | Variants | Verification |
-|---|---|---|---|
-| Guest form | index.html + validateGuest/validatePlayer | nickname-only guest, old/classroom profiles | core/storage/browser |
-| Dialog/settings/tutorial | usability-ui.mjs + app dialog owner | Settings, three-step guide, pause, scores, leave | browser/focus/state |
-| Text and math | i18n.mjs + local copy modules + format.mjs | BM/English, SVG/MathML | catalog/bank/browser |
-| Direct manipulation | app Pointer Events controller | pointer, touch, click, keyboard | browser stage/selection |
-| Scores | storage.mjs | save, list, CSV, erase, legacy | storage tests/browser |
-| Modes | one Game engine | quiz10, practice15, review subset, Duel10 | core/browser |
-| Classroom | existing cloud.mjs + portal.mjs | accounts, roster, rooms | existing cloud/auth tests + portal UI |
-| Duel | duel.mjs + isolated existing service | PIN, ready, live/result, reconnect | two real browser contexts |
+| Capability | Canonical owner | Source of truth | Allowed variants | Verification |
+|---|---|---|---|---|
+| Design tokens | design-system/tokens.mjs → tools/design-tokens.mjs | DESIGN.md / docs/DESIGN_SYSTEM.md | light/dark, standard/strong; generated module adapter | design:check; design-tokens.test.mjs |
+| Button / field / panel | dist/foundation.css + dist/module-foundation.css | DESIGN.md | brand, neutral, danger, icon; legacy class adapters | tests/design-system.browser.mjs; reference gallery |
+| Form | portal.mjs validator + guest validateGuest; native labelled controls | account/game contracts below | guest, login/signup/recovery, profile/security | portal-auth-validation.test.mjs; browser |
+| Select/Listbox | native select + shared field recipe | fixed choices; DESIGN.md | browser/OS popup | browser keyboard/open popup |
+| Scrollbar | design-system/tokens.mjs + global style.css | DESIGN.md | normal/forced colors | token checker + browser computed style |
+| Toast | usability-ui.mjs and portal announce/inline feedback | feedback contract below | polite routine; persistent actionable error | usability.test.mjs; browser |
+| CRUD | portal.mjs + cloud.mjs existing actions | backend/schema.sql; account/classroom contract below | account-scoped existing navigation and confirmation | cloud/auth/profile/security tests |
+| Guest form | index.html + validateGuest/validatePlayer | existing core/storage contract | nickname-only guest; legacy/classroom profiles | core/storage/browser |
+| Dialog/settings/tutorial | usability-ui.mjs + app dialog owner | settings and gameplay contract below | settings, guide, pause, scores, leave | browser focus/state |
+| Text and math | i18n.mjs + local copy modules + format.mjs | docs/DWI_GLOSSARY.md; question IDs | BM/English, SVG/MathML | catalog/bank/browser |
+| Direct manipulation | app Pointer Events controller | gameplay contract below | pointer, touch, click, keyboard | browser stage/selection |
+| Scores | storage.mjs | gameplay and results contract below | save, list, CSV, erase, legacy | storage tests/browser |
+| Modes | one Game engine | core.mjs | quiz10, practice15, review subset, Duel10 | core/browser |
+| Classroom | cloud.mjs + portal.mjs | backend/schema.sql | accounts, roster, rooms | cloud/auth tests + portal UI |
+| Duel | duel.mjs + isolated service | docs/DUEL.md | PIN, ready, live/result, reconnect | two browser contexts |
 
 ## Home, guest and settings
 
@@ -148,3 +155,18 @@ Completed achievements survive retries and edits, while current observations and
 checks are invalidated as needed. Restored practice is formative self-report, not
 verified mastery or TP. Root index and all standalone aliases share one build.
 See docs/RELEASE_V2_6.md for source SHAs, tests and deployment limits.
+
+## Shared visual foundation (design system v1)
+
+The component recipes adapt existing markup and do not own Auth, validation, role,
+account state, timing, scoring, storage or announcements. Existing semantic button,
+field and native dialog controllers remain authoritative. Styling never adds an
+activation handler to a disabled control. Busy semantics and duplicate protection
+stay with the owning action. Use `data-block-while-busy` before starting an action
+to reserve spinner space; do not replace a native button with a clickable container.
+
+The component reference has temporary preview controls only. It creates no second
+preferences record and makes no Auth/database calls. Production preferences retain
+the single language/theme/device owner above. Native select popup geometry remains
+platform-owned. Gallery tabs follow roving Tab, arrows and Home/End; production
+auth mode buttons retain their current aria-pressed model.
