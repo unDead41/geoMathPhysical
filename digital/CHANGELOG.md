@@ -1,5 +1,14 @@
 # GeoDecoder Digital changelog
 
+## v2.7.0 — 26 Oktober 2026 (calon digitalized-utility-profile)
+
+- Profil: amaran perubahan belum disimpan dengan Simpan/Teruskan, Buang atau Teruskan menyunting; refresh/tab close menggunakan amaran native browser.
+- Pintasan kepada tetapan sedia ada dan keselamatan; draf kekal apabila tetapan dibuka.
+- Nama guru daripada snapshot kelas yang dibenarkan, pautan Buka kelas dan Sertai kelas bagi murid tanpa kelas.
+- Pratonton nama/avatar setempat dengan status tersimpan/belum disimpan, BM/English.
+- Migrasi susulan `profile_class_details_v2_7.sql` hanya menambah nama guru pada snapshot, tanpa menggantikan dispatcher atau hak akses. Belum dipasang pada hosted backend oleh branch ini.
+
+
 ## v2.6.0 — 26 Oktober 2026 (main-digitalized)
 
 - Satukan branch digital: BM/English, rich text, latihan 15 soalan, Duel,

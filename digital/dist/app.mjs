@@ -50,7 +50,7 @@ let roomState=null,roomReceivedAt=0,roomPending=null,roomSending=false,roomPolli
 const cloud=new ClassroomCloud();
 let moduleLaunchEpoch=0,moduleReturnToPortal=false;
 const moduleProgress=new ModuleProgress({storage,cloud,onChange:renderModuleSaveStatus});
-const portal=createPortal({cloud,onPlay:openRoomGame,onModule:()=>void openLearningModule(true),onExit:returnHome,onError:()=>{}});
+const portal=createPortal({cloud,onPlay:openRoomGame,onModule:()=>void openLearningModule(true),onPreferences:()=>usabilityUI.openSettings(),onExit:returnHome,onError:()=>{}});
 const dialog = $('app-dialog');
 let refreshingLanguage=false, lastStatus=null, validationErrors=null, scoreNotice='', automaticPause=false;
 let duelBusy=false,duelNeedsRestore=false,duelAppliedSeq=-1,duelNoticeKey='',duelInputsBlocked=null;
@@ -540,6 +540,7 @@ function renderModuleSaveStatus(state){
   $('module-sync-retry').hidden=state.status!=='pending';
 }
 async function openLearningModule(fromPortal=false){
+  if(portal.requestLeave(()=>void openLearningModule(fromPortal)))return;
   moduleReturnToPortal=fromPortal;const request=++moduleLaunchEpoch;
   showScreen('module');moduleProgress.close();moduleBridge.clear();
   $('module-back-button').innerHTML=icon('home')+t(fromPortal?'platform.backClass':'ease.backHome');
@@ -572,11 +573,13 @@ $('online-room-back').addEventListener('click',()=>openAccounts(roomState?.roomI
 function stopRoomPolling(){if(roomPolling)clearInterval(roomPolling);roomPolling=null;}
 function resetRoomRequests(){roomEpoch++;roomPending=null;roomSending=false;roomInFlight=null;stopRoomPolling();}
 function returnHome(){
+  if(portal.requestLeave(returnHome))return;
   cancelDrag();resetRoomRequests();game=null;roomState=null;selected=null;acceptedSolid=null;acceptedNet=null;cloud.setRoom(null);
   dialogTrigger=null;if(dialog.open)closeDialog();
   showScreen('welcome');$('guest-button').focus({preventScroll:true});
 }
 function openGuest(){
+  if(portal.requestLeave(openGuest))return;
   cancelDrag();resetRoomRequests();game=null;roomState=null;selected=null;cloud.setRoom(null);
   showScreen('guest');$('player-name').focus({preventScroll:true});
 }

@@ -1,5 +1,7 @@
 # GeoDecoder Digital V2
 
+Calon utility profil: **v2.7.0**, branch **digitalized-utility-profile**. Asas integrasi v2.6.0 dikekalkan. Lihat [kemas kini profil](docs/PROFILE_V2_7.md).
+
 Versi Digital: **v2.6.0**. Branch integrasi: **main-digitalized**.
 Modul pembelajaran: **v1.5.0**. Firmware kekal **v1.1.3**.
 

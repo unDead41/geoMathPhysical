@@ -85,3 +85,7 @@ Rekod latihan kendiri tidak menjadi markah room atau pengesahan TP. Ujian
 `verify_profile.sql` dan `verify_module_progress.sql` menggunakan fixture rawak
 dan rollback. Deployment ini tidak mengesahkan penghantaran email atau aliran
 kata laluan pengguna sebenar.
+
+## Calon profil v2.7.0
+
+Snapshot kelas berizin menambah `teacher_name` (nama paparan guru). Migrasi susulan `profile_class_details_v2_7.sql` memerlukan definisi snapshot v2.6 sebagai asas; semak perubahan core-backend sebelum memasangnya. Jangan ulang migrasi profil lama selepas migrasi susulan. Lihat `../docs/PROFILE_V2_7.md`. Migrasi hosted belum dilaksanakan oleh branch utility ini.

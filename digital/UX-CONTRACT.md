@@ -148,3 +148,7 @@ Completed achievements survive retries and edits, while current observations and
 checks are invalidated as needed. Restored practice is formative self-report, not
 verified mastery or TP. Root index and all standalone aliases share one build.
 See docs/RELEASE_V2_6.md for source SHAs, tests and deployment limits.
+
+## Calon profil v2.7.0
+
+Draf nama/avatar tidak menukar pengepala akaun sebelum simpan disahkan. Pratonton setempat dikemas kini melalui input/change tanpa panggilan rangkaian dan mengekalkan draf semasa refresh/bahasa. Keluar ke Home, kelas, keselamatan atau log keluar menawarkan Simpan dan teruskan, Buang perubahan atau Teruskan menyunting. Escape membatalkan pilihan keluar. Gagal simpan tidak meneruskan navigasi. Tukar akaun membatalkan draf dan destinasi lama. Tutup/reload tab menggunakan amaran native browser, tertakluk kepada polisi interaksi browser. Tetapan membuka dialog bersama dan mengekalkan profil/draf di belakangnya. Kelas dan nama guru menggunakan data backend yang dibenarkan; nilai yang belum disediakan tidak direka.

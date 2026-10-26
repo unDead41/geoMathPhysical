@@ -192,7 +192,7 @@ test('recovery and invalid callback screens take precedence over signed-in dashb
     active: true, destroyed: false, composing: false, renderDeferred: false, initializing: false,
     profileView: false, securityView: false, callbackErrorDismissed: false, authOnly: false, recoveryCode: 'old-code', snapshot: {}, profile: {}, roomId: null,
     clearSecurityFields() {},
-    content, updateBusy() {}, renderAuth: () => 'AUTH', renderRecovery: () => 'LEGACY',
+    content, updateProfilePreview() {}, updateBusy() {}, renderAuth: () => 'AUTH', renderRecovery: () => 'LEGACY',
     renderStudent: () => 'DASHBOARD', renderTeacher: () => 'DASHBOARD', isTeacher: () => false
   });
   vm.runInContext(`${functionSource('function signedIn()', 'function now(')}\n${functionSource('function render({', 'function updateEmailCooldown(')}`, context);

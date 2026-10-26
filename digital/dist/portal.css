@@ -665,3 +665,16 @@ html[data-text-size=large]{font-size:20px}html[data-text-size=largest]{font-size
 @media(max-width:400px){.dialog-header h2{font-size:1rem}}
 
 .portal-utility-navigation{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0}.portal-profile-link:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
+
+/* Profile drafts and shortcuts use existing semantic tokens. */
+.portal-profile-confirm{margin-block:1rem;border-color:var(--primary)}
+.portal-profile-confirm p{margin-block:.75rem}
+.portal-profile-preview{display:flex;align-items:center;gap:.75rem;padding:1rem;border:1px solid var(--border);border-radius:var(--radius);margin-block:1rem;min-width:0}
+.portal-profile-preview>.portal-avatar{flex-shrink:0}
+.portal-profile-preview>span:last-child{min-width:0}
+.portal-profile-preview small,.portal-profile-preview b{display:block;overflow-wrap:anywhere}
+.portal-profile-preview small{color:var(--muted)}
+.portal-profile-classes{list-style:none;padding:0!important}
+.portal-profile-classes li{display:flex;flex-direction:column;gap:.25rem;padding-block:.75rem;border-bottom:1px solid var(--border)}
+.portal-profile-classes .button{align-self:flex-start}
+.portal-profile-confirm .dialog-actions{flex-wrap:wrap}

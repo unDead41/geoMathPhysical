@@ -1,5 +1,20 @@
 // Authored account and practice-report copy only. Learner content is never translated.
 export const ACCOUNT_COPY = {
+  'Pratonton nama dan avatar': 'Name and avatar preview',
+  'Profil tersimpan': 'Saved profile',
+  'Perubahan belum disimpan': 'Unsaved changes',
+  'Simpan nama dan avatar sebelum keluar, atau buang perubahan ini.': 'Save your name and avatar before leaving, or discard these changes.',
+  'Teruskan menyunting': 'Keep editing',
+  'Buang perubahan': 'Discard changes',
+  'Simpan dan teruskan': 'Save and continue',
+  'Pratonton sahaja · belum disimpan': 'Preview only · not saved',
+  'Tetapan Penggunaan': 'Usage preferences',
+  'Maklumat guru belum tersedia': 'Teacher details are not available yet',
+  'Buka kelas': 'Open class',
+  'Gunakan PIN daripada guru untuk menyertai kelas.': 'Use the PIN from your teacher to join a class.',
+  'Sertai kelas': 'Join class',
+  'Buka ruang kelas': 'Open classroom',
+
   'Profil Saya': 'My profile',
   'AKAUN ANDA': 'YOUR ACCOUNT',
   'Anda sedang menggunakan mod tetamu. Log masuk untuk melihat dan menyimpan profil akaun anda.': 'You are using guest mode. Sign in to view and save your account profile.',
