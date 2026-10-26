@@ -245,3 +245,8 @@ test('standalone builds can supply embedded track URLs without global configurat
   await music.setScene('game');
   assert.equal(audio.src, tracks.map);
 });
+
+
+test('volume remains independent of mute, scene changes and visibility',async()=>{
+ const {music,audio,document}=setup();music.setVolume(.47);await music.unlock();assert.equal(audio.volume,.47);await music.setEnabled(false);assert.equal(audio.paused,true);assert.equal(audio.volume,.47);await music.setEnabled(true);await music.setScene('module');assert.equal(audio.volume,.47);document.hide(true);assert.equal(audio.paused,true);document.hide(false);assert.equal(audio.volume,.47);music.setVolume(9);assert.equal(audio.volume,1);music.setVolume(-1);assert.equal(audio.volume,0);music.destroy();
+});

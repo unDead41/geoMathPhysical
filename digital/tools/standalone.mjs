@@ -27,7 +27,7 @@ for(const name of ['menu','map']){
 const html=page(offline);
 const canonical=path.join(root,'artifacts/GeoDecoder_Digital_V2.html');
 fs.writeFileSync(canonical,html);
-for(const target of ['artifacts/GeoDecoder_Digital_V1.html','dist/GeoDecoder_Digital_V1.html','dist/GeoDecoder_Digital_V2.html']){
+for(const target of ['artifacts/GeoDecoder_Digital_V1.html','dist/GeoDecoder_Digital_V1.html','dist/GeoDecoder_Digital_V2.html','GeoDecoder_Digital_V1.html','GeoDecoder_Digital_V2.html']){
   const destination=path.join(root,target);fs.rmSync(destination,{force:true});fs.linkSync(canonical,destination);
 }
 console.log(`GeoDecoder Digital: website ${Buffer.byteLength(page(javascript))} bytes; offline HTML ${Buffer.byteLength(html)} bytes including both complete music tracks and module v${moduleRelease.version}.`);

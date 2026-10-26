@@ -49,3 +49,7 @@ The teacher board subscribes to authorized room_progress changes. Only a confirm
 The theme button applies light/dark across entry, game, dialogs, results and portal, persists the preference and respects the system choice before an explicit selection. Both themes preserve visible text, focus outlines and non-colour state labels.
 
 The v1.2.0 module includes four interactive labs reachable from its own Makmal interaktif tab. Parent navigation still owns the iframe lifetime and the map music; classroom Auth and scoring remain in the parent application.
+
+## Usage preferences
+
+Tetapan Penggunaan is the single native-dialog settings view for display, accessibility, audio and learning choices. It reuses pause/focus/Escape behavior and saves automatically with explicit session-only storage-failure feedback. Music/motion/effects shortcuts share one canonical preferences repository; reset restores its defaults without erasing scores, accounts or theme. Module preferences cross only the source-checked opaque-frame adapter, preserving the pinned standalone module and its no-storage boundary. Bahasa Melayu and nonadjustable animation speed are honestly described for this base. See docs/PREFERENCES.md for scope and verification.

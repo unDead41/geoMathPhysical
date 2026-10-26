@@ -5,6 +5,7 @@ import { ScoreStore, csvScores, SCORE_KEY, LEGACY_SCORE_KEY } from './storage.mj
 import { shapeArt, icon, brandArt, SHAPE_NAMES, describeShape } from './art.mjs';
 import {ClassroomCloud} from './cloud.mjs';
 import {createPortal} from './portal.mjs';
+import {createPreferences, controls, PREFERENCES_KEY} from './preferences.mjs';
 import {initTheme} from './theme.mjs';
 import {createMusic} from './music.mjs';
 import moduleHtml from '../vendor/module-v1.2.0.html';
@@ -16,6 +17,7 @@ const pretty = value => escapeHtml(value).replaceAll('pi', 'π').replaceAll('^2'
 const now = () => performance.now();
 let storage;
 try { storage = window.localStorage; } catch { storage = {getItem(){throw new Error('Storage unavailable');},setItem(){throw new Error('Storage unavailable');},removeItem(){throw new Error('Storage unavailable');}}; }
+const preferences=createPreferences(storage);
 const store = new ScoreStore(storage);
 const music=createMusic({storage,onChange:renderMusicButton});
 function renderMusicButton(state){
@@ -29,7 +31,7 @@ function renderMusicButton(state){
 function unlockMusic(event){if(event.target?.closest?.('#music-button'))return;if(event.isTrusted&&(!music.state.unlocked||music.state.blocked))void music.unlock();}
 document.addEventListener('pointerdown',unlockMusic,{capture:true});
 document.addEventListener('keydown',event=>{if(['Enter',' '].includes(event.key))unlockMusic(event);},{capture:true});
-$('music-button').addEventListener('click',()=>void music.toggle());
+$('music-button').addEventListener('click',()=>{preferences.set({music:!preferences.value.music});void music.unlock();});
 let screen = 'welcome', game = null, selected = null, acceptedSolid = null, acceptedNet = null;
 let player = null, roundId = '', lastResult = null, dialogMode = '', dialogTrigger = null;
 let drag = null, suppressClickUntil = 0, hiddenPause = false, sound = false, audioContext = null;
@@ -57,14 +59,15 @@ hydrate();
 initTheme();
 $('app-version').textContent='V'+VERSION;
 function updateMotion(){
-  document.body.classList.toggle('motion-paused',motionPaused||reducedMotion.matches);
+  motionPaused=preferences.value.motion==='reduce'||(preferences.value.motion==='system'&&reducedMotion.matches);
+  document.body.classList.toggle('motion-paused',motionPaused);
   const label=reducedMotion.matches?'Animasi dikurangkan mengikut tetapan peranti':motionPaused?'Sambung animasi':'Jeda animasi';
-  $('motion-button').disabled=reducedMotion.matches;
+  $('motion-button').disabled=false;
   $('motion-button').setAttribute('aria-label',label);$('motion-button').title=label;
-  $('motion-button').setAttribute('aria-pressed',String(motionPaused||reducedMotion.matches));
-  $('motion-button').innerHTML=icon(motionPaused||reducedMotion.matches?'spark':'pause');
+  $('motion-button').setAttribute('aria-pressed',String(motionPaused));
+  $('motion-button').innerHTML=icon(motionPaused?'spark':'pause');
 }
-$('motion-button').addEventListener('click',()=>{motionPaused=!motionPaused;updateMotion();});
+$('motion-button').addEventListener('click',()=>{preferences.set({motion:motionPaused?'full':'reduce'});});
 reducedMotion.addEventListener('change',updateMotion);updateMotion();
 
 function announce(message) { $('announcer').textContent = ''; requestAnimationFrame(() => { $('announcer').textContent = message; }); }
@@ -237,7 +240,7 @@ function scannerStatus(target,color){
 function renderLeds(time) {
   for (const target of ['r1','r2']) {
     let color = game.led(target,time);
-    if ((reducedMotion.matches||motionPaused) && (game.status==='feedback'||game.reviewing)) color = game.lastOutcome==='correct'?'green':target===game.wrongReader||game.lastOutcome==='skipped'?'red':target==='r1'&&game.stage==='net'?'green':'off';
+    if (motionPaused && (game.status==='feedback'||game.reviewing)) color = game.lastOutcome==='correct'?'green':target===game.wrongReader||game.lastOutcome==='skipped'?'red':target==='r1'&&game.stage==='net'?'green':'off';
     if (lastLed[target] === color) continue;
     lastLed[target] = color;
     $('led-'+target).className = 'led-dot '+color;
@@ -302,7 +305,7 @@ function showCorrection(){
   $('correction-pair').innerHTML=`<div class="correct-model">${shapeArt(q.shape,'solid',false,visualPlan.solid[q.shape])}<span>R1 · ${SHAPE_NAMES[q.shape]}</span></div><span class="correct-link" aria-hidden="true">${icon('arrow')}</span><div class="correct-net">${shapeArt(q.shape,'net',false,visualPlan.net[q.shape])}<span>R2 · Bentangannya</span></div>`;
   $('continue-button').disabled=true;$('continue-button').textContent='Perhatikan jawapan…';
   $('correction-title').focus({preventScroll:true});
-  $('correction-panel').scrollIntoView({block:'nearest',behavior:reducedMotion.matches||motionPaused?'instant':'smooth'});
+  $('correction-panel').scrollIntoView({block:'nearest',behavior:motionPaused?'instant':'smooth'});
   announce(`Jawapan betul ialah ${SHAPE_NAMES[q.shape]}. ${SHAPE_NOTES[q.shape]} Tiada markah. Tekan terus selepas melihat jawapan.`);
 }
 
@@ -344,7 +347,7 @@ $('welcome-account-button').addEventListener('click',()=>requestAccounts());
 $('guest-button').addEventListener('click',openGuest);
 $('guest-back-button').addEventListener('click',returnHome);
 $('module-button').addEventListener('click',()=>{
-  showScreen('module');$('module-frame').srcdoc=prepareModuleFrame(moduleHtml);$('module-title').focus({preventScroll:true});
+  showScreen('module');$('module-frame').srcdoc=prepareModuleFrame(moduleHtml,{...preferences.value,reduced:motionPaused});$('module-title').focus({preventScroll:true});
 });
 $('module-back-button').addEventListener('click',returnHome);
 $('online-retry').addEventListener('click',()=>{if(roomPending)sendRoomPending();});
@@ -621,7 +624,7 @@ function renderAnalysis(result){
 }
 
 function tone(kind){
-  if(!sound)return;
+  if(!sound||preferences.value.muted||document.hidden)return;
   try{
     audioContext ||= new (window.AudioContext||window.webkitAudioContext)();
     if(audioContext.state==='suspended')audioContext.resume().catch(()=>{});
@@ -630,7 +633,7 @@ function tone(kind){
       const oscillator=audioContext.createOscillator(),gain=audioContext.createGain();
       const t=audioContext.currentTime+i*.09;
       oscillator.type='sine';oscillator.frequency.value=frequency;
-      gain.gain.setValueAtTime(0,t);gain.gain.linearRampToValueAtTime(.065,t+.01);gain.gain.exponentialRampToValueAtTime(.001,t+.16);
+      gain.gain.setValueAtTime(0,t);gain.gain.linearRampToValueAtTime(.065*preferences.value.effectsVolume/100,t+.01);gain.gain.exponentialRampToValueAtTime(.001,t+.16);
       oscillator.connect(gain);gain.connect(audioContext.destination);oscillator.start(t);oscillator.stop(t+.17);
     });
   }catch{sound=false;updateSound();announce('Bunyi tidak tersedia dalam pelayar ini. Permainan boleh diteruskan.');}
@@ -641,7 +644,7 @@ function updateSound(){
   $('sound-button').setAttribute('aria-label',sound?'Matikan bunyi':'Hidupkan bunyi');
   $('sound-button').title=sound?'Matikan bunyi':'Hidupkan bunyi';
 }
-$('sound-button').addEventListener('click',()=>{sound=!sound;updateSound();if(sound)tone('solid');});
+$('sound-button').addEventListener('click',()=>{preferences.set({effects:!preferences.value.effects});if(sound)tone('solid');});
 
 document.addEventListener('visibilitychange',()=>{
   if(!game || screen!=='game')return;
@@ -681,3 +684,18 @@ function frame(time){
 store.read();storageStatus();
 requestAnimationFrame(frame);
 if(cloud.hasAuthCallback||cloud.hasRecoveryIntent)void openAccounts();
+
+function applyPreferences(p){
+ document.documentElement.dataset.textSize=p.text;document.documentElement.dataset.contrast=p.contrast;
+ sound=p.effects;updateSound();updateMotion();void music.setVolume(p.musicVolume/100);void music.setEnabled(p.music&&!p.muted);
+ if(p.muted||!p.effects)void audioContext?.suspend();
+ const frame=$('module-frame');if(frame.contentWindow&&frame.hasAttribute('srcdoc'))frame.contentWindow.postMessage({type:'geodecoder:preferences',value:{...p,reduced:motionPaused}},'*');
+ const status=document.getElementById('preferences-status');if(status)status.textContent=preferences.failed?'Storan tidak tersedia. Pilihan digunakan untuk sesi ini sahaja.':'Tetapan disimpan secara automatik.';
+}
+preferences.subscribe(applyPreferences);applyPreferences(preferences.value);
+reducedMotion.addEventListener('change',()=>applyPreferences(preferences.value));
+window.addEventListener('storage',event=>{if(event.key===PREFERENCES_KEY||event.key===null)preferences.reload();});
+$('preferences-button').addEventListener('click',()=>{openDialog('preferences','Tetapan Penggunaan',controls(preferences.value));applyPreferences(preferences.value);});
+$('dialog-content').addEventListener('input',event=>{const el=event.target,key=el.dataset.pref;if(!key)return;preferences.set({[key]:el.type==='checkbox'?el.checked:el.type==='range'?Number(el.value):el.value});const out=document.querySelector(`[data-volume="${key}"]`);if(out)out.textContent=el.value+'%';});
+$('dialog-content').addEventListener('click',event=>{if(event.target.closest('[data-reset-preferences]')){preferences.reset();$('dialog-content').innerHTML=controls(preferences.value);applyPreferences(preferences.value);document.querySelector('[data-reset-preferences]').focus();}if(event.target.closest('[data-test-sound]'))tone('solid');});
+window.addEventListener('message',event=>{if(event.source!==$('module-frame').contentWindow||event.data?.type!=='geodecoder:module-choice')return;const p=event.data.value;if(p&&['explore','notes','labs'].includes(p.lastSection))preferences.set({lastSection:p.lastSection});else if(p&&typeof p.labels==='boolean')preferences.set({labels:p.labels});else if(p&&typeof p.autoRotate==='boolean')preferences.set({autoRotate:p.autoRotate});});

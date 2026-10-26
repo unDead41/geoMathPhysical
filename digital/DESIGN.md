@@ -102,3 +102,7 @@ Teacher entry uses a class sidebar, selected-class PIN/invitation panel, searcha
 ## Home and guest entry V2.1
 
 Preserve the supplied Home hero, geometry kit and two-column desktop layout. The right panel contains classroom account access and a prominent **Play as a Guest** action. Guest opens the supplied local-player form in a separate card, max-width 520px, with a visible Back to Home action. Use existing panel, button, text and focus tokens in both themes; no new colour system. On phones, Home stacks and the guest card fits document width.
+
+## Usage preferences
+
+Preference groups use native fieldsets, checkboxes, selects and range inputs, the existing primary blue and panel tokens, and a live preview. Native controls retain keyboard behavior. High contrast deepens text/borders without changing geometry palettes. Typography uses a shared scale with wrapping layouts; models keep their original dimensions. At 320px the dialog and its controls stack and scroll vertically.

@@ -144,6 +144,7 @@ export function createMusic(options = {}) {
       track = ['module', 'game', 'map'].includes(scene.toLowerCase()) ? 'map' : 'menu';
       return reconcile();
     },
+    setVolume(value) { if(audio)audio.volume=Math.max(0,Math.min(1,Number(value)||0)); },
     setEnabled(value) {
       if (destroyed) return Promise.resolve(false);
       changePreference(Boolean(value));
