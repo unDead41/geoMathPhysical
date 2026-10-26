@@ -108,3 +108,37 @@ adc51627eaaace5d9543c7e033d2994986c8715d. core.mjs pada SHA itu masih v2.3.0
 (blob 74abef3da499bdafe1cd19cca04b1aab74357dc4). Main dan sharing kekal pada
 SHA di atas; head module yang dijadikan expected-head masih 931a0150397bfb3fd79ef3c8da6684167d1c6aad.
 Tiada perubahan branch permainan diserap ke dalam kemas kini modul ini.
+
+## Peluasan v1.4.0 dan integrasi reka bentuk MD — 26 Oktober 2026
+
+Asas kerja sambungan: digitalize-module
+**ee7c7ee983ce32bc9681c60424df184f29e8a80b**, tree
+**19c42988a65e32f74ee5eeafc8c59c694b393e58**, modul v1.3.0.
+Worktree sendiri /dev/shm/geodecoder-module-69ae/work. Maksimum dua subagent
+digunakan: katalog nota dan studio/cetakan; semakan bebas menggunakan ejen sama.
+
+Ref difetch sebelum kerja dan disemak semula sebelum penerbitan:
+
+| Branch | SHA penuh | Versi rujukan |
+|---|---|---|
+| main | a059979d97926b82cafd4aa5cf3fe59da04a55bb | firmware v1.1.3 |
+| sharing | 01b549a26861ef5f093d4c2c630700de37008d6b | firmware v1.1.3 |
+| digitalize | adc51627eaaace5d9543c7e033d2994986c8715d | Digital v2.3.0 |
+| digitalize-module | ee7c7ee983ce32bc9681c60424df184f29e8a80b | modul v1.3.0 |
+| digitalize-module-design | 2a62091fe72f88c59b2f3ca393a29fc3f1b47263 | reka bentuk v1.2.1 |
+| main-digital | 71db77c0206de664e50fa57ff57e1825af13f938 | Digital BM/BI v1.2.0 |
+| main-digitalized mula | 8c12818565d8b5531216ec0a24fa8a93a583bf35 | modul v1.3.0 |
+| main-digitalized terkini | 42c7d29bbdaedb7bb0824c2d10222752c385ab6f | modul v1.3.1 |
+
+Arahan kemudian pengguna secara eksplisit membenarkan push ke
+**main-digitalized (MD)**. Had awal hanya digitalize-module kini ditambah MD;
+main/sharing/digitalize/main-digital/design tidak diubah. Kerja reka bentuk
+v1.3.1 yang tiba pada MD ketika pembangunan digabung secara tiga hala ke fail
+modul, termasuk token/ikon/widget, framing stabil dan easing jeda/sambung.
+Tiada fail destinasi di luar digital/module ditindih. Penerbitan setiap ref
+menggunakan expected SHA dan tanpa force.
+
+Versi fungsi serasi baharu ialah v1.4.0, dipaparkan V1.4.0 berhampiran logo.
+Permainan, bank soalan, skor, analitik dan firmware tidak berubah. MODEL_ORDER
+sebelas bentuk hanya katalog pembelajaran tempatan; Shape ID kuiz kekal lima.
+Enam sumber PDF setempat serta julat dua bab dicatat dalam SOURCES_V1_4.md.

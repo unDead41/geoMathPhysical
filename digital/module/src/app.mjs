@@ -10,6 +10,7 @@ const el=id=>document.getElementById(id);
 const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
 const initial=MODEL_ORDER.includes(location.hash.slice(1))?location.hash.slice(1):'cube';
 const state={shape:initial,learningView:'explore',progress:0,yaw:.55,pitch:.35,zoom:1,mode:'model',view:'front',auto:!reduced.matches,labels:false,selected:null,playing:false,direction:1,kind:'cycle',hold:0,camera:null,manualOrbit:false,pausedAnimation:null};
+const primaryLearningShapes=['cube','cuboid','pyramid','cylinder','cone'];
 const mainRenderer=new ModelRenderer(el('model-canvas'));
 const navRenderers=new Map(),viewRenderers=new Map();
 let raf=0,lastFrame=0,dirty=true,lastPercent=-1;
@@ -31,8 +32,9 @@ function refreshControls() {
   el('auto-rotate').disabled=state.mode==='views';
   el('auto-rotate').querySelector('span').textContent=state.auto?'Hentikan putaran':'Putaran automatik';
   playbackButton(el('play'),state.playing?'Jeda animasi':state.pausedAnimation?'Sambung animasi':'Main animasi',state.playing);
-  el('open-net').disabled=state.progress>=1&&!state.playing;
-  el('close-net').disabled=state.progress<=0&&!state.playing;
+  const noNet=Boolean(MODEL_DATA[state.shape].noNet);el('animation-panel').hidden=state.mode!=='model'||noNet;el('no-net-note').hidden=!noNet||state.mode!=='model';el('no-net-note').textContent=noNet?MODEL_DATA[state.shape].net:'';el('guided-net').hidden=noNet;el('play').disabled=noNet;el('progress').disabled=noNet;el('replay').disabled=noNet;
+  el('open-net').disabled=noNet||state.progress>=1&&!state.playing;
+  el('close-net').disabled=Boolean(MODEL_DATA[state.shape].noNet)||state.progress<=0&&!state.playing;
   el('labels').checked=state.labels;
   el('zoom-level').textContent=Math.round(state.zoom*100)+'%';
   el('zoom-in').disabled=state.zoom>=2.2;
@@ -97,9 +99,9 @@ function renderContent() {
   const data=MODEL_DATA[state.shape];
   document.title=(state.learningView==='notes'?'Nota ':'')+data.name+' — Modul GeoDecoder';
   el('model-title').textContent=data.name;el('notes-title').textContent=data.name;el('shape-tag').textContent=data.tag;
-  el('shape-intro').textContent=data.intro;el('net-explanation').textContent=data.net;el('observation').textContent=data.observe;
+  el('shape-intro').textContent=data.intro;el('net-explanation').textContent=data.net;el('net-explore-title').textContent=data.noNet?'Fahami permukaan melengkung':'Dari bongkah ke bentangan';el('observation').textContent=data.observe;
   el('edge-note').hidden=!data.curvedEdges;
-  const stats=[[data.flat+data.curved,data.curved?'permukaan':'muka rata',data.curved?`${data.flat} rata + ${data.curved} melengkung`:'semuanya rata'],[data.edges,'rusuk',data.curvedEdges?'melengkung':'lurus'],[data.vertices,'bucu',state.shape==='cone'?'puncak':state.shape==='pyramid'?'termasuk puncak':'']];
+  const stats=[[data.flat+data.curved,data.curved?'permukaan':'muka rata',data.curved?`${data.flat} rata + ${data.curved} melengkung`:'semuanya rata'],[data.edges,'rusuk',data.edges===0?'tiada':data.curvedEdges?'melengkung':'lurus'],[data.vertices,'bucu',state.shape==='cone'?'puncak':state.shape==='pyramid'?'termasuk puncak':'']];
   el('properties').replaceChildren(...stats.map(([count,label,detail])=>{const box=element('div',{class:'property'});box.append(element('b',{},String(count)),element('span',{},label),element('small',{},detail));return box;}));
   el('think-title').textContent=data.question;el('think-feedback').textContent='Pilih satu jawapan untuk melihat penerangan.';el('think-feedback').className='think-feedback';
   el('think-options').replaceChildren(...data.options.map((text,i)=>{
@@ -110,10 +112,10 @@ function renderContent() {
       el('think-feedback').className='think-feedback'+(i===data.answer?' correct':'');
     });return button;
   }));
-  el('animation-caption').textContent=data.curved?'Tapak dibuka dahulu. '+(state.shape==='cone'?'Permukaan melengkung dibuka menjadi sektor bulatan; panjang lengkok kekal sepadan dengan lilitan tapak.':'Permukaan melengkung dibuka menjadi segi empat tepat; panjangnya kekal sama dengan lilitan tapak.'):'Muka kekal bersambung pada rusuk. Warna yang sama menandakan muka yang sama.';
+  el('animation-caption').textContent=data.noNet?data.net:data.curved?'Tapak dibuka dahulu. '+(state.shape==='cone'?'Permukaan melengkung dibuka menjadi sektor bulatan; panjang lengkok kekal sepadan dengan lilitan tapak.':'Permukaan melengkung dibuka menjadi segi empat tepat; panjangnya kekal sama dengan lilitan tapak.'):'Muka kekal bersambung pada rusuk. Warna yang sama menandakan muka yang sama.';
   el('face-description').textContent='Pilih permukaan untuk melihatnya pada model.';
   for(const button of el('shape-picker').children)button.setAttribute('aria-pressed',String(button.dataset.shape===state.shape));
-  renderLegend();renderViews();refreshControls();
+  el('extra-shape-select').value=primaryLearningShapes.includes(state.shape)?'':state.shape;renderLegend();renderViews();refreshControls();
   if(state.learningView==='notes')learningNotes.render(state.shape);
 }
 function selectShape(shape) {
@@ -124,6 +126,7 @@ function selectShape(shape) {
   announce(MODEL_DATA[shape].name+' dipilih. '+MODEL_DATA[shape].tag);wake();
 }
 function beginAnimation(target=null) {
+  if(MODEL_DATA[state.shape].noNet){state.progress=0;stopAnimation();refreshControls();announce(MODEL_DATA[state.shape].net);wake();return;}
   if(state.mode!=='model')switchMode('model');
   state.auto=false;state.playing=true;state.hold=0;state.manualOrbit=false;state.pausedAnimation=null;
   state.kind=target===null?'cycle':'target';state.direction=target===null?(state.progress>=1?-1:1):(target>state.progress?1:-1);
@@ -167,18 +170,20 @@ function frame(time) {
   if(dirty){drawMain();dirty=false;}
   if(state.auto||state.playing||state.camera){if(!raf)raf=requestAnimationFrame(frame);}else lastFrame=0;
 }
-for(const shape of MODEL_ORDER){
+for(const shape of primaryLearningShapes){
   const button=element('button',{class:'shape-choice','data-shape':shape,'aria-pressed':String(shape===state.shape)}),canvas=element('canvas',{'aria-hidden':'true'});
   button.append(canvas,element('span',{class:'shape-name'},MODEL_DATA[shape].name),element('span',{class:'choice-dot','aria-hidden':'true'}));
   button.addEventListener('click',()=>selectShape(shape));el('shape-picker').append(button);navRenderers.set(shape,new ModelRenderer(canvas));
 }
+for(const shape of MODEL_ORDER.filter(s=>!primaryLearningShapes.includes(s)))el('extra-shape-select').append(element('option',{value:shape},MODEL_DATA[shape].name));
+el('extra-shape-select').addEventListener('change',()=>{const shape=el('extra-shape-select').value;if(MODEL_ORDER.includes(shape))selectShape(shape);});
 function switchLearningView(view) {
   if(state.learningView===view)return;
   stopAnimation();state.auto=false;state.camera=null;
   if(state.learningView==='labs')learningLabs.close();
   if(raf)cancelAnimationFrame(raf);raf=0;lastFrame=0;state.learningView=view;
   refreshControls();drawMain();
-  el('explore-panel').hidden=view!=='explore';el('study-panel').hidden=view!=='notes';el('labs-panel').hidden=view!=='labs';el('shape-picker').hidden=view==='labs';
+  el('explore-panel').hidden=view!=='explore';el('study-panel').hidden=view!=='notes';el('labs-panel').hidden=view!=='labs';el('shape-picker').hidden=view==='labs';el('extra-shape-field').hidden=view==='labs';
   el('learn-explore').setAttribute('aria-pressed',String(view==='explore'));el('learn-notes').setAttribute('aria-pressed',String(view==='notes'));el('learn-labs').setAttribute('aria-pressed',String(view==='labs'));
   document.title=(view==='notes'?'Nota ':'')+MODEL_DATA[state.shape].name+' — Modul GeoDecoder';
   if(view==='labs'){learningLabs.open();el('labs-title').focus({preventScroll:true});document.title='Makmal Interaktif — Modul GeoDecoder';}
@@ -215,7 +220,7 @@ for(const [id,key,amount] of [['orbit-left','yaw',-.2],['orbit-right','yaw',.2],
   refreshControls();wake();
 });
 el('progress').addEventListener('input',()=>{
-  stopAnimation();state.auto=false;state.progress=Number(el('progress').value)/1000;
+  stopAnimation();state.auto=false;state.progress=MODEL_DATA[state.shape].noNet?0:Number(el('progress').value)/1000;
   if(!state.manualOrbit)alignCamera(state.progress===1?0:state.progress===0?.55:.48,state.progress===1?0:state.progress===0?.35:.28);
   lastPercent=-1;refreshControls();wake();
 });

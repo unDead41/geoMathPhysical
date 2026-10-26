@@ -9,3 +9,6 @@ test('one or both selected volumes count only their actual contents',()=>{const 
 test('impossible volumes are rejected',()=>{assert.throws(()=>volumeInfo('sphere',{}),RangeError);assert.throws(()=>volumeInfo('tetrahedron',{a:0,t:4}),RangeError);});
 
 test('comparison defaults fit their actual 1–8 cm native range controls',()=>{for(const [key] of cases){const d=volumeDefaults(key);for(const field of volumeFields(key))assert.ok(d[field]>=1&&d[field]<=8,key+' '+field+' exceeds its control');}});
+test('sphere and hemisphere clipped fluid has outward caps and <0.4% full-capacity volume error',()=>{
+ for(const [key,factor] of [['sphere',4/3],['hemisphere',2/3]]){const d={j:3},capacity=factor*Math.PI*27;for(const fill of [.001,.01,.05,.1,.5,.9,.99,1]){const m=volumeComparisonMesh([{key,d,fill}],1).filter(f=>f.id===0);let signed=0;for(const f of m)for(let i=1;i<f.vertices.length-1;i++){const [p,q,r]=[f.vertices[0],f.vertices[i],f.vertices[i+1]],n=cross3(q,r);signed+=p.reduce((s,x,k)=>s+x*n[k],0)/6;}near(signed,capacity*fill,capacity*.004);assert.ok(signed>0);assert.ok(m.every(f=>new Set(f.vertices.map(v=>v.map(n=>n.toFixed(7)).join(','))).size>=3));}}
+});

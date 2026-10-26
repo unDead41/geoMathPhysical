@@ -160,6 +160,30 @@ Changing one shape/size clears that solid only. Direct ranges cancel animation
 and keep the newly read value. All calculations use unrounded quantities; tiny
 positive results show < 0.01 instead of zero. Circular values use Math.PI.
 
+## Kontrak semasa v1.4.0
+
+Katalog pembelajaran MODEL_ORDER berisi 11 bentuk dan tidak digunakan oleh kuiz.
+Lima pilihan utama kekal; enam tambahan dalam satu select native. Nota, model,
+enam pandangan, isi A/B dan luas menggunakan katalog yang sama. Sfera/hemisfera
+mempunyai progress 0; kawalan net disembunyikan/disabled dan tindakan nota dijaga.
+
+NetStudio owns constrained parent/edge trees, dimensions and opening sides for
+seven polyhedra. All eleven cube examples are distinct. Editing locks during
+folds. Real flat intersections mark warnings and block printing. NetPrinter owns
+physical mm SVG, a 10mm grid and ruler. Oversized A4 layouts are rejected, never
+silently fitted. Print mode is entered only by its explicit print button.
+
+Volume amounts accept positive decimal cm³/mL/L. Add-to-both applies the chosen
+amount independently and caps each vessel. Transfer takes existing source liquid;
+receiver fills before spill starts. A+B+spill conserves the pre-transfer total.
+Direct edits cancel paused targets and clear stale transfer proofs. Empty resets
+spill. Includer checkboxes affect the selected total, not conservation or meshes.
+
+SurfaceWorkshop owns thin open/closed containers and rectangular through cavities.
+Its exposed groups include inner walls. Capacity and material volume have distinct
+labels. Advanced surface modes have no meaningless unfold slider or internal
+triangle labels. Existing timing, keyboard/native controls and focus apply.
+
 ## Integrasi reka bentuk pada MD (v1.3.1)
 
 All v1.3 controls use the shared design-system.mjs and ui.mjs owners. Speed changes change the rate of the same elapsed-time easing record; they do not restart interpolation. Suspended records retain progress and their destinations across activity/section changes. Direct inputs cancel the affected record. Gallery/editor and formula/exterior readiness gates remain from v1.3.

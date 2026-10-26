@@ -1,6 +1,6 @@
 # Modul Pembelajaran GeoDecoder Digital V1
 
-Versi modul: **v1.3.1**. Branch kerja: **digitalize-module**.
+Versi modul: **v1.4.0**. Branch kerja: **digitalize-module**.
 
 ## Cuba terus
 
@@ -9,7 +9,10 @@ Satu fail ini mengandungi semua kod, gaya, kandungan dan geometri. Tiada CDN,
 fon, pemasangan, akaun, storan pelayar atau sambungan Internet diperlukan.
 Pautan DSKP ialah rujukan pilihan; aktiviti tidak memerlukannya.
 
-- Pilih kubus, kuboid, piramid bertapak segi empat sama, silinder atau kon.
+- Pilih lima bongkah GeoDecoder atau bentuk tambahan melalui senarai: prisma segi
+  tiga/segi lima/segi enam, piramid segi tiga, sfera dan hemisfera. Kesemua 11 bentuk
+  mempunyai nota, pengiraan, model serta enam pandangan 2D. Sfera dan hemisfera
+  tidak mempunyai bentangan rata tepat; kawalan buka/cantum disembunyikan.
 - Seret model untuk putar. Cubit dua jari, gunakan roda tetikus atau butang +/− untuk zum.
 - **Kedudukan asal** mengembalikan kamera dan zum. Anak panah pada model
   memutarkannya; Home mengembalikan kamera. Pilihan arah menyediakan alternatif kepada seretan.
@@ -24,7 +27,7 @@ Pautan DSKP ialah rujukan pilihan; aktiviti tidak memerlukannya.
 - Buka **Contoh berpandu** untuk soalan dan empat langkah penyelesaian.
 - **Cuba ukuran sendiri** menerima ukuran dalam cm (0.1–1000), termasuk koma
   perpuluhan. Rajah ukuran, tinggi sendeng, jumlah luas dan isi padu dikira semula.
-  Silinder/kon menyediakan pilihan π ≈ 22/7, π ≈ 3.142 atau nilai π penuh.
+  Silinder, kon, sfera dan hemisfera menyediakan pilihan π ≈ 22/7, π ≈ 3.142 atau nilai π penuh.
 - Nota turut mengandungi rumus ringkas, penukaran unit, kesilapan lazim dan satu
   contoh bongkah gabungan. Tindakan pada nota membuka model/bentangan/pandangan
   bongkah yang sama. Membaca nota menghentikan gerakan 3D di belakangnya.
@@ -35,24 +38,26 @@ untuk bergerak semula. Reduced motion mematikan putaran awal dan peralihan kamer
 animasi pendidikan hanya dimainkan selepas arahan Main/Buka/Cantum daripada murid.
 Peluncur sentiasa membolehkan pemerhatian bingkai demi bingkai.
 
-## Makmal interaktif v1.3.0
+## Makmal interaktif v1.4.0
 
 Pilih **Makmal interaktif**, kemudian pilih aktiviti 01–04:
 
-1. **Bina bentangan:** galeri sembilan bentangan siap: lima bongkah projek,
-   prisma segi tiga/segi lima/segi enam sekata, dan piramid bertapak segi tiga
-   sama sisi. Pilih muka melalui nombor dan warna. Lipat perlahan, jeda, buka rata
-   atau periksa setiap bingkai. **Susun petak kubus** mengekalkan editor 6 × 6,
-   seretan dan alternatif butang arah serta semakan sah/terputus/bertindih.
-2. **Isi padu:** pilih satu atau dua bongkah daripada sembilan bentuk. Ukuran A/B
-   boleh diubah secara berasingan. Tambah **1 cm³ ke A**, **ke B**, atau
-   **ke A dan B** (sehingga 1 cm³ setiap bekas), penuhkan satu/kedua-duanya,
-   laraskan peratus isi, kosongkan dan pilih isi A/B yang hendak dijumlahkan.
-   Jumlah mengira isi semasa, bukan kapasiti kosong. Kiub unit 1–6 cm dan tiga
-   tuangan kon/silinder atau piramid/prisma masih tersedia dalam pilihan aktiviti.
-3. **Terbitkan rumus:** lima bongkah, ukuran 1–10 cm dan bentangan berukuran
-   sebenar. Pilihan luas diaktifkan selepas bentangan rata; jumlah dan rumus
-   membantu murid mengira setiap permukaan sekali.
+1. **Bina bentangan:** sembilan bentangan siap, editor petak kubus dan **Studio
+   sambungan muka** bagi tujuh poliedron. Ubah muka induk, sisi bukaan dan ukuran
+   sambil mengekalkan pasangan rusuk sebenar. Semak sorotan merah jika bertindih.
+   Cuba kesemua **11 bentangan kubus**. Cetak A4 / simpan SVG dengan grid 1 cm,
+   skala nyata dan palang semakan pembaris; bentangan tidak dikecilkan secara senyap.
+2. **Isi padu:** pilih satu atau dua daripada **11 bentuk**. Tetapkan jumlah
+   dalam cm³, mL atau L, kemudian tambah ke A, B atau kedua-duanya; penuhkan dan
+   pilih isi yang dijumlahkan. Buka **Pindahkan isi A ↔ B** untuk mengambil isi
+   sedia ada daripada sumber. Pilih berhenti pada kapasiti atau terus menuang
+   dengan limpahan direkod. Baki A + baki B + limpahan kekal sepanjang pindahan.
+   Kiub unit dan tiga tuangan padanan bertapak/bertinggi sama turut tersedia.
+3. **Terbitkan rumus:** sebelas bongkah, ukuran sebenar, pilihan bahagian luas dan
+   rumus keseluruhan. Sfera/hemisfera dipilih pada permukaan melengkung tanpa
+   bentangan rata palsu. **Bekas terbuka / bertutup** membandingkan luas dengan
+   kapasiti bagi silinder/kuboid nipis. **Rongga tembus** mengira dinding dalam,
+   dinding luar, dua bingkai dan isi padu bahan selepas penolakan rongga.
 4. **Gabungan:** kubus+piramid dan silinder+kon dengan tapak sepadan. Cantum dahulu,
    kemudian pilih permukaan luar dan semak. Dua permukaan dalaman dikecualikan.
 
@@ -70,6 +75,8 @@ menggunakan paras tidak linear yang sepadan dengan isi padu. Simulasi ini
 memaparkan paras/isi ideal, bukan aliran bendalir fizikal. Poligon tambahan ialah
 contoh tegak dengan tapak sekata, bukan bentangan bentuk bebas sewenang-wenangnya.
 
+Pengesahan terkini: [laporan v1.4.0](docs/LABS_V1_4.md).
+Rujukan enam PDF setempat: [indeks sumber](docs/SOURCES_V1_4.md).
 Pengesahan integrasi MD: [laporan v1.3.1](docs/INTEGRATION_MD_V1_3_1.md).
 Sejarah fungsi v1.3.0: [laporan makmal](docs/LABS_V1_3.md).
 Sejarah: [laporan empat makmal v1.2.0](docs/LABS_V1_2.md).
@@ -77,8 +84,9 @@ Sejarah: [laporan empat makmal v1.2.0](docs/LABS_V1_2.md).
 ## Kandungan dan matematik
 
 Sifat dan bentangan menyokong DSKP Matematik Tingkatan 2 SP 6.1.1 dan 6.2.1.
-Nota v1.1.0 menambah luas permukaan (6.3.1), contoh gabungan dan unit (6.3.3),
-serta isi padu (6.4.1–6.4.3) untuk lima bongkah projek.
+Nota meliputi luas permukaan (6.3.1–6.3.2), contoh gabungan dan unit (6.3.3),
+serta isi padu (6.4.1–6.4.3) bagi bentuk yang dipilih. Ia menggunakan buku teks
+BM/BI Tingkatan 2 Bab 6 dan Tingkatan 3 Bab 7 sahaja, bersama halaman DSKP berkaitan.
 Pandangan ortografik ialah pengayaan Tingkatan 3 SP 7.1.1–7.1.2; bahasa dipermudah
 pada aras Tingkatan 1. Modul ini bukan liputan keseluruhan DSKP atau pentaksiran TP.
 Rujuk [pemetaan kurikulum](docs/CURRICULUM.md) dan [geometri](docs/GEOMETRY.md).
@@ -101,6 +109,11 @@ bukan pertukaran gambar atau panel poligon berengsel.
 | `src/lessons.mjs` | Nota, contoh asal, rumus dan pengiraan ukuran yang disahkan |
 | `src/lab-geometry.mjs` | Validasi bentangan, bingkai engsel, bahagian luas, isi dan gabungan |
 | `src/preset-nets.mjs` | Sembilan bentangan sah dan engsel prisma/piramid tambahan |
+| `src/learning-mesh.mjs` | Katalog geometri sebelas bentuk, permukaan dan paras sfera |
+| `src/volume-transfer.mjs` | Pelan pindahan, baki dan limpahan pada setiap bingkai |
+| `src/surface-workshop.mjs` | Bekas terbuka/bertutup dan rongga tembus |
+| `src/net-studio-geometry.mjs`, `src/net-studio.mjs` | Sambungan sebenar tujuh poliedron dan 11 net kubus |
+| `src/net-print.mjs`, `src/net-tools.css` | SVG/A4 berskala fizikal dan preview luar talian |
 | `src/volume-lab.mjs` | Rumus, jumlah pilihan dan geometri isi bagi satu/dua bekas |
 | `src/labs.mjs` | Empat aktiviti, kamera bersama, seretan dan kitar hayat animasi |
 | `src/notes.mjs` | Paparan nota, rajah SVG, input ukuran, maklum balas dan navigasi |
@@ -142,19 +155,24 @@ Paparan Canvas mempunyai penerangan teks dan kawalan setara; ia bukan model
 sentuhan atau pengganti penuh penerangan guru untuk murid bermasalah penglihatan.
 Lihat [pengesahan](docs/VERIFICATION.md) untuk beza ujian sebenar dan simulasi.
 Pengesahan tambahan v1.1.0 direkodkan dalam [NOTES_V1_1.md](docs/NOTES_V1_1.md).
-Pengiraan menerima bongkah tegak tertutup sahaja. Rajah kalkulator mengikut
+Kalkulator nota menerima model tertutup; makmal luas juga menyediakan bekas
+terbuka nipis dan rongga segi empat tepat tembus. Studio bukan pembina poliedron
+sewenang-wenangnya. Cetakan tidak menyediakan tab gam atau jubin berbilang halaman.
+Pilih cetakan 100% dan semak palang 1 cm; pencetak fizikal belum diuji.
+Sfera/hemisfera ditesselasi untuk paparan: ralat isi mesh <0.4% kapasiti penuh,
+bukannya 0.4% isi semasa apabila hampir kosong. Semua nombor menggunakan rumus analitik. Rajah kalkulator mengikut
 ukuran aktiviti; ukuran ini tidak mengubah model 3D ilustrasi.
 
 
 QA pilihan: `npm run qa` membuka workbench tempatan pada port 4173. Laluan
 `/qa.html` memaparkan fail HTML keluaran sebenar dalam iframe 320/390/768/1280px.
 Simulasi reduced motion di workbench ialah suntikan dependency untuk ujian sahaja,
-bukan perubahan tetapan OS. Borang evidence menerima screenshot daripada pelayar
-ujian dan menyimpannya dalam evidence/ tanpa menindih fail. Server ini hanya alat
+bukan perubahan tetapan OS. Butang Semak paparan merekod reflow/kawalan; ujian pointer dinyatakan sebagai
+simulasi. Tangkapan skrin disimpan berasingan melalui pelayar ujian. Server ini hanya alat
 pembangunan dan tidak dimasukkan ke dalam HTML murid.
 
 ## Reka bentuk seragam v1.3.1
 
 Token warna, tipografi, ruang, radius, saiz kawalan, ikon dan tempoh animasi datang daripada `src/design-system.mjs`. Semua bahagian berkongsi komponen butang/panel/medan/maklum balas. Teks kecil minimum 12px; kawalan biasa sekurang-kurangnya 44px. Label rajah SVG menggunakan 16px supaya masih 12px pada skrin 320px.
 
-Semua fungsi v1.3.0 dikekalkan. Jeda/sambung mengekalkan garis masa easing sebenar, dan pembingkaian model tetap sepanjang lipatan/cantuman. Kamera boleh dikawal melalui butang arah. Kawalan kembali ke model tersedia selepas panel aktiviti; susun atur kecil menggunakan tatal dokumen biasa.
+Versi v1.4.0 mengekalkan pembaikan reka bentuk MD v1.3.1. Jeda/sambung mengekalkan garis masa easing sebenar, dan pembingkaian model tetap sepanjang lipatan/cantuman. Kamera boleh dikawal melalui butang arah. Kawalan kembali ke model tersedia selepas panel aktiviti; susun atur kecil menggunakan tatal dokumen biasa.

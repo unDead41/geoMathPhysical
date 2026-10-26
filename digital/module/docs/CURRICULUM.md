@@ -6,16 +6,25 @@ semula. Tidak mendakwa modul diluluskan KPM atau meliputi keseluruhan DSKP.
 
 | Rujukan | Aktiviti modul | Batas skop |
 |---|---|---|
-| Tingkatan 2, SP 6.1.1, muka surat cetak 52 / PDF 64 | Putar lima bongkah; banding permukaan rata/melengkung, rusuk dan bucu | Hanya bongkah tegak dalam projek; tidak meliputi prisma lain atau sfera |
-| Tingkatan 2, SP 6.2.1, halaman sama | Buka, jeda, jejaki muka, cantum; kenal sektor kon dan segi empat tepat silinder | Galeri sembilan bentuk dan editor kubus; belum melukis semua jenis bentangan |
-| Tingkatan 2, SP 6.3.1, muka surat cetak 52 / PDF 64 | Nota menghubungkan luas setiap bahagian bentangan dengan rumus luas permukaan; lima contoh berpandu dan pengiraan ukuran | Bongkah tegak tertutup; bukan derivasi semua jenis prisma |
-| Tingkatan 2, SP 6.3.3, muka surat cetak 53 / PDF 65 | Kotak kubus berbumbung piramid: abaikan kedua-dua muka yang bercantum; penukaran unit persegi | Satu contoh asal; belum merangkumi semua jenis masalah gabungan |
+| Tingkatan 2, SP 6.1.1, muka surat cetak 52 / PDF 64 | Putar sebelas bongkah; banding permukaan rata/melengkung, rusuk dan bucu | Lima bongkah projek, tiga prisma sekata, piramid segi tiga, sfera dan hemisfera; bukan semua poliedron |
+| Tingkatan 2, SP 6.2.1, halaman sama | Buka, jeda, jejaki muka, cantum; kenal sektor kon dan segi empat tepat silinder | Galeri sembilan, editor kubus, studio tujuh poliedron dan cetakan berskala; sfera tiada net rata |
+| Tingkatan 2, SP 6.3.1, muka surat cetak 52 / PDF 64 | Nota menghubungkan luas setiap bahagian bentangan dengan rumus luas permukaan; contoh berpandu dan pengiraan sebelas bentuk | Bentuk terpilih, bekas nipis dan rongga tembus; bukan derivasi semua jenis prisma |
+| Tingkatan 2, SP 6.3.2, muka surat cetak 52 / PDF 64 | Rumus luas sfera; hemisfera membezakan 2πj² melengkung dengan 3πj² tertutup | Penggunaan rumus, bukan bentangan atau bukti eksperimen penuh |
+| Tingkatan 2, SP 6.3.3, muka surat cetak 53 / PDF 65 | Kotak kubus berbumbung piramid: abaikan kedua-dua muka yang bercantum; penukaran unit persegi | Contoh gabungan dan rongga asal terpilih; belum semua jenis masalah |
 | Tingkatan 2, SP 6.4.1–6.4.2, muka surat cetak 53 / PDF 65 | Nota luas tapak × tinggi, hubungan satu pertiga piramid/kon dengan prisma/silinder, contoh berpandu dan aktiviti mengubah ukuran | Simulasi tiga tuangan ideal; bukan eksperimen fizikal atau pembuktian penuh rumus |
 | Tingkatan 2, SP 6.4.3, halaman sama | Contoh tambah isi padu kubus dan piramid, cm³ kepada mL/L, panduan cm³/m³ | Masalah dan unit terpilih; tiada pentaksiran TP |
-| Tingkatan 3, SP 7.1.1–7.1.2, muka surat cetak 58 | Enam arah kamera ortografik dan perbandingan unjuran dengan objek | Pengayaan pengenalan; bukan latihan lukisan formal atau penskoran TP |
+| Tingkatan 3, SP 7.1.1–7.1.2, muka surat cetak 58 / PDF 70 | Enam arah kamera ortografik dan perbandingan unjuran dengan objek | Pengayaan pengenalan; bukan latihan lukisan formal atau penskoran TP |
 
 Bahasa BM dipermudah pada aras Tingkatan 1. Kandungan sifat/bentangan itu sendiri
 ialah topik DSKP Tingkatan 2; jangan menamakannya standard Tingkatan 1.
+
+## Sumber setempat v1.4.0
+
+Enam PDF yang diberikan pengguna menggantikan keperluan mencari buku berulang.
+Hanya buku teks Tingkatan 2 **Bab 6** dan Tingkatan 3 **Bab 7**, bersama halaman
+DSKP bagi bab tersebut, digunakan. Julat PDF/halaman bercetak serta SHA-256
+terkandung dalam [SOURCES_V1_4.md](SOURCES_V1_4.md). Tiada soalan, rajah atau
+petikan panjang buku disalin. Senarai pautan di bawah merekod sejarah rujukan awal.
 
 ## Sumber yang disemak
 
@@ -46,8 +55,8 @@ ialah topik DSKP Tingkatan 2; jangan menamakannya standard Tingkatan 1.
 - Rumus piramid menggunakan tapak segi empat sama dan puncak di atas pusat tapak.
   s = √(t² + (a/2)²). Untuk kon tegak, s = √(t² + j²).
 - Contoh dan ayat nota ialah penulisan asal. DSKP dirujuk semula pada
-  26 Oktober 2026 untuk skop Bab 6. Standard 6.3.2 (sfera), sfera dalam isi padu
-  dan prisma lain tidak diajar dalam modul lima bongkah ini.
+  26 Oktober 2026 untuk skop Bab 6. Versi semasa menambah 6.3.2 (sfera), sfera dalam 6.4.2 serta tiga prisma sekata
+  dan hemisfera. Bahagian bertanda v1.2/v1.3 di bawah ialah rekod skop versi lama.
 
 ## Makmal v1.2.0
 
@@ -78,3 +87,20 @@ ialah topik DSKP Tingkatan 2; jangan menamakannya standard Tingkatan 1.
 - Bezakan peratus isi daripada peratus tinggi. Pada piramid/kon, 50% isi tidak
   menghasilkan 50% tinggi. Ukuran/isi sebenar dan kapasiti kosong dipaparkan
   berasingan, dengan unit cm³. Tiada markah atau tuntutan tahap penguasaan.
+
+## Peluasan v1.4.0
+
+- 6.1.1/6.3.1/6.4.2: sifat, luas dan isi semua 11 bentuk. Prisma tegak bertapak
+  poligon sekata; apotem diterangkan sebagai jarak tegak pusat ke sisi. Piramid
+  segi tiga mempunyai tapak sama sisi dan puncak di atas pusat, tidak semestinya
+  keempat-empat mukanya kongruen. V = ⅓At, dengan s daripada apotem tapak.
+- 6.3.2/6.4.2: luas/isi sfera dan hemisfera. L hemisfera tertutup = 3πj²;
+  bahagian melengkung sahaja = 2πj². Kedua-duanya tiada bentangan rata tepat.
+- 6.3.3/6.4.3: bekas tanpa penutup, rongga tembus, jumlah dalam cm³/mL/L,
+  baki dan limpahan. V bahan = V luar − V rongga; luas mesti memasukkan dinding
+  dalam dan menolak bukaan pada dua tapak. Dinding bekas terbuka dianggap nipis.
+- 6.2.1: studio tujuh poliedron mengekalkan muka tegar dan pasangan rusuk asal;
+  semakan pertindihan ialah geometri sebenar. 11 bentangan kubus berbeza tersedia.
+- Tingkatan 3 Bab 7.1: model sejajar kamera ortografik dari enam arah. Bab 7.2
+  telah menjadi rujukan konteks sahaja; belum ada latihan pelan/dongakan berskala,
+  aturan susun pandangan atau garis terlindung. Tiada tuntutan penguasaan penuh.

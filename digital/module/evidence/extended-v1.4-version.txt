@@ -1,0 +1,1 @@
+[VERSION OK] GeoDecoder v1.1.3 | firmware = README = CHANGELOG

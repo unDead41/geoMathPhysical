@@ -203,6 +203,18 @@ The stage outcome also shows both current volumes and the selected total, so
 students see the result while watching a fill. One-solid mode hides B controls.
 Amount, fill height and empty capacity must remain explicitly distinguishable.
 
+## Peluasan v1.4.0
+
+Keep the five primary cards and put six learning extras in one labelled native
+select. Reuse existing field, action, output and detail styles. A shared quantity
+field precedes the A/B cards; transfer is a progressive disclosure with a visible
+conservation ledger. Surface mode switches reuse one canvas and camera. Advanced
+surfaces highlight meaningful groups without exposing renderer face numbers.
+Studio connection details reveal one face at a time. Print preview represents a
+physical mm plan while responsive width only affects screen display. No new
+brand palette: two supplementary face colours extend the six original colours
+without changing their identity. The version badge is V1.4.0.
+
 ## Integrasi MD v1.3.1
 
 The v1.2.1 design system is integrated with all v1.3.0 gallery, pacing and volume controls. Their new guide, speed selector, comparison cards and sum choices use the same token recipes and 12/14/16px type scale. Volume A/B colour markers mirror the unchanged geometric fill colours through --volume-a/--volume-b. The source helpers preset-nets.mjs and volume-lab.mjs remain authoritative for their mathematical models.

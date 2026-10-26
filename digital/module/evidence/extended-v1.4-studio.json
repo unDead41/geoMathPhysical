@@ -1,0 +1,123 @@
+[
+  {
+    "case": "studio-shape",
+    "printDisabled": false,
+    "shape": "cube",
+    "svgMM": "100mm",
+    "valid": "true"
+  },
+  {
+    "case": "studio-shape",
+    "printDisabled": false,
+    "shape": "cuboid",
+    "svgMM": "110mm",
+    "valid": "true"
+  },
+  {
+    "case": "studio-shape",
+    "printDisabled": false,
+    "shape": "pyramid",
+    "svgMM": "100mm",
+    "valid": "true"
+  },
+  {
+    "case": "studio-shape",
+    "printDisabled": false,
+    "shape": "triangular-prism",
+    "svgMM": "100mm",
+    "valid": "true"
+  },
+  {
+    "case": "studio-shape",
+    "printDisabled": false,
+    "shape": "pentagonal-prism",
+    "svgMM": "116.18034mm",
+    "valid": "true"
+  },
+  {
+    "case": "studio-shape",
+    "printDisabled": false,
+    "shape": "hexagonal-prism",
+    "svgMM": "140mm",
+    "valid": "true"
+  },
+  {
+    "case": "studio-shape",
+    "printDisabled": false,
+    "shape": "tetrahedron",
+    "svgMM": "100mm",
+    "valid": "true"
+  },
+  {
+    "case": "cube-net",
+    "example": "0",
+    "printDisabled": false,
+    "valid": "true"
+  },
+  {
+    "case": "cube-net",
+    "example": "1",
+    "printDisabled": false,
+    "valid": "true"
+  },
+  {
+    "case": "cube-net",
+    "example": "2",
+    "printDisabled": false,
+    "valid": "true"
+  },
+  {
+    "case": "cube-net",
+    "example": "3",
+    "printDisabled": false,
+    "valid": "true"
+  },
+  {
+    "case": "cube-net",
+    "example": "4",
+    "printDisabled": false,
+    "valid": "true"
+  },
+  {
+    "case": "cube-net",
+    "example": "5",
+    "printDisabled": false,
+    "valid": "true"
+  },
+  {
+    "case": "cube-net",
+    "example": "6",
+    "printDisabled": false,
+    "valid": "true"
+  },
+  {
+    "case": "cube-net",
+    "example": "7",
+    "printDisabled": false,
+    "valid": "true"
+  },
+  {
+    "case": "cube-net",
+    "example": "8",
+    "printDisabled": false,
+    "valid": "true"
+  },
+  {
+    "case": "cube-net",
+    "example": "9",
+    "printDisabled": false,
+    "valid": "true"
+  },
+  {
+    "case": "cube-net",
+    "example": "10",
+    "printDisabled": false,
+    "valid": "true"
+  },
+  {
+    "case": "studio-overlap",
+    "feedback": "Muka 1, 2 bertindih pada bentangan rata. Tukar sambungannya; muka terlibat disorot merah.",
+    "printDisabled": true,
+    "valid": "false"
+  }
+]

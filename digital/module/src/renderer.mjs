@@ -1,4 +1,5 @@
-import {buildMesh,meshBounds,viewPoint,sub3,cross3,length3,faceCenter} from './geometry.mjs';
+import {meshBounds,viewPoint,sub3,cross3,length3,faceCenter} from './geometry.mjs';
+import {learningMesh} from './learning-mesh.mjs';
 import {UI_TOKENS} from './design-system.mjs';
 function shade(hex,amount) {
   const c=hex.slice(1).match(/../g).map(v=>parseInt(v,16));
@@ -26,7 +27,7 @@ export class ModelRenderer {
     if(customMesh&&customMesh.length===0){this.hitFaces=[];return;}
     const key=shape+':'+progress+':'+mini;
     if(customMesh){this.mesh=customMesh;this.bounds=meshBounds(customMesh);this.meshKey='';}
-    else if(key!==this.meshKey){this.mesh=buildMesh(shape,progress,mini?64:144);this.bounds=meshBounds(this.mesh);this.meshKey=key;}
+    else if(key!==this.meshKey){this.mesh=learningMesh(shape,progress,mini?64:144);this.bounds=meshBounds(this.mesh);this.meshKey=key;}
     if(fitMesh&&this.fitMesh!==fitMesh){this.fitMesh=fitMesh;this.fitBounds=meshBounds(fitMesh);}
     const {center,radius}=fitMesh?this.fitBounds:this.bounds;
     let scale=Math.min(w,h)/(2*radius)*(mini?.79:.78)*zoom,offsetX=0,offsetY=0;

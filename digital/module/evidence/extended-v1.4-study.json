@@ -1,0 +1,68 @@
+[
+  {
+    "shape": "cube",
+    "volume": "64 cm³",
+    "view": "Kanan: Segi empat sama. Warna menunjukkan permukaan yang dilihat; warna tidak mengubah bentuk unjuran.",
+    "buttons": 6
+  },
+  {
+    "shape": "cuboid",
+    "volume": "72 cm³",
+    "view": "Kanan: Segi empat tepat · 4 × 3. Warna menunjukkan permukaan yang dilihat; warna tidak mengubah bentuk unjuran.",
+    "buttons": 6
+  },
+  {
+    "shape": "pyramid",
+    "volume": "48 cm³",
+    "view": "Kanan: Segi tiga. Warna menunjukkan permukaan yang dilihat; warna tidak mengubah bentuk unjuran.",
+    "buttons": 6
+  },
+  {
+    "shape": "cylinder",
+    "volume": "1540 cm³",
+    "view": "Kanan: Segi empat tepat. Warna menunjukkan permukaan yang dilihat; warna tidak mengubah bentuk unjuran.",
+    "buttons": 6
+  },
+  {
+    "shape": "cone",
+    "volume": "37.71 cm³",
+    "view": "Kanan: Segi tiga. Warna menunjukkan permukaan yang dilihat; warna tidak mengubah bentuk unjuran.",
+    "buttons": 6
+  },
+  {
+    "shape": "triangular-prism",
+    "volume": "41.57 cm³",
+    "view": "Kanan: Segi empat tepat + rusuk. Warna menunjukkan permukaan yang dilihat; warna tidak mengubah bentuk unjuran.",
+    "buttons": 6
+  },
+  {
+    "shape": "tetrahedron",
+    "volume": "20.78 cm³",
+    "view": "Kanan: Segi tiga + rusuk. Warna menunjukkan permukaan yang dilihat; warna tidak mengubah bentuk unjuran.",
+    "buttons": 6
+  },
+  {
+    "shape": "pentagonal-prism",
+    "volume": "165.17 cm³",
+    "view": "Kanan: Segi empat tepat + rusuk. Warna menunjukkan permukaan yang dilihat; warna tidak mengubah bentuk unjuran.",
+    "buttons": 6
+  },
+  {
+    "shape": "hexagonal-prism",
+    "volume": "249.42 cm³",
+    "view": "Kanan: Segi empat tepat + rusuk. Warna menunjukkan permukaan yang dilihat; warna tidak mengubah bentuk unjuran.",
+    "buttons": 6
+  },
+  {
+    "shape": "sphere",
+    "volume": "268.19 cm³",
+    "view": "Kanan: Bulatan. Warna menunjukkan permukaan yang dilihat; warna tidak mengubah bentuk unjuran.",
+    "buttons": 6
+  },
+  {
+    "shape": "hemisphere",
+    "volume": "56.57 cm³",
+    "view": "Kanan: Separuh bulatan. Warna menunjukkan permukaan yang dilihat; warna tidak mengubah bentuk unjuran.",
+    "buttons": 6
+  }
+]

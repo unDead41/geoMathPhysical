@@ -25,7 +25,7 @@ test('Malay decimal comma and decimal point are accepted without treating a diam
  near(readDimension(' 3,5 '),3.5);near(readDimension('.5'),.5);near(calculateMeasures('cylinder',{j:'3,5',t:10}).volume,385);
 });
 test('unknown shape/pi and missing required dimensions cannot yield misleading answers',()=>{
- assert.equal(calculateMeasures('sphere',{j:3}).valid,false);assert.equal(calculateMeasures('cube',{a:4},'wrong').valid,false);assert.equal(calculateMeasures('cuboid',{p:6,l:4}).valid,false);
+ assert.equal(calculateMeasures('unknown-solid',{j:3}).valid,false);assert.equal(calculateMeasures('cube',{a:4},'wrong').valid,false);assert.equal(calculateMeasures('cuboid',{p:6,l:4}).valid,false);
 });
 test('worked-example defaults match independently known results and include reasoning and units',()=>{
  for(const [shape,dims,area,volume] of cases){const lesson=LESSON_DATA[shape],r=calculateMeasures(shape,lesson.defaults);assert.deepEqual(lesson.defaults,dims);near(r.area,area);near(r.volume,volume);assert.ok(lesson.surface.steps.length>=4);assert.ok(lesson.volume.steps.length>=4);assert.match(lesson.surface.answer,/cm²/);assert.match(lesson.volume.answer,/cm³/);}
