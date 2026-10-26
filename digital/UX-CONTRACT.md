@@ -12,6 +12,7 @@ Business sources: user request (25 October 2026), docs/SOURCE.md and docs/UPGRAD
 | Dialog | app.mjs openDialog/closeDialog, native dialog | this contract | help/pause/scores/leave/erase | Escape/focus/browser |
 | Direct manipulation | app.mjs Pointer Events controller | user request | pointer/touch/tap/keyboard | browser drag + keyboard |
 | CRUD | storage.mjs score repository | local-only decision | save/list/export/erase | storage tests, browser persistence |
+| Account security | portal.mjs + account-security.mjs + cloud.mjs | SECURITY_UTILITY.md and pinned Auth SDK | signed-in password change / confirmed global logout | security-cloud, security-sdk, security-portal and security-cleanup-race tests |
 
 ## Home and guest navigation
 
@@ -31,6 +32,30 @@ Dialogs remember trigger focus, use native showModal inertness and Escape, pause
 ## Account and classroom behavior
 
 The account entry is distinct from practice. Signup requires email, username, display name, password and teacher/student role; Auth verifies the email before login. A scoped Auth insert trigger validates and copies the initial role into an immutable private profile. Later metadata edits cannot change authorization. Login accepts email or username. Forgotten password requests an email link; reset takes priority over account dashboards only after an SDK-validated recovery session. Two matching 10–128-character passwords are required; successful reset signs out globally. Invalid/expired links offer a new request. Resend has a 60-second UI cooldown and provider errors remain visible. Request success uses generic copy and does not assert inbox delivery. Public delivery depends on configured SMTP and redirect URLs. Legacy username-only accounts retain secondary code recovery; email accounts cannot use legacy codes. No credentials or recovery codes are logged. Names are escaped. Session changes clear account/room caches; stale responses cannot overwrite current context. Recovery screens stop dashboard polling.
+
+## Kata Laluan & Keselamatan
+
+Signed-in teachers and students can open security from their dashboard. The
+current password reauthenticates the server-verified canonical account using a
+separate SDK client with no persistence. New passwords and confirmation use the
+existing 10–128-character policy without trimming; paste and password managers
+remain available. Labels, reveal state, field errors and focus follow portal
+components. Duplicate submissions are blocked while pending. The security page
+pauses dashboard rendering and polling so drafts survive background activity.
+
+Secrets are erased on success, dashboard/reset navigation, exit, account/session
+changes and pagehide. No security error object or password payload is sent to
+host diagnostics, storage or analytics. A dropped password-update response is
+an uncertain outcome and advises trying the new password/reset; it never retries
+the change automatically. Expired sessions offer login again.
+
+Global logout has an inline confirmation explaining that this device also exits.
+Escape cancels and returns focus. An actual successful provider logout response
+is required before global success is displayed. Existing access tokens can stay
+valid until expiry. Shared SDK session installation, logout and callback
+initialization coordinate through the same application mutex; older tabs from a
+previous release do not implement this coordination. Recovery and email
+confirmation retain priority over the security page.
 
 ## Music and learning module
 

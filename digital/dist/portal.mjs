@@ -1,5 +1,6 @@
 import {icon, shapeArt} from './art.mjs';
 import {VERSION, formatTime} from './core.mjs';
+import {securitySessionKey} from './account-security.mjs';
 
 const PAGE_SIZE = 20;
 const ROOM_PAGE_SIZE = 6;
@@ -41,6 +42,9 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
   let recoveryUsername = '';
   let authEmail = '';
   let authOnly = false;
+  let securityView = false;
+  let securityConfirm = false;
+  let securityController = null;
   let emailCooldownUntil = 0;
   let emailCooldownTimer = null;
   let callbackErrorDismissed = false;
@@ -73,6 +77,7 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
   let renderDeferred = false;
   let previousTitle = '';
   let knownSession = '';
+  let knownSecuritySession = '';
   let notice = {text: '', tone: 'info'};
 
   screen.classList.add('portal-screen');
@@ -185,6 +190,55 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
     return `<header class="portal-page-heading"><div><p class="card-kicker">${eyebrow}</p><h1 id="portal-title" tabindex="-1">${title}</h1><p>${description}</p></div><div class="portal-account-chip"><span class="portal-avatar">${esc(initial(profile?.display_name))}</span><div><b>${esc(profile?.display_name)}</b><small>@${esc(profile?.username)} · ${isTeacher() ? 'Guru' : 'Pelajar'}</small></div>${button('Log keluar', 'logout', {quiet: true})}</div></header>`;
   }
 
+  function renderSecurity() {
+    document.title = 'Kata Laluan & Keselamatan — GeoDecoder Digital';
+    const heading = profile ? accountHeading('TETAPAN AKAUN', 'Kata Laluan & Keselamatan', 'Lindungi akaun anda dan urus sesi log masuk.') : '<header class="portal-page-heading"><div><p class="card-kicker">TETAPAN AKAUN</p><h1 id="portal-title" tabindex="-1">Kata Laluan &amp; Keselamatan</h1><p>Lindungi akaun yang sedang log masuk.</p></div></header>';
+    const account = profile?.username ? 'akaun @' + esc(profile.username) : 'akaun yang sedang log masuk';
+    return `<div class="portal-room-navigation">${button('Kembali ke kelas', 'dashboard', {quiet: true, symbol: 'home'})}</div>${heading}<div class="portal-security-layout"><section class="portal-panel" aria-labelledby="portal-change-title"><div class="portal-panel-title"><div><h2 id="portal-change-title">Tukar kata laluan</h2><p>Sahkan identiti menggunakan kata laluan semasa untuk ${account}.</p></div><span class="portal-class-icon" aria-hidden="true">${icon('lock')}</span></div><form data-portal-form="change-password" novalidate>${field('portal-security-current', 'Kata laluan semasa', {name: 'current_password', type: 'password', autocomplete: 'current-password', max: 128, password: true, secretLabel: 'kata laluan semasa', help: 'Digunakan hanya untuk mengesahkan identiti anda semula.'})}${field('portal-security-new', 'Kata laluan baharu', {name: 'password', type: 'password', autocomplete: 'new-password', min: 10, max: 128, password: true, secretLabel: 'kata laluan baharu', help: '10–128 aksara. Anda boleh tampal atau menggunakan pengurus kata laluan.'})}${field('portal-security-confirm', 'Sahkan kata laluan baharu', {name: 'password_confirm', type: 'password', autocomplete: 'new-password', min: 10, max: 128, password: true, secretLabel: 'pengesahan kata laluan baharu', help: 'Masukkan semula kata laluan baharu yang sama.'})}${formError()}${submit('Simpan kata laluan baharu')}<p class="portal-security-note">Gunakan kata laluan baharu apabila diminta log masuk semula. Terlupa kata laluan semasa? ${button('Dapatkan pautan reset', 'security-recover', {quiet: true})}</p></form></section><aside class="portal-panel portal-security-sessions" aria-labelledby="portal-sessions-title"><span class="portal-security-symbol" aria-hidden="true">${icon('user')}</span><h2 id="portal-sessions-title">Sesi semua peranti</h2><p>Log keluar pada telefon, komputer dan pelayar yang menggunakan akaun ini, termasuk peranti ini.</p><p class="portal-security-note">Pelayan membatalkan sesi untuk pembaharuan log masuk. Token akses yang sudah dikeluarkan mungkin masih sah sehingga tamat tempoh; peranti lain tidak semestinya terkeluar serta-merta.</p>${button('Log keluar semua peranti', 'request-logout-all', {danger: true})}${securityConfirm ? `<div class="portal-close-confirmation portal-security-confirm" role="group" aria-labelledby="portal-global-title"><div><h3 id="portal-global-title" tabindex="-1">Log keluar semua peranti?</h3><p>Anda juga akan keluar pada peranti ini. Simpan kerja anda dahulu. Untuk kembali, log masuk menggunakan kata laluan anda.</p></div><div>${button('Batal', 'cancel-logout-all')}${button('Ya, log keluar semua', 'logout-all', {danger: true})}</div></div>` : ''}</aside></div>`;
+  }
+
+  function clearSecurityFields() {
+    for (const input of content.querySelectorAll('form[data-portal-form="change-password"] input')) { input.value = ''; if (input.classList.contains('portal-password')) input.type = 'password'; }
+  }
+
+  async function handleSecurity(form, values, type) {
+    if (!securityView || !accountAvailable() || pending || type === 'logout-all' && !securityConfirm) return;
+    const token = epoch, identity = sessionKey(), job = ++operation;
+    const controller = new AbortController();
+    securityController = controller;
+    pending = type;
+    // Session changes must still clear sensitive fields while this request runs.
+    updateBusy(); announce(type === 'change-password' ? 'Sedang mengesahkan identiti dan menyimpan…' : 'Sedang meminta log keluar semua peranti…');
+    try {
+      const result = await cloud.auth(type, values, {signal: controller.signal});
+      if (!active || token !== epoch || !securityView || identity !== sessionKey() && !(type === 'logout-all' && !signedIn())) return;
+      clearSecurityFields();
+      if (type === 'logout-all') {
+        clearAccount(); knownSession = sessionKey(); authOnly = false; authMode = 'login';
+        render({focus: true, preserve: false});
+      } else { securityConfirm = false; render({preserve: false}); content.querySelector('#portal-change-title')?.setAttribute('tabindex', '-1'); content.querySelector('#portal-change-title')?.focus(); }
+      announce(result.message, 'success');
+    } catch (error) {
+      if (!active || token !== epoch || !securityView) return;
+      // Never forward provider error objects or credential payloads to diagnostics.
+      const message = errorText(error);
+      if (error.code === 'session-expired' || error.code === 'session-changed') {
+        clearSecurityFields(); securityView = false; securityConfirm = false; authOnly = true; authMode = 'login';
+        render({focus: true, preserve: false}); announce(message, 'error');
+      } else {
+        if (error.code === 'outcome-unknown') clearSecurityFields();
+        const input = form?.elements.namedItem(error.field);
+        if (input) { input.setAttribute('aria-invalid', 'true'); const node = [...form.querySelectorAll('[data-error-for]')].find(item => item.dataset.errorFor === error.field); if (node) node.textContent = message; input.focus(); }
+        if (form) form.querySelector('[data-form-error]').textContent = message;
+        announce(message, 'error');
+      }
+    } finally {
+      for (const key of ['current_password', 'password', 'password_confirm']) if (key in values) values[key] = '';
+      if (securityController === controller) securityController = null;
+      if (job === operation) { pending = ''; updateBusy(); }
+    }
+  }
+
   function freshness() {
     const text = roomId && isTeacher() ? connection === 'live' ? 'Masa nyata disambungkan' : connection === 'connecting' ? 'Menyambung kemas kini masa nyata…' : 'Disegar setiap 15 saat' : 'Disegar setiap 15 saat';
     return `<div class="portal-freshness"><span class="portal-live-state ${connection === 'live' && roomId ? 'is-live' : ''}" id="portal-connection"><i aria-hidden="true"></i><span>${text}</span></span><span id="portal-last-updated">${lastUpdated ? `Dikemas kini ${timeFormat.format(lastUpdated)} MYT` : 'Belum dikemas kini'}</span>${button('Muat semula', 'refresh', {quiet: true, symbol: 'refresh'})}</div>`;
@@ -228,7 +282,7 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
     if (!currentClass()) classId = classes[0]?.id || null;
     const selected = currentClass();
     const rooms = list(snapshot?.rooms).filter(room => !selected || String(room.class_id) === String(selected.id));
-    return `${accountHeading('RUANG GURU', 'Kelas anda, belajar bersama.', 'Urus pelajar, kongsi PIN dan pantau permainan kelas.')}${freshness()}<div class="portal-teacher-layout">${renderClassList(classes)}<div class="portal-class-main">${selected ? `<section class="portal-panel portal-class-overview"><div class="portal-panel-title"><div><p class="card-kicker">KELAS DIPILIH</p><h2>${esc(selected.name)}</h2><p>${list(selected.members).length} pelajar berdaftar</p></div><span class="portal-class-geometry" aria-hidden="true">${shapeArt('cuboid', 'solid', true, 'orange')}</span></div>${pinPanel(selected, 'class')}<form data-portal-form="invite" novalidate class="portal-inline-form"><div><h3>Jemput pelajar</h3><p>Masukkan nama pengguna tepat. Pelajar perlu menerima jemputan dalam akaunnya.</p></div><div class="portal-inline-form-fields">${field('portal-invite-username', 'Nama pengguna pelajar', {name: 'username', max: 24, placeholder: 'nama_pengguna', help: 'Huruf besar ditukar kepada huruf kecil. Gunakan username berdaftar pelajar.'})}${submit('Hantar jemputan', false)}</div>${formError()}</form></section>${renderRoster(selected)}<section class="portal-panel" aria-labelledby="portal-rooms-title"><div class="portal-panel-title"><div><h2 id="portal-rooms-title">Bilik permainan</h2><p>Setiap bilik mempunyai PIN dan papan skor sendiri.</p></div><span class="portal-count">${rooms.length}</span></div><form data-portal-form="create-room" novalidate class="portal-room-form"><div class="portal-inline-form-fields">${field('portal-room-name', 'Nama bilik', {name: 'name', max: 80, placeholder: 'Contoh: Latihan bongkah', help: 'Pelajar akan melihat nama ini.'})}${submit('Cipta bilik')}</div>${formError()}</form>${renderRoomCards(rooms, true)}</section>` : '<section class="portal-panel portal-first-class"><div class="portal-empty-state">' + geometryKit() + '<h2>Sediakan kelas pertama anda</h2><p>Masukkan nama kelas di sebelah. Kemudian kongsi PIN atau jemput pelajar menggunakan nama pengguna.</p></div></section>'}</div></div>`;
+    return `${accountHeading('RUANG GURU', 'Kelas anda, belajar bersama.', 'Urus pelajar, kongsi PIN dan pantau permainan kelas.')}${button('Kata Laluan &amp; Keselamatan', 'security', {quiet: true, symbol: 'lock'})}${freshness()}<div class="portal-teacher-layout">${renderClassList(classes)}<div class="portal-class-main">${selected ? `<section class="portal-panel portal-class-overview"><div class="portal-panel-title"><div><p class="card-kicker">KELAS DIPILIH</p><h2>${esc(selected.name)}</h2><p>${list(selected.members).length} pelajar berdaftar</p></div><span class="portal-class-geometry" aria-hidden="true">${shapeArt('cuboid', 'solid', true, 'orange')}</span></div>${pinPanel(selected, 'class')}<form data-portal-form="invite" novalidate class="portal-inline-form"><div><h3>Jemput pelajar</h3><p>Masukkan nama pengguna tepat. Pelajar perlu menerima jemputan dalam akaunnya.</p></div><div class="portal-inline-form-fields">${field('portal-invite-username', 'Nama pengguna pelajar', {name: 'username', max: 24, placeholder: 'nama_pengguna', help: 'Huruf besar ditukar kepada huruf kecil. Gunakan username berdaftar pelajar.'})}${submit('Hantar jemputan', false)}</div>${formError()}</form></section>${renderRoster(selected)}<section class="portal-panel" aria-labelledby="portal-rooms-title"><div class="portal-panel-title"><div><h2 id="portal-rooms-title">Bilik permainan</h2><p>Setiap bilik mempunyai PIN dan papan skor sendiri.</p></div><span class="portal-count">${rooms.length}</span></div><form data-portal-form="create-room" novalidate class="portal-room-form"><div class="portal-inline-form-fields">${field('portal-room-name', 'Nama bilik', {name: 'name', max: 80, placeholder: 'Contoh: Latihan bongkah', help: 'Pelajar akan melihat nama ini.'})}${submit('Cipta bilik')}</div>${formError()}</form>${renderRoomCards(rooms, true)}</section>` : '<section class="portal-panel portal-first-class"><div class="portal-empty-state">' + geometryKit() + '<h2>Sediakan kelas pertama anda</h2><p>Masukkan nama kelas di sebelah. Kemudian kongsi PIN atau jemput pelajar menggunakan nama pengguna.</p></div></section>'}</div></div>`;
   }
 
   function renderStudent() {
@@ -236,7 +290,7 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
     const classes = list(snapshot?.classes);
     const invites = list(snapshot?.invites);
     const rooms = list(snapshot?.rooms);
-    return `${accountHeading('RUANG PELAJAR', 'Jom temui padanannya.', 'Sertai kelas anda dan tunggu guru memulakan permainan.')}${freshness()}<div class="portal-student-top"><section class="portal-panel portal-join-panel"><div><p class="card-kicker">ADA PIN DARIPADA GURU?</p><h2>Sertai kelas atau bilik</h2><p>Masukkan enam digit PIN yang diberi oleh guru.</p></div><form data-portal-form="join-pin" novalidate>${field('portal-join-pin', 'PIN enam digit', {name: 'pin', max: 6, inputmode: 'numeric', placeholder: '000000', help: 'PIN kelas menambah anda ke kelas. PIN bilik membuka bilik permainan.'})}${formError()}${submit('Sertai dengan PIN')}</form></section><section class="portal-panel portal-student-classes"><div class="portal-panel-title"><h2>Kelas saya</h2><span class="portal-count">${classes.length}</span></div>${classes.length ? `<ul>${classes.map(item => `<li><span class="portal-class-icon">${icon('user')}</span><span><b>${esc(item.name)}</b><small>Anda ahli kelas ini</small></span>${icon('check')}</li>`).join('')}</ul>` : '<p class="portal-empty-note">Kelas anda akan muncul selepas menyertai melalui PIN atau menerima jemputan.</p>'}</section></div>${invites.length ? `<section class="portal-panel portal-invites"><div class="portal-panel-title"><div><h2>Jemputan kelas</h2><p>Semak nama guru dan kelas sebelum menerima.</p></div><span class="portal-count">${invites.length}</span></div><ul>${invites.map(invite => `<li><span class="portal-invite-symbol">${icon('user')}</span><div><b>${esc(invite.class_name)}</b><p>Daripada ${esc(invite.teacher_name)}</p></div>${button('Terima jemputan', 'accept-invite', {id: invite.id, primary: true, symbol: 'check'})}</li>`).join('')}</ul></section>` : ''}<section class="portal-panel" aria-labelledby="portal-rooms-title"><div class="portal-panel-title"><div><h2 id="portal-rooms-title">Bilik permainan kelas</h2><p>Masuk ke bilik untuk melihat status dan papan skor.</p></div><span class="portal-count">${rooms.length}</span></div>${renderRoomCards(rooms, false)}</section>`;
+    return `${accountHeading('RUANG PELAJAR', 'Jom temui padanannya.', 'Sertai kelas anda dan tunggu guru memulakan permainan.')}${button('Kata Laluan &amp; Keselamatan', 'security', {quiet: true, symbol: 'lock'})}${freshness()}<div class="portal-student-top"><section class="portal-panel portal-join-panel"><div><p class="card-kicker">ADA PIN DARIPADA GURU?</p><h2>Sertai kelas atau bilik</h2><p>Masukkan enam digit PIN yang diberi oleh guru.</p></div><form data-portal-form="join-pin" novalidate>${field('portal-join-pin', 'PIN enam digit', {name: 'pin', max: 6, inputmode: 'numeric', placeholder: '000000', help: 'PIN kelas menambah anda ke kelas. PIN bilik membuka bilik permainan.'})}${formError()}${submit('Sertai dengan PIN')}</form></section><section class="portal-panel portal-student-classes"><div class="portal-panel-title"><h2>Kelas saya</h2><span class="portal-count">${classes.length}</span></div>${classes.length ? `<ul>${classes.map(item => `<li><span class="portal-class-icon">${icon('user')}</span><span><b>${esc(item.name)}</b><small>Anda ahli kelas ini</small></span>${icon('check')}</li>`).join('')}</ul>` : '<p class="portal-empty-note">Kelas anda akan muncul selepas menyertai melalui PIN atau menerima jemputan.</p>'}</section></div>${invites.length ? `<section class="portal-panel portal-invites"><div class="portal-panel-title"><div><h2>Jemputan kelas</h2><p>Semak nama guru dan kelas sebelum menerima.</p></div><span class="portal-count">${invites.length}</span></div><ul>${invites.map(invite => `<li><span class="portal-invite-symbol">${icon('user')}</span><div><b>${esc(invite.class_name)}</b><p>Daripada ${esc(invite.teacher_name)}</p></div>${button('Terima jemputan', 'accept-invite', {id: invite.id, primary: true, symbol: 'check'})}</li>`).join('')}</ul></section>` : ''}<section class="portal-panel" aria-labelledby="portal-rooms-title"><div class="portal-panel-title"><div><h2 id="portal-rooms-title">Bilik permainan kelas</h2><p>Masuk ke bilik untuk melihat status dan papan skor.</p></div><span class="portal-count">${rooms.length}</span></div>${renderRoomCards(rooms, false)}</section>`;
   }
 
   function elapsed(player) {
@@ -289,6 +343,7 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
     else if (cloud.recoveryRequired === true || callbackError()) content.innerHTML = renderAuth();
     else if (recoveryCode) content.innerHTML = renderRecovery();
     else if (authOnly || !signedIn()) content.innerHTML = renderAuth();
+    else if (securityView) content.innerHTML = renderSecurity();
     else if (!snapshot || !profile) content.innerHTML = '<div class="portal-panel portal-loading" aria-busy="true"><span class="portal-spinner" aria-hidden="true"></span><h1 id="portal-title" tabindex="-1">Memuatkan ruang kelas…</h1><p>Sedang mendapatkan kelas dan permainan anda.</p></div>';
     else content.innerHTML = roomId ? renderRoom() : isTeacher() ? renderTeacher() : renderStudent();
     if (saved && !focus) {
@@ -376,7 +431,7 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
   }
 
   function startLive() {
-    if (!active || !accountAvailable()) return;
+    if (!active || !accountAvailable() || securityView) return;
     if (!poll) poll = setInterval(() => { if (!document.hidden && (!roomId || !isTeacher() || connection !== 'live')) refresh({silent: true}); }, POLL_MS);
     if (!tick) tick = setInterval(updateLiveLabels, 1000);
     if (!roomId || !isTeacher()) { if (watchingRoom) stopWatch(); return; }
@@ -423,7 +478,7 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
   }
 
   async function refresh({silent = false} = {}) {
-    if (!active || destroyed || !accountAvailable() || initializing) return;
+    if (!active || destroyed || !accountAvailable() || initializing || securityView) return;
     if (pending) { refreshAgain = true; return; }
     if (refreshPromise) { refreshAgain = true; return refreshPromise; }
     const token = epoch;
@@ -444,7 +499,7 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
         stale = true;
         if (requestedRoom && !currentRoom()) { roomError = errorText(error); render(); }
         announce(`${errorText(error)}${lastUpdated ? ' Data terakhir masih dipaparkan. Tekan Muat semula untuk mencuba lagi.' : ' Tekan Muat semula untuk mencuba lagi.'}`, 'error');
-        if (!snapshot) content.innerHTML = `<section class="portal-panel portal-load-error"><h1 id="portal-title" tabindex="-1">Ruang kelas belum dapat dimuatkan</h1><p>Semak sambungan anda dan cuba semula. Anda masih boleh log keluar.</p><div>${button('Muat semula', 'refresh', {primary: true, symbol: 'refresh'})}${button('Log keluar', 'logout')}</div></section>`;
+        if (!snapshot) content.innerHTML = `<section class="portal-panel portal-load-error"><h1 id="portal-title" tabindex="-1">Ruang kelas belum dapat dimuatkan</h1><p>Semak sambungan anda dan cuba semula. Anda masih boleh log keluar.</p><div>${button('Muat semula', 'refresh', {primary: true, symbol: 'refresh'})}${button('Kata Laluan &amp; Keselamatan', 'security', {quiet: true, symbol: 'lock'})}${button('Log keluar', 'logout')}</div></section>`;
         updateBusy();
         report(error);
       } finally {
@@ -458,6 +513,9 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
   }
 
   function clearAccount() {
+    clearSecurityFields();
+    securityController?.abort(); securityController = null;
+    securityView = false; securityConfirm = false;
     epoch += 1;
     operation += 1;
     pending = '';
@@ -489,8 +547,11 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
       const identity = sessionKey();
       const recovery = cloud.recoveryRequired === true;
       const linkError = String(cloud.callbackError || '');
-      if (identity === knownSession && recovery === knownRecovery && linkError === knownCallbackError) return;
+      if (securityView && pending === 'logout-all' && !signedIn()) return;
+      const securityChanged = securityView && knownSecuritySession !== securitySessionKey(cloud.session);
+      if (identity === knownSession && recovery === knownRecovery && linkError === knownCallbackError && !securityChanged) return;
       knownSession = identity;
+      knownSecuritySession = securitySessionKey(cloud.session);
       knownRecovery = recovery;
       if (linkError !== knownCallbackError || recovery) callbackErrorDismissed = false;
       knownCallbackError = linkError;
@@ -526,10 +587,11 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
       if (!validEmail(values.email)) errors.email = 'Masukkan alamat email yang sah, maksimum 254 aksara.';
     }
     if (type === 'signup' && (String(values.display_name || '').trim().length < 2 || String(values.display_name || '').trim().length > 60)) errors.display_name = 'Masukkan nama paparan antara 2 hingga 60 aksara.';
-    if (['signup', 'recover', 'reset-password'].includes(type) && (String(values.password || '').length < 10 || String(values.password || '').length > 128)) errors.password = 'Gunakan kata laluan antara 10 hingga 128 aksara.';
+    if (['signup', 'recover', 'reset-password', 'change-password'].includes(type) && (String(values.password || '').length < 10 || String(values.password || '').length > 128)) errors.password = 'Gunakan kata laluan antara 10 hingga 128 aksara.';
+    if (type === 'change-password' && (!values.current_password || values.current_password.length > 128)) errors.current_password = 'Masukkan kata laluan semasa, maksimum 128 aksara.';
     if (type === 'login' && !values.password) errors.password = 'Masukkan kata laluan anda.';
     if (type === 'login' && values.password?.length > 128) errors.password = 'Kata laluan mestilah maksimum 128 aksara.';
-    if (type === 'reset-password') {
+    if (type === 'reset-password' || type === 'change-password') {
       if (String(values.password_confirm || '').length < 10 || String(values.password_confirm || '').length > 128) errors.password_confirm = 'Gunakan pengesahan kata laluan antara 10 hingga 128 aksara.';
       else if (values.password_confirm !== values.password) errors.password_confirm = 'Pengesahan kata laluan mesti sama dengan kata laluan baharu.';
     }
@@ -683,6 +745,7 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
     if (!validate(form, values, type)) return;
     if (['login', 'signup', 'recover', 'recover-email', 'resend-confirmation', 'reset-password'].includes(type)) return handleAuth(form, values, type);
     if (!accountAvailable()) return;
+    if (type === 'change-password') return handleSecurity(form, values, type);
     if (type === 'create-class') return mutate('create_class', {name: values.name.trim()}, {form, success: 'Kelas berjaya dicipta. Kongsi PIN untuk menambah pelajar.', navigateClass: true});
     if (type === 'invite' && currentClass()) return mutate('invite', {class_id: classId, username: values.username.trim()}, {form, success: 'Jemputan telah dihantar. Pelajar perlu menerimanya dalam akaun sendiri.'});
     if (type === 'create-room' && currentClass()) return mutate('create_room', {class_id: classId, name: values.name.trim()}, {form, success: 'Bilik berjaya dicipta. Pelajar boleh masuk dengan PIN bilik.', navigateRoom: true});
@@ -778,6 +841,11 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
       return;
     }
     if (!accountAvailable()) return;
+    if (action === 'security') { epoch += 1; knownSecuritySession = securitySessionKey(cloud.session); roomId = null; cloud.setRoom?.(null); securityView = true; securityConfirm = false; stopLive(); announce(''); render({focus: true, preserve: false}); return; }
+    if (action === 'request-logout-all' && securityView) { clearSecurityFields(); securityConfirm = true; render({preserve: false}); content.querySelector('[data-portal-action="cancel-logout-all"]')?.focus(); return; }
+    if (action === 'cancel-logout-all' && securityView) { securityConfirm = false; render({preserve: false}); content.querySelector('[data-portal-action="request-logout-all"]')?.focus(); return; }
+    if (action === 'logout-all') return handleSecurity(null, {}, action);
+    if (action === 'security-recover' && securityView) { clearSecurityFields(); securityView = false; securityConfirm = false; authOnly = true; authMode = 'recover-email'; announce(''); render({focus: true, preserve: false}); return; }
     if (action === 'select-class') {
       classId = control.dataset.id; rosterQuery = ''; rosterPage = roomPage = 1; render({preserve: false});
       const heading = content.querySelector('.portal-class-overview h2');
@@ -787,7 +855,7 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
     if (action === 'clear-search') { rosterQuery = ''; rosterPage = 1; render({preserve: false}); content.querySelector('#portal-roster-search')?.focus({preventScroll: true}); return; }
     if (action === 'page') { const page = Math.max(1, Number(control.dataset.page) || 1); if (control.dataset.target === 'roster') rosterPage = page; else if (control.dataset.target === 'board') boardPage = page; else roomPage = page; render(); return; }
     if (action === 'view-room') return showRoom(control.dataset.id);
-    if (action === 'dashboard') { epoch += 1; roomId = null; cloud.setRoom?.(null); roomError = ''; closeConfirmation = false; stopWatch(); announce(''); render({focus: true, preserve: false}); return refresh(); }
+    if (action === 'dashboard') { clearSecurityFields(); securityView = false; securityConfirm = false; epoch += 1; roomId = null; cloud.setRoom?.(null); roomError = ''; closeConfirmation = false; stopWatch(); announce(''); render({focus: true, preserve: false}); return refresh(); }
     if (action === 'join-room') return mutate('join_room', {room_id: control.dataset.id}, {success: 'Anda telah masuk ke bilik permainan.', navigateRoom: true});
     if (action === 'accept-invite') return mutate('accept_invite', {invite_id: control.dataset.id}, {success: 'Jemputan diterima. Anda kini ahli kelas ini.', navigateClass: true});
     if (action === 'rotate-pin') return mutate('rotate_pin', {kind: control.dataset.kind, id: control.dataset.id}, {success: 'PIN baharu sudah sedia. PIN lama tidak boleh digunakan lagi.'});
@@ -819,7 +887,9 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
   function compositionStart() { composing = true; }
 
   function visibility() { if (active && !document.hidden && accountAvailable()) refresh({silent: true}); }
+  function pageHide() { clearSecurityFields(); securityController?.abort(); }
   function keyboard(event) {
+    if (event.key === 'Escape' && securityConfirm && !pending) { event.preventDefault?.(); event.stopPropagation?.(); securityConfirm = false; render({preserve: false}); content.querySelector('[data-portal-action="request-logout-all"]')?.focus(); return; }
     if (event.key === 'Escape' && closeConfirmation) {
       event.preventDefault?.();
       event.stopPropagation?.();
@@ -835,6 +905,7 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
   screen.addEventListener('compositionend', input);
   screen.addEventListener('keydown', keyboard);
   document.addEventListener('visibilitychange', visibility);
+  globalThis.addEventListener?.('pagehide', pageHide);
 
   async function open(options = {}) {
     if (destroyed) return;
@@ -908,6 +979,7 @@ export function createPortal({cloud, onPlay = () => {}, onExit = () => {}, onErr
     screen.removeEventListener('compositionend', input);
     screen.removeEventListener('keydown', keyboard);
     document.removeEventListener('visibilitychange', visibility);
+    globalThis.removeEventListener?.('pagehide', pageHide);
   }
 
   return {open, close, refresh, showRoom, destroy, get isOpen() { return active; }};

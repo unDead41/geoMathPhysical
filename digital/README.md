@@ -1,6 +1,6 @@
 # GeoDecoder Digital V2
 
-Versi Digital semasa: **v2.3.0**. Modul pembelajaran **v1.2.0** kini mempunyai empat Makmal interaktif.
+Versi Digital pada branch ini: **v2.4.0**. Utility Kata Laluan & Keselamatan tersedia selepas log masuk. Rujuk [laporan dan batasan pengesahan](docs/SECURITY_UTILITY.md). Modul pembelajaran **v1.2.0** kini mempunyai empat Makmal interaktif.
 
 Versi digital **2.3.0**, branch **digitalize**. Permainan geometri R1 → R2 kini mempunyai akaun guru/pelajar, kelas dan room dengan skor langsung. Firmware v1.1.3 menggunakan versi berasingan.
 

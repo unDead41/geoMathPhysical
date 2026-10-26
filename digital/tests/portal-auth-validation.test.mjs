@@ -32,6 +32,16 @@ function formFor(values) {
 }
 const valid = () => ({username: ' Ijammahmad41 ', email: ' Ijamm+Kelas@Example.COM ', password: ' Test Pass#41 ', display_name: 'Nama Ujian', role: 'student', recovery_code: 'a'.repeat(32)});
 
+test('security validates matching new passwords and current password without trimming secrets', () => {
+  const values={current_password:' old ',password:' New Pass#41 ',password_confirm:' New Pass#41 '},form=formFor(values);
+  assert.equal(validate(form,values,'change-password'),true);
+  assert.equal(values.current_password,' old ');assert.equal(values.password,' New Pass#41 ');
+  for(const invalid of [{...values,current_password:''},{...values,password:'short'},{...values,password_confirm:'different'}]){
+    const bad=formFor(invalid);assert.equal(validate(bad,invalid,'change-password'),false);
+    assert.ok(bad.focused);assert.ok([...bad.fields.values()].some(field=>field.invalid));
+  }
+});
+
 test('signup requires an email and normalizes username/email without changing the password', () => {
   const values = valid(), form = formFor(values), password = values.password;
   assert.equal(validate(form, values, 'signup'), true);
@@ -177,7 +187,7 @@ test('recovery and invalid callback screens take precedence over signed-in dashb
   const content = {innerHTML: '', querySelector: () => null};
   const context = vm.createContext({
     cloud: {session: {user: {id: 'verified-user'}}, recoveryRequired: true},
-    active: true, destroyed: false, composing: false, renderDeferred: false, initializing: false,
+    active: true, securityView: false, destroyed: false, composing: false, renderDeferred: false, initializing: false,
     callbackErrorDismissed: false, authOnly: false, recoveryCode: 'old-code', snapshot: {}, profile: {}, roomId: null,
     content, updateBusy() {}, renderAuth: () => 'AUTH', renderRecovery: () => 'LEGACY',
     renderStudent: () => 'DASHBOARD', renderTeacher: () => 'DASHBOARD', isTeacher: () => false

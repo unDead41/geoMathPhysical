@@ -1,5 +1,6 @@
 import {createClient} from '@supabase/supabase-js';
 import {CLOUD_CONFIG} from './cloud-config.mjs';
+import {runAccountSecurity,securitySessionKey,withAccountSessionLock} from './account-security.mjs';
 
 const AUTH_REDIRECT='https://undead41.github.io/geodecoder-digital/';
 const CALLBACK_KEYS=['access_token','refresh_token','provider_token','provider_refresh_token','token_type','expires_in','expires_at','type','error','error_code','error_description','code','token_hash'];
@@ -31,7 +32,7 @@ function emailError(error){
   return 'Email belum dapat dihantar. Cuba lagi kemudian.';
 }
 export class ClassroomCloud {
-  constructor(config=CLOUD_CONFIG,options={}){this.config=config;this._client=null;this._session=null;this.listeners=new Set();this.roomId=null;this.roomScope=0;this.profile=null;this.room=null;this.heartbeatTimer=null;this.heartbeatPending=false;this.ready=!!config.url&&!!config.publishableKey;this._createClient=options.createClient||createClient;this._location=options.location||globalThis.location;this._history=options.history||globalThis.history;this._callback=inspectAuthCallback(this._location?.href);this.hasAuthCallback=this._callback.present;this.authCallbackHandled=false;this.callbackError='';this.recoveryRequired=false;this._recoveryStorage=options.recoveryStorage===undefined?defaultRecoveryStorage():options.recoveryStorage;this.hasRecoveryIntent=false;try{this.hasRecoveryIntent=!!this._recoveryStorage?.getItem(RECOVERY_KEY);}catch{}this._restoredRecovery=false;this._initialization=null;this._callbackEvent=new Promise(resolve=>{this._resolveCallback=resolve;});}
+  constructor(config=CLOUD_CONFIG,options={}){this.config=config;this._client=null;this._session=null;this.listeners=new Set();this.roomId=null;this.roomScope=0;this.profile=null;this.room=null;this.heartbeatTimer=null;this.heartbeatPending=false;this.ready=!!config.url&&!!config.publishableKey;this._createClient=options.createClient||createClient;this._securityFetch=options.fetch||globalThis.fetch;this._location=options.location||globalThis.location;this._history=options.history||globalThis.history;this._callback=inspectAuthCallback(this._location?.href);this.hasAuthCallback=this._callback.present;this.authCallbackHandled=false;this.callbackError='';this.recoveryRequired=false;this._recoveryStorage=options.recoveryStorage===undefined?defaultRecoveryStorage():options.recoveryStorage;this.hasRecoveryIntent=false;try{this.hasRecoveryIntent=!!this._recoveryStorage?.getItem(RECOVERY_KEY);}catch{}this._restoredRecovery=false;this._initialization=null;this._callbackEvent=new Promise(resolve=>{this._resolveCallback=resolve;});}
   get session(){return this._session;}
   _setSession(session){if(this._session?.user?.id!==session?.user?.id){if(this._session?.user?.id)this._clearRecovery();this.profile=null;this.room=null;this.roomId=null;this.roomScope++;this.recoveryRequired=false;}this._session=session;if(!session){this._clearRecovery();this.stopHeartbeat();}}
   _clearRecovery(){this.recoveryRequired=false;this.hasRecoveryIntent=false;try{this._recoveryStorage?.removeItem(RECOVERY_KEY);}catch{}}
@@ -54,7 +55,7 @@ export class ClassroomCloud {
   get client(){
     if(!this.ready)throw Error('Sambungan kelas belum dikonfigurasi. Latihan sendiri masih boleh dimainkan.');
     if(!this._client){
-      this._client=this._createClient(this.config.url,this.config.publishableKey,{auth:{storageKey:'geodecoder.cloud.auth',persistSession:true,autoRefreshToken:true,detectSessionInUrl:['recovery','confirmation'].includes(this._callback.kind),flowType:'implicit'}});
+      this._client=this._createClient(this.config.url,this.config.publishableKey,{auth:{storageKey:'geodecoder.cloud.auth',persistSession:true,autoRefreshToken:true,skipAutoInitialize:true,detectSessionInUrl:['recovery','confirmation'].includes(this._callback.kind),flowType:'implicit'}});
       this._client.auth.onAuthStateChange((event,session)=>{
         this._setSession(session);
         if(event==='PASSWORD_RECOVERY'&&session?.user?.id){this._rememberRecovery(session);this.callbackError='';this._resolveCallback();}
@@ -70,10 +71,10 @@ export class ClassroomCloud {
     const {data,error}=await this.client.auth.getSession();if(error)throw Error('Sesi tidak dapat dibaca. Log masuk semula.');this._setSession(data.session);await this._restoreRecovery(data.session);if(this._session&&!this.recoveryRequired&&!this.callbackError)this.startHeartbeat();return this._session;
   }
   async _initCallback(){
-    if(!this.hasAuthCallback)return;
+    if(!this.hasAuthCallback){const result=await withAccountSessionLock(()=>this.client.auth.initialize?.());if(result?.error)throw Error('Sesi tidak dapat dibaca. Log masuk semula.');return;}
     try{
       if(!['recovery','confirmation'].includes(this._callback.kind)){this.callbackError=LINK_ERROR;return;}
-      const {error}=await this.client.auth.initialize();
+      const {error}=await withAccountSessionLock(()=>this.client.auth.initialize());
       if(error){this.callbackError=LINK_ERROR;return;}
       // Auth-js queues its validated callback notification after initialize().
       await this._callbackEvent;
@@ -81,8 +82,31 @@ export class ClassroomCloud {
     }catch{this.callbackError=LINK_ERROR;}
     finally{this.authCallbackHandled=true;try{this._history?.replaceState(null,'',cleanAuthCallbackUrl(this._location.href));}catch{/* File origins may prohibit history updates. */}}
   }
-  async auth(action,payload={}){
-    if(action==='logout'){const {error}=await this.client.auth.signOut({scope:'local'});if(error)throw Error('Log keluar belum berjaya. Cuba lagi.');this._setSession(null);return {};}
+  async auth(action,payload={},options={}){
+    if(action==='change-password'||action==='logout-all'){
+      if(this._securityPending)throw Object.assign(Error('Tunggu permintaan keselamatan selesai.'),{code:'busy'});
+      this._securityPending=true;
+      const identity=securitySessionKey(this._session);
+      try{
+        if(!identity)throw Object.assign(Error('Sesi tamat. Log masuk semula sebelum mencuba lagi.'),{code:'session-expired'});
+        await withAccountSessionLock(async()=>{
+          const actual=await this.client.auth.getSession();
+          if(actual.error||!actual.data?.session)throw Object.assign(Error('Sesi tamat. Log masuk semula sebelum mencuba lagi.'),{code:'session-expired'});
+          if(securitySessionKey(actual.data.session)!==identity||securitySessionKey(this._session)!==identity)throw Object.assign(Error('Sesi akaun berubah. Log masuk semula untuk meneruskan.'),{code:'session-changed'});
+        });
+        const result=await runAccountSecurity({config:this.config,createClient:this._createClient,getSession:()=>this._session,fetcher:this._securityFetch,signal:options.signal,expectedIdentity:identity},action,payload);
+        if(result.globalSignedOut)await withAccountSessionLock(async()=>{
+          // Inspect inside the same lock used to install login sessions. A login
+          // queued before cleanup wins; one queued after installs after logout.
+          const actual=await this.client.auth.getSession();
+          if(actual.error||securitySessionKey(actual.data?.session)!==identity||securitySessionKey(this._session)!==identity)return;
+          try{await this.client.auth.signOut({scope:'local'});}catch{}
+          if(securitySessionKey(this._session)===identity)this._setSession(null);
+        });
+        return result;
+      }finally{this._securityPending=false;}
+    }
+    if(action==='logout')return withAccountSessionLock(async()=>{const {error}=await this.client.auth.signOut({scope:'local'});if(error)throw Error('Log keluar belum berjaya. Cuba lagi.');this._setSession(null);return {};});
     if(action==='recover-email'||action==='resend-confirmation'){
       const email=emailAddress(payload.email),redirect=this.config.authRedirectUrl||AUTH_REDIRECT;
       const {error}=action==='recover-email'?await this.client.auth.resetPasswordForEmail(email,{redirectTo:redirect}):await this.client.auth.resend({type:'signup',email,options:{emailRedirectTo:redirect}});
@@ -90,7 +114,7 @@ export class ClassroomCloud {
       this.callbackError='';
       return {message:action==='recover-email'?'Jika email ini berdaftar, pautan reset akan dihantar. Semak peti masuk dan folder spam.':'Jika akaun ini menunggu pengesahan, email pengesahan akan dihantar. Semak peti masuk dan folder spam.'};
     }
-    if(action==='reset-password'){
+    if(action==='reset-password')return withAccountSessionLock(async()=>{
       if(!this.recoveryRequired||!this._session?.user?.id)throw Error(LINK_ERROR);
       if(typeof payload.password!=='string'||payload.password.length<10||payload.password.length>128)throw Error('Gunakan kata laluan antara 10 hingga 128 aksara.');
       const {error}=await this.client.auth.updateUser({password:payload.password});
@@ -99,12 +123,12 @@ export class ClassroomCloud {
       const signedOut=await this.client.auth.signOut({scope:'global'});
       if(signedOut.error)throw Error('Kata laluan sudah dikemas kini. Log keluar dan log masuk semula menggunakan kata laluan baharu.');
       this._setSession(null);this.callbackError='';return {message:'Kata laluan sudah dikemas kini. Log masuk menggunakan kata laluan baharu.'};
-    }
+    });
     const response=await fetch(this.config.url+'/functions/v1/geodecoder-auth',{method:'POST',headers:{apikey:this.config.publishableKey,'Content-Type':'application/json'},body:JSON.stringify({...payload,action}),signal:AbortSignal.timeout(20000)}).catch(()=>{throw Error('Sambungan akaun gagal. Semak Internet dan cuba lagi.');});
     const data=await response.json().catch(()=>({error:'Respons akaun tidak sah.'}));
     if(!response.ok||data.error)throw Error(typeof data.error==='string'?data.error:data.error?.message||'Tindakan akaun gagal.');
     this.callbackError='';this._clearRecovery();
-    if(data.session){const {error}=await this.client.auth.setSession({access_token:data.session.access_token,refresh_token:data.session.refresh_token});if(error)throw Error('Sesi tidak dapat disimpan. Cuba log masuk semula.');this._setSession(data.session);this.startHeartbeat();}
+    if(data.session)await withAccountSessionLock(async()=>{const {error}=await this.client.auth.setSession({access_token:data.session.access_token,refresh_token:data.session.refresh_token});if(error)throw Error('Sesi tidak dapat disimpan. Cuba log masuk semula.');this._setSession(data.session);this.startHeartbeat();});
     return data;
   }
   async rpc(action,payload={}){

@@ -1,4 +1,17 @@
 /* GeoDecoder account/classroom extension. style.css remains the light token owner. */
+.portal-security-layout {display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: 24px; align-items: start; margin-top: 24px}
+.portal-security-layout > * {min-width: 0}
+.portal-security-layout form {display: grid; gap: 18px}
+.portal-security-layout .portal-panel-title p, .portal-security-sessions p {line-height: 1.75; color: var(--muted); font-size: 13px; overflow-wrap: anywhere}
+.portal-security-note {font-size: 12px; line-height: 1.75; color: var(--muted); margin: 0}
+.portal-security-note .button {white-space: normal; text-align: left}
+.portal-security-sessions {display: grid; gap: 18px}
+.portal-security-symbol {display: grid; place-items: center; width: 48px; height: 48px; border-radius: 14px; background: var(--blue-soft); color: var(--primary)}
+.portal-security-symbol svg {width: 24px; height: 24px}
+.portal-security-sessions .portal-security-confirm {margin-top: 0; flex-direction: column; gap: 16px; min-width: 0}
+.portal-security-confirm > div:last-child {width: 100%}
+@media (max-width: 800px) {.portal-security-layout {grid-template-columns: minmax(0, 1fr); gap: 18px}}
+@media (max-width: 380px) {.portal-security-layout .button {width: 100%; white-space: normal; overflow-wrap: anywhere; padding-inline: 12px}}
 :root {
   --portal-field: #FBFCFE;
   --portal-warning: #79551E;
