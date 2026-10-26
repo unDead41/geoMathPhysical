@@ -1,9 +1,11 @@
 # GeoDecoder Digital V2
 
 Versi Digital: **v2.8.0**. Branch integrasi: **main-digitalized**.
+
+Laman aktif: https://undead41.github.io/geodecoder-digital/ . Pages commit `c27f3bde56079c2ab7f519a43f0008dce9f20c81` / workflow `40323253926` berjaya; HTTP/hash laman sepadan artifak gabungan.
 Modul pembelajaran: **v1.6.0**. Firmware kekal **v1.1.3**. Status pengesahan dan penerbitan v2.8.0 direkodkan dalam [RELEASE_V2_8.md](docs/RELEASE_V2_8.md).
 
-> Rekod deployment v2.7.0: backend diaktifkan selepas kebenaran jelas melalui migration `20261026110959` dan Duel Edge v2/protocol2. Commit penerbitan awam `0486388a9c94942ab0973af5609be0168d27323c`. Lihat [RELEASE_V2_7.md](docs/RELEASE_V2_7.md). Rekod ini tidak mengesahkan calon v2.8.0.
+> Rekod deployment v2.7.0: backend diaktifkan selepas kebenaran jelas melalui migration `20261026110959` dan Duel Edge v2/protocol2. Commit penerbitan awam `0486388a9c94942ab0973af5609be0168d27323c`. Lihat [RELEASE_V2_7.md](docs/RELEASE_V2_7.md). Ini rekod sejarah sebelum keluaran v2.8.0.
 
 Keluaran v2.8.0 mengekalkan semua fungsi v2.7.0 dan menambah satu design system pusat, tutorial/bantuan bergambar serta Studio Pelan & Dongakan dan Semakan Langkah Pengiraan modul v1.6.0. Penggabungan kod tidak membuktikan penerbitan Pages atau deployment backend baharu.
 

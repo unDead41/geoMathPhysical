@@ -1,0 +1,22 @@
+{
+  "version": "2.8.0",
+  "moduleVersion": "1.6.0",
+  "runtimeSource": "9288d422bc34212fe5b7d6c0a2c6edb129bbd295",
+  "integrationCommit": "f740aded776f2af8930dbcc63c98451ef20a4178",
+  "publicCommit": "c27f3bde56079c2ab7f519a43f0008dce9f20c81",
+  "workflow": 40323253926,
+  "workflowConclusion": "success",
+  "live": {
+    "status": 200,
+    "bytes": 1360334,
+    "sha256": "bff5e71a21aca1b9a2ba924c90b68d77f608c8d6d7534be44ca7dfb61e4d02c5",
+    "verifiedAt": "2026-10-26T12:33:09.715014Z"
+  },
+  "unitTests": {
+    "app": 350,
+    "module": 328
+  },
+  "digitalBranchHeads": 19,
+  "pendingBranchHeads": 0,
+  "backendChanges": false
+}

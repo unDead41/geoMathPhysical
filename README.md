@@ -2,9 +2,9 @@
 
 Versi semasa: **v1.1.3**.
 
-GeoDecoder Digital calon integrasi: **v2.8.0**, modul **v1.6.0**, branch integrasi **main-digitalized**.
-Calon ini menyatukan design system pusat, bantuan visual serta Studio Pelan & Dongakan dan Semakan Langkah Pengiraan. Pengesahan gabungan dan penerbitan Pages v2.8.0 masih belum selesai; firmware kekal v1.1.3.
-Rekod deployment v2.7.0 dikekalkan dalam [laporan keluaran](digital/docs/RELEASE_V2_7.md); bukti keluaran terdahulu tidak menggantikan ujian calon baharu.
+GeoDecoder Digital: **v2.8.0**, modul **v1.6.0**, branch integrasi **main-digitalized**.
+Keluaran ini menyatukan design system pusat, bantuan visual serta Studio Pelan & Dongakan dan Semakan Langkah Pengiraan. Pengesahan gabungan dan penerbitan Pages v2.8.0 lulus; firmware kekal v1.1.3. Lihat [resit v2.8.0](digital/docs/RELEASE_V2_8.md).
+Rekod deployment v2.7.0 dikekalkan dalam [laporan keluaran](digital/docs/RELEASE_V2_7.md); bukti keluaran terdahulu tidak menggantikan ujian gabungan semasa.
 Rujukan digital: [panduan penerbitan](docs/DIGITAL_PUBLISHING.md) dan
 [rekod v2.7.0](digital/docs/RELEASE_V2_7.md) serta [sejarah v2.6.0](digital/docs/RELEASE_V2_6.md).
 Rujukan kemas kini: [SOR versi](docs/SOR_VERSIONING.md) dan [changelog](CHANGELOG.md).

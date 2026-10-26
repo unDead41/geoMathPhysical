@@ -1,5 +1,7 @@
 # Digital v2.8.0 integration
 
+Published: public commit `c27f3bde56079c2ab7f519a43f0008dce9f20c81`, [successful Pages run40323253926](https://github.com/unDead41/geodecoder-digital/actions/runs/40323253926). Live root was HTTP200,1,360,334bytes at2026-10-26T12:33:09.715014Z, SHA256 `bff5e71a21aca1b9a2ba924c90b68d77f608c8d6d7534be44ca7dfb61e4d02c5`, matching the tested artifact. Runtime source: `9288d422bc34212fe5b7d6c0a2c6edb129bbd295`; final source receipts change documentation only. All19 digital branch heads had ahead_by0 at final inventory.
+
 This release combines three reviewed heads on top of deployed v2.7.0:
 
 | Feature | Branch | Commit |
