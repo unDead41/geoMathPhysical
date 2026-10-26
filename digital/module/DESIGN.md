@@ -45,6 +45,25 @@ components:
 
 # GeoDecoder Learning Module
 
+## Pelan & pengiraan v1.6.0
+
+Add two labelled peers to the existing learning navigation. Preserve all three
+older sections and their state owners. New feature panels use native bilingual
+copy under `data-module-native-language`; the host translates legacy sections
+only. Continue using `uiNode`, `uiSvg`, `uiIcon`, shared button/field tokens and
+the same light/dark palette. Text and controls inherit host scale and contrast.
+
+Studio uses the real learning mesh and analytic orthographic answers. Its single
+combined sheet keeps a constant physical grid scale, front above plan and the
+right side view to the left. Narrow screens scroll that sheet locally, with a
+coordinate form below for non-drag input. Geometry never shrinks or changes its
+scale to fit the page. Model directions, dimensions and line types have text.
+
+Calculation uses one question setup and four numbered semantic step cards.
+Only relevant measurements are shown. Later steps wait for earlier checks; edits
+invalidate dependent checks. Hints precede solution disclosure. Worked examples
+and pupil drafts are distinct. Neither tool starts animation or speech by itself.
+
 ## Overview
 
 A classroom geometry workbench for Malaysian pupils, with BM at Tingkatan 1
@@ -53,11 +72,13 @@ is the signature. Quiet controls frame the actual geometry; no decorative hero,
 background animation, account workflow or dashboard is added. Preserve the palette
 and system-font identity in ../DESIGN.md without modifying the quiz design.
 
-Model B ownership: **src/design-system.mjs is the canonical UI token and icon
-source**. tools/build.mjs generates src/design-tokens.css and embeds that CSS plus
-src/style.css into GeoDecoder_Modul_V1.html. Generated CSS is never hand-edited.
-This document mirrors accepted values and explains their use. tools/check.mjs
-compares the generated file byte-for-byte and checks every token in the HTML.
+Model B ownership: **../design-system/tokens.mjs is the canonical UI token source**.
+`../tools/design-tokens.mjs` generates `src/central-tokens.mjs` and
+`src/design-tokens.css`; `src/design-system.mjs` is the module adapter and keeps
+icons plus educational motion ownership. `tools/build.mjs` embeds the generated
+tokens and shared `../dist/module-foundation.css` after module recipes. Generated
+files are never hand-edited. `npm run design:check` from digital verifies all adapters.
+`tools/check.mjs` checks final CSS, token usage, contrast and standalone boundaries.
 
 ## Colors
 
@@ -84,7 +105,7 @@ notes or feedback to 7–11px to fit a phone. Text wraps; tables scroll locally.
 
 ## Layout
 
-Maximum page width 85rem. Shared spacing scale 4, 8, 12, 16, 20, 24, 32 and 40px.
+Maximum page width 85rem (the explicit module variant). Shared spacing scale 4, 8, 12, 16, 20, 24, 32 and 40px.
 Desktop exploration and notes use a 20rem reference column. Two-column content
 stacks at 900px. Phone padding is 16px; cards use 16px padding below 600px.
 Three section actions remain labelled and wrap into a vertical set on phones.
@@ -120,7 +141,7 @@ exact; UI radius never alters geometry.
 
 | Owner / role | Canonical path | Consumers |
 |---|---|---|
-| Colour/type/space/radius/control/motion tokens | design-system.mjs → generated design-tokens.css | all module surfaces |
+| Colour/type/space/radius/control/motion tokens | ../design-system/tokens.mjs → generated central-tokens.mjs → design-system.mjs / design-tokens.css | all module surfaces |
 | Button, selection, field, panel and feedback recipes | style.css shared selectors | exploration, notes, four labs |
 | Safe DOM/SVG and playback labels/icons | ui.mjs | app.mjs, notes.mjs, labs.mjs |
 | 24×24 SVG icon paths, 1.8px stroke | UI_ICONS in design-system.mjs | static build placeholders + uiIcon |

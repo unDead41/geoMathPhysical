@@ -1,0 +1,8 @@
+EVIDENCE docs/help-support-evidence/2026-10-26T12-22-32-222Z/help-ms-desktop.png
+EVIDENCE docs/help-support-evidence/2026-10-26T12-22-32-222Z/preview-ms.png
+EVIDENCE docs/help-support-evidence/2026-10-26T12-22-32-222Z/help-en-phone.png
+EVIDENCE docs/help-support-evidence/2026-10-26T12-22-32-222Z/preview-en.png
+EVIDENCE docs/help-support-evidence/2026-10-26T12-22-32-222Z/clipboard-denied-320-dark-150.png
+EVIDENCE docs/help-support-evidence/2026-10-26T12-22-32-222Z/offline-review-report-r2.png
+EVIDENCE docs/help-support-evidence/2026-10-26T12-22-32-222Z/module-after-help.png
+PASS 7 help/report browser scenarios; evidence in docs/help-support-evidence

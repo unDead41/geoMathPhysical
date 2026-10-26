@@ -1,7 +1,10 @@
 # GeoDecoder Digital V2 UX contract
 
-Current candidate: v2.5.0, digitalize-ease-of-use. Source of change: the eight
-ease-of-use recommendations and shared game/module settings accepted on 26 October 2026. Reference design:
+Current integration candidate: Digital v2.8.0 / module v1.6.0; firmware v1.1.3.
+The ease-of-use, shared game/module settings and v2.7.0 account/game contracts
+remain in force alongside the central design system, visual help and new module
+learning tools. Combined verification and v2.8.0 Pages publication are pending.
+Original ease-of-use reference design:
 [approved specification](../docs/superpowers/specs/2026-10-26-ease-of-use-design.md).
 Firmware rounds remain a separate contract.
 
@@ -9,20 +12,23 @@ Firmware rounds remain a separate contract.
 
 | Capability | Canonical owner | Source of truth | Allowed variants | Verification |
 |---|---|---|---|---|
-| Form | index.html, core validators, portal form owner; support-report.mjs for reports | domain validation + this contract | nickname, account, local report | core, portal, support integration/browser |
-| Select/Listbox | native select + shared field CSS | DESIGN.md; platform-owned popup | game mode, preferences, report category | keyboard and open native popup |
-| Scrollbar | style.css global scrollbar tokens | DESIGN.md runtime mapping | dialog/textarea geometry only | check.mjs + browser reflow |
-| Toast | app announcer, portal notice, report role=status | actual action outcome | status, error, local export | integration/browser |
-| CRUD | portal.mjs + cloud.mjs; storage.mjs for local scores | backend contracts; SOR | accounts/classes/rooms, local score erase | cloud/auth/storage + portal integration |
-| Guest form | index.html + validateGuest/validatePlayer | core.mjs | nickname-only guest, old/classroom profiles | core/storage/browser |
-| Dialog/settings/tutorial | usability-ui.mjs + app dialog owner | app.mjs openDialog/closeDialog | Settings, three-step guide, pause, scores, leave, help/report | browser/focus/state |
-| Help and support | help-support.mjs + support-report.mjs | HELP_SUPPORT_PLAN.md + HELP_SUPPORT_AUDIT.md | guide, report draft, read-only preview, copy/download | privacy/integration/browser |
-| Text and math | i18n.mjs + local copy modules + format.mjs | language catalog and stable IDs | BM/English, SVG/MathML | catalog/bank/browser |
-| Direct manipulation | app Pointer Events controller | core.mjs | pointer, touch, click, keyboard | browser stage/selection |
-| Scores | storage.mjs | single-attempt ruleset | save, list, CSV, erase, legacy | storage tests/browser |
+| Design tokens | design-system/tokens.mjs → tools/design-tokens.mjs | DESIGN.md / docs/DESIGN_SYSTEM.md | light/dark, standard/strong; generated module adapter | design:check; design-tokens.test.mjs |
+| Button / field / panel | dist/foundation.css + dist/module-foundation.css | DESIGN.md | brand, neutral, danger, icon; legacy class adapters | tests/design-system.browser.mjs; reference gallery |
+| Form | core validators + portal form owner; support-report.mjs for reports | account/game validation and report contract | guest, login/signup/recovery, profile/security, local report | core, portal-auth-validation, support integration/browser |
+| Select/Listbox | native select + shared field recipe | DESIGN.md; fixed choices and native popup | game mode, preferences, report category; browser/OS popup | keyboard and open native popup |
+| Scrollbar | design-system/tokens.mjs + global style.css | DESIGN.md runtime mapping | normal/forced colors; dialog/textarea geometry | token checker + browser computed style/reflow |
+| Toast | app announcer, portal notice and report role=status | actual action outcome and feedback contract | polite routine, persistent actionable error, local export | usability/integration/browser |
+| CRUD | portal.mjs + cloud.mjs; storage.mjs for local scores | backend contracts and SOR | existing accounts/classes/rooms, local score erase | cloud/auth/profile/security/storage + portal integration |
+| Guest form | index.html + validateGuest/validatePlayer | core.mjs and storage contract | nickname-only guest; legacy/classroom profiles | core/storage/browser |
+| Dialog/settings/tutorial | usability-ui.mjs + app dialog owner; help-visuals.mjs for demonstration | app openDialog/closeDialog and settings/gameplay contract | settings, visual guide, pause, scores, leave, help/report | browser focus/state; help-visuals browser |
+| Help and support | help-support.mjs + support-report.mjs | HELP_SUPPORT_PLAN.md + HELP_SUPPORT_AUDIT.md + HELP_VISUAL_UPDATE.md | visual guide, report draft, read-only preview, copy/download | privacy/integration/browser |
+| Text and math | i18n.mjs + local copy modules + format.mjs | docs/DWI_GLOSSARY.md; stable question IDs | BM/English, SVG/MathML | catalog/bank/browser |
+| Direct manipulation | app Pointer Events controller | core.mjs and gameplay contract | pointer, touch, click, keyboard | browser stage/selection |
+| Scores and solo resume | storage.mjs and actor-scoped SoloStore | single-attempt ruleset; docs/SAVE_RESUME.md | save, list, CSV, erase, legacy, explicit local resume | storage/solo tests + browser |
 | Modes | one Game engine | core.mjs | quiz10, practice15, review subset, Duel10 | core/browser |
-| Classroom | existing cloud.mjs + portal.mjs | server state/RLS | accounts, roster, rooms | existing cloud/auth tests + portal UI |
-| Duel | duel.mjs + isolated existing service | Duel contract/server | PIN, ready, live/result, reconnect | isolated transport + existing live suite |
+| Classroom | cloud.mjs + portal.mjs | backend/schema.sql; server state/RLS | accounts, roster, rooms | cloud/auth tests + portal UI |
+| Duel | duel.mjs + isolated service | docs/DUEL_V2.md; protocol 2 server | PIN, ready, live/result, reconnect | isolated transport/live suites; two browser contexts |
+| Module learning tools | module projection/calculation source owners | module/UX-CONTRACT.md; canonical measures | three-view drafts, four calculation steps; existing four reflections | module unit/DOM/browser + host integration |
 
 ## Home, guest and settings
 
@@ -141,12 +147,14 @@ motion; turning it off does not silently resume it. Sliders and explicitly
 requested educational animations remain available, matching the existing module
 accessibility behavior. Settings do not change game or server clocks/rules.
 
-The source pin stays byte-identical1.2.0. Its original content was BM-only;
-a local canonical DOM/attribute/canvas adapter supplies reversible BM/English
-for Explore, Notes and all four Labs. This corrects the earlier documentation
-claim that this pin already owned a language selector. The parent remains the
-only owner of language/text/motion storage. Source/opaque-origin/instance-checked
-messages carry exactly three presentation values, never tokens or answers.
+The original v1.2.0 pin was BM-only; its local canonical DOM/attribute/canvas
+adapter supplied reversible BM/English for Explore, Notes and all four Labs.
+The current module pin advances to v1.6.0 with the integrated native startup
+interface. New learning-tool roots declare data-module-native-language so the
+legacy translation adapter does not overwrite their own BM/English rendering.
+The parent remains the only owner of language/text/motion storage. The existing
+source/opaque-origin/instance-checked settings channel never carries credentials
+or game answers; progress remains a separate session-scoped channel.
 See docs/MODULE_SETTINGS.md for the versioned integration contract and limits.
 
 ## Integrated release v2.7.0 / module v1.5.0
@@ -166,7 +174,7 @@ responses after account changes. Teacher reads are limited to owned-class member
 Completed achievements survive retries and edits, while current observations and
 checks are invalidated as needed. Restored practice is formative self-report, not
 verified mastery or TP. Root index and all standalone aliases share one build.
-See docs/RELEASE_V2_6.md for historical v2.6.0 source SHAs, tests and deployment limits; it does not verify the v2.7.0 integration.
+See docs/RELEASE_V2_6.md for historical v2.6.0 source SHAs, tests and deployment limits; docs/RELEASE_V2_7.md records the subsequent v2.7.0 integration and deployment. Neither record verifies the v2.8.0 candidate.
 
 ## Duel protocol 2 — integration v2.7.0
 
@@ -191,3 +199,54 @@ views never replaces a game or iframe. Solo pauses; classroom/Duel retain their
 server clocks. Report drafts remain memory-only; explicit preview is the exact
 copy/download content. Automatic diagnostics use an allowlist; no remote report
 transport exists. Reuse existing module guide through the validated bridge.
+
+## Shared visual foundation (design system v1)
+
+The component recipes adapt existing markup and do not own Auth, validation, role,
+account state, timing, scoring, storage or announcements. Existing semantic button,
+field and native dialog controllers remain authoritative. Styling never adds an
+activation handler to a disabled control. Busy semantics and duplicate protection
+stay with the owning action. Use `data-block-while-busy` before starting an action
+to reserve spinner space; do not replace a native button with a clickable container.
+
+The component reference has temporary preview controls only. It creates no second
+preferences record and makes no Auth/database calls. Production preferences retain
+the single language/theme/device owner above. Native select popup geometry remains
+platform-owned. Gallery tabs follow roving Tab, arrows and Home/End; production
+auth mode buttons retain their current aria-pressed model.
+
+## Visual help integration v2.8.0
+
+The three-step tutorial and seven help guides use one exact-SVG demonstration
+renderer. Its fixed cube example reads no live question or answer. CSS plays
+once for 4.8 seconds; Pause/Resume and Replay affect only the demonstration,
+without new gameplay timers, storage or service calls. OS or application reduced
+motion produces static labelled content. Detailed text and keyboard guidance
+remain available through native disclosures. Existing dialog focus restoration,
+solo pause, classroom/Duel server clocks and local report export remain intact.
+
+## Learning module v1.6.0 integration
+
+Studio Pelan & Dongakan provides front +Z, plan +Y and right +X views in Kaedah 1
+arrangement, with consistent length scales. Its five project solids and two unit
+cube compositions use canonical meshes; this is not a free-object builder.
+Coordinates/line/circle tools, selection, delete and Undo complement pointer
+input. Equivalent geometric coverage accepts reversed or split/joined collinear
+segments. Inclusive tolerance is 0.06 cm in the drawing; construction lines do
+not substitute for an answer, and visible edges win over coincident hidden ones.
+
+Semakan Langkah Pengiraan gates formula, substitution, calculation and unit for
+22 shape/quantity pairs across 11 solids, selected open containers and two
+compositions. Measures come from the shared calculation functions. A bounded
+expression parser evaluates mathematical input without executing learner code;
+formula equivalence and substitution provenance have explicit limits. Hints,
+retry, guided examples and worked solutions do not fill the learner's answers.
+
+Both tools follow the same host settings and keep drafts across ordinary
+navigation and language changes. A new account session clears those drafts;
+standalone drafts have no added persistence. The four existing protocol 1
+reflections remain formative self-report, with no new score, TP or verified
+mastery claim. Pin the tested v1.6.0 HTML and rebuild the parent aliases before
+combined checks. Source-level branch evidence and limitations are in
+module/docs/HANDOFF_PELAN_PENGIRAAN_V1_6.md; it does not establish v2.8.0 Pages
+publication or completed integration tests.

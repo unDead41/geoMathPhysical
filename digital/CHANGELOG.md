@@ -1,6 +1,52 @@
 # GeoDecoder Digital changelog
 
+## v2.8.0 — 26 Oktober 2026 (main-digitalized)
+
+Modul dinaik taraf kepada v1.6.0; firmware kekal v1.1.3. Keluaran ini menyatukan
+kerja design system pusat, cadangan bantuan visual v2.7.1 dan modul pelan/pengiraan
+di atas semua fungsi v2.7.0. Pengesahan gabungan lulus; keputusan dan resit penerbitan Pages v2.8.0 berada dalam `docs/RELEASE_V2_8.md` dan `docs/integration-evidence/v2.8/`.
+
+### Design system pusat v1
+
+- Satu pemilik token dan adapter terjana untuk portal serta modul offline.
+- Komponen bersama, tema/kontras, tipografi, kawalan, fokus dan keadaan interaksi.
+- Rujukan komponen BM/English, semakan drift serta suite visual/akses sedia ada.
+- Peraturan backend, pemarkahan, masa dan geometri kekal dengan pemilik asal.
+
+### Bantuan visual
+
+- Tutorial R1/R2 dan pasangan +1 menggunakan demonstrasi bergambar 4.8 saat,
+  sekali main, dengan Jeda/Sambung dan Main semula.
+- Tujuh panduan bantuan mendahulukan visual; penerangan penuh dan panduan papan
+  kekunci dibuka apabila diperlukan. BM/English dan eksport laporan kekal.
+- Kurangkan gerakan melalui OS atau Tetapan memberikan ilustrasi statik berlabel.
+  Tiada video/aset luar, timer permainan atau penghantaran laporan baharu.
+
+### Modul v1.6.0: pelan, dongakan dan langkah pengiraan
+
+- Studio Pelan & Dongakan menggunakan lima bentuk projek dan dua susunan kiub
+  unit, tiga grid Kaedah 1, skala 1:1/1:2, garis nampak/terlindung/binaan,
+  alat garis/bulatan, koordinat papan kekunci, Undo dan semakan setiap pandangan.
+  Liputan geometri setara diterima pada toleransi inklusif 0.06 cm lukisan.
+- Semakan Rumus → Gantian nilai → Pengiraan → Unit bagi 11 bentuk, bekas terbuka
+  terpilih dan dua gabungan; π/unit pilihan, petunjuk khusus dan parser terhad
+  tanpa pelaksanaan kod murid.
+- Nota/kalkulator membawa ukuran semasa kepada aktiviti. Bahasa/tetapan induk,
+  geometri, empat makmal/refleksi asal dan protokol kemajuan kekal; komponen
+  baharu memiliki bahasa sendiri dan dikecualikan daripada adapter terjemahan lama.
+- Pin modul dan alias aplikasi mesti dibina semula daripada sumber gabungan.
+  Tiada schema, rekod skor atau storan draf kekal baharu.
+
+Rujukan sumber dan had: docs/DESIGN_SYSTEM.md, docs/HELP_VISUAL_UPDATE.md dan
+module/docs/HANDOFF_PELAN_PENGIRAAN_V1_6.md. Rekod deployment v2.7.0 di bawah
+kekal sejarah keluaran tersebut, bukan pengesahan penerbitan v2.8.0.
+
 ## v2.7.0 — 26 Oktober 2026 (integrasi main-digitalized)
+
+Deployment v2.7.0 disahkan kemudian melalui migration `20261026110959`,
+Duel Edge v2/protocol2 dan commit awam
+`0486388a9c94942ab0973af5609be0168d27323c`; lihat docs/RELEASE_V2_7.md.
+Catatan penggabungan dan gate asal dikekalkan di bawah.
 
 Modul v1.5.0 dan firmware v1.1.3 dikekalkan. Penerbitan awam dan deployment baharu memerlukan resit berasingan; bukti ujian setiap branch bukan pengesahan automatik hasil gabungan.
 

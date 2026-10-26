@@ -1,0 +1,138 @@
+{
+  "browser": "Chromium via Playwright",
+  "fileOrigin": true,
+  "scenarios": [
+    {
+      "name": "reference-light-desktop",
+      "width": 1440,
+      "height": 1000,
+      "language": "ms",
+      "theme": "light",
+      "contrast": "standard",
+      "textSize": "normal",
+      "reducedMotion": "no-preference",
+      "interaction": true,
+      "status": "PASS"
+    },
+    {
+      "name": "reference-dark-desktop",
+      "width": 1440,
+      "height": 1000,
+      "language": "en",
+      "theme": "dark",
+      "contrast": "standard",
+      "textSize": "normal",
+      "reducedMotion": "no-preference",
+      "interaction": true,
+      "status": "PASS"
+    },
+    {
+      "name": "reference-ms-light-standard-320-150",
+      "width": 320,
+      "height": 780,
+      "language": "ms",
+      "theme": "light",
+      "contrast": "standard",
+      "textSize": "largest",
+      "reducedMotion": "no-preference",
+      "interaction": false,
+      "status": "PASS"
+    },
+    {
+      "name": "reference-ms-light-strong-320-150",
+      "width": 320,
+      "height": 780,
+      "language": "ms",
+      "theme": "light",
+      "contrast": "strong",
+      "textSize": "largest",
+      "reducedMotion": "no-preference",
+      "interaction": true,
+      "status": "PASS"
+    },
+    {
+      "name": "reference-ms-dark-standard-320-150",
+      "width": 320,
+      "height": 780,
+      "language": "ms",
+      "theme": "dark",
+      "contrast": "standard",
+      "textSize": "largest",
+      "reducedMotion": "no-preference",
+      "interaction": false,
+      "status": "PASS"
+    },
+    {
+      "name": "reference-ms-dark-strong-320-150",
+      "width": 320,
+      "height": 780,
+      "language": "ms",
+      "theme": "dark",
+      "contrast": "strong",
+      "textSize": "largest",
+      "reducedMotion": "no-preference",
+      "interaction": true,
+      "status": "PASS"
+    },
+    {
+      "name": "reference-en-light-standard-320-150",
+      "width": 320,
+      "height": 780,
+      "language": "en",
+      "theme": "light",
+      "contrast": "standard",
+      "textSize": "largest",
+      "reducedMotion": "no-preference",
+      "interaction": false,
+      "status": "PASS"
+    },
+    {
+      "name": "reference-en-light-strong-320-150",
+      "width": 320,
+      "height": 780,
+      "language": "en",
+      "theme": "light",
+      "contrast": "strong",
+      "textSize": "largest",
+      "reducedMotion": "no-preference",
+      "interaction": true,
+      "status": "PASS"
+    },
+    {
+      "name": "reference-en-dark-standard-320-150",
+      "width": 320,
+      "height": 780,
+      "language": "en",
+      "theme": "dark",
+      "contrast": "standard",
+      "textSize": "largest",
+      "reducedMotion": "no-preference",
+      "interaction": false,
+      "status": "PASS"
+    },
+    {
+      "name": "reference-en-dark-strong-320-150",
+      "width": 320,
+      "height": 780,
+      "language": "en",
+      "theme": "dark",
+      "contrast": "strong",
+      "textSize": "largest",
+      "reducedMotion": "no-preference",
+      "interaction": true,
+      "status": "PASS"
+    },
+    {
+      "name": "reference-system-reduced-motion",
+      "width": 1440,
+      "height": 1000,
+      "language": "ms",
+      "theme": "light",
+      "contrast": "standard",
+      "textSize": "normal",
+      "reducedMotion": "reduce",
+      "interaction": false,
+      "status": "PASS"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ms"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GeoDecoder v1.6 · Pengesahan pembelajaran</title>
+<style>
+body{margin:16px;font:15px/1.5 system-ui;color:#18334b;background:#eaf0f6}h1{font-size:24px;margin:0 0 8px}p{max-width:85ch}nav{display:flex;gap:10px;flex-wrap:wrap;align-items:end;margin:12px 0}label{display:grid;gap:4px}button,select{font:inherit;min-height:44px;padding:8px 12px;border:1px solid #7d94a8;border-radius:8px;background:#fff;color:#18334b}button{cursor:pointer}iframe{display:block;box-sizing:content-box;width:390px;height:900px;border:1px solid #7d94a8;background:#fff}pre{white-space:pre-wrap;font:13px/1.5 monospace;max-width:1100px;background:#fff;padding:16px}button:focus-visible,select:focus-visible{outline:3px solid #215ff0;outline-offset:3px}
+</style>
+<h1>GeoDecoder · Ujian dua fungsi pembelajaran</h1>
+<p>Alat pembangunan sahaja. Bingkai memuatkan HTML keluaran sebenar dengan jambatan tetapan aplikasi sebenar. Lebar iframe mensimulasikan viewport CSS, bukan peranti fizikal. Pilihan reduced motion, bahasa, kontras dan saiz teks ialah tetapan ujian.</p>
+<nav aria-label="Lebar ujian"><button data-width="320">320 px</button><button data-width="390">390 px</button><button data-width="768">768 px</button><button data-width="1280">1280 px</button><button id="qa-inspect">Semak paparan</button></nav>
+<nav aria-label="Tetapan ujian">
+ <label>Bahasa<select id="qa-language"><option value="ms">BM</option><option value="en">English</option></select></label>
+ <label>Tema<select id="qa-theme"><option value="light">Cerah</option><option value="dark">Gelap</option></select></label>
+ <label>Saiz teks<select id="qa-text"><option value="100">100%</option><option value="125">125%</option><option value="150">150%</option></select></label>
+ <label>Kontras<select id="qa-contrast"><option value="standard">Biasa</option><option value="strong">Tinggi</option></select></label>
+ <label>Reduced motion<select id="qa-motion"><option value="true">Aktif</option><option value="false">Tidak aktif</option></select></label>
+ <button id="qa-new-session">Simulasi sesi baharu</button>
+</nav>
+<nav aria-label="Bahagian ujian"><button data-section="explore">Teroka</button><button data-section="notes">Nota</button><button data-section="labs">Makmal</button><button data-section="projection">Studio</button><button data-section="calculation">Pengiraan</button></nav>
+<iframe id="qa-frame" title="Aplikasi GeoDecoder sebenar"></iframe>
+<h2>Keputusan DOM pelayar</h2><pre id="qa-result" role="status">Sedang memuatkan HTML…</pre>
+<script type="module">
+import {prepareModuleFrame,MODULE_CHANNEL} from '../../dist/module-frame.mjs';
+const qaFrame=document.getElementById('qa-frame'),qaOut=document.getElementById('qa-result'),qaInstance='learning-tools-qa',qaReports=[];let qaSession='learning-tools-qa-1',qaSequence=1;
+const qaSettings=()=>({language:document.getElementById('qa-language').value,textSize:Number(document.getElementById('qa-text').value),motionPaused:document.getElementById('qa-motion').value==='true',contrast:document.getElementById('qa-contrast').value,autoRotate:false,showLabels:true,audioEnabled:false,resume:false,lastSection:'explore'});
+function qaContext(){qaFrame.contentWindow.postMessage({type:'geodecoder:module-context',protocol:1,session:qaSession,theme:document.getElementById('qa-theme').value,progress:[]},'*');}
+window.addEventListener('message',event=>{if(event.source!==qaFrame.contentWindow)return;if(event.data?.type==='geodecoder:module-ready')qaContext();});
+for(const b of document.querySelectorAll('[data-width]'))b.addEventListener('click',()=>{qaFrame.style.width=b.dataset.width+'px';qaFrame.style.height=Number(b.dataset.width)<500?'900px':'1000px';});
+for(const b of document.querySelectorAll('[data-section]'))b.addEventListener('click',()=>qaFrame.contentDocument.getElementById('learn-'+b.dataset.section).click());
+for(const id of ['qa-language','qa-text','qa-contrast','qa-motion'])document.getElementById(id).addEventListener('change',()=>qaFrame.contentWindow.postMessage({channel:MODULE_CHANNEL,version:1,instanceId:qaInstance,type:'settings',settings:qaSettings()},'*'));
+document.getElementById('qa-theme').addEventListener('change',qaContext);
+document.getElementById('qa-new-session').addEventListener('click',()=>{qaSession='learning-tools-qa-'+(++qaSequence);qaContext();});
+document.getElementById('qa-inspect').addEventListener('click',()=>{
+ const d=qaFrame.contentDocument,w=qaFrame.contentWindow,root=d.documentElement,visible=e=>Boolean(e.getClientRects().length),rect=e=>e.getBoundingClientRect();
+ const active=['explore','notes','labs','projection','calculation'].find(key=>d.getElementById('learn-'+key).getAttribute('aria-pressed')==='true');
+ const panel=d.getElementById(active==='notes'?'study-panel':active+'-panel');
+ const controls=[...panel.querySelectorAll('button,input,select,summary')].filter(visible);
+ const smallTargets=controls.filter(e=>!['checkbox','radio'].includes(e.type)&&!e.classList.contains('net-cell')&&(rect(e).width<43.9||rect(e).height<43.9)).map(e=>({id:e.id,label:e.textContent.trim().slice(0,60),width:rect(e).width,height:rect(e).height}));
+ const smallText=[...panel.querySelectorAll('p,span,small,button,label,summary,select')].filter(visible).filter(e=>parseFloat(w.getComputedStyle(e).fontSize)<12).map(e=>({id:e.id,text:e.textContent.slice(0,50),font:w.getComputedStyle(e).fontSize}));
+ const ids=[...d.querySelectorAll('[id]')].map(e=>e.id);
+ const report={viewport:w.innerWidth,availableWidth:root.clientWidth,scrollWidth:root.scrollWidth,pageOverflow:root.scrollWidth>root.clientWidth+1,section:active,settings:qaSettings(),theme:root.dataset.theme,smallTargets,smallText,duplicateIds:ids.filter((id,i)=>ids.indexOf(id)!==i),externalResources:[...d.querySelectorAll('script[src],link[rel="stylesheet"],img[src]')].map(e=>e.getAttribute('src')||e.getAttribute('href')),moduleCount:d.getElementById('module-count').textContent,fields:[...panel.querySelectorAll('input,textarea,select')].filter(visible).map(e=>({id:e.id,value:e.value,invalid:e.getAttribute('aria-invalid')}))};
+ qaReports.push(report);qaOut.textContent=JSON.stringify({latest:report,recorded:qaReports.length},null,2);
+});
+try{const html=await(await fetch('../GeoDecoder_Modul_V1.html')).text();qaFrame.srcdoc=prepareModuleFrame(html,{instanceId:qaInstance,settings:qaSettings()});qaOut.textContent='Sedia. Pilih bahagian dan lebar, kemudian Semak paparan.';}catch(error){qaOut.textContent=error.message;}
+</script></html>

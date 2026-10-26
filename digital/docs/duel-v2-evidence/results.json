@@ -1,10 +1,11 @@
 {
-  "date": "2026-10-26T10:50:34.131Z",
+  "date": "2026-10-26T12:18:37.260Z",
   "environment": "Chromium, two independent contexts, real Edge handler + isolated PGlite; no hosted writes",
   "checks": [
     "invalid PIN, escaped aliases, two-player lobby, third-player rejection, BM/EN and mobile 150%",
     "common server start, current prompt only, no future IDs/answer/hint in player response",
     "delayed accepted R1 survives opening a menu before ACK",
+    "invalid PIN recovery preserves the first keyboard choice across polling",
     "refresh resumes accepted R1 using the Home resume action",
     "lost R2 ACK retries without a second point",
     "wrong-answer correction and server pacing survive refresh",

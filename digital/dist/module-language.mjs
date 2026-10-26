@@ -27,7 +27,9 @@ export function installModuleLanguage({language='ms',catalog,document:doc=global
   const textRecords=new WeakMap(),attributeRecords=new WeakMap();
   const attributes=['aria-label','aria-valuetext','aria-description','title','placeholder','alt'];
   let observer=null;
-  const ignored=node=>node.parentElement?.closest('script,style,noscript,textarea');
+  // New learning tools own complete BM/English copy and preserve typed drafts.
+  // Do not reverse-translate their text or mathematical field labels.
+  const ignored=node=>(node.nodeType===1?node:node.parentElement)?.closest('script,style,noscript,textarea,[data-module-native-language]');
   function text(node){
     if(!node.nodeValue?.trim()||ignored(node))return;
     const previous=textRecords.get(node),value=node.nodeValue;
@@ -44,6 +46,7 @@ export function installModuleLanguage({language='ms',catalog,document:doc=global
     if(value!==rendered)node.nodeValue=rendered;
   }
   function attribute(node,name){
+    if(ignored(node))return;
     if(!node.hasAttribute(name))return;
     let record=attributeRecords.get(node);if(!record){record=new Map();attributeRecords.set(node,record);}
     const previous=record.get(name),value=node.getAttribute(name);

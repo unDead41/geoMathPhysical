@@ -1,0 +1,65 @@
+{
+  "browser": "headless Chromium",
+  "cases": [
+    {
+      "name": "Home and Auth desktop light",
+      "pass": true
+    },
+    {
+      "name": "Home and Auth desktop dark",
+      "pass": true
+    },
+    {
+      "name": "Phone150 ms light",
+      "pass": true
+    },
+    {
+      "name": "Phone150 ms dark",
+      "pass": true
+    },
+    {
+      "name": "Phone150 en light",
+      "pass": true
+    },
+    {
+      "name": "Phone150 en dark",
+      "pass": true
+    },
+    {
+      "name": "All 15 English question layouts at 320px and 150%",
+      "pass": true
+    },
+    {
+      "name": "profile controlled fixture light",
+      "pass": true
+    },
+    {
+      "name": "profile controlled fixture dark",
+      "pass": true
+    },
+    {
+      "name": "security controlled fixture light",
+      "pass": true
+    },
+    {
+      "name": "security controlled fixture dark",
+      "pass": true
+    },
+    {
+      "name": "reset controlled fixture light",
+      "pass": true
+    },
+    {
+      "name": "reset controlled fixture dark",
+      "pass": true
+    },
+    {
+      "name": "Embedded pinned module preferences and math preserve values",
+      "pass": true
+    },
+    {
+      "name": "Downloaded HTML offline uses same controls",
+      "pass": true
+    }
+  ]
+}

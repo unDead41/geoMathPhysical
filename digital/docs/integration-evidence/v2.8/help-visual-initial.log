@@ -1,0 +1,8 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> geodecoder-digital@2.8.0 test:help-visuals
+> node tests/help-visuals.browser.mjs
+
+EVIDENCE docs/ease-evidence/2026-10-26T12-13-06-606Z/visual-tutorial-r1.png
+EVIDENCE docs/ease-evidence/2026-10-26T12-13-06-606Z/visual-tutorial-r2.png
+PASS visual tutorial: finite animation, pause/replay, R1/R2/+1, OS/app reduced motion, 320px 150% storyboards

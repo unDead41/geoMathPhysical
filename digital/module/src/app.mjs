@@ -4,6 +4,8 @@ import {MODULE_VERSION,MODEL_ORDER,MODEL_DATA} from './content.mjs';
 import {ModelRenderer} from './renderer.mjs';
 import {LearningNotes} from './notes.mjs';
 import {LearningLabs} from './labs.mjs';
+import {ProjectionStudio} from './projection-studio.mjs';
+import {CalculationWorkshop} from './calculation-workshop.mjs';
 import {UI_MOTION} from './design-system.mjs';
 import {uiNode,playbackButton,hydrateIcons} from './ui.mjs';
 hydrateIcons(document);
@@ -16,6 +18,7 @@ const primaryLearningShapes=['cube','cuboid','pyramid','cylinder','cone'];
 const mainRenderer=new ModelRenderer(el('model-canvas'));
 const navRenderers=new Map(),viewRenderers=new Map();
 let raf=0,lastFrame=0,dirty=true,lastPercent=-1;
+let openedProjection=false,openedCalculation=false;
 const element=uiNode;
 function announce(text) {el('announcer').textContent=text;}
 function wake() {dirty=true;if(!raf&&!document.hidden&&state.learningView==='explore')raf=requestAnimationFrame(frame);}
@@ -119,6 +122,7 @@ function renderContent() {
   for(const button of el('shape-picker').children)button.setAttribute('aria-pressed',String(button.dataset.shape===state.shape));
   el('extra-shape-select').value=primaryLearningShapes.includes(state.shape)?'':state.shape;renderLegend();renderViews();refreshControls();
   if(state.learningView==='notes')learningNotes.render(state.shape);
+  refreshLearningToolLabels();
 }
 function selectShape(shape) {
   moduleAccess.stopSpeech();
@@ -180,22 +184,35 @@ for(const shape of primaryLearningShapes){
 }
 for(const shape of MODEL_ORDER.filter(s=>!primaryLearningShapes.includes(s)))el('extra-shape-select').append(element('option',{value:shape},MODEL_DATA[shape].name));
 el('extra-shape-select').addEventListener('change',()=>{const shape=el('extra-shape-select').value;if(MODEL_ORDER.includes(shape))selectShape(shape);});
-function switchLearningView(view) {
+function refreshLearningToolLabels(){
+  const english=window.__geodecoderModuleHost?.language==='en';
+  for(const [id,ms,en] of [['learn-projection-label','Pelan & Dongakan','Plans & Elevations'],['learn-calculation-label','Semakan Pengiraan','Calculation Steps'],['note-draw-projections','Latih pelan & dongakan','Practise plans & elevations'],['note-check-steps','Semak langkah untuk ukuran ini','Check steps with these measurements'],['note-check-description','Bina penyelesaian sendiri menggunakan ukuran dan pilihan π di atas.','Build your own solution with the measurements and π choice above.']])el(id).textContent=english?en:ms;
+  el('note-draw-projections').hidden=!primaryLearningShapes.includes(state.shape);
+}
+function switchLearningView(view,options={}) {
   moduleAccess.stopSpeech();
   if(state.learningView===view)return;
   stopAnimation();state.auto=false;state.camera=null;
   if(state.learningView==='labs')learningLabs.close();
+  if(state.learningView==='projection')projectionStudio.close();
+  if(state.learningView==='calculation')calculationWorkshop.close();
   if(raf)cancelAnimationFrame(raf);raf=0;lastFrame=0;state.learningView=view;
   refreshControls();drawMain();
-  el('explore-panel').hidden=view!=='explore';el('study-panel').hidden=view!=='notes';el('labs-panel').hidden=view!=='labs';el('shape-picker').hidden=view==='labs';el('extra-shape-field').hidden=view==='labs';
-  el('learn-explore').setAttribute('aria-pressed',String(view==='explore'));el('learn-notes').setAttribute('aria-pressed',String(view==='notes'));el('learn-labs').setAttribute('aria-pressed',String(view==='labs'));
+  for(const section of ['explore','notes','labs','projection','calculation']){
+    el(section==='notes'?'study-panel':section+'-panel').hidden=view!==section;
+    el('learn-'+section).setAttribute('aria-pressed',String(view===section));
+  }
+  el('shape-picker').hidden=!['explore','notes'].includes(view);el('extra-shape-field').hidden=!['explore','notes'].includes(view);
   document.title=(view==='notes'?'Nota ':'')+MODEL_DATA[state.shape].name+' — Modul GeoDecoder';
-  if(view!=='labs')moduleAccess.describe(MODEL_DATA[state.shape].intro+' '+MODEL_DATA[state.shape].net);
+  if(['explore','notes'].includes(view))moduleAccess.describe(MODEL_DATA[state.shape].intro+' '+MODEL_DATA[state.shape].net);
   if(view==='labs'){learningLabs.open();el('labs-title').focus({preventScroll:true});document.title='Makmal Interaktif — Modul GeoDecoder';}
+  else if(view==='projection'){projectionStudio.open(options.shape??(openedProjection?undefined:state.shape));openedProjection=true;el('projection-title')?.focus({preventScroll:true});document.title=(moduleAccess.language()==='en'?'Plans & Elevations':'Pelan & Dongakan')+' — GeoDecoder';}
+  else if(view==='calculation'){calculationWorkshop.open(options.shape??(openedCalculation?undefined:state.shape),options.context);openedCalculation=true;el('calculation-title')?.focus({preventScroll:true});document.title=(moduleAccess.language()==='en'?'Calculation Steps':'Semakan Langkah Pengiraan')+' — GeoDecoder';}
   else if(view==='notes'){learningNotes.render(state.shape);el('study-title').focus({preventScroll:true});announce('Nota '+MODEL_DATA[state.shape].name.toLowerCase()+' dibuka.');}
   else {redrawSmallModels();el('model-title').focus({preventScroll:true});announce('Teroka 3D '+MODEL_DATA[state.shape].name.toLowerCase()+'.');}
 }
-const moduleAccess=new ModuleAccess({onTheme:()=>{redrawSmallModels();if(learningLabs.active)learningLabs.draw();},onFocus:()=>{redrawSmallModels();if(learningLabs.active)learningLabs.draw();const target=el(state.learningView==='labs'?'labs-canvas':'model-canvas');if(state.learningView!=='notes'){target.focus({preventScroll:true});target.scrollIntoView({behavior:reduced.matches?'instant':'smooth',block:'center'});}},onContext:(records,changed)=>{
+const moduleAccess=new ModuleAccess({onTheme:()=>{redrawSmallModels();if(learningLabs.active)learningLabs.draw();if(state.learningView==='projection')projectionStudio.draw();},onFocus:()=>{redrawSmallModels();if(learningLabs.active)learningLabs.draw();if(state.learningView==='projection')projectionStudio.draw();const target=el(state.learningView==='labs'?'labs-canvas':state.learningView==='projection'?'projection-title':state.learningView==='calculation'?'calculation-title':'model-canvas');if(state.learningView!=='notes'&&target){target.focus({preventScroll:true});target.scrollIntoView({behavior:reduced.matches?'instant':'smooth',block:'center'});}},onContext:(records,changed)=>{
+ if(changed){projectionStudio.resetContext();calculationWorkshop.resetContext();openedProjection=false;openedCalculation=false;}
  if(changed){learningLabs.lastProgressSent={};learningLabs.suspended.clear();learningLabs.touched.clear();for(const a of Object.values(learningLabs.guided)){a.retry();a.record={activity:a.activity,stage:'prediction',prediction:'',result:'',explanation:'',completed:false};}if(learningLabs.ready){learningLabs.stop();for(const id of ['guided-prediction','guided-explanation','guided-answer'])el(id).value='';}}
  learningLabs.restoreProgress(records);
 }});
@@ -207,8 +224,18 @@ const learningNotes=new LearningNotes({announce,prefersReduced:()=>reduced.match
   else switchMode('model');
   el('stage').scrollIntoView({behavior:reduced.matches?'instant':'smooth',block:'center'});
 }});
+const projectionStudio=new ProjectionStudio({root:el('projection-panel'),announce,prefersReduced:()=>reduced.matches,getLanguage:()=>moduleAccess.language(),onDescribe:text=>moduleAccess.describe(text)});
+const calculationWorkshop=new CalculationWorkshop({root:el('calculation-panel'),announce,prefersReduced:()=>reduced.matches,getLanguage:()=>moduleAccess.language(),onDescribe:text=>moduleAccess.describe(text),onNotes:shape=>{if(MODEL_ORDER.includes(shape))selectShape(shape);switchLearningView('notes');}});
 el('learn-explore').addEventListener('click',()=>switchLearningView('explore'));el('learn-notes').addEventListener('click',()=>switchLearningView('notes'));
 el('learn-labs').addEventListener('click',()=>switchLearningView('labs'));
+el('learn-projection').addEventListener('click',()=>switchLearningView('projection'));
+el('learn-calculation').addEventListener('click',()=>switchLearningView('calculation'));
+el('note-draw-projections').addEventListener('click',()=>switchLearningView('projection',{shape:state.shape}));
+el('note-check-steps').addEventListener('click',()=>{
+  const result=learningNotes.calculate();
+  if(!result.valid){const invalid=Object.keys(result.errors)[0];el('measure-'+invalid)?.focus();return;}
+  switchLearningView('calculation',{shape:state.shape,context:{dimensions:result.dimensions,piMode:learningNotes.piMode}});
+});
 el('version').textContent='V'+MODULE_VERSION;
 el('mode-model').addEventListener('click',()=>switchMode('model'));el('mode-views').addEventListener('click',()=>switchMode('views'));
 el('open-net').addEventListener('click',()=>beginAnimation(1));el('close-net').addEventListener('click',()=>beginAnimation(0));
@@ -304,6 +331,7 @@ function refreshModuleHost(settings={}){
  if(typeof settings.showLabels==='boolean'&&settings.showLabels!==lastHostSettings.showLabels)state.labels=settings.showLabels;
  if(typeof settings.autoRotate==='boolean'&&settings.autoRotate!==lastHostSettings.autoRotate){state.auto=settings.autoRotate&&!reduced.matches&&state.mode==='model'&&state.learningView==='explore';if(state.auto){stopAnimation();state.camera=null;}}
  lastHostSettings={...settings};refreshControls();redrawSmallModels();
- if(learningLabs.active)learningLabs.render();else moduleAccess.describe(MODEL_DATA[state.shape].intro+' '+MODEL_DATA[state.shape].net);
+ refreshLearningToolLabels();projectionStudio.refreshLanguage();calculationWorkshop.refreshLanguage();
+ if(learningLabs.active)learningLabs.render();else if(['explore','notes'].includes(state.learningView))moduleAccess.describe(MODEL_DATA[state.shape].intro+' '+MODEL_DATA[state.shape].net);
 }
 window.__geodecoderModuleHost?.start(refreshModuleHost);

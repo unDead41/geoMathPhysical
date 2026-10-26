@@ -2,6 +2,17 @@
 
 Versi modul berasingan daripada permainan Digital dan firmware ESP32.
 
+## v1.6.0 — 26 Oktober 2026
+
+- Tambah Studio Pelan & Dongakan dengan model projek, latihan grid berskala,
+  alat garis/bulatan, semakan geometri setara, panduan dan Undo.
+- Tambah semakan Rumus → Gantian nilai → Pengiraan → Unit bagi 11 bentuk,
+  π/unit pilihan, petunjuk khusus dan parser matematik tanpa pelaksanaan kod.
+- Sambung nota/kalkulator kepada dua aktiviti; kekalkan tetapan induk dan empat
+  refleksi sedia ada. Bahasa baharu dimiliki komponen dan diabaikan adapter lama.
+- HTML mandiri dibina semula; versi firmware dan permainan kekal. Hasil branch
+  belum diterbitkan ke main atau laman awam. Lihat handoff v1.6.0.
+
 ## v1.5.0 — 26 Oktober 2026
 
 - Satukan makmal v1.4.0 dengan aliran Ramalkan → Cuba → Semak → Terangkan,

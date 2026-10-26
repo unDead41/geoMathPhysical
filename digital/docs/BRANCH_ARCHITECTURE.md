@@ -115,7 +115,7 @@ komposisi sedia ada telah dipecahkan menjadi pakej baharu.
 | `game-duel` | `duel.mjs`, `format.mjs`; `digital/backend/duel/`; ujian Duel/rich text/latihan | Duel mempunyai gateway/schema tersendiri. Formatter mengeluarkan markup terbatas selepas escaping; teks pengguna tidak menjadi HTML dipercayai. Pemarkahan room kelas dan Duel tidak dipindahkan kepada klien. |
 | `ux-usability` | `usability.mjs`, `usability-ui.mjs`, `usability-copy.mjs`, `usability.css`, `module-settings.mjs`, `module-frame.mjs` | Panduan, fokus, ralat dan lifecycle iframe; gunakan pemilik preferences bersama. Jambatan tetapan tidak menulis rekod kemajuan atau data akaun. |
 | `module-content` | `digital/module/src/geometry.mjs`, `content.mjs`, `lessons.mjs`, `lab-geometry.mjs`, `renderer.mjs`, `notes.mjs`, `labs.mjs`, fail makmal/bentangan | Miliki geometri, pengiraan dan kandungan. Formula/ID tidak diubah untuk susun atur atau terjemahan. Runtime pengajaran terbenam tidak mengambil alih Auth atau rangkaian portal. |
-| `module-design` | `digital/module/src/design-system.mjs`, `ui.mjs`, `style.css`, `net-tools.css`, `accessibility.mjs`; dokumen reka bentuk modul | Token dan komponen visual modul. `design-tokens.css` dijana daripada `design-system.mjs`. Warna muka geometri kekal berasingan daripada token status UI. |
+| `module-design` | `digital/module/src/design-system.mjs`, `ui.mjs`, `style.css`, `net-tools.css`, `accessibility.mjs`; dokumen reka bentuk modul | Komponen dan susun atur visual modul. Token bersama dimiliki `digital/design-system/tokens.mjs`; `design-system.mjs` ialah adapter untuk CSS/modul yang dijana. Warna muka geometri kekal berasingan daripada token status UI. |
 | `module-guided` | `digital/module/src/guided.mjs`; `digital/dist/module-progress.mjs`, `module-progress-view.mjs`; `backend/module_progress_v2_4.sql` | Aliran Ramal/Cuba/Semak/Terangkan dan rekod refleksi. Parent mengurus storan/awan; child mengurus aktiviti. Rekod latihan bukan markah kuiz, TP atau penguasaan disahkan. |
 | `utility-profile` | `profile-view.mjs`; `backend/profile_v2_3.sql` | Nama/avatar pengguna sendiri. Identiti, role dan kebenaran ditentukan backend. `snapshot` dan dispatcher bersama disepadukan oleh pemilik skema di bawah. |
 | `utility-security` | `account-security.mjs`, `security-view.mjs`; ujian SDK/sesi | Adapter Auth melalui SDK, pembersihan medan sensitif dan perlindungan pertukaran sesi. Jangan simpan kata laluan dalam rekod preferences, storan aplikasi atau mesej iframe. |
@@ -134,6 +134,15 @@ CSS utama) mempunyai satu pemilik integrasi bagi setiap perubahan. Fitur boleh
 menambah helper dan ujian miliknya, kemudian menyerahkan hook kecil kepada
 pemilik integrasi. Jangan menyalin keseluruhan fail komposisi daripada branch
 lama kerana tindakan itu boleh membuang fitur yang sudah digabungkan.
+
+## Pemilik design system pusat
+
+`digitalized-ux-design-system` owns `digital/design-system/tokens.mjs`, token
+generation/drift checks and shared recipes `dist/foundation.css` plus
+`dist/module-foundation.css`. Module layout and motion/audio branches consume this
+owner through documented variants. They retain their existing geometry, preference
+and event controllers. See [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md) for adoption and
+conflict handling; never copy an entire old app or module file over integration.
 
 ## Pemilik skema dan kontrak data
 

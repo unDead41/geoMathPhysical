@@ -8,7 +8,7 @@ import {ClassroomCloud} from './cloud.mjs';
 import {createPortal} from './portal.mjs';
 import {initTheme,setTheme} from './theme.mjs';
 import {createMusic} from './music.mjs';
-import moduleHtml from '../vendor/module-v1.5.0.html';
+import moduleHtml from '../vendor/module-v1.6.0.html';
 import {createModuleBridge} from './module-settings.mjs';
 
 import {createI18n, translate, localizeQuestion, shapeName} from './i18n.mjs';
@@ -310,7 +310,8 @@ function startGame(confirmed=false) {
   if(playMode!=='duel'&&!confirmed&&((soloStore.read(soloActor)?.state.status!=='finished'&&soloStore.status==='saved')||soloStore.status==='invalid')){soloNewAction=()=>startGame(true);openSolo();return;}
   cancelDrag();roomState=null;resetRoomRequests();cloud.setRoom(null);
   game = playMode==='duel'?Game.fromDuelSnapshot(QUESTIONS,{...player,name:duelClient.snapshot.me.name},duelClient.snapshot,now()):new Game(QUESTIONS, player, now(),Math.random,{mode:playMode,questionIds:playMode==='review'?reviewIds:undefined});
-  if(playMode==='duel'){player={...player,name:duelClient.snapshot.me.name};duelAppliedSeq=duelClient.snapshot.me.seq;}
+  // A fresh server snapshot already includes recovery from earlier lobby errors.
+  if(playMode==='duel'){player={...player,name:duelClient.snapshot.me.name};duelAppliedSeq=duelClient.snapshot.me.seq;duelNeedsRestore=false;}
   roundId = playMode==='duel'?'duel:'+duelClient.snapshot.room.id+':'+duelClient.snapshot.me.id:uid(); lastResult = null; lastClock = ''; lastLed = {}; visualPlan=null;
   $('player-initial').textContent = player.name[0].toLocaleUpperCase('ms-MY');
   $('player-display').textContent = player.name;
@@ -353,7 +354,7 @@ function renderQuestionContent() {
     const parts=q.lines.flatMap(line=>line.split(';')).map(part=>part.trim());
     const formulaLines = parts.filter(line => /^(?:V|L)=/.test(line));
     const rest = parts.filter(line => !/^(?:V|L)=/.test(line)).join(' ').replace(/Bongkah apakah ini\?|Bentuk apa\?|Which solid is this\?|Which shape is it\?/g,'').trim().replace(/ (?=[a-z]=)/g,' · ');
-    $('question-detail').innerHTML = `<span class="formula-line">${formulaLines.map(line=>`<span>${pretty(line)}</span>`).join('')}</span>${pretty(rest)}`;
+    $('question-detail').innerHTML = `<span class="formula-line">${formulaLines.map(line=>`<span class="formula-scroll" tabindex="0">${pretty(line)}</span>`).join('')}</span>${pretty(rest)}`;
   } else $('question-detail').innerHTML = pretty(detail);
   $('formula-key').hidden = true;
   if (q.formulaKey||q.id === 'S2') { $('formula-key').innerHTML = pretty(q.formulaKey?.[locale.language]||t("V = isi padu · L = luas permukaan · j = jejari · t = tinggi")); $('formula-key').hidden = false; }

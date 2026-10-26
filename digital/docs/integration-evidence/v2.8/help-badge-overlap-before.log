@@ -1,0 +1,120 @@
+EVIDENCE docs/ease-evidence/2026-10-26T12-25-30-053Z/help-badges-dark-strong-150.png
+HELP_BADGE_COMPUTED_STYLES [{"theme":"dark","contrast":"standard","textSize":100,"minContrast":5.979266288147258,"fontSizes":[12]},{"theme":"dark","contrast":"standard","textSize":150,"minContrast":5.979266288147258,"fontSizes":[18]},{"theme":"dark","contrast":"strong","textSize":100,"minContrast":7.280615378735646,"fontSizes":[12]},{"theme":"dark","contrast":"strong","textSize":150,"minContrast":7.280615378735646,"fontSizes":[18]},{"theme":"light","contrast":"standard","textSize":100,"minContrast":4.892646084699413,"fontSizes":[12]},{"theme":"light","contrast":"standard","textSize":150,"minContrast":4.892646084699413,"fontSizes":[18]},{"theme":"light","contrast":"strong","textSize":100,"minContrast":4.892646084699413,"fontSizes":[12]},{"theme":"light","contrast":"strong","textSize":150,"minContrast":4.892646084699413,"fontSizes":[18]}]
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Help badges keep readable contrast and follow 100/150% text preferences
++ actual - expected
+
++ [
++   {
++     contrast: 'standard',
++     reason: 'success badge obscures the scanner label',
++     textSize: 100,
++     theme: 'dark'
++   },
++   {
++     contrast: 'standard',
++     reason: 'success badge obscures the scanner label',
++     textSize: 150,
++     theme: 'dark'
++   },
++   {
++     contrast: 'strong',
++     reason: 'success badge obscures the scanner label',
++     textSize: 100,
++     theme: 'dark'
++   },
++   {
++     contrast: 'strong',
++     reason: 'success badge obscures the scanner label',
++     textSize: 150,
++     theme: 'dark'
++   },
++   {
++     contrast: 'standard',
++     reason: 'success badge obscures the scanner label',
++     textSize: 100,
++     theme: 'light'
++   },
++   {
++     contrast: 'standard',
++     reason: 'success badge obscures the scanner label',
++     textSize: 150,
++     theme: 'light'
++   },
++   {
++     contrast: 'strong',
++     reason: 'success badge obscures the scanner label',
++     textSize: 100,
++     theme: 'light'
++   },
++   {
++     contrast: 'strong',
++     reason: 'success badge obscures the scanner label',
++     textSize: 150,
++     theme: 'light'
++   }
++ ]
+- []
+
+    at file:///workspace/scratch/cc2654f85d60/integration/digital/tests/help-visuals.browser.mjs:47:10 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [
+    {
+      theme: 'dark',
+      contrast: 'standard',
+      textSize: 100,
+      reason: 'success badge obscures the scanner label'
+    },
+    {
+      theme: 'dark',
+      contrast: 'standard',
+      textSize: 150,
+      reason: 'success badge obscures the scanner label'
+    },
+    {
+      theme: 'dark',
+      contrast: 'strong',
+      textSize: 100,
+      reason: 'success badge obscures the scanner label'
+    },
+    {
+      theme: 'dark',
+      contrast: 'strong',
+      textSize: 150,
+      reason: 'success badge obscures the scanner label'
+    },
+    {
+      theme: 'light',
+      contrast: 'standard',
+      textSize: 100,
+      reason: 'success badge obscures the scanner label'
+    },
+    {
+      theme: 'light',
+      contrast: 'standard',
+      textSize: 150,
+      reason: 'success badge obscures the scanner label'
+    },
+    {
+      theme: 'light',
+      contrast: 'strong',
+      textSize: 100,
+      reason: 'success badge obscures the scanner label'
+    },
+    {
+      theme: 'light',
+      contrast: 'strong',
+      textSize: 150,
+      reason: 'success badge obscures the scanner label'
+    }
+  ],
+  expected: [],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.22.1

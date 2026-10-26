@@ -19,7 +19,9 @@ try{
     const test=await fresh({viewport:{width:language==='ms'?1365:390,height:language==='ms'?980:844},hasTouch:language==='en',setup:noServices});const {page}=test;
     await settings(page,{language});await page.locator('#help-button').press('Enter');
     assert.equal(await page.locator('#dialog-title').innerText(),language==='ms'?'Pusat Bantuan':'Help centre');
-    assert.equal(await page.locator('.help-guides details').count(),7);await fits(page,'Help '+language);
+    assert.equal(await page.locator('.help-guides>details').count(),7);assert.equal(await page.locator('.help-more[open]').count(),0);
+    await page.locator('[data-demo-action=pause]').click();assert.equal(await page.locator('[data-help-demo]').getAttribute('data-demo-state'),'paused');
+    await page.locator('[data-demo-action=replay]').click();assert.equal(await page.locator('[data-help-demo]').getAttribute('data-demo-state'),'playing');await fits(page,'Help '+language);
     await screenshot(harness,page,'help-'+language+(language==='ms'?'-desktop':'-phone'));
     const report=await preview(page);assert.match(report,language==='ms'?/Hasil dijangka/:/Expected result/);
     assert.match(report,language==='ms'?/belum dihantar/:/not been sent/);assert.doesNotMatch(report,/access_token|refresh_token|publishable|@/);

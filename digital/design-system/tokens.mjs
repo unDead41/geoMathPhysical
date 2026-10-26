@@ -1,0 +1,110 @@
+/**
+ * GeoDecoder Digital design tokens — the single authoring owner for portal and
+ * learning module UI. Geometry face palettes and educational time are separate.
+ * Run `node tools/design-tokens.mjs` from digital after changing this file.
+ */
+export const DESIGN_SYSTEM_VERSION = 1;
+export const UI_TIMING = Object.freeze({fast:140, feedback:220, panel:240, slow:360, spin:800});
+
+export const LIGHT_TOKENS = Object.freeze({
+  primary:'#215FF0', 'primary-dark':'#194AC0', 'primary-pressed':'#123B9C',
+  'on-primary':'#FFFFFF', 'primary-fill':'#215FF0', 'primary-fill-hover':'#194AC0',
+  'primary-fill-pressed':'#123B9C', 'on-primary-fill':'#FFFFFF',
+  ink:'#18334B', bg:'#F3F7FB', surface:'#FFFFFF', 'surface-raised':'#FFFFFF',
+  'surface-field':'#FBFCFE', muted:'#526A7D', placeholder:'#526A7D',
+  border:'#D9E4ED', 'border-control':'#7D94A8', 'border-hover':'#526A7D',
+  success:'#127957', 'mint-soft':'#EAF7F1', 'success-border':'#57A489',
+  danger:'#B9403E', 'danger-soft':'#FFF0EF', 'red-soft':'var(--danger-soft)',
+  'danger-fill':'#B9403E', 'danger-fill-hover':'#983230', 'danger-fill-pressed':'#7F2827',
+  'on-danger-fill':'#FFFFFF', 'on-danger':'var(--on-danger-fill)', 'danger-border':'#B9403E',
+  accent:'#FFCB66', 'warning-ink':'#795211', 'warning-soft':'#FFFAED',
+  'warning-border':'#A37B2D', purple:'#8B3DA6', 'purple-soft':'#F8EDFC',
+  'purple-border':'#A46FB6', 'blue-soft':'#EAF1FF', hover:'#DEE9FC',
+  selected:'#EAF1FF', 'selected-border':'#215FF0', 'neutral-active':'#D5E4FF',
+  'disabled-bg':'#EAF0F6', 'disabled-ink':'#526A7D', 'disabled-opacity':'.5',
+  'stage-bg':'#F1F6FC', 'stage-dot':'#B6CBE1',
+  'scroll-thumb':'#7D94A8', 'scroll-track':'#EAF0F6', 'scroll-hover':'#526A7D', 'scroll-active':'#18334B',
+  'shadow-control':'0 1px 3px #18334B12', 'shadow-raised':'0 6px 20px #18334B12',
+  'shadow-panel':'0 12px 32px #294C6A06', 'shadow-dialog':'0 24px 80px #173C6333',
+  backdrop:'#16334E66',
+  'font-display':'"Trebuchet MS","Avenir Next",sans-serif',
+  'font-body':'"Segoe UI",Arial,sans-serif', 'font-mono':'"SFMono-Regular",Consolas,monospace',
+  'text-caption':'0.75rem', 'text-small':'0.875rem', 'text-body':'1rem',
+  'text-subheading':'1.125rem', 'text-heading':'1.5rem', 'text-title':'2rem', 'text-display':'2.5rem',
+  'leading-body':'1.65', 'leading-heading':'1.25', 'leading-control':'1.4',
+  'weight-body':'400', 'weight-label':'650', 'weight-heading':'750',
+  'tracking-heading':'-.025em', 'tracking-label':'.07em',
+  'space-0':'0', 'space-1':'0.25rem', 'space-2':'0.5rem', 'space-3':'0.75rem',
+  'space-4':'1rem', 'space-5':'1.25rem', 'space-6':'1.5rem', 'space-8':'2rem',
+  'space-10':'2.5rem', 'space-12':'3rem', 'space-16':'4rem',
+  'radius-small':'0.375rem', 'radius-control':'0.625rem', 'radius':'1rem', 'radius-lg':'1.5rem',
+  'radius-pill':'999px', 'border-width':'1px', 'focus-width':'3px', 'focus-offset':'3px',
+  'control-size':'2.75rem', 'control-size-large':'3rem', 'control-height':'3rem', 'icon-size':'1.25rem', 'icon-small':'1rem',
+  'page-max':'80rem', 'content-max':'76rem', 'module-page-max':'85rem', 'form-max':'32rem',
+  'sidebar-width':'20rem', 'stage-height':'23rem', 'diagram-label-size':'16px',
+  'ease-ui':'cubic-bezier(.2,.7,.2,1)', 'ease-enter':'cubic-bezier(.16,1,.3,1)',
+  'ease-exit':'cubic-bezier(.4,0,1,1)',
+  ...Object.fromEntries(Object.entries(UI_TIMING).map(([key,value])=>['motion-'+key,value+'ms'])),
+  // Existing portal variable names remain aliases, never a second token owner.
+  'field-bg':'var(--surface-field)', 'border-selected':'var(--selected-border)',
+  'focus-color':'var(--primary)', 'portal-field':'var(--surface-field)', 'portal-warning':'var(--warning-ink)',
+  'portal-warning-soft':'var(--warning-soft)', 'portal-warning-border':'var(--warning-border)',
+  'portal-panel-shadow':'var(--shadow-panel)', 'portal-primary-fill':'var(--primary-fill)',
+  'portal-on-primary':'var(--on-primary-fill)'
+});
+
+export const DARK_TOKENS = Object.freeze({
+  primary:'#97BBFF', 'primary-dark':'#BCD3FF', 'primary-pressed':'#A7C7FF',
+  'on-primary':'#101C29', 'primary-fill':'#255AD6', 'primary-fill-hover':'#194AC0',
+  'primary-fill-pressed':'#123B9C', 'on-primary-fill':'#FFFFFF',
+  ink:'#E8F1FA', bg:'#101C29', surface:'#1A2B3C', 'surface-raised':'#20364B',
+  'surface-field':'#142434', muted:'#AFBFCE', placeholder:'#AFBFCE',
+  border:'#3B5266', 'border-control':'#91A8BF', 'border-hover':'#AFBFCE',
+  success:'#80DAB7', 'mint-soft':'#183C34', 'success-border':'#64B493',
+  danger:'#FFA49D', 'danger-soft':'#462A31', 'danger-fill':'#A93638',
+  'danger-fill-hover':'#912A30', 'danger-fill-pressed':'#7F2827', 'danger-border':'#D98783',
+  'warning-ink':'#F3D69F', 'warning-soft':'#3E3424', 'warning-border':'#A68D5A',
+  purple:'#DBA7ED', 'purple-soft':'#382843', 'purple-border':'#AE81C1',
+  'blue-soft':'#203E65', hover:'#263F60', selected:'#203E65', 'selected-border':'#97BBFF',
+  'neutral-active':'#314D65', 'disabled-bg':'#26394C', 'disabled-ink':'#AFBFCE',
+  'stage-bg':'#101C29', 'stage-dot':'#425C76',
+  'scroll-thumb':'#91A8BF', 'scroll-track':'#172737', 'scroll-hover':'#AFBFCE', 'scroll-active':'#E8F1FA',
+  'shadow-control':'0 1px 3px #00000024', 'shadow-raised':'0 6px 20px #00000024',
+  'shadow-panel':'0 12px 32px #00000012', 'shadow-dialog':'0 24px 80px #00000066',
+  backdrop:'#07111ACC'
+});
+
+export const STRONG_TOKENS = Object.freeze({
+  primary:'#1747BC', 'primary-dark':'#123B9C', 'primary-pressed':'#0E2C76',
+  'primary-fill':'#1747BC', 'primary-fill-hover':'#123B9C', 'primary-fill-pressed':'#0E2C76',
+  ink:'#10283D', muted:'#334155', placeholder:'#334155', border:'#52657E',
+  'border-control':'#52657E', 'selected-border':'#1747BC', 'border-hover':'#334155'
+});
+export const DARK_STRONG_TOKENS = Object.freeze({
+  primary:'#A6C9FF', 'primary-dark':'#D5E4FF', 'primary-pressed':'#BCD3FF',
+  ink:'#F8FAFC', muted:'#E2E8F0', placeholder:'#E2E8F0', border:'#B6C9E2',
+  'border-control':'#B6C9E2', 'selected-border':'#A6C9FF', 'border-hover':'#E2E8F0',
+  'primary-fill':'#1747BC', 'primary-fill-hover':'#123B9C', 'primary-fill-pressed':'#0E2C76'
+});
+
+// Explicit module presentation variants; these never alter mathematical meshes.
+export const MODULE_TOKENS = Object.freeze({
+  'page-max':LIGHT_TOKENS['module-page-max'], 'volume-a':'#64CBB8', 'volume-b':'#94BDF7'
+});
+
+export function effectiveTokens({theme='light',contrast='standard',module=false}={}) {
+  return {...LIGHT_TOKENS,...(theme==='dark'?DARK_TOKENS:{}),
+    ...(contrast==='strong'?(theme==='dark'?DARK_STRONG_TOKENS:STRONG_TOKENS):{}),
+    ...(module?MODULE_TOKENS:{})};
+}
+export function tokenRule(selector,tokens,scheme='') {
+  return selector+'{'+(scheme?'color-scheme:'+scheme+';':'')+'\n'+
+    Object.entries(tokens).map(([name,value])=>'  --'+name+':'+value+';').join('\n')+'\n}\n';
+}
+export function designTokenCss({module=false}={}) {
+  return '/* Generated from digital/design-system/tokens.mjs. Do not edit. */\n'+
+    tokenRule(':root',{...LIGHT_TOKENS,...(module?MODULE_TOKENS:{})},'light')+
+    tokenRule(':root[data-theme="dark"]',DARK_TOKENS,'dark')+
+    tokenRule(':root[data-contrast="strong"]',STRONG_TOKENS)+
+    tokenRule(':root[data-theme="dark"][data-contrast="strong"]',DARK_STRONG_TOKENS);
+}

@@ -48,6 +48,14 @@ try{
     await pick(p,'solid',shape,'r1');await seen;await p.page.locator('#pause-button').click();release();
     await p.page.waitForFunction(()=>document.querySelector('#scanner-body-r1').textContent.includes('diterima'));await p.page.locator('#dialog-close').click();await p.page.unroute('**/api/duel');
     pass('delayed accepted R1 survives opening a menu before ACK');
+   }else if(p===guest&&i===0){
+    const card=p.page.locator(`.choice[data-kind="solid"][data-shape="${shape}"]`);
+    await card.focus();await card.press('Enter');assert.equal(await card.getAttribute('aria-pressed'),'true');
+    await p.page.waitForResponse(response=>response.url().endsWith('/api/duel')&&response.request().postDataJSON()?.action==='state');
+    await p.page.evaluate(()=>new Promise(requestAnimationFrame));
+    assert.equal(await card.getAttribute('aria-pressed'),'true','Lobby error recovery must not clear the first choice on polling');
+    await p.page.locator('#r1').focus();await p.page.locator('#r1').press('Enter');
+    pass('invalid PIN recovery preserves the first keyboard choice across polling');
    }else await pick(p,'solid',shape,'r1');
    await p.page.locator('#r2:not([disabled])').waitFor().catch(async e=>{console.log('DEBUG R2',i,p.name,errors,JSON.stringify(await state(p)),await p.page.locator('#feedback-text').textContent(),await p.page.locator('#app-dialog').getAttribute('open'));throw e;});
    if(p===host&&i===1){await resume(p);await p.page.locator('#r2:not([disabled])').waitFor();assert.equal((await state(p)).me.stage,'net');pass('refresh resumes accepted R1 using the Home resume action');}

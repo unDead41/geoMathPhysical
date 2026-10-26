@@ -1,0 +1,136 @@
+{
+  "startedAt": "2026-10-26T12:18:13.365Z",
+  "browser": "Headless Chromium 1161 via Playwright",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "bundleSha256": "dea8ff26f14f7aa108e6919dcf3f699e280d7c1773a1903e789751fbce9ecf1e",
+  "moduleSha256": "0b2db0879b5bf3fd0ce3b42e38b801e2f16e3fd697de2f3ca87a5e2ee9ab55d0",
+  "steps": [
+    "projection ms/light 150% fits actual iframe 346px with readable controls",
+    "projection en/dark 150% fits actual iframe 346px with readable controls",
+    "Unapplied studio dimensions survive language/theme and section changes",
+    "Guided projection transitions to independent practice; 12 coordinate lines pass all three views",
+    "Projection clear/Undo and checked drafts survive live shared settings",
+    "calculation ms/light 150% fits actual iframe 346px with readable controls",
+    "Four calculation gates reject coincidental formula/substitution and wrong cubic unit, then accept corrections",
+    "calculation en/dark 150% fits actual iframe 346px with readable controls",
+    "Checked calculation answers and gates survive shared language/theme/contrast changes",
+    "Notes transfer real dimensions and invalidate checks; new tools retain four-reflection progress contract"
+  ],
+  "layout": [
+    {
+      "section": "projection",
+      "viewport": 346,
+      "rootWidth": 346,
+      "scrollWidth": 336,
+      "textSize": "150",
+      "theme": "light",
+      "contrast": "strong",
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "nativeLanguage": true,
+      "active": [
+        "learn-projection"
+      ],
+      "brokenNavWords": [],
+      "language": "ms"
+    },
+    {
+      "section": "projection",
+      "viewport": 346,
+      "rootWidth": 346,
+      "scrollWidth": 336,
+      "textSize": "150",
+      "theme": "dark",
+      "contrast": "strong",
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "nativeLanguage": true,
+      "active": [
+        "learn-projection"
+      ],
+      "brokenNavWords": [],
+      "language": "en"
+    },
+    {
+      "section": "calculation",
+      "viewport": 346,
+      "rootWidth": 346,
+      "scrollWidth": 336,
+      "textSize": "150",
+      "theme": "light",
+      "contrast": "strong",
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "nativeLanguage": true,
+      "active": [
+        "learn-calculation"
+      ],
+      "brokenNavWords": [],
+      "language": "ms"
+    },
+    {
+      "section": "calculation",
+      "viewport": 346,
+      "rootWidth": 346,
+      "scrollWidth": 336,
+      "textSize": "150",
+      "theme": "dark",
+      "contrast": "strong",
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "nativeLanguage": true,
+      "active": [
+        "learn-calculation"
+      ],
+      "brokenNavWords": [],
+      "language": "en"
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "projection-ms-light-390-150.png",
+      "sha256": "80659bffa7561437177c84674858e453d6f4e9c5888009e747fe5d51f3d49d5a"
+    },
+    {
+      "file": "projection-en-dark-390-150.png",
+      "sha256": "f778c262b83a8be9673e5095ecc2c9bdbfd78ba8c33cbbb8af422d8b12160d67"
+    },
+    {
+      "file": "calculation-ms-light-390-150.png",
+      "sha256": "e2ac2d678a9c4fb6cd03f8334e3a6dc8c45608cd86f0561b59038d400378967a"
+    },
+    {
+      "file": "calculation-en-dark-390-150.png",
+      "sha256": "699b8f27529e2df5f7c8ead1c91a179a6619e15d38f92db7b7d3e674c14ee828"
+    }
+  ],
+  "runtimeErrors": [],
+  "blockedExternalRequests": [],
+  "limitations": [
+    "390px desktop CSS viewport emulation; no physical touch, screen reader, Safari or Firefox validation.",
+    "Actual parent dist application and sandboxed opaque srcdoc tested with local browser preferences; all external HTTP requests blocked."
+  ],
+  "status": "PASS",
+  "finishedAt": "2026-10-26T12:18:23.009Z",
+  "visualReview": {
+    "status": "PASS",
+    "reviewedScreenshots": [
+      "projection-ms-light-390-150.png",
+      "projection-en-dark-390-150.png",
+      "calculation-ms-light-390-150.png",
+      "calculation-en-dark-390-150.png"
+    ],
+    "finding": "Navigation curriculum/activity badges remain intact; large labels wrap at word boundaries; new feature headings readable in BM/English light/dark at 150%."
+  }
+}

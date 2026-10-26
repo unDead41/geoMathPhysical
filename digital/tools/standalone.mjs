@@ -2,16 +2,19 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {build} from 'esbuild';
+import {execFileSync} from 'node:child_process';
+import {buildDesignReference} from './design-reference.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+execFileSync(process.execPath,[path.join(root,'tools/design-tokens.mjs')],{stdio:'inherit'});
 const moduleRelease=JSON.parse(fs.readFileSync(path.join(root,'vendor/module-release.json'),'utf8'));
 const template=fs.readFileSync(path.join(root,'dist/index.html'),'utf8');
-const css=['style','portal','usability','help-support'].map(name=>fs.readFileSync(path.join(root,`dist/${name}.css`),'utf8')).join('\n');
+const css=['design-tokens','style','portal','usability','help-support','foundation'].map(name=>fs.readFileSync(path.join(root,`dist/${name}.css`),'utf8')).join('\n');
 const options={entryPoints:[path.join(root,'dist/app.mjs')],bundle:true,write:false,platform:'browser',format:'iife',target:['es2022'],minify:true,legalComments:'eof',loader:{'.html':'text'}};
 const javascript=(await build(options)).outputFiles[0].text;
 fs.writeFileSync(path.join(root,'dist/app.bundle.js'),javascript);
 function page(script){
   if(script.includes('</script'))throw new Error('Unsafe inline script terminator');
-  return template.replace('<link rel="stylesheet" href="./style.css">',()=>`<style>\n${css}\n</style>`).replace('<link rel="stylesheet" href="./portal.css">','').replace('<link rel="stylesheet" href="./usability.css">','').replace('<link rel="stylesheet" href="./help-support.css">','').replace('<script type="module" src="./app.bundle.js"></script>',()=>`<script type="module">\n${script}\n</script>`);
+  return template.replace('<link rel="stylesheet" href="./style.css">',()=>`<style>\n${css}\n</style>`).replace('<link rel="stylesheet" href="./design-tokens.css">','').replace('<link rel="stylesheet" href="./foundation.css">','').replace('<link rel="stylesheet" href="./portal.css">','').replace('<link rel="stylesheet" href="./usability.css">','').replace('<link rel="stylesheet" href="./help-support.css">','').replace('<script type="module" src="./app.bundle.js"></script>',()=>`<script type="module">\n${script}\n</script>`);
 }
 fs.mkdirSync(path.join(root,'artifacts'),{recursive:true});
 // Pages loads music on demand, keeping the first Home download small.
@@ -31,3 +34,5 @@ for(const target of ['GeoDecoder_Digital_V1.html','GeoDecoder_Digital_V2.html','
   const destination=path.join(root,target);fs.rmSync(destination,{force:true});fs.linkSync(canonical,destination);
 }
 console.log(`GeoDecoder Digital: website ${Buffer.byteLength(page(javascript))} bytes; offline HTML ${Buffer.byteLength(html)} bytes including both complete music tracks and module v${moduleRelease.version}.`);
+
+const reference=buildDesignReference({root});console.log(`Design reference: ${reference.bytes} bytes, self-contained.`);

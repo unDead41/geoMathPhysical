@@ -52,8 +52,11 @@ h1{margin:var(--space-1) 0 var(--space-2)}
 .self-paced{display:flex;gap:var(--space-2);align-items:center;font-size:var(--text-caption);color:var(--muted);max-width:11rem;flex-shrink:0}
 .self-paced svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8}
 .learning-navigation{display:flex;gap:var(--space-2);align-items:stretch;flex-wrap:wrap;margin-bottom:var(--space-5);padding-bottom:var(--space-4);border-bottom:var(--border-width) solid var(--border)}
-.learning-nav-button{border-color:transparent;background:transparent;color:var(--muted);padding-inline:var(--space-4)}
-.learning-nav-button span{font-size:var(--text-caption);font-weight:500}
+.learning-nav-button{border-color:transparent;background:transparent;color:var(--muted);padding-inline:var(--space-4);flex-wrap:wrap;overflow-wrap:normal}
+.learning-nav-button span{font-size:var(--text-caption);font-weight:500;flex:none;white-space:nowrap;overflow-wrap:normal}
+.learning-nav-button b{font:inherit}
+.learning-tool-bridge{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-4);padding:var(--space-5);margin-top:var(--space-5);border:var(--border-width) solid var(--border);border-radius:var(--radius);background:var(--blue-soft)}
+.learning-tool-bridge p{flex:1;min-width:min(100%,18rem)}
 .learning-nav-button[aria-pressed="true"]{background:var(--surface)}
 .shape-picker{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--space-3);margin-bottom:var(--space-5)}
 .shape-choice{min-width:0;justify-content:flex-start;text-align:left;padding:var(--space-2) var(--space-3);border-color:var(--border);gap:var(--space-3);min-height:68px}

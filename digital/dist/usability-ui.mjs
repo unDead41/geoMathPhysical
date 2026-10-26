@@ -1,9 +1,11 @@
-import {shapeArt,icon} from './art.mjs';
+import {helpVisual,installHelpVisuals} from './help-visuals.mjs';
+import {icon} from './art.mjs';
 
 
 /** Dialog views only. Gameplay, language and audio continue to have one owner. */
 export function createUsabilityUI({storage,preferenceStore,t,openDialog,closeDialog,onStart,onTheme,onTestSound,onHelp}){
   const $=id=>document.getElementById(id),panel=$('settings-panel'),home=$('settings-home');
+  installHelpVisuals($('dialog-content'));
   let step=0,beginAfterGuide=false,returnToHelp=false,themeChoice='system';
   try{const saved=storage.getItem('geodecoder.theme.v1');if(['light','dark'].includes(saved))themeChoice=saved;}catch{}
   function persist(){refreshSettings();}
@@ -20,8 +22,8 @@ export function createUsabilityUI({storage,preferenceStore,t,openDialog,closeDia
     $('dialog-content').append(panel);panel.hidden=false;refreshSettings();$('language-select').focus({preventScroll:true});
   }
   function renderTutorial(){
-    const active=step+1,art=step===0?shapeArt('cube','solid',true,'violet'):step===1?shapeArt('cube','net',true,'orange'):shapeArt('cube','solid',true,'violet')+icon('arrow')+shapeArt('cube','net',true,'orange');
-    openDialog('tutorial',t('ease.tutorial'),`<div class="tutorial-content"><p id="tutorial-progress" class="eyebrow" aria-live="polite">${t('ease.tutorialProgress',{step:active})}</p><div class="tutorial-art" aria-hidden="true">${art}</div><h3>${t('ease.tutorial'+active+'Title')}</h3><p>${t('ease.tutorial'+active+'Copy')}</p><p class="tutorial-keyboard">${t('ease.keyboardNote')}</p>${beginAfterGuide?`<p class="tutorial-clock">${t('ease.tutorialSoloClock')}</p>`:''}<div class="tutorial-actions">${step?`<button class="button button-outline" data-dialog-action="tutorial-previous">${t('ease.previous')}</button>`:''}${step<2?`<button class="button button-primary" data-dialog-action="tutorial-next" data-autofocus>${t('ease.next')} ${icon('arrow')}</button>`:`<button class="button button-primary" data-dialog-action="tutorial-finish" data-autofocus>${t(beginAfterGuide?'ease.start':'ease.close')}</button>`}</div>${returnToHelp?`<button type="button" class="button button-quiet" data-dialog-action="help-open">${t('help.back')}</button>`:''}${beginAfterGuide&&step<2?`<button class="button button-quiet tutorial-skip" data-dialog-action="tutorial-skip">${t('ease.skipGuide')}</button>`:''}</div>`);
+    const active=step+1;
+    openDialog('tutorial',t('ease.tutorial'),`<div class="tutorial-content"><p id="tutorial-progress" class="eyebrow" aria-live="polite">${t('ease.tutorialProgress',{step:active})}</p>${helpVisual('play',document.documentElement.lang,step)}<h3>${t('ease.tutorial'+active+'Title')}</h3><p>${t('ease.tutorial'+active+'Copy')}</p><details class="tutorial-keyboard"><summary>${t('help.keyboard')}</summary><p>${t('ease.keyboardNote')}</p></details>${beginAfterGuide?`<p class="tutorial-clock">${t('ease.tutorialSoloClock')}</p>`:''}<div class="tutorial-actions">${step?`<button class="button button-outline" data-dialog-action="tutorial-previous">${t('ease.previous')}</button>`:''}${step<2?`<button class="button button-primary" data-dialog-action="tutorial-next" data-autofocus>${t('ease.next')} ${icon('arrow')}</button>`:`<button class="button button-primary" data-dialog-action="tutorial-finish" data-autofocus>${t(beginAfterGuide?'ease.start':'ease.close')}</button>`}</div>${returnToHelp?`<button type="button" class="button button-quiet" data-dialog-action="help-open">${t('help.back')}</button>`:''}${beginAfterGuide&&step<2?`<button class="button button-quiet tutorial-skip" data-dialog-action="tutorial-skip">${t('ease.skipGuide')}</button>`:''}</div>`);
   }
   function openTutorial({start=false,fromHelp=false}={}){step=0;beginAfterGuide=start;returnToHelp=fromHelp;renderTutorial();}
   function finishTutorial(){preferenceStore.set({tutorialSeen:true});persist();const begin=beginAfterGuide,back=returnToHelp;beginAfterGuide=false;returnToHelp=false;if(back)onHelp();else closeDialog();if(begin)onStart();}

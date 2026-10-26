@@ -1,15 +1,15 @@
 # GeoDecoder Digital V2
 
-> v2.7.0 backend activated after explicit authorization: migration `20261026110959`, Duel Edge v2/protocol2. Public release commit `0486388a9c94942ab0973af5609be0168d27323c`. See [RELEASE_V2_7.md](docs/RELEASE_V2_7.md).
+Versi Digital: **v2.8.0**. Branch integrasi: **main-digitalized**.
+Modul pembelajaran: **v1.6.0**. Firmware kekal **v1.1.3**. Status pengesahan dan penerbitan v2.8.0 direkodkan dalam [RELEASE_V2_8.md](docs/RELEASE_V2_8.md).
 
-Versi Digital: **v2.7.0**. Branch integrasi: **main-digitalized**.
-Asas keluaran terdahulu: v2.6.0. Penggabungan kod tidak membuktikan penerbitan Pages atau deployment backend baharu.
+> Rekod deployment v2.7.0: backend diaktifkan selepas kebenaran jelas melalui migration `20261026110959` dan Duel Edge v2/protocol2. Commit penerbitan awam `0486388a9c94942ab0973af5609be0168d27323c`. Lihat [RELEASE_V2_7.md](docs/RELEASE_V2_7.md). Rekod ini tidak mengesahkan calon v2.8.0.
+
+Keluaran v2.8.0 mengekalkan semua fungsi v2.7.0 dan menambah satu design system pusat, tutorial/bantuan bergambar serta Studio Pelan & Dongakan dan Semakan Langkah Pengiraan modul v1.6.0. Penggabungan kod tidak membuktikan penerbitan Pages atau deployment backend baharu.
 
 Profil mempunyai pratonton draf dan pengesahan perubahan belum disimpan; lihat [kemas kini profil](docs/PROFILE_V2_7.md).
 Simpan & Sambung: Home → **Sambung permainan** memaparkan ringkasan sebelum memulihkan Kuiz10, Latihan15 atau latihan semula. Satu slot bagi tetamu/setiap akaun pada pelayar dan origin yang sama; bukan sync antara peranti. **Mula baharu** mengesahkan penggantian sesi belum selesai. Jika storan disekat/penuh, kekalkan halaman terbuka. Lihat [kontrak dan bukti](docs/SAVE_RESUME.md).
 Sejarah migration hosted dan semakan deployment boleh diaudit melalui [operasi backend](backend/operations/README.md); fail migration dalam Git bukan bukti deployment baharu.
-
-Modul pembelajaran: **v1.5.0**. Firmware kekal **v1.1.3**.
 
 Integrasi ini merangkumi Duel protocol 2. Pengaktifan memerlukan backend/Edge yang sepadan; rekod branch Duel tidak mendakwa deployment production.
 Lihat [handoff integrasi](docs/DUEL_V2_HANDOFF.md) sebelum merge atau deploy.
@@ -39,6 +39,13 @@ Jangan masukkan maklumat peribadi atau rahsia dalam penerangan. Draf kekal
 dalam memori tab sahaja. Lihat [audit dan kontrak backend](docs/HELP_SUPPORT_AUDIT.md)
 dan [serahan serta ujian](docs/HELP_SUPPORT_HANDOFF.md).
 
+Tutorial R1, R2 dan pasangan +1 kini menggunakan contoh kubus bergambar dengan
+klip setempat 4.8 saat, sekali main serta Jeda/Sambung/Main semula. Tujuh
+panduan mendahulukan visual; penerangan penuh dan panduan papan kekunci boleh
+dibuka. Pilihan Kurangkan animasi aplikasi atau peranti memberi ilustrasi
+statik berlabel. Demonstrasi tidak membaca jawapan semasa, mengubah permainan
+atau memuat video luar. Lihat [kemas kini bantuan visual](docs/HELP_VISUAL_UPDATE.md).
+
 ## Laman GitHub Pages
 
 Main terus: **[GeoDecoder Digital](https://undead41.github.io/geodecoder-digital/)**.
@@ -46,7 +53,13 @@ Main terus: **[GeoDecoder Digital](https://undead41.github.io/geodecoder-digital
 Pautan itu menggunakan repository penerbitan berasingan. Push ke
 `main-digitalized` tidak dengan sendiri mengemas kini repository laman awam.
 Fail `index.html` di akar branch ini dan setiap HTML muat turun dibina daripada
-satu artifak v2.7.0 yang sama selepas binaan.
+satu artifak keluaran yang sama. Untuk calon v2.8.0, binaan dan semakan hash
+semua alias mesti diselesaikan pada sumber gabungan; ia belum menjadi resit
+penerbitan baharu.
+
+Rekod penerbitan v2.7.0 berada dalam [RELEASE_V2_7.md](docs/RELEASE_V2_7.md),
+dengan workflow [40313690820](https://github.com/unDead41/geodecoder-digital/actions/runs/40313690820)
+bagi commit awam `0486388a9c94942ab0973af5609be0168d27323c`.
 
 Rekod penerbitan v2.6.0 menggunakan repository public `unDead41/geodecoder-digital`,
 branch **main-digitalized**, folder **/(root)**. Tetapan Pages telah disimpan dan
@@ -85,7 +98,9 @@ sebelum permainan tetamu pertama; boleh dilangkau atau dibuka semula melalui
 Pilihan peranti disimpan jika storan dibenarkan. Iframe modul kekal menggunakan
 tetapan bahasa, saiz teks dan animasi daripada Tetapan utama, termasuk perubahan
 semasa modul dibuka. Butang Tetapan dalam modul membuka dialog utama yang sama.
-Aktiviti, ukuran, tab dan kemajuan bentangan dikekalkan. Modul v1.5.0 dipinkan dan penyesuai setempat menyediakan paparan BM/English.
+Aktiviti, ukuran, tab dan kemajuan bentangan dikekalkan. Calon ini menaik taraf pin
+kepada modul v1.6.0; penyesuai setempat mengekalkan paparan BM/English sedia ada,
+sementara dua fungsi baharu memiliki paparan bahasa natifnya.
 [Kontrak dan bukti penyelarasan](docs/MODULE_SETTINGS.md).
 
 ## Duel dengan kawan
@@ -198,7 +213,9 @@ Jalankan `backend/verify.sql` sebagai database owner: seluruh ujian dibatalkan m
 Rujukan bank/SHA: `docs/SOURCE.md`. Pin modul akhir dan sumbernya berada dalam
 `vendor/module-release.json`; ia mesti sepadan dengan HTML hasil binaan dalam
 `module/`. Bukti keluaran terdahulu dikekalkan sebagai sejarah; pengesahan
-terkini dan had integrasi berada dalam `docs/RELEASE_V2_6.md`.
+v2.7.0 dan hadnya berada dalam `docs/RELEASE_V2_7.md`; rekod v2.6.0
+kekal dalam `docs/RELEASE_V2_6.md`. Pengesahan sumber gabungan v2.8.0
+perlu direkodkan selepas ujian calon selesai.
 
 ## Muzik latar
 
@@ -216,6 +233,17 @@ bekas terbuka/rongga dan nota daripada v1.4.0. Aktiviti berpandu, langkah
 animasi, Undo, fokus, tema, suara dan rekod latihan disepadukan dalam v1.5.0.
 Cabaran berpandu menerangkan mod yang disokong; penerokaan lain terus tersedia.
 
+v1.6.0 menambah **Studio Pelan & Dongakan**: lima bentuk projek dan dua susunan
+kiub unit, tiga pandangan Kaedah 1 pada skala sama, alat garis/bulatan,
+koordinat papan kekunci, Undo serta semakan geometri setara dengan toleransi
+inklusif 0.06 cm lukisan. **Semakan Langkah Pengiraan** membimbing Rumus →
+Gantian nilai → Pengiraan → Unit bagi 11 bentuk, bekas terbuka terpilih dan
+dua gabungan. Nota/kalkulator membawa ukuran dan π kepada soalan yang sama.
+Kedua-dua fungsi mengikut tetapan induk dan mengekalkan draf dalam sesi, tanpa
+menambah skor atau rekod kepada empat refleksi asal. Draf baharu tidak disimpan
+merentas penutupan HTML dan dibersihkan apabila sesi akaun berubah.
+Lihat [handoff serta had modul v1.6.0](module/docs/HANDOFF_PELAN_PENGIRAAN_V1_6.md).
+
 Profil Saya membenarkan nama paparan dan avatar terbina dalam, dengan butiran
 akaun/kelas baca sahaja. Kata Laluan & Keselamatan mengesahkan identiti semula
 serta menyediakan tindakan log keluar semua sesi. Tetapan Penggunaan
@@ -232,3 +260,16 @@ kontrak lama, migration sumber ialah `backend/profile_v2_3.sql` dan
 frontend gabungan. Pemasangan baharu menggunakan `backend/schema.sql`. Backend
 Duel kekal dalam `backend/duel/`. Push branch tidak memasang migration atau
 mengubah SMTP/Auth secara automatik.
+
+## Design system pusat v1 — integrasi v2.8.0
+
+Panduan pemilik token, komponen, adapter modul dan handoff layout/motion:
+[DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md). Dari folder `digital`, jalankan
+`npm run build`, kemudian buka `artifacts/GeoDecoder_Design_System.html` untuk
+rujukan komponen BM/English yang berfungsi offline. `npm run design:check`
+mengesan drift; `npm run test:design` menguji komponen dan permukaan aplikasi.
+Sumber branch `digitalized-ux-design-system` disatukan dalam calon v2.8.0.
+Token mempunyai satu pemilik dan adapter terjana untuk portal serta modul;
+komponen berkongsi tema/kontras, tipografi, kawalan, fokus dan keadaan interaksi.
+Semakan branch terdahulu ialah bukti sumber; semakan gabungan v2.8.0 masih perlu
+diselesaikan. Design system tidak menukar backend, pemarkahan atau geometri.
