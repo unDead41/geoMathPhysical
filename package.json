@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "packageId": "GeoDecoder-sharing",
-  "packageVersion": "2.0.1-sharing.1",
-  "firmwareVersion": "2.0.1",
-  "sourceSha": "d8d8ad46f041fef489542ea530367dde47ac7db6",
+  "packageVersion": "2.0.2-sharing.1",
+  "firmwareVersion": "2.0.2",
+  "sourceSha": "25836eb1a6f24459aace8a3980ae880a13e3b488",
   "platformioCore": "6.1.18",
   "tutorial": {
     "status": "included",
@@ -40,7 +40,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "9fc669c6a84c8c8b0f5e35ef2ee4d86c4eadb17706e140bfd7dfe5c082bdbf91"
+      "sha256": "70bb0cf06ad411b54ff223ff0382ede103294549e2aac4a385c93dbe3e12023d"
     },
     {
       "path": "SAMBUNGAN.md",
@@ -124,7 +124,7 @@
     },
     {
       "path": "main/firmware_version.h",
-      "sha256": "72377f3ed31d2f67fa469e0aa08bc0d9112cb0d31288b648a6ce5014c65a63e5"
+      "sha256": "79f77c164a7832a499f7f7c6690eae08c9ae8b6137e0ce8dee2a7fc862689a29"
     },
     {
       "path": "main/hardware/buttons.h",
@@ -244,7 +244,7 @@
     },
     {
       "path": "tutorial/GeoDecoder_Cara_Bermain_Murid.pdf",
-      "sha256": "5775fe4a2043580367c658e8547526bebb337e71a40b75fb9bcbd9a087601781"
+      "sha256": "82f70dffc5651e0d38e11cf77854cf24e72b9448ce242f5283b55d97be863165"
     },
     {
       "path": "tutorial/GeoDecoder_Panduan_A-Z.pdf",
@@ -254,16 +254,16 @@
   "playerGuide": {
     "status": "included",
     "path": "tutorial/GeoDecoder_Cara_Bermain_Murid.pdf",
-    "pages": 21,
-    "edition": "2026-10-25",
+    "pages": 31,
+    "edition": "2026-10-28",
     "printedPageNumbers": false,
-    "firmwareVersion": "1.1.1",
-    "sourceSharingSha": "1201e902c6ecec483ffc2ff1d0f4de52c37fc532",
-    "example": "prisma segi tiga",
-    "exampleOnly": true,
-    "exampleSupportedByFirmware": false,
+    "firmwareVersion": "2.0.2",
+    "sourceSharingSha": "9f75337bd63d965e434f3b85732291c5865dad0d",
+    "example": "piramid bertapak segi empat sama (P1/P3)",
+    "exampleOnly": false,
+    "exampleSupportedByFirmware": true,
     "curriculum": "KSSM Matematik Tingkatan 2, DSKP SP 6.1.1 dan 6.2.1",
-    "editionRevision": 2,
+    "editionRevision": 3,
     "answerFormat": {
       "r1": "Bongkah 3D fizikal dengan kad RFID di bawahnya",
       "r2": "Kad RFID ditampal cetakan bentangan"
@@ -271,7 +271,15 @@
     "ledLabels": [
       "LED R1",
       "LED R2"
-    ]
+    ],
+    "flowFirmwareVersion": "2.0.1",
+    "sourceMainSha": "d8d8ad46f041fef489542ea530367dde47ac7db6",
+    "lcdFrames": 27,
+    "learningExample": {
+      "shape": "prisma segi tiga",
+      "supportedByFirmware": false
+    },
+    "verification": "LCD/source verified; 31 pages rendered; physical hardware pending"
   },
   "installer": {
     "entrypoint": "setupGeoDecoder.ps1",
