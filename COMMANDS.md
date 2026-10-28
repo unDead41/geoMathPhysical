@@ -34,7 +34,7 @@ Arahan maksimum 159 aksara. Baris terlalu panjang ditolak sepenuhnya.
 | round new | Mula round baharu dan kosongkan markah round |
 | next | Sama seperti NEXT / B1: mula, sambung, seterusnya atau menu mengikut skrin |
 | hint | Sama seperti HINT / B2: cara bermain, pembayang atau menu mengikut skrin |
-| retry | Reset pasangan soalan semasa dari R1 dan minta imbas semula; markah round kekal |
+| retry | Reset pasangan ikut fokus jika masih menjawab; ditolak selepas salah dimuktamadkan |
 | clear | Alias retry; tidak memadam pendaftaran UID |
 | score | Markah round, masa bermain, bilangan kombinasi salah dan soalan guna hint |
 | status | Versi firmware, mod aplikasi, perkakasan, UID terakhir, markah dan jenis aktif |
@@ -59,7 +59,7 @@ Untuk mendaftarkan tanpa menaip UID, gunakan assign r1 kubus dan imbas kad.
 ## Kesan terhadap round
 
 - version/help/current/tags/status/pins/score/bank tidak mengubah kuiz.
-- check uid menjeda kuiz; play menyambung markah/soalan, tetapi pasangan perlu diimbas semula dari R1.
+- check uid menjeda kuiz; play menyambung markah/soalan dengan pasangan baharu mengikut fokus. Jika soalan sudah salah, play memulihkan penerangan tanpa menyambung masa atau membuka percubaan semula.
 - Perubahan melalui assign/unassign/use/set menyimpan NVS lalu membatalkan round lama.
 - Pendaftaran gagal kerana kad pendua/UID salah/NVS gagal tidak mengubah mapping.
 - Pendaftaran imbas berhenti selepas satu simpanan berjaya. Gunakan stop untuk membatalkan.
@@ -88,7 +88,27 @@ ujian komponen, keluar dengan `test/stop` dahulu sebelum memadam tagging.
 
 Menu utama: NEXT mula pusingan baharu, HINT cara bermain. Serial `play` boleh menyambung pusingan yang dijeda. Soalan: NEXT langkau +0 markah, HINT buka/tutup pembayang.
 Ringkasan: NEXT main semula, HINT menu. Semakan/pendaftaran: NEXT kembali menu atau batal.
-Setiap soalan wajib R1 bongkah kemudian R2 bentangan sepadan; +1 hanya setelah kedua-duanya betul. Masa berjalan ketika menjawab/hint/notis salah, dijeda sepanjang tiga kelipan 900 ms, dan berhenti pada tindakan terakhir. Menu/penyelenggaraan menjeda masa. NEXT/HINT semasa kelipan diabaikan. Rujuk [panduan permainan](README.md#daftar-kad-dan-main).
+Fokus bongkah: R1 bongkah dahulu, kemudian R2 bentangan. Fokus bentangan:
+R2 bentangan dahulu, kemudian R1 bongkah. Kedua-dua kad mesti sepadan dengan
+jawapan yang sama; +1 hanya selepas kad kedua betul. Kad pertama tidak wajib
+kekal di reader. Reader biru menunggu; reader yang sudah betul kekal hijau;
+HINT memberi ungu pada reader aktif sahaja. Masa berjalan ketika menjawab/hint.
+
+Salah pada mana-mana tahap memuktamadkan +0, menjeda masa dan memaparkan
+jawapan serta penerangan LCD. Kedua-dua RGB merah berkelip 150 ms ON/OFF
+berterusan hingga **NEXT/TERUSKAN (B1, GPIO32)** atau Serial `next`.
+HINT/kad/retry/clear tidak membuka semula soalan itu. `stop`/`play` atau
+semakan guru mengekalkan keputusan salah. NEXT membuka soalan seterusnya
+dan menyambung masa, atau keputusan akhir tanpa menyambung masa.
+
+NEXT ketika masih menjawab kekal langkau +0. Betul/langkau menggunakan tiga
+kelipan 150 ms ON/OFF (900 ms), kemudian automatik maju; NEXT/HINT/kad
+diabaikan semasa urutan itu. Masa dijeda pada tindakan dan sepanjang kelipan.
+Pada soalan terakhir, masa akhir dibekukan pada pengesahan betul/salah atau
+langkau. UID belum didaftarkan/peranan kad salah ialah notis bantuan 1,200 ms,
+tanpa memuktamadkan soalan, menambah markah atau menjeda masa.
+
+Rujuk [panduan permainan](README.md#daftar-kad-dan-main).
 Serial mengekalkan maklumat teknikal guru; LCD memaparkan arahan murid sahaja.
 
 ## Ujian komponen
@@ -133,7 +153,7 @@ READY ialah respons register; imbas kad sebenar untuk mengesahkan bacaan antena.
 Banner ini juga muncul semasa boot dan pada permulaan output `status`:
 
 ```text
-[FIRMWARE] GeoDecoder v1.1.4 | ESP32 | env=esp32dev-rgb
+[FIRMWARE] GeoDecoder v2.0.0 | ESP32 | env=esp32dev-rgb
 ```
 
 Build pengguna tunggal ialah RGB. Semak versi dengan README GitHub pada

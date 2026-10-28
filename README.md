@@ -1,7 +1,7 @@
 # GeoDecoder - pakej perkongsian
 
-Versi semasa: **v1.1.4**. Pakej **1.1.4-sharing.1**.
-Sumber firmware: main [`c9275fda75b1720613c5bfa776e6b3049ee326d5`](https://github.com/unDead41/geodecoder/commit/c9275fda75b1720613c5bfa776e6b3049ee326d5).
+Versi semasa: **v2.0.0**. Pakej **2.0.0-sharing.1**.
+Sumber firmware: main [`c368e8c951478360c89f99b8a3c9944a62761049`](https://github.com/unDead41/geodecoder/commit/c368e8c951478360c89f99b8a3c9944a62761049).
 Semua fail `main/` dan `src/main.cpp` sama tepat dengan sumber itu.
 `platformio.ini` menggunakan nama environment khusus sharing; board, pin dan dependency kekal sama.
 Installer tidak mengubah firmware atau pendaftaran UID.
@@ -91,7 +91,7 @@ atau setup semula, sambil mengekalkan COM. Fail INI yang disunting pengguna
 dilindungi; jika menetapkan `default_envs` secara manual, tukar nama environment
 pada baris itu sendiri dan kekalkan tetapan COM/pin yang diperlukan.
 
-Serial Monitor mencetak `GeoDecoder v1.1.4 | ESP32 | env=esp32dev-rgb`.
+Serial Monitor mencetak `GeoDecoder v2.0.0 | ESP32 | env=esp32dev-rgb`.
 Label hardware Serial sama dengan main; nama tugas sharing dibezakan di atas.
 
 ## Langkah fizikal
@@ -126,11 +126,61 @@ yang ditampal cetakan bentangan kubus di R2. Ulang satu per satu untuk
 `piramid`, `silinder`, `kon`, `kuboid`. Setiap slot memerlukan kad berlainan.
 Pilih jenis lengkap, misalnya `use kubus piramid silinder`.
 
-Menu: NEXT mula, HINT cara main. Setiap soalan memerlukan **R1 bongkah dahulu,
-kemudian R2 bentangan sepadan**; +1 selepas kedua-duanya betul. Biru menunggu,
-hijau betul, merah salah, ungu hint. Angkat kad sebelum imbasan seterusnya.
-NEXT ketika soalan melangkau; tiga kelipan selepas betul/langkau menjeda masa.
-Keputusan menunjukkan skor dan masa akhir. NEXT main semula; HINT menu.
+Menu: NEXT mula pusingan baharu pada skor 0 dan 00:00; HINT membuka lapan
+halaman cara main. R1 kekal bongkah, R2 kekal bentangan. Urutan ikut fokus:
+
+| Soalan | Kad pertama | Kad kedua |
+|---|---|---|
+| Bongkah: ciri atau formula | Bongkah di R1 | Bentangan sepadan di R2 |
+| Bentangan | Bentangan di R2 | Bongkah sepadan di R1 |
+
+Reader pertama biru, kedua padam. Kad pertama betul menjadi hijau dan reader
+kedua biru; belum mendapat markah. HINT membuka/menutup petunjuk ungu pada
+reader aktif, yang sudah betul kekal hijau. Masa berjalan ketika menjawab/hint.
+Angkat kad lama sebelum imbasan seterusnya; kedua-duanya tidak wajib kekal di
+reader serentak.
+
+**Salah pada mana-mana tahap memuktamadkan +0.** Skor terdahulu kekal; masa
+dijeda tepat pada scan salah. Kedua-dua RGB merah berkelip bersama berterusan
+150 ms ON/OFF, LCD menunjukkan jawapan dan sebab sehingga
+**NEXT/TERUSKAN = B1/GPIO32** ditekan. HINT ialah B2/GPIO33. Warna fizikal
+butang tidak mengubah pemetaan. Contoh sebenar K1:
+
+```text
+SALAH +0 NEXT:Terus
+Jawapan: KUBUS
+6 muka segi empat
+sama saiz dan bentuk
+```
+
+Nama dan dua baris sebab tersedia bagi semua 15 soalan, termasuk formula dan
+bentangan. Soalan/hint biasa tidak mendedahkan nama jawapan. HINT, kad,
+`retry`/`clear` tidak membuka percubaan baharu selepas salah. `stop`/`play`,
+semakan guru dan diagnostik mengekalkan keputusan; `play` memulihkan penerangan
+salah dengan masa beku. NEXT meneruskan terus ke soalan baharu serta menyambung
+masa; pada soalan terakhir, NEXT membuka keputusan tanpa menyambung masa.
+
+Dua kad betul memberi **+1 sekali sahaja**, tiga kelipan hijau serentak.
+NEXT ketika masih menjawab kekal langkau **+0**, tiga kelipan merah serentak.
+Kedua-duanya 150 ms ON + 150 ms OFF, tiga kali (900 ms); masa dijeda tepat
+pada tindakan. Selepas 900 ms, automatik buka soalan seterusnya ikut fokus
+sendiri dan sambung masa, atau keputusan akhir yang kekal beku. Input dalam
+900 ms diabaikan dan butang ditahan tidak dibawa ke soalan berikut.
+
+UID belum didaftar/peranan kad salah ialah notis bantuan 1,200 ms pada reader
+aktif, bukan soalan salah; skor/tahap kekal dan masa terus berjalan. Minta guru
+semak `status`, `check uid` atau `assign`. Reader tidak READY menghalang mula/
+sambung; kegagalan membaca bukan jawapan salah.
+
+Menu/panduan: RGB rawak setiap 1,000 ms. Keputusan: setiap 150 ms. Pasangan
+warna sentiasa berlainan dan setiap LED mengelak warna sebelumnya. LCD keputusan
+menunjukkan skor, peratus dan masa akhir; NEXT main semula, HINT menu.
+
+**PDF/tutorial masih edisi lama.** Sebelum merakam video, rujuk flow v2.0.0 di
+atas atau [handoff video/tutorial main](https://github.com/unDead41/geodecoder/blob/main/docs/TUTORIAL_FLOW_V2_HANDOFF.md).
+PDF A-Z, cara bermain murid dan 15 LCD/PNG memerlukan kemas kini urutan,
+keputusan salah, penerangan LCD, lapan halaman panduan serta aturan masa.
+PDF kad/bentangan cetak dan semua aset tutorial sedia ada dikekalkan.
 
 Setup/Build tidak menyentuh board. Upload biasa mengekalkan UID bagi partition
 asal projek; jangan gunakan Erase Flash. Board dengan partition tersuai perlu
@@ -172,7 +222,7 @@ LCD sumber versi 4 (24 Oktober 2026).
 
 **[Buka cara bermain GeoDecoder untuk murid](tutorial/GeoDecoder_Cara_Bermain_Murid.pdf)** — 21 halaman A4 melintang, tanpa nombor halaman. Gambar simulasi menunjukkan bongkah 3D sebenar dengan kad RFID di bawahnya untuk R1 dan kad RFID yang ditampal cetakan bentangan untuk R2. Label LED R1/LED R2, butang NEXT/HINT, petunjuk ungu, jawapan salah/betul, langkau, skor, masa dan bermain semula diterangkan melalui gambar. Bahasa mudah untuk murid Tingkatan 1; istilah matematik dirujuk kepada KSSM Matematik Tingkatan 2, DSKP SP 6.1.1 dan 6.2.1.
 
-**Contoh prisma segi tiga ialah simulasi penerangan sahaja.** Firmware v1.1.4 masih menyokong kubus, kuboid, piramid berasaskan segi empat sama, silinder dan kon; jawapan prisma belum tersedia. Rajah prisma dalam panduan tidak menambah bahan kepada tiga PDF kad cetak asal. Gunakan bongkah dan kad bentangan yang guru sediakan; guru perlu menguji bacaan kad RFID di bawah setiap bongkah sebenar. Peraturan butang, R1/R2, lampu, markah dan masa disemak dengan source sharing; gambar ini bukan bukti ujian perkakasan fizikal.
+**Contoh prisma segi tiga ialah simulasi penerangan sahaja.** Firmware v2.0.0 masih menyokong kubus, kuboid, piramid berasaskan segi empat sama, silinder dan kon; jawapan prisma belum tersedia. Rajah prisma dalam panduan tidak menambah bahan kepada tiga PDF kad cetak asal. Gunakan bongkah dan kad bentangan yang guru sediakan; guru perlu menguji bacaan kad RFID di bawah setiap bongkah sebenar. Peraturan butang, R1/R2, lampu, markah dan masa disemak dengan source sharing; gambar ini bukan bukti ujian perkakasan fizikal.
 
 **Nama installer utama ialah `setupGeoDecoder.ps1`.** Fail kecil `setup.ps1` dikekalkan sebagai alias supaya arahan dalam PDF sedia ada masih berfungsi. Kedua-duanya menjalankan installer yang sama dan menerima pilihan yang sama. Mesej installer kini menunjukkan tutorial yang disertakan.
 
@@ -181,8 +231,13 @@ Beri **ZIP bersih** kepada penerima yang tidak patut menerima sejarah repo.
 Jangan merge sharing ke main. ZIP tiada `.git`, sejarah pembangunan, fixture/
 ujian developer, UID sebenar, token, toolchain, cache, output build atau COM peribadi.
 
-Pakej **1.1.4-sharing.1** menggunakan satu build RGB dan firmware yang sama
-dengan main v1.1.4. Enam PDF sedia ada dikekalkan, bersama satu PDF bentangan
-bongkah baharu. Kemas kini aset ini menyelaraskan label versi, rujukan sumber
-main dan checksum pakej. Semakan meliputi format PDF, keselarasan versi,
-kesamaan sumber firmware serta senarai/hash fail yang berubah.
+Pakej **2.0.0-sharing.1** menggunakan satu build RGB dan firmware sama tepat
+dengan main v2.0.0. Tujuh PDF serta installer sedia ada dikekalkan. Tree kekal
+minimum (58 fail): tiada ujian/development docs/cache/build ditambah. Manifest
+memadankan senarai 57 payload, checksum dan SHA main sumber sebenar.
+
+Pengesahan firmware: 14/14 kes pure core/application/view dan 75/75 integrasi
+lulus merentas enam konfigurasi native main, termasuk entry PlatformIO RGB dan
+modul berasingan. Entry RGB sharing turut diuji menggunakan harness main.
+`pio run` default berjaya pada kedua-dua branch. Ujian ini simulasi/kompilasi;
+tiada upload USB, ujian Windows installer sebenar atau ujian board fizikal.

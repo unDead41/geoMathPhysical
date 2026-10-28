@@ -199,7 +199,7 @@ void serialPrintHelp() {
     "round new                  : reset markah + round rawak baharu\n"
     "next                       : sama seperti B1\n"
     "hint                       : sama seperti B2\n"
-    "retry / clear              : ulang pasangan dari R1, kekal markah\n"
+    "retry / clear              : ulang pasangan ikut fokus jika belum salah\n"
     "score                      : markah, salah, penggunaan hint\n"
     "status                     : status perkakasan + kuiz\n"
     "pins                       : semua GPIO\n"
@@ -210,11 +210,14 @@ void serialPrintHelp() {
     "assign/use/set/unassign menyimpan NVS dan membatalkan round lama.\n"
     "UID 4/7/10 byte: 04A1B2C3 atau 04:A1:B2:C3 atau byte berjarak.\n"
     "Pendaftaran imbas tamat selepas satu kad berjaya atau timeout 30s.\n"
-    "Menu: B1/NEXT=mula baharu; B2/HINT=cara bermain 6 halaman.\n"
+    "Menu: B1/NEXT=mula baharu; B2/HINT=cara bermain 8 halaman.\n"
     "Panduan: HINT maju hingga tamat lalu kembali menu.\n"
-    "Kuiz: B1=langkau (+0); B2=buka/tutup hint. R1 bongkah -> R2 bentangan.\n"
-    "Dua kad sepadan=+1 sekali. Tiga kelipan 150ms ON/OFF; masa dijeda.\n"
-    "Biru=imbas, ungu=hint, merah=salah, hijau=tahap betul. Angkat kad.\n"
+    "Kuiz: B1/NEXT=langkau (+0); B2/HINT=buka/tutup hint.\n"
+    "Fokus bongkah: R1 -> R2; fokus bentangan: R2 -> R1. Dua sepadan=+1.\n"
+    "Betul/langkau: 3 kelip 150ms ON/OFF, 900ms; masa dijeda.\n"
+    "Salah: +0, penerangan LCD, merah berkelip 150ms ON/OFF hingga NEXT.\n"
+    "Masa salah dijeda; retry/clear/play tidak membuka semula jawapan.\n"
+    "Biru=imbas, ungu=hint, hijau=tahap betul. Angkat kad.\n"
     "Markah akhir: B1=main semula; B2=menu. Imbas/daftar: B1=menu/batal.\n"));
 }
 
@@ -265,7 +268,8 @@ void serialPrintStatus() {
 void serialPrintBank() {
   Serial.println(F("[BANK] Soalan cadangan Bab 6; paparan ASCII disingkatkan untuk LCD."));
   for (const Question &q : QUESTIONS) {
-    Serial.printf("%s [%s, R1 -> R2] %s\n", q.id, shapeName(q.answer), q.fullText);
+    Serial.printf("%s [%s, R%u -> R%u] %s\n", q.id, shapeName(q.answer),
+                  q.focus == QuestionFocus::NET ? 2U : 1U, q.focus == QuestionFocus::NET ? 1U : 2U, q.fullText);
     Serial.printf("  HINT: %s | %s | %s\n", q.hint[0], q.hint[1], q.hint[2]);
   }
 }

@@ -101,30 +101,33 @@ Menu/cara main dan keputusan menggunakan pasangan warna rawak yang sentiasa
 berlainan antara R1/R2. Setiap LED juga bertukar daripada warna sebelumnya.
 Ujian `test/led/random` menggunakan polisi sama pada sela 500 ms.
 
-Petunjuk RGB bagi flow dua kad:
+Petunjuk RGB mengikut fokus soalan (peranan dan GPIO kekal):
 
 | Keadaan | RGB R1 | RGB R2 |
 |---|---|---|
-| Menu / cara main | Warna rawak setiap 1,000 ms | Warna rawak setiap 1,000 ms |
-| Menunggu bongkah | Biru | Padam |
-| Hint bongkah | Ungu | Padam |
-| Bongkah salah / UID tidak sah | Merah sementara | Padam |
-| Bongkah betul; menunggu bentangan | Hijau kekal | Biru |
-| Hint bentangan | Hijau kekal | Ungu |
-| Bentangan salah / UID tidak sah | Hijau kekal | Merah sementara |
-| Kedua-dua kad betul | Hijau berkelip 3 kali bersama | Hijau berkelip 3 kali bersama |
-| Langkau pada mana-mana tahap | Merah berkelip 3 kali bersama | Merah berkelip 3 kali bersama |
-| Semakan UID / pendaftaran | Biru jika pembaca ini aktif | Biru jika pembaca ini aktif |
-| Keputusan akhir | Warna rawak setiap 150 ms | Warna rawak setiap 150 ms |
+| Menu / cara main | Rawak berlainan, 1,000 ms | Rawak berlainan, 1,000 ms |
+| Soalan bongkah, kad pertama | Biru | Padam |
+| Bongkah betul, kad kedua | Hijau | Biru |
+| Soalan bentangan, kad pertama | Padam | Biru |
+| Bentangan betul, kad kedua | Biru | Hijau |
+| HINT | Ungu jika aktif; hijau jika sudah betul | Ungu jika aktif; hijau jika sudah betul |
+| Salah mana-mana tahap | Merah berkelip hingga NEXT | Merah berkelip hingga NEXT |
+| Dua kad betul | Hijau berkelip 3 kali | Hijau berkelip 3 kali |
+| NEXT ketika menjawab | Merah berkelip 3 kali | Merah berkelip 3 kali |
+| Semakan UID / pendaftaran | Biru jika aktif | Biru jika aktif |
+| Keputusan | Rawak berlainan, 150 ms | Rawak berlainan, 150 ms |
 
-Notis salah ialah 1,200 ms, kemudian pembaca aktif kembali biru/ungu.
-Kelipan ialah 150 ms ON + 150 ms OFF, tiga kali, jumlah 900 ms; stopwatch
-berhenti sepanjang urutan itu. Menu/keputusan tidak menerima jawapan.
+Kelipan bersama: 150 ms ON + 150 ms OFF. Betul/langkau tamat selepas tiga
+kali (900 ms); salah berterusan hingga NEXT/B1/GPIO32. Stopwatch dijeda
+pada tindakan dan sepanjang kelipan/menunggu NEXT. Soalan baharu menyambung
+masa; keputusan akhir kekal beku. Kad lama mesti diangkat dan diimbas semula.
 
-Dalam environment LED biasa, hanya GPIO25/26 dipandu. Semua warna selain
-padam menghasilkan ON. Maka tahap R2 mengekalkan kedua-dua LED ON, dan
-menu/keputusan juga ON; rujuk header R1/R2 dan notis LCD untuk tindakan.
-Timing tiga kelipan dikekalkan. Lihat [panduan permainan](README.md#daftar-kad-dan-main).
+UID tidak berdaftar/peranan kad salah hanya memberi notis merah 1,200 ms pada
+reader aktif, tanpa memuktamadkan jawapan. Masa terus berjalan; warna kembali
+biru/ungu. Reader yang sudah betul kekal hijau. Menu/keputusan tidak menerima
+jawapan. HINT ialah B2/GPIO33; warna fizikal butang tidak menentukan pemetaan.
+
+Lihat [panduan permainan](README.md#daftar-kad-dan-main).
 
 RGB dalam kod ini ialah LED biasa empat kaki, bukan WS2812/NeoPixel.
 GPIO16/17 dalam peta ini khusus board WROOM; ia tidak bebas pada sesetengah WROVER/PSRAM.

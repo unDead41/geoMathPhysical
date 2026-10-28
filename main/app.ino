@@ -84,9 +84,11 @@ bool appPlay(bool newRound) {
     appLogf("[ERROR] UID R1 dan R2 bagi jenis aktif belum lengkap.\n");
     registryPrintActive(); return false;
   }
-  if (newRound || quizState().phase != QuizPhase::QUESTION) {
+  if (newRound || (quizState().phase != QuizPhase::QUESTION &&
+                   quizState().phase != QuizPhase::WRONG_ANSWER)) {
     if (!quizStartRound()) return false;
-  } else if (!quizState().advancePending && !quizState().awarded) {
+  } else if (quizState().phase == QuizPhase::QUESTION &&
+             !quizState().advancePending && !quizState().awarded) {
     quizRetry(); // Imbasan penyelenggaraan tidak boleh dibawa masuk sebagai jawapan.
   }
   state.mode = AppMode::PLAY; state.enrollReader = -1; state.enrollShape = Shape::NONE;
@@ -95,7 +97,9 @@ bool appPlay(bool newRound) {
   updateAmbientColors();
   quizResumeClock();
   quizArmCurrentReader();
-  appLogf("[PLAY] R1 bongkah dahulu, kemudian R2 bentangan sepadan. NEXT=langkau; HINT=petunjuk.\n");
+  if (quizState().phase == QuizPhase::WRONG_ANSWER)
+    appLogf("[PLAY] Jawapan salah dimuktamadkan. Masa dijeda; NEXT=teruskan.\n");
+  else appLogf("[PLAY] Ikut fokus soalan dan LED biru. R1=bongkah; R2=bentangan. NEXT=langkau; HINT=petunjuk.\n");
   return true;
 }
 

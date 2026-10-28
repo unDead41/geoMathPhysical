@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "packageId": "GeoDecoder-sharing",
-  "packageVersion": "1.1.4-sharing.1",
-  "firmwareVersion": "1.1.4",
-  "sourceSha": "c9275fda75b1720613c5bfa776e6b3049ee326d5",
+  "packageVersion": "2.0.0-sharing.1",
+  "firmwareVersion": "2.0.0",
+  "sourceSha": "c368e8c951478360c89f99b8a3c9944a62761049",
   "platformioCore": "6.1.18",
   "tutorial": {
     "status": "included",
@@ -36,15 +36,15 @@
     },
     {
       "path": "COMMANDS.md",
-      "sha256": "264212d170107b890e9484e990240f52b6971b784e038747f3dca7200d3bf963"
+      "sha256": "ec9ca1e5e3a2a76eee79fbe7a4c86301caac3630eda7283bb5b0c2d72f1058d1"
     },
     {
       "path": "README.md",
-      "sha256": "3da03ead8ed574bc2608bcf3165af414070740c7b7b287107e47f6862591015b"
+      "sha256": "cc3da7394dd03d594c68a407bda067191ee2ab240ed71e4b17a2c02caf19ae73"
     },
     {
       "path": "SAMBUNGAN.md",
-      "sha256": "970158169f7053115ccc92d69dceed5f3f9862eaf39775152ac219e499ed370a"
+      "sha256": "0e5dd424a1852f000b2e6e98b21067a3ac46d1a6ce8ca4061df16b8d0105e60f"
     },
     {
       "path": "docs/lcd/GeoDecoder_15_Contoh_LCD_Soalan_dan_Hint.pdf",
@@ -56,7 +56,7 @@
     },
     {
       "path": "main/app.ino",
-      "sha256": "dd8e251edd991ceefd69175ee6c5748208f34c9759177e78e33f6d08c7327ee3"
+      "sha256": "4a98665bb1672e061b8b6845de6c4107c92c105df93ce2d8691ac56ed05048d4"
     },
     {
       "path": "main/app_ports.ino",
@@ -96,11 +96,11 @@
     },
     {
       "path": "main/domain/quiz_engine.h",
-      "sha256": "9394f4895a96bbb0a9789cb64c9213f1f767ed5b8aa2e4a3dd469b8e60db7ed5"
+      "sha256": "71891dfff8453a36e47c678a5803420829989c4ffeaa9e0d6ff113181e9e0387"
     },
     {
       "path": "main/domain/registry.h",
-      "sha256": "ec10fb28ed4fa3fb2fdb38549042b39be3fb6d4ded260a44db186e22a9ac9ff5"
+      "sha256": "8551bea1380c798165f64852fcb2bbfa0d1737400e4efa3842b99f15cfe0e992"
     },
     {
       "path": "main/domain/rgb_random.h",
@@ -108,15 +108,15 @@
     },
     {
       "path": "main/domain/rules.h",
-      "sha256": "a9bd234f440e1b7eafdbddead40a65298c4a2761fd28c198b01437fce6d46d83"
+      "sha256": "531c29845284005ad0cf66b8dac8df6c10598c42f508bcf881d677e4e713fb68"
     },
     {
       "path": "main/domain/types.h",
-      "sha256": "b0fdc8ace56527a6edd59aca733d6aa8a7ac365fee043d083a7aa9a94fff0af2"
+      "sha256": "f2668f3ddffc98c1a214a8b6d489098a0adf6dcc02ad0150912e30d3a8bd19f9"
     },
     {
       "path": "main/firmware_version.h",
-      "sha256": "f4d9cc4e96602d8fe52dc79c8c90c42d0d473c7682955f1a24c822f1f15a8fbc"
+      "sha256": "293af543ab642904d153058fccf2a2f00a38cf6fb21b62e3222fecb2839875ae"
     },
     {
       "path": "main/hardware/buttons.h",
@@ -164,7 +164,7 @@
     },
     {
       "path": "main/presentation/lcd_view.h",
-      "sha256": "e2b5ec933f8a4eafb627b9c1803c6830d7964b94b70214ee65b6f7a01338dd0d"
+      "sha256": "69161a9b37945e85032a878440da2d7a102e0c7f0b754f24f4314b80cb3eb70a"
     },
     {
       "path": "main/presentation/serial_commands.h",
@@ -172,11 +172,11 @@
     },
     {
       "path": "main/question_bank.h",
-      "sha256": "85d62102e47521e294935fb19370e34e9ff3585c800c9003bd7fb7faa837a117"
+      "sha256": "18c3ba54ba38be5fe3b144a0cbef3ec4822e71c708e4ea1c81a7ecea186e3d61"
     },
     {
       "path": "main/quiz.ino",
-      "sha256": "b0db8b986cf8ed98e67eb380f520be104de45d70b9d7d770513c80794d2a6fa9"
+      "sha256": "70728018bcc9e98798b966983c4b709b3440b636474ec48acd214b22d5a751ad"
     },
     {
       "path": "main/rfid.ino",
@@ -188,7 +188,7 @@
     },
     {
       "path": "main/serial_commands.ino",
-      "sha256": "b358e043cd28df088705ce77c3e2fdec8b5a46a76e515068e7a5eb4a4476a8b3"
+      "sha256": "5ec323a1dcd9836e6d9ddcf7e56437e0ca4247f599317092f5eea498698e7e3b"
     },
     {
       "path": "main/tag_registry.ino",

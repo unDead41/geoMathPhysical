@@ -15,6 +15,12 @@ inline const char *shapeLabel(Shape shape) {
   return uint8_t(shape) < SHAPE_COUNT ? labels[uint8_t(shape)] : "--";
 }
 
+// Compact answer name leaves room for "Jawapan: " on a 20-column LCD.
+// Question-specific pyramid/base details belong to its explanation rows.
+inline const char *shapeShortLabel(Shape shape) {
+  return shape == Shape::PYRAMID ? "PIRAMID" : shapeLabel(shape);
+}
+
 inline Shape shapeFromName(const char *name) {
   for (uint8_t s = 0; s < SHAPE_COUNT; ++s)
     if (!strcmp(name, shapeName(Shape(s)))) return Shape(s);
