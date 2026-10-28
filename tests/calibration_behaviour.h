@@ -52,13 +52,13 @@ static void game_rgb_outputs_and_purple_hints() {
   command("hint"); rgbUpdate(); componentOutputs(true,false,true,false,false,false);
   advance(100); need(quizElapsedMs() == before + 100, "purple hint paused gameplay time");
   command("hint"); rgbUpdate(); componentOutputs(false,false,true,false,false,false);
-  command("hint"); quizOnScan(0,tag(Shape::CUBE,0)); rgbUpdate();
+  command("hint"); quizOnScan(0,Uid{4,{9,8,7,6}}); rgbUpdate();
   componentOutputs(true,false,false,false,false,false);
   advance(1200); componentOutputs(true,false,true,false,false,false);
   quizOnScan(0,tag(Shape::PYRAMID,0)); rgbUpdate();
   componentOutputs(false,true,false,false,false,true);
   command("hint"); rgbUpdate(); componentOutputs(false,true,false,true,false,true);
-  quizOnScan(1,tag(Shape::CUBE,1)); rgbUpdate(); componentOutputs(false,true,false,true,false,false);
+  quizOnScan(1,Uid{4,{9,8,7,6}}); rgbUpdate(); componentOutputs(false,true,false,true,false,false);
   advance(1200); componentOutputs(false,true,false,true,false,true);
   command("hint"); rgbUpdate(); componentOutputs(false,true,false,false,false,true);
   command("hint"); quizOnScan(1,tag(Shape::PYRAMID,1)); rgbUpdate();

@@ -1,6 +1,6 @@
 # GeoDecoder
 
-Versi semasa: **v1.1.4**.
+Versi semasa: **v2.0.0**.
 Rujukan kemas kini: [SOR versi](docs/SOR_VERSIONING.md) dan [changelog](CHANGELOG.md).
 
 Kuiz geometri 3D menggunakan ESP32 klasik/WROOM-32, dua pembaca MFRC522,
@@ -26,7 +26,9 @@ Monitor tersedia terus dalam VS Code. Arduino IDE tidak diperlukan.
 
 Kedua-dua PDF ialah salinan tepat daripada `sharing` pada commit
 [`de86754`](https://github.com/unDead41/geodecoder/commit/de86754fb042e12c9254eb883621febf6f055a31).
-Panduan disemak terhadap firmware v1.1.1. Mulai v1.1.3, Build sentiasa RGB:
+Panduan disemak terhadap firmware v1.1.1. **PDF belum dikemas kini untuk
+flow v2.0.0**: urutan ikut fokus, salah tamat +0, penerangan LCD dan NEXT
+untuk teruskan. Rujuk flow semasa di bawah sebelum menyediakan video/tutorial. Mulai v1.1.3, Build sentiasa RGB:
 langkau langkah memilih LED/environment dalam PDF dan terus Build/Upload.
 
 Bahagian installer A-Z menggunakan `setup.ps1` dalam pakej
@@ -154,7 +156,7 @@ use kubus piramid silinder kon kuboid
 ```
 
 LCD dan butang boleh diuji di menu walaupun pendaftaran belum lengkap:
-tekan **HINT** untuk enam halaman cara main. Untuk memulakan kuiz, kedua-dua
+tekan **HINT** untuk lapan halaman cara main. Untuk memulakan kuiz, kedua-dua
 RFID mesti READY dan semua jenis aktif mesti mempunyai UID R1 serta R2.
 
 ## 5. Main dan semak keputusan
@@ -162,23 +164,37 @@ RFID mesti READY dan semua jenis aktif mesti mempunyai UID R1 serta R2.
 1. Menu: kedua-dua RGB bertukar warna perlahan setiap 1,000 ms; warna R1/R2
    sentiasa berlainan dan setiap LED bertukar daripada warna sebelumnya. NEXT memulakan
    pusingan baharu pada skor 0 dan masa 00:00; HINT membuka cara bermain.
-2. **Setiap soalan memerlukan dua kad: R1 bongkah dahulu, kemudian R2 bentangan
-   yang sepadan.** R1 biru/R2 padam pada permulaan. R1 betul belum mendapat markah;
-   R1 kekal hijau dan R2 menjadi biru. Tahap aktif turut ditulis pada header LCD.
-3. Salah: pembaca aktif merah selama notis, kemudian kembali biru/ungu.
-   Cuba semula pada tahap sama; R1 kekal hijau jika sedang menjawab bentangan.
-4. HINT membuka/menutup petunjuk dan menjadikan pembaca aktif ungu. Masa terus
-   berjalan; imbasan masih diterima dan markah tidak ditolak.
-5. Dua kad betul: **+1 sekali sahaja**, kedua-dua RGB hijau berkelip tiga kali.
-   NEXT melangkau mana-mana tahap: **+0**, kedua-duanya merah berkelip tiga kali.
-6. Setiap kelipan ialah 150 ms ON + 150 ms OFF; jumlah 900 ms. Stopwatch dijeda
-   sepanjang kelipan. Jawapan/NEXT/HINT diabaikan; loop aplikasi terus berjalan.
-7. Soalan seterusnya bermula pada R1 biru/R2 padam dan masa bersambung.
-   Angkat kad sebelum mengimbas semula, termasuk kad yang sudah berada di R2.
-8. Pada tindakan akhir, masa dibekukan dahulu. Selepas tiga kelipan, LCD
-   menunjukkan skor, peratus dan masa akhir; RGB bertukar warna setiap 150 ms
-   dengan warna R1/R2 sentiasa berlainan.
+2. **Urutan mengikut fokus soalan:** soalan bongkah memerlukan R1 bongkah
+   kemudian R2 bentangan; soalan bentangan memerlukan R2 bentangan kemudian
+   R1 bongkah. Reader pertama biru, kedua padam. Kad pertama betul menjadi
+   hijau dan mengaktifkan reader kedua biru; belum mendapat markah.
+3. **Salah pada mana-mana tahap memuktamadkan soalan pada +0.** Masa terus
+   dijeda, kedua-dua RGB merah berkelip berterusan (150 ms ON/OFF), dan LCD
+   menunjukkan jawapan serta sebab. Tekan **NEXT/TERUSKAN (B1, GPIO32)** untuk
+   membuka soalan seterusnya. Tiada percubaan semula bagi soalan itu.
+4. HINT membuka/menutup petunjuk ungu pada reader aktif; reader yang sudah
+   betul kekal hijau. Masa berjalan dan kad masih diterima ketika hint.
+   HINT/kad/retry diabaikan selepas jawapan salah dimuktamadkan.
+5. Dua kad sepadan: **+1 sekali sahaja**, tiga kelipan hijau serentak. NEXT
+   ketika masih menjawab: **+0**, tiga kelipan merah serentak.
+6. Kelipan betul/langkau: 150 ms ON + 150 ms OFF, tiga kali, jumlah 900 ms;
+   masa dijeda tepat pada tindakan. Input dalam urutan ini diabaikan.
+   Selepas 900 ms, soalan baharu dibuka secara automatik dan masa bersambung.
+   Kelipan salah kekal menunggu NEXT tanpa had masa.
+7. Soalan baharu mengosongkan kemajuan dan mengikuti fokusnya sendiri.
+   Angkat kad lama sebelum imbasan baharu pada setiap tahap. Kad pertama
+   tidak wajib kekal di reader semasa mengimbas kad kedua.
+8. Pada soalan terakhir, masa beku pada kad kedua betul, kad salah atau
+   tindakan langkau. Betul/langkau membuka keputusan selepas 900 ms;
+   salah menunggu NEXT. LCD keputusan menunjukkan skor, peratus dan masa.
+   Pasangan RGB rawak berlainan warna bertukar setiap 150 ms.
 9. Keputusan: NEXT memulakan pusingan baharu, HINT kembali ke menu perlahan.
+
+UID belum didaftarkan dan kad dengan peranan salah ialah bantuan pemasangan,
+bukan jawapan salah: notis 1,200 ms pada reader aktif, masa terus berjalan,
+markah/tahap tidak berubah. Minta guru semak `status`, `check uid` atau
+`assign`. Reader tidak READY tidak menghasilkan jawapan dan menghalang mula
+atau sambung kuiz sehingga masalah diselesaikan.
 
 Satu build RGB mengendalikan semua warna dan petunjuk R1/R2 di atas.
 Panduan penuh: [flow dua kad dan RGB](docs/GAME_FLOW_RGB.md).
@@ -239,7 +255,7 @@ Untuk melihat port: `pio device list`.
 Pada boot/reset ESP32, Serial 115200 baud memaparkan:
 
 ```text
-[FIRMWARE] GeoDecoder v1.1.4 | ESP32 | env=esp32dev-rgb
+[FIRMWARE] GeoDecoder v2.0.0 | ESP32 | env=esp32dev-rgb
 ```
 
 Jika Monitor dibuka selepas banner berlalu, taip `version`; `status` turut
@@ -306,7 +322,7 @@ python tools/check_version.py
 ```
 
 Setiap arahan `tests/run_tests.py` menyemak keselarasan versi, menjalankan
-11 kes teras/application tanpa Arduino dan 63 kes integrasi firmware.
+14 kes teras/application tanpa Arduino dan 75 kes integrasi firmware.
 Mod `--separate-modules` mengkompil setiap tab secara
 berasingan supaya header serta kebergantungan modul turut disahkan.
 

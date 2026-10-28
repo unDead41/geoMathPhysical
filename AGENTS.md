@@ -7,7 +7,14 @@
   report the final version, branch and actual commit SHA. First numbered release: v1.0.0.
 - Read `README.md`, `docs/ARCHITECTURE.md`, `SAMBUNGAN.md`, `COMMANDS.md` and `VERIFICATION.md` before editing firmware.
 - Component tests: read `docs/COMPONENT_TESTS.md` before changing Serial diagnostics. Keep the controller outside pure domain/application, preserve nonblocking output ownership and suppress game actions during tests.
-- Active flow: `docs/GAME_FLOW_RGB.md`. Every question requires R1 solid then matching R2 net; only the pair earns +1. Use the runtime answer stage, not legacy `Question.reader`, to select the pad. Pause the clock during the three 150 ms ON/OFF blink cycles.
+- Active flow: `docs/GAME_FLOW_RGB.md`. Typed `Question.focus` determines first
+  reader: solid R1 -> net R2, or net R2 -> solid R1. Roles/pins never swap.
+  Runtime `stage` selects the current pad; `firstAccepted` tracks pair progress.
+  A wrong registered answer enters WRONG_ANSWER: +0, stopped clock, continuous
+  synchronized 150 ms red ON/OFF until NEXT. Do not gate NEXT with timed-blink
+  input blocking; retry/hint/play must never reopen a finalized wrong question.
+  Correct/skip retain three 150 ms ON/OFF cycles (900 ms) with stopped clock.
+  Unknown UID/wrong card role remain recoverable help, not scored failures.
 - Firmware source lives in `main/`. `src/main.cpp` is the PlatformIO entry point and includes the same tabs. Keep a single source of application logic.
 - Keep domain and application hardware-independent. Application time/RNG/logging/storage/reader control goes through `AppPorts`, bound once in setup. RFID/buttons emit `InputEvents`; LCD accepts a `LcdFrame`. `config.h` contains board settings only.
 - Mutable state is owned by its module. Read `appState()`, `quizState()` and `registryState()` as const; use application actions for mutations. Do not restore mutable extern globals or introduce production `const_cast`.

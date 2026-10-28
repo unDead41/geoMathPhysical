@@ -21,7 +21,9 @@ uint8_t bankBuildRound(uint8_t mask, uint8_t *out) {
 }
 void quizArmCurrentReader() {
   const Question *q = quizCurrentQuestion();
-  if (!q || quizState().advancePending) { appPorts().setReaderMode(ScanMode::STOPPED); return; }
+  if (!q || quizState().phase != QuizPhase::QUESTION || quizState().advancePending) {
+    appPorts().setReaderMode(ScanMode::STOPPED); return;
+  }
   appPorts().setReaderMode(quizActiveReader() == 0 ? ScanMode::R1 : ScanMode::R2);
   appPorts().requireFreshCards();
 }
@@ -35,7 +37,7 @@ bool quizStartRound() {
   if (!quizEngine.start(selected, count, appPorts().now())) {
     appLogf("[ERROR] Bank soalan tidak mencukupi.\n"); return false;
   }
-  appLogf("\n[ROUND] %u soalan; dua kad setiap soalan: R1 bongkah -> R2 bentangan.\n", unsigned(count));
+  appLogf("\n[ROUND] %u soalan; urutan dua kad mengikut fokus soalan. R1=bongkah; R2=bentangan.\n", unsigned(count));
   quizPrintQuestion();
   return true;
 }
@@ -54,10 +56,25 @@ void quizPrintScore() {
           unsigned(quiz.score), unsigned(quiz.length), pct,
           unsigned(quiz.wrongAttempts), unsigned(quiz.hintsUsed), duration);
 }
+namespace {
+void publishTransition(QuizTransition transition) {
+  if (transition == QuizTransition::QUESTION) { quizArmCurrentReader(); quizPrintQuestion(); }
+  else if (transition == QuizTransition::SUMMARY) {
+    appPorts().setReaderMode(ScanMode::STOPPED);
+    appLogf("[ROUND TAMAT] NEXT=main semula, HINT=menu utama.\n");
+    quizPrintScore();
+  }
+}
+}
 void quizNext() {
   if (appState().mode != AppMode::PLAY) return;
   if (quizState().phase == QuizPhase::SUMMARY || quizState().phase == QuizPhase::SETUP) {
     appPlay(true); return;
+  }
+  if (quizState().phase == QuizPhase::WRONG_ANSWER) {
+    appLogf("[TERUSKAN] Jawapan salah kekal +0.\n");
+    publishTransition(quizEngine.continueAfterWrong(appPorts().now()));
+    return;
   }
   if (!quizEngine.skip(appPorts().now())) return;
   appLogf("[SKIP] +0 markah. Tiga kelipan merah; masa dijeda 900 ms.\n");
@@ -65,14 +82,7 @@ void quizNext() {
 }
 void quizUpdate() {
   if (appState().mode != AppMode::PLAY) return;
-  switch (quizEngine.update(appPorts().now())) {
-    case QuizTransition::QUESTION: quizArmCurrentReader(); quizPrintQuestion(); break;
-    case QuizTransition::SUMMARY:
-      appPorts().setReaderMode(ScanMode::STOPPED);
-      appLogf("[ROUND TAMAT] NEXT=main semula, HINT=menu utama.\n");
-      quizPrintScore(); break;
-    case QuizTransition::NONE: break;
-  }
+  publishTransition(quizEngine.update(appPorts().now()));
 }
 void quizHint() {
   if (appState().mode != AppMode::PLAY || !quizEngine.toggleHint()) return;
@@ -84,7 +94,8 @@ void quizHint() {
 void quizRetry() {
   if (!quizEngine.retry()) return;
   quizArmCurrentReader();
-  appLogf("[RETRY] Mulakan semula pasangan di R1. Angkat kad; markah dikekalkan.\n");
+  appLogf("[RETRY] Pasangan baharu bermula di R%u mengikut fokus. Angkat kad; markah dikekalkan.\n",
+          unsigned(quizActiveReader() + 1));
 }
 void quizOnScan(uint8_t reader, const Uid &uid) {
   if (appState().mode != AppMode::PLAY) return;
@@ -94,7 +105,9 @@ void quizOnScan(uint8_t reader, const Uid &uid) {
   if (!quizEngine.submit(reader, found, registeredReader, appPorts().now())) return;
   if (previousReader != quizActiveReader()) {
     quizArmCurrentReader();
-    appLogf("[R1 TEPAT] Belum mendapat markah. Angkat kad bentangan dan imbas di R2.\n");
+    appLogf("[R%u TEPAT] Belum mendapat markah. Angkat kad %s dan imbas di R%u.\n",
+            unsigned(previousReader + 1), quizActiveReader() == 0 ? "bongkah" : "bentangan",
+            unsigned(quizActiveReader() + 1));
   }
   switch (quizState().feedback) {
     case Feedback::WRONG_PAD:
@@ -105,7 +118,12 @@ void quizOnScan(uint8_t reader, const Uid &uid) {
       appLogf("[TEPAT] Dua kad betul: +1 sekali sahaja. Tiga kelipan hijau; masa dijeda.\n");
       appPorts().setReaderMode(ScanMode::STOPPED); quizPrintScore(); break;
     case Feedback::WRONG:
-      appLogf("[SALAH] Cuba jawapan lain untuk soalan yang sama.\n"); break;
+      appPorts().setReaderMode(ScanMode::STOPPED);
+      appLogf("[SALAH] +0. Jawapan: %s. %s %s\n"
+              "Masa dijeda; dua LED merah berkelip sehingga NEXT/TERUSKAN.\n",
+              shapeShortLabel(quizCurrentQuestion()->answer), quizCurrentQuestion()->explanation[0],
+              quizCurrentQuestion()->explanation[1]);
+      break;
     default: break;
   }
 }

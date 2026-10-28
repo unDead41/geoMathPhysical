@@ -1,74 +1,111 @@
-# GeoDecoder v1.1.3 verification - 25 October 2026
+# GeoDecoder v2.0.0 verification - 28 October 2026
 
-Inspected main: `1f45d142b1cb59d976dbf52eb6581cc8dfcf0e0b` (v1.1.2).
-Inspected sharing: `fa12e37861906c7d4e958ad0060eb6cae449f34c` (1.1.1-sharing.3).
-Publication targets: `main` v1.1.3 and reduced `sharing` package 1.1.3-sharing.1.
+Audited main: `c9275fda75b1720613c5bfa776e6b3049ee326d5` (v1.1.4).
+Audited sharing: `4e3fdfcbfc1508dcf4cce55a58df637243c33f2a` (1.1.4-sharing.1).
+The v1.1.4 printable-net asset update arrived during the audit and was retained.
+Publication targets: main v2.0.0 and reduced sharing 2.0.0-sharing.1.
 
-## One user build
+## Behaviour and data
 
-Main exposes exactly one default environment, `esp32dev-rgb`; sharing exposes
-exactly one, `esp32dev-sharing-rgb`. Both retain board ID `esp32dev`, pinned
-platform/libraries and the existing RGB GPIO mapping. `pio run` builds each
-project directly without `-e`. Build, Upload and Monitor use that default.
-PlatformIO's Default group refers to the same sole environment.
+Typed QuestionFocus selects solid R1 -> net R2 or net R2 -> solid R1.
+First-card progress is independent of reader number; only the second matching
+card awards +1. A registered wrong shape on either stage enters WRONG_ANSWER,
+pauses at the scan timestamp, stops readers and continuously blinks both LEDs
+red at 150 ms ON/OFF until NEXT. NEXT is not gated by automatic-blink blocking.
+It advances immediately to a fresh question and resumes time, or opens the
+last summary with the original failure timestamp still frozen.
 
-The header default is RGB. The sharing installer and Configure have no LED
-selection prompt. Old script environment names all map to RGB; the old
-BuildBoth switch submits one build only. Managed legacy state/INI settings
-migrate to RGB with COM preserved. User-edited local configuration is protected.
+All fifteen questions have actual-answer names and two precise explanation
+rows. Formula derivations, net components and B3's paired face dimensions were
+reviewed. All source rows, compact answer labels and eight instruction pages
+fit printable ASCII 20x4. Question/hint copy, IDs, answers and random selection
+are preserved. No solution data is rendered in ordinary question/hint frames.
 
-## Native firmware verification
+Unknown UID and wrong registered card role retain the 1,200 ms recoverable
+help notice: time runs, score/stage/wrong count do not change. Reader faults
+never dispatch an answer; online checks and teacher diagnostics remain.
+Stop/play/retry/clear and inspection/diagnostic roundtrips cannot reopen a
+finalized failed question. Deliberate round new or registry changes still
+reset the round as documented.
 
-| Runner flags (`python tests/run_tests.py`) | Version regressions | Pure core/application/view | Firmware integration |
+No hardware pin, reader role, config default, storage namespace/key/magic/
+version, Shape ID or RegistryData ABI changed. Ordinary LED paths remain
+native developer compatibility only. One published RGB environment remains
+on each branch. No production dependency was added and loop() is unchanged.
+
+## Native simulation
+
+Baseline v1.1.4: 12/12 pure cases and 68/68 integration passed. Before the
+implementation, six new scenarios failed on the intended missing behaviours:
+focus routing, terminal failure/pause, maintenance lock, held NEXT, reverse
+stale-card routing and explanation rendering. Existing fresh-card protection
+already satisfied the additional wrong-to-next held-card case.
+
+| python tests/run_tests.py flags | Version regressions | Pure core/application/view | Firmware integration |
 |---|---:|---:|---:|
-| `--entrypoint src/main.cpp --rgb` | 6/6 | 12/12 | 68/68 |
-| `--separate-modules --rgb` | 6/6 | 12/12 | 68/68 |
-| `--entrypoint src/main.cpp` (developer LED compatibility) | 6/6 | 12/12 | 68/68 |
+| none (developer ordinary LED) | 6/6 | 14/14 | 75/75 |
+| --rgb | 6/6 | 14/14 | 75/75 |
+| --entrypoint src/main.cpp | 6/6 | 14/14 | 75/75 |
+| --entrypoint src/main.cpp --rgb | 6/6 | 14/14 | 75/75 |
+| --separate-modules | 6/6 | 14/14 | 75/75 |
+| --separate-modules --rgb | 6/6 | 14/14 | 75/75 |
 
-All paths completed with exit code 0, C++11 warnings-as-errors, AddressSanitizer
-and UBSan; LeakSanitizer is disabled for the managed runtime. The last row
-checks retained internal compatibility, not a second published build.
-`python tools/check_version.py --previous-version v1.1.2` passes.
+The sharing source was also executed using the main harness:
+`python tests/run_tests.py --sketch ../geodecoder-sharing/main --entrypoint ../geodecoder-sharing/src/main.cpp --rgb`:
+6/6 version regressions, 14/14 pure cases and 75/75 integration. The pure
+runner reads the main core; byte-for-byte parity of all 36 firmware/entry
+files establishes the same core in sharing. Electrical adapters are simulated.
+
+C++11, -Wall -Wextra -Werror -pedantic, ASan and UBSan were enabled;
+LeakSanitizer is disabled in the managed runtime. Each maintained runner
+executes the pure suite. `python tools/check_version.py --previous-version
+v1.1.4` passes for v2.0.0. Both git diff --check runs pass.
+
+New coverage includes both question orders and failure stages, prior-score
+preservation, every millisecond of continuous red output for 4,800 ms, longer
+frozen waits/maintenance roundtrips, final failure, both physical held buttons,
+both-order prepositioned cards and old cards across questions. Pure tests
+cover last/non-last failures and continuous blinking across millis rollover.
+Existing tests retain all 900 green/red blink samples, skip paths, ambient
+RGB timing/distinct-pair rules, UID/NVS, Serial, calibration and game resets.
 
 ## ESP32 compilation
 
-`pio run` without an environment option completed with SUCCESS for both branch
-snapshots. PlatformIO project-config output independently confirms one named
-environment, one matching default, board `esp32dev` and RGB enabled in each.
+Default `python -m platformio run` (no -e) succeeds for both snapshots using
+PlatformIO Core 6.1.18, Espressif32 6.12.0, Arduino ESP32 2.0.17,
+MFRC522 1.4.12 and hd44780 1.3.2. Both builds use 22,812 bytes RAM and
+340,457 bytes flash. Project config confirms exactly one environment and
+matching default each: esp32dev-rgb / esp32dev-sharing-rgb, board esp32dev,
+GEODECODER_RGB_ENABLED=1. Compile is not a USB upload.
 
-Toolchain: PlatformIO Core 6.1.18, Espressif32 6.12.0, Arduino ESP32 2.0.17,
-MFRC522 1.4.12 and hd44780 1.3.2, using existing verified dependency caches.
+## Independent review and sharing package
 
-## Sharing installer and local configuration
+Read-only independent review found no Critical, Important or Minor issues.
+The reviewer independently ran the PlatformIO RGB native entry (6/14/75
+passing), checked all explanations and verified all 36 shipping source files
+match. The other five native runs and ESP32 compilation are executor results.
 
-- 17/17 installer orchestration cases pass on Linux PowerShell 7.4.13 in
-  Legacy native argument mode. The fresh-install case passes without an
-  Environment option and with prompting enabled; any unexpected Read-Host
-  would fail the case. The legacy BuildBoth option submits just one RGB build.
-- 14/14 compatibility checks pass: four scripts parse, full package integrity,
-  all four saved environment names, old/new command overrides, actual CLI
-  Build/Upload/Monitor argument dispatch to a capture process, COM preservation,
-  Configure without an environment prompt, edited-INI protection and invalid
-  environment rejection.
-- Missing/existing dependencies, reruns, failure/recovery, multiple COM ports,
-  Unicode/spaces/ampersands and calibration preservation remain covered by the
-  installer simulation. Windows OS/process/download/signature boundaries use
-  explicit controlled substitutes; Upload/Monitor processes are capture stubs.
+Sharing is synchronized by selected firmware/guide updates on its own tree;
+it is never merged back into main. Its tree remains 58 files, with 57 payload
+manifest entries excluding package.json. Installer/PowerShell/tasks/config
+files and all seven PDF Git blobs are retained. Existing binary payload hashes
+are retained for unchanged PDF blobs; every local text payload hash is checked
+against its final bytes. Firmware version, package version, actual main source
+SHA, README source link and payload inventory are checked together before push.
+Installer code is unchanged; Windows installer orchestration was not rerun in
+this firmware-only update. It is not reported as newly tested.
 
-Verification fixtures, local COM/configuration, dependencies and build outputs
-are not included in either published tree. Sharing keeps its reduced file list.
+## Physical limits and tutorial follow-up
 
-## Scope and physical limits
+No USB upload, actual Windows installation or physical ESP32/RFID/LCD/button/
+RGB test was performed. After pulling, Build/Upload and query version to confirm
+v2.0.0 on the board. Retain existing UID data; do not erase flash routinely.
 
-No actual Windows application installation, USB upload or physical
-ESP32/RFID/LCD/button/RGB test was performed. After pulling and reloading VS Code,
-click Upload and use `version` to confirm v1.1.3 on the board.
+The A-Z tutorial PDF, student gameplay PDF, 15-screen LCD PDF/PNG and any
+video using the previous flow need updates. They still describe earlier
+reader order/error handling and do not show the new explanations/eight help
+pages. No PDF/video was overwritten by this change. Print-card/net PDFs,
+including the latest smaller printable nets, are preserved. Exact handoff:
+[docs/TUTORIAL_FLOW_V2_HANDOFF.md](docs/TUTORIAL_FLOW_V2_HANDOFF.md).
 
-Gameplay, question bank, GPIO values, UID/NVS schema/namespace, partition layout
-and all six PDFs are preserved. Main and sharing use identical firmware source;
-sharing records its exact source main commit in package.json and README.
-Existing PDF screenshots/environment choices describe the older edition;
-the current README directs users to skip LED selection and use the sole RGB build.
-
-Previous RGB-pair verification is retained in
-[the v1.1.1 archive](docs/archive/VERIFICATION_2026-10-25-version-1.1.1.md).
+Previous verification: [v1.1.3 archive](docs/archive/VERIFICATION_2026-10-25-version-1.1.3.md).

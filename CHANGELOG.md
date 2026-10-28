@@ -1,5 +1,23 @@
 # Changelog
 
+## v2.0.0 - 2026-10-28
+
+- Urutan dua kad mengikut metadata fokus: bongkah R1 -> R2, bentangan R2 -> R1.
+  Reader fizikal kekal R1 bongkah/R2 bentangan; kad pertama belum mendapat markah.
+- Salah pada mana-mana tahap kini memuktamadkan +0. Masa dijeda tepat pada scan;
+  dua LED merah berkelip 150 ms ON/OFF berterusan bersama penerangan LCD hingga
+  NEXT/TERUSKAN. Kad/HINT/retry/clear dan stop/play tidak membuka semula keputusan.
+- Setiap 15 soalan mempunyai dua baris sebab tepat, nama daripada data jawapan,
+  paparan ASCII 20x4 tanpa memotong teks. Soalan/hint biasa tidak mendedahkan nama.
+- Betul kedua-dua kad kekal +1 sekali; betul/langkau kekal tiga kelipan 900 ms.
+  Soalan berikut mengikut fokus sendiri; kad lama dan butang ditahan tidak dibawa.
+- Naik MAJOR kerana kontrak penggunaan/retry berubah. UID/NVS/GPIO, pemilihan
+  rawak, diagnostik, RGB rawak berlainan dan satu build RGB kekal; tiada migrasi data.
+- Tindakan pengguna: pull, Build/Upload semula, semak `version` v2.0.0. Pakej
+  sharing diselaraskan daripada main; installer/aset sedia ada dikekalkan.
+- PDF A-Z, cara bermain murid dan LCD/PNG serta video/tutorial perlu diselaraskan
+  dengan flow baharu. Aset daripada kerja tutorial lain tidak ditindih.
+
 ## v1.1.4 - 2026-10-28
 
 - Add the 20-page A4 landscape printable nets PDF: two complete sets of cube,

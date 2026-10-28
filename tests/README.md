@@ -20,13 +20,13 @@ python tests/test_version_check.py
 
 The pure runner compiles and links the real domain, LCD view and four application
 tabs using only standard C++11 headers. It supplies typed application ports and
-executes 12 cases: two-card scoring/routing/final freeze, every blink half-step
+executes 14 cases: two-card scoring/routing/final freeze, every blink half-step
 and both skip stages, role/error/hint colours, hint/pause/resume, rollover/reset,
 invalid rounds, UID values, registry validation, filtered/random rounds,
 immutable LCD snapshots, and an application driven entirely by ports.
 
 Each firmware runner first checks release agreement and six checker regressions,
-runs those 12 core cases, then executes 68 behavioural
+runs those 14 core cases, then executes 75 behavioural
 cases with fake electrical/device I/O. Flow regressions drive real input adapters
 for pre-positioned R2, both held cards across questions, short/late/held buttons,
 all 900 blink samples, stopwatch resumption, stage arming, hint colours and
@@ -110,3 +110,15 @@ cases check different R1/R2 colours and no per-reader repeats over 32 seeds
 in menu, instructions, summary and both all-target random command forms.
 They also verify literal GPIO outputs, cadence edges, per-reader Serial logs,
 rollover, delayed updates and preserved stopwatch/score/NVS.
+
+
+`final_flow_behaviour.h` adds seven real-adapter cases for all fifteen
+focus-driven orders, terminal wrong answers at either stage/order, unlimited
+red blinking with a frozen clock, stop/play/retry/inspection/diagnostic
+round-trips, final wrong NEXT, held physical NEXT/HINT, stale cards in both
+orders and all fifteen exact wrong-explanation LCD frames. Source bounds and
+ASCII checks cover every explanation, answer label and all eight help pages.
+Unknown UID/wrong-role notices remain recoverable and the existing purple-hint
+cases now exercise those assistance paths; a wrong registered shape is terminal.
+Pure cases additionally check wrong wait/continuation across millis rollover,
+both last/non-last questions, both stages, and skips in both focus directions.

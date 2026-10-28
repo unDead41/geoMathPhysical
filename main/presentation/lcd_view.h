@@ -16,11 +16,13 @@ struct LcdViewState {
 };
 
 const char *const LCD_INSTRUCTIONS[INSTRUCTION_PAGE_COUNT][2] = {
-  {"R1: Kad bongkah dulu", "R2: Bentangan sama"},
+  {"Soalan bongkah:", "R1 dulu, kemudian R2"},
+  {"Soalan bentangan:", "R2 dulu, kemudian R1"},
   {"Biru: Sedia imbas", "Hijau: Tahap betul"},
   {"HINT:Petunjuk ungu", "HINT lagi: Soalan"},
-  {"Merah: Cuba semula", "NEXT: Langkau (+0)"},
+  {"Salah:+0 merah kelip", "NEXT: Teruskan"},
   {"Dua betul:+1 markah", "3 kelip: Masa dijeda"},
+  {"NEXT: Langkau (+0)", "3 kelip merah: Jeda"},
   {"Menu:Warna perlahan", "Tamat: Warna pantas"}
 };
 
@@ -44,7 +46,7 @@ inline void lcdMenu(char rows[4][21], const LcdViewState &view) {
     lcdPutRow(rows, 0, title);
     lcdPutRow(rows, 1, LCD_INSTRUCTIONS[page][0]);
     lcdPutRow(rows, 2, LCD_INSTRUCTIONS[page][1]);
-    // Lima halaman pertama tidak memaparkan "HINT: Seterusnya".
+    // Hanya halaman terakhir memaparkan arahan kembali ke menu.
     if (page + 1 == INSTRUCTION_PAGE_COUNT) lcdPutRow(rows, 3, "HINT: Menu utama");
     return;
   }
@@ -75,10 +77,6 @@ inline void lcdQuizBody(char rows[4][21], const QuizData &quiz, const Question &
     lcdPutRow(rows, 1, quiz.feedback == Feedback::RIGHT ? "Jawapan betul!" : "Soalan dilangkau.");
     lcdPutRow(rows, 2, quiz.feedback == Feedback::RIGHT ? "Markah: +1" : "Markah: +0");
     lcdPutRow(rows, 3, quiz.index + 1 == quiz.length ? "Pusingan selesai." : "Ke soalan seterusnya");
-  } else if (quiz.feedback == Feedback::WRONG) {
-    lcdPutRow(rows, 1, "Salah, cuba lagi.");
-    lcdPutRow(rows, 2, "Pilih jawapan lain.");
-    lcdPutRow(rows, 3, "Angkat kad & imbas.");
   } else if (quiz.feedback == Feedback::UNKNOWN_UID) {
     lcdPutRow(rows, 1, "Kad belum didaftar");
     lcdPutRow(rows, 2, "Minta bantuan guru");
@@ -118,6 +116,12 @@ inline LcdFrame buildLcdFrame(const LcdViewState &view) {
     snprintf(text, sizeof(text), "Masa akhir: %s", duration);
     lcdPutRow(rows, 2, text);
     lcdPutRow(rows, 3, "NEXT:Lagi HINT:Menu");
+  } else if (view.app.mode == AppMode::PLAY && view.question && quiz.phase == QuizPhase::WRONG_ANSWER) {
+    lcdPutRow(rows, 0, "SALAH +0 NEXT:Terus");
+    snprintf(text, sizeof(text), "Jawapan: %s", shapeShortLabel(view.question->answer));
+    lcdPutRow(rows, 1, text);
+    lcdPutRow(rows, 2, view.question->explanation[0]);
+    lcdPutRow(rows, 3, view.question->explanation[1]);
   } else if (view.app.mode == AppMode::PLAY && view.question) {
     lcdQuizHeader(rows, quiz, view.elapsedMs);
     lcdQuizBody(rows, quiz, *view.question);

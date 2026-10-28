@@ -8,7 +8,8 @@ enum class Shape : uint8_t {
   CUBE = 0, PYRAMID = 1, CYLINDER = 2, CONE = 3, CUBOID = 4, NONE = 255
 };
 enum class AppMode : uint8_t { STOPPED, PLAY, UID_SCAN, ENROLL };
-enum class QuizPhase : uint8_t { SETUP, QUESTION, SUMMARY };
+enum class QuizPhase : uint8_t { SETUP, QUESTION, WRONG_ANSWER, SUMMARY };
+enum class QuestionFocus : uint8_t { SOLID, NET };
 enum class AnswerStage : uint8_t { SOLID, NET };
 enum class Feedback : uint8_t { WAITING, WRONG, RIGHT, UNKNOWN_UID, WRONG_PAD, SKIPPED };
 enum class ScanMode : uint8_t { STOPPED, BOTH, R1, R2 };
@@ -18,10 +19,11 @@ using RandomIndex = uint8_t (*)(uint8_t upperExclusive);
 struct Question {
   const char *id;
   Shape answer;
-  uint8_t reader; // Legacy bank metadata; runtime stage always requires R1 then R2.
+  QuestionFocus focus; // Determines first card; physical roles never change.
   const char *lines[3]; // <=20 aksara ASCII setiap baris.
   const char *hint[3];
   const char *fullText;
+  const char *explanation[2]; // Correct-answer reason, only shown after failure.
 };
 struct RegistryData {
   uint32_t magic;
@@ -37,7 +39,7 @@ struct QuizData {
   AnswerStage stage;
   uint8_t blinkStep;
   uint16_t wrongAttempts, hintsUsed;
-  bool awarded, showHint, hintUsedHere, advancePending;
+  bool awarded, showHint, hintUsedHere, advancePending, firstAccepted;
   Feedback feedback;
   uint32_t feedbackStartedMs;
   uint32_t elapsedMs, clockStartedMs;

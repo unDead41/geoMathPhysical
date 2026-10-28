@@ -20,7 +20,8 @@ class QuizEngine {
   const QuizData &data() const { return data_; }
   uint8_t activeReader() const { return data_.stage == AnswerStage::SOLID ? 0 : 1; }
   const Question *current() const {
-    if (data_.phase != QuizPhase::QUESTION || data_.index >= data_.length ||
+    if ((data_.phase != QuizPhase::QUESTION && data_.phase != QuizPhase::WRONG_ANSWER) ||
+        data_.index >= data_.length ||
         data_.order[data_.index] >= count_) return nullptr;
     return &bank_[data_.order[data_.index]];
   }
@@ -49,12 +50,16 @@ class QuizEngine {
     return true;
   }
   bool skip(uint32_t now) {
-    if (!current() || data_.advancePending || data_.awarded) return false;
+    if (data_.phase != QuizPhase::QUESTION || !current() || data_.advancePending || data_.awarded) return false;
     queueAdvance(Feedback::SKIPPED, now);
     return true;
   }
+  QuizTransition continueAfterWrong(uint32_t now) {
+    if (data_.phase != QuizPhase::WRONG_ANSWER) return QuizTransition::NONE;
+    return advance(now);
+  }
   bool toggleHint() {
-    if (!current() || data_.advancePending) return false;
+    if (data_.phase != QuizPhase::QUESTION || !current() || data_.advancePending) return false;
     data_.showHint = !data_.showHint; data_.feedback = Feedback::WAITING;
     if (data_.showHint && !data_.hintUsedHere) {
       data_.hintUsedHere = true; ++data_.hintsUsed;
@@ -62,22 +67,23 @@ class QuizEngine {
     return true;
   }
   bool retry() {
-    if (!current() || data_.advancePending || data_.awarded) return false;
-    data_.stage = AnswerStage::SOLID;
+    if (data_.phase != QuizPhase::QUESTION || !current() || data_.advancePending || data_.awarded) return false;
+    data_.stage = firstStage(); data_.firstAccepted = false;
     data_.feedback = Feedback::WAITING; data_.showHint = false;
     return true;
   }
   bool submit(uint8_t reader, Shape answer, uint8_t registeredReader, uint32_t now) {
     const Question *q = current();
-    if (reader >= READER_COUNT || !q || data_.advancePending || data_.awarded ||
+    if (reader >= READER_COUNT || data_.phase != QuizPhase::QUESTION || !q || data_.advancePending || data_.awarded ||
         reader != activeReader()) return false;
     data_.feedbackStartedMs = now;
     if (answer != Shape::NONE && registeredReader != activeReader())
       data_.feedback = Feedback::WRONG_PAD;
     else if (answer == Shape::NONE) data_.feedback = Feedback::UNKNOWN_UID;
     else if (answer == q->answer) {
-      if (data_.stage == AnswerStage::SOLID) {
-        data_.stage = AnswerStage::NET;
+      if (!data_.firstAccepted) {
+        data_.firstAccepted = true;
+        data_.stage = data_.stage == AnswerStage::SOLID ? AnswerStage::NET : AnswerStage::SOLID;
         data_.feedback = Feedback::WAITING; data_.showHint = false;
       } else {
         data_.awarded = true; ++data_.score; queueAdvance(Feedback::RIGHT, now);
@@ -85,24 +91,26 @@ class QuizEngine {
     } else {
       data_.feedback = Feedback::WRONG;
       if (data_.wrongAttempts < UINT16_MAX) ++data_.wrongAttempts;
+      data_.phase = QuizPhase::WRONG_ANSWER;
+      data_.showHint = false; data_.blinkStep = 0;
+      pause(now);
+      if (data_.index + 1 >= data_.length) finish(now);
     }
     return true;
   }
   QuizTransition update(uint32_t now) {
-    if (data_.phase != QuizPhase::QUESTION) return QuizTransition::NONE;
     const uint32_t age = uint32_t(now - data_.feedbackStartedMs);
+    if (data_.phase == QuizPhase::WRONG_ANSWER) {
+      data_.blinkStep = uint8_t((age / QUIZ_BLINK_HALF_MS) % 2U);
+      return QuizTransition::NONE;
+    }
+    if (data_.phase != QuizPhase::QUESTION) return QuizTransition::NONE;
     if (data_.advancePending) {
       if (age < QUIZ_NOTICE_MS) {
         data_.blinkStep = uint8_t(age / QUIZ_BLINK_HALF_MS);
         return QuizTransition::NONE;
       }
-      data_.advancePending = false;
-      if (data_.index + 1 >= data_.length) {
-        finish(now); data_.phase = QuizPhase::SUMMARY;
-        return QuizTransition::SUMMARY;
-      }
-      ++data_.index; clearCurrent(); resume(now);
-      return QuizTransition::QUESTION;
+      return advance(now);
     }
     if (data_.feedback != Feedback::WAITING && age >= QUIZ_ERROR_MS)
       data_.feedback = Feedback::WAITING;
@@ -112,21 +120,35 @@ class QuizEngine {
     if (reader >= READER_COUNT) return RgbColor::OFF;
     const Question *q = current();
     if (!q) return RgbColor::OFF;
-    if (data_.advancePending) {
+    if (data_.advancePending || data_.phase == QuizPhase::WRONG_ANSWER) {
       if (data_.blinkStep % 2) return RgbColor::OFF;
       return data_.feedback == Feedback::RIGHT ? RgbColor::GREEN : RgbColor::RED;
     }
-    if (data_.stage == AnswerStage::NET && reader == 0) return RgbColor::GREEN;
+    if (data_.firstAccepted && reader != activeReader()) return RgbColor::GREEN;
     if (reader != activeReader()) return RgbColor::OFF;
     if (data_.feedback == Feedback::WRONG || data_.feedback == Feedback::UNKNOWN_UID ||
         data_.feedback == Feedback::WRONG_PAD) return RgbColor::RED;
     return data_.showHint ? RgbColor::MAGENTA : RgbColor::BLUE;
   }
  private:
+  AnswerStage firstStage() const {
+    return bank_[data_.order[data_.index]].focus == QuestionFocus::NET ? AnswerStage::NET : AnswerStage::SOLID;
+  }
+  QuizTransition advance(uint32_t now) {
+    data_.advancePending = false;
+    if (data_.index + 1 >= data_.length) {
+      finish(now); data_.phase = QuizPhase::SUMMARY;
+      return QuizTransition::SUMMARY;
+    }
+    ++data_.index; data_.phase = QuizPhase::QUESTION;
+    clearCurrent(); resume(now);
+    return QuizTransition::QUESTION;
+  }
   void clearCurrent() {
     data_.awarded = data_.showHint = data_.hintUsedHere = data_.advancePending = false;
+    data_.firstAccepted = false;
     data_.feedback = Feedback::WAITING; data_.feedbackStartedMs = 0;
-    data_.stage = AnswerStage::SOLID; data_.blinkStep = 0;
+    data_.stage = firstStage(); data_.blinkStep = 0;
   }
   void queueAdvance(Feedback feedback, uint32_t now) {
     data_.feedback = feedback; data_.feedbackStartedMs = now;

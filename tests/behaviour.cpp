@@ -43,6 +43,7 @@ std::map<std::string,std::vector<uint8_t>> fakeNvs;
 #endif
 #include "expected_displays.h"
 #include "hardware/rgb.h"
+#include "presentation/lcd_view.h"
 
 // Legacy characterization fixtures set synthetic states only in test utilities.
 // Production adapters see const snapshots and cannot mutate the application.
@@ -73,9 +74,9 @@ static void bank(){
  for(const auto& q:QUESTIONS){
   need(uint8_t(q.answer)<SHAPE_COUNT,"question has invalid shape");
   need(questionIds.insert(q.id).second,"duplicate question ID");
-  need(q.reader<READER_COUNT,"question has invalid reader");
+  need((q.focus==QuestionFocus::SOLID||q.focus==QuestionFocus::NET),"question has invalid reader");
   ++counts[uint8_t(q.answer)];
-  ++(q.reader==0?solidCounts:netCounts)[uint8_t(q.answer)];
+  ++(q.focus==QuestionFocus::SOLID?solidCounts:netCounts)[uint8_t(q.answer)];
   std::string fullText;
   for(unsigned row=0;row<3;++row){
    need(strlen(q.lines[row])<=LCD_COLUMNS,"source question would be truncated");
@@ -87,6 +88,11 @@ static void bank(){
    fullText+=q.lines[row];
   }
   need(fullText==q.fullText,"Serial question differs from LCD copy");
+  need(strlen(shapeShortLabel(q.answer))+9<=20,"answer label would be truncated");
+  for(const char* value:q.explanation){
+   need(value&&strlen(value)>0&&strlen(value)<=20,"explanation source would be missing or truncated");
+   for(const char* p=value;*p;++p)need(*p>=32&&*p<=126,"explanation must be printable ASCII");
+  }
  }
  for(uint8_t shape=0;shape<SHAPE_COUNT;++shape)
   need(solidCounts[shape]==2&&netCounts[shape]==1,"each shape needs two solid questions and one net question");
@@ -97,10 +103,10 @@ static void bank(){
  need(seen.size()==15,"some bank questions cannot be selected");
 }
 static void menu(){fixture();need(std::string(sim::lcdCells[1]).find("Jom uji minda 3D!")!=std::string::npos,"menu copy does not match preview");}
-static void help_pages(){fixture();for(unsigned i=1;i<=6;++i){appHintButton();lcdUpdate();need(appState().showInstructions,"HINT left help too early");char expected[21];snprintf(expected,sizeof(expected),"CARA MAIN %u/6",i);need(std::string(sim::lcdCells[0]).find(expected)!=std::string::npos,"wrong tutorial page");if(i<6)need(std::string(sim::lcdCells[3])==std::string(20,' '),"tutorial must not show HINT: Seterusnya");}appHintButton();need(!appState().showInstructions,"HINT after last page must return to menu");}
+static void help_pages(){fixture();for(const auto& page:LCD_INSTRUCTIONS)for(const char* row:page){need(strlen(row)<=20,"instruction would be truncated");for(const char* p=row;*p;++p)need(*p>=32&&*p<=126,"instruction must be ASCII");}for(unsigned i=1;i<=8;++i){appHintButton();lcdUpdate();need(appState().showInstructions,"HINT left help too early");char expected[21];snprintf(expected,sizeof(expected),"CARA MAIN %u/8",i);need(std::string(sim::lcdCells[0]).find(expected)!=std::string::npos,"wrong tutorial page");if(i<8)need(std::string(sim::lcdCells[3])==std::string(20,' '),"tutorial must not show HINT: Seterusnya");}appHintButton();need(!appState().showInstructions,"HINT after last page must return to menu");}
 static void help_next(){fixture();appHintButton();appNextButton();need(appState().mode==AppMode::STOPPED&&appState().showInstructions,"NEXT must not leave the tutorial before HINT finishes all pages");}
 static void hint_toggle(){fixture();start();appHintButton();need(testQuiz().showHint,"first HINT should open hint");const uint8_t index=testQuiz().index;advance(2000);appHintButton();need(!testQuiz().showHint,"second HINT should return to question");need(testQuiz().index==index&&testQuiz().score==0,"hint changed question or score");need(quizElapsedMs()>=2500,"hint paused the clock");}
-static void header(){fixture();start();sim::now+=13500;lcdUpdate();need(std::string(sim::lcdCells[0])=="Q1/5 R1 00:14   S0/5","game header must match Q/time/S layout");}
+static void header(){fixture();start();sim::now+=13500;lcdUpdate();need(std::string(sim::lcdCells[0])=="Q1/5 R2 00:14   S0/5","game header must identify net-focused R2 with Q/time/S layout");}
 // Catches old one-card scoring and duplicate card callbacks.
 static void single_scan(){
  fixture();start();select("P1");
@@ -111,21 +117,19 @@ static void single_scan(){
  quizOnScan(0,tag(Shape::PYRAMID,0));need(testQuiz().score==0,"duplicate R1 scored");
  quizOnScan(1,tag(Shape::PYRAMID,1));need(testQuiz().score==1&&testQuiz().awarded,"pair did not award");
  quizOnScan(1,tag(Shape::PYRAMID,1));need(testQuiz().score==1,"pair scored twice");
- advance(900);need(testQuiz().index==1&&rfidGetMode()==ScanMode::R1,"next question did not start at R1");
+ advance(900);need(testQuiz().index==1&&quizActiveReader()==(quizCurrentQuestion()->focus==QuestionFocus::NET?1:0),"next question did not start at its own focus");
 }
 static void net_reader(){
  fixture();start();select("C3");
- need(rfidGetMode()==ScanMode::R1,"even legacy net questions must begin with R1");
- quizOnScan(1,tag(Shape::CONE,1));need(testQuiz().score==0,"early net scored");
- quizOnScan(0,tag(Shape::CUBE,0));need(testQuiz().score==0&&rfidGetMode()==ScanMode::R1,"wrong solid advanced stage");
- quizOnScan(0,tag(Shape::CONE,1));need(testQuiz().feedback==Feedback::WRONG_PAD,"net UID accepted on R1");
- const Uid unknown={4,{9,8,7,6}};quizOnScan(0,unknown);
- need(testQuiz().feedback==Feedback::UNKNOWN_UID,"unknown solid accepted");
- quizOnScan(0,tag(Shape::CONE,0));
- quizOnScan(1,unknown);need(testQuiz().score==0&&rfidGetMode()==ScanMode::R2,"unknown net advanced");
- quizOnScan(1,tag(Shape::CUBE,1));need(testQuiz().score==0,"wrong net scored");
+ need(rfidGetMode()==ScanMode::R2,"net-focused question must begin with R2");
+ quizOnScan(0,tag(Shape::CONE,0));need(testQuiz().score==0&&quizActiveReader()==1,"early solid answered");
  quizOnScan(1,tag(Shape::CONE,0));need(testQuiz().feedback==Feedback::WRONG_PAD,"solid UID accepted on R2");
- quizOnScan(1,tag(Shape::CONE,1));need(testQuiz().score==1,"matching pair did not score");
+ const Uid unknown={4,{9,8,7,6}};quizOnScan(1,unknown);
+ need(testQuiz().feedback==Feedback::UNKNOWN_UID&&testQuiz().clockRunning,"unknown net finalized the question");
+ quizOnScan(1,tag(Shape::CONE,1));
+ quizOnScan(0,unknown);need(testQuiz().score==0&&rfidGetMode()==ScanMode::R1,"unknown solid advanced");
+ quizOnScan(0,tag(Shape::CONE,1));need(testQuiz().feedback==Feedback::WRONG_PAD,"net UID accepted on R1");
+ quizOnScan(0,tag(Shape::CONE,0));need(testQuiz().score==1,"matching reverse pair did not score");
 }
 static void skip_notice(){fixture();start();appNextButton();need(testQuiz().index==0,"skip notice must appear before advancing");lcdUpdate();need(std::string(sim::lcdCells[1]).find("Soalan dilangkau.")!=std::string::npos,"missing skip message");advance(2000);need(testQuiz().index==1&&testQuiz().score==0,"skip did not advance for zero marks");}
 static void pending_buttons(){fixture();start();appNextButton();appNextButton();appHintButton();advance(2000);need(testQuiz().index==1&&testQuiz().score==0&&!testQuiz().showHint,"buttons during notice must not skip another question");}
@@ -145,7 +149,7 @@ static void finish_skip(){fixture();start();testQuiz().index=testQuiz().length-1
 static void fresh_reader(){fixture();rfidSetMode(ScanMode::R1);rfidRequireFreshCards();advance(500);need(rfidPadsArmed(),"single-reader arming is waiting for disabled reader");}
 // Drives both real reader adapters: neither card can carry into a new question.
 static void held_card(){
- fixture();start();select("C3");testQuiz().order[1]=questionId("C3");
+ fixture();start();select("C1");testQuiz().order[1]=questionId("C1");
  for(unsigned r=0;r<2;++r){const Uid& uid=tag(Shape::CONE,r);sim::cards[r].size=uid.size;memcpy(sim::cards[r].bytes,uid.bytes,10);}
  sim::cards[0].present=true;advance(400);
  need(testQuiz().score==0&&rfidGetMode()==ScanMode::R2,"solid adapter did not advance to net");
@@ -158,7 +162,7 @@ static void held_card(){
  need(testQuiz().score==2,"lifted and rescanned pair could not answer again");
 }
 static void leds(){
- fixture();start();select("C3");rgbUpdate();
+ fixture();start();select("C1");rgbUpdate();
 #if GEODECODER_RGB_ENABLED
  need(sim::pins[25]==HIGH&&sim::pins[26]==LOW,"R1 blue/R2 off missing at question start");
 #else
@@ -179,7 +183,7 @@ static void all_copies(){
  fixture();start();
  for(const auto& expected:EXPECTED_DISPLAYS){
   testQuiz().index=0;testQuiz().order[0]=questionId(expected.id);quizRetry();quizArmCurrentReader();lcdUpdate();
-  need(quizCurrentQuestion()->reader==expected.reader,"question targets the wrong reader");
+  need(uint8_t(quizCurrentQuestion()->focus)==expected.reader,"question targets the wrong reader");
   for(unsigned row=0;row<3;++row){std::string line=expected.question[row];need(line.size()<=20,"question exceeds 20 columns");line.resize(20,' ');need(line==sim::lcdCells[row+1],"question LCD copy differs from expected text");}
   appHintButton();lcdUpdate();
   for(unsigned row=0;row<3;++row){std::string line=expected.hint[row];need(line.size()<=20,"hint exceeds 20 columns");line.resize(20,' ');need(line==sim::lcdCells[row+1],"hint LCD copy differs from expected text");}
@@ -190,7 +194,7 @@ static void physical_hint(){
 }
 static void complete_round(){
  fixture();start();
- for(unsigned i=0;i<5;++i){need(testQuiz().phase==QuizPhase::QUESTION&&testQuiz().index==i,"round question sequence is wrong");if(i==1)appNextButton();else{const Question& q=*quizCurrentQuestion();quizOnScan(0,tag(q.answer,0));quizOnScan(1,tag(q.answer,1));}advance(1500);}
+ for(unsigned i=0;i<5;++i){need(testQuiz().phase==QuizPhase::QUESTION&&testQuiz().index==i,"round question sequence is wrong");if(i==1)appNextButton();else{const Question& q=*quizCurrentQuestion();const uint8_t first=quizActiveReader(),second=1-first;quizOnScan(first,tag(q.answer,first));quizOnScan(second,tag(q.answer,second));}advance(1500);}
  need(testQuiz().phase==QuizPhase::SUMMARY&&testQuiz().score==4&&testQuiz().index==4,"five-question round did not finish at 4/5 after one skip");const uint32_t elapsed=quizElapsedMs();advance(3000);need(quizElapsedMs()==elapsed,"finished full-round timer is still running");
 }
 static void late_notice_buttons(){
@@ -275,16 +279,16 @@ static void stage_hints_and_errors(){
 #if GEODECODER_RGB_ENABLED
  need(sim::pins[13]==HIGH&&sim::pins[14]==LOW&&sim::pins[25]==HIGH,"purple is not red+blue on R1");
 #endif
- quizOnScan(0,tag(Shape::CUBE,0));need(appReaderColor(0)==RgbColor::RED,"solid error not red");
+ quizOnScan(0,Uid{4,{9,8,7,6}});need(appReaderColor(0)==RgbColor::RED,"solid error not red");
  advance(1200);need(appReaderColor(0)==RgbColor::MAGENTA&&testQuiz().showHint,"solid error lost hint");
  quizOnScan(0,tag(Shape::PYRAMID,0));lcdUpdate();
  need(!testQuiz().showHint&&appReaderColor(0)==RgbColor::GREEN&&appReaderColor(1)==RgbColor::BLUE,"solid success kept hint or lost green");
  need(std::string(sim::lcdCells[0]).find("R2")!=std::string::npos,"LCD does not identify active R2");
  appHintButton();need(appReaderColor(0)==RgbColor::GREEN&&appReaderColor(1)==RgbColor::MAGENTA,"net hint changed R1");
- quizOnScan(1,tag(Shape::CUBE,1));need(appReaderColor(0)==RgbColor::GREEN&&appReaderColor(1)==RgbColor::RED,"net error changed R1");
+ quizOnScan(1,Uid{4,{9,8,7,6}});need(appReaderColor(0)==RgbColor::GREEN&&appReaderColor(1)==RgbColor::RED,"net error changed R1");
  advance(1200);need(appReaderColor(0)==RgbColor::GREEN&&appReaderColor(1)==RgbColor::MAGENTA,"net error restore lost stage/hint");
  appHintButton();need(appReaderColor(1)==RgbColor::BLUE,"close net hint did not restore blue");
- quizOnScan(1,tag(Shape::CUBE,1));advance(1200);need(appReaderColor(1)==RgbColor::BLUE,"closed hint error did not restore blue");
+ quizOnScan(1,Uid{4,{9,8,7,6}});advance(1200);need(appReaderColor(1)==RgbColor::BLUE,"closed hint error did not restore blue");
  appHintButton();quizOnScan(1,tag(Shape::PYRAMID,1));
  need(testQuiz().score==1&&testQuiz().hintsUsed==1,"hint scan failed or incurred penalty/repeated count");
 }
@@ -355,7 +359,7 @@ static void ambient_cadence_and_no_scoring(){
 #endif
 }
 static void summary_next_resets(){
- fixture();start();testQuiz().index=testQuiz().length-1;quizOnScan(0,tag(quizCurrentQuestion()->answer,0));quizOnScan(1,tag(quizCurrentQuestion()->answer,1));
+ fixture();start();testQuiz().index=testQuiz().length-1;const Shape answer=quizCurrentQuestion()->answer;const uint8_t first=quizActiveReader(),second=1-first;quizOnScan(first,tag(answer,first));quizOnScan(second,tag(answer,second));
  advance(900);advance(1000);appNextButton();
  need(testQuiz().score==0&&testQuiz().index==0&&quizElapsedMs()==0&&testQuiz().clockRunning&&!testQuiz().clockFinished,"summary NEXT failed reset");
  need(rfidGetMode()==ScanMode::R1&&appReaderColor(0)==RgbColor::BLUE&&appReaderColor(1)==RgbColor::OFF,"summary NEXT did not arm solid stage");
@@ -411,9 +415,17 @@ static void physical_led_wiring(){
 #include "calibration_behaviour.h"
 #include "unassign_behaviour.h"
 #include "version_behaviour.h"
+#include "final_flow_behaviour.h"
 
 int main(){
  const std::pair<const char*,void(*)()> tests[]={
+ {"focus_driven_pairs",focus_driven_pairs},
+ {"terminal_wrong_at_either_stage",terminal_wrong_at_either_stage},
+ {"wrong_survives_stop_play_and_tools",wrong_survives_stop_play_and_tools},
+ {"wrong_next_physical_hold",wrong_next_physical_hold},
+ {"stale_cards_in_both_orders",stale_cards_in_both_orders},
+ {"wrong_next_requires_fresh_card",wrong_next_requires_fresh_card},
+ {"all_wrong_explanations",all_wrong_explanations},
  {"version_boot_and_status",version_boot_and_status},
  {"version_uart_preserves_game",version_uart_preserves_game},
  {"version_diagnostics_and_arguments",version_diagnostics_and_arguments},
@@ -436,7 +448,7 @@ int main(){
  {"unassign_invalid_and_legacy_slots",unassign_invalid_and_legacy},
  {"unassign_cancels_capture",unassign_cancels_capture},
  {"unassign_single_storage_commit",unassign_single_commit},
- {"component_help_uart_and_lcd",component_help_and_uart},{"component_led_output_ownership",component_led_ownership},{"component_led_cycle_and_blink",component_led_timing},{"component_rfid_selected_reads",component_rfid_watch},{"component_live_rfid_health",component_rfid_health},{"component_button_debounce_watch",component_button_watch},{"component_exit_suppresses_buttons",component_exit_drops_buttons},{"component_invalid_paths_and_command_gates",component_invalid_paths_and_gates},{"component_switching_and_rollover",component_switch_and_rollover},{"physical_led_wiring_all_colours",physical_led_wiring},{"stage_hints_errors_and_colours",stage_hints_and_errors},{"skip_stages_exact_blinks_and_clock",skip_both_stages_and_exact_blinks},{"early_net_requires_removal",early_positioned_net},{"short_blink_button_presses",short_blink_presses},{"menu_result_rgb_cadence",ambient_cadence_and_no_scoring},{"summary_next_resets",summary_next_resets},{"teacher_tools_with_two_cards",teacher_tools_with_two_cards},{"bank_15_and_round_variety",bank},{"menu_copy",menu},{"six_help_pages",help_pages},{"help_blocks_next",help_next},{"hint_toggle_and_timer",hint_toggle},{"lcd_header",header},{"two_cards_and_no_double_award",single_scan},{"net_reader_and_wrong_answers",net_reader},{"skip_notice_zero_points",skip_notice},{"buttons_during_notice",pending_buttons},{"automatic_last_correct_result",finish_correct},{"last_skip_result",finish_skip},{"single_reader_arming",fresh_reader},{"held_card_requires_removal",held_card},{"per_reader_led",leds},{"millis_rollover",clock_rollover},{"minutes_seconds_after_one_hour",long_time},{"nvs_and_filtered_round",saved_tags},{"all_15_question_and_hint_displays",all_copies},{"physical_hint_debounce_and_hold",physical_hint},{"complete_five_question_round",complete_round},{"physical_late_notice_buttons",late_notice_buttons},{"failed_nvs_write_is_transactional",nvs_failed_write},{"unavailable_nvs_rejects_registration",nvs_unavailable},{"duplicate_uid_keeps_mapping",duplicate_mapping},{"corrupt_storage_not_loaded_or_overwritten",corrupt_storage},{"application_pause_resume_clock",paused_application},{"serial_overflow_then_valid_command",serial_overflow_recovery},{"legacy_nvs_byte_image",legacy_nvs_image}};
+ {"component_help_uart_and_lcd",component_help_and_uart},{"component_led_output_ownership",component_led_ownership},{"component_led_cycle_and_blink",component_led_timing},{"component_rfid_selected_reads",component_rfid_watch},{"component_live_rfid_health",component_rfid_health},{"component_button_debounce_watch",component_button_watch},{"component_exit_suppresses_buttons",component_exit_drops_buttons},{"component_invalid_paths_and_command_gates",component_invalid_paths_and_gates},{"component_switching_and_rollover",component_switch_and_rollover},{"physical_led_wiring_all_colours",physical_led_wiring},{"stage_hints_errors_and_colours",stage_hints_and_errors},{"skip_stages_exact_blinks_and_clock",skip_both_stages_and_exact_blinks},{"early_net_requires_removal",early_positioned_net},{"short_blink_button_presses",short_blink_presses},{"menu_result_rgb_cadence",ambient_cadence_and_no_scoring},{"summary_next_resets",summary_next_resets},{"teacher_tools_with_two_cards",teacher_tools_with_two_cards},{"bank_15_and_round_variety",bank},{"menu_copy",menu},{"eight_help_pages",help_pages},{"help_blocks_next",help_next},{"hint_toggle_and_timer",hint_toggle},{"lcd_header",header},{"two_cards_and_no_double_award",single_scan},{"net_reader_and_wrong_answers",net_reader},{"skip_notice_zero_points",skip_notice},{"buttons_during_notice",pending_buttons},{"automatic_last_correct_result",finish_correct},{"last_skip_result",finish_skip},{"single_reader_arming",fresh_reader},{"held_card_requires_removal",held_card},{"per_reader_led",leds},{"millis_rollover",clock_rollover},{"minutes_seconds_after_one_hour",long_time},{"nvs_and_filtered_round",saved_tags},{"all_15_question_and_hint_displays",all_copies},{"physical_hint_debounce_and_hold",physical_hint},{"complete_five_question_round",complete_round},{"physical_late_notice_buttons",late_notice_buttons},{"failed_nvs_write_is_transactional",nvs_failed_write},{"unavailable_nvs_rejects_registration",nvs_unavailable},{"duplicate_uid_keeps_mapping",duplicate_mapping},{"corrupt_storage_not_loaded_or_overwritten",corrupt_storage},{"application_pause_resume_clock",paused_application},{"serial_overflow_then_valid_command",serial_overflow_recovery},{"legacy_nvs_byte_image",legacy_nvs_image}};
  unsigned failures=0;for(const auto& test:tests){try{test.second();std::cout<<"PASS "<<test.first<<'\n';}catch(const std::exception& error){++failures;std::cout<<"FAIL "<<test.first<<": "<<error.what()<<'\n';}}
  std::cout<<(sizeof(tests)/sizeof(tests[0])-failures)<<"/"<<sizeof(tests)/sizeof(tests[0])<<" passed\n";return failures?1:0;
 }

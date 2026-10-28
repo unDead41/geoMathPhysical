@@ -68,7 +68,8 @@ Adapter menggunakan namespace `geomath_q2`, key `registry`, magic
 
 Satu build default `esp32dev-rgb` mengaktifkan RGB empat kaki; board ID kekal `esp32dev`.
 Semua pin asal, bank soalan/hint, format UID dan arahan guru dikekalkan.
-Flow terkini memerlukan R1 bongkah kemudian R2 bentangan bagi setiap soalan.
+Flow mengikut Question.focus: SOLID memerlukan R1 kemudian R2; NET memerlukan
+R2 kemudian R1. R1 kekal bongkah, R2 kekal bentangan.
 
 ## Panduan perubahan seterusnya
 
@@ -86,16 +87,30 @@ Flow terkini memerlukan R1 bongkah kemudian R2 bentangan bagi setiap soalan.
 
 ## Flow dua kad dan output masa
 
-`QuizData.stage` ialah `AnswerStage::SOLID` atau `NET`. `QuizEngine.activeReader()`
-memilih pembaca daripada tahap ini, bukan metadata lama `Question.reader`.
-Bank tidak perlu diubah apabila flow ditukar. R1 betul mengubah tahap tanpa
-menambah skor; R2 sepadan memberi +1 sekali dan menjadualkan peralihan.
+`Question.focus` ialah metadata bertip SOLID/NET. Teks soalan tidak dianalisis
+untuk memilih urutan. `QuizData.stage` memilih peranan aktif, sementara
+`firstAccepted` menyimpan kemajuan pertama tanpa menganggap R1 sentiasa dahulu.
+Reader pertama betul mengaktifkan reader kedua; hanya pasangan memberi +1.
 
-`advancePending` mewakili state kelipan yang menolak jawapan, hint, retry dan
-skip tambahan. `blinkStep` dipacu oleh umur notis melalui `update(now)`: enam
-separuh langkah 150 ms menghasilkan tepat tiga ON/OFF selama 900 ms. Kedua-dua
-warna dibina daripada langkah yang sama. Stopwatch dijeda sebelum kelipan;
-soalan seterusnya memulakannya semula, keputusan akhir kekal beku.
+State QUESTION menerima jawapan/hint/skip. Betul/langkau memasuki
+`advancePending`, enam separuh langkah 150 ms untuk tiga kelipan 900 ms.
+Salah berdaftar memasuki `QuizPhase::WRONG_ANSWER`: konteks soalan dikekalkan,
+clock dipause pada timestamp scan, `update(now)` hanya meneruskan kelipan merah
+bersama tanpa auto-advance. `continueAfterWrong(now)` hanya dipanggil oleh NEXT;
+ia membuka soalan baharu serta resume, atau SUMMARY yang kekal beku.
+`resume`, `retry`, `submit`, `skip` dan `toggleHint` tidak menerima state salah.
+
+`appPlay(false)` memulihkan state salah selepas stop/semakan/diagnostik tanpa
+membina pusingan baharu. `quizArmCurrentReader()` menghentikan kedua-dua reader
+ketika salah. `appInputBlocked()` hanya menyekat urutan automatik betul/langkau,
+supaya NEXT kekal berfungsi pada penerangan salah. Debounce sedia ada memberi
+satu tindakan setiap tekanan stabil dan memerlukan lepasan untuk tekanan baharu.
+
+View salah menggunakan header tetap, `shapeShortLabel(question.answer)` dan dua
+baris `Question.explanation`. Nama PIRAMID diringkaskan agar muat selepas
+"Jawapan: "; bentuk tapak diterangkan dalam sebab. Soalan/hint biasa hanya
+membaca `lines`/`hint`. Notis UNKNOWN_UID/WRONG_PAD kekal boleh dipulihkan tanpa
+mengubah skor/tahap/clock; ralat sambungan tidak dihantar sebagai jawapan.
 
 `quiz.ino` menukar mod pembaca ketika tahap berubah dan memanggil port
 `requireFreshCards()`. Adapter memerlukan tiga poll kosong sebelum menerima

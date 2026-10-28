@@ -214,7 +214,8 @@ ujian aktif, `version`, `help`, `pins`, `status`, `tags`, `current`, `bank` dan 
 dibaca. Jalankan `test/stop` dahulu sebelum `play`, `next`, `hint`, `check uid`,
 `assign` atau perubahan registry. Semua arahan guru lama kekal tersedia selepas
 keluar. NEXT pada menu memulakan round baharu; Serial `play` boleh menyambung
-soalan yang dijeda dengan pasangan kad baharu dari R1.
+soalan yang dijeda dengan pasangan kad baharu mengikut fokus. Jika jawapan sudah salah, play
+memulihkan penerangan salah dengan masa kekal beku; hanya NEXT meneruskan.
 
 LCD 20x4 memaparkan UJIAN KOMPONEN, komponen/target dan arahan keluar. Menu akan
 dipaparkan semula selepas test/stop. Flow permainan dan bank soalan tidak berubah.

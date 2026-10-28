@@ -44,14 +44,13 @@ static void scoring() {
   need(game.update(1899) == QuizTransition::NONE, "blink ended before 900 ms");
   need(game.update(1900) == QuizTransition::QUESTION, "next question not opened at 900 ms");
   need(game.elapsed(2000) == 1000, "clock failed to resume after blink");
-  game.submit(0, Shape::CONE, 0, 2100);
-  game.submit(1, Shape::NONE, 255, 2200);
+  need(game.activeReader() == 1, "net-focused question must start at R2");
+  game.submit(1, Shape::NONE, 255, 2100);
   need(game.data().feedback == Feedback::UNKNOWN_UID, "unknown UID accepted");
-  game.submit(1, Shape::CUBE, 1, 2300);
-  need(game.data().feedback == Feedback::WRONG && game.data().wrongAttempts == 1, "wrong shape not counted");
-  need(game.readerColor(0) == RgbColor::GREEN && game.readerColor(1) == RgbColor::RED,
-       "net error changed completed solid stage");
-  game.submit(1, Shape::CONE, 1, 2400);
+  game.submit(1, Shape::CONE, 1, 2200);
+  need(game.data().score == 1 && game.readerColor(1) == RgbColor::GREEN,
+       "net-first card scored or failed to hold green");
+  game.submit(0, Shape::CONE, 0, 2400);
   need(game.data().score == 2 && game.elapsed(9000) == 1400, "final scan did not freeze clock");
   need(game.update(3299) == QuizTransition::NONE, "final blink ended early");
   need(game.update(3300) == QuizTransition::SUMMARY, "summary missing after 900 ms");
@@ -92,20 +91,20 @@ static void stageRetry() {
   game.start(round, 1, 0);
   game.submit(0, Shape::PYRAMID, 1, 100); // net UID on solid pad
   need(game.data().feedback == Feedback::WRONG_PAD && !game.data().awarded, "wrong role accepted");
-  game.submit(0, Shape::CUBE, 0, 200);
+  game.submit(0, Shape::NONE, 255, 200);
   need(game.readerColor(0) == RgbColor::RED && game.readerColor(1) == RgbColor::OFF, "wrong solid colours");
   game.update(1400);
   need(game.readerColor(0) == RgbColor::BLUE, "error did not return to blue");
   game.toggleHint();
   const RgbColor hintColour = game.readerColor(0);
   need(hintColour == RgbColor::MAGENTA, "hint must use purple (red+blue), never yellow");
-  game.submit(0, Shape::CUBE, 0, 1500); game.update(2700);
+  game.submit(0, Shape::NONE, 255, 1500); game.update(2700);
   need(game.readerColor(0) == hintColour && game.data().showHint, "error lost open hint colour");
   game.submit(0, Shape::PYRAMID, 0, 3000);
   need(!game.data().showHint && game.data().score == 0, "solid success must close hint without scoring");
   game.toggleHint();
   need(game.readerColor(0) == RgbColor::GREEN && game.readerColor(1) == hintColour, "net hint changed R1 green");
-  game.submit(1, Shape::CUBE, 1, 3100); game.update(4300);
+  game.submit(1, Shape::NONE, 255, 3100); game.update(4300);
   need(game.readerColor(0) == RgbColor::GREEN && game.readerColor(1) == hintColour, "net retry lost hint/R1");
   game.toggleHint();
   need(game.readerColor(1) == RgbColor::BLUE && game.data().hintsUsed == 1, "hint toggling changed count");
@@ -231,9 +230,10 @@ static void injectedApplication() {
   appNextButton();
   need(appState().mode == AppMode::PLAY && quizState().length == 5, "application needed a device to start");
   const Question q = *quizCurrentQuestion(); now = 750;
-  appHandleScan(0, registryState().tags[uint8_t(q.answer)][0]);
-  need(quizState().score == 0 && mode == ScanMode::R2, "R1 must activate R2 without scoring");
-  now = 850; appHandleScan(1, registryState().tags[uint8_t(q.answer)][1]);
+  const uint8_t first = q.focus == QuestionFocus::NET ? 1 : 0, second = 1 - first;
+  appHandleScan(first, registryState().tags[uint8_t(q.answer)][first]);
+  need(quizState().score == 0 && mode == (second ? ScanMode::R2 : ScanMode::R1), "first card must activate the second without scoring");
+  now = 850; appHandleScan(second, registryState().tags[uint8_t(q.answer)][second]);
   need(quizState().score == 1 && mode == ScanMode::STOPPED, "injected scan failed to score/stop reader");
   now = 1750; appUpdate();
   need(quizState().index == 1 && mode != ScanMode::STOPPED, "injected clock failed to advance");
@@ -271,8 +271,51 @@ static void boundedDistinctAmbientColours() {
   }
   need(seen.size() == 7, "candidate exclusions made a palette colour unreachable");
 }
+static void finalizedWrongEngine() {
+  for (const char *id : {"P1", "P3"}) for (unsigned stage = 0; stage < 2; ++stage)
+    for (unsigned final = 0; final < 2; ++final) {
+      QuizEngine game(QUESTIONS, QUESTION_COUNT);
+      const uint8_t order[] = {indexOf(id), indexOf("K3")};
+      game.start(order, final ? 1 : 2, UINT32_MAX - 500U);
+      const uint8_t first = id[1] == '3' ? 1 : 0;
+      need(game.activeReader() == first, "focus ignored by pure engine");
+      if (stage) game.submit(first, Shape::PYRAMID, first, UINT32_MAX - 400U);
+      const uint8_t active = stage ? 1 - first : first;
+      game.submit(active, Shape::CUBE, active, UINT32_MAX - 200U);
+      need(game.data().phase == QuizPhase::WRONG_ANSWER && game.current(), "wrong question lost its context");
+      need(game.elapsed(9999) == 300 && !game.data().clockRunning, "wrong timestamp not frozen");
+      for (uint32_t ms = 0; ms < 5200; ++ms) {
+        game.update(UINT32_MAX - 200U + ms); game.resume(9999);
+        const RgbColor expected = (ms / 150) % 2 ? RgbColor::OFF : RgbColor::RED;
+        need(game.readerColor(0) == expected && game.readerColor(1) == expected,
+             "red blink ended, drifted or failed across timer wrap");
+        need(!game.retry() && !game.toggleHint() && !game.skip(9999) &&
+             !game.submit(active, Shape::PYRAMID, active, 9999), "final wrong accepted retry/skip/hint/scan");
+        need(game.elapsed(9999) == 300 && game.data().score == 0 && game.data().wrongAttempts == 1,
+             "wrong wait mutated score, count or timer");
+      }
+      const QuizTransition next = game.continueAfterWrong(10000);
+      need(next == (final ? QuizTransition::SUMMARY : QuizTransition::QUESTION), "wrong NEXT routed incorrectly");
+      need(game.elapsed(11000) == (final ? 300U : 1300U), "wrong continuation resumed final time or lost live time");
+      need(game.continueAfterWrong(11000) == QuizTransition::NONE, "repeated continuation skipped another question");
+      if (!final) need(game.activeReader() == 1 && !game.data().firstAccepted, "next question did not reset to its own net focus");
+    }
+}
+static void skipInBothOrders() {
+  for (const char *id : {"P1", "P3"}) for (unsigned second = 0; second < 2; ++second) {
+    QuizEngine game(QUESTIONS, QUESTION_COUNT); const uint8_t order[] = {indexOf(id), indexOf("K3")};
+    game.start(order, 2, 0); const uint8_t first = id[1] == '3' ? 1 : 0;
+    if (second) game.submit(first, Shape::PYRAMID, first, 100);
+    need(game.skip(200), "skip rejected at either focus/stage");
+    need(game.data().score == 0 && game.elapsed(800) == 200, "skip scored a partial pair or ran time");
+    need(game.update(1100) == QuizTransition::QUESTION && game.activeReader() == 1,
+         "skip did not open next net-focused question after 900ms");
+  }
+}
 int main() {
   const std::pair<const char *, void(*)()> tests[] = {
+    {"final_wrong_freeze_blink_next_and_rollover", finalizedWrongEngine},
+    {"skip_both_focuses_and_stages", skipInBothOrders},
     {"two_card_routing_award_and_final_freeze", scoring},
     {"exact_blinks_skips_and_stopwatch", blinkAndSkip}, {"stage_retries_roles_and_hint_colours", stageRetry}, {"hint_pause_resume_skip", hintAndPause},
     {"clock_rollover_and_new_round", rolloverAndReset}, {"invalid_round_keeps_current_state", invalidRound},
