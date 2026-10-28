@@ -1,111 +1,123 @@
-# GeoDecoder v2.0.0 verification - 28 October 2026
+# GeoDecoder v2.0.1 verification - 28 October 2026
 
-Audited main: `c9275fda75b1720613c5bfa776e6b3049ee326d5` (v1.1.4).
-Audited sharing: `4e3fdfcbfc1508dcf4cce55a58df637243c33f2a` (1.1.4-sharing.1).
-The v1.1.4 printable-net asset update arrived during the audit and was retained.
-Publication targets: main v2.0.0 and reduced sharing 2.0.0-sharing.1.
+## Actual audited bases and concurrent work
 
-## Behaviour and data
+Main: `c368e8c951478360c89f99b8a3c9944a62761049` (v2.0.0).
+Sharing: `63a1193978577a9f8a4fe116a902ec08e87b52d5` (2.0.0-sharing.1).
+These heads arrived during the earlier audit. Work was reapplied to these
+actual sources, retaining their final-flow implementation, typed QuestionFocus,
+all 15 answer explanations and seven PDFs, including the new printable net.
 
-Typed QuestionFocus selects solid R1 -> net R2 or net R2 -> solid R1.
-First-card progress is independent of reader number; only the second matching
-card awards +1. A registered wrong shape on either stage enters WRONG_ANSWER,
-pauses at the scan timestamp, stops readers and continuously blinks both LEDs
-red at 150 ms ON/OFF until NEXT. NEXT is not gated by automatic-blink blocking.
-It advances immediately to a fresh question and resumes time, or opens the
-last summary with the original failure timestamp still frozen.
+Publication targets are main v2.0.1 and sharing package 2.0.1-sharing.1. PATCH
+fits SOR: complete the agreed LCD guidance and fix a pending-button leak while
+preserving the v2.0.0 game/usage, hardware, storage and question-data contracts.
 
-All fifteen questions have actual-answer names and two precise explanation
-rows. Formula derivations, net components and B3's paired face dimensions were
-reviewed. All source rows, compact answer labels and eight instruction pages
-fit printable ASCII 20x4. Question/hint copy, IDs, answers and random selection
-are preserved. No solution data is rendered in ordinary question/hint frames.
+## LCD and input changes
 
-Unknown UID and wrong registered card role retain the 1,200 ms recoverable
-help notice: time runs, score/stage/wrong count do not change. Reader faults
-never dispatch an answer; online checks and teacher diagnostics remain.
-Stop/play/retry/clear and inspection/diagnostic roundtrips cannot reopen a
-finalized failed question. Deliberate round new or registry changes still
-reset the round as documented.
+Cara Main now has 15 actual firmware pages. Each has a title, two ASCII body
+rows <=20 and HINT: Seterusnya (last: HINT: Menu utama). The pages explicitly
+cover solid R1->R2, net R2->R1, blue waiting, first green/+0, matching pair +1,
+three green blinks/auto-next, terminal wrong +0/continuous red, answer/reason,
+NEXT/TERUSKAN, paused time and active-reader purple hints. The clock wording
+names green *blinking*, so steady first-card green is not mistaken for a pause.
+HINT opens/advances/returns; NEXT is inactive on every page.
 
-No hardware pin, reader role, config default, storage namespace/key/magic/
-version, Shape ID or RegistryData ABI changed. Ordinary LED paths remain
-native developer compatibility only. One published RGB environment remains
-on each branch. No production dependency was added and loop() is unchanged.
+Input blocking now takes the button index. Both buttons remain suppressed
+through automatic green/skip-red sequences. In WRONG_ANSWER, only HINT is
+suppressed until release; NEXT stays usable. The driver snapshots blocking
+before dispatching either button, so NEXT cannot carry a HINT whose debounce
+began in the wrong-answer screen into the next question. Held NEXT still acts
+once. The existing timed-blink/default NEXT query remains compatible.
 
-## Native simulation
+Fresh tests on the actual v2.0.0 source first passed 14 pure and 75 integration
+cases. New regressions then failed exactly for incomplete 15-page guidance
+and a HINT started 20 ms after a NEXT press in wrong review. Both pass after
+the production changes. All source QuestionFocus, QuizEngine, Question data
+(including every explanation), registry/Shape/NVS, config/GPIO, RFID adapter,
+component diagnostics and PlatformIO configuration remain byte-identical to
+the audited current source. loop() is unchanged.
 
-Baseline v1.1.4: 12/12 pure cases and 68/68 integration passed. Before the
-implementation, six new scenarios failed on the intended missing behaviours:
-focus routing, terminal failure/pause, maintenance lock, held NEXT, reverse
-stale-card routing and explanation rendering. Existing fresh-card protection
-already satisfied the additional wrong-to-next held-card case.
+## Native simulation results
 
-| python tests/run_tests.py flags | Version regressions | Pure core/application/view | Firmware integration |
+| python tests/run_tests.py flags | Version regressions | Pure core/application/view | Integration |
 |---|---:|---:|---:|
-| none (developer ordinary LED) | 6/6 | 14/14 | 75/75 |
-| --rgb | 6/6 | 14/14 | 75/75 |
-| --entrypoint src/main.cpp | 6/6 | 14/14 | 75/75 |
-| --entrypoint src/main.cpp --rgb | 6/6 | 14/14 | 75/75 |
-| --separate-modules | 6/6 | 14/14 | 75/75 |
-| --separate-modules --rgb | 6/6 | 14/14 | 75/75 |
+| none (legacy LED developer compatibility) | 6/6 | 14/14 | 79/79 |
+| --rgb | 6/6 | 14/14 | 79/79 |
+| --entrypoint src/main.cpp | 6/6 | 14/14 | 79/79 |
+| --entrypoint src/main.cpp --rgb | 6/6 | 14/14 | 79/79 |
+| --separate-modules | 6/6 | 14/14 | 79/79 |
+| --separate-modules --rgb | 6/6 | 14/14 | 79/79 |
 
-The sharing source was also executed using the main harness:
-`python tests/run_tests.py --sketch ../geodecoder-sharing/main --entrypoint ../geodecoder-sharing/src/main.cpp --rgb`:
-6/6 version regressions, 14/14 pure cases and 75/75 integration. The pure
-runner reads the main core; byte-for-byte parity of all 36 firmware/entry
-files establishes the same core in sharing. Electrical adapters are simulated.
+The sharing source was also exercised with the main harness using
+`--sketch ../geodecoder-final-sharing/main --entrypoint ../geodecoder-final-sharing/src/main.cpp --rgb`:
+6/6 checker regressions, 14/14 pure and 79/79 integration. The pure runner uses
+main's core; byte parity of all 36 firmware/entry files establishes the same
+core in sharing. Electrical/device I/O is simulated. These paths use C++11,
+-Wall -Wextra -Werror -pedantic, ASan and UBSan; LeakSanitizer is disabled.
 
-C++11, -Wall -Wextra -Werror -pedantic, ASan and UBSan were enabled;
-LeakSanitizer is disabled in the managed runtime. Each maintained runner
-executes the pure suite. `python tools/check_version.py --previous-version
-v1.1.4` passes for v2.0.0. Both git diff --check runs pass.
+Coverage retains both card orders, wrong at either stage, +1 once after the
+pair, continuous synchronized red/frozen wrong time and rollover, final wrong
+NEXT, correct/skip six half-steps (900 ms), timer resume/final freeze, stop/play/
+retry/clear/inspection/diagnostic locks, pre-positioned/old cards and sequential
+scans without requiring simultaneous presence, held inputs, ambient random RGB,
+legacy NVS, teacher commands and diagnostics.
 
-New coverage includes both question orders and failure stages, prior-score
-preservation, every millisecond of continuous red output for 4,800 ms, longer
-frozen waits/maintenance roundtrips, final failure, both physical held buttons,
-both-order prepositioned cards and old cards across questions. Pure tests
-cover last/non-last failures and continuous blinking across millis rollover.
-Existing tests retain all 900 green/red blink samples, skip paths, ambient
-RGB timing/distinct-pair rules, UID/NVS, Serial, calibration and game resets.
+Additional cases check wrong waits/next in both orders, both stages and final
+questions; pending HINT plus held NEXT; recoverable unknown/wrong-role UIDs
+on both stages/orders; and skip from both focus orders/stages. All 15 wrong
+LCD explanations are now tested at both stages (30 frames), including no
+answer name in ordinary question/hint and unchanged display after 5 seconds.
+Every one of 15 guide pages and its navigation/ASCII/width is checked.
+
+`python tools/check_version.py --previous-version v2.0.0` passes. Runtime
+header, README and top CHANGELOG identify v2.0.1. Both git diff --check runs pass.
 
 ## ESP32 compilation
 
-Default `python -m platformio run` (no -e) succeeds for both snapshots using
-PlatformIO Core 6.1.18, Espressif32 6.12.0, Arduino ESP32 2.0.17,
-MFRC522 1.4.12 and hd44780 1.3.2. Both builds use 22,812 bytes RAM and
-340,457 bytes flash. Project config confirms exactly one environment and
-matching default each: esp32dev-rgb / esp32dev-sharing-rgb, board esp32dev,
-GEODECODER_RGB_ENABLED=1. Compile is not a USB upload.
+Default `python -m platformio run` (equivalent to pio run, without -e)
+completed SUCCESS for both branches. Core 6.1.18, Espressif32 6.12.0,
+Arduino ESP32 2.0.17, MFRC522 1.4.12 and hd44780 1.3.2.
+RAM 22812/327680 bytes; flash 341073/1310720 bytes in main.
+Independent checks confirm one default RGB environment per branch:
+esp32dev-rgb and esp32dev-sharing-rgb; classic board esp32dev and original pins.
+No production dependency or partition change was introduced.
 
-## Independent review and sharing package
+## Sharing, documentation and assets
 
-Read-only independent review found no Critical, Important or Minor issues.
-The reviewer independently ran the PlatformIO RGB native entry (6/14/75
-passing), checked all explanations and verified all 36 shipping source files
-match. The other five native runs and ESP32 compilation are executor results.
+All 36 firmware/entry files match byte-for-byte. Sharing retains its installer,
+config and minimal tree, adding only GAME_FLOW_RGB.md and the existing-name
+TUTORIAL_FLOW_V2_HANDOFF.md as two compact user documents (60 files total).
+No test fixtures, design history, toolchain, COM data or build output is shipped.
+Package metadata records the actual main source SHA; changed text-file SHA-256
+values are regenerated, while unchanged PDF entries retain prior digests backed
+by identical Git blob SHAs. Sharing deletions are never merged into main.
 
-Sharing is synchronized by selected firmware/guide updates on its own tree;
-it is never merged back into main. Its tree remains 58 files, with 57 payload
-manifest entries excluding package.json. Installer/PowerShell/tasks/config
-files and all seven PDF Git blobs are retained. Existing binary payload hashes
-are retained for unchanged PDF blobs; every local text payload hash is checked
-against its final bytes. Firmware version, package version, actual main source
-SHA, README source link and payload inventory are checked together before push.
-Installer code is unchanged; Windows installer orchestration was not rerun in
-this firmware-only update. It is not reported as newly tested.
+The existing tutorial handoff is extended, rather than replaced by a competing
+handoff: all 15 guide pages, all 15 actual wrong frames and gameplay examples
+are exported from buildLcdFrame/QUESTIONS/LCD_INSTRUCTIONS. Right-hand padding
+is omitted only in Markdown. These frames are text simulation, not board photos.
+The seven PDFs and main PNG ZIP from current tutorial/print work are preserved.
+A-Z/player/LCD PDFs, PNG previews and video still need the changes listed in
+that handoff; the printable-card/net assets need no flow-related replacement.
 
-## Physical limits and tutorial follow-up
+## Physical limits
 
-No USB upload, actual Windows installation or physical ESP32/RFID/LCD/button/
-RGB test was performed. After pulling, Build/Upload and query version to confirm
-v2.0.0 on the board. Retain existing UID data; do not erase flash routinely.
+No USB upload, physical ESP32/RFID/RGB/LCD/button testing, actual Windows install
+or new video recording was performed. Native PASS and successful ESP32 compile
+are separate from physical validation. After pull, Build/Upload the sole RGB
+default and query version at 115200 baud; routine full-flash erase is unnecessary
+and would remove enrolled cards.
 
-The A-Z tutorial PDF, student gameplay PDF, 15-screen LCD PDF/PNG and any
-video using the previous flow need updates. They still describe earlier
-reader order/error handling and do not show the new explanations/eight help
-pages. No PDF/video was overwritten by this change. Print-card/net PDFs,
-including the latest smaller printable nets, are preserved. Exact handoff:
-[docs/TUTORIAL_FLOW_V2_HANDOFF.md](docs/TUTORIAL_FLOW_V2_HANDOFF.md).
+Previous release evidence: docs/archive/VERIFICATION_2026-10-28-version-2.0.0.md.
 
-Previous verification: [v1.1.3 archive](docs/archive/VERIFICATION_2026-10-25-version-1.1.3.md).
+## Independent final review
+
+Read-only review of the canonical v2.0.1 source found no Critical or Important
+issues. It checked the button snapshot, wrong-answer locks, fresh-card barriers,
+rollover/time, every help page and preservation of the protected files.
+A pre-existing editorial minor is deferred: K1's reason splits `segi empat`
+and `sama saiz dan bentuk` across rows; explicit square wording could be
+clearer in future tutorial editing. The current rows match the user-provided
+example and are preserved with all current answer data. This is not a scoring,
+flow or LCD-width issue. Hardware/PDF limits above remain; the actual source SHA
+and manifest are finalized before publication.

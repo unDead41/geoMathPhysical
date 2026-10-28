@@ -1,6 +1,6 @@
 # Semakan soalan dan hint GeoDecoder
 
-Tarikh: 28 Oktober 2026 - firmware v2.0.0
+Tarikh: 28 Oktober 2026 - firmware v2.0.1
 
 Baris pertama LCD menunjukkan nombor soalan, tahap R1/R2, masa dan skor. Tiga baris berikutnya digunakan untuk soalan atau hint. Setiap baris ialah ASCII dan tidak melebihi 20 aksara. `main/question_bank.h` ialah sumber runtime.
 
@@ -16,7 +16,7 @@ Soalan bentangan menguji bentuk atau lipatan. Ukuran kotak dalam B3 membezakan r
 - [Set 15 PNG](lcd/GeoDecoder_15_Contoh_LCD_PNG.zip)
 - [Indeks aset cetakan dan LCD](ASSETS.md)
 
-**PDF/PNG belum diselaraskan kepada flow v2.0.0.** Teks soalan/hint masih sama, tetapi header bentangan perlu R2 dahulu dan paparan salah baharu belum dimasukkan.
+**PDF/PNG belum diselaraskan kepada flow v2.0.1.** Teks soalan/hint masih sama, tetapi header bentangan perlu R2 dahulu dan paparan salah baharu belum dimasukkan.
 
 Semua halaman menggunakan satu templat A4 landskap yang tetap, dengan LCD soalan dan hint bersebelahan. Baris ID soalan dan label dimensi LCD telah dibuang daripada reka letak PDF; garisan emas berada dalam lengkungan banner. Petunjuk simbol menggunakan istilah Buku Teks Matematik Tingkatan 2 KSSM, Bab 6.
 

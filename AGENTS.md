@@ -15,6 +15,11 @@
   input blocking; retry/hint/play must never reopen a finalized wrong question.
   Correct/skip retain three 150 ms ON/OFF cycles (900 ms) with stopped clock.
   Unknown UID/wrong card role remain recoverable help, not scored failures.
+  Cara Main has 15 ASCII 20x4 pages; HINT opens/advances/returns and NEXT stays
+  inactive throughout help. Keep all exact pages in the existing tutorial handoff.
+  InputEvents button blocking is per-button: both during automatic blink,
+  only HINT during WRONG_ANSWER. Snapshot before dispatch so pending HINT cannot
+  enter the next question after NEXT. Keep NEXT available in WRONG_ANSWER.
 - Firmware source lives in `main/`. `src/main.cpp` is the PlatformIO entry point and includes the same tabs. Keep a single source of application logic.
 - Keep domain and application hardware-independent. Application time/RNG/logging/storage/reader control goes through `AppPorts`, bound once in setup. RFID/buttons emit `InputEvents`; LCD accepts a `LcdFrame`. `config.h` contains board settings only.
 - Mutable state is owned by its module. Read `appState()`, `quizState()` and `registryState()` as const; use application actions for mutations. Do not restore mutable extern globals or introduce production `const_cast`.

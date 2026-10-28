@@ -1,4 +1,4 @@
-# Flow GeoDecoder v2.0.0: urutan ikut fokus dan salah dimuktamadkan
+# Flow GeoDecoder v2.0.1: urutan ikut fokus dan salah dimuktamadkan
 
 Dokumen ini menggantikan aturan lama R1 sentiasa dahulu dan salah boleh cuba
 semula. Sumber runtime ialah `main/question_bank.h` dan pure `QuizEngine`.
@@ -35,7 +35,7 @@ memberi tepat satu soalan rawak setiap jenis.
 
 | Keadaan | R1 | R2 | Masa / keputusan |
 |---|---|---|---|
-| Menu / 8 halaman cara main | Rawak perlahan | Rawak perlahan | Berhenti; sela 1,000 ms |
+| Menu / 15 halaman cara main | Rawak perlahan | Rawak perlahan | Berhenti; sela 1,000 ms |
 | Fokus bongkah, tahap pertama | Biru | Padam | Berjalan |
 | Bongkah betul, tahap kedua | Hijau | Biru | Berjalan; +0 setakat ini |
 | Fokus bentangan, tahap pertama | Padam | Biru | Berjalan |
@@ -131,7 +131,7 @@ READY ialah respons register, bukan bukti antena membaca kad sebenar.
 ## Menu, keputusan dan penyelenggaraan
 
 NEXT pada menu memulakan pusingan baharu (skor 0, 00:00). HINT menggerakkan
-lapan halaman panduan lalu kembali ke menu; NEXT tidak keluar daripada panduan.
+15 halaman panduan lalu kembali ke menu; NEXT tidak keluar daripada panduan.
 
 Pada soalan terakhir, masa akhir dibekukan ketika kad kedua betul, kad salah
 atau langkau disahkan. Betul/langkau menyelesaikan tiga kelipan dahulu; salah
@@ -161,7 +161,7 @@ ESP32 dan dependency dipin kekal. Upload rutin tidak memerlukan erase flash.
 
 PDF A-Z, cara bermain murid, PDF 15 LCD dan set PNG masih edisi terdahulu.
 Ia perlu kemas kini bagi urutan ikut fokus, salah +0 yang menunggu NEXT,
-penerangan LCD, lapan halaman panduan dan masa beku. Video/tutorial perlu
+penerangan LCD, 15 halaman panduan dan masa beku. Video/tutorial perlu
 merekod semula bahagian tersebut. PDF kad/bentangan cetak tidak berubah oleh
 flow ini; aset baharu daripada kerja tutorial lain dikekalkan.
 

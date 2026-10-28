@@ -111,6 +111,11 @@ tanpa memuktamadkan soalan, menambah markah atau menjeda masa.
 Rujuk [flow semasa](docs/GAME_FLOW_RGB.md).
 Serial mengekalkan maklumat teknikal guru; LCD memaparkan arahan murid sahaja.
 
+Cara Main LCD mempunyai 15 halaman: HINT membuka/maju, HINT terakhir kembali
+ke menu; NEXT tidak memulakan permainan dalam panduan. Kad pertama betul hijau
+kekal tetapi belum +1. HINT di skrin salah disekat sehingga dilepaskan dan tidak
+dibawa ke soalan seterusnya. [Semua paparan LCD](docs/TUTORIAL_FLOW_V2_HANDOFF.md).
+
 ## Ujian komponen
 
 Arahan ringkas untuk kalibrasi (satu arahan setiap baris):
@@ -153,7 +158,7 @@ warna, timing, watch butang dan maksud output RFID.
 Banner ini juga muncul semasa boot dan pada permulaan output `status`:
 
 ```text
-[FIRMWARE] GeoDecoder v2.0.0 | ESP32 | env=esp32dev-rgb
+[FIRMWARE] GeoDecoder v2.0.1 | ESP32 | env=esp32dev-rgb
 ```
 
 Build pengguna tunggal ialah RGB. Semak versi dengan README GitHub pada

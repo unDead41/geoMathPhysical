@@ -36,7 +36,7 @@ Jika dua RGB sudah dipasang, ubah satu baris dalam `config.h`:
 
 `RGB_COMMON_ANODE = false` untuk common ke GND; gunakan `true` jika common anode. Setiap saluran LED memerlukan resistor seperti sambungan asal.
 
-Setiap soalan bermula dengan R1 biru dan R2 padam. Selepas bongkah betul, R1 kekal hijau dan R2 biru untuk bentangan. Ungu menandakan hint dan merah menandakan salah/kad tidak sah. Menu bertukar warna setiap 1,000 ms; keputusan setiap 150 ms. Dalam putaran rawak, R1/R2 sentiasa berlainan dan setiap LED mengelakkan warna sebelumnya. LED biasa memetakan semua warna kepada ON dan menggunakan notis/tahap LCD.
+Soalan bongkah bermula R1 biru/R2 padam; soalan bentangan R2 biru/R1 padam. Reader pertama betul hijau kekal dan reader kedua biru. Ungu ialah hint pada reader aktif. Jawapan salah: kedua-dua LED merah berkelip berterusan sehingga NEXT; UID belum berdaftar/salah peranan: bantuan merah sementara sahaja. Menu bertukar warna setiap 1,000 ms; keputusan setiap 150 ms. Dalam putaran rawak, R1/R2 sentiasa berlainan dan setiap LED mengelakkan warna sebelumnya. LED biasa memetakan semua warna kepada ON dan menggunakan notis/tahap LCD.
 
 ## Aktifkan semua lima bongkah
 
@@ -51,26 +51,27 @@ Selepas itu permainan boleh dimulakan dengan butang fizikal. Pilihan ini disimpa
 
 Tetapan jenis aktif daripada firmware lama dikekalkan. Jika dahulu hanya tiga jenis aktif, bank permainan menggunakan jenis itu sehingga arahan `use` di atas dijalankan. Jika UID belum lengkap, gunakan `tags`, `help` dan arahan `assign r1 <jenis>` / `assign r2 <jenis>` seperti sebelum ini.
 
-Setiap jenis mempunyai UID bongkah R1 dan UID bentangan R2. **Setiap soalan memerlukan kedua-dua kad secara berurutan: bongkah di R1, kemudian bentangan sepadan di R2.** R1 betul sahaja belum mendapat markah.
+Setiap jenis mempunyai UID bongkah R1 dan UID bentangan R2. **Soalan bongkah: R1 -> R2; soalan bentangan: R2 -> R1.** Dua kad mesti menjawab jenis yang sama; kad pertama betul belum mendapat markah. Kad pertama tidak wajib kekal di reader semasa kad kedua diimbas.
 
 ## Butang dan paparan
 
 | Keadaan | NEXT / B1 / GPIO32 | HINT / B2 / GPIO33 |
 |---|---|---|
-| Menu utama | Mula pusingan baharu | Buka cara main halaman 1/6 |
-| Cara main | Kekal pada panduan | Maju satu halaman; selepas 6/6 kembali ke menu |
+| Menu utama | Mula pusingan baharu | Buka cara main halaman 1/15 |
+| Cara main | Kekal pada panduan | Maju satu halaman; selepas 15/15 kembali ke menu |
 | Soalan atau hint | Langkau dengan +0 markah | Buka hint; tekan lagi untuk kembali ke soalan |
+| Salah muktamad | TERUSKAN ke soalan/keputusan | Diabaikan |
 | Tiga kelipan betul/langkau | Diabaikan sehingga dilepaskan | Diabaikan sehingga dilepaskan |
 | Keputusan akhir | Mula semula pada Q1, masa 00:00 dan skor 0 | Kembali ke menu |
 
-- Semua soalan menggunakan **kad bongkah di R1 kemudian kad bentangan di R2**. R2 hanya menerima jawapan selepas R1 betul.
+- Ikut fokus: **bongkah R1 -> R2; bentangan R2 -> R1**. Reader kedua hanya aktif selepas kad pertama betul.
 - Kedua-dua jawapan betul memberi **+1 sekali sahaja**, diikuti tiga kelipan hijau serentak, 150 ms ON + 150 ms OFF setiap kali; jumlah 900 ms. Langkau memberi +0 dan tiga kelipan merah.
-- Jawapan salah boleh dicuba semula pada tahap yang sama. Jika bentangan salah atau hint dibuka, R1 kekal hijau. NEXT boleh melangkau pada kedua-dua tahap dengan +0.
+- Satu kad jawapan salah: +0 muktamad, skor lama kekal. Kedua-dua LED merah berkelip 150 ms ON/OFF berterusan; LCD jawapan+sebab kekal sehingga NEXT/TERUSKAN. Tiada cuba semula. NEXT semasa menjawab masih melangkau mana-mana tahap dengan +0 dan tiga kelipan merah.
 - Angkat kad sebelum mengimbasnya untuk soalan baharu. Kad yang terus diletakkan tidak dikira sebagai jawapan baharu.
 - Tekanan yang dibuat semasa notis tidak dibawa ke soalan atau keputusan berikutnya.
 - Baris pertama permainan: `Q1/5 R1 00:14   S0/5` (atau R2 pada tahap bentangan). Tiga baris bawah memaparkan soalan atau hint, maksimum 20 aksara sebaris.
-- Masa berjalan semasa soalan, hint dan notis salah. Masa dijeda sepanjang kelipan 900 ms dan disambung pada soalan seterusnya. Pada soalan terakhir, masa akhir dibekukan ketika dua kad lengkap atau soalan dilangkau, sebelum kelipan akhir.
-- Lima halaman panduan pertama tidak mengandungi `HINT: Seterusnya`; halaman terakhir mengekalkan `HINT: Menu utama` seperti gambar rujukan.
+- Masa berjalan semasa soalan, hint dan bantuan UID/peranan. Masa dijeda tepat pada dua kad betul, langkau atau salah; sepanjang kelipan 900 ms serta menunggu NEXT pada salah. Masa bersambung pada soalan baharu sahaja. Soalan akhir salah menunggu NEXT untuk keputusan tanpa menyambung masa.
+- Cara Main LCD: 15 halaman, `HINT: Seterusnya` dan akhir `HINT: Menu utama`. NEXT tidak bermula dalam panduan. Semua paparan: [handoff tutorial](docs/TUTORIAL_FLOW_V2_HANDOFF.md).
 - Keputusan akhir memaparkan skor, peratus dan masa akhir.
 
 ## Bank soalan
@@ -83,7 +84,7 @@ Setiap jenis mempunyai UID bongkah R1 dan UID bentangan R2. **Setiap soalan meme
 | Kon | C1 | C2 | C3 |
 | Kuboid | B1 | B2 | B3 |
 
-Kesemua 10 soalan bongkah R1 dikekalkan, termasuk P1 tentang muka/bucu/rusuk dan P2 tentang rumus. Lima soalan bentangan R2 diubah supaya murid mentafsir ukuran, isi padu atau luas permukaan sebelum memilih kad bentangan. Soalan R2 tidak menyebut nama bongkah. Semua 15 hint membimbing langkah berfikir tanpa menyatakan jawapan atau menyenaraikan kepingan bentangan.
+Kesemua 10 soalan bongkah R1 dikekalkan, termasuk P1 tentang tapak/muka dan P2 tentang rumus. Lima soalan bentangan R2 menggunakan kepingan atau ukuran bagi memilih kad bentangan yang sepadan. Soalan R2 tidak menyebut nama bongkah. Semua 15 hint membimbing langkah berfikir tanpa menyatakan nama jawapan.
 
 Setiap soalan dan hint menggunakan tiga baris, maksimum 20 aksara ASCII sebaris. `V` ialah isi padu, `L` luas permukaan keseluruhan, `t` tinggi tegak, `a` panjang sisi tapak persegi atau rusuk mengikut soalan, `r` jejari, dan `s` tinggi condong. `pi`, `*` dan `^` digunakan untuk keserasian LCD.
 

@@ -167,3 +167,17 @@ R2 excludes its own previous colour and the newly selected R1 colour. Each
 reader uses one bounded RNG call over 5..7 candidates; there is no retry loop.
 The component session stores random colours per reader and logs each target.
 Rendering reads these values without making additional RNG calls.
+
+## Cara Main dan input selepas salah (v2.0.1)
+
+LCD_INSTRUCTIONS mempunyai 15 halaman dua baris isi, tajuk CARA MAIN n/15 dan
+footer HINT: Seterusnya/HINT: Menu utama. HINT melayari panduan; NEXT tidak
+memulakan pusingan sehingga panduan kembali ke menu. Teks semua halaman dan
+penerangan salah dijana melalui view sebenar dalam TUTORIAL_FLOW_V2_HANDOFF.md.
+
+InputEvents::buttonsBlocked menerima indeks 0=NEXT, 1=HINT. appInputBlocked
+menyekat kedua-duanya ketika advancePending; pada WRONG_ANSWER hanya HINT
+disekat sehingga dilepaskan, manakala NEXT meneruskan seperti biasa. Driver
+mengambil snapshot sekatan sebelum dispatch mana-mana butang dalam tick yang
+sama. Ini menghalang HINT yang bermula pada skrin salah tetapi belum selesai
+debounce daripada membuka hint soalan baharu selepas NEXT. Loop kekal sama.

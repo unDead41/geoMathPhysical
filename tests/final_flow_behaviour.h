@@ -109,10 +109,15 @@ static void all_wrong_explanations() {
   {"KUBOID","Panjang,lebar,tinggi","3 ukuran berbeza."},
   {"KUBOID","V=luas tapak*t","Tapak=p*l; tinggi=t"},
   {"KUBOID","2 muka setiap saiz:","6x4, 6x3 dan 4x3 cm"}};
- for(unsigned i=0;i<15;++i){
+ for(unsigned i=0;i<15;++i)for(unsigned stage=0;stage<2;++stage){
   fixture();start();select(EXPECTED_DISPLAYS[i].id);
   lcdUpdate();for(unsigned row=1;row<4;++row)need(std::string(sim::lcdCells[row]).find(expected[i][0])==std::string::npos,"answer name leaked in ordinary question");
-  const uint8_t reader=i%3==2?1:0;const Shape wrong=i<6?Shape::CUBE:Shape::PYRAMID;
+  appHintButton();lcdUpdate();
+  for(unsigned row=1;row<4;++row)need(std::string(sim::lcdCells[row]).find(expected[i][0])==std::string::npos,"answer name leaked in ordinary hint");
+  appHintButton();
+  const uint8_t first=i%3==2?1:0,reader=stage?1-first:first;
+  if(stage)quizOnScan(first,tag(quizCurrentQuestion()->answer,first));
+  const Shape wrong=i<6?Shape::CUBE:Shape::PYRAMID;
   quizOnScan(reader,tag(wrong,reader));lcdUpdate();
   const std::string rows[]={"SALAH +0 NEXT:Terus",std::string("Jawapan: ")+expected[i][0],expected[i][1],expected[i][2]};
   for(unsigned row=0;row<4;++row){
@@ -120,5 +125,7 @@ static void all_wrong_explanations() {
    for(char c:rows[row])need(c>=32&&c<=126,"explanation is not printable ASCII");
    std::string padded=rows[row];padded.resize(20,' ');if(padded!=sim::lcdCells[row])throw std::runtime_error(std::string(EXPECTED_DISPLAYS[i].id)+" row="+std::to_string(row)+" expected=["+padded+"] actual=["+sim::lcdCells[row]+"]");
   }
+  advance(5000);lcdUpdate();
+  for(unsigned row=0;row<4;++row){std::string padded=rows[row];padded.resize(20,' ');need(padded==sim::lcdCells[row],"wrong explanation expired or changed while waiting");}
  }
 }

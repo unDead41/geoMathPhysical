@@ -146,8 +146,9 @@ void appUpdate() {
   }
 }
 
-bool appInputBlocked() {
-  return state.mode == AppMode::PLAY && quizState().advancePending;
+bool appInputBlocked(uint8_t button) {
+  return state.mode == AppMode::PLAY && (quizState().advancePending ||
+    (quizState().phase == QuizPhase::WRONG_ANSWER && button == 1));
 }
 RgbColor appReaderColor(uint8_t reader) {
   if (reader >= READER_COUNT) return RgbColor::OFF;

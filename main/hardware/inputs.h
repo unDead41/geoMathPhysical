@@ -4,7 +4,7 @@
 struct InputEvents {
   void (*next)();
   void (*hint)();
-  bool (*buttonsBlocked)();
+  bool (*buttonsBlocked)(uint8_t button);
   void (*scan)(uint8_t reader, const Uid &uid);
 };
 // One inline function-local instance across translation units (C++11 ODR).

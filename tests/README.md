@@ -26,7 +26,7 @@ invalid rounds, UID values, registry validation, filtered/random rounds,
 immutable LCD snapshots, and an application driven entirely by ports.
 
 Each firmware runner first checks release agreement and six checker regressions,
-runs those 14 core cases, then executes 75 behavioural
+runs those 14 core cases, then executes 79 behavioural
 cases with fake electrical/device I/O. Flow regressions drive real input adapters
 for pre-positioned R2, both held cards across questions, short/late/held buttons,
 all 900 blink samples, stopwatch resumption, stage arming, hint colours and
@@ -122,3 +122,11 @@ Unknown UID/wrong-role notices remain recoverable and the existing purple-hint
 cases now exercise those assistance paths; a wrong registered shape is terminal.
 Pure cases additionally check wrong wait/continuation across millis rollover,
 both last/non-last questions, both stages, and skips in both focus directions.
+
+`guide_flow_behaviour.h` adds both-order/stage/final wrong waits, NEXT and HINT
+pending debounce, recoverable non-answer help and skip paths in both orders.
+The existing all_wrong_explanations case now checks all 15 explanations on both
+stages (30 frames), absence of answer names from question/hint, and identical
+frames after a 5-second wait. The guide case checks all 15 actual pages, every
+ASCII source row <=20, visible HINT navigation and inactive NEXT on every page.
+A pending wrong-review HINT and incomplete guide failed before the v2.0.1 fix.

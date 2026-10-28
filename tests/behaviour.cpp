@@ -103,7 +103,44 @@ static void bank(){
  need(seen.size()==15,"some bank questions cannot be selected");
 }
 static void menu(){fixture();need(std::string(sim::lcdCells[1]).find("Jom uji minda 3D!")!=std::string::npos,"menu copy does not match preview");}
-static void help_pages(){fixture();for(const auto& page:LCD_INSTRUCTIONS)for(const char* row:page){need(strlen(row)<=20,"instruction would be truncated");for(const char* p=row;*p;++p)need(*p>=32&&*p<=126,"instruction must be ASCII");}for(unsigned i=1;i<=8;++i){appHintButton();lcdUpdate();need(appState().showInstructions,"HINT left help too early");char expected[21];snprintf(expected,sizeof(expected),"CARA MAIN %u/8",i);need(std::string(sim::lcdCells[0]).find(expected)!=std::string::npos,"wrong tutorial page");if(i<8)need(std::string(sim::lcdCells[3])==std::string(20,' '),"tutorial must not show HINT: Seterusnya");}appHintButton();need(!appState().showInstructions,"HINT after last page must return to menu");}
+static void help_pages() {
+ const char *pages[][2] = {
+  {"Soalan bongkah:","R1 dahulu -> R2"},
+  {"Soalan bentangan:","R2 dahulu -> R1"},
+  {"Biru: Menunggu kad","Reader kedua padam"},
+  {"Kad pertama betul:","Hijau kekal; +0"},
+  {"Dua kad sepadan:","Betul kedua-dua: +1"},
+  {"Kelip hijau 3 kali","Auto soalan baharu"},
+  {"Satu kad salah: +0","Dua LED kelip merah"},
+  {"Merah berterusan","Lihat jawapan+sebab"},
+  {"NEXT/TERUSKAN:","Ke soalan seterusnya"},
+  {"Masa jeda: Kelipan","hijau & skrin salah"},
+  {"HINT: Petunjuk ungu","Pada reader aktif"},
+  {"HINT lagi: Soalan","Masa hint berjalan"},
+  {"NEXT: Langkau (+0)","3 kelip merah, jeda"},
+  {"Soalan akhir tamat:","Paparan keputusan"},
+  {"Angkat & imbas baru","Kad ikut LED biru"}
+ };
+ fixture();
+ for (const auto &page : LCD_INSTRUCTIONS) for (const char *text : page) {
+  need(text && strlen(text)<=20,"source guide row would be clipped");
+  for(const char *p=text;*p;++p) need(*p>=32 && *p<=126,"source guide row is not ASCII");
+ }
+ for(unsigned page=0;page<15;++page) {
+  appHintButton(); appNextButton(); lcdUpdate();
+  need(appState().mode==AppMode::STOPPED && appState().showInstructions,
+       "NEXT started game in help or HINT left help too early");
+  char title[21]; snprintf(title,sizeof(title),"CARA MAIN %u/15",page+1);
+  const char *want[]={title,pages[page][0],pages[page][1],page==14?"HINT: Menu utama":"HINT: Seterusnya"};
+  for(unsigned row=0;row<4;++row) {
+   std::string text=want[row]; need(text.size()<=20,"guide row exceeds 20 chars");
+   for(char c:text) need(c>=32 && c<=126,"guide row must be ASCII");
+   text.resize(20,' '); need(text==sim::lcdCells[row],"guide page content/navigation is wrong or clipped");
+  }
+ }
+ appHintButton(); lcdUpdate();
+ need(!appState().showInstructions && appState().mode==AppMode::STOPPED,"last HINT did not return to menu");
+}
 static void help_next(){fixture();appHintButton();appNextButton();need(appState().mode==AppMode::STOPPED&&appState().showInstructions,"NEXT must not leave the tutorial before HINT finishes all pages");}
 static void hint_toggle(){fixture();start();appHintButton();need(testQuiz().showHint,"first HINT should open hint");const uint8_t index=testQuiz().index;advance(2000);appHintButton();need(!testQuiz().showHint,"second HINT should return to question");need(testQuiz().index==index&&testQuiz().score==0,"hint changed question or score");need(quizElapsedMs()>=2500,"hint paused the clock");}
 static void header(){fixture();start();sim::now+=13500;lcdUpdate();need(std::string(sim::lcdCells[0])=="Q1/5 R2 00:14   S0/5","game header must identify net-focused R2 with Q/time/S layout");}
@@ -416,9 +453,14 @@ static void physical_led_wiring(){
 #include "unassign_behaviour.h"
 #include "version_behaviour.h"
 #include "final_flow_behaviour.h"
+#include "guide_flow_behaviour.h"
 
 int main(){
  const std::pair<const char*,void(*)()> tests[]={
+ {"wrong_wait_and_next_both_orders_and_last",focus_wrong_wait_and_next},
+ {"wrong_next_hold_and_pending_hint",wrong_next_hold_and_hint_debounce},
+ {"nonanswers_help_both_orders_and_stages",focus_nonanswers_are_help},
+ {"skip_both_orders_and_stages",focus_skip_both_orders},
  {"focus_driven_pairs",focus_driven_pairs},
  {"terminal_wrong_at_either_stage",terminal_wrong_at_either_stage},
  {"wrong_survives_stop_play_and_tools",wrong_survives_stop_play_and_tools},
@@ -448,7 +490,7 @@ int main(){
  {"unassign_invalid_and_legacy_slots",unassign_invalid_and_legacy},
  {"unassign_cancels_capture",unassign_cancels_capture},
  {"unassign_single_storage_commit",unassign_single_commit},
- {"component_help_uart_and_lcd",component_help_and_uart},{"component_led_output_ownership",component_led_ownership},{"component_led_cycle_and_blink",component_led_timing},{"component_rfid_selected_reads",component_rfid_watch},{"component_live_rfid_health",component_rfid_health},{"component_button_debounce_watch",component_button_watch},{"component_exit_suppresses_buttons",component_exit_drops_buttons},{"component_invalid_paths_and_command_gates",component_invalid_paths_and_gates},{"component_switching_and_rollover",component_switch_and_rollover},{"physical_led_wiring_all_colours",physical_led_wiring},{"stage_hints_errors_and_colours",stage_hints_and_errors},{"skip_stages_exact_blinks_and_clock",skip_both_stages_and_exact_blinks},{"early_net_requires_removal",early_positioned_net},{"short_blink_button_presses",short_blink_presses},{"menu_result_rgb_cadence",ambient_cadence_and_no_scoring},{"summary_next_resets",summary_next_resets},{"teacher_tools_with_two_cards",teacher_tools_with_two_cards},{"bank_15_and_round_variety",bank},{"menu_copy",menu},{"eight_help_pages",help_pages},{"help_blocks_next",help_next},{"hint_toggle_and_timer",hint_toggle},{"lcd_header",header},{"two_cards_and_no_double_award",single_scan},{"net_reader_and_wrong_answers",net_reader},{"skip_notice_zero_points",skip_notice},{"buttons_during_notice",pending_buttons},{"automatic_last_correct_result",finish_correct},{"last_skip_result",finish_skip},{"single_reader_arming",fresh_reader},{"held_card_requires_removal",held_card},{"per_reader_led",leds},{"millis_rollover",clock_rollover},{"minutes_seconds_after_one_hour",long_time},{"nvs_and_filtered_round",saved_tags},{"all_15_question_and_hint_displays",all_copies},{"physical_hint_debounce_and_hold",physical_hint},{"complete_five_question_round",complete_round},{"physical_late_notice_buttons",late_notice_buttons},{"failed_nvs_write_is_transactional",nvs_failed_write},{"unavailable_nvs_rejects_registration",nvs_unavailable},{"duplicate_uid_keeps_mapping",duplicate_mapping},{"corrupt_storage_not_loaded_or_overwritten",corrupt_storage},{"application_pause_resume_clock",paused_application},{"serial_overflow_then_valid_command",serial_overflow_recovery},{"legacy_nvs_byte_image",legacy_nvs_image}};
+ {"component_help_uart_and_lcd",component_help_and_uart},{"component_led_output_ownership",component_led_ownership},{"component_led_cycle_and_blink",component_led_timing},{"component_rfid_selected_reads",component_rfid_watch},{"component_live_rfid_health",component_rfid_health},{"component_button_debounce_watch",component_button_watch},{"component_exit_suppresses_buttons",component_exit_drops_buttons},{"component_invalid_paths_and_command_gates",component_invalid_paths_and_gates},{"component_switching_and_rollover",component_switch_and_rollover},{"physical_led_wiring_all_colours",physical_led_wiring},{"stage_hints_errors_and_colours",stage_hints_and_errors},{"skip_stages_exact_blinks_and_clock",skip_both_stages_and_exact_blinks},{"early_net_requires_removal",early_positioned_net},{"short_blink_button_presses",short_blink_presses},{"menu_result_rgb_cadence",ambient_cadence_and_no_scoring},{"summary_next_resets",summary_next_resets},{"teacher_tools_with_two_cards",teacher_tools_with_two_cards},{"bank_15_and_round_variety",bank},{"menu_copy",menu},{"all_15_help_pages_and_navigation",help_pages},{"help_blocks_next",help_next},{"hint_toggle_and_timer",hint_toggle},{"lcd_header",header},{"two_cards_and_no_double_award",single_scan},{"net_reader_and_wrong_answers",net_reader},{"skip_notice_zero_points",skip_notice},{"buttons_during_notice",pending_buttons},{"automatic_last_correct_result",finish_correct},{"last_skip_result",finish_skip},{"single_reader_arming",fresh_reader},{"held_card_requires_removal",held_card},{"per_reader_led",leds},{"millis_rollover",clock_rollover},{"minutes_seconds_after_one_hour",long_time},{"nvs_and_filtered_round",saved_tags},{"all_15_question_and_hint_displays",all_copies},{"physical_hint_debounce_and_hold",physical_hint},{"complete_five_question_round",complete_round},{"physical_late_notice_buttons",late_notice_buttons},{"failed_nvs_write_is_transactional",nvs_failed_write},{"unavailable_nvs_rejects_registration",nvs_unavailable},{"duplicate_uid_keeps_mapping",duplicate_mapping},{"corrupt_storage_not_loaded_or_overwritten",corrupt_storage},{"application_pause_resume_clock",paused_application},{"serial_overflow_then_valid_command",serial_overflow_recovery},{"legacy_nvs_byte_image",legacy_nvs_image}};
  unsigned failures=0;for(const auto& test:tests){try{test.second();std::cout<<"PASS "<<test.first<<'\n';}catch(const std::exception& error){++failures;std::cout<<"FAIL "<<test.first<<": "<<error.what()<<'\n';}}
  std::cout<<(sizeof(tests)/sizeof(tests[0])-failures)<<"/"<<sizeof(tests)/sizeof(tests[0])<<" passed\n";return failures?1:0;
 }

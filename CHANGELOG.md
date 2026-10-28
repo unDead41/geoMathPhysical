@@ -1,5 +1,26 @@
 # Changelog
 
+## v2.0.1 - 2026-10-28
+
+- Complete the final flow guidance in the actual LCD Cara Main: 15 readable
+  ASCII 20x4 pages cover both reader orders, first-card +0/green, pair +1/three
+  green blinks, terminal wrong +0/continuous red, answer/reason and NEXT,
+  paused time and active-reader purple hints. Every page has HINT navigation;
+  NEXT remains inactive while the guide is open.
+- Suppress HINT presses that begin during a finalized wrong answer until
+  release, while keeping NEXT usable. Sample per-button blocking before event
+  dispatch so a pending HINT cannot open on the following question after NEXT.
+- Extend actual-source regressions for both-order/stage/final wrong waits,
+  held NEXT/pending HINT, unknown/role help, skips and every explanation on
+  both answer stages. Ordinary question/hint data and existing v2.0.0 engine,
+  typed focus, wiring, diagnostics, UID/NVS and random question policy are retained.
+- Keep the new printable-net PDF and all other tutorial assets from concurrent
+  v1.1.4/v2.0.0 work. Update the existing tutorial handoff with exact exported LCD
+  frames; PDF/video updates remain pending. Match firmware in minimum sharing
+  with the sole RGB default and refreshed package source/hash manifest.
+- After pull, Build/Upload and query `version` at 115200 baud. Verification and
+  physical-test limits are in VERIFICATION.md; no full-flash erase is needed.
+
 ## v2.0.0 - 2026-10-28
 
 - Urutan dua kad mengikut metadata fokus: bongkah R1 -> R2, bentangan R2 -> R1.

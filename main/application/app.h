@@ -20,5 +20,6 @@ void appInspect(ScanMode mode);
 bool appEnroll(uint8_t reader, Shape shape);
 void appConfigurationChanged();
 void appHandleScan(uint8_t reader, const Uid &uid);
-bool appInputBlocked();
+// button: 0=NEXT, 1=HINT. NEXT remains usable in finalized wrong review.
+bool appInputBlocked(uint8_t button = 0);
 RgbColor appReaderColor(uint8_t reader);

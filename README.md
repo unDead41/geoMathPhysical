@@ -1,6 +1,6 @@
 # GeoDecoder
 
-Versi semasa: **v2.0.0**.
+Versi semasa: **v2.0.1**.
 Rujukan kemas kini: [SOR versi](docs/SOR_VERSIONING.md) dan [changelog](CHANGELOG.md).
 
 Kuiz geometri 3D menggunakan ESP32 klasik/WROOM-32, dua pembaca MFRC522,
@@ -27,7 +27,7 @@ Monitor tersedia terus dalam VS Code. Arduino IDE tidak diperlukan.
 Kedua-dua PDF ialah salinan tepat daripada `sharing` pada commit
 [`de86754`](https://github.com/unDead41/geodecoder/commit/de86754fb042e12c9254eb883621febf6f055a31).
 Panduan disemak terhadap firmware v1.1.1. **PDF belum dikemas kini untuk
-flow v2.0.0**: urutan ikut fokus, salah tamat +0, penerangan LCD dan NEXT
+flow v2.0.1**: urutan ikut fokus, salah tamat +0, penerangan LCD dan NEXT
 untuk teruskan. Rujuk flow semasa di bawah sebelum menyediakan video/tutorial. Mulai v1.1.3, Build sentiasa RGB:
 langkau langkah memilih LED/environment dalam PDF dan terus Build/Upload.
 
@@ -156,7 +156,7 @@ use kubus piramid silinder kon kuboid
 ```
 
 LCD dan butang boleh diuji di menu walaupun pendaftaran belum lengkap:
-tekan **HINT** untuk lapan halaman cara main. Untuk memulakan kuiz, kedua-dua
+tekan **HINT** untuk 15 halaman cara main. Untuk memulakan kuiz, kedua-dua
 RFID mesti READY dan semua jenis aktif mesti mempunyai UID R1 serta R2.
 
 ## 5. Main dan semak keputusan
@@ -198,6 +198,8 @@ atau sambung kuiz sehingga masalah diselesaikan.
 
 Satu build RGB mengendalikan semua warna dan petunjuk R1/R2 di atas.
 Panduan penuh: [flow dua kad dan RGB](docs/GAME_FLOW_RGB.md).
+Semua 15 halaman Cara Main pada LCD, penerangan salah dan aturan video/PDF:
+[handoff tutorial](docs/TUTORIAL_FLOW_V2_HANDOFF.md).
 
 ## Uji komponen melalui Serial Monitor
 
@@ -255,7 +257,7 @@ Untuk melihat port: `pio device list`.
 Pada boot/reset ESP32, Serial 115200 baud memaparkan:
 
 ```text
-[FIRMWARE] GeoDecoder v2.0.0 | ESP32 | env=esp32dev-rgb
+[FIRMWARE] GeoDecoder v2.0.1 | ESP32 | env=esp32dev-rgb
 ```
 
 Jika Monitor dibuka selepas banner berlalu, taip `version`; `status` turut
