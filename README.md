@@ -1,6 +1,6 @@
 # GeoDecoder
 
-Versi semasa: **v2.0.1**.
+Versi semasa: **v2.0.2**.
 Rujukan kemas kini: [SOR versi](docs/SOR_VERSIONING.md) dan [changelog](CHANGELOG.md).
 
 Kuiz geometri 3D menggunakan ESP32 klasik/WROOM-32, dua pembaca MFRC522,
@@ -21,15 +21,22 @@ Monitor tersedia terus dalam VS Code. Arduino IDE tidak diperlukan.
   bergambar untuk sambungan, persediaan komputer, ujian, pendaftaran RFID
   dan penggunaan GeoDecoder.
 - [Cara bermain untuk murid](tutorial/GeoDecoder_Cara_Bermain_Murid.pdf):
-  21 halaman bergambar tanpa nombor halaman, menggunakan bahasa mudah dan
+  31 halaman bergambar tanpa nombor halaman, menggunakan bahasa mudah dan
   istilah matematik berpandukan KSSM/DSKP.
 
-Kedua-dua PDF ialah salinan tepat daripada `sharing` pada commit
-[`de86754`](https://github.com/unDead41/geodecoder/commit/de86754fb042e12c9254eb883621febf6f055a31).
-Panduan disemak terhadap firmware v1.1.1. **PDF belum dikemas kini untuk
-flow v2.0.1**: urutan ikut fokus, salah tamat +0, penerangan LCD dan NEXT
-untuk teruskan. Rujuk flow semasa di bawah sebelum menyediakan video/tutorial. Mulai v1.1.3, Build sentiasa RGB:
-langkau langkah memilih LED/environment dalam PDF dan terus Build/Upload.
+Panduan murid edisi **28 Oktober 2026** meliputi flow firmware **v2.0.1**
+dan serasi dengan keluaran dokumentasi **v2.0.2**: soalan bongkah R1 -> R2,
+soalan bentangan R2 -> R1, salah tamat +0 dengan penerangan sehingga NEXT,
+serta masa yang dijeda dan keputusan akhir. Semua 27 paparan LCD dijana
+daripada fungsi paparan sebenar pada sumber
+[`d8d8ad4`](https://github.com/unDead41/geodecoder/commit/d8d8ad46f041fef489542ea530367dde47ac7db6).
+Semua 31 halaman dirender dan diperiksa; ilustrasi bukan rakaman ujian alat fizikal.
+
+**Panduan A-Z dan PDF LCD 15 halaman masih edisi terdahulu.** Gunakan panduan
+murid baharu untuk aliran permainan. A-Z kekal edisi 25 Oktober 2026 untuk
+firmware v1.1.1; mulai v1.1.3, Build sentiasa RGB. Langkau langkah memilih
+LED/environment dalam A-Z dan terus Build/Upload. Salinan A-Z berasal daripada
+`sharing` commit `de86754fb042e12c9254eb883621febf6f055a31`.
 
 Bahagian installer A-Z menggunakan `setup.ps1` dalam pakej
 [`sharing`](https://github.com/unDead41/geodecoder/tree/sharing).
@@ -37,9 +44,10 @@ Dapatkan installer bersama ZIP branch itu. Untuk folder `main`, ikut
 langkah VS Code + PlatformIO di bawah.
 
 Cara bermain murid menunjukkan bongkah 3D dengan kad RFID di bawahnya untuk
-R1, serta kad RFID yang ditampal cetakan bentangan untuk R2. Contoh prisma
-segi tiga ialah simulasi penerangan; bank firmware masih menggunakan lima
-jenis bongkah asal. Guru perlu menguji bacaan RFID pada bongkah sebenar.
+R1, serta kad RFID yang ditampal cetakan bentangan untuk R2. Demonstrasi
+permainan menggunakan soalan P1 dan P3, piramid bertapak segi empat sama.
+Prisma segi tiga pada pengenalan ialah contoh pembelajaran; bank firmware
+masih menggunakan lima jenis bongkah asal. Guru perlu menguji bacaan RFID pada bongkah sebenar.
 
 ## 1. Buka projek dalam VS Code
 
@@ -257,7 +265,7 @@ Untuk melihat port: `pio device list`.
 Pada boot/reset ESP32, Serial 115200 baud memaparkan:
 
 ```text
-[FIRMWARE] GeoDecoder v2.0.1 | ESP32 | env=esp32dev-rgb
+[FIRMWARE] GeoDecoder v2.0.2 | ESP32 | env=esp32dev-rgb
 ```
 
 Jika Monitor dibuka selepas banner berlalu, taip `version`; `status` turut

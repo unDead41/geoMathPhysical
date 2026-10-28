@@ -1,5 +1,20 @@
 # Changelog
 
+## v2.0.2 - 2026-10-28
+
+- Kemas kini cara bermain murid kepada 31 halaman bergambar tanpa nombor halaman:
+  dua urutan R1/R2, kad pertama belum mendapat markah, pasangan betul +1,
+  salah +0 dengan merah berterusan, jawapan/sebab, NEXT dan masa dijeda.
+- Jana semua 27 contoh LCD terus daripada fungsi paparan firmware v2.0.1.
+  Contoh permainan P1/P3 menggunakan piramid yang disokong; prisma segi tiga
+  dikekalkan sebagai ilustrasi pembelajaran dalam pengenalan.
+- Semak istilah dengan DSKP SP 6.1.1/6.2.1 dan buku teks KSSM Tingkatan 2;
+  render dan periksa setiap halaman. Selaraskan PDF dan checksum pakej sharing.
+- Keluaran dokumentasi sahaja: label versi naik mengikut SOR; logik permainan,
+  installer, A-Z, PDF LCD 15 halaman dan aset cetakan tidak diubah.
+- Tindakan pengguna: gunakan PDF murid baharu untuk flow v2; Build/Upload semula
+  jika mahu label firmware PC/GitHub/ESP32 sama pada v2.0.2. Ujian fizikal masih perlu.
+
 ## v2.0.1 - 2026-10-28
 
 - Complete the final flow guidance in the actual LCD Cara Main: 15 readable

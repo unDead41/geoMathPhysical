@@ -60,13 +60,24 @@ menggunakan reka letak tetap dan petunjuk simbol yang sama.
 | Fail | Kandungan | Halaman |
 |---|---|---:|
 | [Panduan A-Z](../tutorial/GeoDecoder_Panduan_A-Z.pdf) | Sambungan, komputer baharu, installer sharing, Build/Upload, ujian, pendaftaran dan penggunaan | 45 |
-| [Cara bermain murid](../tutorial/GeoDecoder_Cara_Bermain_Murid.pdf) | Aliran bergambar dengan bongkah 3D/RFID di R1 dan kad bentangan di R2; tanpa nombor halaman | 21 |
+| [Cara bermain murid](../tutorial/GeoDecoder_Cara_Bermain_Murid.pdf) | Aliran bergambar dengan bongkah 3D/RFID di R1 dan kad bentangan di R2; tanpa nombor halaman | 31 |
 
-Edisi 25 Oktober 2026, disalin tepat daripada `sharing` commit
-`de86754fb042e12c9254eb883621febf6f055a31`. PDF disemak terhadap v1.1.1
-dan serasi dengan v1.1.2. Installer yang diterangkan dalam panduan A-Z
-dibekalkan bersama pakej sharing. Contoh prisma segi tiga dalam panduan
-murid dilabel sebagai simulasi; firmware belum menyokong jawapan prisma.
+Panduan A-Z kekal edisi 25 Oktober 2026, 45 halaman, disalin daripada
+`sharing` commit `de86754fb042e12c9254eb883621febf6f055a31`, untuk firmware v1.1.1.
+
+Panduan murid edisi **28 Oktober 2026** mempunyai **31 halaman tanpa nombor
+halaman**, meliputi flow **v2.0.1** dan serasi dengan keluaran dokumentasi
+**v2.0.2**. Sumber main disemak pada
+`d8d8ad46f041fef489542ea530367dde47ac7db6`, sharing pada
+`9f75337bd63d965e434f3b85732291c5865dad0d`. Semua 27 contoh LCD 20x4 dijana
+daripada fungsi paparan sebenar. Soalan demonstrasi P1/P3 menggunakan piramid
+bertapak segi empat sama. Prisma segi tiga pada pengenalan ialah contoh
+pembelajaran dan belum disokong oleh bank firmware.
+
+Semua 31 halaman panduan murid dirender dan diperiksa. Rajah ialah ilustrasi;
+bacaan RFID di bawah bongkah, kad bentangan, butang, warna LED dan LCD sebenar
+masih memerlukan pengesahan pada perkakasan. A-Z dan PDF LCD 15 halaman kekal
+edisi terdahulu; gunakan panduan murid baharu bagi aliran permainan semasa.
 
 ## Semakan aset
 
