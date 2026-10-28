@@ -1,7 +1,7 @@
 # GeoDecoder - pakej perkongsian
 
-Versi semasa: **v1.1.3**. Pakej **1.1.3-sharing.1**.
-Sumber firmware: main [`a059979d97926b82cafd4aa5cf3fe59da04a55bb`](https://github.com/unDead41/geodecoder/commit/a059979d97926b82cafd4aa5cf3fe59da04a55bb).
+Versi semasa: **v1.1.4**. Pakej **1.1.4-sharing.1**.
+Sumber firmware: main [`c9275fda75b1720613c5bfa776e6b3049ee326d5`](https://github.com/unDead41/geodecoder/commit/c9275fda75b1720613c5bfa776e6b3049ee326d5).
 Semua fail `main/` dan `src/main.cpp` sama tepat dengan sumber itu.
 `platformio.ini` menggunakan nama environment khusus sharing; board, pin dan dependency kekal sama.
 Installer tidak mengubah firmware atau pendaftaran UID.
@@ -13,7 +13,7 @@ Arduino IDE dan Git tidak diperlukan. Build boleh dibuat tanpa board.
 ## Pasang dengan satu arahan
 
 1. Dapatkan ZIP pakej GeoDecoder sharing terkini daripada pemilik projek.
-   Repo private; ZIP baharu mengandungi kod projek dan enam PDF termasuk tutorial A-Z dan cara bermain murid. Penerima
+   Repo private; ZIP baharu mengandungi kod projek dan tujuh PDF termasuk bentangan bongkah, tutorial A-Z dan cara bermain murid. Penerima
    tidak memerlukan akses repo, akaun atau token GitHub. Dependency vendor
    dimuat turun berasingan oleh installer daripada sumber rasmi.
 2. Klik kanan ZIP > **Extract All**. Masuk folder `geodecoder-sharing` yang
@@ -91,7 +91,7 @@ atau setup semula, sambil mengekalkan COM. Fail INI yang disunting pengguna
 dilindungi; jika menetapkan `default_envs` secara manual, tukar nama environment
 pada baris itu sendiri dan kekalkan tetapan COM/pin yang diperlukan.
 
-Serial Monitor mencetak `GeoDecoder v1.1.3 | ESP32 | env=esp32dev-rgb`.
+Serial Monitor mencetak `GeoDecoder v1.1.4 | ESP32 | env=esp32dev-rgb`.
 Label hardware Serial sama dengan main; nama tugas sharing dibezakan di atas.
 
 ## Langkah fizikal
@@ -148,12 +148,21 @@ Senarai tepat setiap fail dan SHA-256 berada dalam `package.json`.
 | `setupGeoDecoder.ps1`, `setup.ps1`, `geodecoder.ps1`, `scripts/common.ps1` | Installer dan arahan pengguna |
 | `.vscode/`, `.gitignore`, `.gitattributes` | Task, cadangan extension, peraturan fail |
 | `README.md`, `SAMBUNGAN.md`, `COMMANDS.md`, `package.json` | Panduan, wayar, Serial, identiti pakej |
+| `print_labels/GeoDecoder_Bentangan_2_Set_Tanpa_Tulisan_A4.pdf` | Dua set bentangan untuk membina lima bongkah, 20 halaman |
 | `print_labels/GeoDecoder_Kad_RFID_A4.pdf` | Kad campuran, 2 halaman |
 | `print_labels/GeoDecoder_Kad_2D_Kiri_Kanan_A4.pdf` | Bentangan kiri/kanan, 2 halaman |
 | `print_labels/GeoDecoder_Kad_3D_Kiri_Kanan_A4.pdf` | Model kiri/kanan, 2 halaman |
 | `docs/lcd/GeoDecoder_15_Contoh_LCD_Soalan_dan_Hint.pdf` | LCD soalan/hint, tepat 15 halaman |
 | `tutorial/GeoDecoder_Panduan_A-Z.pdf` | Tutorial pengguna lengkap A-Z, 45 halaman |
 | `tutorial/GeoDecoder_Cara_Bermain_Murid.pdf` | Cara bermain bergambar untuk murid, 21 halaman tanpa nombor halaman |
+
+**[Buka bentangan untuk membina bongkah](print_labels/GeoDecoder_Bentangan_2_Set_Tanpa_Tulisan_A4.pdf)** —
+20 halaman A4 landskap, dua set lima bongkah. Kedua-dua set sudah dikecilkan
+20% daripada ukuran sebelumnya; tapak terkecil 6 cm. Tab gam lebih lebar,
+semua sisi satu tona dan hanya tapak bawah gelap. Tiada tulisan atau garis
+putus-putus. Cetak **satu muka, Actual size / 100%**, matikan **Fit to page**;
+gunting garisan luar dan lipat pada garis hitam nipis, kemudian gam tab kelabu
+ke dalam. Semak ruang kunci RFID sebenar sebelum menutup tapak.
 
 Kad sumber versi 2 (16 Oktober 2026): tiada nama jawapan atau arahan "ikut LED".
 Cetak **A4, Actual size / 100%**, matikan Fit to page; semak garis 50 mm dahulu.
@@ -163,7 +172,7 @@ LCD sumber versi 4 (24 Oktober 2026).
 
 **[Buka cara bermain GeoDecoder untuk murid](tutorial/GeoDecoder_Cara_Bermain_Murid.pdf)** — 21 halaman A4 melintang, tanpa nombor halaman. Gambar simulasi menunjukkan bongkah 3D sebenar dengan kad RFID di bawahnya untuk R1 dan kad RFID yang ditampal cetakan bentangan untuk R2. Label LED R1/LED R2, butang NEXT/HINT, petunjuk ungu, jawapan salah/betul, langkau, skor, masa dan bermain semula diterangkan melalui gambar. Bahasa mudah untuk murid Tingkatan 1; istilah matematik dirujuk kepada KSSM Matematik Tingkatan 2, DSKP SP 6.1.1 dan 6.2.1.
 
-**Contoh prisma segi tiga ialah simulasi penerangan sahaja.** Firmware v1.1.3 masih menyokong kubus, kuboid, piramid berasaskan segi empat sama, silinder dan kon; jawapan prisma belum tersedia. Rajah prisma dalam panduan tidak menambah bahan kepada tiga PDF kad cetak asal. Gunakan bongkah dan kad bentangan yang guru sediakan; guru perlu menguji bacaan kad RFID di bawah setiap bongkah sebenar. Peraturan butang, R1/R2, lampu, markah dan masa disemak dengan source sharing; gambar ini bukan bukti ujian perkakasan fizikal.
+**Contoh prisma segi tiga ialah simulasi penerangan sahaja.** Firmware v1.1.4 masih menyokong kubus, kuboid, piramid berasaskan segi empat sama, silinder dan kon; jawapan prisma belum tersedia. Rajah prisma dalam panduan tidak menambah bahan kepada tiga PDF kad cetak asal. Gunakan bongkah dan kad bentangan yang guru sediakan; guru perlu menguji bacaan kad RFID di bawah setiap bongkah sebenar. Peraturan butang, R1/R2, lampu, markah dan masa disemak dengan source sharing; gambar ini bukan bukti ujian perkakasan fizikal.
 
 **Nama installer utama ialah `setupGeoDecoder.ps1`.** Fail kecil `setup.ps1` dikekalkan sebagai alias supaya arahan dalam PDF sedia ada masih berfungsi. Kedua-duanya menjalankan installer yang sama dan menerima pilihan yang sama. Mesej installer kini menunjukkan tutorial yang disertakan.
 
@@ -172,8 +181,8 @@ Beri **ZIP bersih** kepada penerima yang tidak patut menerima sejarah repo.
 Jangan merge sharing ke main. ZIP tiada `.git`, sejarah pembangunan, fixture/
 ujian developer, UID sebenar, token, toolchain, cache, output build atau COM peribadi.
 
-Pakej **1.1.3-sharing.1** menggunakan satu build RGB dan firmware yang sama
-dengan main v1.1.3. Semua enam PDF dikekalkan. Semakan native/ESP32, aliran
-installer dan keserasian tetapan lama dijalankan secara berasingan; simulasi
-Linux mengganti operasi Windows yang tidak tersedia. Pemasangan aplikasi pada
-Windows sebenar, Upload USB serta perkakasan fizikal masih belum diuji.
+Pakej **1.1.4-sharing.1** menggunakan satu build RGB dan firmware yang sama
+dengan main v1.1.4. Enam PDF sedia ada dikekalkan, bersama satu PDF bentangan
+bongkah baharu. Kemas kini aset ini menyelaraskan label versi, rujukan sumber
+main dan checksum pakej. Semakan meliputi format PDF, keselarasan versi,
+kesamaan sumber firmware serta senarai/hash fail yang berubah.

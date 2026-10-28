@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "packageId": "GeoDecoder-sharing",
-  "packageVersion": "1.1.3-sharing.1",
-  "firmwareVersion": "1.1.3",
-  "sourceSha": "a059979d97926b82cafd4aa5cf3fe59da04a55bb",
+  "packageVersion": "1.1.4-sharing.1",
+  "firmwareVersion": "1.1.4",
+  "sourceSha": "c9275fda75b1720613c5bfa776e6b3049ee326d5",
   "platformioCore": "6.1.18",
   "tutorial": {
     "status": "included",
@@ -36,11 +36,11 @@
     },
     {
       "path": "COMMANDS.md",
-      "sha256": "a9eabe3e3ac473ae5f9146e9d205e51060e2700769f69858891a7d3dc7fb2127"
+      "sha256": "264212d170107b890e9484e990240f52b6971b784e038747f3dca7200d3bf963"
     },
     {
       "path": "README.md",
-      "sha256": "d0df5b7dcae9df7df8dc157f635b1944768adc0afd7edc5bfdbf4205e6ca9f34"
+      "sha256": "3da03ead8ed574bc2608bcf3165af414070740c7b7b287107e47f6862591015b"
     },
     {
       "path": "SAMBUNGAN.md",
@@ -116,7 +116,7 @@
     },
     {
       "path": "main/firmware_version.h",
-      "sha256": "b72a191fa61a4ae02c3d8591fd1852858f898c56e452b8c17784a698a7c9d4a2"
+      "sha256": "f4d9cc4e96602d8fe52dc79c8c90c42d0d473c7682955f1a24c822f1f15a8fbc"
     },
     {
       "path": "main/hardware/buttons.h",
@@ -201,6 +201,10 @@
     {
       "path": "platformio.local.ini.example",
       "sha256": "a3782b2f61c26cb51c32d4b60e25e8b77cd75ee297d50eb7c5bae60917e885d4"
+    },
+    {
+      "path": "print_labels/GeoDecoder_Bentangan_2_Set_Tanpa_Tulisan_A4.pdf",
+      "sha256": "595a6af91ac591e8da7bbe85a4720f87b7c63763a4407922705560c7929f3807"
     },
     {
       "path": "print_labels/GeoDecoder_Kad_2D_Kiri_Kanan_A4.pdf",

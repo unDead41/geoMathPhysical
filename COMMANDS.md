@@ -133,7 +133,7 @@ READY ialah respons register; imbas kad sebenar untuk mengesahkan bacaan antena.
 Banner ini juga muncul semasa boot dan pada permulaan output `status`:
 
 ```text
-[FIRMWARE] GeoDecoder v1.1.3 | ESP32 | env=esp32dev-rgb
+[FIRMWARE] GeoDecoder v1.1.4 | ESP32 | env=esp32dev-rgb
 ```
 
 Build pengguna tunggal ialah RGB. Semak versi dengan README GitHub pada
