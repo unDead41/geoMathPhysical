@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "packageId": "GeoDecoder-sharing",
-  "packageVersion": "2.0.0-sharing.1",
-  "firmwareVersion": "2.0.0",
-  "sourceSha": "c368e8c951478360c89f99b8a3c9944a62761049",
+  "packageVersion": "2.0.1-sharing.1",
+  "firmwareVersion": "2.0.1",
+  "sourceSha": "d8d8ad46f041fef489542ea530367dde47ac7db6",
   "platformioCore": "6.1.18",
   "tutorial": {
     "status": "included",
@@ -36,15 +36,23 @@
     },
     {
       "path": "COMMANDS.md",
-      "sha256": "ec9ca1e5e3a2a76eee79fbe7a4c86301caac3630eda7283bb5b0c2d72f1058d1"
+      "sha256": "032438b8cd4b89d51edb26bcc29fe48f63597d226a0f5cb232063212d60d40c4"
     },
     {
       "path": "README.md",
-      "sha256": "cc3da7394dd03d594c68a407bda067191ee2ab240ed71e4b17a2c02caf19ae73"
+      "sha256": "9fc669c6a84c8c8b0f5e35ef2ee4d86c4eadb17706e140bfd7dfe5c082bdbf91"
     },
     {
       "path": "SAMBUNGAN.md",
       "sha256": "0e5dd424a1852f000b2e6e98b21067a3ac46d1a6ce8ca4061df16b8d0105e60f"
+    },
+    {
+      "path": "docs/GAME_FLOW_RGB.md",
+      "sha256": "8e6c31355b2a85035e8435ac53e23e7e5e0b272ddc19777c1d0f6f4548d8c7f0"
+    },
+    {
+      "path": "docs/TUTORIAL_FLOW_V2_HANDOFF.md",
+      "sha256": "73ec2a3d8b2ec18d180136fbc9d71311020391f5916c56f07c78c66aba922af4"
     },
     {
       "path": "docs/lcd/GeoDecoder_15_Contoh_LCD_Soalan_dan_Hint.pdf",
@@ -56,7 +64,7 @@
     },
     {
       "path": "main/app.ino",
-      "sha256": "4a98665bb1672e061b8b6845de6c4107c92c105df93ce2d8691ac56ed05048d4"
+      "sha256": "35fcd26dcf47cb516573ce3b56597018905d990049d870fe7a10cfee97bd7d74"
     },
     {
       "path": "main/app_ports.ino",
@@ -64,7 +72,7 @@
     },
     {
       "path": "main/application/app.h",
-      "sha256": "6e9060a3ff91212f0cf02737f891fae055bf1890acbe8b53b1afe5335820e837"
+      "sha256": "7986512691366d237503104e6ce50f92c5f12c936b36700fd2b06afc247edc09"
     },
     {
       "path": "main/application/ports.h",
@@ -84,7 +92,7 @@
     },
     {
       "path": "main/buttons.ino",
-      "sha256": "ee1786eaec54bbabe8bdd85a2e3fce60e59e88bffbebf715bcc9f92b05b96290"
+      "sha256": "2c346992e4d896f8494ada2694d841f9db639fc026d27bcc5fb59e6e3522cd29"
     },
     {
       "path": "main/component_tests.ino",
@@ -108,7 +116,7 @@
     },
     {
       "path": "main/domain/rules.h",
-      "sha256": "531c29845284005ad0cf66b8dac8df6c10598c42f508bcf881d677e4e713fb68"
+      "sha256": "b76bdcbf95e7d909321bebeb70636fc77d6eddff9bb0bbac0b5c4f1a36c92cd0"
     },
     {
       "path": "main/domain/types.h",
@@ -116,7 +124,7 @@
     },
     {
       "path": "main/firmware_version.h",
-      "sha256": "293af543ab642904d153058fccf2a2f00a38cf6fb21b62e3222fecb2839875ae"
+      "sha256": "72377f3ed31d2f67fa469e0aa08bc0d9112cb0d31288b648a6ce5014c65a63e5"
     },
     {
       "path": "main/hardware/buttons.h",
@@ -128,7 +136,7 @@
     },
     {
       "path": "main/hardware/inputs.h",
-      "sha256": "e52dde9ff1cc8e88b4bcd4256935dedc2eacd87553c5a5f32a411ff4650b42e7"
+      "sha256": "710cfd7c8e15745be5be03acfb20c8660e2201cc536e07df469ff8088e51e662"
     },
     {
       "path": "main/hardware/lcd.h",
@@ -152,7 +160,7 @@
     },
     {
       "path": "main/main.ino",
-      "sha256": "cd098a9db33bf3a53689471b1946a4a3d2dc0bb6af29a5fa653c9e2a2705c759"
+      "sha256": "51f1db5d81c796a5d9f435532b2bab5fa48f50724cabf7bebd315b9dc9f559b9"
     },
     {
       "path": "main/nvs_storage.ino",
@@ -164,7 +172,7 @@
     },
     {
       "path": "main/presentation/lcd_view.h",
-      "sha256": "69161a9b37945e85032a878440da2d7a102e0c7f0b754f24f4314b80cb3eb70a"
+      "sha256": "d7cbfbe6dac576737e6de7bc297f6d93b787a10cf5f362b649d5a02ea82adcfc"
     },
     {
       "path": "main/presentation/serial_commands.h",
@@ -188,7 +196,7 @@
     },
     {
       "path": "main/serial_commands.ino",
-      "sha256": "5ec323a1dcd9836e6d9ddcf7e56437e0ca4247f599317092f5eea498698e7e3b"
+      "sha256": "820bdea773b07d05ac3f82d846c657c46a90cfc51ae0237171e6fb2d4b05244f"
     },
     {
       "path": "main/tag_registry.ino",

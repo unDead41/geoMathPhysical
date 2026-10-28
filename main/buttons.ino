@@ -28,13 +28,18 @@ void buttonsRequireRelease() {
 
 void buttonsUpdate() {
   const uint32_t now = millis();
+  // Snapshot before dispatch: NEXT may open a question before HINT is sampled.
+  const bool blocked[2] = {
+    hardwareInputs().buttonsBlocked && hardwareInputs().buttonsBlocked(0),
+    hardwareInputs().buttonsBlocked && hardwareInputs().buttonsBlocked(1)
+  };
   for (uint8_t i = 0; i < 2; ++i) {
     const bool raw = digitalRead(BUTTON_PINS[i]);
     if (raw != buttonLastRaw[i]) { buttonLastRaw[i] = raw; buttonChangedMs[i] = now; }
     const bool pressed = raw == BUTTON_PRESSED_LEVEL[i];
     // Ingat bahawa tekanan ini berlaku semasa notis, walaupun debounce selesai
     // selepas soalan bertukar atau keputusan akhir sudah dipaparkan.
-    if (pressed && hardwareInputs().buttonsBlocked && hardwareInputs().buttonsBlocked())
+    if (pressed && blocked[i])
       buttonSuppressed[i] = true;
     // Lepasan stabil juga membersihkan tekanan pendek yang belum sempat didebounce.
     if (!pressed && uint32_t(now - buttonChangedMs[i]) >= BUTTON_DEBOUNCE_MS)

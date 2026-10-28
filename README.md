@@ -1,7 +1,7 @@
 # GeoDecoder - pakej perkongsian
 
-Versi semasa: **v2.0.0**. Pakej **2.0.0-sharing.1**.
-Sumber firmware: main [`c368e8c951478360c89f99b8a3c9944a62761049`](https://github.com/unDead41/geodecoder/commit/c368e8c951478360c89f99b8a3c9944a62761049).
+Versi semasa: **v2.0.1**. Pakej **2.0.1-sharing.1**.
+Sumber firmware: main [`d8d8ad46f041fef489542ea530367dde47ac7db6`](https://github.com/unDead41/geodecoder/commit/d8d8ad46f041fef489542ea530367dde47ac7db6).
 Semua fail `main/` dan `src/main.cpp` sama tepat dengan sumber itu.
 `platformio.ini` menggunakan nama environment khusus sharing; board, pin dan dependency kekal sama.
 Installer tidak mengubah firmware atau pendaftaran UID.
@@ -91,7 +91,7 @@ atau setup semula, sambil mengekalkan COM. Fail INI yang disunting pengguna
 dilindungi; jika menetapkan `default_envs` secara manual, tukar nama environment
 pada baris itu sendiri dan kekalkan tetapan COM/pin yang diperlukan.
 
-Serial Monitor mencetak `GeoDecoder v2.0.0 | ESP32 | env=esp32dev-rgb`.
+Serial Monitor mencetak `GeoDecoder v2.0.1 | ESP32 | env=esp32dev-rgb`.
 Label hardware Serial sama dengan main; nama tugas sharing dibezakan di atas.
 
 ## Langkah fizikal
@@ -126,7 +126,7 @@ yang ditampal cetakan bentangan kubus di R2. Ulang satu per satu untuk
 `piramid`, `silinder`, `kon`, `kuboid`. Setiap slot memerlukan kad berlainan.
 Pilih jenis lengkap, misalnya `use kubus piramid silinder`.
 
-Menu: NEXT mula pusingan baharu pada skor 0 dan 00:00; HINT membuka lapan
+Menu: NEXT mula pusingan baharu pada skor 0 dan 00:00; HINT membuka 15
 halaman cara main. R1 kekal bongkah, R2 kekal bentangan. Urutan ikut fokus:
 
 | Soalan | Kad pertama | Kad kedua |
@@ -176,10 +176,10 @@ Menu/panduan: RGB rawak setiap 1,000 ms. Keputusan: setiap 150 ms. Pasangan
 warna sentiasa berlainan dan setiap LED mengelak warna sebelumnya. LCD keputusan
 menunjukkan skor, peratus dan masa akhir; NEXT main semula, HINT menu.
 
-**PDF/tutorial masih edisi lama.** Sebelum merakam video, rujuk flow v2.0.0 di
+**PDF/tutorial masih edisi lama.** Sebelum merakam video, rujuk flow v2.0.1 di
 atas atau [handoff video/tutorial main](https://github.com/unDead41/geodecoder/blob/main/docs/TUTORIAL_FLOW_V2_HANDOFF.md).
 PDF A-Z, cara bermain murid dan 15 LCD/PNG memerlukan kemas kini urutan,
-keputusan salah, penerangan LCD, lapan halaman panduan serta aturan masa.
+keputusan salah, penerangan LCD, 15 halaman panduan serta aturan masa.
 PDF kad/bentangan cetak dan semua aset tutorial sedia ada dikekalkan.
 
 Setup/Build tidak menyentuh board. Upload biasa mengekalkan UID bagi partition
@@ -222,7 +222,7 @@ LCD sumber versi 4 (24 Oktober 2026).
 
 **[Buka cara bermain GeoDecoder untuk murid](tutorial/GeoDecoder_Cara_Bermain_Murid.pdf)** — 21 halaman A4 melintang, tanpa nombor halaman. Gambar simulasi menunjukkan bongkah 3D sebenar dengan kad RFID di bawahnya untuk R1 dan kad RFID yang ditampal cetakan bentangan untuk R2. Label LED R1/LED R2, butang NEXT/HINT, petunjuk ungu, jawapan salah/betul, langkau, skor, masa dan bermain semula diterangkan melalui gambar. Bahasa mudah untuk murid Tingkatan 1; istilah matematik dirujuk kepada KSSM Matematik Tingkatan 2, DSKP SP 6.1.1 dan 6.2.1.
 
-**Contoh prisma segi tiga ialah simulasi penerangan sahaja.** Firmware v2.0.0 masih menyokong kubus, kuboid, piramid berasaskan segi empat sama, silinder dan kon; jawapan prisma belum tersedia. Rajah prisma dalam panduan tidak menambah bahan kepada tiga PDF kad cetak asal. Gunakan bongkah dan kad bentangan yang guru sediakan; guru perlu menguji bacaan kad RFID di bawah setiap bongkah sebenar. Peraturan butang, R1/R2, lampu, markah dan masa disemak dengan source sharing; gambar ini bukan bukti ujian perkakasan fizikal.
+**Contoh prisma segi tiga ialah simulasi penerangan sahaja.** Firmware v2.0.1 masih menyokong kubus, kuboid, piramid berasaskan segi empat sama, silinder dan kon; jawapan prisma belum tersedia. Rajah prisma dalam panduan tidak menambah bahan kepada tiga PDF kad cetak asal. Gunakan bongkah dan kad bentangan yang guru sediakan; guru perlu menguji bacaan kad RFID di bawah setiap bongkah sebenar. Peraturan butang, R1/R2, lampu, markah dan masa disemak dengan source sharing; gambar ini bukan bukti ujian perkakasan fizikal.
 
 **Nama installer utama ialah `setupGeoDecoder.ps1`.** Fail kecil `setup.ps1` dikekalkan sebagai alias supaya arahan dalam PDF sedia ada masih berfungsi. Kedua-duanya menjalankan installer yang sama dan menerima pilihan yang sama. Mesej installer kini menunjukkan tutorial yang disertakan.
 
@@ -231,8 +231,8 @@ Beri **ZIP bersih** kepada penerima yang tidak patut menerima sejarah repo.
 Jangan merge sharing ke main. ZIP tiada `.git`, sejarah pembangunan, fixture/
 ujian developer, UID sebenar, token, toolchain, cache, output build atau COM peribadi.
 
-Pakej **2.0.0-sharing.1** menggunakan satu build RGB dan firmware sama tepat
-dengan main v2.0.0. Tujuh PDF serta installer sedia ada dikekalkan. Tree kekal
+Pakej **2.0.1-sharing.1** menggunakan satu build RGB dan firmware sama tepat
+dengan main v2.0.1. Tujuh PDF serta installer sedia ada dikekalkan. Tree kekal
 minimum (58 fail): tiada ujian/development docs/cache/build ditambah. Manifest
 memadankan senarai 57 payload, checksum dan SHA main sumber sebenar.
 
@@ -241,3 +241,9 @@ lulus merentas enam konfigurasi native main, termasuk entry PlatformIO RGB dan
 modul berasingan. Entry RGB sharing turut diuji menggunakan harness main.
 `pio run` default berjaya pada kedua-dua branch. Ujian ini simulasi/kompilasi;
 tiada upload USB, ujian Windows installer sebenar atau ujian board fizikal.
+
+Panduan LCD kini mempunyai 15 halaman lengkap dan footer HINT pada setiap
+halaman; NEXT kekal tidak aktif dalam panduan. HINT dari skrin salah tidak
+terbawa ke soalan baharu selepas NEXT. [Flow semasa](docs/GAME_FLOW_RGB.md) dan
+[semua paparan LCD/handoff tutorial](docs/TUTORIAL_FLOW_V2_HANDOFF.md) disertakan
+sebagai dua dokumen ringkas; ujian developer tidak dimasukkan dalam pakej.

@@ -16,14 +16,21 @@ struct LcdViewState {
 };
 
 const char *const LCD_INSTRUCTIONS[INSTRUCTION_PAGE_COUNT][2] = {
-  {"Soalan bongkah:", "R1 dulu, kemudian R2"},
-  {"Soalan bentangan:", "R2 dulu, kemudian R1"},
-  {"Biru: Sedia imbas", "Hijau: Tahap betul"},
-  {"HINT:Petunjuk ungu", "HINT lagi: Soalan"},
-  {"Salah:+0 merah kelip", "NEXT: Teruskan"},
-  {"Dua betul:+1 markah", "3 kelip: Masa dijeda"},
-  {"NEXT: Langkau (+0)", "3 kelip merah: Jeda"},
-  {"Menu:Warna perlahan", "Tamat: Warna pantas"}
+  {"Soalan bongkah:", "R1 dahulu -> R2"},
+  {"Soalan bentangan:", "R2 dahulu -> R1"},
+  {"Biru: Menunggu kad", "Reader kedua padam"},
+  {"Kad pertama betul:", "Hijau kekal; +0"},
+  {"Dua kad sepadan:", "Betul kedua-dua: +1"},
+  {"Kelip hijau 3 kali", "Auto soalan baharu"},
+  {"Satu kad salah: +0", "Dua LED kelip merah"},
+  {"Merah berterusan", "Lihat jawapan+sebab"},
+  {"NEXT/TERUSKAN:", "Ke soalan seterusnya"},
+  {"Masa jeda: Kelipan", "hijau & skrin salah"},
+  {"HINT: Petunjuk ungu", "Pada reader aktif"},
+  {"HINT lagi: Soalan", "Masa hint berjalan"},
+  {"NEXT: Langkau (+0)", "3 kelip merah, jeda"},
+  {"Soalan akhir tamat:", "Paparan keputusan"},
+  {"Angkat & imbas baru", "Kad ikut LED biru"}
 };
 
 inline void lcdPutRow(char rows[4][21], uint8_t row, const char *text) {
@@ -46,8 +53,7 @@ inline void lcdMenu(char rows[4][21], const LcdViewState &view) {
     lcdPutRow(rows, 0, title);
     lcdPutRow(rows, 1, LCD_INSTRUCTIONS[page][0]);
     lcdPutRow(rows, 2, LCD_INSTRUCTIONS[page][1]);
-    // Hanya halaman terakhir memaparkan arahan kembali ke menu.
-    if (page + 1 == INSTRUCTION_PAGE_COUNT) lcdPutRow(rows, 3, "HINT: Menu utama");
+    lcdPutRow(rows, 3, page + 1 == INSTRUCTION_PAGE_COUNT ? "HINT: Menu utama" : "HINT: Seterusnya");
     return;
   }
   lcdPutCentered(rows, 0, "GeoDecoder");

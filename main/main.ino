@@ -25,7 +25,7 @@ void platformScan(uint8_t reader, const Uid &uid) {
   serialPrintUid(reader);
   if (!componentTestsActive()) appHandleScan(reader, uid);
 }
-bool platformButtonsBlocked() { return componentTestsActive() || appInputBlocked(); }
+bool platformButtonsBlocked(uint8_t button) { return componentTestsActive() || appInputBlocked(button); }
 }
 
 void setup() {

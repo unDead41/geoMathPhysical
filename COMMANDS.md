@@ -153,7 +153,7 @@ READY ialah respons register; imbas kad sebenar untuk mengesahkan bacaan antena.
 Banner ini juga muncul semasa boot dan pada permulaan output `status`:
 
 ```text
-[FIRMWARE] GeoDecoder v2.0.0 | ESP32 | env=esp32dev-rgb
+[FIRMWARE] GeoDecoder v2.0.1 | ESP32 | env=esp32dev-rgb
 ```
 
 Build pengguna tunggal ialah RGB. Semak versi dengan README GitHub pada
@@ -162,3 +162,7 @@ Dalam Project Tasks branch sharing, satu environment `esp32dev-sharing-rgb`
 ialah default; firmware berkongsi label hardware Serial `env=esp32dev-rgb` dengan main.
 Rujukan sumber dan versi terdapat dalam README.md dan package.json.
 
+
+Cara Main LCD: 15 halaman; HINT membuka/maju, HINT terakhir kembali menu.
+NEXT tidak memulakan permainan dalam panduan. Semua halaman dan penerangan
+sebenar: [handoff LCD/video](docs/TUTORIAL_FLOW_V2_HANDOFF.md).
