@@ -1,5 +1,20 @@
 # Changelog
 
+## v1.1.4 - 2026-10-28
+
+- Add the 20-page A4 landscape printable nets PDF: two complete sets of cube,
+  cuboid, square-based pyramid, cylinder and cone. All solid dimensions are
+  80% of the preceding printable edition; glue tabs retain their enlarged sizes.
+- Use one light tone on side/top faces, a darker bottom base, gray glue tabs
+  and thin solid black fold lines, with no printed text or dashed lines.
+- Include the same PDF in main and the reduced sharing package, link it from
+  the guides, and update the sharing installer manifest and file checksums.
+- Print single-sided at Actual size / 100% with Fit to page disabled; the 20%
+  reduction is already applied in the PDF. Cut the outer outlines and fold the
+  thin black lines. Confirm the RFID fob fits before closing the model.
+- Advance the runtime version label under the project SOR. Build/Upload only
+  if the board's displayed version should match v1.1.4; this is a print-asset release.
+
 ## v1.1.3 - 2026-10-25
 
 - Provide one default RGB build in main (`esp32dev-rgb`) and sharing

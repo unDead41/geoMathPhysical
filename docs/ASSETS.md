@@ -1,6 +1,6 @@
 # Aset cetakan dan paparan LCD
 
-Disemak pada 25 Oktober 2026. Gunakan fail di bawah untuk cetakan dan dokumentasi.
+Disemak pada 28 Oktober 2026. Gunakan fail di bawah untuk cetakan dan dokumentasi.
 
 ## Kad RFID siap potong
 
@@ -15,6 +15,29 @@ Ketiga-tiganya menggunakan versi sumber 2, terakhir dikemas kini pada
 "ikut LED". Cetak pada kertas A4 menggunakan **Actual size / 100%** dan matikan
 **Fit to page**. Saiz kad ialah 85.6 x 54 mm; semak garis ukuran 50 mm sebelum
 memotong.
+
+## Bentangan untuk membina bongkah
+
+| Fail | Kandungan | Halaman |
+|---|---|---:|
+| [Bentangan dua set tanpa tulisan](../print_labels/GeoDecoder_Bentangan_2_Set_Tanpa_Tulisan_A4.pdf) | Kubus, kuboid, piramid bertapak segi empat sama, silinder dan kon | 20 |
+
+Edisi 28 Oktober 2026. Set A menggunakan halaman 1-10 dan Set B halaman
+11-20, dua halaman bagi setiap bongkah mengikut turutan dalam jadual.
+Panjang, lebar dan tinggi kedua-dua set ialah **80% daripada ukuran sebelumnya**;
+tapak terkecil kini 6 cm. Tab gam kubus/kuboid sedalam 1.5 cm menggunakan
+bahagian tepi berselang pada kedua-dua muka cantuman. Tab lain sedalam
+1 cm dan tab cantuman sisi silinder/kon sedalam 1.2 cm.
+
+Cetak **A4 landskap, satu muka, Actual size / 100%** dan matikan **Fit to page**.
+Pengecilan sudah diterapkan; jangan kecilkan lagi dalam tetapan cetakan.
+Gunting garisan luar yang lebih tebal; lipat pada garis hitam nipis dan
+gam tab kelabu ke bahagian dalam. Semua sisi/penutup atas satu tona dan
+hanya tapak bawah lebih gelap. Tiada tulisan atau garis putus-putus.
+Semak ruang kunci RFID sebenar sebelum menutup tapak.
+
+PDF disahkan mempunyai 20 halaman A4 landskap, tanpa teks bercetak atau
+corak garis putus-putus. Kekuatan cantuman belum diuji melalui pemasangan fizikal.
 
 ## Dokumentasi LCD
 

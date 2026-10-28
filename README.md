@@ -1,6 +1,6 @@
 # GeoDecoder
 
-Versi semasa: **v1.1.3**.
+Versi semasa: **v1.1.4**.
 Rujukan kemas kini: [SOR versi](docs/SOR_VERSIONING.md) dan [changelog](CHANGELOG.md).
 
 Kuiz geometri 3D menggunakan ESP32 klasik/WROOM-32, dua pembaca MFRC522,
@@ -11,6 +11,12 @@ Monitor tersedia terus dalam VS Code. Arduino IDE tidak diperlukan.
 
 ## Panduan PDF
 
+- [Bentangan untuk membina lima bongkah, dua set](print_labels/GeoDecoder_Bentangan_2_Set_Tanpa_Tulisan_A4.pdf):
+  20 halaman A4 landskap untuk digunting, dilipat dan digam. Kedua-dua set
+  sudah dikecilkan 20% daripada ukuran sebelumnya, dengan tab gam lebih lebar.
+  Cetak pada **Actual size / 100%**, satu muka; matikan **Fit to page**.
+  Gunting garisan luar dan lipat pada garis hitam nipis. Semua sisi satu tona,
+  tapak bawah lebih gelap, tab gam kelabu; tiada tulisan atau garis putus-putus.
 - [Panduan lengkap A-Z](tutorial/GeoDecoder_Panduan_A-Z.pdf): 45 halaman
   bergambar untuk sambungan, persediaan komputer, ujian, pendaftaran RFID
   dan penggunaan GeoDecoder.
@@ -233,7 +239,7 @@ Untuk melihat port: `pio device list`.
 Pada boot/reset ESP32, Serial 115200 baud memaparkan:
 
 ```text
-[FIRMWARE] GeoDecoder v1.1.3 | ESP32 | env=esp32dev-rgb
+[FIRMWARE] GeoDecoder v1.1.4 | ESP32 | env=esp32dev-rgb
 ```
 
 Jika Monitor dibuka selepas banner berlalu, taip `version`; `status` turut
@@ -264,7 +270,7 @@ lama selepas pull, Upload semula environment yang betul. Rujuk [SOR versi](docs/
 | `SAMBUNGAN.md` | Jadual wayar asal |
 | `COMMANDS.md` | Senarai penuh arahan Serial |
 | `docs/lcd/` | PDF 15 halaman dan set PNG paparan LCD terkini |
-| `print_labels/` | Tiga PDF kad RFID siap potong tanpa nama jawapan |
+| `print_labels/` | PDF kad RFID dan bentangan untuk membina bongkah |
 | `tutorial/` | PDF panduan A-Z dan cara bermain murid bergambar |
 
 Rujuk [panduan architecture](docs/ARCHITECTURE.md) sebelum mengubah modul.
