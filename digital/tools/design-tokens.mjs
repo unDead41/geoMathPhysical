@@ -30,7 +30,7 @@ for(const [relative,content] of Object.entries(outputs)){
 // Local geometry values and preference variables are outside this shared set.
 if(check){
   const owners=new Set(Object.keys(LIGHT_TOKENS));
-  for(const relative of ['dist/style.css','dist/portal.css','dist/usability.css','dist/foundation.css','module/src/style.css','module/src/net-tools.css','dist/module-frame.mjs','dist/module-foundation.css']){
+  for(const relative of ['dist/style.css','dist/portal.css','dist/usability.css','dist/foundation.css','dist/entry.css','module/src/style.css','module/src/net-tools.css','dist/module-frame.mjs','dist/module-foundation.css']){
     const target=path.join(root,relative);if(!fs.existsSync(target))continue;
     const source=fs.readFileSync(target,'utf8');
     for(const match of source.matchAll(/--([\w-]+)\s*:\s*[^;{}]+/g)){
@@ -40,3 +40,4 @@ if(check){
 }
 if(stale)process.exitCode=1;
 else console.log(check?'PASS: portal/module token adapters match one canonical source.':'Generated portal CSS, offline module adapter and module CSS.');
+

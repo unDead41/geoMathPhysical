@@ -12,6 +12,7 @@ Firmware rounds remain a separate contract.
 
 | Capability | Canonical owner | Source of truth | Allowed variants | Verification |
 |---|---|---|---|---|
+| Entry shell/cards/guide | index.html shell + entry-components.mjs + entry-ui.mjs | approved GeoMath reference; docs/ENTRY_UI.md | Home, mode radio cards, real resume, guide page | solo-ui.test.mjs + entry browser QA |
 | Design tokens | design-system/tokens.mjs → tools/design-tokens.mjs | DESIGN.md / docs/DESIGN_SYSTEM.md | light/dark, standard/strong; generated module adapter | design:check; design-tokens.test.mjs |
 | Button / field / panel | dist/foundation.css + dist/module-foundation.css | DESIGN.md | brand, neutral, danger, icon; legacy class adapters | tests/design-system.browser.mjs; reference gallery |
 | Form | core validators + portal form owner; support-report.mjs for reports | account/game validation and report contract | guest, login/signup/recovery, profile/security, local report | core, portal-auth-validation, support integration/browser |
@@ -31,6 +32,20 @@ Firmware rounds remain a separate contract.
 | Module learning tools | module projection/calculation source owners | module/UX-CONTRACT.md; canonical measures | three-view drafts, four calculation steps; existing four reflections | module unit/DOM/browser + host integration |
 
 ## Home, guest and settings
+
+The GeoMath entry preview provides `#utama`, `#main`, `#sambung` and
+`#cara-bermain` as direct entry routes. Header links use the single application
+navigation owner and retain existing game/account leave guards. Mode cards use
+native radio semantics and update the existing play-mode value; Game remains
+the only rules owner. The first-play guide is now a page before the solo clock
+starts. During active play, help still opens a modal without replacing the game.
+Resume is a page rather than the former summary modal. It shows only validated
+unfinished progress for the current browser/account. Missing/corrupt/blocked
+storage has an explicit state; no sample progress is inserted. Optional savedAt
+metadata localizes the save date but never determines elapsed game time.
+Starting over retains the existing destructive confirmation and focus owner.
+The new fixed cube demo is 24 seconds, supports seeking, replay and pause, and
+never reads a live answer or starts a round. It pauses on navigation/background.
 
 Home groups Main, Belajar and Akaun/Kelas. Main opens nickname and mode
 selection: quiz10, practice15, Duel. A guest has category Tetamu and an empty

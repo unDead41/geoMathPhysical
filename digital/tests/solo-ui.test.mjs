@@ -5,9 +5,9 @@ import {build} from 'esbuild';
 import {JSDOM,VirtualConsole} from 'jsdom';
 const html=fs.readFileSync(new URL('../dist/index.html',import.meta.url),'utf8');
 const bundle=(await build({entryPoints:[new URL('../dist/app.mjs',import.meta.url).pathname],bundle:true,write:false,platform:'browser',format:'iife',target:['es2022'],loader:{'.html':'text'}})).outputFiles[0].text;
-function fixture(seed={},denied=false){
+function fixture(seed={},denied=false,hash=''){
   const errors=[],console=new VirtualConsole();console.on('jsdomError',error=>errors.push(error.message.slice(0,180)));
-  const dom=new JSDOM(html,{url:'https://app.invalid/',runScripts:'outside-only',pretendToBeVisual:true,virtualConsole:console});
+  const dom=new JSDOM(html,{url:'https://app.invalid/'+hash,runScripts:'outside-only',pretendToBeVisual:true,virtualConsole:console});
   const {window}=dom;
   window.matchMedia=()=>({matches:false,addEventListener(){},removeEventListener(){}});
   window.requestAnimationFrame=()=>1;window.cancelAnimationFrame=()=>{};window.scrollTo=()=>{};
@@ -27,8 +27,8 @@ function fixture(seed={},denied=false){
 
 import {SOLO_KEY} from '../dist/solo-save.mjs';
 const seedFrom=f=>Object.fromEntries(Object.keys(f.window.localStorage).map(key=>[key,f.window.localStorage.getItem(key)]));
-function start(f){f.document.getElementById('guest-button').click();f.document.getElementById('player-name').value='QA Solo';f.document.getElementById('player-form').dispatchEvent(new f.window.Event('submit',{bubbles:true,cancelable:true}));f.document.querySelector('[data-dialog-action=tutorial-skip]')?.click();}
-function resume(f){f.document.getElementById('solo-resume-button').click();f.document.querySelector('[data-dialog-action=solo-resume]').click();}
+function start(f){f.document.getElementById('guest-button').click();f.document.getElementById('player-name').value='QA Solo';f.document.getElementById('player-form').dispatchEvent(new f.window.Event('submit',{bubbles:true,cancelable:true}));if(!f.document.getElementById('guide-screen').hidden)f.document.getElementById('guide-start-button').click();}
+function resume(f){f.document.getElementById('solo-resume-button').click();assert.equal(f.document.getElementById('resume-screen').hidden,false);f.document.getElementById('resume-continue-button').click();}
 test('cold DOM reload restores selected R1, exact card SVG tones and R2 hint state without network',()=>{
  const a=fixture();let b,c;try{
   start(a);const card=a.document.querySelector('.choice');card.click();
@@ -47,8 +47,8 @@ test('new game confirmation cancels safely, damaged snapshot explains replacemen
  const a=fixture();let b,c;try{
   start(a);const original=a.window.localStorage.getItem(SOLO_KEY+'guest');
   a.document.getElementById('brand-home').click();a.document.querySelector('[data-dialog-action=home]').click();start(a);
-  a.document.querySelector('[data-dialog-action=solo-new]').click();a.document.querySelector('[data-dialog-action=solo-back]').click();assert.equal(JSON.parse(a.window.localStorage.getItem(SOLO_KEY+'guest')).id,JSON.parse(original).id);
-  b=fixture({[SOLO_KEY+'guest']:'{bad'});b.document.getElementById('solo-resume-button').click();assert.match(b.document.getElementById('dialog-content').textContent,/rosak/);
+  a.document.getElementById('resume-new-button').click();a.document.querySelector('[data-dialog-action=solo-back]').click();assert.equal(JSON.parse(a.window.localStorage.getItem(SOLO_KEY+'guest')).id,JSON.parse(original).id);
+  b=fixture({[SOLO_KEY+'guest']:'{bad'});b.document.getElementById('solo-resume-button').click();assert.match(b.document.getElementById('resume-subtitle').textContent,/rosak/);
   c=fixture({},true);start(c);assert.match(c.document.getElementById('solo-save-status').textContent,/belum dapat disimpan/);assert.equal(c.document.getElementById('game-screen').hidden,false);
  }finally{a.window.close();b?.window.close();c?.window.close();}
 });
@@ -67,9 +67,50 @@ for(const language of ['ms','en'])test(`${language}: resume summary, discard con
   start(f);f.document.getElementById('brand-home').click();f.document.querySelector('[data-dialog-action=home]').click();
   f.document.getElementById('settings-button').click();f.change(f.document.getElementById('language-select'),language);f.document.getElementById('dialog-close').click();
   const old=JSON.parse(f.window.localStorage.getItem(SOLO_KEY+'guest')).id;
-  f.document.getElementById('solo-resume-button').click();assert.match(f.document.getElementById('dialog-content').textContent,language==='en'?/questions answered/:/soalan dijawab/);
-  f.document.querySelector('[data-dialog-action=solo-new]').click();assert.match(f.document.getElementById('dialog-content').textContent,language==='en'?/Discard/:/Buang/);
+  f.document.getElementById('solo-resume-button').click();assert.match(f.document.getElementById('resume-details').textContent,language==='en'?/Progress/:/Kemajuan/);assert.equal(f.document.querySelector('#resume-details progress').max,10);
+  f.document.getElementById('resume-new-button').click();assert.match(f.document.getElementById('dialog-content').textContent,language==='en'?/Discard/:/Buang/);
   f.document.querySelector('[data-dialog-action=solo-discard]').click();assert.equal(f.window.localStorage.getItem(SOLO_KEY+'guest'),null);assert.equal(f.document.getElementById('guest-screen').hidden,false);
   start(f);assert.notEqual(JSON.parse(f.window.localStorage.getItem(SOLO_KEY+'guest')).id,old);assert.deepEqual(f.errors,[]);
  }finally{f.window.close();}
 });
+
+test('the first-play page gates the clock and demo seeking never changes a game',()=>{
+ const f=fixture({'geodecoder.digital.preferences.v1':JSON.stringify({tutorialSeen:false,music:false})});try{
+  f.document.getElementById('guest-button').click();f.document.getElementById('player-name').value='QA Guide';
+  f.document.getElementById('player-form').dispatchEvent(new f.window.Event('submit',{bubbles:true,cancelable:true}));
+  assert.equal(f.document.getElementById('guide-screen').hidden,false);assert.equal(f.document.getElementById('game-screen').hidden,true);
+  assert.equal(f.window.localStorage.getItem(SOLO_KEY+'guest'),null);
+  f.change(f.document.getElementById('entry-demo-position'),'12');assert.equal(f.document.getElementById('entry-demo-time').textContent,'00:12 / 00:24');
+  assert.equal(f.document.querySelector('[data-guide-step="2"]').classList.contains('guide-step-active'),true);
+  f.document.getElementById('entry-demo-play').click();assert.equal(f.document.getElementById('entry-demo-play').getAttribute('aria-pressed'),'true');
+  f.document.getElementById('entry-demo-play').click();assert.equal(f.document.getElementById('entry-demo-play').getAttribute('aria-pressed'),'false');
+  f.document.getElementById('guide-start-button').click();assert.equal(f.document.getElementById('game-screen').hidden,false);assert.ok(f.window.localStorage.getItem(SOLO_KEY+'guest'));
+  assert.deepEqual(f.errors,[]);
+ }finally{f.window.close();}
+});
+
+test('shared radio mode cards start real practice and an empty resume deep link fabricates no progress',()=>{
+ const f=fixture(),empty=fixture({},false,'#sambung');try{
+  assert.equal(empty.document.getElementById('resume-screen').hidden,false);assert.equal(empty.document.getElementById('resume-continue-button').hidden,true);
+  assert.equal(empty.document.querySelector('#resume-details progress'),null);assert.match(empty.document.getElementById('resume-details').textContent,/Belum ada/);
+  f.document.getElementById('guest-button').click();const radio=f.document.querySelector('input[name="game-mode-option"][value="practice"]');
+  radio.checked=true;radio.dispatchEvent(new f.window.Event('change',{bubbles:true}));assert.equal(f.document.getElementById('play-mode').value,'practice');
+  f.document.getElementById('player-name').value='QA Practice';f.document.getElementById('player-form').dispatchEvent(new f.window.Event('submit',{bubbles:true,cancelable:true}));
+  assert.equal(f.document.getElementById('game-screen').hidden,false);assert.match(f.document.getElementById('question-counter').textContent,/15/);
+  const saved=JSON.parse(f.window.localStorage.getItem(SOLO_KEY+'guest'));assert.equal(saved.mode,'practice');assert.ok(Number.isFinite(saved.savedAt));
+  assert.deepEqual([...f.errors,...empty.errors],[]);
+ }finally{f.window.close();empty.window.close();}
+});
+
+test('header language and theme controls share the application preference owners',()=>{
+ const f=fixture();try{
+  f.document.querySelector('[data-entry-language="en"]').click();
+  assert.equal(f.document.documentElement.lang,'en');assert.equal(f.document.querySelector('[data-entry-language="en"]').getAttribute('aria-pressed'),'true');
+  assert.equal(f.document.getElementById('theme-button').getAttribute('aria-label'),'Switch to dark theme');
+  f.document.getElementById('theme-button').click();assert.equal(f.document.documentElement.dataset.theme,'dark');
+  assert.equal(f.document.getElementById('theme-button').getAttribute('aria-label'),'Switch to light theme');
+  f.document.getElementById('settings-button').click();assert.equal(f.document.getElementById('theme-select').value,'dark');
+  assert.deepEqual(f.errors,[]);
+ }finally{f.window.close();}
+});
+

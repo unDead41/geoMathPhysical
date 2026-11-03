@@ -8,6 +8,7 @@ export function createUsabilityUI({storage,preferenceStore,t,openDialog,closeDia
   installHelpVisuals($('dialog-content'));
   let step=0,beginAfterGuide=false,returnToHelp=false,themeChoice='system';
   try{const saved=storage.getItem('geodecoder.theme.v1');if(['light','dark'].includes(saved))themeChoice=saved;}catch{}
+  document.addEventListener('geodecoder:theme',event=>{themeChoice=event.detail?.preference||'system';refreshSettings();});
   function persist(){refreshSettings();}
   function refreshSettings(){
     const preferences=preferenceStore.value;
@@ -44,3 +45,4 @@ export function createUsabilityUI({storage,preferenceStore,t,openDialog,closeDia
   refreshSettings();
   return {openSettings,openTutorial,handleAction,stash,persist,refreshSettings,refreshTutorial:renderTutorial};
 }
+

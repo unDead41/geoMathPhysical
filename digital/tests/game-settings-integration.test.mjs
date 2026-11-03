@@ -58,7 +58,8 @@ test('the Profile control keeps a localized explicit accessible name when its vi
     assert.equal(profile.getAttribute('aria-label'),'Profil Saya');assert.equal(profile.getAttribute('title'),'Profil Saya');
     f.document.getElementById('settings-button').click();f.change(f.document.getElementById('language-select'),'en');
     assert.equal(profile.getAttribute('aria-label'),'My profile');assert.equal(profile.getAttribute('title'),'My profile');
-    f.document.getElementById('guest-button').click();assert.match(f.document.querySelector('#guest-screen .card-kicker').textContent,/READY TO TRY/);
+    f.document.getElementById('guest-button').click();assert.match(f.document.getElementById('guest-title').textContent,/Choose your challenge/);
     f.change(f.document.getElementById('language-select'),'ms');assert.equal(profile.getAttribute('aria-label'),'Profil Saya');assert.equal(profile.getAttribute('title'),'Profil Saya');
   }finally{f.window.close();}
 });
+
