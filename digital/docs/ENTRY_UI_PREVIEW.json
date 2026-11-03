@@ -1,0 +1,21 @@
+{
+  "title": "GeoMath — Mula & panduan",
+  "review_url": "https://geomath-ui-ijamm.ijmahmad.chatgpt.site",
+  "audience": "owner-private",
+  "project_id": "appgprj_6aea3587e6488191be548e41745271bc",
+  "deployment_id": "appgdep_6aea3f03b968819180ffc11435f38680",
+  "saved_version_id": "appgprj_6aea3587e6488191be548e41745271bc~appgver_3bdd213eb9b48191b1e1f813ef089972",
+  "deployment_status": "succeeded",
+  "built_site_source_commit": "cf615b814f13669b7213ae1d5227cb99d7c6a68b",
+  "github_ui_source_commit": "0c968c65005a0413c4f4a0034670b4db825599c8",
+  "work_branch": "digitalized-ux-ui-upgrade",
+  "integration_branches_changed": false,
+  "existing_pages_changed": false,
+  "verification_document": "ENTRY_UI_VERIFICATION.md",
+  "entry_routes": [
+    "#utama",
+    "#main",
+    "#sambung",
+    "#cara-bermain"
+  ]
+}
