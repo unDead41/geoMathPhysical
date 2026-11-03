@@ -1,0 +1,199 @@
+{
+  "schema_version": 1,
+  "concept_version": "1.0.0",
+  "created_date": "2026-11-04",
+  "timezone": "Asia/Kuala_Lumpur",
+  "repository": "unDead41/geodecoder",
+  "branch": "ui/ux-redesign-concept",
+  "requested_branch_label": "ui/ux redesign consept",
+  "base_branch": "main-digitalized",
+  "base_sha": "391df985eea4fee15d9859e678068b1a3f613cba",
+  "main_observed_sha": "25836eb1a6f24459aace8a3980ae880a13e3b488",
+  "source_digital_version": "2.8.0",
+  "source_module_version": "1.6.0",
+  "status": "reference-only; no product code changes or deployment",
+  "total_boards": 10,
+  "total_screens": 40,
+  "images": [
+    {
+      "board": 1,
+      "file": "01-start-and-guide.png",
+      "title": "Mula dan panduan",
+      "range": "01–04",
+      "screens": [
+        "Halaman utama",
+        "Pilih permainan",
+        "Sambung permainan",
+        "Cara bermain"
+      ],
+      "width": 1672,
+      "height": 941,
+      "bytes": 1715722,
+      "sha256": "a63ec9bd91ca0a45dcbc3567ae759b26f5eb42ca071fb1c659b0ddba46e8fb9e",
+      "git_blob_sha": "cbedb97dc44fc2120b4e0d6b470549f5edd9fef9",
+      "path": "images/01-start-and-guide.png"
+    },
+    {
+      "board": 2,
+      "file": "02-game-and-feedback.png",
+      "title": "Permainan dan maklum balas",
+      "range": "05–08",
+      "screens": [
+        "Kuiz 10",
+        "Latihan 15",
+        "Semakan jawapan",
+        "Keputusan dan analisis"
+      ],
+      "width": 1672,
+      "height": 941,
+      "bytes": 1867860,
+      "sha256": "8d4853d6fd64b760de5d26f87873178eeaf101de5bf67550d5eb5ef9dfa86630",
+      "git_blob_sha": "6c2aa8f9126822550eeb8806310f205f64a39f57",
+      "path": "images/02-game-and-feedback.png"
+    },
+    {
+      "board": 3,
+      "file": "03-scoreboard-and-duel.png",
+      "title": "Papan skor dan Duel",
+      "range": "09–12",
+      "screens": [
+        "Papan skor kuiz",
+        "Cipta atau sertai Duel",
+        "Lobi Duel",
+        "Duel berlangsung"
+      ],
+      "width": 1672,
+      "height": 941,
+      "bytes": 1739717,
+      "sha256": "df47c25729e032b5ce3b30773f963d50af0b068a6d86509e0911bf92edc2e07a",
+      "git_blob_sha": "8eda33a8a420b0823ea584c1baa4e3591a346b6e",
+      "path": "images/03-scoreboard-and-duel.png"
+    },
+    {
+      "board": 4,
+      "file": "04-account-and-duel-result.png",
+      "title": "Akaun dan keputusan Duel",
+      "range": "13–16",
+      "screens": [
+        "Keputusan Duel",
+        "Log masuk",
+        "Daftar akaun",
+        "Pemulihan akaun"
+      ],
+      "width": 1672,
+      "height": 941,
+      "bytes": 1675935,
+      "sha256": "5dc4d4ee4a4fd370c7a7b12535f5a0681ec60519a82a5f371bb2de94df14d147",
+      "git_blob_sha": "e85117a93f5ae71d01f5573c50833e1edf146eb7",
+      "path": "images/04-account-and-duel-result.png"
+    },
+    {
+      "board": 5,
+      "file": "05-teacher-workspace.png",
+      "title": "Ruang guru",
+      "range": "17–20",
+      "screens": [
+        "Dashboard guru",
+        "Ahli dan jemputan kelas",
+        "Pantau bilik",
+        "Keputusan bilik"
+      ],
+      "width": 1672,
+      "height": 941,
+      "bytes": 1899229,
+      "sha256": "582444c039785b3042bbeec40d11697f7c9728e14ab6d57bdb196cfaea7918d9",
+      "git_blob_sha": "00ae1ab6bc468f39df172b385300ccda3d4495c4",
+      "path": "images/05-teacher-workspace.png"
+    },
+    {
+      "board": 6,
+      "file": "06-student-and-profile.png",
+      "title": "Pelajar dan profil",
+      "range": "21–24",
+      "screens": [
+        "Dashboard pelajar",
+        "Bilik pelajar",
+        "Profil saya",
+        "Kata laluan dan keselamatan"
+      ],
+      "width": 1672,
+      "height": 941,
+      "bytes": 1850247,
+      "sha256": "797bd93ed6ad65c96933f003b6e7f62c702b87fc2df11367777676d4e10faa31",
+      "git_blob_sha": "8e22f9e8dcb69fac0d79e50f76f9ebed2540cf28",
+      "path": "images/06-student-and-profile.png"
+    },
+    {
+      "board": 7,
+      "file": "07-explore-notes-calculator.png",
+      "title": "Penerokaan dan nota",
+      "range": "25–28",
+      "screens": [
+        "Teroka 3D",
+        "Pandangan 2D",
+        "Nota pembelajaran",
+        "Kalkulator ukuran"
+      ],
+      "width": 1672,
+      "height": 941,
+      "bytes": 1847068,
+      "sha256": "15fee50999f6d1ce1d0f1b636824fc6f7334c3986d5533c913f2dc15a1225fcd",
+      "git_blob_sha": "8ed65934d6025cd13bf33118c4747eca351314d0",
+      "path": "images/07-explore-notes-calculator.png"
+    },
+    {
+      "board": 8,
+      "file": "08-interactive-labs.png",
+      "title": "Empat makmal interaktif",
+      "range": "29–32",
+      "screens": [
+        "Bina bentangan",
+        "Makmal isi padu",
+        "Luas permukaan dan rumus",
+        "Bongkah gabungan"
+      ],
+      "width": 1672,
+      "height": 941,
+      "bytes": 1625305,
+      "sha256": "3e05aa5a375f70b07cbb2bd7c3571faa5e22afa6669b24a356a97ca04a69c208",
+      "git_blob_sha": "2869aea0ba145453591c6600c8faf7ca2e8e20ff",
+      "path": "images/08-interactive-labs.png"
+    },
+    {
+      "board": 9,
+      "file": "09-studio-and-progress.png",
+      "title": "Studio dan kemajuan",
+      "range": "33–36",
+      "screens": [
+        "Hab makmal",
+        "Pelan dan Dongakan",
+        "Semakan langkah pengiraan",
+        "Rekod latihan kendiri"
+      ],
+      "width": 1672,
+      "height": 941,
+      "bytes": 1868210,
+      "sha256": "a4d30c7c3249c1463f661bc6b453e7ac9576f175e1b04e7f324a358c912e6b4e",
+      "git_blob_sha": "f082e7ce238965654d4c28cc74ae7517f942aa07",
+      "path": "images/09-studio-and-progress.png"
+    },
+    {
+      "board": 10,
+      "file": "10-settings-and-support.png",
+      "title": "Tetapan dan bantuan",
+      "range": "37–40",
+      "screens": [
+        "Tetapan penggunaan",
+        "Tema gelap",
+        "Pusat bantuan",
+        "Lapor masalah"
+      ],
+      "width": 1672,
+      "height": 941,
+      "bytes": 1871596,
+      "sha256": "3755c130021f52caa4b0b7a3a417c3a960871416901ff401cba37e59538a8ba4",
+      "git_blob_sha": "f68c12eead315d11a171775c09924f88d005d8ef",
+      "path": "images/10-settings-and-support.png"
+    }
+  ]
+}
