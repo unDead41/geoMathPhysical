@@ -98,3 +98,21 @@ test('question givens retain entered precision rather than rounding the dimensio
  assert.match(w.find('calculation-question').textContent,/4\.56789/);
  assert.match(w.find('calculation-question').textContent,/3\.98765/);
 });
+
+test('wizard shows one step, gates navigation and lets checked answers be revisited',()=>{
+ const w=workshop();w.instance.open('cube');
+ assert.equal(w.find('calculation-card-formula').hidden,false);assert.equal(w.find('calculation-card-substitution').hidden,true);
+ assert.equal(w.find('calculation-go-substitution').disabled,true);assert.equal(w.find('calculation-next-step').disabled,true);
+ w.input('calculation-formula','6*a^2');w.find('calculation-check-formula').click();w.find('calculation-next-step').click();
+ assert.equal(w.find('calculation-card-formula').hidden,true);assert.equal(w.find('calculation-go-substitution').getAttribute('aria-current'),'step');
+ w.input('calculation-substitution','6*4^2');w.find('calculation-check-substitution').click();w.find('calculation-previous-step').click();
+ assert.equal(w.find('calculation-formula').value,'6*a^2');w.input('calculation-formula','wrong');
+ assert.equal(w.find('calculation-go-substitution').disabled,true);assert.equal(w.find('calculation-next-step').disabled,true);assert.equal(w.find('calculation-card-substitution').hidden,true);
+});
+
+test('wizard position and draft survive locale/navigation; a session reset returns to formula',()=>{
+ const w=workshop();w.instance.open('cube');w.input('calculation-formula','6*a^2');w.find('calculation-check-formula').click();w.find('calculation-next-step').click();
+ w.input('calculation-substitution','6*4^2');w.language('en');w.instance.close();w.instance.open('cube');
+ assert.equal(w.find('calculation-go-substitution').getAttribute('aria-current'),'step');assert.equal(w.find('calculation-substitution').value,'6*4^2');
+ w.instance.resetContext();assert.equal(w.find('calculation-go-formula').getAttribute('aria-current'),'step');assert.equal(w.find('calculation-card-substitution').hidden,true);assert.equal(w.find('calculation-substitution').value,'');
+});

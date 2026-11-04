@@ -9,13 +9,21 @@ import {CalculationWorkshop} from './calculation-workshop.mjs';
 import {UI_MOTION} from './design-system.mjs';
 import {uiNode,playbackButton,hydrateIcons} from './ui.mjs';
 hydrateIcons(document);
+// UX-REDESIGN:EXPLORE — retain the host's settings/help controls, without
+// repeating the application brand/header inside its sandboxed learning frame.
+if(window.parent&&window.parent!==window){
+  document.documentElement.setAttribute('data-module-embedded','true');
+  const meta=document.querySelector?.('.header-meta'),tools=document.querySelector?.('.module-tools');
+  if(meta&&tools)tools.append(meta);
+}
 const el=id=>document.getElementById(id);
 const reduced=window.__geodecoderModuleHost?.media || window.matchMedia('(prefers-reduced-motion: reduce)');
 const initialHostSettings=window.__geodecoderModuleHost?.settings||{};
 const initial=MODEL_ORDER.includes(location.hash.slice(1))?location.hash.slice(1):'cube';
-const state={shape:initial,learningView:'explore',progress:0,yaw:.55,pitch:.35,zoom:1,mode:'model',view:'front',auto:!reduced.matches&&initialHostSettings.autoRotate!==false,labels:initialHostSettings.showLabels===true,selected:null,playing:false,direction:1,kind:'cycle',hold:0,camera:null,manualOrbit:false,pausedAnimation:null,speed:1};
+const state={shape:initial,learningView:'explore',studyMode:'notes',progress:0,yaw:.55,pitch:.35,zoom:1,mode:'model',view:'front',auto:!reduced.matches&&initialHostSettings.autoRotate!==false,labels:initialHostSettings.showLabels===true,selected:null,playing:false,direction:1,kind:'cycle',hold:0,camera:null,manualOrbit:false,pausedAnimation:null,speed:1};
 const primaryLearningShapes=['cube','cuboid','pyramid','cylinder','cone'];
 const mainRenderer=new ModelRenderer(el('model-canvas'));
+const notesRenderer=new ModelRenderer(el('notes-model'));
 const navRenderers=new Map(),viewRenderers=new Map();
 let raf=0,lastFrame=0,dirty=true,lastPercent=-1;
 let openedProjection=false,openedCalculation=false;
@@ -33,6 +41,7 @@ function alignCamera(yaw,pitch) {
   wake();
 }
 function refreshControls() {
+  el('explore-panel').dataset.exploreMode=state.mode;
   el('auto-rotate').setAttribute('aria-pressed',String(state.auto));
   el('auto-rotate').disabled=state.mode==='views';
   el('auto-rotate').querySelector('span').textContent=state.auto?'Hentikan putaran':'Putaran automatik';
@@ -100,14 +109,18 @@ function switchMode(mode) {
   else alignCamera(.55,.35);
   refreshControls();announce(mode==='views'?'Pandangan 2D: bongkah kekal tertutup, dilihat dari satu arah.':'Model dan bentangan. Seret untuk memutar bongkah.');wake();
 }
+function propertyCards(shape){
+  const data=MODEL_DATA[shape];
+  const stats=[[data.flat+data.curved,data.curved?'permukaan':'muka rata',data.curved?`${data.flat} rata + ${data.curved} melengkung`:'semuanya rata'],[data.edges,'rusuk',data.edges===0?'tiada':data.curvedEdges?'melengkung':'lurus'],[data.vertices,'bucu',shape==='cone'?'puncak':shape==='pyramid'?'termasuk puncak':'']];
+  return stats.map(([count,label,detail])=>{const box=element('div',{class:'property'});box.append(element('b',{},String(count)),element('span',{},label),element('small',{},detail));return box;});
+}
 function renderContent() {
   const data=MODEL_DATA[state.shape];
-  document.title=(state.learningView==='notes'?'Nota ':'')+data.name+' — Modul GeoDecoder';
   el('model-title').textContent=data.name;el('notes-title').textContent=data.name;el('shape-tag').textContent=data.tag;
   el('shape-intro').textContent=data.intro;el('net-explanation').textContent=data.net;el('net-explore-title').textContent=data.noNet?'Fahami permukaan melengkung':'Dari bongkah ke bentangan';el('observation').textContent=data.observe;
   el('edge-note').hidden=!data.curvedEdges;
-  const stats=[[data.flat+data.curved,data.curved?'permukaan':'muka rata',data.curved?`${data.flat} rata + ${data.curved} melengkung`:'semuanya rata'],[data.edges,'rusuk',data.edges===0?'tiada':data.curvedEdges?'melengkung':'lurus'],[data.vertices,'bucu',state.shape==='cone'?'puncak':state.shape==='pyramid'?'termasuk puncak':'']];
-  el('properties').replaceChildren(...stats.map(([count,label,detail])=>{const box=element('div',{class:'property'});box.append(element('b',{},String(count)),element('span',{},label),element('small',{},detail));return box;}));
+  for(const id of ['properties','note-properties'])el(id).replaceChildren(...propertyCards(state.shape));
+  el('notes-model').setAttribute('aria-label',data.name+' · '+data.tag);
   el('think-title').textContent=data.question;el('think-feedback').textContent='Pilih satu jawapan untuk melihat penerangan.';el('think-feedback').className='think-feedback';
   el('think-options').replaceChildren(...data.options.map((text,i)=>{
     const button=element('button',{'aria-pressed':'false','data-answer':i},text);
@@ -121,7 +134,7 @@ function renderContent() {
   el('face-description').textContent='Pilih permukaan untuk melihatnya pada model.';
   for(const button of el('shape-picker').children)button.setAttribute('aria-pressed',String(button.dataset.shape===state.shape));
   el('extra-shape-select').value=primaryLearningShapes.includes(state.shape)?'':state.shape;renderLegend();renderViews();refreshControls();
-  if(state.learningView==='notes')learningNotes.render(state.shape);
+  if(state.learningView==='notes'){learningNotes.render(state.shape);notesRenderer.draw({shape:state.shape,mini:true});}
   refreshLearningToolLabels();
 }
 function selectShape(shape) {
@@ -186,12 +199,28 @@ for(const shape of MODEL_ORDER.filter(s=>!primaryLearningShapes.includes(s)))el(
 el('extra-shape-select').addEventListener('change',()=>{const shape=el('extra-shape-select').value;if(MODEL_ORDER.includes(shape))selectShape(shape);});
 function refreshLearningToolLabels(){
   const english=window.__geodecoderModuleHost?.language==='en';
-  for(const [id,ms,en] of [['learn-projection-label','Pelan & Dongakan','Plans & Elevations'],['learn-calculation-label','Semakan Pengiraan','Calculation Steps'],['note-draw-projections','Latih pelan & dongakan','Practise plans & elevations'],['note-check-steps','Semak langkah untuk ukuran ini','Check steps with these measurements'],['note-check-description','Bina penyelesaian sendiri menggunakan ukuran dan pilihan π di atas.','Build your own solution with the measurements and π choice above.']])el(id).textContent=english?en:ms;
+  for(const [id,ms,en] of [['module-brand-caption','MODUL PEMBELAJARAN','LEARNING MODULE'],['module-sidebar-title','RUANG PEMBELAJARAN','LEARNING SPACE'],['explore-camera-label','Kawalan arah model','Model direction controls'],['explore-tempo-label','Tempo dan langkah','Speed and steps'],['model-picker-title','Pilih model','Choose a model'],['model-picker-count','11 bongkah','11 solids'],['extra-shape-label','Bentuk tambahan','More solids'],['note-comparison-label','Bandingkan 11 bongkah','Compare 11 solids'],['learn-measures-label','Kalkulator ukuran','Measurements'],['module-footer-caption','GeoMath · Belajar melalui penerokaan.','GeoMath · Learn through exploration.'],['learn-projection-label','Pelan & Dongakan','Plans & Elevations'],['learn-calculation-label','Semakan Pengiraan','Calculation Steps'],['note-draw-projections','Latih pelan & dongakan','Practise plans & elevations'],['note-check-steps','Semak langkah untuk ukuran ini','Check steps with these measurements'],['note-check-description','Bina penyelesaian sendiri menggunakan ukuran dan pilihan π di atas.','Build your own solution with the measurements and π choice above.']])el(id).textContent=english?en:ms;
   el('note-draw-projections').hidden=!primaryLearningShapes.includes(state.shape);
+  if(['explore','notes'].includes(state.learningView)){
+    const host=window.__geodecoderModuleHost,shape=host?.translate?.(MODEL_DATA[state.shape].name)||MODEL_DATA[state.shape].name;
+    const prefix=state.learningView==='notes'?(state.studyMode==='calculator'?(english?'Measurements · ':'Kalkulator ukuran · '):(english?'Notes · ':'Nota · ')):'';
+    document.title=prefix+shape+' — GeoMath';
+  }
+}
+function setStudyMode(mode){
+  state.studyMode=mode==='calculator'?'calculator':'notes';
+  el('study-panel').dataset.studyMode=state.studyMode;
+  el('learn-notes').setAttribute('aria-pressed',String(state.learningView==='notes'&&state.studyMode==='notes'));
+  el('learn-measures').setAttribute('aria-pressed',String(state.learningView==='notes'&&state.studyMode==='calculator'));
+  if(state.learningView==='notes'&&state.studyMode==='notes')notesRenderer.draw({shape:state.shape,mini:true});
+  refreshLearningToolLabels();
 }
 function switchLearningView(view,options={}) {
   moduleAccess.stopSpeech();
-  if(state.learningView===view)return;
+  if(state.learningView===view){
+    if(view==='notes'){setStudyMode(options.studyMode);const title=el(state.studyMode==='calculator'?'note-calculate-title':'study-title');title.focus({preventScroll:true});}
+    return;
+  }
   stopAnimation();state.auto=false;state.camera=null;
   if(state.learningView==='labs')learningLabs.close();
   if(state.learningView==='projection')projectionStudio.close();
@@ -202,13 +231,15 @@ function switchLearningView(view,options={}) {
     el(section==='notes'?'study-panel':section+'-panel').hidden=view!==section;
     el('learn-'+section).setAttribute('aria-pressed',String(view===section));
   }
+  setStudyMode(options.studyMode);
+  el('model-workbench').hidden=!['explore','notes'].includes(view);
+  el('module-intro').hidden=view!=='explore';
   el('shape-picker').hidden=!['explore','notes'].includes(view);el('extra-shape-field').hidden=!['explore','notes'].includes(view);
-  document.title=(view==='notes'?'Nota ':'')+MODEL_DATA[state.shape].name+' — Modul GeoDecoder';
   if(['explore','notes'].includes(view))moduleAccess.describe(MODEL_DATA[state.shape].intro+' '+MODEL_DATA[state.shape].net);
-  if(view==='labs'){learningLabs.open();el('labs-title').focus({preventScroll:true});document.title='Makmal Interaktif — Modul GeoDecoder';}
-  else if(view==='projection'){projectionStudio.open(options.shape??(openedProjection?undefined:state.shape));openedProjection=true;el('projection-title')?.focus({preventScroll:true});document.title=(moduleAccess.language()==='en'?'Plans & Elevations':'Pelan & Dongakan')+' — GeoDecoder';}
-  else if(view==='calculation'){calculationWorkshop.open(options.shape??(openedCalculation?undefined:state.shape),options.context);openedCalculation=true;el('calculation-title')?.focus({preventScroll:true});document.title=(moduleAccess.language()==='en'?'Calculation Steps':'Semakan Langkah Pengiraan')+' — GeoDecoder';}
-  else if(view==='notes'){learningNotes.render(state.shape);el('study-title').focus({preventScroll:true});announce('Nota '+MODEL_DATA[state.shape].name.toLowerCase()+' dibuka.');}
+  if(view==='labs'){learningLabs.open();el('labs-title').focus({preventScroll:true});document.title='Makmal Interaktif — GeoMath';}
+  else if(view==='projection'){projectionStudio.open(options.shape??(openedProjection?undefined:state.shape));openedProjection=true;el('projection-title')?.focus({preventScroll:true});document.title=(moduleAccess.language()==='en'?'Plans & Elevations':'Pelan & Dongakan')+' — GeoMath';}
+  else if(view==='calculation'){calculationWorkshop.open(options.shape??(openedCalculation?undefined:state.shape),options.context);openedCalculation=true;el('calculation-title')?.focus({preventScroll:true});document.title=(moduleAccess.language()==='en'?'Calculation Steps':'Semakan Langkah Pengiraan')+' — GeoMath';}
+  else if(view==='notes'){learningNotes.render(state.shape);notesRenderer.draw({shape:state.shape,mini:true});el(state.studyMode==='calculator'?'note-calculate-title':'study-title').focus({preventScroll:true});announce('Nota '+MODEL_DATA[state.shape].name.toLowerCase()+' dibuka.');}
   else {redrawSmallModels();el('model-title').focus({preventScroll:true});announce('Teroka 3D '+MODEL_DATA[state.shape].name.toLowerCase()+'.');}
 }
 const moduleAccess=new ModuleAccess({onTheme:()=>{redrawSmallModels();if(learningLabs.active)learningLabs.draw();if(state.learningView==='projection')projectionStudio.draw();},onFocus:()=>{redrawSmallModels();if(learningLabs.active)learningLabs.draw();if(state.learningView==='projection')projectionStudio.draw();const target=el(state.learningView==='labs'?'labs-canvas':state.learningView==='projection'?'projection-title':state.learningView==='calculation'?'calculation-title':'model-canvas');if(state.learningView!=='notes'&&target){target.focus({preventScroll:true});target.scrollIntoView({behavior:reduced.matches?'instant':'smooth',block:'center'});}},onContext:(records,changed)=>{
@@ -217,7 +248,7 @@ const moduleAccess=new ModuleAccess({onTheme:()=>{redrawSmallModels();if(learnin
  learningLabs.restoreProgress(records);
 }});
 const learningLabs=new LearningLabs({announce,prefersReduced:()=>reduced.matches,onProgress:r=>moduleAccess.progress(r),onActivity:()=>moduleAccess.stopSpeech(),onDescribe:text=>moduleAccess.describe(text)});
-const learningNotes=new LearningNotes({announce,prefersReduced:()=>reduced.matches,onExplore:mode=>{
+const learningNotes=new LearningNotes({announce,onCalculator:()=>switchLearningView('notes',{studyMode:'calculator'}),prefersReduced:()=>reduced.matches,onExplore:mode=>{
   switchLearningView('explore');
   if(mode==='net')beginAnimation(1);
   else if(mode==='views'){switchMode('views');selectView('top');}
@@ -227,6 +258,7 @@ const learningNotes=new LearningNotes({announce,prefersReduced:()=>reduced.match
 const projectionStudio=new ProjectionStudio({root:el('projection-panel'),announce,prefersReduced:()=>reduced.matches,getLanguage:()=>moduleAccess.language(),onDescribe:text=>moduleAccess.describe(text)});
 const calculationWorkshop=new CalculationWorkshop({root:el('calculation-panel'),announce,prefersReduced:()=>reduced.matches,getLanguage:()=>moduleAccess.language(),onDescribe:text=>moduleAccess.describe(text),onNotes:shape=>{if(MODEL_ORDER.includes(shape))selectShape(shape);switchLearningView('notes');}});
 el('learn-explore').addEventListener('click',()=>switchLearningView('explore'));el('learn-notes').addEventListener('click',()=>switchLearningView('notes'));
+el('learn-measures').addEventListener('click',()=>switchLearningView('notes',{studyMode:'calculator'}));
 el('learn-labs').addEventListener('click',()=>switchLearningView('labs'));
 el('learn-projection').addEventListener('click',()=>switchLearningView('projection'));
 el('learn-calculation').addEventListener('click',()=>switchLearningView('calculation'));
@@ -321,7 +353,7 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden){
   stopAnimation();state.pausedAnimation=saved;state.auto=false;state.camera=null;
   if(raf)cancelAnimationFrame(raf);raf=0;lastFrame=0;refreshControls();
 }else wake();});
-function redrawSmallModels(){for(const [shape,r] of navRenderers)r.draw({shape,yaw:.55,pitch:.35,mini:true});drawViews();wake();}
+function redrawSmallModels(){if(state.learningView==='notes')notesRenderer.draw({shape:state.shape,mini:true});for(const [shape,r] of navRenderers)r.draw({shape,yaw:.55,pitch:.35,mini:true});drawViews();wake();}
 if(typeof ResizeObserver!=='undefined'){const resize=new ResizeObserver(redrawSmallModels);resize.observe(el('shape-picker'));resize.observe(el('stage'));}else window.addEventListener('resize',redrawSmallModels);
 renderContent();redrawSmallModels();moduleAccess.init();moduleAccess.describe(MODEL_DATA[state.shape].intro+' '+MODEL_DATA[state.shape].net);wake();
 let lastHostSettings={};
