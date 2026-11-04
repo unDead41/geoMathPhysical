@@ -1,0 +1,77 @@
+{
+  "document_date": "2026-11-04",
+  "timezone": "Asia/Kuala_Lumpur",
+  "repository": "https://github.com/unDead41/geodecoder",
+  "base_sha": "391df985eea4fee15d9859e678068b1a3f613cba",
+  "firmware_sha": "25836eb1a6f24459aace8a3980ae880a13e3b488",
+  "concept_sha": "4d83561667cf74fbe5cd6144ce5e3e7f660a75cd",
+  "digital_version": "2.8.0",
+  "module_version": "1.6.0",
+  "doc_version": "1.0.0",
+  "branches": [
+    {
+      "name": "digitalized-classroom-crud",
+      "sha": "1f0dedca55fd8d1291f5ea5c0b2fc74c059d4324"
+    },
+    {
+      "name": "digitalized-core-backend-scaling",
+      "sha": "5904e4856c0fbab86224cd0a4f63ced77e707018"
+    },
+    {
+      "name": "digitalized-game-duel-ui-refresh",
+      "sha": "02f7614b0b28b7b867836bb2f83fbfc4437888cb"
+    },
+    {
+      "name": "digitalized-module-explore-ui-refresh",
+      "sha": "3ac761ce138c0286f144a74b16e25eed6906c1f7"
+    },
+    {
+      "name": "digitalized-module-labs-ui-refresh",
+      "sha": "dcb5ef6f6ae2a56d52ce0f7f99893d8050d043e2"
+    },
+    {
+      "name": "digitalized-module-studio-ui-refresh",
+      "sha": "0a1304652ff74b5e82aecdf416092fe57dda2131"
+    },
+    {
+      "name": "digitalized-utility-offline-sync",
+      "sha": "b1125588ade0c18168f2fd0116d3e9084dfdd3ed"
+    },
+    {
+      "name": "digitalized-ux-ui-upgrade",
+      "sha": "fc50b3ed51c14774f3f75e8098df3988f4c6a07f"
+    },
+    {
+      "name": "main",
+      "sha": "25836eb1a6f24459aace8a3980ae880a13e3b488"
+    },
+    {
+      "name": "main-digitalized",
+      "sha": "391df985eea4fee15d9859e678068b1a3f613cba"
+    },
+    {
+      "name": "ui/ux-redesign-concept",
+      "sha": "4d83561667cf74fbe5cd6144ce5e3e7f660a75cd"
+    }
+  ],
+  "comparisons": {
+    "offline": {
+      "status": "ahead",
+      "ahead_by": 1,
+      "behind_by": 0,
+      "merge_base": "391df985eea4fee15d9859e678068b1a3f613cba"
+    },
+    "crud": {
+      "status": "ahead",
+      "ahead_by": 1,
+      "behind_by": 0,
+      "merge_base": "391df985eea4fee15d9859e678068b1a3f613cba"
+    },
+    "scaling": {
+      "status": "ahead",
+      "ahead_by": 2,
+      "behind_by": 0,
+      "merge_base": "391df985eea4fee15d9859e678068b1a3f613cba"
+    }
+  }
+}

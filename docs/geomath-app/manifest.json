@@ -1,0 +1,306 @@
+{
+  "schema_version": 1,
+  "document_version": "1.0.0",
+  "created_date": "2026-11-04",
+  "timezone": "Asia/Kuala_Lumpur",
+  "status": "planning-pack-not-app-implementation",
+  "mockup_boards": 12,
+  "screen_count": 48,
+  "supplemental_states": 16,
+  "mockups": [
+    {
+      "board": 1,
+      "file": "assets/mockups/01-start-and-guide.png",
+      "source_image": "exec-cfb7efef-92a2-4b86-8569-5adfcc7f2405.png",
+      "screen_ids": [
+        "01",
+        "02",
+        "03",
+        "04"
+      ],
+      "sha256": "03a28f5dc6b3734e8d223ddb2dbe7b4dd372aec7e2314e621cecd45cb29e068b",
+      "bytes": 1789186
+    },
+    {
+      "board": 2,
+      "file": "assets/mockups/02-game-and-feedback.png",
+      "source_image": "exec-265ea7e2-37ce-4102-a710-043e07aec593.png",
+      "screen_ids": [
+        "05",
+        "06",
+        "07",
+        "08"
+      ],
+      "sha256": "6c770abbf3db6cda27830bec701165542ca49187b5e190771dd48bede5ad821a",
+      "bytes": 1711865
+    },
+    {
+      "board": 3,
+      "file": "assets/mockups/03-scoreboard-and-duel.png",
+      "source_image": "exec-402a78b1-acb9-477c-914a-0e62bd413d97.png",
+      "screen_ids": [
+        "09",
+        "10",
+        "11",
+        "12"
+      ],
+      "sha256": "bcee65bd70be6eb87cf997e433137e24dd8872f271519c8a812879bf4bc65fed",
+      "bytes": 1824683
+    },
+    {
+      "board": 4,
+      "file": "assets/mockups/04-account-and-duel-result.png",
+      "source_image": "exec-06549be8-b232-4604-a348-20cbaa7572e4.png",
+      "screen_ids": [
+        "13",
+        "14",
+        "15",
+        "16"
+      ],
+      "sha256": "e472f72a19b413f266d4e51d815ec08bba59e03bb4f5416caf16c4f215de608a",
+      "bytes": 1633207
+    },
+    {
+      "board": 5,
+      "file": "assets/mockups/05-teacher-workspace.png",
+      "source_image": "exec-2d2dd98a-99fc-4f14-b015-b2d8ce6259b2.png",
+      "screen_ids": [
+        "17",
+        "18",
+        "19",
+        "20"
+      ],
+      "sha256": "612812eab3e21ca4a1e17604873ad3bb01f481599b36fd107eb8c8e86050da81",
+      "bytes": 1815250
+    },
+    {
+      "board": 6,
+      "file": "assets/mockups/06-student-and-profile.png",
+      "source_image": "exec-3281bf79-213a-4e0b-9ba6-5672a39adbc8.png",
+      "screen_ids": [
+        "21",
+        "22",
+        "23",
+        "24"
+      ],
+      "sha256": "dd91cecaa634dfac624e259318d1aca72953ae4601f52ed6f5847668df92d7b9",
+      "bytes": 1846803
+    },
+    {
+      "board": 7,
+      "file": "assets/mockups/07-explore-notes-calculator.png",
+      "source_image": "exec-9259ed31-d9b0-4863-b9e7-8b913ae6cab3.png",
+      "screen_ids": [
+        "25",
+        "26",
+        "27",
+        "28"
+      ],
+      "sha256": "a0f15c1c59c9ff3bc84b2c5b67671f0d8cd5991027bc179cd65be95d6a8546fd",
+      "bytes": 1797105
+    },
+    {
+      "board": 8,
+      "file": "assets/mockups/08-interactive-labs.png",
+      "source_image": "exec-13a001c6-6fa2-4b2e-b06d-ca065f508010.png",
+      "screen_ids": [
+        "29",
+        "30",
+        "31",
+        "32"
+      ],
+      "sha256": "c42e289da1d7e71986def2587bdb3b6dbb066b8998b6ac556718e9706ed1d7bd",
+      "bytes": 1885707
+    },
+    {
+      "board": 9,
+      "file": "assets/mockups/09-studio-and-progress.png",
+      "source_image": "exec-23c95cfe-c6bf-44f2-9314-9895edc7f323.png",
+      "screen_ids": [
+        "33",
+        "34",
+        "35",
+        "36"
+      ],
+      "sha256": "c07e15c7830c5948b2080b60cec30ef6a6695cfbf4f5ee4e2385069c31be5c18",
+      "bytes": 1740491
+    },
+    {
+      "board": 10,
+      "file": "assets/mockups/10-settings-and-support.png",
+      "source_image": "exec-02113db2-9d2d-4ff7-bb20-678b1b0291b5.png",
+      "screen_ids": [
+        "37",
+        "38",
+        "39",
+        "40"
+      ],
+      "sha256": "9c8db4678d038a4e9fc3605507b22082b4b9c0e8216343076aabce02b71b1257",
+      "bytes": 1827737
+    },
+    {
+      "board": 11,
+      "file": "assets/mockups/11-hub-and-class-management.png",
+      "source_image": "exec-2344d098-6428-4f0c-bdd9-45cfca439bde.png",
+      "screen_ids": [
+        "41",
+        "42",
+        "43",
+        "44"
+      ],
+      "sha256": "a8c322ad2199ce91cbdcd9e7f73d10680d7341c51e5b646abc029c389248029f",
+      "bytes": 1751677
+    },
+    {
+      "board": 12,
+      "file": "assets/mockups/12-auth-sessions-connection.png",
+      "source_image": "exec-8380f4f7-f9f0-4692-a83e-fbb4c5ad9457.png",
+      "screen_ids": [
+        "45",
+        "46",
+        "47",
+        "48"
+      ],
+      "sha256": "30ed039d173099a37a320ad5c44217cec88fea116c634b10316ec9c2a1d791fa",
+      "bytes": 1799390
+    }
+  ],
+  "files": {
+    "AGENTS.md": {
+      "sha256": "688392420ab7b7888e623005bbae39c78ad5cb796c799d6acf9094f07a92758b",
+      "bytes": 3539
+    },
+    "ARCHITECTURE.md": {
+      "sha256": "f9c5a304d6c19d20841d8b85b56e41a5029c5e1e6edb6bf0bfa1b67330791f6f",
+      "bytes": 6718
+    },
+    "CHANGELOG.md": {
+      "sha256": "2e40bdb867192f62dd351ca8d956d4680f241e4955472c3917f0c31681dc4e35",
+      "bytes": 626
+    },
+    "DATA_BACKEND_CONTRACT.md": {
+      "sha256": "867d2a68b7b6814998bb5162deeffe1b81ee6790b29dafd67551973756bac86b",
+      "bytes": 7297
+    },
+    "DESIGN_SYSTEM.md": {
+      "sha256": "3f402cabab57da32a2da900ef94d59fc12f2b88f5174b84762cd67e0908bd233",
+      "bytes": 5020
+    },
+    "HANDOFF_TEMPLATE.md": {
+      "sha256": "6c7a62631aab98c441c23527b2beaed5191b91c4509f24291a70edac6004d744",
+      "bytes": 1652
+    },
+    "OFFLINE_SYNC.md": {
+      "sha256": "ab4eff2ad569fc1f49cec21e842d07ebeed6a5aa8fdfd0acd08ec58bb5b13554",
+      "bytes": 5508
+    },
+    "README.md": {
+      "sha256": "8dcefc8802113b749e2c4e09b20117f8de8c413105708e686784942d0160164b",
+      "bytes": 5526
+    },
+    "RESUME_PROMPT.md": {
+      "sha256": "9c807222079800ea22dd81fbced5979f9960f12c6aefcf04b8302520ffb676fb",
+      "bytes": 3034
+    },
+    "SCREEN_CATALOG.md": {
+      "sha256": "45e8691c689f048f9e59415e5e703d9d1ed094c4c4c8d209bd5840329d2c0bd4",
+      "bytes": 7507
+    },
+    "SOR.md": {
+      "sha256": "8e36d6633c3cf942ece7f00b66979fba8d2b56dbd5253b2c29def6ec0e5ad127",
+      "bytes": 10348
+    },
+    "SOURCES_AND_STATUS.md": {
+      "sha256": "535efb24692b012603f3d7b216c585de27cd7843abb34f5515344493025099f6",
+      "bytes": 10220
+    },
+    "TEST_PLAN.md": {
+      "sha256": "2842de18bf3074239a29c29a7cec166a9740044395ee5c12e572a79fcb345da1",
+      "bytes": 5515
+    },
+    "UX_CONTRACT.md": {
+      "sha256": "af86c5e4555a65f3ddb870dba31419ef109906cf7552663f8bb53cdfca6b4ac6",
+      "bytes": 5546
+    },
+    "VALIDATION.md": {
+      "sha256": "224ac34f07db398738d7e106d5bc1baa796fba3719d1772065363fa59dabcc19",
+      "bytes": 1188
+    },
+    "VERSION": {
+      "sha256": "59854984853104df5c353e2f681a15fc7924742f9a2e468c29af248dce45ce03",
+      "bytes": 6
+    },
+    "assets/GeoMath_Aliran_UIUX_App.png": {
+      "sha256": "e429f73a286e8b49e21b7cf0a642c79e624fe6a13dbfebc8c9b1ec76023d3e6b",
+      "bytes": 433731
+    },
+    "assets/mockups/01-start-and-guide.png": {
+      "sha256": "03a28f5dc6b3734e8d223ddb2dbe7b4dd372aec7e2314e621cecd45cb29e068b",
+      "bytes": 1789186
+    },
+    "assets/mockups/02-game-and-feedback.png": {
+      "sha256": "6c770abbf3db6cda27830bec701165542ca49187b5e190771dd48bede5ad821a",
+      "bytes": 1711865
+    },
+    "assets/mockups/03-scoreboard-and-duel.png": {
+      "sha256": "bcee65bd70be6eb87cf997e433137e24dd8872f271519c8a812879bf4bc65fed",
+      "bytes": 1824683
+    },
+    "assets/mockups/04-account-and-duel-result.png": {
+      "sha256": "e472f72a19b413f266d4e51d815ec08bba59e03bb4f5416caf16c4f215de608a",
+      "bytes": 1633207
+    },
+    "assets/mockups/05-teacher-workspace.png": {
+      "sha256": "612812eab3e21ca4a1e17604873ad3bb01f481599b36fd107eb8c8e86050da81",
+      "bytes": 1815250
+    },
+    "assets/mockups/06-student-and-profile.png": {
+      "sha256": "dd91cecaa634dfac624e259318d1aca72953ae4601f52ed6f5847668df92d7b9",
+      "bytes": 1846803
+    },
+    "assets/mockups/07-explore-notes-calculator.png": {
+      "sha256": "a0f15c1c59c9ff3bc84b2c5b67671f0d8cd5991027bc179cd65be95d6a8546fd",
+      "bytes": 1797105
+    },
+    "assets/mockups/08-interactive-labs.png": {
+      "sha256": "c42e289da1d7e71986def2587bdb3b6dbb066b8998b6ac556718e9706ed1d7bd",
+      "bytes": 1885707
+    },
+    "assets/mockups/09-studio-and-progress.png": {
+      "sha256": "c07e15c7830c5948b2080b60cec30ef6a6695cfbf4f5ee4e2385069c31be5c18",
+      "bytes": 1740491
+    },
+    "assets/mockups/10-settings-and-support.png": {
+      "sha256": "9c8db4678d038a4e9fc3605507b22082b4b9c0e8216343076aabce02b71b1257",
+      "bytes": 1827737
+    },
+    "assets/mockups/11-hub-and-class-management.png": {
+      "sha256": "a8c322ad2199ce91cbdcd9e7f73d10680d7341c51e5b646abc029c389248029f",
+      "bytes": 1751677
+    },
+    "assets/mockups/12-auth-sessions-connection.png": {
+      "sha256": "30ed039d173099a37a320ad5c44217cec88fea116c634b10316ec9c2a1d791fa",
+      "bytes": 1799390
+    },
+    "docs/superpowers/plans/2026-11-04-geomath-flutter.md": {
+      "sha256": "0800650729c37d6e5023556fa25e5285995e90190cb5a17b855b057e98a7d993",
+      "bytes": 17728
+    },
+    "face_colors.json": {
+      "sha256": "709e2baca7a85d890abb93c2bb45a22c0e2891735b2dc48a70f99acbee737740",
+      "bytes": 864
+    },
+    "screen_catalog.json": {
+      "sha256": "0d6025168ce076730eeab67257db9ec9f9b84bf831cd1f71643f935a6bc744b0",
+      "bytes": 15803
+    },
+    "source_baseline.json": {
+      "sha256": "396672e10e7fc2c22751c03644f881d69a801b214d2fa688d8ff94e28775769b",
+      "bytes": 2153
+    },
+    "tools/validate_docs.py": {
+      "sha256": "44202acc48bb8bf6819a88d696e7d9441d3fda1b4d953dc0d8d9f2958d09e951",
+      "bytes": 3008
+    }
+  }
+}

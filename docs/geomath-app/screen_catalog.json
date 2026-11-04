@@ -1,0 +1,710 @@
+{
+  "schema_version": 1,
+  "status": "proposed-app-routes-not-implemented",
+  "screens": [
+    {
+      "id": "01",
+      "title": "Utama",
+      "kind": "page",
+      "proposed_route": "/",
+      "actor": "Semua",
+      "connectivity": "Offline",
+      "requirements": [
+        "U01"
+      ],
+      "board": 1
+    },
+    {
+      "id": "02",
+      "title": "Pilih permainan",
+      "kind": "page",
+      "proposed_route": "/play/setup",
+      "actor": "Semua",
+      "connectivity": "Offline",
+      "requirements": [
+        "G01",
+        "G02"
+      ],
+      "board": 1
+    },
+    {
+      "id": "03",
+      "title": "Sambung permainan",
+      "kind": "page",
+      "proposed_route": "/play/resume",
+      "actor": "Owner slot",
+      "connectivity": "Offline",
+      "requirements": [
+        "G05"
+      ],
+      "board": 1
+    },
+    {
+      "id": "04",
+      "title": "Cara bermain",
+      "kind": "page",
+      "proposed_route": "/help/how-to-play",
+      "actor": "Semua",
+      "connectivity": "Offline",
+      "requirements": [
+        "G03",
+        "U04"
+      ],
+      "board": 1
+    },
+    {
+      "id": "05",
+      "title": "Kuiz 10",
+      "kind": "page",
+      "proposed_route": "/solo/quiz/:attemptId",
+      "actor": "Semua",
+      "connectivity": "Offline",
+      "requirements": [
+        "G01",
+        "G02",
+        "G03",
+        "G04"
+      ],
+      "board": 2
+    },
+    {
+      "id": "06",
+      "title": "Latihan 15",
+      "kind": "page",
+      "proposed_route": "/solo/practice/:attemptId",
+      "actor": "Semua",
+      "connectivity": "Offline",
+      "requirements": [
+        "G01",
+        "G02",
+        "G03",
+        "G04"
+      ],
+      "board": 2
+    },
+    {
+      "id": "07",
+      "title": "Semakan jawapan",
+      "kind": "state",
+      "proposed_route": "/solo/:attemptId/review",
+      "actor": "Owner attempt",
+      "connectivity": "Offline",
+      "requirements": [
+        "G03",
+        "G04"
+      ],
+      "board": 2
+    },
+    {
+      "id": "08",
+      "title": "Keputusan dan analisis",
+      "kind": "page",
+      "proposed_route": "/solo/:attemptId/result",
+      "actor": "Owner attempt",
+      "connectivity": "Offline",
+      "requirements": [
+        "G06"
+      ],
+      "board": 2
+    },
+    {
+      "id": "09",
+      "title": "Papan skor kuiz setempat",
+      "kind": "page",
+      "proposed_route": "/solo/scores",
+      "actor": "Owner slot",
+      "connectivity": "Offline",
+      "requirements": [
+        "G06"
+      ],
+      "board": 3
+    },
+    {
+      "id": "10",
+      "title": "Cipta/sertai Duel",
+      "kind": "page",
+      "proposed_route": "/duel",
+      "actor": "Pemain Duel",
+      "connectivity": "Online",
+      "requirements": [
+        "D01"
+      ],
+      "board": 3
+    },
+    {
+      "id": "11",
+      "title": "Lobi Duel",
+      "kind": "page",
+      "proposed_route": "/duel/:roomId/lobby",
+      "actor": "Capability pemain",
+      "connectivity": "Online",
+      "requirements": [
+        "D01",
+        "D02"
+      ],
+      "board": 3
+    },
+    {
+      "id": "12",
+      "title": "Duel berlangsung",
+      "kind": "page",
+      "proposed_route": "/duel/:roomId/match",
+      "actor": "Capability pemain",
+      "connectivity": "Online",
+      "requirements": [
+        "D01",
+        "D02",
+        "D03"
+      ],
+      "board": 3
+    },
+    {
+      "id": "13",
+      "title": "Keputusan Duel",
+      "kind": "page",
+      "proposed_route": "/duel/:roomId/result",
+      "actor": "Capability pemain",
+      "connectivity": "Online/resync",
+      "requirements": [
+        "D03"
+      ],
+      "board": 4
+    },
+    {
+      "id": "14",
+      "title": "Log masuk",
+      "kind": "page",
+      "proposed_route": "/auth/login",
+      "actor": "Belum login",
+      "connectivity": "Online",
+      "requirements": [
+        "C01"
+      ],
+      "board": 4
+    },
+    {
+      "id": "15",
+      "title": "Daftar akaun",
+      "kind": "page",
+      "proposed_route": "/auth/signup",
+      "actor": "Belum login",
+      "connectivity": "Online",
+      "requirements": [
+        "C01"
+      ],
+      "board": 4
+    },
+    {
+      "id": "16",
+      "title": "Pemulihan akaun",
+      "kind": "page",
+      "proposed_route": "/auth/recover",
+      "actor": "Pemohon pemulihan",
+      "connectivity": "Online",
+      "requirements": [
+        "C01"
+      ],
+      "board": 4
+    },
+    {
+      "id": "17",
+      "title": "Dashboard guru",
+      "kind": "page",
+      "proposed_route": "/classes/teacher",
+      "actor": "Guru",
+      "connectivity": "Online; cache berlabel",
+      "requirements": [
+        "C02",
+        "C03"
+      ],
+      "board": 5
+    },
+    {
+      "id": "18",
+      "title": "Ahli dan jemputan kelas",
+      "kind": "page",
+      "proposed_route": "/classes/:classId/members",
+      "actor": "Guru pemilik",
+      "connectivity": "Online",
+      "requirements": [
+        "C02",
+        "C03"
+      ],
+      "board": 5
+    },
+    {
+      "id": "19",
+      "title": "Pantau bilik",
+      "kind": "page",
+      "proposed_route": "/classes/:classId/rooms/:roomId/monitor",
+      "actor": "Guru pemilik",
+      "connectivity": "Online",
+      "requirements": [
+        "C02",
+        "C04"
+      ],
+      "board": 5
+    },
+    {
+      "id": "20",
+      "title": "Keputusan bilik",
+      "kind": "page",
+      "proposed_route": "/classes/:classId/rooms/:roomId/results",
+      "actor": "Guru pemilik",
+      "connectivity": "Online; cache berlabel",
+      "requirements": [
+        "C02",
+        "C04"
+      ],
+      "board": 5
+    },
+    {
+      "id": "21",
+      "title": "Dashboard pelajar",
+      "kind": "page",
+      "proposed_route": "/classes/student",
+      "actor": "Pelajar",
+      "connectivity": "Online; cache berlabel",
+      "requirements": [
+        "C02",
+        "C03"
+      ],
+      "board": 6
+    },
+    {
+      "id": "22",
+      "title": "Bilik pelajar",
+      "kind": "page",
+      "proposed_route": "/classes/:classId/rooms/:roomId",
+      "actor": "Ahli kelas semasa",
+      "connectivity": "Online",
+      "requirements": [
+        "C02",
+        "C04"
+      ],
+      "board": 6
+    },
+    {
+      "id": "23",
+      "title": "Profil saya",
+      "kind": "page",
+      "proposed_route": "/account/profile",
+      "actor": "Akaun sah",
+      "connectivity": "Online untuk simpan",
+      "requirements": [
+        "C05"
+      ],
+      "board": 6
+    },
+    {
+      "id": "24",
+      "title": "Kata laluan dan keselamatan",
+      "kind": "page",
+      "proposed_route": "/account/security",
+      "actor": "Akaun sah",
+      "connectivity": "Online",
+      "requirements": [
+        "C01",
+        "C05"
+      ],
+      "board": 6
+    },
+    {
+      "id": "25",
+      "title": "Teroka 3D",
+      "kind": "page",
+      "proposed_route": "/learn/explore",
+      "actor": "Semua",
+      "connectivity": "Offline",
+      "requirements": [
+        "L01",
+        "L02",
+        "U02"
+      ],
+      "board": 7
+    },
+    {
+      "id": "26",
+      "title": "Pandangan 2D",
+      "kind": "page",
+      "proposed_route": "/learn/views",
+      "actor": "Semua",
+      "connectivity": "Offline",
+      "requirements": [
+        "L03",
+        "U02"
+      ],
+      "board": 7
+    },
+    {
+      "id": "27",
+      "title": "Nota pembelajaran",
+      "kind": "page",
+      "proposed_route": "/learn/notes/:shapeId",
+      "actor": "Semua",
+      "connectivity": "Offline",
+      "requirements": [
+        "L04"
+      ],
+      "board": 7
+    },
+    {
+      "id": "28",
+      "title": "Kalkulator ukuran",
+      "kind": "page",
+      "proposed_route": "/learn/calculator/:shapeId",
+      "actor": "Semua",
+      "connectivity": "Offline",
+      "requirements": [
+        "L04"
+      ],
+      "board": 7
+    },
+    {
+      "id": "29",
+      "title": "Bina bentangan",
+      "kind": "page",
+      "proposed_route": "/learn/labs/net",
+      "actor": "Semua",
+      "connectivity": "Offline",
+      "requirements": [
+        "L05",
+        "L08"
+      ],
+      "board": 8
+    },
+    {
+      "id": "30",
+      "title": "Makmal isi padu",
+      "kind": "page",
+      "proposed_route": "/learn/labs/volume",
+      "actor": "Semua",
+      "connectivity": "Offline",
+      "requirements": [
+        "L05",
+        "L08"
+      ],
+      "board": 8
+    },
+    {
+      "id": "31",
+      "title": "Luas permukaan dan rumus",
+      "kind": "page",
+      "proposed_route": "/learn/labs/area",
+      "actor": "Semua",
+      "connectivity": "Offline",
+      "requirements": [
+        "L05",
+        "L08"
+      ],
+      "board": 8
+    },
+    {
+      "id": "32",
+      "title": "Bongkah gabungan",
+      "kind": "page",
+      "proposed_route": "/learn/labs/composite",
+      "actor": "Semua",
+      "connectivity": "Offline",
+      "requirements": [
+        "L05",
+        "L08"
+      ],
+      "board": 8
+    },
+    {
+      "id": "33",
+      "title": "Hab makmal",
+      "kind": "page",
+      "proposed_route": "/learn/labs",
+      "actor": "Semua",
+      "connectivity": "Offline",
+      "requirements": [
+        "L05"
+      ],
+      "board": 9
+    },
+    {
+      "id": "34",
+      "title": "Pelan dan Dongakan",
+      "kind": "page",
+      "proposed_route": "/learn/projection",
+      "actor": "Semua",
+      "connectivity": "Offline",
+      "requirements": [
+        "L06"
+      ],
+      "board": 9
+    },
+    {
+      "id": "35",
+      "title": "Semakan langkah pengiraan",
+      "kind": "page",
+      "proposed_route": "/learn/calculation",
+      "actor": "Semua",
+      "connectivity": "Offline",
+      "requirements": [
+        "L07"
+      ],
+      "board": 9
+    },
+    {
+      "id": "36",
+      "title": "Rekod latihan kendiri",
+      "kind": "page",
+      "proposed_route": "/learn/records",
+      "actor": "Owner rekod",
+      "connectivity": "Local; sync berakaun",
+      "requirements": [
+        "L08",
+        "O03"
+      ],
+      "board": 9
+    },
+    {
+      "id": "37",
+      "title": "Tetapan penggunaan",
+      "kind": "page",
+      "proposed_route": "/settings",
+      "actor": "Semua",
+      "connectivity": "Offline",
+      "requirements": [
+        "U03"
+      ],
+      "board": 10
+    },
+    {
+      "id": "38",
+      "title": "Tema gelap halaman utama",
+      "kind": "variant",
+      "proposed_route": "/",
+      "actor": "Semua",
+      "connectivity": "Offline",
+      "requirements": [
+        "U03"
+      ],
+      "board": 10
+    },
+    {
+      "id": "39",
+      "title": "Pusat bantuan",
+      "kind": "page",
+      "proposed_route": "/help",
+      "actor": "Semua",
+      "connectivity": "Offline",
+      "requirements": [
+        "U04"
+      ],
+      "board": 10
+    },
+    {
+      "id": "40",
+      "title": "Lapor masalah dan pratonton",
+      "kind": "page+sheet",
+      "proposed_route": "/help/report",
+      "actor": "Semua",
+      "connectivity": "Offline",
+      "requirements": [
+        "U04"
+      ],
+      "board": 10
+    },
+    {
+      "id": "41",
+      "title": "Hab Belajar",
+      "kind": "page",
+      "proposed_route": "/learn",
+      "actor": "Semua",
+      "connectivity": "Offline",
+      "requirements": [
+        "L01",
+        "U01"
+      ],
+      "board": 11
+    },
+    {
+      "id": "42",
+      "title": "Cipta kelas",
+      "kind": "form",
+      "proposed_route": "/classes/new",
+      "actor": "Guru",
+      "connectivity": "Online",
+      "requirements": [
+        "C02"
+      ],
+      "board": 11
+    },
+    {
+      "id": "43",
+      "title": "Cipta bilik",
+      "kind": "form",
+      "proposed_route": "/classes/:classId/rooms/new",
+      "actor": "Guru pemilik",
+      "connectivity": "Online",
+      "requirements": [
+        "C02"
+      ],
+      "board": 11
+    },
+    {
+      "id": "44",
+      "title": "Sertai kelas/bilik melalui PIN",
+      "kind": "form",
+      "proposed_route": "/classes/join",
+      "actor": "Pelajar",
+      "connectivity": "Online",
+      "requirements": [
+        "C02"
+      ],
+      "board": 11
+    },
+    {
+      "id": "45",
+      "title": "Sahkan e-mel",
+      "kind": "state",
+      "proposed_route": "/auth/verify",
+      "actor": "Akaun belum disahkan",
+      "connectivity": "Online untuk sahkan",
+      "requirements": [
+        "C01"
+      ],
+      "board": 12
+    },
+    {
+      "id": "46",
+      "title": "Kata laluan baharu",
+      "kind": "form",
+      "proposed_route": "/auth/reset",
+      "actor": "Recovery session sah",
+      "connectivity": "Online",
+      "requirements": [
+        "C01"
+      ],
+      "board": 12
+    },
+    {
+      "id": "47",
+      "title": "Sesi aktif",
+      "kind": "page",
+      "proposed_route": "/account/sessions",
+      "actor": "Akaun sah",
+      "connectivity": "Online",
+      "requirements": [
+        "C05"
+      ],
+      "board": 12
+    },
+    {
+      "id": "48",
+      "title": "Sambungan Duel terganggu",
+      "kind": "state",
+      "proposed_route": "/duel/:roomId/match",
+      "actor": "Capability pemain",
+      "connectivity": "Resync; clock terus",
+      "requirements": [
+        "D02",
+        "D03",
+        "N01"
+      ],
+      "board": 12
+    }
+  ],
+  "supplemental_states": [
+    {
+      "id": "EX01",
+      "title": "Sunting nama kelas",
+      "requirement": "C03",
+      "behavior": "Nama/draf/expected_revision; kekalkan input pada gagal"
+    },
+    {
+      "id": "EX02",
+      "title": "Sunting nama bilik",
+      "requirement": "C03",
+      "behavior": "Nama berubah tanpa mengubah status atau markah"
+    },
+    {
+      "id": "EX03",
+      "title": "Pengesahan arkib",
+      "requirement": "C03",
+      "behavior": "Nama skop, kesan PIN dan blok semasa playing"
+    },
+    {
+      "id": "EX04",
+      "title": "Senarai arkib / restore",
+      "requirement": "C03",
+      "behavior": "Restore tidak membuka closed room atau kod lama"
+    },
+    {
+      "id": "EX05",
+      "title": "Pengesahan padam rekod kosong",
+      "requirement": "C03",
+      "behavior": "Semak server; unknown outcome refresh sebelum retry"
+    },
+    {
+      "id": "EX06",
+      "title": "Keluarkan ahli kelas",
+      "requirement": "C03",
+      "behavior": "Sejarah dipelihara; akses semasa ditarik"
+    },
+    {
+      "id": "EX07",
+      "title": "Batal/tolak jemputan",
+      "requirement": "C03",
+      "behavior": "UUID issuance baharu tidak dipengaruhi dialog lama"
+    },
+    {
+      "id": "EX08",
+      "title": "Conflict revision / refresh",
+      "requirement": "C03",
+      "behavior": "Tunjuk nama terkini sambil kekalkan draf"
+    },
+    {
+      "id": "EX09",
+      "title": "Senarai pending sync",
+      "requirement": "O04",
+      "behavior": "Bilangan sebenar, retry dan status setiap kumpulan"
+    },
+    {
+      "id": "EX10",
+      "title": "Login semula untuk sync",
+      "requirement": "O05",
+      "behavior": "Owner sama; jangan hantar queue menggunakan akaun lain"
+    },
+    {
+      "id": "EX11",
+      "title": "Storan gagal/penuh",
+      "requirement": "O02",
+      "behavior": "Belum disimpan; tiada silent eviction atau janji durable"
+    },
+    {
+      "id": "EX12",
+      "title": "Keluar Duel / forfeit",
+      "requirement": "D02",
+      "behavior": "Pengesahan jelas; clock tetap terus berjalan"
+    },
+    {
+      "id": "EX13",
+      "title": "Draf belum disimpan",
+      "requirement": "C05",
+      "behavior": "Simpan/discard/stay; account switch mengikut kontrak"
+    },
+    {
+      "id": "EX14",
+      "title": "Pemulihan akaun legacy",
+      "requirement": "C01",
+      "behavior": "Kod lama hanya melalui aliran source; bukan OTP baharu"
+    },
+    {
+      "id": "EX15",
+      "title": "Cache read-only / akses ditarik",
+      "requirement": "N01",
+      "behavior": "Label stale; denial membersihkan data/subscription"
+    },
+    {
+      "id": "EX16",
+      "title": "Backend capability belum tersedia",
+      "requirement": "N01",
+      "behavior": "Tiada kawalan mati; pending disimpan jika sync belum dipasang"
+    }
+  ]
+}

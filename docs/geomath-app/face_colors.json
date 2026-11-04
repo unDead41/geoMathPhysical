@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "status": "requested-design-for-future-app-not-existing-runtime-palette",
+  "scope": [
+    "cube",
+    "cuboid"
+  ],
+  "faces": [
+    {
+      "id": 0,
+      "semantic": "front",
+      "ms": "Depan",
+      "hex": "#4C8DFF"
+    },
+    {
+      "id": 1,
+      "semantic": "right",
+      "ms": "Kanan",
+      "hex": "#F69B45"
+    },
+    {
+      "id": 2,
+      "semantic": "back",
+      "ms": "Belakang",
+      "hex": "#E9799B"
+    },
+    {
+      "id": 3,
+      "semantic": "left",
+      "ms": "Kiri",
+      "hex": "#42B883"
+    },
+    {
+      "id": 4,
+      "semantic": "top",
+      "ms": "Atas",
+      "hex": "#F4C95D"
+    },
+    {
+      "id": 5,
+      "semantic": "bottom",
+      "ms": "Bawah",
+      "hex": "#9B7EDC"
+    }
+  ],
+  "rule": "bind color to stable face ID; never camera orientation; no fictitious six faces on curved shapes"
+}
