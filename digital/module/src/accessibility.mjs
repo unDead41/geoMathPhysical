@@ -1,5 +1,13 @@
 import {acceptModuleContext,GUIDED_KINDS} from './guided.mjs';
 import {uiNode,uiIcon} from './ui.mjs';
+import {ModelRenderer} from './renderer.mjs';
+import {unitCubeMesh,compositionMesh} from './lab-geometry.mjs';
+import {presetNetMesh} from './preset-nets.mjs';
+// Static record illustrations use the same canonical scenes as the lab hub.
+function moduleRecordScene(activity){
+ const scene=activity==='net'?{mesh:presetNetMesh('cube',0),yaw:0,pitch:.12}:activity==='volume'?{mesh:unitCubeMesh({p:3,l:2,t:2},8)}:activity==='area'?{shape:'pyramid'}:{mesh:compositionMesh('roof',{a:3,t:2},.5)};
+ return {shape:'lab',mini:true,...scene};
+}
 /** Optional parent bridge. Offline runtime has no browser persistence. */
 export class ModuleAccess{
  constructor({onTheme,onContext,onFocus}){Object.assign(this,{onTheme,onContext,onFocus});this.session=null;this.records=[];this.theme='light';this.focus=false;this.embedded=Boolean(window.parent&&window.parent!==window);this.transcript='';}
@@ -38,16 +46,20 @@ export class ModuleAccess{
     cached.row.setAttribute('data-completed',String(done));cached.copy.children[0].textContent=names[activity];cached.copy.children[1].textContent=descriptions[activity];cached.stage.textContent=done?(en?'Complete':'Selesai'):record?stages[record.stage]:(en?'Not recorded':'Belum direkod');cached.stage.setAttribute('data-completed',String(done));cached.action.textContent=done?(en?'Revisit':'Ulang aktiviti'):(en?'Continue':'Sambung');cached.action.setAttribute('aria-label',(done?(en?'Revisit ':'Ulang '):(en?'Continue ':'Sambung '))+names[activity]);
     cached.reflection.hidden=!record;cached.reflection.children[0].textContent=en?'View my reflection':'Lihat refleksi saya';for(const [index,key] of ['prediction','result','explanation'].entries()){cached.list.children[index].children[0].textContent=(en?['Prediction','Observation','My explanation']:['Ramalan','Pemerhatian','Penerangan saya'])[index];cached.list.children[index].children[1].textContent=record?.[key]||(en?'Not recorded yet':'Belum direkod');}return cached.row;
    }
-   const row=uiNode('article',{class:'module-record','data-completed':String(done)}),icon=uiNode('div',{class:'module-record-icon','aria-hidden':'true'});icon.append(uiIcon(icons[activity]));
+   const row=uiNode('article',{class:'module-record','data-completed':String(done)}),icon=uiNode('div',{class:'module-record-icon','aria-hidden':'true'}),art=uiNode('canvas',{class:'module-record-art','aria-hidden':'true'}),artRenderer=new ModelRenderer(art);
+   icon.append(artRenderer.ctx?art:uiIcon(icons[activity]));
+   const drawArt=()=>artRenderer.draw(moduleRecordScene(activity));let artResize=null;
+   if(typeof ResizeObserver!=='undefined'){artResize=new ResizeObserver(drawArt);artResize.observe(art);}
    const copy=uiNode('div',{class:'module-record-copy'});copy.append(uiNode('h3',{},names[activity]),uiNode('p',{},descriptions[activity]));
    const stage=uiNode('span',{id:'module-record-stage-'+activity,class:'module-record-stage','data-completed':String(done)},done?(en?'Complete':'Selesai'):record?stages[record.stage]:(en?'Not recorded':'Belum direkod'));
    const action=uiNode('button',{id:'module-record-action-'+activity,class:'button primary',type:'button','aria-label':(done?(en?'Revisit ':'Ulang '):(en?'Continue ':'Sambung '))+names[activity]},done?(en?'Revisit':'Ulang aktiviti'):(en?'Continue':'Sambung'));
    action.addEventListener('click',()=>{this.get('learn-labs').click();this.get('lab-'+activity).click();this.get('labs-title').focus({preventScroll:true});this.get('labs-title').scrollIntoView({behavior:'instant',block:'start'});});
    row.append(icon,copy,stage,action);
-   const reflection=uiNode('details',{class:'module-record-reflection'});reflection.append(uiNode('summary',{},en?'View my reflection':'Lihat refleksi saya'));const list=uiNode('dl');for(const [key,label] of [['prediction',en?'Prediction':'Ramalan'],['result',en?'Observation':'Pemerhatian'],['explanation',en?'My explanation':'Penerangan saya']]){const field=uiNode('div');field.append(uiNode('dt',{},label),uiNode('dd',{},record?.[key]||(en?'Not recorded yet':'Belum direkod')));list.append(field);}reflection.append(list);reflection.hidden=!record;row.append(reflection);this.recordRows.set(activity,{row,copy,stage,action,reflection,list});
+   const reflection=uiNode('details',{class:'module-record-reflection'});reflection.append(uiNode('summary',{},en?'View my reflection':'Lihat refleksi saya'));const list=uiNode('dl');for(const [key,label] of [['prediction',en?'Prediction':'Ramalan'],['result',en?'Observation':'Pemerhatian'],['explanation',en?'My explanation':'Penerangan saya']]){const field=uiNode('div');field.append(uiNode('dt',{},label),uiNode('dd',{},record?.[key]||(en?'Not recorded yet':'Belum direkod')));list.append(field);}reflection.append(list);reflection.hidden=!record;row.append(reflection);this.recordRows.set(activity,{row,copy,stage,action,reflection,list,drawArt,artResize});
    return row;
   });
   if(!this.recordsMounted){this.get('module-summary').replaceChildren(...rows);this.recordsMounted=true;}
+  for(const view of this.recordRows.values())view.drawArt?.();
  }
  describe(text){if(this.transcript===text)return;this.stopSpeech();this.transcript=text;this.get('speech-transcript').textContent=text;}
  language(){return window.__geodecoderModuleHost?.language==='en'?'en':'ms';}

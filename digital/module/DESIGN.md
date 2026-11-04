@@ -260,3 +260,12 @@ Undo and retry remain separate from camera reset. Dark values share the canonica
 src/design-system.mjs source and generated CSS with light tokens. Focus expands
 the real model and keeps control labels visible. The optional speech area always
 retains its transcript and reports local voice availability for the active language.
+
+
+## Mockup completion v1.6.2
+
+Embedded context/status is compact. Notes have a native model selector, an inner
+contents rail and three net/area/volume cards around canonical renderer output.
+Full explanations, comparison, formulas and worked steps remain reachable through
+native disclosures. All math, shape data and Kaedah1 projection layout remain
+authoritative over the raster mockup. Existing control and theme tokens apply.

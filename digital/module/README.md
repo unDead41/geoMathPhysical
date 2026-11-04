@@ -1,6 +1,6 @@
 # Modul Pembelajaran GeoDecoder Digital V1
 
-Versi modul: **v1.6.1**. Branch integrasi: **main-digitalized**.
+Versi modul: **v1.6.2**. Branch semakan: **digitalized-ux-mockup-completion**.
 
 ## UI GeoMath v1.6.1 · integrasi tiga modul
 

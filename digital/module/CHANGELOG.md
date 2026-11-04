@@ -2,6 +2,14 @@
 
 Versi modul berasingan daripada permainan Digital dan firmware ESP32.
 
+## v1.6.2 — 4 November 2026 · padanan komposisi mockup
+
+- Padatkan shell modul supaya model dan kawalan utama lebih cepat kelihatan.
+- Susun nota dengan isi kandungan, model, bentangan, rumus dan contoh ukuran
+  semasa; penjelasan penuh kekal dalam pendedahan native yang boleh dibuka.
+- Kekalkan semua 11 bongkah, rumus, renderer dan aliran makmal sebenar.
+- Hasil branch semakan sahaja; pin induk dikemas kini daripada binaan tepat.
+
 ## v1.6.1 — 4 November 2026 · integrasi UI tiga modul
 
 - Kemaskan shell GeoMath, pemilih 11 bongkah, model 3D dan enam pandangan 2D.
