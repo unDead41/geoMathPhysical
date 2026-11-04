@@ -1,0 +1,125 @@
+{
+  "base_branch": "main-digitalized",
+  "base_sha": "391df985eea4fee15d9859e678068b1a3f613cba",
+  "concept_sha": "4d83561667cf74fbe5cd6144ce5e3e7f660a75cd",
+  "digital_version": "2.8.0",
+  "module_version": "1.6.0",
+  "generated_preview_committed": false,
+  "reference_images": {
+    "08-interactive-labs.png": "3e05aa5a375f70b07cbb2bd7c3571faa5e22afa6669b24a356a97ca04a69c208",
+    "09-studio-and-progress.png": "a4d30c7c3249c1463f661bc6b453e7ac9576f175e1b04e7f324a358c912e6b4e"
+  },
+  "files": [
+    {
+      "path": "digital/module/src/index.html",
+      "bytes": 51684,
+      "sha256": "f08c9a28307adb340ddba745964e23de9f3fb4daedc9ce612318828a4d77c99d"
+    },
+    {
+      "path": "digital/module/src/labs.mjs",
+      "bytes": 67928,
+      "sha256": "023873e7ac6dc0b97de4b9a9ba4fdc3591f77b6e64c915981d7d2c92bca72e7f"
+    },
+    {
+      "path": "digital/module/src/style.css",
+      "bytes": 63386,
+      "sha256": "6a433cf0a09e249d48079416da7af91a604d694a7abf4db9118c643748c3eff3"
+    },
+    {
+      "path": "digital/module/src/net-tools.css",
+      "bytes": 2755,
+      "sha256": "ee0fc010258f27f486d5c2d875e5b6861cd9d51eeaa8f8636ee09ad15d93d05d"
+    },
+    {
+      "path": "digital/module/tests/labs-ui-refresh.test.mjs",
+      "bytes": 4222,
+      "sha256": "457389e868d1e2320ac11f29f309bd075b21a4e5affdadc9e80f000a783827c2"
+    },
+    {
+      "path": "digital/module/tools/labs-ui-qa.html",
+      "bytes": 19227,
+      "sha256": "e1f517d3527f9f5fefddc5b6c2d652af84b9ddb90594ae58e52968d9ee337a13"
+    },
+    {
+      "path": "digital/module/GeoDecoder_Modul_V1.html",
+      "bytes": 494707,
+      "sha256": "0ab0cdf903168e33f28dcd574bd178bd0aa557052bcbd5a99c890cd47aed035b"
+    },
+    {
+      "path": "digital/docs/handoffs/digitalized-module-labs-ui-refresh/LATEST.md",
+      "bytes": 6687,
+      "sha256": "2152e903465ad548e3baca6ededa7e95622a5c59dbbab8e69c14c33e579242dc"
+    },
+    {
+      "path": "digital/docs/handoffs/digitalized-module-labs-ui-refresh/PLAN.md",
+      "bytes": 1858,
+      "sha256": "680bbb4085371a9900bb21c4dea5e62fcd325d76bc9bff20488a9479fee93f9b"
+    },
+    {
+      "path": "digital/docs/handoffs/digitalized-module-labs-ui-refresh/evidence/browser-summary.json",
+      "bytes": 3396,
+      "sha256": "e978329b4a955fc5470f9e41fad53a517c1939bc1baa896ab4441941aee3875f"
+    },
+    {
+      "path": "digital/docs/handoffs/digitalized-module-labs-ui-refresh/evidence/build.log",
+      "bytes": 177,
+      "sha256": "bd3be0734f40e1475d07fa588487ba30e4b8f94398d2a28084cd9f30d714e056"
+    },
+    {
+      "path": "digital/docs/handoffs/digitalized-module-labs-ui-refresh/evidence/check.log",
+      "bytes": 220,
+      "sha256": "577d9e406f1479538c37f66c204095b560d5dcfcffa71a2b5c633002f2bdd44f"
+    },
+    {
+      "path": "digital/docs/handoffs/digitalized-module-labs-ui-refresh/evidence/design-check.log",
+      "bytes": 144,
+      "sha256": "1df81de78606d97482b7cc32ce0f28b0b599ef38a26f8d8d13d9e0ce966e6140"
+    },
+    {
+      "path": "digital/docs/handoffs/digitalized-module-labs-ui-refresh/evidence/premium-audit.json",
+      "bytes": 34900,
+      "sha256": "2e5eb1c88205ee4d1e28ad6d593dc026df67ae826541d62eaf2775bf58fd9689"
+    },
+    {
+      "path": "digital/docs/handoffs/digitalized-module-labs-ui-refresh/evidence/screenshots/29-net-1440.jpg",
+      "bytes": 139329,
+      "sha256": "95c2045493ea73d7357d9a232b75d37d45a2d45e72445041431d2651af378ad6"
+    },
+    {
+      "path": "digital/docs/handoffs/digitalized-module-labs-ui-refresh/evidence/screenshots/30-volume-1440.jpg",
+      "bytes": 124365,
+      "sha256": "7815af26831f5c1e0e8fa5aa5e0380c7b15eea56fff79778d3f5e30a4ae64a45"
+    },
+    {
+      "path": "digital/docs/handoffs/digitalized-module-labs-ui-refresh/evidence/screenshots/31-area-1440.jpg",
+      "bytes": 140735,
+      "sha256": "da6fb18ae18c72f8bc00944678c02d35ccee896b813285e781a2c317520c22ca"
+    },
+    {
+      "path": "digital/docs/handoffs/digitalized-module-labs-ui-refresh/evidence/screenshots/32-composite-1440.jpg",
+      "bytes": 134450,
+      "sha256": "a11a9d940768129c6609834477e5b7bff709056e5a40d802c23449e5681e2aa5"
+    },
+    {
+      "path": "digital/docs/handoffs/digitalized-module-labs-ui-refresh/evidence/screenshots/33-hub-1440.jpg",
+      "bytes": 172646,
+      "sha256": "16f3272b5cac03c9cf4d3db8e1741a22d79e7ecb630d98dd82e49ce29ad6b5d1"
+    },
+    {
+      "path": "digital/docs/handoffs/digitalized-module-labs-ui-refresh/evidence/screenshots/390-en-dark-150.jpg",
+      "bytes": 46582,
+      "sha256": "b2a680307075396048ee58d04fa7617cbd599a9cddd93789677e105677d22df4"
+    },
+    {
+      "path": "digital/docs/handoffs/digitalized-module-labs-ui-refresh/evidence/tests.tap",
+      "bytes": 32513,
+      "sha256": "7ca260190674814751a56bbee91285895e06652950520e2462a4c8c94ccdc3ac"
+    }
+  ],
+  "implementation_sha": "ed4ecd74cc0559d664e3de5f5220509183c468df",
+  "browser_checks": {
+    "passed": 202,
+    "failed": 0,
+    "summary": "evidence/browser-summary.json"
+  }
+}

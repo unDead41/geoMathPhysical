@@ -1,0 +1,5 @@
+
+> geodecoder-module@1.6.0 check
+> node tools/check.mjs
+
+PASS: standalone syntax, no runtime network/storage/dependencies, IDs, reduced motion, module versions, generated token drift, SVG icons and text/control contrast

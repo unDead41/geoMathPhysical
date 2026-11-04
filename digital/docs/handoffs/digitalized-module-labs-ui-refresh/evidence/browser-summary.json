@@ -1,0 +1,49 @@
+{
+  "evidence_kind": "summary transcribed from the final QA page report observed in the browser",
+  "implementation_sha": "ed4ecd74cc0559d664e3de5f5220509183c468df",
+  "build_sha256_verified_locally": "0ab0cdf903168e33f28dcd574bd178bd0aa557052bcbd5a99c890cd47aed035b",
+  "browser_build_sha256": null,
+  "browser_hash_note": "The HTTP preview has no crypto.subtle; the staging standalone and local build were compared separately.",
+  "fixture": "digital/module/tools/labs-ui-qa.html",
+  "suite": "Run all checks, after restoring playback above the canvas",
+  "checks": 202,
+  "passed": 202,
+  "failed": [],
+  "groups": {"functional": 107, "input": 5, "display": 90},
+  "input_checks": [
+    {"name": "canvas keyboard alternative changes yaw", "pass": true},
+    {"name": "simulated touch drag and pointer cancellation", "pass": true},
+    {"name": "non-drag range endpoint folds the net", "pass": true},
+    {"name": "reflection link places keyboard focus", "pass": true},
+    {"name": "model return places keyboard focus", "pass": true}
+  ],
+  "display_group_key": ["iframe_width", "language", "theme", "text_percent", "contrast"],
+  "display_groups": {
+    "1440|ms|light|100|standard": {"cases": 5, "passed": 5, "overflow": 0, "smallTargets": 0},
+    "1440|ms|light|150|standard": {"cases": 5, "passed": 5, "overflow": 0, "smallTargets": 0},
+    "1440|ms|dark|100|standard": {"cases": 5, "passed": 5, "overflow": 0, "smallTargets": 0},
+    "1440|ms|dark|150|standard": {"cases": 5, "passed": 5, "overflow": 0, "smallTargets": 0},
+    "1440|en|light|100|standard": {"cases": 5, "passed": 5, "overflow": 0, "smallTargets": 0},
+    "1440|en|light|150|standard": {"cases": 5, "passed": 5, "overflow": 0, "smallTargets": 0},
+    "1440|en|dark|100|standard": {"cases": 5, "passed": 5, "overflow": 0, "smallTargets": 0},
+    "1440|en|dark|150|standard": {"cases": 5, "passed": 5, "overflow": 0, "smallTargets": 0},
+    "390|ms|light|100|standard": {"cases": 5, "passed": 5, "overflow": 0, "smallTargets": 0},
+    "390|ms|light|150|standard": {"cases": 5, "passed": 5, "overflow": 0, "smallTargets": 0},
+    "390|ms|dark|100|standard": {"cases": 5, "passed": 5, "overflow": 0, "smallTargets": 0},
+    "390|ms|dark|150|standard": {"cases": 5, "passed": 5, "overflow": 0, "smallTargets": 0},
+    "390|en|light|100|standard": {"cases": 5, "passed": 5, "overflow": 0, "smallTargets": 0},
+    "390|en|light|150|standard": {"cases": 5, "passed": 5, "overflow": 0, "smallTargets": 0},
+    "390|en|dark|100|standard": {"cases": 5, "passed": 5, "overflow": 0, "smallTargets": 0},
+    "390|en|dark|150|standard": {"cases": 5, "passed": 5, "overflow": 0, "smallTargets": 0},
+    "1440|ms|light|125|strong": {"cases": 5, "passed": 5, "overflow": 0, "smallTargets": 0},
+    "390|en|dark|125|strong": {"cases": 5, "passed": 5, "overflow": 0, "smallTargets": 0}
+  },
+  "limits": [
+    "CSS iframe widths, not physical device viewports",
+    "Synthetic touch PointerEvents and host reduced-motion setting",
+    "Print interception and SVG/mm checks, no native print dialog or paper/PDF output",
+    "44px target audit excludes the existing spatial net grid and checkbox glyphs",
+    "Display matrix uses current activity modes rather than every advanced-mode combination",
+    "Raw JSON download could not be synchronized out of the browser environment; rerun the committed fixture to reproduce the full report"
+  ]
+}
