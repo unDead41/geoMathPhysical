@@ -5,6 +5,10 @@ Work branch: `digitalized-core-backend-scaling` only.
 Upstream base: `391df985eea4fee15d9859e678068b1a3f613cba` on
 `main-digitalized`; observed `main`: `25836eb1a6f24459aace8a3980ae880a13e3b488`.
 Source versions remain Digital 2.8.0 / module 1.6.0; candidate, not a release.
+Verified remote implementation commit:
+`a3ab6dee26692a1c660915fbc627dda9d8f4c051`.
+The final receipt commit adds only documentation after this implementation;
+the chat receipt reports the final branch head without a self-referential SHA.
 
 ## Delivered
 

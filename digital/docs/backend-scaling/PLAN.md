@@ -33,7 +33,7 @@ deadlines during background tabs. Tests must cover these before completion.
    against known base definitions; test real SQL roles, read/write behavior,
    Duel idempotency/expiry, NAT and configured quota behavior in PGlite. Provide
    rollback and read-only operational diagnostics.
-4. [ ] Add staging-only load scenarios and local smoke, document budget/quotas,
+4. [x] Add staging-only load scenarios and local smoke, document budget/quotas,
    cache scope, UI handoff and release order. Run full suite, build and check,
    review the whole diff, commit and publish only the work branch; verify SHA.
 

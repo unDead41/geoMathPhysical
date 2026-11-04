@@ -219,5 +219,13 @@
     "Actual k6 engine/distributed memory and physical devices unmeasured.",
     "Conservative admission defaults require measured staging configuration.",
     "Browser verification blocked; prior attempts are recorded, not claimed passing."
-  ]
+  ],
+  "remote_implementation_commit": "a3ab6dee26692a1c660915fbc627dda9d8f4c051",
+  "remote_tree_integrity": {
+    "untouched_original_files_preserved": true,
+    "original_files": 863,
+    "candidate_files": 883,
+    "changed_paths": 26,
+    "changed_blob_hashes_match_local": true
+  }
 }
