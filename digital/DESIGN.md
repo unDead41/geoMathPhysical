@@ -41,7 +41,10 @@ components:
 
 The approved GeoMath reference governs the four entry surfaces: Home, mode
 selection, resume and how to play. The shared header is a single application
-shell; the signature illustration is an exact SVG geometry kit on a grid board.
+shell; the signature illustration is a real-time 3D geometry kit on a grid board,
+with exact SVG alternatives when WebGL is unavailable. Original procedural assets
+share bevels, satin materials, studio lighting and contact shadows. Three.js is
+pinned and bundled locally; there are no remote model, texture or font requests.
 Home uses a text/art hero with three equal action cards underneath. Mode choices
 are native radio cards. Resume uses actual actor-scoped progress, and the guide
 shows three reusable steps with explicit demonstration playback controls.
@@ -52,6 +55,13 @@ the generated CSS. Its shell maximum uses `--page-max`; controls keep the existi
 foundation recipes. `dist/entry-components.mjs` owns repeated card/guide markup,
 `entry-copy.mjs` extends the existing catalog, and `entry-ui.mjs` binds those views.
 New entry pages must extend these owners. See `docs/ENTRY_UI.md` for reuse.
+`entry-models.mjs` owns the reusable presentation assets; `entry-scenes.mjs` owns
+one shared renderer and the motion lifecycle. The established visual palettes
+provide object colours. Interface colours continue to come from central tokens.
+Rotation has labelled button alternatives to dragging. The existing animation
+preference controls every decorative scene; hidden routes/background tabs stop
+rendering. Cards gain gentle central-token elevation and a dedicated artwork
+area while the same native radio/form/navigation owners retain all behaviour.
 Other application surfaces and the pinned learning module retain their owners.
 
 Calon integrasi Digital v2.8.0 merangkumi modul v1.6.0; firmware kekal v1.1.3.

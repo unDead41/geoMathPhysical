@@ -11,12 +11,14 @@ existing public Pages repository without a later instruction from Ijamm.
 | Buttons, fields, dialog, feedback | dist/foundation.css and existing app owners | Reuse existing classes, validation and native dialog. |
 | Header and footer | dist/index.html | One shared shell for every screen; do not duplicate into a page. |
 | Mode card | entry-components.mjs: modeCard/ENTRY_MODES | Add a configuration row and catalog strings. Preserve the Game mode contract. |
-| Guide step | entry-components.mjs: guideStep/guideSteps | Use the same semantic step markup and exact shapeArt diagrams. |
+| Guide step | entry-components.mjs: guideStep/guideSteps | Use the same semantic step markup, shared 3D illustrations and exact shapeArt fallback diagrams. |
 | Information panel | entry-components.mjs: infoPanel | Accept escaped or trusted catalog text only. |
 | Geometry illustration/icons | entry-art.mjs; existing art.mjs | Keep exact geometry and accessible equivalent descriptions. |
 | Entry layout and responsive rules | entry.css | Consume shared tokens; document scrolling; no second framework. |
 | BM/English entry text | entry-copy.mjs → existing i18n.mjs | Add both languages; locale remains the application owner. |
 | View bindings/demo | entry-ui.mjs | No direct Game, Auth or storage mutation. |
+| Dimensional assets | entry-models.mjs | Original procedural models, shared PALETTES and central theme colours; decorative only. |
+| Renderer and animation | entry-scenes.mjs | One WebGL context, visible-route rendering, 30 FPS cap, pixel ratio capped at 1.5, reduced motion and static SVG fallback. |
 | Navigation/game/storage | app.mjs, core.mjs, solo-save.mjs | Existing leave guards and actor-scoped snapshots remain authoritative. |
 
 Routes: `#utama`, `#main`, `#sambung`, `#cara-bermain`. Learning and class links
@@ -31,3 +33,17 @@ self-contained with the original complete audio tracks and pinned module.
 
 No schema, Supabase service, firmware, UID registration, scoring or module
 geometry changes are part of this work.
+
+## Dimensional entry refresh — 4 November 2026
+
+Home: true 3D cube, pyramid, cylinder and cuboid on a gridded board with ruler,
+set square and compass. Drag to rotate, or use Left/Right/Reset buttons; Pause
+uses the existing motion preference rather than a second local setting.
+Mode cards: shared clipboard, graduation cap and two-player assets.
+Resume and guide: the same solid materials/board with a valid six-square cube
+net. These are presentation assets; learning geometry and live answers are
+untouched. Theme changes rebuild material colours without changing page state.
+
+Three.js 0.180.0 (MIT) is pinned in package.json/package-lock.json and bundled
+by the existing builder. No runtime CDN/HDRI/model downloads. Failed/unsupported
+WebGL keeps accessible copy, SVG artwork and every ordinary control available.

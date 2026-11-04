@@ -13,6 +13,7 @@ Firmware rounds remain a separate contract.
 | Capability | Canonical owner | Source of truth | Allowed variants | Verification |
 |---|---|---|---|---|
 | Entry shell/cards/guide | index.html shell + entry-components.mjs + entry-ui.mjs | approved GeoMath reference; docs/ENTRY_UI.md | Home, mode radio cards, real resume, guide page | solo-ui.test.mjs + entry browser QA |
+| Entry 3D presentation | entry-models.mjs + entry-scenes.mjs | DESIGN.md; existing PALETTES and preferences | shared hero/mode/resume/guide assets; static SVG fallback | entry-scenes.test.mjs + live Pages visual checks |
 | Design tokens | design-system/tokens.mjs → tools/design-tokens.mjs | DESIGN.md / docs/DESIGN_SYSTEM.md | light/dark, standard/strong; generated module adapter | design:check; design-tokens.test.mjs |
 | Button / field / panel | dist/foundation.css + dist/module-foundation.css | DESIGN.md | brand, neutral, danger, icon; legacy class adapters | tests/design-system.browser.mjs; reference gallery |
 | Form | core validators + portal form owner; support-report.mjs for reports | account/game validation and report contract | guest, login/signup/recovery, profile/security, local report | core, portal-auth-validation, support integration/browser |

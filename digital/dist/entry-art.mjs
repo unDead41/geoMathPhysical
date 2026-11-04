@@ -58,6 +58,10 @@ export function entryIcon(name) {
     info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10h.01"/>',
     keyboard:'<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M5 9h1m3 0h1m3 0h1m3 0h1M5 12h1m3 0h1m3 0h1m3 0h1M7 16h10"/>',
     back:'<path d="M20 12H4m6-6-6 6 6 6"/>'
+    ,pause:'<path d="M8 5v14M16 5v14" stroke-width="3"/>'
+    ,left:'<path d="m14 6-6 6 6 6"/>'
+    ,right:'<path d="m10 6 6 6-6 6"/>'
+    ,reset:'<path d="M3 11a9 9 0 1 1 2 7M3 4v7h7"/>'
   };
   return `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name]||paths.play}</svg>`;
 }

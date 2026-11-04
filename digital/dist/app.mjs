@@ -1199,6 +1199,7 @@ moduleBridge=createModuleBridge({frame:$('module-frame'),getSettings:()=>({langu
 usabilityUI=createUsabilityUI({storage,preferenceStore,t,openDialog,closeDialog,onStart:beginSelectedMode,onTheme:setTheme,onTestSound:()=>tone('solid'),onHelp:openHelp});
 helpSupport=createHelpSupport({t,getLanguage:()=>locale.language,getContext:supportContext,openDialog,openTutorial:()=>usabilityUI.openTutorial({fromHelp:true}),openSettings:()=>usabilityUI.openSettings(),openModuleGuide:()=>{closeDialog();moduleBridge.showGuide();}});
 entryUI=createEntryUI({t,getLanguage:()=>locale.language,onNavigate:navigateEntry,
+  onToggleMotion:()=>preferenceStore.set({motion:motionPaused?'full':'reduce'}),
   onLanguage:language=>{if(locale.setLanguage(language)){cancelDrag();applyLanguage();announce(t('language.changed'));}},
   onResume:resumeSolo,onNew:()=>{
     const snapshot=soloStore.read(soloActor);

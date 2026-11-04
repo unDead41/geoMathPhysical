@@ -66,11 +66,19 @@
     <section id="welcome" class="entry-screen geomath-home" aria-labelledby="welcome-title">
       <div class="home-hero">
         <div class="home-hero-copy">
+          <span class="entry-eyebrow"><span data-entry-icon="book"></span><span data-i18n="entry.sceneLabel">Geometri dalam 3D</span></span>
           <h1 id="welcome-title"><span data-i18n="entry.heroA">Geometri yang</span><br><span data-i18n="entry.heroB">boleh diteroka.</span></h1>
           <p><span data-i18n="entry.heroCopy">Kenali bongkah. Fahami bentangan.</span><br><span data-i18n="entry.heroCopy2">Cuba sendiri.</span></p>
           <span class="hero-accent" aria-hidden="true"></span>
         </div>
-        <div id="geometry-kit" class="hero-art" role="img" aria-label="Set geometri di atas papan berpetak" data-i18n-aria-label="entry.heroAlt"></div>
+        <div class="home-scene">
+          <div id="geometry-kit" class="hero-art entry-scene" data-entry-scene="hero" role="img" aria-label="Set geometri di atas papan berpetak" data-i18n-aria-label="entry.heroAlt"></div>
+          <div class="scene-toolbar">
+            <span class="scene-hint" data-i18n="entry.sceneHint">Seret untuk memutar</span>
+            <div class="scene-rotation-controls"><button type="button" class="scene-control" data-scene-turn="-1" aria-label="Putar model ke kiri" data-i18n-aria-label="entry.rotateLeft" title="Putar model ke kiri" data-i18n-title="entry.rotateLeft"><span data-entry-icon="left"></span></button><button type="button" class="scene-control" data-scene-turn="reset" aria-label="Pulihkan sudut pandangan" data-i18n-aria-label="entry.resetView" title="Pulihkan sudut pandangan" data-i18n-title="entry.resetView"><span data-entry-icon="reset"></span></button><button type="button" class="scene-control" data-scene-turn="1" aria-label="Putar model ke kanan" data-i18n-aria-label="entry.rotateRight" title="Putar model ke kanan" data-i18n-title="entry.rotateRight"><span data-entry-icon="right"></span></button></div>
+            <button type="button" class="scene-control scene-motion" id="entry-motion-button" aria-pressed="false" aria-label="Jeda animasi 3D"></button>
+          </div>
+        </div>
       </div>
       <div class="home-actions">
         <button id="guest-button" type="button" class="home-action home-action-primary"><span data-entry-icon="play"></span><span><strong data-i18n="entry.play">Main</strong><small data-i18n="entry.playNote">Cabaran kuiz, latihan atau duel</small></span><span class="home-arrow" data-icon="chevron"></span></button>
@@ -87,7 +95,7 @@
     <section id="guest-screen" class="guest-screen entry-page" hidden aria-labelledby="guest-title">
       <button id="guest-back-button" type="button" class="button entry-back"><span data-entry-icon="back"></span><span data-i18n="entry.back">Kembali</span></button>
       <div class="registration-card guest-card entry-card">
-        <div class="entry-heading"><h1 id="guest-title" tabindex="-1" data-i18n="entry.chooseTitle">Pilih cabaran anda.</h1><p data-i18n="entry.chooseCopy">Masukkan nama panggilan dan pilih mod permainan.</p></div>
+        <div class="entry-heading"><span class="entry-eyebrow" data-i18n="entry.chooseEyebrow">Pilih cara anda belajar</span><h1 id="guest-title" tabindex="-1" data-i18n="entry.chooseTitle">Pilih cabaran anda.</h1><p data-i18n="entry.chooseCopy">Masukkan nama panggilan dan pilih mod permainan.</p></div>
         <form id="player-form" novalidate>
           <div class="field nickname-field"><label for="player-name" data-i18n="entry.nickname">Nama panggilan</label><input id="player-name" name="name" type="text" maxlength="60" autocomplete="nickname" placeholder="Contoh: Aisyah" data-i18n-placeholder="Contoh: Aisyah" aria-describedby="name-error"><span class="field-error" id="name-error"></span></div>
           <select id="play-mode" name="mode" hidden aria-label="Mod permainan" aria-describedby="mode-description"><option value="quiz" data-i18n="mode.quiz">Kuiz — 10 soalan</option><option value="practice" data-i18n="mode.practice">Latihan Pengukuhan · 15</option><option value="duel" data-i18n="duel.mode">Duel · 2 pemain</option></select>
@@ -103,9 +111,9 @@
     <section id="resume-screen" class="entry-page" hidden aria-labelledby="resume-title">
       <button type="button" class="button entry-back" data-entry-route="home"><span data-entry-icon="back"></span><span data-i18n="entry.back">Kembali</span></button>
       <div class="resume-content">
-        <div class="entry-heading"><h1 id="resume-title" tabindex="-1" data-i18n="entry.resumeTitle">Sambung penerokaan anda.</h1><p id="resume-subtitle"></p></div>
+        <div class="entry-heading"><span class="entry-eyebrow" data-i18n="entry.resumeEyebrow">Teruskan langkah anda</span><h1 id="resume-title" tabindex="-1" data-i18n="entry.resumeTitle">Sambung penerokaan anda.</h1><p id="resume-subtitle"></p></div>
         <div class="resume-card">
-          <div class="resume-art" aria-hidden="true"><span data-art="cube" data-tone="blue"></span><span data-art="cube" data-tone="yellow"></span></div>
+          <div class="resume-art entry-scene" data-entry-scene="resume" aria-hidden="true"></div>
           <div id="resume-details"></div>
         </div>
         <div class="resume-buttons"><button type="button" id="resume-continue-button" class="button button-primary"><span data-i18n="entry.resume">Sambung permainan</span><span data-icon="chevron"></span></button><button type="button" id="resume-new-button" class="button button-outline" data-i18n="entry.new">Mula baharu</button></div>
@@ -114,7 +122,7 @@
 
     <section id="guide-screen" class="entry-page guide-page" hidden aria-labelledby="guide-title">
       <button id="guide-back-button" type="button" class="button entry-back"><span data-entry-icon="back"></span><span data-i18n="entry.back">Kembali</span></button>
-      <div class="entry-heading"><h1 id="guide-title" tabindex="-1" data-i18n="entry.guideTitle">Cara bermain GeoMath.</h1><p data-i18n="entry.guideCopy">Kenali aliran asas permainan yang menguji bongkah (R1) dan bentangan (R2).</p></div>
+      <div class="entry-heading"><span class="entry-eyebrow" data-i18n="entry.guideEyebrow">Kenali permainan</span><h1 id="guide-title" tabindex="-1" data-i18n="entry.guideTitle">Cara bermain GeoMath.</h1><p data-i18n="entry.guideCopy">Kenali aliran asas permainan yang menguji bongkah (R1) dan bentangan (R2).</p></div>
       <ol class="guide-steps" id="guide-steps" aria-label="Tiga langkah permainan"></ol>
       <div class="entry-demo-player">
         <strong data-i18n="entry.demo">Tontonan contoh (demo)</strong>

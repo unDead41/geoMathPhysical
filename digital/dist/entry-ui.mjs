@@ -1,16 +1,20 @@
 import {shapeArt,icon} from './art.mjs';
 import {entryIcon,geometryKit} from './entry-art.mjs';
 import {escapeHtml} from './format.mjs';
-import {modeCards,guideSteps,infoPanel} from './entry-components.mjs';
+import {modeCards,guideSteps,infoPanel,sceneContents} from './entry-components.mjs';
+import {createEntryScenes} from './entry-scenes.mjs';
 
 /** Presentation for the four entry pages. Game, preferences and storage stay in app.mjs. */
-export function createEntryUI({t,getLanguage,onNavigate,onLanguage,onResume,onNew,onGuideBack,onGuideFinish}) {
+export function createEntryUI({t,getLanguage,onNavigate,onLanguage,onResume,onNew,onGuideBack,onGuideFinish,onToggleMotion}) {
   const $=id=>document.getElementById(id);
   let current='welcome',elapsed=0,playing=false,lastTick=0,animation=0,lastStep=-1;
   $('game-mode-options').insertAdjacentHTML('beforeend',modeCards(t));
   $('guide-steps').innerHTML=guideSteps(t);
-  $('geometry-kit').innerHTML=geometryKit();
+  $('geometry-kit').innerHTML=sceneContents(geometryKit());
+  const resumeArt=document.querySelector('.resume-art');
+  resumeArt.innerHTML=sceneContents(shapeArt('cube','solid',true,'blue')+shapeArt('cube','solid',true,'yellow'));
   document.querySelectorAll('[data-entry-icon]').forEach(node=>{node.classList.add('entry-icon');node.innerHTML=entryIcon(node.dataset.entryIcon);});
+  const scenes=createEntryScenes({t,onToggleMotion});
   const duration=24;
   const time=value=>'00:'+String(Math.floor(value)).padStart(2,'0');
   function renderDemo(){
@@ -77,7 +81,7 @@ export function createEntryUI({t,getLanguage,onNavigate,onLanguage,onResume,onNe
   document.addEventListener('geodecoder:theme',syncTheme);
   function syncLanguage(){
     document.querySelectorAll('[data-entry-language]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.entryLanguage===getLanguage())));
-    syncTheme();lastStep=-1;renderDemo();
+    syncTheme();lastStep=-1;renderDemo();scenes.syncLanguage();
   }
   function sync(screen){
     current=screen;document.body.dataset.screen=screen;
@@ -85,7 +89,7 @@ export function createEntryUI({t,getLanguage,onNavigate,onLanguage,onResume,onNe
     document.querySelectorAll('.primary-navigation [data-entry-route]').forEach(link=>{
       if(link.dataset.entryRoute===route)link.setAttribute('aria-current','page');else link.removeAttribute('aria-current');
     });
-    if(screen!=='guide')pauseDemo();
+    if(screen!=='guide')pauseDemo();scenes.sync();
   }
   function resetGuide(){pauseDemo();elapsed=0;lastStep=-1;renderDemo();}
   function renderResume(snapshot,status){

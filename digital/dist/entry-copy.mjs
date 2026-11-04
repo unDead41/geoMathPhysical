@@ -1,6 +1,17 @@
 /** Entry-page copy uses the application's existing BM/English catalog. */
 export const ENTRY_COPY = {
   'entry.home':['Utama','Home'],
+  'entry.sceneLabel':['Geometri dalam 3D','Geometry in 3D'],
+  'entry.sceneHint':['Seret untuk memutar','Drag to rotate'],
+  'entry.motionPlay':['Hidupkan animasi 3D','Play 3D animation'],
+  'entry.motionPause':['Jeda animasi 3D','Pause 3D animation'],
+  'entry.animate':['Animasikan','Animate'],
+  'entry.rotateLeft':['Putar model ke kiri','Rotate model left'],
+  'entry.rotateRight':['Putar model ke kanan','Rotate model right'],
+  'entry.resetView':['Pulihkan sudut pandangan','Reset view'],
+  'entry.chooseEyebrow':['Pilih cara anda belajar','Choose how you learn'],
+  'entry.guideEyebrow':['Kenali permainan','Get to know the game'],
+  'entry.resumeEyebrow':['Teruskan langkah anda','Pick up where you left off'],
   'entry.play':['Main','Play'],
   'entry.learn':['Belajar','Learn'],
   'entry.classes':['Kelas','Classes'],
