@@ -1,0 +1,7 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> geodecoder-module@1.6.1 build
+> node tools/build.mjs
+
+Generated portal CSS, offline module adapter and module CSS.
+GeoDecoder_Modul_V1.html · 491046 bytes · self-contained

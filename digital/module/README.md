@@ -1,6 +1,27 @@
 # Modul Pembelajaran GeoDecoder Digital V1
 
-Versi modul: **v1.6.0** (cadangan branch). Sasaran integrasi: **main-digitalized**.
+Versi modul: **v1.6.1** (cadangan branch). Sasaran integrasi: **main-digitalized**.
+
+## UI GeoMath v1.6.1 · calon branch
+
+Navigasi sisi membawa terus kepada Teroka 3D, Nota dan Kalkulator ukuran. Lima
+bongkah projek serta enam bentuk tambahan kekal. Kawalan arah, tempo dan label
+permukaan tersedia dalam pendedahan native. Nota mengekalkan contoh, rumus,
+simbol, unit dan jadual; kalkulator berkongsi draf ukuran serta π yang sama.
+
+Dalam iframe, header aplikasi disembunyikan dan kawalan Tetapan/Bantuan induk
+kekal dalam navigasi modul. Tiada preference store atau protokol baharu. Hasil
+mandiri ialah preview branch; parent/vendor belum memakai perubahan ini.
+
+QA mengembangkan corak iframe runner sedia ada dengan jambatan sebenar:
+
+```sh
+node tools/explore-ui-qa.mjs /absolute/temporary/qa-output
+```
+
+Hidangkan folder output secara setempat dan buka `qa.html`. **Jalankan matriks**
+menguji 11 model, input, navigasi dan 64 keadaan paparan. Muat turun laporan
+selepas selesai. Fixture tidak masuk bundle murid atau penerbitan awam.
 
 ## Dua fungsi pembelajaran v1.6.0
 

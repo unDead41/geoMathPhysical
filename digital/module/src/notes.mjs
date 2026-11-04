@@ -59,14 +59,18 @@ function drawNoteDiagram(shape,result){
   }
 }
 export class LearningNotes{
-  constructor({onExplore,announce,prefersReduced}){this.onExplore=onExplore;this.announce=announce;this.prefersReduced=prefersReduced;this.ready=false;this.shape=null;this.piMode='22/7';}
+  constructor({onExplore,onCalculator,announce,prefersReduced}){this.onExplore=onExplore;this.onCalculator=onCalculator;this.announce=announce;this.prefersReduced=prefersReduced;this.ready=false;this.shape=null;this.piMode='22/7';}
   init(){
     if(this.ready)return;this.ready=true;
     for(const field of ['a','p','l','t','j'])noteEl('measure-'+field).addEventListener('input',()=>this.calculate());
-    noteEl('notes-form').addEventListener('submit',event=>{event.preventDefault();const r=this.calculate();if(!r.valid){const first=MEASURE_FIELDS[this.shape].find(k=>r.errors[k]);if(first)noteEl('measure-'+first).focus();}});
+    noteEl('notes-form').addEventListener('submit',event=>{event.preventDefault();this.validate();});
+    // The host sandbox deliberately disallows form navigation. Validate through
+    // owned controls as well, so click/Enter work without allow-forms permission.
+    noteEl('calculate-measures').addEventListener('click',()=>this.validate());
+    noteEl('notes-form').addEventListener('keydown',event=>{if(event.key==='Enter'&&!event.isComposing&&event.target.tagName==='INPUT'){event.preventDefault();this.validate();}});
     noteEl('reset-measures').addEventListener('click',()=>{this.fillDefaults();this.calculate();this.announce('Ukuran contoh dikembalikan.');});
     for(const [id,mode] of [['pi-ratio','22/7'],['pi-decimal','3.142'],['pi-full','full']])noteEl(id).addEventListener('click',()=>{this.piMode=mode;this.calculate();});
-    for(const [id,target] of [['jump-concept','note-concept-title'],['jump-net','note-net-title'],['jump-area','note-area-title'],['jump-volume','note-volume-title'],['jump-calculate','note-calculate-title']])noteEl(id).addEventListener('click',()=>{noteEl(target).focus({preventScroll:true});noteEl(target).scrollIntoView({behavior:this.prefersReduced()?'instant':'smooth',block:'start'});});
+    for(const [id,target] of [['jump-concept','note-concept-title'],['jump-net','note-net-title'],['jump-area','note-area-title'],['jump-volume','note-volume-title'],['jump-calculate','note-calculate-title']])noteEl(id).addEventListener('click',()=>{if(id==='jump-calculate')this.onCalculator?.();noteEl(target).focus({preventScroll:true});noteEl(target).scrollIntoView({behavior:this.prefersReduced()?'instant':'smooth',block:'start'});});
     for(const [id,mode] of [['note-explore-solid','model'],['note-explore-net','net'],['note-explore-views','views']])noteEl(id).addEventListener('click',()=>{if(mode==='net'&&MODEL_DATA[this.shape].noNet)return;this.onExplore(mode);});
     this.buildTables();
   }
@@ -97,6 +101,11 @@ export class LearningNotes{
     noteEl('notes-pi').hidden=!['cylinder','cone','sphere','hemisphere'].includes(shape);noteEl('slant-result').hidden=!['pyramid','cone','tetrahedron'].includes(shape);
     noteEl('diagram-caption').textContent=d.noNet?'Keratan melalui pusat menunjukkan jejari j; rajah ini bukan bentangan.':shape==='tetrahedron'?'Keratan melalui puncak dan pusat tapak: t tegak, s tinggi muka sisi, u jarak pusat tapak ke tengah sisi.':['pyramid','cone'].includes(shape)?'Keratan rentas: t tegak lurus kepada tapak; s mengikut sisi condong.':['triangular-prism','pentagonal-prism','hexagonal-prism'].includes(shape)?'a ialah panjang sisi tapak sekata; t ialah jarak tegak antara dua tapak. A ialah luas satu tapak.':'Rajah ukuran bagi aktiviti ini. Label merujuk kepada nilai dalam kotak ukuran.';
     this.fillDefaults();this.calculate();
+  }
+  validate(){
+    const r=this.calculate();
+    if(!r.valid){const first=MEASURE_FIELDS[this.shape].find(k=>r.errors[k]);if(first)noteEl('measure-'+first).focus();}
+    return r;
   }
   calculate(){
     const values=Object.fromEntries(MEASURE_FIELDS[this.shape].map(k=>[k,noteEl('measure-'+k).value])),r=calculateMeasures(this.shape,values,this.piMode);

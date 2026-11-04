@@ -1,0 +1,20 @@
+{
+  "labs-panel": true,
+  "projection-panel": true,
+  "calculation-panel": true,
+  "progress-summary": true,
+  "geometry.mjs": true,
+  "renderer.mjs": true,
+  "learning-mesh.mjs": true,
+  "lessons.mjs": true,
+  "preset-nets.mjs": true,
+  "labs.mjs": true,
+  "net-tools.css": true,
+  "projection-studio.mjs": true,
+  "projection-studio.css": true,
+  "calculation-workshop.mjs": true,
+  "calculation-workshop.css": true,
+  "calculation-steps.mjs": true,
+  "projection-geometry.mjs": true,
+  "content-catalog": true
+}

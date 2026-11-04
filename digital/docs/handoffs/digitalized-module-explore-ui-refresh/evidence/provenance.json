@@ -1,0 +1,23 @@
+{
+  "base": "391df985eea4fee15d9859e678068b1a3f613cba",
+  "concept": "4d83561667cf74fbe5cd6144ce5e3e7f660a75cd",
+  "conceptImageSha256": "15fee50999f6d1ce1d0f1b636824fc6f7334c3986d5533c913f2dc15a1225fcd",
+  "conceptImageGitBlob": "8ed65934d6025cd13bf33118c4747eca351314d0",
+  "sourceDigitalVersion": "2.8.0",
+  "baseModuleVersion": "1.6.0",
+  "candidateModuleVersion": "1.6.1",
+  "mainObserved": "25836eb1a6f24459aace8a3980ae880a13e3b488",
+  "mainObservedFirmwareVersion": "2.0.2",
+  "standaloneSha256": "b4df004f9e24e3b34537ef417f3a66ad844d51f25d4e229cef2d2ec69d789163",
+  "noNewRuntimeImports": true,
+  "vendorPinChanged": false,
+  "parentBuildChanged": false,
+  "published": false,
+  "screenshots": {
+    "25-explore-1440-ms-light.jpg": "40fa4591a7e380d5fbf298c4dfa603280f073c93079079543c48353ed3bf1e71",
+    "26-views-1440-ms-light.jpg": "6058e0db2285defb3b83e4a2a9ffe51e8a0faaba201e1b927516e53b534d4383",
+    "27-notes-1440-ms-light.jpg": "0b49d87ad7c11759885457dbaa286fbeeadbe8e06cfe71f594807f774e3bd8ff",
+    "28-calculator-1440-ms-light.jpg": "b55718147412fa460dbef844fcbec9187a64a00cff3f66c4182bc5fe3cebd9a8",
+    "phone-calculator-390-en-dark-150.jpg": "198ed78ab2b1162f4e6c2b92fe16178380bf8466a2e3d2123cafc15569a25570"
+  }
+}

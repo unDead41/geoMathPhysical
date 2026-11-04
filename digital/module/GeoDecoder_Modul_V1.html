@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#215FF0">
   <meta name="description" content="Teroka sebelas bongkah pembelajaran GeoDecoder: putar model 3D, buka bentangan dan bandingkan enam pandangan 2D. Nota, rumus dan aktiviti pengiraan offline berpandukan KSSM / DSKP.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src data:; connect-src 'none'; font-src 'none'; base-uri 'none'; form-action 'none'">
-  <title>GeoDecoder — Modul pembelajaran bongkah</title>
+  <title>GeoMath — Modul pembelajaran bongkah</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 44'%3E%3Cpath d='m20 2 17 10v20L20 42 3 32V12Z' fill='%23215FF0'/%3E%3Cpath d='m20 2 17 10-17 10L3 12Z' fill='%236EAAFF'/%3E%3C/svg%3E">
   <style>
 /* Generated from digital/design-system/tokens.mjs. Do not edit. */
@@ -706,6 +706,200 @@ footer{max-width:var(--page-max);margin:auto;padding:var(--space-5) var(--space-
 
 [data-theme="dark"] #notes-diagram{background:#F3F7FB;border-radius:var(--radius-small)}
 
+/* UX-REDESIGN:EXPLORE — shell and screens 25–28 only.
+   Consume central tokens; labs/studio/progress retain their feature recipes. */
+.site-header{background:var(--surface);padding-block:var(--space-4)}
+.module-shell{display:grid;grid-template-columns:11.5rem minmax(0,1fr);gap:var(--space-6);padding-top:var(--space-5)}
+.module-sidebar{min-width:0;border-right:var(--border-width) solid var(--border);padding-right:var(--space-4)}
+.module-sidebar>.eyebrow{margin:var(--space-2) var(--space-2) var(--space-4);letter-spacing:.035em}
+.module-sidebar .learning-navigation{display:flex;flex-direction:column;gap:var(--space-2);border:0;padding:0;margin:0}
+.module-sidebar .learning-nav-button{width:100%;justify-content:flex-start;flex-wrap:nowrap;gap:var(--space-3);padding:var(--space-3);background:transparent;border-color:transparent;text-align:left;color:var(--ink)}
+.module-sidebar .learning-nav-button>span{display:none}
+.module-sidebar .learning-nav-button[aria-pressed="true"]{background:var(--selected);border-color:var(--primary);color:var(--primary-dark);box-shadow:none}
+.module-sidebar .learning-nav-button:hover{background:var(--hover)}
+.module-sidebar .module-tools{display:flex;flex-direction:column;align-items:stretch;border-top:var(--border-width) solid var(--border);margin-top:var(--space-6);padding-top:var(--space-4)}
+.module-sidebar .module-tools button{text-align:left;justify-content:flex-start;font-size:var(--text-caption)}
+.module-content,.model-workbench-content{min-width:0}
+.module-content>.intro{margin:var(--space-2) 0 var(--space-5)}
+.module-content>.intro h1{font-size:var(--text-title);margin-top:var(--space-2)}
+.module-content>.intro .self-paced{display:none}
+.module-content>.intro>div>p:last-child{max-width:62ch}
+.model-workbench{display:grid;grid-template-columns:10rem minmax(0,1fr);align-items:start;gap:var(--space-4)}
+.model-picker-panel{min-width:0;background:var(--surface);border:var(--border-width) solid var(--border);border-radius:var(--radius);padding:var(--space-3)}
+.model-picker-heading{padding:var(--space-1) var(--space-1) var(--space-3)}
+.model-picker-heading h2{font-family:var(--font-body);font-size:var(--text-small);letter-spacing:0}
+.model-picker-heading>span{display:block;font-size:var(--text-caption);color:var(--muted);margin-top:var(--space-1)}
+.model-picker-panel .shape-picker{display:flex;flex-direction:column;gap:var(--space-2);margin:0}
+.model-picker-panel .shape-choice{width:100%;min-height:var(--control-size);padding:var(--space-2);gap:var(--space-2);flex-direction:row;justify-content:flex-start;border-color:var(--border-control);font-size:var(--text-small)}
+.model-picker-panel .shape-choice canvas{width:2rem;height:2rem}
+.model-picker-panel .shape-name{flex:1;overflow-wrap:anywhere}
+.model-picker-panel .choice-dot{width:var(--space-3)}
+.model-picker-panel .extra-shape-field{display:flex;flex-direction:column;align-items:stretch;gap:var(--space-2);margin:var(--space-4) 0 0}
+.model-picker-panel .extra-shape-field select{width:100%;max-width:100%;border-color:var(--border-control);border-radius:var(--radius-control);font-size:var(--text-caption)}
+#explore-panel{grid-template-columns:minmax(0,1fr) 13rem;gap:var(--space-4)}
+#explore-panel .workspace{border-radius:var(--radius);overflow:visible}
+#explore-panel .workspace-top{padding:var(--space-4);gap:var(--space-3)}
+#explore-panel .workspace-top>div:first-child{flex:1}
+#explore-panel .mode-switch{width:100%;justify-content:stretch}
+#explore-panel .mode-switch button{flex:1;font-size:var(--text-small);padding-inline:var(--space-2)}
+#explore-panel .stage{margin-inline:var(--space-3)}
+#explore-panel #model-canvas{height:21rem;background-color:var(--stage-bg)}
+#explore-panel .stage-top{padding:var(--space-2);gap:var(--space-2)}
+#explore-panel .stage-tools{margin-left:auto}
+#explore-panel .canvas-help{padding:var(--space-2) var(--space-3);font-size:var(--text-caption)}
+#explore-panel .stage-bottom{padding:var(--space-1) var(--space-2);gap:var(--space-1)}
+#explore-panel .camera-options{border-top:var(--border-width) solid var(--border)}
+#explore-panel .camera-options>summary{font-size:var(--text-caption);color:var(--muted);padding:var(--space-2) var(--space-3)}
+#explore-panel .explore-camera{border:0;padding:var(--space-2)}
+#explore-panel .animation-panel{padding:var(--space-4)}
+#explore-panel .animation-actions{margin-top:var(--space-3);gap:var(--space-2)}
+#explore-panel .animation-actions .button{font-size:var(--text-caption);padding:var(--space-2)}
+#explore-panel .animation-caption{min-height:0;font-size:var(--text-caption)}
+#explore-panel .explore-options{margin-top:var(--space-3);border:var(--border-width) solid var(--border);border-radius:var(--radius-control)}
+#explore-panel .explore-options>summary{font-size:var(--text-caption);padding:var(--space-2) var(--space-3);color:var(--muted)}
+#explore-panel .motion-tools{font-size:var(--text-small);padding:var(--space-3);border:0;gap:var(--space-2)}
+#explore-panel .motion-tools select{width:auto;min-width:4rem}
+#explore-panel .motion-tools button{flex:1}
+#explore-panel .face-key{padding:0}
+#explore-panel .face-key>summary{padding:var(--space-3) var(--space-4);font-size:var(--text-small);display:list-item}
+#explore-panel .face-key>summary span{display:block;margin-top:var(--space-1)}
+#explore-panel .face-legend,#explore-panel #face-description{margin:var(--space-3) var(--space-4)}
+#explore-panel .notes-card{padding:var(--space-4);border-radius:var(--radius-control)}
+#explore-panel .properties{grid-template-columns:1fr;gap:var(--space-2);padding:0;border:0}
+#explore-panel .property{display:grid;grid-template-columns:1fr auto;align-items:center;padding:var(--space-2);background:var(--bg);border:var(--border-width) solid var(--border);border-radius:var(--radius-small)}
+#explore-panel .property>b{grid-column:2;grid-row:1/3;font-size:var(--text-heading);color:var(--success)}
+#explore-panel .property>span{grid-column:1;grid-row:1;color:var(--ink);font-weight:650;margin:0}
+#explore-panel .property>small{grid-column:1;grid-row:2;font-size:var(--text-caption)}
+#explore-panel .body-copy,#explore-panel .shape-tag{font-size:var(--text-caption)}
+#explore-panel .explore-card{background:var(--mint-soft)}
+#explore-panel .think-card{background:var(--surface)}
+#explore-panel .observation{margin-top:var(--space-3)}
+#explore-panel .think-options button{font-size:var(--text-small);min-height:var(--control-size)}
+#explore-panel .think-feedback{font-size:var(--text-caption);padding:var(--space-3)}
+#explore-panel[data-explore-mode="views"]{grid-template-columns:minmax(0,1fr)}
+#explore-panel[data-explore-mode="views"] .workspace{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start;gap:0 var(--space-3);padding:0 var(--space-3)}
+#explore-panel[data-explore-mode="views"] .workspace-top{grid-column:1/-1;padding-inline:var(--space-1)}
+#explore-panel[data-explore-mode="views"] .stage{grid-column:1;margin:0}
+#explore-panel[data-explore-mode="views"] .views-panel{grid-column:2;grid-row:2;padding:0}
+#explore-panel[data-explore-mode="views"] .workspace>.motion-note,#explore-panel[data-explore-mode="views"] .face-key{grid-column:1/-1}
+#explore-panel[data-explore-mode="views"] .face-key{margin-top:var(--space-3)}
+#explore-panel[data-explore-mode="views"] .view-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-2);margin-top:var(--space-3)}
+#explore-panel[data-explore-mode="views"] .view-choice{min-width:0;padding:var(--space-2)}
+#explore-panel[data-explore-mode="views"] .view-choice canvas{height:5rem}
+#explore-panel[data-explore-mode="views"] .view-choice b{font-size:var(--text-small)}
+#explore-panel[data-explore-mode="views"] .view-choice small{font-size:var(--text-caption)}
+#explore-panel[data-explore-mode="views"] .view-description,#explore-panel[data-explore-mode="views"] .views-panel>p{font-size:var(--text-small)}
+#explore-panel[data-explore-mode="views"] .learning-notes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+#study-panel .study-heading{display:flex;align-items:center;gap:var(--space-4);padding:var(--space-4);background:var(--surface);border:var(--border-width) solid var(--border);border-radius:var(--radius);margin-bottom:var(--space-4)}
+#study-panel .study-heading>div{flex:1;min-width:0}
+#study-panel .study-heading h2{font-size:var(--text-title)}
+#study-panel #notes-model{width:8rem;height:8rem;background:var(--stage-bg);border-radius:var(--radius-control);flex-shrink:0}
+#study-panel .study-jumps{gap:var(--space-2);margin-bottom:var(--space-4)}
+#study-panel .study-jumps button{font-size:var(--text-caption);padding-inline:var(--space-3)}
+#study-panel .study-layout{grid-template-columns:minmax(0,1fr) 13rem;gap:var(--space-4)}
+#study-panel .study-reading{gap:var(--space-4)}
+#study-panel :is(.lesson-block,.formula-reference,.mistake-reference,.notes-calculator,.notes-summary){padding:var(--space-4)}
+#study-panel .lesson-block h3{font-size:var(--text-heading)}
+#study-panel .note-properties{margin:var(--space-4) 0;padding:var(--space-3) 0}
+#study-panel .note-properties .property>b{color:var(--success)}
+#study-panel .note-comparison{border:var(--border-width) solid var(--border);border-radius:var(--radius-control);margin-top:var(--space-4)}
+#study-panel .note-comparison>.table-hint{padding:var(--space-3)}
+#study-panel .note-comparison .note-table-wrap{border-inline:0;border-radius:0;margin:0}
+#study-panel .study-reference{position:static;gap:var(--space-4)}
+#study-panel .formula-reference .button{font-size:var(--text-caption);padding-inline:var(--space-2)}
+#study-panel .lesson-formula{margin-block:var(--space-4);font-size:var(--text-subheading)}
+#study-panel .worked-example{background:var(--warning-soft);border-color:var(--border)}
+#study-panel .worked-example>summary{color:var(--warning-ink)}
+#study-panel .calculator-heading{gap:var(--space-4);flex-wrap:wrap}
+#study-panel .calculator-heading h3{font-size:var(--text-title)}
+#study-panel .calculator-heading .button{font-size:var(--text-small);flex-shrink:1}
+#study-panel .notes-calculator{margin:0}
+#study-panel .calculator-layout{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--space-4);margin:var(--space-5) 0}
+#study-panel #notes-form{grid-column:1;grid-row:1/3;min-width:0}
+#study-panel .diagram-panel{grid-column:2;grid-row:1;padding:var(--space-3)}
+#study-panel .calculation-results{grid-column:2;grid-row:2;grid-template-columns:1fr;align-self:start}
+#study-panel .calculation-results>div{background:var(--mint-soft);padding:var(--space-3)}
+#study-panel .calculation-results output{color:var(--success);font-size:var(--text-heading)}
+#study-panel .measure-fields{grid-template-columns:1fr}
+#study-panel .measure-help{font-size:var(--text-caption)}
+#study-panel .diagram-panel svg{height:15rem}
+#study-panel .calculation-status{font-size:var(--text-caption)}
+#study-panel[data-study-mode="notes"] .notes-calculator{display:none}
+#study-panel[data-study-mode="calculator"]>:is(.study-heading,.study-jumps,.study-layout,.notes-summary,.composite-example,.view-note,.curriculum-scope){display:none}
+[data-focus="true"] #explore-panel{grid-template-columns:minmax(0,1fr)}
+[data-focus="true"] #explore-panel #model-canvas{height:min(65vh,680px)}
+[data-module-embedded="true"] .site-header{display:none}
+[data-module-embedded="true"] .module-tools #module-theme{display:none}
+[data-module-embedded="true"] .module-sidebar .header-meta{display:flex;flex-direction:column;align-items:stretch;gap:var(--space-2);margin:0;min-width:0}
+[data-module-embedded="true"] .module-sidebar .header-meta .offline{padding:var(--space-2);font-size:var(--text-caption)}
+[data-module-embedded="true"] .module-sidebar .header-meta :is(button,a){justify-content:flex-start;min-height:var(--control-size);font-size:var(--text-caption)}
+[data-module-embedded="true"] :is(#module-settings,#module-help){min-height:var(--control-size)}
+@media(min-width:1201px){
+ #study-panel .calculator-layout{grid-template-columns:minmax(0,.8fr) minmax(0,1.1fr) minmax(0,.6fr)}
+ #study-panel #notes-form{grid-column:1;grid-row:1}
+ #study-panel .diagram-panel{grid-column:2;grid-row:1}
+ #study-panel .calculation-results{grid-column:3;grid-row:1}
+}
+@media(max-width:1200px){
+ .module-shell{grid-template-columns:10rem minmax(0,1fr);gap:var(--space-4);padding-inline:var(--space-4)}
+ .model-workbench{grid-template-columns:minmax(0,1fr)}
+ .model-picker-panel{padding:var(--space-3)}
+ .model-picker-heading{display:flex;justify-content:space-between;gap:var(--space-3)}
+ .model-picker-heading>span{margin:0}
+ .model-picker-panel .shape-picker{display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}
+ .model-picker-panel .shape-choice{flex-direction:column;justify-content:center;font-size:var(--text-caption);text-align:center}
+ .model-picker-panel .shape-name{flex:0}
+ .model-picker-panel .choice-dot{display:none}
+ .model-picker-panel .extra-shape-field{flex-direction:row;align-items:center;justify-content:flex-start;margin-top:var(--space-3)}
+ .model-picker-panel .extra-shape-field label{flex-shrink:0}
+ .model-picker-panel .extra-shape-field select{max-width:22rem}
+}
+@media(max-width:960px){
+ #explore-panel{grid-template-columns:minmax(0,1fr)}
+ #explore-panel .learning-notes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+ #explore-panel .think-card{grid-column:1/-1}
+ #explore-panel[data-explore-mode="views"] .learning-notes{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #explore-panel[data-explore-mode="views"] .workspace{display:block;padding:0}
+ #explore-panel[data-explore-mode="views"] .stage{margin-inline:var(--space-3)}
+ #explore-panel[data-explore-mode="views"] .views-panel{padding:var(--space-4)}
+ #study-panel .study-layout{grid-template-columns:minmax(0,1fr)}
+ #study-panel .study-reference{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:760px){
+ .module-shell{display:block;padding:var(--space-4)}
+ .module-sidebar{padding:0;border:0;margin-bottom:var(--space-5)}
+ .module-sidebar>.eyebrow{margin:0 0 var(--space-3)}
+ .module-sidebar .learning-navigation{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+ .module-sidebar .learning-nav-button{min-width:0;padding:var(--space-2);gap:var(--space-2);font-size:var(--text-small)}
+ .module-sidebar .module-tools{flex-direction:row;flex-wrap:wrap;padding-top:var(--space-3);margin-top:var(--space-3);gap:var(--space-2)}
+ .module-sidebar .module-tools button{flex:1}
+ .module-content>.intro h1{font-size:var(--text-title)}
+ .model-picker-panel .shape-picker{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-2)}
+ .model-picker-panel .shape-choice{min-height:var(--control-size)}
+ .model-picker-panel .extra-shape-field{flex-direction:column;align-items:stretch}
+ .model-picker-panel .extra-shape-field select{max-width:100%}
+ #explore-panel .workspace-top{padding:var(--space-3)}
+ #explore-panel #model-canvas{height:18rem}
+ #explore-panel .learning-notes,#explore-panel[data-explore-mode="views"] .learning-notes{display:flex;flex-direction:column}
+ #explore-panel .stage-top .stage-label{flex:1 1 100%}
+ #explore-panel .stage-top .stage-tools{justify-content:flex-end;width:100%}
+ #explore-panel .stage-bottom{flex-direction:row;align-items:center;flex-wrap:wrap}
+ #explore-panel .stage-bottom>*{flex:1 1 auto}
+ #explore-panel .rotate-toggle{width:auto}
+ #explore-panel[data-explore-mode="views"] .view-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #study-panel .study-heading{padding:var(--space-3);align-items:flex-start;flex-wrap:wrap}
+ #study-panel .study-heading h2,#study-panel .calculator-heading h3{font-size:var(--text-heading)}
+ #study-panel #notes-model{width:6rem;height:6rem}
+ #study-panel .study-reference{grid-template-columns:minmax(0,1fr)}
+ #study-panel .calculator-layout{display:flex;flex-direction:column}
+ #study-panel #notes-form{order:0;width:100%}
+ #study-panel .diagram-panel{order:1;width:100%}
+ #study-panel .calculation-results{order:2;width:100%}
+ #study-panel .calculator-heading .button{width:100%}
+ [data-module-embedded="true"] .module-sidebar .header-meta{flex-direction:row;flex-wrap:wrap;width:100%}
+ [data-module-embedded="true"] .module-sidebar .header-meta .offline{flex:1 1 100%}
+}
+
 .studio-connections{display:flex;flex-direction:column;gap:8px;margin:17px 0}.studio-connection{border:1px solid var(--border);border-radius:8px;padding:0 10px}.studio-connection>summary{font-size:var(--text-caption);font-weight:700;min-height:44px;padding:11px 0;cursor:pointer}.studio-connection label{display:block;font-size:var(--text-caption);font-weight:700;margin:9px 0 6px}.studio-connection select{display:block;width:100%;min-width:0;min-height:44px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--ink);font:var(--text-small) var(--font-body);padding:8px;margin-bottom:12px}.net-print-preview{max-height:340px;overflow:auto;border:1px solid var(--border);border-radius:10px;background:white;margin-top:14px}.net-print-preview>svg{display:block;width:100%;height:auto;min-width:200px}.net-print-grid-toggle{display:flex;align-items:center;gap:8px;font-size:var(--text-small);min-height:36px}.net-print-grid-toggle input{width:16px;height:16px;accent-color:var(--primary)}.net-print-sheet{display:none}#net-print-mount{margin-top:22px;padding-top:20px;border-top:1px solid var(--border)}#net-print-mount h4{margin:0 0 8px;font-size:var(--text-body)}.net-print-preview:empty{display:none}
 @page{size:A4 portrait;margin:10mm}
 @media print{body[data-net-printing="true"]{margin:0!important;padding:0!important;background:white!important}body[data-net-printing="true"]>*{display:none!important}body[data-net-printing="true"]>#net-print-sheet{display:block!important;margin:0!important;padding:0!important;border:0!important;background:white!important;max-width:none!important;width:190mm!important}body[data-net-printing="true"]>#net-print-sheet>svg{display:block!important;width:auto!important;height:auto!important;max-width:none!important}}
@@ -848,34 +1042,39 @@ button {transition:background-color var(--motion-fast) var(--ease-ui),border-col
 <body>
   <a class="skip" href="#main">Terus ke modul</a>
   <header class="site-header">
-    <a href="#main" class="brand" aria-label="GeoDecoder Digital, modul pembelajaran"><svg viewBox="0 0 40 44" aria-hidden="true"><path d="m20 2 17 10v20L20 42 3 32V12Z" fill="#215FF0"/><path d="m20 2 17 10-17 10L3 12Z" fill="#6EAAFF"/><path d="m20 22 17-10v20L20 42Z" fill="#1847B0"/><path d="m11 17 9 5 9-5M20 22v10" stroke="white" stroke-width="2" fill="none"/></svg><span>Geo<span class="brand-blue">Decoder</span><small>DIGITAL · MODUL PEMBELAJARAN</small></span></a>
-    <span id="version" class="version">V1.6.0</span>
+    <a href="#main" class="brand" aria-label="GeoMath, modul pembelajaran" data-module-native-language><svg viewBox="0 0 40 44" aria-hidden="true"><path d="m20 2 17 10v20L20 42 3 32V12Z" fill="#215FF0"/><path d="m20 2 17 10-17 10L3 12Z" fill="#6EAAFF"/><path d="m20 22 17-10v20L20 42Z" fill="#1847B0"/><path d="m11 17 9 5 9-5M20 22v10" stroke="white" stroke-width="2" fill="none"/></svg><span>Geo<span class="brand-blue">Math</span><small id="module-brand-caption">MODUL PEMBELAJARAN</small></span></a>
+    <span id="version" class="version">V1.6.1</span>
     <div class="header-meta"><span class="offline"><i></i>Tanpa Internet</span><a href="#panduan" class="help-link">Panduan <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a></div>
   </header>
-  <main id="main">
+  <main id="main" class="module-shell">
+    <aside class="module-sidebar" aria-label="Navigasi modul"><p id="module-sidebar-title" class="eyebrow" data-module-native-language>RUANG PEMBELAJARAN</p>
+    <nav class="learning-navigation" aria-label="Bahagian pembelajaran"><button id="learn-explore" aria-controls="explore-panel" class="learning-nav-button" aria-pressed="true"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 9 5v9l-9 5-9-5V8l9-5Zm0 10 9-5M3 8l9 5v9"/></svg>Teroka 3D</button><button id="learn-notes" aria-controls="study-panel" class="learning-nav-button" aria-pressed="false"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5c3-1 6 0 9 2 3-2 6-3 9-2v15c-3-1-6 0-9 2-3-2-6-3-9-2V5Zm9 2v15"/></svg>Nota pembelajaran <span>KSSM</span></button><button id="learn-measures" data-module-native-language class="learning-nav-button" aria-pressed="false" aria-controls="study-panel"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4V4Zm5 0v5H4m11-5v5h5M9 20v-5H4m11 5v-5h5"/></svg><b id="learn-measures-label">Kalkulator ukuran</b></button><button id="learn-labs" class="learning-nav-button" aria-pressed="false"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3M8 15h8"/></svg>Makmal interaktif <span>4 AKTIVITI</span></button><button id="learn-projection" data-module-native-language class="learning-nav-button" aria-pressed="false"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 9 5v9l-9 5-9-5V8l9-5Zm0 10 9-5M3 8l9 5v9"/></svg><b id="learn-projection-label">Pelan &amp; Dongakan</b></button><button id="learn-calculation" data-module-native-language class="learning-nav-button" aria-pressed="false"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><b id="learn-calculation-label">Semakan Pengiraan</b></button></nav>
     <div class="module-tools" role="group" aria-label="Pilihan paparan"><button id="module-theme" aria-pressed="false">Tema gelap</button><button id="module-focus" aria-pressed="false">Fokus model</button></div>
-    <section class="progress-summary" aria-label="Ringkasan empat aktiviti"><b id="module-count">0 / 4 aktiviti selesai</b><p id="module-summary">Bentangan: belum · Isi padu: belum · Luas: belum · Gabungan: belum</p><small>Rekod latihan kendiri; bukan pengesahan penguasaan atau gred TP. Ulang aktiviti mengekalkan pencapaian.</small></section>
-    <div class="intro"><div><p class="eyebrow">MAKMAL BONGKAH · KSSM</p><h1>Lihat. Buka. <span>Fahami.</span></h1><p>Teroka bongkah, bentangan dan pandangan 2D. Fahami luas permukaan serta isi padu melalui nota dan contoh.</p></div><span class="self-paced"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 5 9 3 9-3v14l-9 3-9-3V5Zm9 3v14"/></svg>Belajar ikut rentak sendiri</span></div>
-    <nav class="learning-navigation" aria-label="Bahagian pembelajaran"><button id="learn-explore" class="learning-nav-button" aria-pressed="true"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 9 5v9l-9 5-9-5V8l9-5Zm0 10 9-5M3 8l9 5v9"/></svg>Teroka 3D</button><button id="learn-notes" class="learning-nav-button" aria-pressed="false"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5c3-1 6 0 9 2 3-2 6-3 9-2v15c-3-1-6 0-9 2-3-2-6-3-9-2V5Zm9 2v15"/></svg>Nota pembelajaran <span>KSSM</span></button><button id="learn-labs" class="learning-nav-button" aria-pressed="false"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3M8 15h8"/></svg>Makmal interaktif <span>4 AKTIVITI</span></button><button id="learn-projection" data-module-native-language class="learning-nav-button" aria-pressed="false"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 9 5v9l-9 5-9-5V8l9-5Zm0 10 9-5M3 8l9 5v9"/></svg><b id="learn-projection-label">Pelan &amp; Dongakan</b></button><button id="learn-calculation" data-module-native-language class="learning-nav-button" aria-pressed="false"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><b id="learn-calculation-label">Semakan Pengiraan</b></button></nav>
-    <nav id="shape-picker" class="shape-picker" aria-label="Pilih bongkah"></nav><div id="extra-shape-field" class="extra-shape-field"><label for="extra-shape-select">Bentuk tambahan untuk pembelajaran</label><select id="extra-shape-select"><option value="">Pilih prisma, piramid segi tiga atau sfera…</option></select></div>
+    </aside>
+    <div class="module-content">
+
+
+    <div id="module-intro" class="intro"><div><p class="eyebrow">MAKMAL BONGKAH · KSSM</p><h1>Lihat. Buka. <span>Fahami.</span></h1><p>Teroka bongkah, bentangan dan pandangan 2D. Fahami luas permukaan serta isi padu melalui nota dan contoh.</p></div><span class="self-paced"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 5 9 3 9-3v14l-9 3-9-3V5Zm9 3v14"/></svg>Belajar ikut rentak sendiri</span></div>
+
+    <div id="model-workbench" class="model-workbench"><aside id="model-picker-panel" class="model-picker-panel"><div class="model-picker-heading"><h2 id="model-picker-title" data-module-native-language>Pilih model</h2><span id="model-picker-count" data-module-native-language>11 bongkah</span></div><nav id="shape-picker" class="shape-picker" aria-label="Pilih bongkah"></nav><div id="extra-shape-field" class="extra-shape-field"><label for="extra-shape-select"><span id="extra-shape-label" data-module-native-language>Bentuk tambahan</span></label><select id="extra-shape-select"><option value="">Pilih prisma, piramid segi tiga atau sfera…</option></select></div></aside><div class="model-workbench-content">
     <div id="explore-panel" class="learning-layout">
       <section class="workspace" aria-labelledby="model-title">
         <div class="workspace-top"><div><span class="mini-label">RUANG PENEROKAAN</span><h2 id="model-title" tabindex="-1">Kubus</h2></div><div class="mode-switch" role="group" aria-label="Jenis penerokaan"><button id="mode-model" aria-pressed="true">Model &amp; bentangan</button><button id="mode-views" aria-pressed="false">Pandangan 2D</button></div></div>
         <div id="stage" class="stage">
           <div class="stage-top"><span id="stage-label" class="stage-label">Bongkah 3D</span><div class="stage-tools"><button id="zoom-out" class="icon-button" aria-label="Zum keluar" title="Zum keluar"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button><output id="zoom-level" aria-live="off">100%</output><button id="zoom-in" class="icon-button" aria-label="Zum masuk" title="Zum masuk"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button><button id="reset" class="icon-button" aria-label="Kedudukan asal" title="Kedudukan asal"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5m-4-4a8 8 0 0 1 13-3l2 3M4 16l2 3a8 8 0 0 0 13-3"/></svg></button></div></div>
-          <div class="motion-tools"><label for="explore-speed">Kelajuan animasi</label><select id="explore-speed"><option value="1">1×</option><option value="0.5">0.5×</option></select><button id="explore-next">Langkah seterusnya</button></div><canvas id="model-canvas" tabindex="0" role="img" aria-label="Model interaktif kubus" aria-describedby="canvas-help">Model bongkah boleh diteroka menggunakan kawalan di bawah. Penerangan muka tersedia di sebelah model.</canvas>
+          <canvas id="model-canvas" tabindex="0" role="img" aria-label="Model interaktif kubus" aria-describedby="canvas-help">Model bongkah boleh diteroka menggunakan kawalan di bawah. Penerangan muka tersedia di sebelah model.</canvas>
           <p id="canvas-help" class="canvas-help">Seret untuk putar · Cubit atau roda tetikus untuk zum<span>Anak panah: putar · + / −: zum · Home: asal</span></p>
-          <div class="stage-bottom"><label class="toggle"><input id="labels" type="checkbox"><span>Label pada model</span></label><button id="auto-rotate" class="rotate-toggle" aria-pressed="true"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5m-4-4a8 8 0 0 1 13-3l2 3M4 16l2 3a8 8 0 0 0 13-3"/></svg><span>Hentikan putaran</span></button></div><div class="explore-camera camera-toolbar" role="group" aria-label="Kawalan arah model"><span class="camera-group-label">Putar model</span><div class="camera-group"><button id="orbit-left" class="icon-button" aria-label="Putar bongkah ke kiri" title="Putar ke kiri"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></button><button id="orbit-right" class="icon-button" aria-label="Putar bongkah ke kanan" title="Putar ke kanan"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m10 6 6 6-6 6"/></svg></button><button id="orbit-up" class="icon-button" aria-label="Putar bongkah ke atas" title="Putar ke atas"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 14 6-6 6 6"/></svg></button><button id="orbit-down" class="icon-button" aria-label="Putar bongkah ke bawah" title="Putar ke bawah"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 10 6 6 6-6"/></svg></button></div></div>
+          <div class="stage-bottom"><label class="toggle"><input id="labels" type="checkbox"><span>Label pada model</span></label><button id="auto-rotate" class="rotate-toggle" aria-pressed="true"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5m-4-4a8 8 0 0 1 13-3l2 3M4 16l2 3a8 8 0 0 0 13-3"/></svg><span>Hentikan putaran</span></button></div><details class="camera-options"><summary id="explore-camera-label" data-module-native-language>Kawalan arah model</summary><div class="explore-camera camera-toolbar" role="group" aria-label="Kawalan arah model"><span class="camera-group-label">Putar model</span><div class="camera-group"><button id="orbit-left" class="icon-button" aria-label="Putar bongkah ke kiri" title="Putar ke kiri"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></button><button id="orbit-right" class="icon-button" aria-label="Putar bongkah ke kanan" title="Putar ke kanan"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m10 6 6 6-6 6"/></svg></button><button id="orbit-up" class="icon-button" aria-label="Putar bongkah ke atas" title="Putar ke atas"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 14 6-6 6 6"/></svg></button><button id="orbit-down" class="icon-button" aria-label="Putar bongkah ke bawah" title="Putar ke bawah"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 10 6 6 6-6"/></svg></button></div></div></details>
         </div>
         <p id="reduced-note" class="motion-note" hidden>Gerakan dikurangkan: putaran automatik dimatikan. Peluncur mengawal bentangan secara terus; animasi hanya bergerak apabila anda menekan Main.</p>
         <div id="animation-panel" class="animation-panel">
           <div class="timeline-label"><label for="progress">Bongkah <span aria-hidden="true">⟷</span> Bentangan</label><output id="progress-value" for="progress">0% terbuka</output></div>
           <input id="progress" type="range" min="0" max="1000" step="1" value="0" aria-valuetext="Bongkah tertutup, 0 peratus terbuka">
           <div class="animation-actions"><button id="play" class="button primary"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7V5Z"/></svg><span>Main animasi</span></button><button id="open-net" class="button">Buka bentangan</button><button id="close-net" class="button">Cantum semula</button><button id="replay" class="button replay"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5m-4-4a8 8 0 0 1 13-3l2 3M4 16l2 3a8 8 0 0 0 13-3"/></svg> Ulang</button></div>
-          <p id="animation-caption" class="animation-caption">Muka kekal bersambung pada rusuk. Warna yang sama menandakan muka yang sama.</p>
+          <details class="explore-options"><summary id="explore-tempo-label" data-module-native-language>Tempo dan langkah</summary><div class="motion-tools"><label for="explore-speed">Kelajuan animasi</label><select id="explore-speed"><option value="1">1×</option><option value="0.5">0.5×</option></select><button id="explore-next">Langkah seterusnya</button></div></details><p id="animation-caption" class="animation-caption">Muka kekal bersambung pada rusuk. Warna yang sama menandakan muka yang sama.</p>
         </div>
         <p id="no-net-note" class="motion-note no-net-note" hidden></p><div id="views-panel" class="views-panel" hidden><p><b>Pandangan 2D bukan bentangan.</b> Lihat bongkah yang masih tertutup dari satu arah. Tiada kesan perspektif.</p><div id="view-grid" class="view-grid" role="group" aria-label="Enam pandangan ortografik"></div><p id="view-description" class="view-description"></p></div>
-        <div class="face-key"><div class="face-key-title"><b>Jejaki permukaan</b><span>Klik model atau pilih label.</span></div><div id="face-legend" class="face-legend" role="group" aria-label="Pilih muka atau permukaan"></div><p id="face-description" aria-live="polite">Pilih permukaan untuk melihatnya pada model.</p></div>
+        <details class="face-key"><summary class="face-key-title"><b>Jejaki permukaan</b><span>Klik model atau pilih label.</span></summary><div id="face-legend" class="face-legend" role="group" aria-label="Pilih muka atau permukaan"></div><p id="face-description" aria-live="polite">Pilih permukaan untuk melihatnya pada model.</p></details>
       </section>
       <aside class="learning-notes" aria-labelledby="notes-title">
         <section class="notes-card"><p class="eyebrow">KENALI BONGKAH</p><h2 id="notes-title">Kubus</h2><p id="shape-tag" class="shape-tag"></p><div id="properties" class="properties"></div><p id="shape-intro" class="body-copy"></p><p id="edge-note" class="edge-note" hidden>Rusuk melengkung ialah sempadan antara permukaan rata dengan permukaan melengkung.</p></section>
@@ -883,13 +1082,13 @@ button {transition:background-color var(--motion-fast) var(--ease-ui),border-col
         <section class="notes-card think-card" aria-labelledby="think-title"><p class="eyebrow">CUBA FIKIR · TANPA MARKAH</p><h3 id="think-title"></h3><div id="think-options" class="think-options" role="group" aria-label="Pilihan pemahaman"></div><p id="think-feedback" class="think-feedback" role="status">Pilih satu jawapan untuk melihat penerangan.</p></section>
       </aside>
     </div>
-    <section id="study-panel" class="study-panel" hidden aria-labelledby="study-title">
-      <div class="study-heading"><div><p class="eyebrow">KSSM · TINGKATAN 2 · BAB 6</p><h2 id="study-title" tabindex="-1">Nota kubus</h2><p id="study-description"></p></div><span class="study-tag">Bentuk geometri tiga dimensi</span></div>
+    <section id="study-panel" class="study-panel" data-study-mode="notes" hidden aria-labelledby="study-title">
+      <div class="study-heading"><div><p class="eyebrow">KSSM · TINGKATAN 2 · BAB 6</p><h2 id="study-title" tabindex="-1">Nota kubus</h2><p id="study-description"></p></div><canvas id="notes-model" role="img" aria-label="Model bongkah untuk nota"></canvas></div>
       <nav class="study-jumps" aria-label="Pergi ke bahagian nota"><button id="jump-concept">6.1 Sifat</button><button id="jump-net">6.2 Bentangan</button><button id="jump-area">6.3 Luas permukaan</button><button id="jump-volume">6.4 Isi padu</button><button id="jump-calculate">Cuba ukuran</button><button id="note-draw-projections" data-module-native-language>Latih pelan &amp; dongakan</button></nav>
       <div class="study-layout">
         <div class="study-reading">
-          <article class="lesson-block"><span class="lesson-code">6.1 · KENALI BONGKAH</span><h3 id="note-concept-title" tabindex="-1">Sifat geometri</h3><p id="note-classification"></p><p id="note-everyday" class="note-context"></p>
-            <div class="note-table-wrap" tabindex="0" role="region" aria-label="Perbandingan sifat sebelas bongkah"><table class="note-table"><caption>Bandingkan sebelas bongkah pembelajaran</caption><thead><tr><th scope="col">Bongkah</th><th scope="col">Muka / permukaan</th><th scope="col">Rusuk</th><th scope="col">Bucu</th></tr></thead><tbody id="shape-comparison-body"></tbody></table></div><p class="table-hint">Pada skrin kecil, leret jadual ke kiri atau kanan.</p><p class="note-definition"><b>Muka</b> ialah permukaan rata. <b>Rusuk melengkung</b> ialah sempadan bulatan tempat permukaan rata bertemu permukaan melengkung.</p>
+          <article class="lesson-block"><span class="lesson-code">6.1 · KENALI BONGKAH</span><h3 id="note-concept-title" tabindex="-1">Sifat geometri</h3><p id="note-classification"></p><p id="note-everyday" class="note-context"></p><div id="note-properties" class="properties note-properties"></div>
+            <details class="note-comparison"><summary id="note-comparison-label" data-module-native-language>Bandingkan 11 bongkah</summary><div class="note-table-wrap" tabindex="0" role="region" aria-label="Perbandingan sifat sebelas bongkah"><table class="note-table"><caption>Bandingkan sebelas bongkah pembelajaran</caption><thead><tr><th scope="col">Bongkah</th><th scope="col">Muka / permukaan</th><th scope="col">Rusuk</th><th scope="col">Bucu</th></tr></thead><tbody id="shape-comparison-body"></tbody></table></div><p class="table-hint">Pada skrin kecil, leret jadual ke kiri atau kanan.</p></details><p class="note-definition"><b>Muka</b> ialah permukaan rata. <b>Rusuk melengkung</b> ialah sempadan bulatan tempat permukaan rata bertemu permukaan melengkung.</p>
           </article>
           <article class="lesson-block"><span class="lesson-code">6.2 · LIHAT SAMBUNGANNYA</span><h3 id="note-net-title" tabindex="-1">Daripada bongkah kepada bentangan</h3><p>Bentangan menunjukkan seluruh permukaan bongkah yang dibuka pada satu satah. Sisi yang sepadan akan bercantum semula apabila dilipat.</p><div id="note-net-list"></div><div class="note-discovery"><b>Teroka sendiri</b><p id="note-task"></p><button id="note-explore-net" class="text-button">Lihat animasi bentangan <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></button></div></article>
           <article class="lesson-block"><span class="lesson-code">6.3 · JUMLAH LUAS DI LUAR</span><h3 id="note-area-title" tabindex="-1">Luas permukaan, L</h3><p>Jumlahkan luas semua permukaan yang berada di luar bongkah. Untuk nota ini, rumus jumlah luas melibatkan bongkah tertutup.</p><p id="note-area-formula" class="lesson-formula"></p><p id="note-area-why"></p><div id="area-example"></div></article>
@@ -905,8 +1104,8 @@ button {transition:background-color var(--motion-fast) var(--ease-ui),border-col
             <div id="measure-field-l" class="measure-field" hidden><label id="measure-label-l" for="measure-l">l · lebar</label><div class="measure-input"><input id="measure-l" name="l" type="text" inputmode="decimal" maxlength="10" autocomplete="off" aria-describedby="measure-help measure-error-l"><span aria-hidden="true">cm</span></div><p id="measure-error-l" class="measure-error"></p></div>
             <div id="measure-field-t" class="measure-field" hidden><label id="measure-label-t" for="measure-t">t · tinggi tegak</label><div class="measure-input"><input id="measure-t" name="t" type="text" inputmode="decimal" maxlength="10" autocomplete="off" aria-describedby="measure-help measure-error-t"><span aria-hidden="true">cm</span></div><p id="measure-error-t" class="measure-error"></p></div>
             <div id="measure-field-j" class="measure-field" hidden><label id="measure-label-j" for="measure-j">j · jejari tapak</label><div class="measure-input"><input id="measure-j" name="j" type="text" inputmode="decimal" maxlength="10" autocomplete="off" aria-describedby="measure-help measure-error-j"><span aria-hidden="true">cm</span></div><p id="measure-error-j" class="measure-error"></p></div>
-          </div><fieldset id="notes-pi" class="notes-pi" hidden><legend>Nilai π untuk aktiviti ini</legend><div class="pi-options" role="group" aria-label="Pilih nilai pi"><button type="button" id="pi-ratio" aria-pressed="true">22/7</button><button type="button" id="pi-decimal" aria-pressed="false">3.142</button><button type="button" id="pi-full" aria-pressed="false">π</button></div><p id="notes-pi-description"></p></fieldset><button type="submit" id="calculate-measures" class="button primary">Kira dan semak ukuran</button></form>
-        </div><div class="calculation-results" aria-live="polite" aria-atomic="true"><div><span>Luas permukaan</span><output id="calculated-area">—</output></div><div><span>Isi padu</span><output id="calculated-volume">—</output></div></div><p id="calculation-status" class="calculation-status" role="status"></p><details class="area-breakdown"><summary>Dari mana datangnya jumlah luas ini?</summary><ul id="area-breakdown"></ul></details>
+          </div><fieldset id="notes-pi" class="notes-pi" hidden><legend>Nilai π untuk aktiviti ini</legend><div class="pi-options" role="group" aria-label="Pilih nilai pi"><button type="button" id="pi-ratio" aria-pressed="true">22/7</button><button type="button" id="pi-decimal" aria-pressed="false">3.142</button><button type="button" id="pi-full" aria-pressed="false">π</button></div><p id="notes-pi-description"></p></fieldset><button type="button" id="calculate-measures" class="button primary">Kira dan semak ukuran</button></form>
+        <div class="calculation-results" aria-live="polite" aria-atomic="true"><div><span>Luas permukaan</span><output id="calculated-area">—</output></div><div><span>Isi padu</span><output id="calculated-volume">—</output></div></div></div><p id="calculation-status" class="calculation-status" role="status"></p><details class="area-breakdown"><summary>Dari mana datangnya jumlah luas ini?</summary><ul id="area-breakdown"></ul></details>
       </section>
       <div class="learning-tool-bridge" data-module-native-language><p id="note-check-description">Bina penyelesaian sendiri menggunakan ukuran dan pilihan π di atas.</p><button id="note-check-steps" class="button primary">Semak langkah untuk ukuran ini</button></div>
       <section class="notes-summary"><div><p class="eyebrow">SIMPAN DALAM INGATAN</p><h3>Rumus dan unit</h3><p>Luas permukaan menggunakan unit persegi. Isi padu menggunakan unit padu.</p></div><div class="note-table-wrap" tabindex="0" role="region" aria-label="Ringkasan rumus sebelas bongkah"><table class="note-table formula-table"><caption>Rumus bagi sebelas bongkah pembelajaran tertutup</caption><thead><tr><th scope="col">Bongkah</th><th scope="col">Luas permukaan</th><th scope="col">Isi padu</th></tr></thead><tbody id="formula-summary-body"></tbody></table></div><div id="unit-facts" class="unit-facts"></div><p class="note-definition">Jangan darab 100 sahaja apabila menukar m² kepada cm². Luas melibatkan dua ukuran; isi padu melibatkan tiga ukuran.</p></section>
@@ -914,6 +1113,7 @@ button {transition:background-color var(--motion-fast) var(--ease-ui),border-col
       <div class="view-note"><div><p class="eyebrow">PENGAYAAN · UNJURAN ORTOGON</p><h3>Pandangan 2D bukan bentangan</h3><p>Pandangan menunjukkan rupa bongkah dari satu arah. Bentangan membuka seluruh permukaan pada satu satah. Bandingkan kedua-duanya dengan model yang sama.</p></div><button id="note-explore-views" class="button">Bandingkan enam pandangan <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></button></div>
       <p class="curriculum-scope">Nota dan contoh asli ini meliputi lima bongkah projek serta enam bentuk tambahan, berpandukan DSKP Matematik Tingkatan 2 SP 6.1.1, 6.2.1, 6.3.1–6.3.2 dan 6.4.1–6.4.3. Contoh gabungan dan unit menyokong 6.3.3. Pengayaan pandangan berkait Tingkatan 3 SP 7.1.1–7.1.2. Ia menyokong dua bab yang dipilih; aktiviti tidak meliputi setiap latihan atau semua jenis bongkah.</p>
     </section>
+    </div></div>
     <section id="projection-panel" data-module-native-language hidden></section>
     <section id="calculation-panel" data-module-native-language hidden></section>
     <section id="labs-panel" class="labs-panel" hidden aria-labelledby="labs-title">
@@ -935,12 +1135,14 @@ button {transition:background-color var(--motion-fast) var(--ease-ui),border-col
       </div></div>
       <p class="curriculum-scope">Aktiviti berpandukan DSKP Matematik Tingkatan 2: bentangan dan pembinaan model (6.2.1), rumus luas permukaan (6.3.1–6.3.2), masalah gabungan (6.3.3), rumus serta masalah isi padu (6.4.1–6.4.3). Fokus pada bongkah tegak terpilih. Prisma tambahan bertapak poligon sekata; tapak segi tiga ialah segi tiga sama sisi. Ini penerokaan, bukan pentaksiran tahap penguasaan.</p>
     </section>
+    <section class="progress-summary" aria-label="Ringkasan empat aktiviti"><b id="module-count">0 / 4 aktiviti selesai</b><p id="module-summary">Bentangan: belum · Isi padu: belum · Luas: belum · Gabungan: belum</p><small>Rekod latihan kendiri; bukan pengesahan penguasaan atau gred TP. Ulang aktiviti mengekalkan pencapaian.</small></section>
     <section id="panduan" class="guide" aria-labelledby="guide-title"><div><p class="eyebrow">PANDUAN RINGKAS</p><h2 id="guide-title">Satu bongkah. Tiga cara memahami.</h2></div><div class="guide-columns"><article><span class="guide-icon" aria-hidden="true">3D</span><h3>Model bongkah</h3><p>Putar dan zum untuk melihat permukaan, rusuk dan bucu. Klik muka untuk menjejakinya.</p></article><article><span class="guide-icon" aria-hidden="true">↗</span><h3>Bentangan</h3><p>Buka seluruh permukaan menjadi bentuk rata. Cantum semula untuk memahami sambungannya.</p></article><article><span class="guide-icon" aria-hidden="true">2D</span><h3>Pandangan ortografik</h3><p>Lihat bongkah dari atas, bawah, depan, belakang, kiri atau kanan. Bongkah kekal tertutup.</p></article></div>
       <details id="curriculum"><summary>Rujukan KSSM / DSKP dan skop pembelajaran</summary><div class="curriculum-copy"><p><b>Tingkatan 2:</b> SP 6.1.1 (sifat geometri bongkah) dan SP 6.2.1 (bentangan dan model). Nota turut merangkumi luas permukaan (6.3.1–6.3.2), isi padu (6.4.1–6.4.3), contoh gabungan dan unit (6.3.3). Lima bongkah projek dikekalkan bersama enam bentuk tambahan. Studio dan makmal menggunakan contoh yang ditulis semula, bukan salinan latihan buku.</p><p><b>Pengayaan Tingkatan 3:</b> SP 7.1.1–7.1.2 (unjuran ortogon). Enam pandangan membantu membezakan objek dengan unjurannya; modul belum mengajar lukisan pelan/dongakan mengikut skala.</p><p>Bahasa dipermudah supaya murid Tingkatan 1 boleh mengikuti aktiviti. Contoh ini menggunakan bongkah tegak. Silinder dan kon mempunyai permukaan melengkung; istilah “muka” digunakan untuk permukaan rata.</p><p><a href="https://bpk.moe.gov.my/kurikulum/kssm/kssm-tingkatan-2/341-dskp-kssm-matematik-tingkatan-2/file" target="_blank" rel="noreferrer">DSKP Matematik Tingkatan 2 · BPK, KPM</a><br><a href="https://sman.pahang.edu.my/system/documents/attachments/000/000/168/original/002_DSKP_KSSM_MATEMATIK_TINGKATAN_3.pdf?1544929347=" target="_blank" rel="noreferrer">DSKP Matematik Tingkatan 3 · salinan dokumen KPM</a></p><p><b>Sumber setempat:</b> buku teks BM dan BI Tingkatan 2 Bab 6, halaman bercetak 98–119, serta Tingkatan 3 Bab 7, halaman 168–197; DSKP Tingkatan 2 halaman 51–54 dan Tingkatan 3 halaman 57–60. Tiada bab lain digunakan untuk kemas kini ini.</p><p>Semua aktiviti berfungsi tanpa Internet. Pautan rujukan memerlukan Internet.</p></div></details>
     </section>
+    </div>
   </main><section id="net-print-sheet" class="net-print-sheet" hidden></section>
   <section class="speech-panel" aria-label="Penerangan suara pilihan"><b id="speech-heading">Penerangan suara pilihan</b><p id="speech-transcript">Pilih aktiviti untuk membaca penerangan.</p><div class="lab-actions"><button id="speech-play">Baca / ulang penerangan</button><button id="speech-stop">Hentikan suara</button></div><p id="speech-status" role="status">Teks sentiasa tersedia. Suara hanya dimainkan selepas arahan anda.</p></section>
-  <footer><span>GeoDecoder Digital · Belajar melalui penerokaan.</span><span>Model ilustrasi · Ukuran relatif sepadan</span></footer>
+  <footer><span id="module-footer-caption" data-module-native-language>GeoMath · Belajar melalui penerokaan.</span><span>Model ilustrasi · Ukuran relatif sepadan</span></footer>
   <div id="announcer" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
   <noscript><p class="noscript">Hidupkan JavaScript dalam pelayar untuk memutar model dan membuka bentangan. Semua penerangan ringkas tersedia selepas JavaScript dihidupkan.</p></noscript>
   <script>
@@ -1337,7 +1539,7 @@ function meshBounds(mesh) {
 function faceCenter(f) {return f.vertices.reduce((sum,p)=>add3(sum,p),[0,0,0]).map(v=>v/f.vertices.length);}
 
 
-const MODULE_VERSION='1.6.0';
+const MODULE_VERSION='1.6.1';
 const MODEL_ORDER=['cube','cuboid','pyramid','cylinder','cone','triangular-prism','tetrahedron','pentagonal-prism','hexagonal-prism','sphere','hemisphere'];
 const MODEL_DATA={
   cube:{name:'Kubus',tag:'Enam muka, semuanya sama.',flat:6,curved:0,edges:12,vertices:8,
@@ -2236,14 +2438,18 @@ function drawNoteDiagram(shape,result){
   }
 }
 class LearningNotes{
-  constructor({onExplore,announce,prefersReduced}){this.onExplore=onExplore;this.announce=announce;this.prefersReduced=prefersReduced;this.ready=false;this.shape=null;this.piMode='22/7';}
+  constructor({onExplore,onCalculator,announce,prefersReduced}){this.onExplore=onExplore;this.onCalculator=onCalculator;this.announce=announce;this.prefersReduced=prefersReduced;this.ready=false;this.shape=null;this.piMode='22/7';}
   init(){
     if(this.ready)return;this.ready=true;
     for(const field of ['a','p','l','t','j'])noteEl('measure-'+field).addEventListener('input',()=>this.calculate());
-    noteEl('notes-form').addEventListener('submit',event=>{event.preventDefault();const r=this.calculate();if(!r.valid){const first=MEASURE_FIELDS[this.shape].find(k=>r.errors[k]);if(first)noteEl('measure-'+first).focus();}});
+    noteEl('notes-form').addEventListener('submit',event=>{event.preventDefault();this.validate();});
+    // The host sandbox deliberately disallows form navigation. Validate through
+    // owned controls as well, so click/Enter work without allow-forms permission.
+    noteEl('calculate-measures').addEventListener('click',()=>this.validate());
+    noteEl('notes-form').addEventListener('keydown',event=>{if(event.key==='Enter'&&!event.isComposing&&event.target.tagName==='INPUT'){event.preventDefault();this.validate();}});
     noteEl('reset-measures').addEventListener('click',()=>{this.fillDefaults();this.calculate();this.announce('Ukuran contoh dikembalikan.');});
     for(const [id,mode] of [['pi-ratio','22/7'],['pi-decimal','3.142'],['pi-full','full']])noteEl(id).addEventListener('click',()=>{this.piMode=mode;this.calculate();});
-    for(const [id,target] of [['jump-concept','note-concept-title'],['jump-net','note-net-title'],['jump-area','note-area-title'],['jump-volume','note-volume-title'],['jump-calculate','note-calculate-title']])noteEl(id).addEventListener('click',()=>{noteEl(target).focus({preventScroll:true});noteEl(target).scrollIntoView({behavior:this.prefersReduced()?'instant':'smooth',block:'start'});});
+    for(const [id,target] of [['jump-concept','note-concept-title'],['jump-net','note-net-title'],['jump-area','note-area-title'],['jump-volume','note-volume-title'],['jump-calculate','note-calculate-title']])noteEl(id).addEventListener('click',()=>{if(id==='jump-calculate')this.onCalculator?.();noteEl(target).focus({preventScroll:true});noteEl(target).scrollIntoView({behavior:this.prefersReduced()?'instant':'smooth',block:'start'});});
     for(const [id,mode] of [['note-explore-solid','model'],['note-explore-net','net'],['note-explore-views','views']])noteEl(id).addEventListener('click',()=>{if(mode==='net'&&MODEL_DATA[this.shape].noNet)return;this.onExplore(mode);});
     this.buildTables();
   }
@@ -2274,6 +2480,11 @@ class LearningNotes{
     noteEl('notes-pi').hidden=!['cylinder','cone','sphere','hemisphere'].includes(shape);noteEl('slant-result').hidden=!['pyramid','cone','tetrahedron'].includes(shape);
     noteEl('diagram-caption').textContent=d.noNet?'Keratan melalui pusat menunjukkan jejari j; rajah ini bukan bentangan.':shape==='tetrahedron'?'Keratan melalui puncak dan pusat tapak: t tegak, s tinggi muka sisi, u jarak pusat tapak ke tengah sisi.':['pyramid','cone'].includes(shape)?'Keratan rentas: t tegak lurus kepada tapak; s mengikut sisi condong.':['triangular-prism','pentagonal-prism','hexagonal-prism'].includes(shape)?'a ialah panjang sisi tapak sekata; t ialah jarak tegak antara dua tapak. A ialah luas satu tapak.':'Rajah ukuran bagi aktiviti ini. Label merujuk kepada nilai dalam kotak ukuran.';
     this.fillDefaults();this.calculate();
+  }
+  validate(){
+    const r=this.calculate();
+    if(!r.valid){const first=MEASURE_FIELDS[this.shape].find(k=>r.errors[k]);if(first)noteEl('measure-'+first).focus();}
+    return r;
   }
   calculate(){
     const values=Object.fromEntries(MEASURE_FIELDS[this.shape].map(k=>[k,noteEl('measure-'+k).value])),r=calculateMeasures(this.shape,values,this.piMode);
@@ -3552,13 +3763,21 @@ class CalculationWorkshop{
 
 
 hydrateIcons(document);
+// UX-REDESIGN:EXPLORE — retain the host's settings/help controls, without
+// repeating the application brand/header inside its sandboxed learning frame.
+if(window.parent&&window.parent!==window){
+  document.documentElement.setAttribute('data-module-embedded','true');
+  const meta=document.querySelector?.('.header-meta'),tools=document.querySelector?.('.module-tools');
+  if(meta&&tools)tools.append(meta);
+}
 const el=id=>document.getElementById(id);
 const reduced=window.__geodecoderModuleHost?.media || window.matchMedia('(prefers-reduced-motion: reduce)');
 const initialHostSettings=window.__geodecoderModuleHost?.settings||{};
 const initial=MODEL_ORDER.includes(location.hash.slice(1))?location.hash.slice(1):'cube';
-const state={shape:initial,learningView:'explore',progress:0,yaw:.55,pitch:.35,zoom:1,mode:'model',view:'front',auto:!reduced.matches&&initialHostSettings.autoRotate!==false,labels:initialHostSettings.showLabels===true,selected:null,playing:false,direction:1,kind:'cycle',hold:0,camera:null,manualOrbit:false,pausedAnimation:null,speed:1};
+const state={shape:initial,learningView:'explore',studyMode:'notes',progress:0,yaw:.55,pitch:.35,zoom:1,mode:'model',view:'front',auto:!reduced.matches&&initialHostSettings.autoRotate!==false,labels:initialHostSettings.showLabels===true,selected:null,playing:false,direction:1,kind:'cycle',hold:0,camera:null,manualOrbit:false,pausedAnimation:null,speed:1};
 const primaryLearningShapes=['cube','cuboid','pyramid','cylinder','cone'];
 const mainRenderer=new ModelRenderer(el('model-canvas'));
+const notesRenderer=new ModelRenderer(el('notes-model'));
 const navRenderers=new Map(),viewRenderers=new Map();
 let raf=0,lastFrame=0,dirty=true,lastPercent=-1;
 let openedProjection=false,openedCalculation=false;
@@ -3576,6 +3795,7 @@ function alignCamera(yaw,pitch) {
   wake();
 }
 function refreshControls() {
+  el('explore-panel').dataset.exploreMode=state.mode;
   el('auto-rotate').setAttribute('aria-pressed',String(state.auto));
   el('auto-rotate').disabled=state.mode==='views';
   el('auto-rotate').querySelector('span').textContent=state.auto?'Hentikan putaran':'Putaran automatik';
@@ -3643,14 +3863,18 @@ function switchMode(mode) {
   else alignCamera(.55,.35);
   refreshControls();announce(mode==='views'?'Pandangan 2D: bongkah kekal tertutup, dilihat dari satu arah.':'Model dan bentangan. Seret untuk memutar bongkah.');wake();
 }
+function propertyCards(shape){
+  const data=MODEL_DATA[shape];
+  const stats=[[data.flat+data.curved,data.curved?'permukaan':'muka rata',data.curved?`${data.flat} rata + ${data.curved} melengkung`:'semuanya rata'],[data.edges,'rusuk',data.edges===0?'tiada':data.curvedEdges?'melengkung':'lurus'],[data.vertices,'bucu',shape==='cone'?'puncak':shape==='pyramid'?'termasuk puncak':'']];
+  return stats.map(([count,label,detail])=>{const box=element('div',{class:'property'});box.append(element('b',{},String(count)),element('span',{},label),element('small',{},detail));return box;});
+}
 function renderContent() {
   const data=MODEL_DATA[state.shape];
-  document.title=(state.learningView==='notes'?'Nota ':'')+data.name+' — Modul GeoDecoder';
   el('model-title').textContent=data.name;el('notes-title').textContent=data.name;el('shape-tag').textContent=data.tag;
   el('shape-intro').textContent=data.intro;el('net-explanation').textContent=data.net;el('net-explore-title').textContent=data.noNet?'Fahami permukaan melengkung':'Dari bongkah ke bentangan';el('observation').textContent=data.observe;
   el('edge-note').hidden=!data.curvedEdges;
-  const stats=[[data.flat+data.curved,data.curved?'permukaan':'muka rata',data.curved?`${data.flat} rata + ${data.curved} melengkung`:'semuanya rata'],[data.edges,'rusuk',data.edges===0?'tiada':data.curvedEdges?'melengkung':'lurus'],[data.vertices,'bucu',state.shape==='cone'?'puncak':state.shape==='pyramid'?'termasuk puncak':'']];
-  el('properties').replaceChildren(...stats.map(([count,label,detail])=>{const box=element('div',{class:'property'});box.append(element('b',{},String(count)),element('span',{},label),element('small',{},detail));return box;}));
+  for(const id of ['properties','note-properties'])el(id).replaceChildren(...propertyCards(state.shape));
+  el('notes-model').setAttribute('aria-label',data.name+' · '+data.tag);
   el('think-title').textContent=data.question;el('think-feedback').textContent='Pilih satu jawapan untuk melihat penerangan.';el('think-feedback').className='think-feedback';
   el('think-options').replaceChildren(...data.options.map((text,i)=>{
     const button=element('button',{'aria-pressed':'false','data-answer':i},text);
@@ -3664,7 +3888,7 @@ function renderContent() {
   el('face-description').textContent='Pilih permukaan untuk melihatnya pada model.';
   for(const button of el('shape-picker').children)button.setAttribute('aria-pressed',String(button.dataset.shape===state.shape));
   el('extra-shape-select').value=primaryLearningShapes.includes(state.shape)?'':state.shape;renderLegend();renderViews();refreshControls();
-  if(state.learningView==='notes')learningNotes.render(state.shape);
+  if(state.learningView==='notes'){learningNotes.render(state.shape);notesRenderer.draw({shape:state.shape,mini:true});}
   refreshLearningToolLabels();
 }
 function selectShape(shape) {
@@ -3729,12 +3953,28 @@ for(const shape of MODEL_ORDER.filter(s=>!primaryLearningShapes.includes(s)))el(
 el('extra-shape-select').addEventListener('change',()=>{const shape=el('extra-shape-select').value;if(MODEL_ORDER.includes(shape))selectShape(shape);});
 function refreshLearningToolLabels(){
   const english=window.__geodecoderModuleHost?.language==='en';
-  for(const [id,ms,en] of [['learn-projection-label','Pelan & Dongakan','Plans & Elevations'],['learn-calculation-label','Semakan Pengiraan','Calculation Steps'],['note-draw-projections','Latih pelan & dongakan','Practise plans & elevations'],['note-check-steps','Semak langkah untuk ukuran ini','Check steps with these measurements'],['note-check-description','Bina penyelesaian sendiri menggunakan ukuran dan pilihan π di atas.','Build your own solution with the measurements and π choice above.']])el(id).textContent=english?en:ms;
+  for(const [id,ms,en] of [['module-brand-caption','MODUL PEMBELAJARAN','LEARNING MODULE'],['module-sidebar-title','RUANG PEMBELAJARAN','LEARNING SPACE'],['explore-camera-label','Kawalan arah model','Model direction controls'],['explore-tempo-label','Tempo dan langkah','Speed and steps'],['model-picker-title','Pilih model','Choose a model'],['model-picker-count','11 bongkah','11 solids'],['extra-shape-label','Bentuk tambahan','More solids'],['note-comparison-label','Bandingkan 11 bongkah','Compare 11 solids'],['learn-measures-label','Kalkulator ukuran','Measurements'],['module-footer-caption','GeoMath · Belajar melalui penerokaan.','GeoMath · Learn through exploration.'],['learn-projection-label','Pelan & Dongakan','Plans & Elevations'],['learn-calculation-label','Semakan Pengiraan','Calculation Steps'],['note-draw-projections','Latih pelan & dongakan','Practise plans & elevations'],['note-check-steps','Semak langkah untuk ukuran ini','Check steps with these measurements'],['note-check-description','Bina penyelesaian sendiri menggunakan ukuran dan pilihan π di atas.','Build your own solution with the measurements and π choice above.']])el(id).textContent=english?en:ms;
   el('note-draw-projections').hidden=!primaryLearningShapes.includes(state.shape);
+  if(['explore','notes'].includes(state.learningView)){
+    const host=window.__geodecoderModuleHost,shape=host?.translate?.(MODEL_DATA[state.shape].name)||MODEL_DATA[state.shape].name;
+    const prefix=state.learningView==='notes'?(state.studyMode==='calculator'?(english?'Measurements · ':'Kalkulator ukuran · '):(english?'Notes · ':'Nota · ')):'';
+    document.title=prefix+shape+' — GeoMath';
+  }
+}
+function setStudyMode(mode){
+  state.studyMode=mode==='calculator'?'calculator':'notes';
+  el('study-panel').dataset.studyMode=state.studyMode;
+  el('learn-notes').setAttribute('aria-pressed',String(state.learningView==='notes'&&state.studyMode==='notes'));
+  el('learn-measures').setAttribute('aria-pressed',String(state.learningView==='notes'&&state.studyMode==='calculator'));
+  if(state.learningView==='notes'&&state.studyMode==='notes')notesRenderer.draw({shape:state.shape,mini:true});
+  refreshLearningToolLabels();
 }
 function switchLearningView(view,options={}) {
   moduleAccess.stopSpeech();
-  if(state.learningView===view)return;
+  if(state.learningView===view){
+    if(view==='notes'){setStudyMode(options.studyMode);const title=el(state.studyMode==='calculator'?'note-calculate-title':'study-title');title.focus({preventScroll:true});}
+    return;
+  }
   stopAnimation();state.auto=false;state.camera=null;
   if(state.learningView==='labs')learningLabs.close();
   if(state.learningView==='projection')projectionStudio.close();
@@ -3745,13 +3985,15 @@ function switchLearningView(view,options={}) {
     el(section==='notes'?'study-panel':section+'-panel').hidden=view!==section;
     el('learn-'+section).setAttribute('aria-pressed',String(view===section));
   }
+  setStudyMode(options.studyMode);
+  el('model-workbench').hidden=!['explore','notes'].includes(view);
+  el('module-intro').hidden=view!=='explore';
   el('shape-picker').hidden=!['explore','notes'].includes(view);el('extra-shape-field').hidden=!['explore','notes'].includes(view);
-  document.title=(view==='notes'?'Nota ':'')+MODEL_DATA[state.shape].name+' — Modul GeoDecoder';
   if(['explore','notes'].includes(view))moduleAccess.describe(MODEL_DATA[state.shape].intro+' '+MODEL_DATA[state.shape].net);
-  if(view==='labs'){learningLabs.open();el('labs-title').focus({preventScroll:true});document.title='Makmal Interaktif — Modul GeoDecoder';}
-  else if(view==='projection'){projectionStudio.open(options.shape??(openedProjection?undefined:state.shape));openedProjection=true;el('projection-title')?.focus({preventScroll:true});document.title=(moduleAccess.language()==='en'?'Plans & Elevations':'Pelan & Dongakan')+' — GeoDecoder';}
-  else if(view==='calculation'){calculationWorkshop.open(options.shape??(openedCalculation?undefined:state.shape),options.context);openedCalculation=true;el('calculation-title')?.focus({preventScroll:true});document.title=(moduleAccess.language()==='en'?'Calculation Steps':'Semakan Langkah Pengiraan')+' — GeoDecoder';}
-  else if(view==='notes'){learningNotes.render(state.shape);el('study-title').focus({preventScroll:true});announce('Nota '+MODEL_DATA[state.shape].name.toLowerCase()+' dibuka.');}
+  if(view==='labs'){learningLabs.open();el('labs-title').focus({preventScroll:true});document.title='Makmal Interaktif — GeoMath';}
+  else if(view==='projection'){projectionStudio.open(options.shape??(openedProjection?undefined:state.shape));openedProjection=true;el('projection-title')?.focus({preventScroll:true});document.title=(moduleAccess.language()==='en'?'Plans & Elevations':'Pelan & Dongakan')+' — GeoMath';}
+  else if(view==='calculation'){calculationWorkshop.open(options.shape??(openedCalculation?undefined:state.shape),options.context);openedCalculation=true;el('calculation-title')?.focus({preventScroll:true});document.title=(moduleAccess.language()==='en'?'Calculation Steps':'Semakan Langkah Pengiraan')+' — GeoMath';}
+  else if(view==='notes'){learningNotes.render(state.shape);notesRenderer.draw({shape:state.shape,mini:true});el(state.studyMode==='calculator'?'note-calculate-title':'study-title').focus({preventScroll:true});announce('Nota '+MODEL_DATA[state.shape].name.toLowerCase()+' dibuka.');}
   else {redrawSmallModels();el('model-title').focus({preventScroll:true});announce('Teroka 3D '+MODEL_DATA[state.shape].name.toLowerCase()+'.');}
 }
 const moduleAccess=new ModuleAccess({onTheme:()=>{redrawSmallModels();if(learningLabs.active)learningLabs.draw();if(state.learningView==='projection')projectionStudio.draw();},onFocus:()=>{redrawSmallModels();if(learningLabs.active)learningLabs.draw();if(state.learningView==='projection')projectionStudio.draw();const target=el(state.learningView==='labs'?'labs-canvas':state.learningView==='projection'?'projection-title':state.learningView==='calculation'?'calculation-title':'model-canvas');if(state.learningView!=='notes'&&target){target.focus({preventScroll:true});target.scrollIntoView({behavior:reduced.matches?'instant':'smooth',block:'center'});}},onContext:(records,changed)=>{
@@ -3760,7 +4002,7 @@ const moduleAccess=new ModuleAccess({onTheme:()=>{redrawSmallModels();if(learnin
  learningLabs.restoreProgress(records);
 }});
 const learningLabs=new LearningLabs({announce,prefersReduced:()=>reduced.matches,onProgress:r=>moduleAccess.progress(r),onActivity:()=>moduleAccess.stopSpeech(),onDescribe:text=>moduleAccess.describe(text)});
-const learningNotes=new LearningNotes({announce,prefersReduced:()=>reduced.matches,onExplore:mode=>{
+const learningNotes=new LearningNotes({announce,onCalculator:()=>switchLearningView('notes',{studyMode:'calculator'}),prefersReduced:()=>reduced.matches,onExplore:mode=>{
   switchLearningView('explore');
   if(mode==='net')beginAnimation(1);
   else if(mode==='views'){switchMode('views');selectView('top');}
@@ -3770,6 +4012,7 @@ const learningNotes=new LearningNotes({announce,prefersReduced:()=>reduced.match
 const projectionStudio=new ProjectionStudio({root:el('projection-panel'),announce,prefersReduced:()=>reduced.matches,getLanguage:()=>moduleAccess.language(),onDescribe:text=>moduleAccess.describe(text)});
 const calculationWorkshop=new CalculationWorkshop({root:el('calculation-panel'),announce,prefersReduced:()=>reduced.matches,getLanguage:()=>moduleAccess.language(),onDescribe:text=>moduleAccess.describe(text),onNotes:shape=>{if(MODEL_ORDER.includes(shape))selectShape(shape);switchLearningView('notes');}});
 el('learn-explore').addEventListener('click',()=>switchLearningView('explore'));el('learn-notes').addEventListener('click',()=>switchLearningView('notes'));
+el('learn-measures').addEventListener('click',()=>switchLearningView('notes',{studyMode:'calculator'}));
 el('learn-labs').addEventListener('click',()=>switchLearningView('labs'));
 el('learn-projection').addEventListener('click',()=>switchLearningView('projection'));
 el('learn-calculation').addEventListener('click',()=>switchLearningView('calculation'));
@@ -3864,7 +4107,7 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden){
   stopAnimation();state.pausedAnimation=saved;state.auto=false;state.camera=null;
   if(raf)cancelAnimationFrame(raf);raf=0;lastFrame=0;refreshControls();
 }else wake();});
-function redrawSmallModels(){for(const [shape,r] of navRenderers)r.draw({shape,yaw:.55,pitch:.35,mini:true});drawViews();wake();}
+function redrawSmallModels(){if(state.learningView==='notes')notesRenderer.draw({shape:state.shape,mini:true});for(const [shape,r] of navRenderers)r.draw({shape,yaw:.55,pitch:.35,mini:true});drawViews();wake();}
 if(typeof ResizeObserver!=='undefined'){const resize=new ResizeObserver(redrawSmallModels);resize.observe(el('shape-picker'));resize.observe(el('stage'));}else window.addEventListener('resize',redrawSmallModels);
 renderContent();redrawSmallModels();moduleAccess.init();moduleAccess.describe(MODEL_DATA[state.shape].intro+' '+MODEL_DATA[state.shape].net);wake();
 let lastHostSettings={};
