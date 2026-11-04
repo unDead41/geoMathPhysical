@@ -1,0 +1,41 @@
+{
+  "observed_date_malaysia": "2026-11-04",
+  "project_ref": "fkrlwzxvyufndavlpzbp",
+  "source_commit": "05d57ec18a80ce68f5e53d8e2d5867c9eaa8dab8",
+  "migration": {
+    "name": "geodecoder_auth_providers",
+    "hosted_version": "20261104061744",
+    "source_file": "supabase/migrations/20261104053103_geodecoder_auth_providers.sql",
+    "source_blob": "e864122b53fb4ab3cd46fbb9053d41a2db739d86",
+    "applied": true,
+    "source_timestamp_differs_from_hosted_version": true
+  },
+  "verification": {
+    "function_security": true,
+    "function_privileges": true,
+    "profile_table_security": true,
+    "targeted_tests": 187,
+    "targeted_pass": 187,
+    "build_and_checks": "passed",
+    "new_advisor_findings": 0
+  },
+  "google": {
+    "cloud_project_id": "geomath-digital",
+    "client_form_prepared": true,
+    "client_created": false,
+    "secret_entered": false,
+    "provider_saved": false
+  },
+  "phone": {
+    "provider_enabled": false,
+    "sms_requested": false,
+    "credentials_present": false
+  },
+  "frontend": {
+    "feature_branch": "digitalized-utility-auth-providers",
+    "published": false,
+    "public_runtime_version": "2.8.0",
+    "public_commit": "c27f3bde56079c2ab7f519a43f0008dce9f20c81"
+  },
+  "note": "This later rollout receipt supersedes the earlier task snapshot that marked hosted_changes_applied=false. Provider activation remains pending direct user credential creation/entry. No secret values are recorded."
+}
