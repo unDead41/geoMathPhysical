@@ -61,3 +61,69 @@
 
 #solo-save-status{max-width:72rem;margin:.5rem auto;padding:.5rem 1rem;font-size:.875rem;color:var(--ink)}
 #solo-resume-button{margin-bottom:.75rem}
+
+/* Approved utility workspaces keep the app-owned dialog, focus and preference owners. */
+#app-dialog:has(.utility-workspace){width:min(var(--page-max),calc(100% - 32px));margin:124px auto 20px;max-height:calc(100dvh - 144px);background:var(--surface);border-radius:var(--radius-lg)}
+#app-dialog:has(.utility-workspace)::backdrop{background:color-mix(in srgb,var(--bg) 68%,transparent);backdrop-filter:none}
+#app-dialog:has(.utility-workspace) .dialog-shell{padding:16px}
+#app-dialog:has(.utility-workspace) .dialog-header{position:absolute;inset-block-start:20px;inset-inline-end:20px;margin:0;padding:0;z-index:2}
+#app-dialog:has(.utility-workspace) .dialog-header h2{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+#app-dialog:has(.utility-workspace) .dialog-header .icon-button{min-width:44px;min-height:44px;background:var(--surface)}
+.utility-workspace{display:grid;grid-template-columns:minmax(230px,.36fr) minmax(0,1fr);gap:22px;align-items:stretch;min-width:0}
+.utility-workspace[hidden],.settings-tab-panel[hidden]{display:none}
+.utility-workspace>*{min-width:0}
+.utility-rail{display:flex;flex-direction:column;min-width:0;border-radius:var(--radius);background:linear-gradient(150deg,var(--bg),var(--blue-soft));padding:25px 22px;color:var(--ink)}
+.utility-rail h3{display:flex;align-items:flex-start;gap:12px;margin:0 0 14px;font:800 calc(25px * var(--text-scale,1))/1.2 var(--font-display);letter-spacing:-.6px}
+.utility-rail h3>.icon{width:29px;height:29px;flex-shrink:0;margin-block-start:1px}
+.utility-rail>p{margin:0;color:var(--muted);font-size:calc(14px * var(--text-scale,1));line-height:1.6}
+.utility-rail-art{margin-block-start:auto;padding-block-start:60px;width:100%}
+.utility-rail-art .geometry-scene{display:block;width:100%;height:auto}
+.settings-workspace{padding:4px 0 0;min-width:0}
+.settings-tabs{display:flex;flex-wrap:wrap;gap:7px;padding-inline-end:54px;margin:0 0 14px}
+.settings-tabs [role=tab]{min-height:44px;min-width:116px;flex:0 1 auto;padding:9px 20px;border:1px solid transparent;border-radius:9px;background:var(--bg);color:var(--ink);font-size:calc(14px * var(--text-scale,1));font-weight:650;line-height:1.4}
+.settings-tabs [role=tab]:hover{background:var(--hover);border-color:var(--border-hover)}
+.settings-tabs [role=tab][aria-selected=true]{background:var(--primary-fill);color:var(--on-primary-fill);border-color:var(--primary-fill)}
+.settings-tab-panel{border:1px solid var(--border);border-radius:var(--radius);padding:18px;background:var(--surface);min-width:0}
+.settings-display{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:20px}
+.settings-display .settings-fields{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;margin:0}
+.settings-display .settings-field{display:grid;grid-template-columns:minmax(105px,.7fr) minmax(0,1fr);align-items:center;gap:12px;min-height:44px;font-size:calc(14px * var(--text-scale,1));line-height:1.45}
+.settings-display .settings-field>span{margin:0}
+.settings-display .settings-field select{min-height:44px;padding:8px 25px 8px 10px;font-size:calc(13px * var(--text-scale,1));line-height:1.4}
+.settings-preview{display:flex;flex-direction:column;justify-content:flex-start;margin:0;padding-inline-start:18px;border-inline-start:1px solid var(--border);min-width:0}
+.settings-preview figcaption{font-size:calc(14px * var(--text-scale,1));font-weight:750;line-height:1.4;margin-bottom:9px}
+.settings-preview-scene{display:grid;place-items:center;flex:1;min-height:178px;overflow:hidden;border:1px solid var(--border);border-radius:10px;background-color:var(--blue-soft);background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:22px 22px}
+.settings-preview .geometry-scene{display:block;width:100%;max-height:205px;height:auto}
+.settings-preview p{margin:12px 0 5px;font-size:calc(14px * var(--text-scale,1));font-weight:700;line-height:1.45}
+.settings-preview small{font-size:calc(11px * var(--text-scale,1));color:var(--muted);line-height:1.5}
+.settings-audio-card{padding:13px 18px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-top:14px}
+.settings-volume-row{display:grid;grid-template-columns:minmax(120px,1fr) 44px minmax(110px,1.3fr) 48px;align-items:center;gap:12px;min-height:48px;font-size:calc(14px * var(--text-scale,1))}
+.settings-volume-row+ .settings-volume-row{margin-top:4px}
+.settings-volume-row>label{font-weight:700;line-height:1.4}
+.settings-volume-row output{font-size:calc(12px * var(--text-scale,1));font-variant-numeric:tabular-nums;text-align:end}
+.settings-volume-row .icon-button{background:transparent;border-color:transparent}
+.settings-volume-row input[type=range]{width:100%;min-width:0;min-height:44px;margin:0;accent-color:var(--primary-fill)}
+.settings-audio-options>h4{font:750 calc(21px * var(--text-scale,1))/1.4 var(--font-display);margin:0 0 8px}
+.settings-audio-options>p{color:var(--muted);font-size:calc(14px * var(--text-scale,1));margin:0 0 16px}
+.settings-panel .preference-row{display:flex;align-items:center;justify-content:space-between;min-height:48px;gap:16px;cursor:pointer}
+.settings-panel .learning-preferences{margin:0;border:0;padding:0}
+.settings-panel .learning-preferences legend{font:750 calc(21px * var(--text-scale,1))/1.4 var(--font-display);padding:0 0 12px}
+.settings-panel .learning-preferences .preference-row+.preference-row{border-top:1px solid var(--border);padding-block:10px}
+.settings-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:16px}
+.settings-secondary-actions{display:flex;flex-wrap:wrap;gap:2px}
+.settings-secondary-actions>.button{font-size:calc(11px * var(--text-scale,1));padding-inline:10px}
+.settings-footer>.button{min-width:126px}
+.settings-panel #settings-notice{margin:8px 0 0;font-size:calc(11px * var(--text-scale,1));line-height:1.5;color:var(--muted)}
+.settings-panel[data-settings-tab=learning] .settings-audio-card{display:none}
+@media(max-width:1000px){.utility-workspace{grid-template-columns:minmax(190px,.33fr) minmax(0,1fr);gap:16px}.utility-rail{padding:23px 18px}.settings-display{grid-template-columns:minmax(0,1fr)}.settings-preview{display:none}.settings-volume-row{grid-template-columns:minmax(110px,1fr) 44px minmax(100px,1fr) 44px;gap:8px}}
+@media(max-width:700px){#app-dialog:has(.utility-workspace){margin:16px auto;width:calc(100% - 24px);max-height:calc(100dvh - 32px)}#app-dialog:has(.utility-workspace) .dialog-shell{padding:12px}#app-dialog:has(.utility-workspace) .dialog-header{inset-block-start:18px;inset-inline-end:18px}.utility-workspace{grid-template-columns:minmax(0,1fr);gap:18px}.utility-rail{padding:21px 18px}.utility-rail h3{padding-inline-end:44px;font-size:calc(23px * var(--text-scale,1));margin-bottom:10px}.utility-rail-art{display:none}.settings-tabs{padding-inline-end:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.settings-tabs [role=tab]{min-width:0;padding:9px 6px;font-size:calc(12px * var(--text-scale,1))}.settings-tab-panel{padding:14px}.settings-display .settings-field{grid-template-columns:minmax(0,1fr);gap:5px}.settings-display .settings-fields{gap:15px}.settings-preview{display:flex;padding-inline-start:0;padding-top:16px;border-inline-start:0;border-top:1px solid var(--border)}.settings-preview-scene{min-height:150px}.settings-preview .geometry-scene{max-height:170px}.settings-volume-row{grid-template-columns:minmax(0,1fr) 44px 48px;gap:5px 10px}.settings-volume-row>input[type=range]{grid-row:2;grid-column:1 / 4}.settings-volume-row>output{grid-column:3;grid-row:1}.settings-audio-card{padding:14px}.settings-volume-row+.settings-volume-row{margin-top:16px}.settings-footer{flex-wrap:wrap;align-items:stretch}.settings-secondary-actions{flex:1 1 100%;gap:0}.settings-footer>.button{margin-inline-start:auto;min-width:126px}}
+@media(forced-colors:active){.utility-rail,.settings-tab-panel,.settings-preview-scene,.settings-audio-card{border:1px solid CanvasText}.settings-tabs [role=tab][aria-selected=true]{border:2px solid Highlight}}
+#settings-panel .settings-secondary-actions>.button{font-size:calc(11px * var(--text-scale,1));padding-inline:10px}
+/* At the narrowest size, keep native tab labels and the rail title as whole words. */
+@media(max-width:380px){
+ .settings-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .settings-tabs [role=tab]:last-child{grid-column:1/-1}
+ html[data-text-size="150"] .utility-rail h3{font-size:calc(20px * var(--text-scale,1));gap:9px;padding-inline-end:35px}
+}
+/* Preserve the chosen text scale after the shared settings type recipe. */
+#settings-panel :is(.settings-field,.preference-row,.learning-preferences legend){font-size:calc(14px * var(--text-scale,1))}
+#settings-panel .learning-preferences .settings-notice{font-size:calc(12px * var(--text-scale,1))}

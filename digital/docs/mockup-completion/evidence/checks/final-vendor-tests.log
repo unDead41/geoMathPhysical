@@ -1,0 +1,18 @@
+✔ every stylesheet and typography token in the pinned artifact receives text scaling while model dimensions stay unchanged (8693.39499ms)
+✔ the actual module artifact starts through the native bridge with current preferences and both independent protocols (1752.605892ms)
+✔ settings messages preserve document identity and measurements, reject stale instances, and update language/audio live (2280.877231ms)
+✔ guided labels localize while a learner prediction and paused model stay unchanged (4418.49653ms)
+✔ English lab and print preview labels translate without changing SVG geometry or print-scale values (3576.593294ms)
+✔ module settings permit only the three supported presentation values (34.159145ms)
+✔ only the active opaque module can update a single supported learning preference (99.360248ms)
+✔ load and ready recover current settings while sync leaves the existing document intact (48.848551ms)
+✔ foreign windows, origins, versions and closed/old frames cannot open host settings (63.23393ms)
+✔ help requests reuse the active frame and reject stale, foreign or forged messages (38.071783ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 25020.740049

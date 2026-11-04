@@ -30,9 +30,15 @@ export function estimatedDevice(userAgent,t) {
   return t(device)+' · '+browser;
 }
 
+function deviceIcon(userAgent) {
+  const mobile = /Mobile|iPhone|Android|iPad|Tablet/i.test(userAgent || '');
+  return `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${mobile ? '<rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 18h4"/>' : '<path d="M4 3h16v13H4zM2 20h20l-2-4H4z"/>'}</svg>`;
+}
+
 export function renderActiveSessions({state,confirming='',button,esc,t}) {
   const loading=state.status==='loading',data=state.status==='ready'?state.data:null;
   const rows=data?.sessions||[],others=rows.filter(row=>!row.is_current);
+  const orderedRows=[...rows.filter(row=>row.is_current),...others];
   const date=value=>value?new Intl.DateTimeFormat(globalThis.document?.documentElement?.lang==='en'?'en-MY':'ms-MY',{timeZone:'Asia/Kuala_Lumpur',dateStyle:'medium',timeStyle:'short'}).format(new Date(value)):t('Belum direkodkan');
   const confirm=confirming==='others'
     ? [t('Log keluar semua sesi lain?'),t('Semua sesi lain akan dibatalkan. Peranti ini kekal log masuk.'),'logout-others',t('Ya, log keluar sesi lain')]
@@ -42,13 +48,12 @@ export function renderActiveSessions({state,confirming='',button,esc,t}) {
     <p class="portal-security-note">${t('Jenis peranti dan pelayar ialah anggaran. Aktiviti terakhir tidak tersedia.')}</p>
     ${loading||state.status==='idle'?`<p role="status">${t('Memuatkan sesi…')}</p>`:''}
     ${state.status==='error'?`<p class="portal-inline-warning" role="status">${esc(t(state.error))}</p>`:''}
-    ${data?`<ul class="portal-session-list">${rows.map(row=>`<li data-session-row class="portal-session-row"><div class="portal-session-heading"><b>${esc(estimatedDevice(row.user_agent,t))}</b>${row.is_current?`<span class="portal-session-current" data-current-session>${t('Peranti ini')}</span>`:''}</div><dl><div><dt>${t('Sesi bermula')}</dt><dd>${row.started_at?`<time datetime="${esc(row.started_at)}">${esc(date(row.started_at))}</time>`:t('Belum direkodkan')}</dd></div><div><dt>${t('Status sesi')}</dt><dd>${row.status==='expired'?t('Tamat mengikut pelayan'):t('Direkodkan oleh Auth')}</dd></div></dl></li>`).join('')}</ul>
+    ${data?`<ul class="portal-session-list">${orderedRows.map(row=>`<li data-session-row class="portal-session-row${row.is_current?' is-current':''}"><span class="portal-session-device" aria-hidden="true">${deviceIcon(row.user_agent)}</span><div class="portal-session-description"><div class="portal-session-heading"><b>${esc(estimatedDevice(row.user_agent,t))}</b>${row.is_current?`<span class="portal-session-current" data-current-session>${t('Peranti ini')}</span>`:''}</div><p class="portal-session-state"><span>${t('Status sesi')}: </span>${row.status==='expired'?t('Tamat mengikut pelayan'):t('Direkodkan oleh Auth')}</p></div><dl><div><dt>${t('Sesi bermula')}</dt><dd>${row.started_at?`<time datetime="${esc(row.started_at)}">${esc(date(row.started_at))}</time>`:t('Belum direkodkan')}</dd></div></dl></li>`).join('')}</ul>
       ${!others.length?`<p class="portal-session-empty">${t('Tiada sesi lain direkodkan.')}</p>`:''}
       ${data.truncated?`<p class="portal-security-note">${t('Hanya 100 sesi terkini dipaparkan, termasuk peranti ini. Log keluar sesi lain meliputi semua sesi lain.')}</p>`:''}
       <p class="portal-security-note">${t('Disemak pada')} ${esc(date(data.server_now))} ${t('(waktu Malaysia)')}</p>`:''}
-    <p class="portal-security-note">${t('Pembatalan satu sesi pilihan belum disokong. Gunakan log keluar semua sesi lain jika anda mahu mengekalkan peranti ini.')}</p>
     ${data?`<div class="portal-session-actions">${others.length?button(t('Log keluar semua sesi lain'),'request-logout-others',{danger:true}):''}${button(t('Log keluar peranti ini'),'request-logout-current',{quiet:true})}</div>`:''}
-    <p class="portal-security-note">${t('Pembatalan menghentikan pembaharuan log masuk. Token akses sedia ada boleh kekal sah sehingga luput.')}</p>
+    <details class="portal-session-scope"><summary>${t('Tentang pembatalan sesi')}</summary><p class="portal-security-note">${t('Pembatalan satu sesi pilihan belum disokong. Gunakan log keluar semua sesi lain jika anda mahu mengekalkan peranti ini.')} ${t('Pembatalan menghentikan pembaharuan log masuk. Token akses sedia ada boleh kekal sah sehingga luput.')}</p></details>
     ${confirming?`<div id="portal-session-confirm" class="portal-close-confirmation portal-security-confirm" role="group" aria-labelledby="portal-session-confirm-title"><div><h3 id="portal-session-confirm-title">${confirm[0]}</h3><p>${confirm[1]}</p></div><div>${button(t('Batal'),'cancel-session-logout')}${button(confirm[3],confirm[2],{danger:true})}</div></div>`:''}
   </section>`;
 }

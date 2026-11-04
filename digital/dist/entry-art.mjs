@@ -1,3 +1,14 @@
+import {shapeArt} from './art.mjs';
+
+/** Decorative still lifes reuse the same authored solid diagrams as the app. */
+export function sceneIllustration({variant='cluster',className=''}={}) {
+  const safeClass=String(className).replace(/[^a-zA-Z0-9_ -]/g,'');
+  const grid=Array.from({length:13},(_,i)=>`<path d="M${36+i*13} 265 230 ${132+i*8}M${28+i*28} 210l150 65"/>`).join('');
+  const solid=(shape,color,x,y,width,height)=>shapeArt(shape,'solid',true,color).replace('<svg ',`<svg x="${x}" y="${y}" width="${width}" height="${height}" style="width:${width}px;height:${height}px;overflow:visible" `);
+  const models=variant==='cube'?solid('cube','blue',112,30,205,210):solid('cube','blue',34,27,190,205)+solid('cylinder','yellow',232,64,146,174)+solid('pyramid','mint',139,121,176,171);
+  return `<svg class="geometry-scene ${safeClass}" viewBox="0 0 420 300" aria-hidden="true" focusable="false"><g fill="none" stroke="var(--primary,#215FF0)" stroke-opacity=".17" stroke-width="1">${grid}</g><ellipse cx="213" cy="252" rx="166" ry="24" fill="var(--primary,#215FF0)" opacity=".06"/>${models}</svg>`;
+}
+
 /** Exact SVG illustrations; no generated mathematical diagrams. */
 export function geometryKit() {
   const ticks=Array.from({length:40},(_,i)=>`<path d="M${12+i*10} 4v${i%5===0?13:7}"/>`).join('');

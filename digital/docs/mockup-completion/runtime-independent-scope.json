@@ -1,0 +1,746 @@
+{
+  "base": "ef697c86a5bfdf5a5658c3df92bce1d7f3f88652",
+  "generated_utc": "2026-11-04T06:17:34.557179+00:00",
+  "checks": [
+    {
+      "path": "digital/backend/README.md",
+      "status": "exact",
+      "expected_blob": "fbfc03b053d158a7bc77eee86b97ff2c1db6384e",
+      "actual_blob": "fbfc03b053d158a7bc77eee86b97ff2c1db6384e"
+    },
+    {
+      "path": "digital/backend/auth/index.ts",
+      "status": "exact",
+      "expected_blob": "98a4c49aff9f4a0dda7f0e555ff5cc6144cbdf8e",
+      "actual_blob": "98a4c49aff9f4a0dda7f0e555ff5cc6144cbdf8e"
+    },
+    {
+      "path": "digital/backend/classroom-crud/README.md",
+      "status": "exact",
+      "expected_blob": "1d54c0e50b4ed34d6709d14e905152eeb342520f",
+      "actual_blob": "1d54c0e50b4ed34d6709d14e905152eeb342520f"
+    },
+    {
+      "path": "digital/backend/duel/config.toml",
+      "status": "exact",
+      "expected_blob": "706c82256bde47daed08bdc68bb87d10d22d826e",
+      "actual_blob": "706c82256bde47daed08bdc68bb87d10d22d826e"
+    },
+    {
+      "path": "digital/backend/duel/functions/geodecoder-duel/handler.mjs",
+      "status": "exact",
+      "expected_blob": "c8b0e4636b6613d9e3d29af491e7bccb1b3ee23f",
+      "actual_blob": "c8b0e4636b6613d9e3d29af491e7bccb1b3ee23f"
+    },
+    {
+      "path": "digital/backend/duel/functions/geodecoder-duel/index.ts",
+      "status": "exact",
+      "expected_blob": "397af8a36474eaf3dfa24978a8e23a0cb4b60cf8",
+      "actual_blob": "397af8a36474eaf3dfa24978a8e23a0cb4b60cf8"
+    },
+    {
+      "path": "digital/backend/duel/functions/geodecoder-duel/questions.mjs",
+      "status": "exact",
+      "expected_blob": "801fa44fbe7b260466de762d52c7ce4bfa61b498",
+      "actual_blob": "801fa44fbe7b260466de762d52c7ce4bfa61b498"
+    },
+    {
+      "path": "digital/backend/duel/rollback-v2.sql",
+      "status": "exact",
+      "expected_blob": "df1ae64dcfdb8742761143290266c664b05bcf91",
+      "actual_blob": "df1ae64dcfdb8742761143290266c664b05bcf91"
+    },
+    {
+      "path": "digital/backend/duel/schema.sql",
+      "status": "exact",
+      "expected_blob": "a89226fca89b471385ef569cfac38e2c6a25dbc2",
+      "actual_blob": "a89226fca89b471385ef569cfac38e2c6a25dbc2"
+    },
+    {
+      "path": "digital/backend/duel/supabase/migrations/20261026091324_duel_durable_review_v2.sql",
+      "status": "exact",
+      "expected_blob": "626b4ad3861738c6b4335333bd1a0e8b539dd192",
+      "actual_blob": "626b4ad3861738c6b4335333bd1a0e8b539dd192"
+    },
+    {
+      "path": "digital/backend/duel/verify-live.mjs",
+      "status": "exact",
+      "expected_blob": "aaf2a605078e0e96ea02686ae7c55a91a17c1eb3",
+      "actual_blob": "aaf2a605078e0e96ea02686ae7c55a91a17c1eb3"
+    },
+    {
+      "path": "digital/backend/duel/verify-local.mjs",
+      "status": "exact",
+      "expected_blob": "c9adc5bd623cbe31dd574f8021489a1761b95e78",
+      "actual_blob": "c9adc5bd623cbe31dd574f8021489a1761b95e78"
+    },
+    {
+      "path": "digital/backend/duel/verify-v2.sql",
+      "status": "exact",
+      "expected_blob": "b7c05b70a8d23474c2fb5b4fcf763d249cbf1a31",
+      "actual_blob": "b7c05b70a8d23474c2fb5b4fcf763d249cbf1a31"
+    },
+    {
+      "path": "digital/backend/duel/verify.sql",
+      "status": "exact",
+      "expected_blob": "fb58352a9a1e9c244e66f61a1eea491dcd43b14f",
+      "actual_blob": "fb58352a9a1e9c244e66f61a1eea491dcd43b14f"
+    },
+    {
+      "path": "digital/backend/email/README.md",
+      "status": "exact",
+      "expected_blob": "29f8485b2080a689d6bc364930fb968024dfbd29",
+      "actual_blob": "29f8485b2080a689d6bc364930fb968024dfbd29"
+    },
+    {
+      "path": "digital/backend/email/manifest.json",
+      "status": "exact",
+      "expected_blob": "08d96bec41e7ff022d4c81fecc7d6ffa594caadc",
+      "actual_blob": "08d96bec41e7ff022d4c81fecc7d6ffa594caadc"
+    },
+    {
+      "path": "digital/backend/email/templates.mjs",
+      "status": "exact",
+      "expected_blob": "bfe4eb239f5481f20812a03165f5c848ca8480a7",
+      "actual_blob": "bfe4eb239f5481f20812a03165f5c848ca8480a7"
+    },
+    {
+      "path": "digital/backend/email/templates/confirmation.html",
+      "status": "exact",
+      "expected_blob": "b24965dea48c400083b4e83f83eb0154b4205200",
+      "actual_blob": "b24965dea48c400083b4e83f83eb0154b4205200"
+    },
+    {
+      "path": "digital/backend/email/templates/email_change.html",
+      "status": "exact",
+      "expected_blob": "b5abda3a7a7e323e07e073fb52c56f5d0d9002b7",
+      "actual_blob": "b5abda3a7a7e323e07e073fb52c56f5d0d9002b7"
+    },
+    {
+      "path": "digital/backend/email/templates/email_changed_notification.html",
+      "status": "exact",
+      "expected_blob": "ae1116e00b6e61e42281db4a4f1568f89d6f1ac2",
+      "actual_blob": "ae1116e00b6e61e42281db4a4f1568f89d6f1ac2"
+    },
+    {
+      "path": "digital/backend/email/templates/invite.html",
+      "status": "exact",
+      "expected_blob": "77a99cb51cc7ab2121db2d97a4a460362aebed74",
+      "actual_blob": "77a99cb51cc7ab2121db2d97a4a460362aebed74"
+    },
+    {
+      "path": "digital/backend/email/templates/magic_link.html",
+      "status": "exact",
+      "expected_blob": "4f2fcc70bd74b7e6f57e6fef3de63dce56b6a092",
+      "actual_blob": "4f2fcc70bd74b7e6f57e6fef3de63dce56b6a092"
+    },
+    {
+      "path": "digital/backend/email/templates/password_changed_notification.html",
+      "status": "exact",
+      "expected_blob": "2a127a3253fe42edc4113bf18dd6713568951085",
+      "actual_blob": "2a127a3253fe42edc4113bf18dd6713568951085"
+    },
+    {
+      "path": "digital/backend/email/templates/reauthentication.html",
+      "status": "exact",
+      "expected_blob": "80d6ba9641ae2bba1a5a3ddef78d0bf60db00ffe",
+      "actual_blob": "80d6ba9641ae2bba1a5a3ddef78d0bf60db00ffe"
+    },
+    {
+      "path": "digital/backend/email/templates/recovery.html",
+      "status": "exact",
+      "expected_blob": "08e356074799e14a0ecaef9c7513d46e6a6ee2bc",
+      "actual_blob": "08e356074799e14a0ecaef9c7513d46e6a6ee2bc"
+    },
+    {
+      "path": "digital/backend/email_v2_2.sql",
+      "status": "exact",
+      "expected_blob": "230c23e074fcbfb73c1173735efe405219155b71",
+      "actual_blob": "230c23e074fcbfb73c1173735efe405219155b71"
+    },
+    {
+      "path": "digital/backend/fix_v2.sql",
+      "status": "exact",
+      "expected_blob": "6ce0e1e35e3d4310d879d5ed05b5cc484a24a943",
+      "actual_blob": "6ce0e1e35e3d4310d879d5ed05b5cc484a24a943"
+    },
+    {
+      "path": "digital/backend/module_progress_v2_4.sql",
+      "status": "exact",
+      "expected_blob": "1f87e6b3b7f1d9415c786be38f7db855694a7012",
+      "actual_blob": "1f87e6b3b7f1d9415c786be38f7db855694a7012"
+    },
+    {
+      "path": "digital/backend/offline-sync.sql",
+      "status": "exact",
+      "expected_blob": "8ab6a1e7506d1efae88c344cfe4120d082772d90",
+      "actual_blob": "8ab6a1e7506d1efae88c344cfe4120d082772d90"
+    },
+    {
+      "path": "digital/backend/operations/README.md",
+      "status": "exact",
+      "expected_blob": "15e445692c2d4dcfbe72f9d1fbc00721c6e19af9",
+      "actual_blob": "15e445692c2d4dcfbe72f9d1fbc00721c6e19af9"
+    },
+    {
+      "path": "digital/backend/operations/RECHECK_HANDOFF.md",
+      "status": "exact",
+      "expected_blob": "48adff363028e0160773ee39eae6ffb4ca2ff3d6",
+      "actual_blob": "48adff363028e0160773ee39eae6ffb4ca2ff3d6"
+    },
+    {
+      "path": "digital/backend/operations/audit-20261026.json",
+      "status": "exact",
+      "expected_blob": "b22f20c35946e1a489e8c5d7d3578ce6face4b56",
+      "actual_blob": "b22f20c35946e1a489e8c5d7d3578ce6face4b56"
+    },
+    {
+      "path": "digital/backend/operations/check-history.mjs",
+      "status": "exact",
+      "expected_blob": "dbd49ca48925b84f33e0f98d00cc5b940d4e7e31",
+      "actual_blob": "dbd49ca48925b84f33e0f98d00cc5b940d4e7e31"
+    },
+    {
+      "path": "digital/backend/operations/deployment-plan.json",
+      "status": "exact",
+      "expected_blob": "55985ef3cc2d13d82eef494d2b15819e74e2a092",
+      "actual_blob": "55985ef3cc2d13d82eef494d2b15819e74e2a092"
+    },
+    {
+      "path": "digital/backend/profile_class_details_v2_7.sql",
+      "status": "exact",
+      "expected_blob": "0cb0ad1cf8d6f536e6c6aaf0d006ac7a792981c9",
+      "actual_blob": "0cb0ad1cf8d6f536e6c6aaf0d006ac7a792981c9"
+    },
+    {
+      "path": "digital/backend/profile_v2_3.sql",
+      "status": "exact",
+      "expected_blob": "c709dceeb2d464a382bc9c888ab054397f1c668d",
+      "actual_blob": "c709dceeb2d464a382bc9c888ab054397f1c668d"
+    },
+    {
+      "path": "digital/backend/scaling/.gitignore",
+      "status": "exact",
+      "expected_blob": "8e127d8288969fd177792120ff2432b429000539",
+      "actual_blob": "8e127d8288969fd177792120ff2432b429000539"
+    },
+    {
+      "path": "digital/backend/scaling/README.md",
+      "status": "exact",
+      "expected_blob": "bf8e4e7e968c8611ed1793019f195a0e96d37154",
+      "actual_blob": "bf8e4e7e968c8611ed1793019f195a0e96d37154"
+    },
+    {
+      "path": "digital/backend/scaling/diagnostics.sql",
+      "status": "exact",
+      "expected_blob": "48c646cd5af64aee3b1c69248b5c934a9329f3c3",
+      "actual_blob": "48c646cd5af64aee3b1c69248b5c934a9329f3c3"
+    },
+    {
+      "path": "digital/backend/scaling/fingerprints.json",
+      "status": "exact",
+      "expected_blob": "5fe52f67e3b7af8c0e65bfadc7f8697c788aa9ed",
+      "actual_blob": "5fe52f67e3b7af8c0e65bfadc7f8697c788aa9ed"
+    },
+    {
+      "path": "digital/backend/scaling/k6.mjs",
+      "status": "exact",
+      "expected_blob": "7ea134df6938cb9b0ed53e9bb6aaa5d711d8e928",
+      "actual_blob": "7ea134df6938cb9b0ed53e9bb6aaa5d711d8e928"
+    },
+    {
+      "path": "digital/backend/scaling/load-policy.mjs",
+      "status": "exact",
+      "expected_blob": "26bd0ce104d796436b0abab09a2faba348a43def",
+      "actual_blob": "26bd0ce104d796436b0abab09a2faba348a43def"
+    },
+    {
+      "path": "digital/backend/scaling/local-smoke.mjs",
+      "status": "exact",
+      "expected_blob": "cc1304d9ba850c6cc577b3ee35bb1eef7e419358",
+      "actual_blob": "cc1304d9ba850c6cc577b3ee35bb1eef7e419358"
+    },
+    {
+      "path": "digital/backend/scaling/rollback.sql",
+      "status": "exact",
+      "expected_blob": "c2f1b75b01aae4953b4dc0f43583e82a766d471d",
+      "actual_blob": "c2f1b75b01aae4953b4dc0f43583e82a766d471d"
+    },
+    {
+      "path": "digital/backend/scaling/supabase/migrations/20261104014211_geodecoder_scaling_v1.sql",
+      "status": "exact",
+      "expected_blob": "32a8dc38f4e2eda40f0c8a33a84b149b8d884ee8",
+      "actual_blob": "32a8dc38f4e2eda40f0c8a33a84b149b8d884ee8"
+    },
+    {
+      "path": "digital/backend/schema.sql",
+      "status": "exact",
+      "expected_blob": "bd2d7e00fa3971ea6cf18965555b11976851d7c2",
+      "actual_blob": "bd2d7e00fa3971ea6cf18965555b11976851d7c2"
+    },
+    {
+      "path": "digital/backend/security/README.md",
+      "status": "exact",
+      "expected_blob": "58b707a9fbc47ad14acc73762a71bd2c39437e33",
+      "actual_blob": "58b707a9fbc47ad14acc73762a71bd2c39437e33"
+    },
+    {
+      "path": "digital/backend/security/qa/README.md",
+      "status": "exact",
+      "expected_blob": "c2a6ecb528f8756cefa74e919a8b15501a3040aa",
+      "actual_blob": "c2a6ecb528f8756cefa74e919a8b15501a3040aa"
+    },
+    {
+      "path": "digital/backend/security/qa/browser.mjs",
+      "status": "exact",
+      "expected_blob": "212fef2a1bf5dd6392e9660203e23c1bb3a4ad0a",
+      "actual_blob": "212fef2a1bf5dd6392e9660203e23c1bb3a4ad0a"
+    },
+    {
+      "path": "digital/backend/security/qa/build.mjs",
+      "status": "exact",
+      "expected_blob": "42384afb8355a21bfd935906350b947217ec9e16",
+      "actual_blob": "42384afb8355a21bfd935906350b947217ec9e16"
+    },
+    {
+      "path": "digital/backend/security/qa/index.html",
+      "status": "exact",
+      "expected_blob": "6ff8ed0dcc7964e2f6432aaf83a5c162f6fd9816",
+      "actual_blob": "6ff8ed0dcc7964e2f6432aaf83a5c162f6fd9816"
+    },
+    {
+      "path": "digital/backend/security/qa/ui.mjs",
+      "status": "exact",
+      "expected_blob": "ebc98bcea7a480137fbbbb4886db428dda7ca7e8",
+      "actual_blob": "ebc98bcea7a480137fbbbb4886db428dda7ca7e8"
+    },
+    {
+      "path": "digital/backend/security/supabase/.gitignore",
+      "status": "exact",
+      "expected_blob": "1ac89fa0f88e637b0b8efe38ffb5b49c1cef0e76",
+      "actual_blob": "1ac89fa0f88e637b0b8efe38ffb5b49c1cef0e76"
+    },
+    {
+      "path": "digital/backend/security/supabase/migrations/20261026090539_geodecoder_security_sessions.sql",
+      "status": "exact",
+      "expected_blob": "c441473dba0934e1eab1e14e4548b61f84d5c52b",
+      "actual_blob": "c441473dba0934e1eab1e14e4548b61f84d5c52b"
+    },
+    {
+      "path": "digital/backend/security/verify-live.mjs",
+      "status": "exact",
+      "expected_blob": "2fd6fdb37651d781b8dc8918bfed8cead935248e",
+      "actual_blob": "2fd6fdb37651d781b8dc8918bfed8cead935248e"
+    },
+    {
+      "path": "digital/backend/verify.sql",
+      "status": "exact",
+      "expected_blob": "47b3ea056fb55aafa3cdc711291304e74f2d710b",
+      "actual_blob": "47b3ea056fb55aafa3cdc711291304e74f2d710b"
+    },
+    {
+      "path": "digital/backend/verify_email.sql",
+      "status": "exact",
+      "expected_blob": "9a6fd4cd8c18caec90aa856ccea4250bf1dc042e",
+      "actual_blob": "9a6fd4cd8c18caec90aa856ccea4250bf1dc042e"
+    },
+    {
+      "path": "digital/backend/verify_module_progress.sql",
+      "status": "exact",
+      "expected_blob": "cad68b21764cf108a9635f127a6490f219e4644c",
+      "actual_blob": "cad68b21764cf108a9635f127a6490f219e4644c"
+    },
+    {
+      "path": "digital/backend/verify_profile.sql",
+      "status": "exact",
+      "expected_blob": "032547072ce13f82f94bd466d91bab0b073e2de2",
+      "actual_blob": "032547072ce13f82f94bd466d91bab0b073e2de2"
+    },
+    {
+      "path": "digital/dist/account-security.mjs",
+      "status": "exact",
+      "expected_blob": "cd4a8c5f3411cef8fd07f6e1e570115602c7425d",
+      "actual_blob": "cd4a8c5f3411cef8fd07f6e1e570115602c7425d"
+    },
+    {
+      "path": "digital/dist/cloud-config.mjs",
+      "status": "exact",
+      "expected_blob": "5e9d3d17ae835939486f3f02850f6df2e89e45c1",
+      "actual_blob": "5e9d3d17ae835939486f3f02850f6df2e89e45c1"
+    },
+    {
+      "path": "digital/dist/cloud.mjs",
+      "status": "exact",
+      "expected_blob": "b1de83046ced49e5318c9463906f0d44ac6a77f9",
+      "actual_blob": "b1de83046ced49e5318c9463906f0d44ac6a77f9"
+    },
+    {
+      "path": "digital/dist/duel-state.mjs",
+      "status": "exact",
+      "expected_blob": "bd7d821064d99b0565c9f11d57e1c72d6b8140d9",
+      "actual_blob": "bd7d821064d99b0565c9f11d57e1c72d6b8140d9"
+    },
+    {
+      "path": "digital/dist/duel.mjs",
+      "status": "exact",
+      "expected_blob": "2d9ba80cc89b09de7daba106daa3961d6c6409f2",
+      "actual_blob": "2d9ba80cc89b09de7daba106daa3961d6c6409f2"
+    },
+    {
+      "path": "digital/dist/format.mjs",
+      "status": "exact",
+      "expected_blob": "82ce6e326260f9d89e873963fe9acf0cc0da59ab",
+      "actual_blob": "82ce6e326260f9d89e873963fe9acf0cc0da59ab"
+    },
+    {
+      "path": "digital/dist/module-design.mjs",
+      "status": "exact",
+      "expected_blob": "61daa3fbddd10bb2fa90cfa4cef4a9112846310d",
+      "actual_blob": "61daa3fbddd10bb2fa90cfa4cef4a9112846310d"
+    },
+    {
+      "path": "digital/dist/module-frame.mjs",
+      "status": "exact",
+      "expected_blob": "cf1fabd31fae02d8f99599ee55f1e5b2a5b9c6f9",
+      "actual_blob": "cf1fabd31fae02d8f99599ee55f1e5b2a5b9c6f9"
+    },
+    {
+      "path": "digital/dist/module-language.mjs",
+      "status": "exact",
+      "expected_blob": "b5f9f289d8d2ed23074659103a65829e9f4ad054",
+      "actual_blob": "b5f9f289d8d2ed23074659103a65829e9f4ad054"
+    },
+    {
+      "path": "digital/dist/module-progress.mjs",
+      "status": "exact",
+      "expected_blob": "d8bfbaf2c6a65cbbf6ab1f8fc46808ac7360c85e",
+      "actual_blob": "d8bfbaf2c6a65cbbf6ab1f8fc46808ac7360c85e"
+    },
+    {
+      "path": "digital/dist/module-settings.mjs",
+      "status": "exact",
+      "expected_blob": "ed7424a4be420beb34216b6ce8c6f11c386021b8",
+      "actual_blob": "ed7424a4be420beb34216b6ce8c6f11c386021b8"
+    },
+    {
+      "path": "digital/dist/music.mjs",
+      "status": "exact",
+      "expected_blob": "28046ad0b86f9e005d6c9689a730b98e9aeea3aa",
+      "actual_blob": "28046ad0b86f9e005d6c9689a730b98e9aeea3aa"
+    },
+    {
+      "path": "digital/dist/network-policy.mjs",
+      "status": "exact",
+      "expected_blob": "e84c4a4327143028a40f4b3a1a2f04a65edb160d",
+      "actual_blob": "e84c4a4327143028a40f4b3a1a2f04a65edb160d"
+    },
+    {
+      "path": "digital/dist/offline-db.mjs",
+      "status": "exact",
+      "expected_blob": "265def342d3e45771c0d0d21974f877fc4dbc95f",
+      "actual_blob": "265def342d3e45771c0d0d21974f877fc4dbc95f"
+    },
+    {
+      "path": "digital/dist/offline-package-client.mjs",
+      "status": "exact",
+      "expected_blob": "a7198f41691ca316f2fd3356c6057a066e9a28b3",
+      "actual_blob": "a7198f41691ca316f2fd3356c6057a066e9a28b3"
+    },
+    {
+      "path": "digital/dist/offline-records.mjs",
+      "status": "exact",
+      "expected_blob": "1095f75a99cc52d531cd3ac273965dfad79abec4",
+      "actual_blob": "1095f75a99cc52d531cd3ac273965dfad79abec4"
+    },
+    {
+      "path": "digital/dist/offline-runtime.mjs",
+      "status": "exact",
+      "expected_blob": "9a8b0f0f4b6112727c9e6b0576175695af97da24",
+      "actual_blob": "9a8b0f0f4b6112727c9e6b0576175695af97da24"
+    },
+    {
+      "path": "digital/dist/offline-sync.mjs",
+      "status": "exact",
+      "expected_blob": "001b62bb8db1ae7bdeb9c542309de85d56b750fe",
+      "actual_blob": "001b62bb8db1ae7bdeb9c542309de85d56b750fe"
+    },
+    {
+      "path": "digital/dist/offline-view.mjs",
+      "status": "exact",
+      "expected_blob": "b739f2917953d3d91efc14933fc91804d667529b",
+      "actual_blob": "b739f2917953d3d91efc14933fc91804d667529b"
+    },
+    {
+      "path": "digital/dist/preferences.mjs",
+      "status": "exact",
+      "expected_blob": "5f9bccb010390819015a2861d6e04d04743071b4",
+      "actual_blob": "5f9bccb010390819015a2861d6e04d04743071b4"
+    },
+    {
+      "path": "digital/dist/questions.mjs",
+      "status": "exact",
+      "expected_blob": "f1368f40149231d359de74d3bdef53f7ad9b27be",
+      "actual_blob": "f1368f40149231d359de74d3bdef53f7ad9b27be"
+    },
+    {
+      "path": "digital/dist/settings.mjs",
+      "status": "exact",
+      "expected_blob": "4552c8ef7c94203a30a0da46fec4dfd41ab6bb49",
+      "actual_blob": "4552c8ef7c94203a30a0da46fec4dfd41ab6bb49"
+    },
+    {
+      "path": "digital/dist/solo-save.mjs",
+      "status": "exact",
+      "expected_blob": "681b577f920e290cd7bf737899d2622203b0dde5",
+      "actual_blob": "681b577f920e290cd7bf737899d2622203b0dde5"
+    },
+    {
+      "path": "digital/dist/storage.mjs",
+      "status": "exact",
+      "expected_blob": "83fe2157c8e724063ab870a9726824c847386185",
+      "actual_blob": "83fe2157c8e724063ab870a9726824c847386185"
+    },
+    {
+      "path": "digital/dist/support-report.mjs",
+      "status": "exact",
+      "expected_blob": "bcaa0be1ab6ab624f882debd79816e8709f17a22",
+      "actual_blob": "bcaa0be1ab6ab624f882debd79816e8709f17a22"
+    },
+    {
+      "path": "digital/dist/usability.mjs",
+      "status": "exact",
+      "expected_blob": "da19ef2e34eff3bbe4b89fd3025dc621d64b5c3c",
+      "actual_blob": "da19ef2e34eff3bbe4b89fd3025dc621d64b5c3c"
+    },
+    {
+      "path": "digital/dist/visuals.mjs",
+      "status": "exact",
+      "expected_blob": "8427f5cf93e785735d340e7e825a723cc572f797",
+      "actual_blob": "8427f5cf93e785735d340e7e825a723cc572f797"
+    },
+    {
+      "path": "digital/module/src/accessibility.mjs",
+      "status": "changed",
+      "expected_blob": "22adee50e52bf899fc3596fcb773e4159f1d050f",
+      "actual_blob": "eac9692ce0d9e9167d1f859ebba8eff2cde8cf9b",
+      "review": "Presentation only: four static record illustrations reuse canonical renderer/mesh helpers, while context acceptance, reflection/progress writes, parent messaging and speech ownership remain unchanged."
+    },
+    {
+      "path": "digital/module/src/calculation-steps.mjs",
+      "status": "exact",
+      "expected_blob": "87013cc606ac3758661d0037fbf95cd5654ff706",
+      "actual_blob": "87013cc606ac3758661d0037fbf95cd5654ff706"
+    },
+    {
+      "path": "digital/module/src/calculation-workshop.mjs",
+      "status": "exact",
+      "expected_blob": "ff6f6f373b67bb6a2aeebc962366c6ba857a5cdb",
+      "actual_blob": "ff6f6f373b67bb6a2aeebc962366c6ba857a5cdb"
+    },
+    {
+      "path": "digital/module/src/geometry.mjs",
+      "status": "exact",
+      "expected_blob": "f399dbbdeaaea8874ac54f2c74305e3b690fa628",
+      "actual_blob": "f399dbbdeaaea8874ac54f2c74305e3b690fa628"
+    },
+    {
+      "path": "digital/module/src/guided.mjs",
+      "status": "exact",
+      "expected_blob": "2e1ffe9a104c6f71cc0d3caf5df1d3654da0c3b4",
+      "actual_blob": "2e1ffe9a104c6f71cc0d3caf5df1d3654da0c3b4"
+    },
+    {
+      "path": "digital/module/src/lab-geometry.mjs",
+      "status": "exact",
+      "expected_blob": "37aa7bb48a3d401b7bcd2a7e8d46ca17e2f4b765",
+      "actual_blob": "37aa7bb48a3d401b7bcd2a7e8d46ca17e2f4b765"
+    },
+    {
+      "path": "digital/module/src/labs.mjs",
+      "status": "exact",
+      "expected_blob": "c75a6e0c75bb36329b4cd6779376d218c74c8cff",
+      "actual_blob": "c75a6e0c75bb36329b4cd6779376d218c74c8cff"
+    },
+    {
+      "path": "digital/module/src/learning-mesh.mjs",
+      "status": "exact",
+      "expected_blob": "02d8621fe45a33b1c908f702ad60f8f0827cd364",
+      "actual_blob": "02d8621fe45a33b1c908f702ad60f8f0827cd364"
+    },
+    {
+      "path": "digital/module/src/lessons.mjs",
+      "status": "exact",
+      "expected_blob": "56fab529e0393b94baf3377c6012ada8b744733f",
+      "actual_blob": "56fab529e0393b94baf3377c6012ada8b744733f"
+    },
+    {
+      "path": "digital/module/src/net-print.mjs",
+      "status": "exact",
+      "expected_blob": "f44b4c0074c9c8f12db75ed853faea4e39c1db67",
+      "actual_blob": "f44b4c0074c9c8f12db75ed853faea4e39c1db67"
+    },
+    {
+      "path": "digital/module/src/net-studio-geometry.mjs",
+      "status": "exact",
+      "expected_blob": "f1c9058beda091372fe92e9da45e67110924c385",
+      "actual_blob": "f1c9058beda091372fe92e9da45e67110924c385"
+    },
+    {
+      "path": "digital/module/src/net-studio.mjs",
+      "status": "exact",
+      "expected_blob": "bc4daa83499e789d52cd77ac05f566f3fe241273",
+      "actual_blob": "bc4daa83499e789d52cd77ac05f566f3fe241273"
+    },
+    {
+      "path": "digital/module/src/notes.mjs",
+      "status": "exact",
+      "expected_blob": "23a2f10f39d2968ebe5ca3ef0240f9d5db02d104",
+      "actual_blob": "23a2f10f39d2968ebe5ca3ef0240f9d5db02d104"
+    },
+    {
+      "path": "digital/module/src/preset-nets.mjs",
+      "status": "exact",
+      "expected_blob": "b8156072fd12a9e9c4d98d4d06c38dddd3f969ad",
+      "actual_blob": "b8156072fd12a9e9c4d98d4d06c38dddd3f969ad"
+    },
+    {
+      "path": "digital/module/src/projection-geometry.mjs",
+      "status": "exact",
+      "expected_blob": "65d1be264ba6fad1b152d29981e928cfc6a73d4d",
+      "actual_blob": "65d1be264ba6fad1b152d29981e928cfc6a73d4d"
+    },
+    {
+      "path": "digital/module/src/renderer.mjs",
+      "status": "exact",
+      "expected_blob": "821c6cc6ac0964ef94485a388647fa67ddfc55e9",
+      "actual_blob": "821c6cc6ac0964ef94485a388647fa67ddfc55e9"
+    },
+    {
+      "path": "digital/module/src/surface-workshop.mjs",
+      "status": "exact",
+      "expected_blob": "b025dc359614f365df32edd88522a8718220e091",
+      "actual_blob": "b025dc359614f365df32edd88522a8718220e091"
+    },
+    {
+      "path": "digital/module/src/volume-lab.mjs",
+      "status": "exact",
+      "expected_blob": "49f880e36cc0797a093f1bdc99d38a35de644c64",
+      "actual_blob": "49f880e36cc0797a093f1bdc99d38a35de644c64"
+    },
+    {
+      "path": "digital/module/src/volume-transfer.mjs",
+      "status": "exact",
+      "expected_blob": "e4d4729b36ae64bb86762ac8764a52a19ef9ecbe",
+      "actual_blob": "e4d4729b36ae64bb86762ac8764a52a19ef9ecbe"
+    },
+    {
+      "path": "supabase/.gitignore",
+      "status": "exact",
+      "expected_blob": "1bf53eb899d793b804bb7e771a0c246c9fabd72d",
+      "actual_blob": "1bf53eb899d793b804bb7e771a0c246c9fabd72d"
+    },
+    {
+      "path": "supabase/config.toml",
+      "status": "exact",
+      "expected_blob": "ec616171d8b300de5f10c3be0be7f6e62166c6ff",
+      "actual_blob": "ec616171d8b300de5f10c3be0be7f6e62166c6ff"
+    },
+    {
+      "path": "supabase/hosted-history.json",
+      "status": "exact",
+      "expected_blob": "9e58f308751bda27a21f6c956c2c56f30de9a65d",
+      "actual_blob": "9e58f308751bda27a21f6c956c2c56f30de9a65d"
+    },
+    {
+      "path": "supabase/migrations/20261025172311_geodecoder_classroom_v2_01.sql",
+      "status": "exact",
+      "expected_blob": "e65250ac4c9491d8731219abad41d2551f8f6623",
+      "actual_blob": "e65250ac4c9491d8731219abad41d2551f8f6623"
+    },
+    {
+      "path": "supabase/migrations/20261025172740_geodecoder_classroom_v2_02.sql",
+      "status": "exact",
+      "expected_blob": "5b4d829aaa7b66e36cf41da8d7f337744cc4eef3",
+      "actual_blob": "5b4d829aaa7b66e36cf41da8d7f337744cc4eef3"
+    },
+    {
+      "path": "supabase/migrations/20261025172928_geodecoder_classroom_v2_03.sql",
+      "status": "exact",
+      "expected_blob": "956e42c5ee0d39aba1d92655d9c2ba7d17c2796c",
+      "actual_blob": "956e42c5ee0d39aba1d92655d9c2ba7d17c2796c"
+    },
+    {
+      "path": "supabase/migrations/20261025173022_geodecoder_classroom_v2_04.sql",
+      "status": "exact",
+      "expected_blob": "6d7ce235d5946c82ee20e0131d056fcc89f530ce",
+      "actual_blob": "6d7ce235d5946c82ee20e0131d056fcc89f530ce"
+    },
+    {
+      "path": "supabase/migrations/20261025173354_geodecoder_classroom_v2_bank_alias.sql",
+      "status": "exact",
+      "expected_blob": "9c6707ffbb75aafb36d234e8ab511470842b6d72",
+      "actual_blob": "9c6707ffbb75aafb36d234e8ab511470842b6d72"
+    },
+    {
+      "path": "supabase/migrations/20261025175447_geodecoder_room_membership_capability.sql",
+      "status": "exact",
+      "expected_blob": "efcea336b6b9eca9c62e5436d21833d8072c65ab",
+      "actual_blob": "efcea336b6b9eca9c62e5436d21833d8072c65ab"
+    },
+    {
+      "path": "supabase/migrations/20261025181814_geodecoder_duel_v1.sql",
+      "status": "exact",
+      "expected_blob": "b403043971b2c7a6e378747adc22df3582e1c822",
+      "actual_blob": "b403043971b2c7a6e378747adc22df3582e1c822"
+    },
+    {
+      "path": "supabase/migrations/20261025193222_geodecoder_email_signup_v2_2.sql",
+      "status": "exact",
+      "expected_blob": "529873ba4736903bf597c7d04ff56070fb175e6b",
+      "actual_blob": "529873ba4736903bf597c7d04ff56070fb175e6b"
+    },
+    {
+      "path": "supabase/migrations/20261026050330_geodecoder_profile_and_module_progress_v2_6.sql",
+      "status": "exact",
+      "expected_blob": "8cb75c05fd357a55948a19a24cd1b88d843f9e71",
+      "actual_blob": "8cb75c05fd357a55948a19a24cd1b88d843f9e71"
+    },
+    {
+      "path": "supabase/migrations/20261026091211_geodecoder_security_sessions.sql",
+      "status": "exact",
+      "expected_blob": "c441473dba0934e1eab1e14e4548b61f84d5c52b",
+      "actual_blob": "c441473dba0934e1eab1e14e4548b61f84d5c52b"
+    },
+    {
+      "path": "supabase/migrations/20261026110959_geodecoder_digital_v2_7_integration.sql",
+      "status": "exact",
+      "expected_blob": "612d67c985c90d208364ce4e8354f08472ccf361",
+      "actual_blob": "612d67c985c90d208364ce4e8354f08472ccf361"
+    },
+    {
+      "path": "supabase/migrations/20261104014958_geodecoder_classroom_crud.sql",
+      "status": "exact",
+      "expected_blob": "fd6e69d8c6f8bc319fa94ac2d58a079ba9c34cc6",
+      "actual_blob": "fd6e69d8c6f8bc319fa94ac2d58a079ba9c34cc6"
+    },
+    {
+      "path": "digital/dist/core.mjs",
+      "status": "version-only"
+    },
+    {
+      "path": "digital/module/src/content.mjs",
+      "status": "version-only"
+    }
+  ],
+  "exact_count": 119,
+  "exceptions": [
+    {
+      "path": "digital/module/src/accessibility.mjs",
+      "status": "changed",
+      "expected_blob": "22adee50e52bf899fc3596fcb773e4159f1d050f",
+      "actual_blob": "eac9692ce0d9e9167d1f859ebba8eff2cde8cf9b",
+      "review": "Presentation only: four static record illustrations reuse canonical renderer/mesh helpers, while context acceptance, reflection/progress writes, parent messaging and speech ownership remain unchanged."
+    }
+  ],
+  "firmware_changed_paths": []
+}

@@ -15,14 +15,14 @@ export function createEntryUI({t,getLanguage,onNavigate,onLanguage,onResume,onNe
   resumeArt.innerHTML=sceneContents(shapeArt('cube','solid',true,'blue')+shapeArt('cube','solid',true,'yellow'));
   document.querySelectorAll('[data-entry-icon]').forEach(node=>{node.classList.add('entry-icon');node.innerHTML=entryIcon(node.dataset.entryIcon);});
   const scenes=createEntryScenes({t,onToggleMotion});
-  const duration=24;
-  const time=value=>'00:'+String(Math.floor(value)).padStart(2,'0');
+  const duration=4.8;
+  const time=value=>'00:'+Number(value).toFixed(1).padStart(4,'0');
   function renderDemo(){
-    const step=elapsed>=16?2:elapsed>=8?1:0;
+    const step=elapsed>=duration*2/3?2:elapsed>=duration/3?1:0;
     document.querySelectorAll('[data-guide-step]').forEach((node,index)=>node.classList.toggle('guide-step-active',elapsed>0&&step===index));
     $('entry-demo-position').value=String(elapsed);
-    $('entry-demo-position').setAttribute('aria-valuetext',`${time(elapsed)} / 00:24`);
-    $('entry-demo-time').textContent=`${time(elapsed)} / 00:24`;
+    $('entry-demo-position').setAttribute('aria-valuetext',`${time(elapsed)} / ${time(duration)}`);
+    $('entry-demo-time').textContent=`${time(elapsed)} / ${time(duration)}`;
     $('entry-demo-play').innerHTML=icon(playing?'pause':'play');
     // art.mjs has no play symbol; use the shared entry icon for that control.
     if(!playing)$('entry-demo-play').innerHTML=entryIcon('play');

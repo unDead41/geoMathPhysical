@@ -1,0 +1,238 @@
+{
+  "label": "final-canonical-mobile-utility-content",
+  "capturedAt": "2026-11-04T06:44:33.310Z",
+  "sourceCommit": "ef697c86a5bfdf5a5658c3df92bce1d7f3f88652",
+  "sourceStatus": "M CHANGELOG.md\n M DESIGN.md\n M GeoDecoder_Digital_V1.html\n M GeoDecoder_Digital_V2.html\n M README.md\n M UX-CONTRACT.md\n M dist/GeoDecoder_Digital_V1.html\n M dist/GeoDecoder_Digital_V2.html\n M dist/account-copy.mjs\n M dist/active-sessions.mjs\n M dist/app.bundle.js\n M dist/app.mjs\n M dist/core.mjs\n M dist/entry-art.mjs\n M dist/entry-copy.mjs\n M dist/entry-ui.mjs\n M dist/entry.css\n M dist/help-copy.mjs\n M dist/help-support.css\n M dist/help-support.mjs\n M dist/i18n.mjs\n M dist/index.html\n M dist/module-copy.mjs\n M dist/portal-copy.mjs\n M dist/portal.css\n M dist/portal.mjs\n M dist/profile-view.mjs\n M dist/security-view.mjs\n M dist/style.css\n M dist/usability-ui.mjs\n M dist/usability.css\n M docs/design-system-evidence/GeoDecoder_Design_System.html\n M module/CHANGELOG.md\n M module/DESIGN.md\n M module/GeoDecoder_Modul_V1.html\n M module/README.md\n M module/package.json\n M module/src/accessibility.mjs\n M module/src/app.mjs\n M module/src/content.mjs\n M module/src/index.html\n M module/src/style.css\n M package-lock.json\n M package.json\n M tests/account-utilities-integration.test.mjs\n M tests/classroom-transport.fixture.mjs\n M tests/ease-browser-helpers.mjs\n M tests/help-support.browser.mjs\n M tests/portal-auth-validation.test.mjs\n M tests/solo-ui.test.mjs\n M tests/usability.browser.mjs\n M vendor/module-release.json\n M ../index.html\n?? dist/auth-view.mjs\n?? docs/mockup-completion/\n?? tests/mockup-account.test.mjs\n?? tests/mockup-notes.browser.mjs\n?? tests/mockup-review.README.md\n?? tests/mockup-review.capture.mjs\n?? tests/mockup-review.compare.py\n?? tests/mockup-review.fixture.mjs\n?? tests/portal-workspace.test.mjs\n?? vendor/module-v1.6.2.html\n?? ../docs/superpowers/plans/2026-11-04-geomath-mockup-completion.md",
+  "sourceEvidence": {
+    "bundleSha256": "0d983533e3432f2f35faccaf06b2e9d467d1525e3ec3fa864d857e1c697e8749",
+    "appSourceSha256": "51d4666e96c1b01f83d5b0fd41b5236620524b9c4c4ec33c23c45081006540fc",
+    "builtAppBundleSha256": "92ed8f577d146d403cb660b8b4cebc5ed72c171f15d38339bc2745196801023d",
+    "moduleMode": "packaged-vendor",
+    "moduleImport": "vendor/module-v1.6.2.html",
+    "moduleHtmlSha256": "7ddd5d60a25fbdf73c20f9f8e8fc0db4253e582fb50d17c944307b8f682066c4",
+    "moduleGitBlobSha1": "3af0469979d878c8e605d093db1be0c0649c6509",
+    "staticVisuals": {
+      "dist/design-tokens.css": "db9dbd721776728d14a03a5a9057f1c62ad30dbf37c477884f057198b2a5d145",
+      "dist/entry.css": "2704969f1f6c1ca785cebcf61b96aedc51bff42a5f1600921f882e02f68e002f",
+      "dist/foundation.css": "be2c5fd9ba363498d31008261d0d6cd81f9de55735483fee5d6d812f529ea8f0",
+      "dist/help-support.css": "15b61ccc115c5b95892f4913a36977410891c4f1040e958134199367a72cc40b",
+      "dist/index.html": "6e25ba38c30daa5cfaabd3c3600b7a5745abf63db3c38ebaca77dd7d992eb37b",
+      "dist/module-foundation.css": "087093fb4d74af106cc6f901f3bac20ea921153eb556d202f720e1906a6d551f",
+      "dist/portal.css": "d7c1933ab195b4c227e3ccdc8e100bcca1181b1f40f433c2660c9207f54731a6",
+      "dist/style.css": "1c25f41585ba4ae828a92e4f07324d9dfe66e0c3341c88a9ce480efa0732775a",
+      "dist/usability.css": "ce929047a11f0829e9897bd9a799c2b641d90e91ea3274dd8ee85462cbe34261"
+    }
+  },
+  "conceptCommit": "4d83561667cf74fbe5cd6144ce5e3e7f660a75cd",
+  "injectedModuleCss": null,
+  "environment": "Local real app/module/controllers, real PGlite classroom gateway + protocol 2 Duel handler, synthetic Auth and labelled synthetic records. No production requests.",
+  "profile": "mobile",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "requested": [
+    37,
+    39,
+    40
+  ],
+  "records": [
+    {
+      "screen": 37,
+      "name": "settings-light",
+      "file": "37-settings-light.png",
+      "fullFile": "37-settings-light-full.png",
+      "sha256": "df74751d089697bec3bd37f8cab6162bb9ad1a6fabb48aa1acd1441b7ec42007",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "width": 380,
+        "height": 1747
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "language": "en",
+      "theme": "dark",
+      "textSize": "150",
+      "typography": {
+        "root": "16px",
+        "body": "24px",
+        "scale": "1.5",
+        "stageInstruction": "21px"
+      },
+      "title": "GeoMath \u2014 Home",
+      "actualScreen": "welcome",
+      "syntheticLabel": "SYNTHETIC QA ONLY \u2014 local PostgreSQL and Auth adapter",
+      "regions": {
+        "#solid-choices": null,
+        "#net-choices": null,
+        "#game-status": null,
+        "#settings-panel": {
+          "top": 29,
+          "bottom": 1717.078125,
+          "left": 25,
+          "right": 355,
+          "width": 330,
+          "height": 1688.078125
+        },
+        "#support-preview": null
+      },
+      "moduleMetrics": null,
+      "supplemental": [
+        {
+          "file": "37-settings-light-bottom.png",
+          "kind": "scrolled-dialog-bottom",
+          "selector": "#app-dialog",
+          "scroll": {
+            "top": 902,
+            "height": 810,
+            "scrollHeight": 1712
+          },
+          "sha256": "18f34b83e74f81f9d29247269342bf9b1e0dda63a0737276a25843a7d8b1806f"
+        }
+      ],
+      "workflowChecks": {},
+      "errors": [],
+      "exception": "",
+      "workflow": "captured",
+      "visualMatch": "PENDING HUMAN IMAGE REVIEW"
+    },
+    {
+      "screen": 39,
+      "name": "help",
+      "file": "39-help.png",
+      "fullFile": "39-help-full.png",
+      "sha256": "dc3bdbd7f9d89f3fa4f699d562189574e030504c32062cfc9047ad802c6cf56d",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "width": 380,
+        "height": 1747
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "language": "en",
+      "theme": "dark",
+      "textSize": "150",
+      "typography": {
+        "root": "16px",
+        "body": "24px",
+        "scale": "1.5",
+        "stageInstruction": "21px"
+      },
+      "title": "GeoMath \u2014 Home",
+      "actualScreen": "welcome",
+      "syntheticLabel": "SYNTHETIC QA ONLY \u2014 local PostgreSQL and Auth adapter",
+      "regions": {
+        "#solid-choices": null,
+        "#net-choices": null,
+        "#game-status": null,
+        "#settings-panel": null,
+        "#support-preview": null
+      },
+      "moduleMetrics": null,
+      "supplemental": [
+        {
+          "file": "39-help-bottom.png",
+          "kind": "scrolled-dialog-bottom",
+          "selector": "#app-dialog",
+          "scroll": {
+            "top": 806,
+            "height": 810,
+            "scrollHeight": 1616
+          },
+          "sha256": "e65f32d4df45a28995d0a90d4319ec1088a1e4d9ce15916c4053d825e261c8cd"
+        }
+      ],
+      "workflowChecks": {},
+      "errors": [],
+      "exception": "",
+      "workflow": "captured",
+      "visualMatch": "PENDING HUMAN IMAGE REVIEW"
+    },
+    {
+      "screen": 40,
+      "name": "support-report",
+      "file": "40-support-report.png",
+      "fullFile": "40-support-report-full.png",
+      "sha256": "3d49d6cdd7ef1e35b2ddeb093dba161819fcbb922930280e7594bcceb086d29c",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "width": 380,
+        "height": 1747
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "language": "en",
+      "theme": "dark",
+      "textSize": "150",
+      "typography": {
+        "root": "16px",
+        "body": "24px",
+        "scale": "1.5",
+        "stageInstruction": "21px"
+      },
+      "title": "GeoMath \u2014 Home",
+      "actualScreen": "welcome",
+      "syntheticLabel": "SYNTHETIC QA ONLY \u2014 local PostgreSQL and Auth adapter",
+      "regions": {
+        "#solid-choices": null,
+        "#net-choices": null,
+        "#game-status": null,
+        "#settings-panel": null,
+        "#support-preview": {
+          "top": 1212.84375,
+          "bottom": 1442.84375,
+          "left": 36,
+          "right": 344,
+          "width": 308,
+          "height": 230
+        }
+      },
+      "moduleMetrics": null,
+      "supplemental": [
+        {
+          "file": "40-support-report-bottom.png",
+          "kind": "scrolled-dialog-bottom",
+          "selector": "#app-dialog",
+          "scroll": {
+            "top": 978,
+            "height": 810,
+            "scrollHeight": 1788
+          },
+          "sha256": "9b3c72bfdc2b4737a6032bd5d6c1ecec873fdd934dfceb1d9c76e9718dfa4469"
+        }
+      ],
+      "workflowChecks": {},
+      "errors": [],
+      "exception": "Local report preview/copy/select/download; no automatic submission.",
+      "workflow": "captured",
+      "visualMatch": "PENDING HUMAN IMAGE REVIEW"
+    }
+  ],
+  "failures": [],
+  "fatalFailure": null,
+  "blockedExternalRequests": [],
+  "pageErrors": [],
+  "visualStatus": "Capture diagnostics are separate from agent image inspection; no pixel-perfect claim.",
+  "manualVisualReview": {
+    "reviewer": "Codex visual audit agent",
+    "method": "Directly opened all three final bottom viewport PNGs",
+    "status": "Reviewed: settings preview/audio/Done; help guide/FAQ; prepared-report preview/copy/select/download/edit visible. Root/user approval separate.",
+    "report": "../REVIEW.md",
+    "notAnAutomaticMatchScore": true
+  }
+}

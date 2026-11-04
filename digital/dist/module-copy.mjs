@@ -2,6 +2,13 @@
 // Formula symbols, values, stable IDs and user-entered responses remain unchanged.
 export const MODULE_COPY = {
   "exact": {
+    "Isi nota": "In these notes",
+    "Penerangan lanjut": "Read more",
+    "Bandingkan dan fahami": "Compare and understand",
+    "Bentangan model dalam nota": "Net of the model in the notes",
+    "Bentuk ini tidak mempunyai bentangan rata tepat.": "This solid has no exact flat net.",
+    "Rumus, simbol dan kesilapan lazim": "Formulas, symbols and common mistakes",
+    "Contoh ringkas · ukuran semasa": "Quick example · current measurements",
     "Pusat Bantuan": "Help centre",
     "DIGITAL · MODUL PEMBELAJARAN": "DIGITAL · LEARNING MODULE",
     "GeoDecoder — Modul pembelajaran bongkah": "GeoDecoder — Solid learning module",

@@ -1,13 +1,27 @@
 // Intercepted transport only: actual portal UI, no live account or backend write.
+import assert from 'node:assert/strict';
+import {normalizeSoloPayload} from '../dist/offline-records.mjs';
 export async function classroomFixture(context,role,{finishedState,snapshotFailures=0}={}){
   const id=role==='teacher'?'10000000-0000-4000-8000-000000000001':'10000000-0000-4000-8000-000000000002';
   const profile={id,role,display_name:'Guru',username:role+'_fixture'};
   const session={access_token:'fixture-access-token',refresh_token:'fixture-refresh-token',token_type:'bearer',expires_at:Math.floor(Date.now()/1000)+3600,expires_in:3600,user:{id,aud:'authenticated',role:'authenticated',email:'fixture@example.invalid',app_metadata:{provider:'email'},user_metadata:{}}};
-  const actions=[];
+  const actions=[];actions.offlineEvents=[];
   await context.addInitScript(value=>{if(window.top===window.self)localStorage.setItem('geodecoder.cloud.auth',JSON.stringify(value));},session);
   await context.route('https://fkrlwzxvyufndavlpzbp.supabase.co/**',async route=>{
     const request=route.request(),url=new URL(request.url());
     if(request.method()==='OPTIONS'){await route.fulfill({status:204,headers:{'access-control-allow-origin':'*','access-control-allow-headers':'*'}});return;}
+    if(url.pathname==='/rest/v1/rpc/geo_offline_sync'){
+      const {action,payload}=request.postDataJSON();
+      assert.equal(role,'student');assert.equal(action,'push');
+      assert.equal(request.headers().authorization,'Bearer fixture-access-token');
+      assert.deepEqual(Object.keys(payload),['events']);assert.ok(Array.isArray(payload.events)&&payload.events.length>0&&payload.events.length<=20);
+      for(const event of payload.events){
+        assert.deepEqual(Object.keys(event).sort(),['content_version','id','kind','payload']);assert.equal(event.kind,'solo');assert.equal(event.content_version,1);
+        assert.equal(event.payload.mode,'review');assert.deepEqual(normalizeSoloPayload(event.payload),event.payload);assert.equal(event.id,'solo:'+event.payload.attempt_id);
+        actions.offlineEvents.push(structuredClone(event));
+      }
+      await route.fulfill({status:200,contentType:'application/json',headers:{'access-control-allow-origin':'*'},body:JSON.stringify({accepted:payload.events.map(event=>event.id),records:[],rejected:[]})});return;
+    }
     if(url.pathname==='/rest/v1/rpc/geo_module_progress'){
       const {action}=request.postDataJSON();
       if(!['mine','class'].includes(action))throw new Error('Fixture prohibits module writes: '+action);

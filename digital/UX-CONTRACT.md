@@ -1,6 +1,7 @@
 # GeoDecoder Digital V2 UX contract
 
-Current source integration: Digital v2.9.0 / module v1.6.1. Firmware is maintained
+Review candidate: Digital v2.9.1 / module v1.6.2, on
+`digitalized-ux-mockup-completion` only. Base integration remains v2.9.0. Firmware is maintained
 on its separate branch. The existing game/account contracts remain in force
 alongside the shared design system, animated entry pages, refreshed Duel/module
 views, offline outbox, classroom CRUD and bounded network policy.
@@ -288,3 +289,15 @@ mastery claim. Pin the tested v1.6.0 HTML and rebuild the parent aliases before
 combined checks. Source-level branch evidence and limitations are in
 module/docs/HANDOFF_PELAN_PENGIRAAN_V1_6.md; it does not establish v2.8.0 Pages
 publication or completed integration tests.
+
+
+## Approved mockup completion
+
+All 40 screens use concept commit `4d83561667cf74fbe5cd6144ce5e3e7f660a75cd`.
+See `docs/mockup-completion/SPEC.md` and its coverage/evidence. Real domain rules
+override raster mistakes: 10–128 character account passwords, canonical Kaedah1
+projection layout, finite4.8s tutorial and Tab/Enter/Space controls. Classroom
+workspace uses its actual anchor/controller; unsupported rematch/CSV/TP/XP actions
+are not invented. Settings/help remain app-owned dialogs with wide content.
+Auth composition lives in auth-view.mjs; profile/security/session views retain
+their owners. Workspace identity/nav extend portal.mjs; tokens remain centralized.

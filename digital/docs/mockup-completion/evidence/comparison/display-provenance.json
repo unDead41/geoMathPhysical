@@ -1,0 +1,132 @@
+[
+  {
+    "file": "board-01-comparison.png",
+    "originalDerivedSha256": "3f3c6bb202c53a1518cb23fd0ad70d6f8ad7397da54bb6060e9804321f9d4278",
+    "originalSize": [
+      3384,
+      1160
+    ],
+    "displaySize": [
+      2560,
+      878
+    ],
+    "displaySha256": "2973b5789deaee4030667cec7cdc6884856430bb3e9e0f7310c1427ffdd51dfd"
+  },
+  {
+    "file": "board-02-comparison.png",
+    "originalDerivedSha256": "976019283f580d4d2536e6c06a2173b4fb5a2d0b6cfeca790d111cc968bd7b36",
+    "originalSize": [
+      3384,
+      1160
+    ],
+    "displaySize": [
+      2560,
+      878
+    ],
+    "displaySha256": "4eae3c6b8f33396a62fe1ea03a9816bd7887b8ee29257a20c5d7a97bf2a15138"
+  },
+  {
+    "file": "board-03-comparison.png",
+    "originalDerivedSha256": "e91b2c1f51f89600140c2dba574f0828e2e0b1a09fc6fa8c5aa4c9d6c92f69ce",
+    "originalSize": [
+      3384,
+      1160
+    ],
+    "displaySize": [
+      2560,
+      878
+    ],
+    "displaySha256": "15cd643a4d24c3833cdf0a8559a124221fe55d493da96d94bcf4e002e3ce3ef8"
+  },
+  {
+    "file": "board-04-comparison.png",
+    "originalDerivedSha256": "087450172ff546f46405609d7a2426beeb2f27831c5beaeb6985bca16c6cd361",
+    "originalSize": [
+      3384,
+      1160
+    ],
+    "displaySize": [
+      2560,
+      878
+    ],
+    "displaySha256": "41d1f63eadee48bbc5f11993e9d17c2c9460f136351f522c4f370e773925b7ab"
+  },
+  {
+    "file": "board-05-comparison.png",
+    "originalDerivedSha256": "e13d6fe021ae2f600af0ac8409d7d8e470f96fd8953ff697a4b8719e93287dd0",
+    "originalSize": [
+      3384,
+      1160
+    ],
+    "displaySize": [
+      2560,
+      878
+    ],
+    "displaySha256": "b21b9fb81269fde726762dbc37b621a7e9eea42877c7a906ca8d7cf4de557cbf"
+  },
+  {
+    "file": "board-06-comparison.png",
+    "originalDerivedSha256": "89797a9843c39d1dcb81e06039b11a2ec7f3a8c5cffd7096505039649408b287",
+    "originalSize": [
+      3384,
+      1160
+    ],
+    "displaySize": [
+      2560,
+      878
+    ],
+    "displaySha256": "4d069249e69fec4fe58c218ccdf1299a475cc1801e399ea321dadfa643fdcecc"
+  },
+  {
+    "file": "board-07-comparison.png",
+    "originalDerivedSha256": "886c5bbe1d73ade144adfbcbd4d67b3e1af43a022ba9628d3898c578f8c1ae8c",
+    "originalSize": [
+      3384,
+      1160
+    ],
+    "displaySize": [
+      2560,
+      878
+    ],
+    "displaySha256": "5c27c739d4c31feed5f1ef28a544df6ba59e5d12651bb2982e89106217e57547"
+  },
+  {
+    "file": "board-08-comparison.png",
+    "originalDerivedSha256": "bdd96b9c44989b8653574bc12dd68c2a854fd46705da3c9f55e8cd527fcd4f28",
+    "originalSize": [
+      3384,
+      1160
+    ],
+    "displaySize": [
+      2560,
+      878
+    ],
+    "displaySha256": "262d4c9376814bb26a1198de306353089ecebcb56ec4ef3b3cddd0d112e81f3d"
+  },
+  {
+    "file": "board-09-comparison.png",
+    "originalDerivedSha256": "150357360ded18a97cc19e1b4c9533811d71d8d685adff10dc75fc72c6bab248",
+    "originalSize": [
+      3384,
+      1160
+    ],
+    "displaySize": [
+      2560,
+      878
+    ],
+    "displaySha256": "afed922ecc208214bff9edbd612afd54e7a9de727c1d98fb1918d6131bf00629"
+  },
+  {
+    "file": "board-10-comparison.png",
+    "originalDerivedSha256": "2dbfdb1f8629fdc791af904ebc3c49ffffbca18e84597eb8a8e5c19107147869",
+    "originalSize": [
+      3384,
+      1160
+    ],
+    "displaySize": [
+      2560,
+      878
+    ],
+    "displaySha256": "14cab6633949c255f63d48b372b8e10dffeca40d120933103d9c43bb90931ac3"
+  }
+]

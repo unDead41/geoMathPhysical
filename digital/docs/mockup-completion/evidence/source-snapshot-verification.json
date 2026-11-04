@@ -1,0 +1,29 @@
+{
+  "verifiedAt": "2026-11-04T06:52:48.873Z",
+  "baseHead": "ef697c86a5bfdf5a5658c3df92bce1d7f3f88652",
+  "sourceState": "Dirty working tree; exact capture hashes establish provenance, not an uncreated final commit",
+  "freshProductionBuildInMemory": true,
+  "generatedOutputsModified": false,
+  "productionBuildEqualsExistingBundle": true,
+  "productionBuildEqualsCanonicalCaptureArtifact": true,
+  "appSourceSha256": "51d4666e96c1b01f83d5b0fd41b5236620524b9c4c4ec33c23c45081006540fc",
+  "builtAppBundleSha256": "92ed8f577d146d403cb660b8b4cebc5ed72c171f15d38339bc2745196801023d",
+  "moduleImport": "vendor/module-v1.6.2.html",
+  "moduleSha256": "7ddd5d60a25fbdf73c20f9f8e8fc0db4253e582fb50d17c944307b8f682066c4",
+  "moduleGitBlobSha1": "3af0469979d878c8e605d093db1be0c0649c6509",
+  "desktopMobileStaticHashesEqual": true,
+  "currentSourceEqualsCanonicalSnapshots": true,
+  "staticVisuals": {
+    "dist/design-tokens.css": "db9dbd721776728d14a03a5a9057f1c62ad30dbf37c477884f057198b2a5d145",
+    "dist/entry.css": "2704969f1f6c1ca785cebcf61b96aedc51bff42a5f1600921f882e02f68e002f",
+    "dist/foundation.css": "be2c5fd9ba363498d31008261d0d6cd81f9de55735483fee5d6d812f529ea8f0",
+    "dist/help-support.css": "15b61ccc115c5b95892f4913a36977410891c4f1040e958134199367a72cc40b",
+    "dist/index.html": "6e25ba38c30daa5cfaabd3c3600b7a5745abf63db3c38ebaca77dd7d992eb37b",
+    "dist/module-foundation.css": "087093fb4d74af106cc6f901f3bac20ea921153eb556d202f720e1906a6d551f",
+    "dist/portal.css": "d7c1933ab195b4c227e3ccdc8e100bcca1181b1f40f433c2660c9207f54731a6",
+    "dist/style.css": "1c25f41585ba4ae828a92e4f07324d9dfe66e0c3341c88a9ce480efa0732775a",
+    "dist/usability.css": "ce929047a11f0829e9897bd9a799c2b641d90e91ea3274dd8ee85462cbe34261"
+  },
+  "visualScope": "Image review remains separate from build/capture verification; see VISUAL_REVIEW.md",
+  "qaBundleCaveat": "Screenshots use real sources with QA-only in-memory hooks/local transport; the production bundle hash is separately reproduced, not the served QA bundle hash."
+}

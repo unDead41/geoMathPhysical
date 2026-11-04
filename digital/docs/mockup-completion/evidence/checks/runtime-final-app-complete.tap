@@ -1,0 +1,2994 @@
+TAP version 13
+# Subtest: profile, security, room and dashboard API targets remain mutually exclusive
+ok 1 - profile, security, room and dashboard API targets remain mutually exclusive
+  ---
+  duration_ms: 569.05402
+  type: 'test'
+  ...
+# Subtest: a delayed learning report cannot rerender security secrets or restart polling
+ok 2 - a delayed learning report cannot rerender security secrets or restart polling
+  ---
+  duration_ms: 108.594597
+  type: 'test'
+  ...
+# Subtest: header profile navigation aborts pending security and discards its late success
+ok 3 - header profile navigation aborts pending security and discards its late success
+  ---
+  duration_ms: 148.867378
+  type: 'test'
+  ...
+# Subtest: navigation during initial Auth loading settles on the newest target
+ok 4 - navigation during initial Auth loading settles on the newest target
+  ---
+  duration_ms: 50.033125
+  type: 'test'
+  ...
+# Subtest: language changes translate account UI and errors while keeping user content and live fields
+ok 5 - language changes translate account UI and errors while keeping user content and live fields
+  ---
+  duration_ms: 146.862211
+  type: 'test'
+  ...
+# Subtest: teacher practice disclosures survive refresh and English copy leaves learner records untouched
+ok 6 - teacher practice disclosures survive refresh and English copy leaves learner records untouched
+  ---
+  duration_ms: 115.630838
+  type: 'test'
+  ...
+# Subtest: session metadata is owner-bound, current-first and contains no identifiers, tokens, IP or fabricated activity
+ok 7 - session metadata is owner-bound, current-first and contains no identifiers, tokens, IP or fabricated activity
+  ---
+  duration_ms: 2461.024902
+  type: 'test'
+  ...
+# Subtest: anon, cross-account current-session claims and missing, expired or malformed sessions are denied
+ok 8 - anon, cross-account current-session claims and missing, expired or malformed sessions are denied
+  ---
+  duration_ms: 1810.597856
+  type: 'test'
+  ...
+# Subtest: frontend roles cannot read or mutate auth tables and RPC cannot accept a target account or session
+ok 9 - frontend roles cannot read or mutate auth tables and RPC cannot accept a target account or session
+  ---
+  duration_ms: 1837.971627
+  type: 'test'
+  ...
+# Subtest: metadata remains bounded and status describes only the backend session record
+ok 10 - metadata remains bounded and status describes only the backend session record
+  ---
+  duration_ms: 1767.395899
+  type: 'test'
+  ...
+# Subtest: migration can be applied twice without changing session rows or broadening caller access
+ok 11 - migration can be applied twice without changing session rows or broadening caller access
+  ---
+  duration_ms: 1650.463878
+  type: 'test'
+  ...
+# Subtest: session listing uses the owner-bound RPC with no user or session selector
+ok 12 - session listing uses the owner-bound RPC with no user or session selector
+  ---
+  duration_ms: 22.380908
+  type: 'test'
+  ...
+# Subtest: session list errors are sanitized and missing deployment is distinguished from expired Auth
+ok 13 - session list errors are sanitized and missing deployment is distinguished from expired Auth
+  ---
+  duration_ms: 8.410283
+  type: 'test'
+  ...
+# Subtest: late session metadata is rejected after an account switch and duplicate reads are suppressed
+ok 14 - late session metadata is rejected after an account switch and duplicate reads are suppressed
+  ---
+  duration_ms: 6.470915
+  type: 'test'
+  ...
+# Subtest: others logout uses documented scope, preserves current session, and requires observed acknowledgement
+ok 15 - others logout uses documented scope, preserves current session, and requires observed acknowledgement
+  ---
+  duration_ms: 8.811686
+  type: 'test'
+  ...
+# Subtest: confirmed current-session logout clears only that local session
+ok 16 - confirmed current-session logout clears only that local session
+  ---
+  duration_ms: 3.601664
+  type: 'test'
+  ...
+# Subtest: late others logout does not clear a newly installed account
+ok 17 - late others logout does not clear a newly installed account
+  ---
+  duration_ms: 5.780265
+  type: 'test'
+  ...
+# Subtest: logout rejects caller-supplied user or session selectors before any provider mutation
+ok 18 - logout rejects caller-supplied user or session selectors before any provider mutation
+  ---
+  duration_ms: 1.367986
+  type: 'test'
+  ...
+# Subtest: real portal renders backend rows, one current label, estimates and no raw IDs or fabricated activity
+ok 19 - real portal renders backend rows, one current label, estimates and no raw IDs or fabricated activity
+  ---
+  duration_ms: 316.560158
+  type: 'test'
+  ...
+# Subtest: others action confirms its full scope, Escape restores focus and confirmed response reloads real list
+ok 20 - others action confirms its full scope, Escape restores focus and confirmed response reloads real list
+  ---
+  duration_ms: 218.764683
+  type: 'test'
+  ...
+# Subtest: loading, retryable network failure and session expiry clear untrusted or stale metadata
+ok 21 - loading, retryable network failure and session expiry clear untrusted or stale metadata
+  ---
+  duration_ms: 170.78479
+  type: 'test'
+  ...
+# Subtest: switching accounts during a list request cannot render the previous account metadata
+ok 22 - switching accounts during a list request cannot render the previous account metadata
+  ---
+  duration_ms: 125.29214
+  type: 'test'
+  ...
+# Subtest: current logout explains sign-in navigation, and all new labels translate to English
+ok 23 - current logout explains sign-in navigation, and all new labels translate to English
+  ---
+  duration_ms: 156.213156
+  type: 'test'
+  ...
+# Subtest: keyboard refresh returns focus after loading without stealing focus from a password field
+ok 24 - keyboard refresh returns focus after loading without stealing focus from a password field
+  ---
+  duration_ms: 159.691385
+  type: 'test'
+  ...
+# Subtest: account switch during post-logout list refresh cannot announce success in the new account
+ok 25 - account switch during post-logout list refresh cannot announce success in the new account
+  ---
+  duration_ms: 153.929707
+  type: 'test'
+  ...
+# Subtest: portable QA rejects a real learner email before any Auth request and clears the password
+ok 26 - portable QA rejects a real learner email before any Auth request and clears the password
+  ---
+  duration_ms: 219.334809
+  type: 'test'
+  ...
+# Subtest: portable QA suppresses repeated login and never exports passwords, tokens or email
+ok 27 - portable QA suppresses repeated login and never exports passwords, tokens or email
+  ---
+  duration_ms: 32.344322
+  type: 'test'
+  ...
+# Subtest: portable QA distinguishes actual provider refresh rejection from an uncertain network failure
+ok 28 - portable QA distinguishes actual provider refresh rejection from an uncertain network failure
+  ---
+  duration_ms: 24.978794
+  type: 'test'
+  ...
+# Subtest: portable QA clears live controls and returns to login when Auth reports logout
+ok 29 - portable QA clears live controls and returns to login when Auth reports logout
+  ---
+  duration_ms: 21.271583
+  type: 'test'
+  ...
+# Subtest: portable QA uses isolated nonpersistent SDK storage and blocks normal account login routes
+ok 30 - portable QA uses isolated nonpersistent SDK storage and blocks normal account login routes
+  ---
+  duration_ms: 2.970879
+  type: 'test'
+  ...
+# Subtest: username auth validates normalized handles, password, role and recovery shape
+ok 31 - username auth validates normalized handles, password, role and recovery shape
+  ---
+  duration_ms: 1.598481
+  type: 'test'
+  ...
+# Subtest: SHA256 recovery verification is deterministic and does not store the code
+ok 32 - SHA256 recovery verification is deterministic and does not store the code
+  ---
+  duration_ms: 5.563997
+  type: 'test'
+  ...
+# Subtest: public endpoint handles CORS, unsupported methods and missing configuration without privileged calls
+ok 33 - public endpoint handles CORS, unsupported methods and missing configuration without privileged calls
+  ---
+  duration_ms: 4.48916
+  type: 'test'
+  ...
+# Subtest: invalid login input is rejected before network/database access
+ok 34 - invalid login input is rejected before network/database access
+  ---
+  duration_ms: 1.26595
+  type: 'test'
+  ...
+# Subtest: a new username with a null identity response can request email confirmation
+ok 35 - a new username with a null identity response can request email confirmation
+  ---
+  duration_ms: 4.005528
+  type: 'test'
+  ...
+# Subtest: history gate accepts the exact archived statement history
+ok 36 - history gate accepts the exact archived statement history
+  ---
+  duration_ms: 110.697736
+  type: 'test'
+  ...
+# Subtest: history gate rejects missing, added, renamed or edited hosted migrations
+ok 37 - history gate rejects missing, added, renamed or edited hosted migrations
+  ---
+  duration_ms: 394.941229
+  type: 'test'
+  ...
+# Subtest: history gate fails closed without a fresh hosted export
+ok 38 - history gate fails closed without a fresh hosted export
+  ---
+  duration_ms: 81.751382
+  type: 'test'
+  ...
+# Subtest: archived hosted history replays in order and passes all five SQL contracts
+ok 39 - archived hosted history replays in order and passes all five SQL contracts
+  ---
+  duration_ms: 4165.671772
+  type: 'test'
+  ...
+# Subtest: default dry run checks exact refs and leaves every branch untouched
+ok 40 - default dry run checks exact refs and leaves every branch untouched
+  ---
+  duration_ms: 8.970125
+  type: 'test'
+  ...
+# Subtest: all preflight reads settle before a late collision can permit any mutation
+ok 41 - all preflight reads settle before a late collision can permit any mutation
+  ---
+  duration_ms: 11.424621
+  type: 'test'
+  ...
+# Subtest: a changed source head blocks the entire apply, including earlier valid rows
+ok 42 - a changed source head blocks the entire apply, including earlier valid rows
+  ---
+  duration_ms: 2.23347
+  type: 'test'
+  ...
+# Subtest: an existing destination is a collision even when both refs share the expected commit
+ok 43 - an existing destination is a collision even when both refs share the expected commit
+  ---
+  duration_ms: 1.672855
+  type: 'test'
+  ...
+# Subtest: missing source and destination or a changed completed target stop before writes
+ok 44 - missing source and destination or a changed completed target stop before writes
+  ---
+  duration_ms: 1.935791
+  type: 'test'
+  ...
+# Subtest: matching completed renames are idempotent without recreating old branch aliases
+ok 45 - matching completed renames are idempotent without recreating old branch aliases
+  ---
+  duration_ms: 2.002021
+  type: 'test'
+  ...
+# Subtest: apply uses native rename only and emits receipts after exact target verification
+ok 46 - apply uses native rename only and emits receipts after exact target verification
+  ---
+  duration_ms: 4.098048
+  type: 'test'
+  ...
+# Subtest: a source move after full preflight is caught by recheck before the first POST
+ok 47 - a source move after full preflight is caught by recheck before the first POST
+  ---
+  duration_ms: 3.624572
+  type: 'test'
+  ...
+# Subtest: a failed native endpoint stops without create, delete, ref update or rollback fallbacks
+ok 48 - a failed native endpoint stops without create, delete, ref update or rollback fallbacks
+  ---
+  duration_ms: 1.586242
+  type: 'test'
+  ...
+# Subtest: unexpected target SHA after native rename halts remaining operations and withholds a false receipt
+ok 49 - unexpected target SHA after native rename halts remaining operations and withholds a false receipt
+  ---
+  duration_ms: 1.563365
+  type: 'test'
+  ...
+# Subtest: unsafe registries cannot redirect the token, touch preserved branches or plan duplicate refs
+ok 50 - unsafe registries cannot redirect the token, touch preserved branches or plan duplicate refs
+  ---
+  duration_ms: 1.161705
+  type: 'test'
+  ...
+# Subtest: missing credentials fail before any request; existing GITHUB_TOKEN is accepted
+ok 51 - missing credentials fail before any request; existing GITHUB_TOKEN is accepted
+  ---
+  duration_ms: 1.021944
+  type: 'test'
+  ...
+# Subtest: nonexact or malformed reference responses never authorize a mutation
+ok 52 - nonexact or malformed reference responses never authorize a mutation
+  ---
+  duration_ms: 4.363149
+  type: 'test'
+  ...
+# Subtest: CLI defaults to dry run and renders credential-safe structured failures
+ok 53 - CLI defaults to dry run and renders credential-safe structured failures
+  ---
+  duration_ms: 19.673942
+  type: 'test'
+  ...
+# Subtest: checked-in registry is accepted and its full rename set can be reviewed without writes
+ok 54 - checked-in registry is accepted and its full rename set can be reviewed without writes
+  ---
+  duration_ms: 3.219121
+  type: 'test'
+  ...
+# Subtest: classroom CRUD is owner-only, validates exact fields and detects stale revisions
+ok 55 - classroom CRUD is owner-only, validates exact fields and detects stale revisions
+  ---
+  duration_ms: 3343.976377
+  type: 'test'
+  ...
+# Subtest: removing a learner revokes room access and preserves authoritative attempts and scores
+ok 56 - removing a learner revokes room access and preserves authoritative attempts and scores
+  ---
+  duration_ms: 2395.319594
+  type: 'test'
+  ...
+# Subtest: archive and restore retain results, revoke PINs, block activity and protect nonempty deletions
+ok 57 - archive and restore retain results, revoke PINs, block activity and protect nonempty deletions
+  ---
+  duration_ms: 3035.976626
+  type: 'test'
+  ...
+# Subtest: teachers can cancel own pending invitations and students can decline only their own
+ok 58 - teachers can cancel own pending invitations and students can decline only their own
+  ---
+  duration_ms: 2474.213164
+  type: 'test'
+  ...
+# Subtest: stale invitation confirmations cannot consume a newly issued invitation
+ok 59 - stale invitation confirmations cannot consume a newly issued invitation
+  ---
+  duration_ms: 2626.955706
+  type: 'test'
+  ...
+# Subtest: heartbeat respects its selected room and never rewrites game projection fields
+ok 60 - heartbeat respects its selected room and never rewrites game projection fields
+  ---
+  duration_ms: 3530.37326
+  type: 'test'
+  ...
+# Subtest: teacher edit uses a modal, validates, preserves failed draft and submits the captured revision once
+ok 61 - teacher edit uses a modal, validates, preserves failed draft and submits the captured revision once
+  ---
+  duration_ms: 1111.046525
+  type: 'test'
+  ...
+# Subtest: archive has named confirmation and a discoverable restore path; Cancel restores focus
+ok 62 - archive has named confirmation and a discoverable restore path; Cancel restores focus
+  ---
+  duration_ms: 527.522311
+  type: 'test'
+  ...
+# Subtest: member removal and invitation cancellation require confirmation and preserve server error recovery
+ok 63 - member removal and invitation cancellation require confirmation and preserve server error recovery
+  ---
+  duration_ms: 351.08874
+  type: 'test'
+  ...
+# Subtest: English controls escape names and hide management from students and older backends
+ok 64 - English controls escape names and hide management from students and older backends
+  ---
+  duration_ms: 415.536342
+  type: 'test'
+  ...
+# Subtest: a late save cannot apply after account switching or leave a management dialog open
+ok 65 - a late save cannot apply after account switching or leave a management dialog open
+  ---
+  duration_ms: 195.344143
+  type: 'test'
+  ...
+# Subtest: an explicit conflict refresh keeps the draft and captures the latest revision
+ok 66 - an explicit conflict refresh keeps the draft and captures the latest revision
+  ---
+  duration_ms: 257.46215
+  type: 'test'
+  ...
+# Subtest: explicit room revocation clears cached results and returns to the class dashboard
+ok 67 - explicit room revocation clears cached results and returns to the class dashboard
+  ---
+  duration_ms: 125.667919
+  type: 'test'
+  ...
+# Subtest: opening an archived class from Profile selects that class and its archive filter
+ok 68 - opening an archived class from Profile selects that class and its archive filter
+  ---
+  duration_ms: 186.455842
+  type: 'test'
+  ...
+# Subtest: failed conflict refresh reports inside the modal, focuses the error and preserves the draft
+ok 69 - failed conflict refresh reports inside the modal, focuses the error and preserves the draft
+  ---
+  duration_ms: 103.188139
+  type: 'test'
+  ...
+# Subtest: confirmation refresh returns keyboard focus to its Cancel control
+ok 70 - confirmation refresh returns keyboard focus to its Cancel control
+  ---
+  duration_ms: 136.208727
+  type: 'test'
+  ...
+# Subtest: a stale cloud cache cannot synchronize account A practice through account B SDK storage
+ok 71 - a stale cloud cache cannot synchronize account A practice through account B SDK storage
+  ---
+  duration_ms: 23.817629
+  type: 'test'
+  ...
+# Subtest: the explicit progress actor prevents writes when the cloud cache has already changed accounts
+ok 72 - the explicit progress actor prevents writes when the cloud cache has already changed accounts
+  ---
+  duration_ms: 6.314813
+  type: 'test'
+  ...
+# Subtest: profile mutations reject a stale account cache before sending any classroom payload
+ok 73 - profile mutations reject a stale account cache before sending any classroom payload
+  ---
+  duration_ms: 4.647732
+  type: 'test'
+  ...
+# Subtest: an SDK account switch after validation cannot attach the new account JWT to an old payload
+ok 74 - an SDK account switch after validation cannot attach the new account JWT to an old payload
+  ---
+  duration_ms: 7.687606
+  type: 'test'
+  ...
+# Subtest: a legitimate token refresh keeps the same account session usable for module RPCs
+ok 75 - a legitimate token refresh keeps the same account session usable for module RPCs
+  ---
+  duration_ms: 4.078287
+  type: 'test'
+  ...
+# Subtest: the installed SDK can refresh a JWT within the same session without bypassing snapshot cache identity checks
+ok 76 - the installed SDK can refresh a JWT within the same session without bypassing snapshot cache identity checks
+  ---
+  duration_ms: 6.143357
+  type: 'test'
+  ...
+# Subtest: a recovery password update cannot operate through another account in shared SDK storage
+ok 77 - a recovery password update cannot operate through another account in shared SDK storage
+  ---
+  duration_ms: 3.05417
+  type: 'test'
+  ...
+# Subtest: recovery resets stay on the verified session when another SDK account appears after validation
+ok 78 - recovery resets stay on the verified session when another SDK account appears after validation
+  ---
+  duration_ms: 8.526576
+  type: 'test'
+  ...
+# Subtest: an old profile form cannot mutate the newly cached account before its UI callback arrives
+ok 79 - an old profile form cannot mutate the newly cached account before its UI callback arrives
+  ---
+  duration_ms: 576.919513
+  type: 'test'
+  ...
+# Subtest: reopening profile after SDK identity changes drops the previous account fields
+ok 80 - reopening profile after SDK identity changes drops the previous account fields
+  ---
+  duration_ms: 148.940921
+  type: 'test'
+  ...
+# Subtest: a delayed previous-account response cannot populate the new account cache
+ok 81 - a delayed previous-account response cannot populate the new account cache
+  ---
+  duration_ms: 31.196369
+  type: 'test'
+  ...
+# Subtest: a delayed old-room response cannot replace the room currently being viewed
+ok 82 - a delayed old-room response cannot replace the room currently being viewed
+  ---
+  duration_ms: 3.123204
+  type: 'test'
+  ...
+# Subtest: logout clears profile, room and session and ignores a late heartbeat
+ok 83 - logout clears profile, room and session and ignores a late heartbeat
+  ---
+  duration_ms: 27.006868
+  type: 'test'
+  ...
+# Subtest: classroom permission errors retain their code for access revocation
+ok 84 - classroom permission errors retain their code for access revocation
+  ---
+  duration_ms: 6.205582
+  type: 'test'
+  ...
+# Subtest: source bank has 15 unique IDs, 3 questions per shape and no answer names
+ok 85 - source bank has 15 unique IDs, 3 questions per shape and no answer names
+  ---
+  duration_ms: 1.932289
+  type: 'test'
+  ...
+# Subtest: 500 seeded rounds have 10 unique questions, exactly 2 per shape
+ok 86 - 500 seeded rounds have 10 unique questions, exactly 2 per shape
+  ---
+  duration_ms: 13.63923
+  type: 'test'
+  ...
+# Subtest: R2 before R1 is blocked; R1 correct earns no points and preserves the question
+ok 87 - R2 before R1 is blocked; R1 correct earns no points and preserves the question
+  ---
+  duration_ms: 0.520555
+  type: 'test'
+  ...
+# Subtest: incorrect role and target cannot be scored, even when shape is correct
+ok 88 - incorrect role and target cannot be scored, even when shape is correct
+  ---
+  duration_ms: 0.228074
+  type: 'test'
+  ...
+# Subtest: wrong answers record exactly one failed question and cannot retry
+ok 89 - wrong answers record exactly one failed question and cannot retry
+  ---
+  duration_ms: 0.318061
+  type: 'test'
+  ...
+# Subtest: a matching pair grants exactly one point, blocks rapid duplicate input and skips
+ok 90 - a matching pair grants exactly one point, blocks rapid duplicate input and skips
+  ---
+  duration_ms: 0.360308
+  type: 'test'
+  ...
+# Subtest: feedback has 3 exact 150 ms ON/OFF cycles and excludes 900 ms from elapsed time
+ok 91 - feedback has 3 exact 150 ms ON/OFF cycles and excludes 900 ms from elapsed time
+  ---
+  duration_ms: 0.414676
+  type: 'test'
+  ...
+# Subtest: hint is purple only on active reader, counted once per question across both stages
+ok 92 - hint is purple only on active reader, counted once per question across both stages
+  ---
+  duration_ms: 0.224764
+  type: 'test'
+  ...
+# Subtest: skip after R1 still gives zero and resets the next question
+ok 93 - skip after R1 still gives zero and resets the next question
+  ---
+  duration_ms: 0.162959
+  type: 'test'
+  ...
+# Subtest: pause freezes clock and answers; resume excludes all pause time
+ok 94 - pause freezes clock and answers; resume excludes all pause time
+  ---
+  duration_ms: 0.636949
+  type: 'test'
+  ...
+# Subtest: pausing during feedback preserves the remaining transition
+ok 95 - pausing during feedback preserves the remaining transition
+  ---
+  duration_ms: 0.171357
+  type: 'test'
+  ...
+# Subtest: complete 100 real rounds, max 10 points and final time remains frozen
+ok 96 - complete 100 real rounds, max 10 points and final time remains frozen
+  ---
+  duration_ms: 40.97217
+  type: 'test'
+  ...
+# Subtest: a mixed round reports correct, skipped and mistakes independently
+ok 97 - a mixed round reports correct, skipped and mistakes independently
+  ---
+  duration_ms: 2.557363
+  type: 'test'
+  ...
+# Subtest: incomplete games cannot produce leaderboard records
+ok 98 - incomplete games cannot produce leaderboard records
+  ---
+  duration_ms: 0.130534
+  type: 'test'
+  ...
+# Subtest: registration trims and validates names, category and class
+ok 99 - registration trims and validates names, category and class
+  ---
+  duration_ms: 0.266365
+  type: 'test'
+  ...
+# Subtest: time display handles minute boundaries and long sessions
+ok 100 - time display handles minute boundaries and long sessions
+  ---
+  duration_ms: 0.206386
+  type: 'test'
+  ...
+# Subtest: text, button states and form boundaries remain legible in both themes and contrast modes
+ok 101 - text, button states and form boundaries remain legible in both themes and contrast modes
+  ---
+  duration_ms: 3.045371
+  type: 'test'
+  ...
+# Subtest: generated module adapts one owner while preserving educational durations
+ok 102 - generated module adapts one owner while preserving educational durations
+  ---
+  duration_ms: 1.335444
+  type: 'test'
+  ...
+# Subtest: portal and module CSS keep dark, strong contrast and adapter output deterministic
+ok 103 - portal and module CSS keep dark, strong contrast and adapter output deterministic
+  ---
+  duration_ms: 4.688262
+  type: 'test'
+  ...
+# Subtest: drift CLI detects stale generated CSS/JS, changed module recipe input and a shadow token owner
+ok 104 - drift CLI detects stale generated CSS/JS, changed module recipe input and a shadow token owner
+  ---
+  duration_ms: 1157.862907
+  type: 'test'
+  ...
+# Subtest: forget cancels a pending mutation without resurrecting its session or throwing a null-session error
+ok 105 - forget cancels a pending mutation without resurrecting its session or throwing a null-session error
+  ---
+  duration_ms: 3.591207
+  type: 'test'
+  ...
+# Subtest: an abandoned mutation cannot clear the pending request or busy state of a new session
+ok 106 - an abandoned mutation cannot clear the pending request or busy state of a new session
+  ---
+  duration_ms: 0.998216
+  type: 'test'
+  ...
+# Subtest: forget during retry backoff never sends the old command under the new generation
+ok 107 - forget during retry backoff never sends the old command under the new generation
+  ---
+  duration_ms: 12.697531
+  type: 'test'
+  ...
+# Subtest: stop and restart polling while a state request is in flight keeps one polling chain
+ok 108 - stop and restart polling while a state request is in flight keeps one polling chain
+  ---
+  duration_ms: 3.629793
+  type: 'test'
+  ...
+# Subtest: concurrent refresh callers share one state request and its authoritative result
+ok 109 - concurrent refresh callers share one state request and its authoritative result
+  ---
+  duration_ms: 0.76636
+  type: 'test'
+  ...
+# Subtest: a delayed state failure cannot disconnect a later accepted answer acknowledgement
+ok 110 - a delayed state failure cannot disconnect a later accepted answer acknowledgement
+  ---
+  duration_ms: 0.999273
+  type: 'test'
+  ...
+# Subtest: a delayed snapshot cannot roll back the return value or clear a newer pending command
+ok 111 - a delayed snapshot cannot roll back the return value or clear a newer pending command
+  ---
+  duration_ms: 0.754976
+  type: 'test'
+  ...
+# Subtest: the v2 wire protocol is added without changing the saved command or retry sequence
+ok 112 - the v2 wire protocol is added without changing the saved command or retry sequence
+  ---
+  duration_ms: 204.424414
+  type: 'test'
+  ...
+# Subtest: an old Edge rejects protocol 2 with a clear backend-update error while retaining the session
+ok 113 - an old Edge rejects protocol 2 with a clear backend-update error while retaining the session
+  ---
+  duration_ms: 11.838458
+  type: 'test'
+  ...
+# Subtest: a v1 snapshot is rejected instead of accepting its future question list
+ok 114 - a v1 snapshot is rejected instead of accepting its future question list
+  ---
+  duration_ms: 0.491146
+  type: 'test'
+  ...
+# Subtest: duel HTTP retries a lost acknowledgement with the same sequence and reconnects the saved session
+ok 115 - duel HTTP retries a lost acknowledgement with the same sequence and reconnects the saved session
+  ---
+  duration_ms: 412.061426
+  type: 'test'
+  ...
+# Subtest: duel winner labels follow the completed server result rather than temporary scores
+ok 116 - duel winner labels follow the completed server result rather than temporary scores
+  ---
+  duration_ms: 7.75486
+  type: 'test'
+  ...
+# Subtest: a real HTTP timeout is retried as a network error without duplicating an accepted mutation
+ok 117 - a real HTTP timeout is retried as a network error without duplicating an accepted mutation
+  ---
+  duration_ms: 4297.834374
+  type: 'test'
+  ...
+# Subtest: Duel has exactly the 15 canonical IDs, correct shapes and stable topics
+ok 118 - Duel has exactly the 15 canonical IDs, correct shapes and stable topics
+  ---
+  duration_ms: 10.339326
+  type: 'test'
+  ...
+# Subtest: every server presentation is complete in BM/English and preserves formulas and measurements
+ok 119 - every server presentation is complete in BM/English and preserves formulas and measurements
+  ---
+  duration_ms: 1.645824
+  type: 'test'
+  ...
+# Subtest: B1/B2 explicitly limit different dimensions to this example without changing the answer
+ok 120 - B1/B2 explicitly limit different dimensions to this example without changing the answer
+  ---
+  duration_ms: 0.550964
+  type: 'test'
+  ...
+# Subtest: S2 alone has the existing bilingual formula legend
+ok 121 - S2 alone has the existing bilingual formula legend
+  ---
+  duration_ms: 0.639028
+  type: 'test'
+  ...
+# Subtest: each item has verified source pages and partial curriculum alignment, with difficulty labelled as a team estimate
+ok 122 - each item has verified source pages and partial curriculum alignment, with difficulty labelled as a team estimate
+  ---
+  duration_ms: 13.028379
+  type: 'test'
+  ...
+# Subtest: all six attached sources are inventoried and server content has no frontend/runtime import
+ok 123 - all six attached sources are inventoried and server content has no frontend/runtime import
+  ---
+  duration_ms: 0.633977
+  type: 'test'
+  ...
+# Subtest: Duel uses the active server projection and never needs the local answer bank or future IDs
+ok 124 - Duel uses the active server projection and never needs the local answer bank or future IDs
+  ---
+  duration_ms: 7.764351
+  type: 'test'
+  ...
+# Subtest: Duel renders an acknowledged R1 from server state without evaluating local correctness
+ok 125 - Duel renders an acknowledged R1 from server state without evaluating local correctness
+  ---
+  duration_ms: 0.637604
+  type: 'test'
+  ...
+# Subtest: refresh restores wrong and skipped correction screens and their remaining minimum review time
+ok 126 - refresh restores wrong and skipped correction screens and their remaining minimum review time
+  ---
+  duration_ms: 2.884476
+  type: 'test'
+  ...
+# Subtest: acknowledgements preserve an open menu and hints without another attempt
+ok 127 - acknowledgements preserve an open menu and hints without another attempt
+  ---
+  duration_ms: 0.761207
+  type: 'test'
+  ...
+# Subtest: Duel rejects malformed totals, raw v1 checkpoints and unsettled answers without changing state
+ok 128 - Duel rejects malformed totals, raw v1 checkpoints and unsettled answers without changing state
+  ---
+  duration_ms: 0.611137
+  type: 'test'
+  ...
+# Subtest: additive Duel migration preserves existing rooms and does not widen table or RPC privileges
+ok 129 - additive Duel migration preserves existing rooms and does not widen table or RPC privileges
+  ---
+  duration_ms: 7725.663632
+  type: 'test'
+  ...
+# Subtest: wrong-answer review survives refresh and cannot be skipped before the server-paced advance
+ok 130 - wrong-answer review survives refresh and cannot be skipped before the server-paced advance
+  ---
+  duration_ms: 114.655574
+  type: 'test'
+  ...
+# Subtest: same-sequence duplicate/conflicting requests settle one answer and one advance only
+ok 131 - same-sequence duplicate/conflicting requests settle one answer and one advance only
+  ---
+  duration_ms: 69.286382
+  type: 'test'
+  ...
+# Subtest: two players share ten unique questions; final score, time and last review remain authoritative
+ok 132 - two players share ten unique questions; final score, time and last review remain authoritative
+  ---
+  duration_ms: 420.189834
+  type: 'test'
+  ...
+# Subtest: deadline, lobby expiry and surrender complete isolated fixtures with no client clock or score
+ok 133 - deadline, lobby expiry and surrender complete isolated fixtures with no client clock or score
+  ---
+  duration_ms: 92.590832
+  type: 'test'
+  ...
+# Subtest: prepared backend verification rolls back every fixture and migration rollback preserves existing rooms
+ok 134 - prepared backend verification rolls back every fixture and migration rollback preserves existing rooms
+  ---
+  duration_ms: 110.420604
+  type: 'test'
+  ...
+# Subtest: equal scores and equal server finish times produce a draw
+ok 135 - equal scores and equal server finish times produce a draw
+  ---
+  duration_ms: 358.193678
+  type: 'test'
+  ...
+# Subtest: equal scores use the earlier server finish time
+ok 136 - equal scores use the earlier server finish time
+  ---
+  duration_ms: 214.549051
+  type: 'test'
+  ...
+# Subtest: authoritative SQL question metadata matches the actual offline bank
+ok 137 - authoritative SQL question metadata matches the actual offline bank
+  ---
+  duration_ms: 11.417004
+  type: 'test'
+  ...
+# Subtest: offline file origins receive CORS without cookies; only POST is accepted
+ok 138 - offline file origins receive CORS without cookies; only POST is accepted
+  ---
+  duration_ms: 4.855716
+  type: 'test'
+  ...
+# Subtest: invalid JSON, arrays, missing tokens and unexpected client score/time/class never reach RPC
+ok 139 - invalid JSON, arrays, missing tokens and unexpected client score/time/class never reach RPC
+  ---
+  duration_ms: 7.071869
+  type: 'test'
+  ...
+# Subtest: body limit applies to declared lengths and streamed bodies
+ok 140 - body limit applies to declared lengths and streamed bodies
+  ---
+  duration_ms: 0.988897
+  type: 'test'
+  ...
+# Subtest: content type and action-specific fields are validated before RPC
+ok 141 - content type and action-specific fields are validated before RPC
+  ---
+  duration_ms: 2.638245
+  type: 'test'
+  ...
+# Subtest: create uses SHA256 token, keyed fingerprint, cryptographic PIN and service-role-only RPC
+ok 142 - create uses SHA256 token, keyed fingerprint, cryptographic PIN and service-role-only RPC
+  ---
+  duration_ms: 22.388387
+  type: 'test'
+  ...
+# Subtest: best-effort fingerprint consistently uses the final forwarding entry
+ok 143 - best-effort fingerprint consistently uses the final forwarding entry
+  ---
+  duration_ms: 2.260546
+  type: 'test'
+  ...
+# Subtest: PIN collisions are retried without changing player identity
+ok 144 - PIN collisions are retried without changing player identity
+  ---
+  duration_ms: 3.070364
+  type: 'test'
+  ...
+# Subtest: mutations preserve exact sequence/question/scan fields and never add client clock
+ok 145 - mutations preserve exact sequence/question/scan fields and never add client clock
+  ---
+  duration_ms: 2.616255
+  type: 'test'
+  ...
+# Subtest: known business errors map to deliberate HTTP statuses
+ok 146 - known business errors map to deliberate HTTP statuses
+  ---
+  duration_ms: 30.935171
+  type: 'test'
+  ...
+# Subtest: upstream failures and arbitrary database messages stay private
+ok 147 - upstream failures and arbitrary database messages stay private
+  ---
+  duration_ms: 7.164175
+  type: 'test'
+  ...
+# Subtest: snapshot response whitelist strips private token/sequence/answer data from opponent
+ok 148 - snapshot response whitelist strips private token/sequence/answer data from opponent
+  ---
+  duration_ms: 2.438505
+  type: 'test'
+  ...
+# Subtest: unconfigured functions return a sanitized error without calling upstream
+ok 149 - unconfigured functions return a sanitized error without calling upstream
+  ---
+  duration_ms: 4.282921
+  type: 'test'
+  ...
+# Subtest: RPC timeout is bounded and sanitized
+ok 150 - RPC timeout is bounded and sanitized
+  ---
+  duration_ms: 13.999976
+  type: 'test'
+  ...
+# Subtest: Duel protocol 2 sends only the active prompt without answer key, future IDs or unused hint
+ok 151 - Duel protocol 2 sends only the active prompt without answer key, future IDs or unused hint
+  ---
+  duration_ms: 1.674549
+  type: 'test'
+  ...
+# Subtest: hints are released only after server accounting; countdown releases no prompt
+ok 152 - hints are released only after server accounting; countdown releases no prompt
+  ---
+  duration_ms: 0.271708
+  type: 'test'
+  ...
+# Subtest: settled review can reveal its answer, while the next prompt remains withheld until advance
+ok 153 - settled review can reveal its answer, while the next prompt remains withheld until advance
+  ---
+  duration_ms: 0.245857
+  type: 'test'
+  ...
+# Subtest: v1 or unmigrated database cannot silently expose the old response contract
+ok 154 - v1 or unmigrated database cannot silently expose the old response contract
+  ---
+  duration_ms: 29.091015
+  type: 'test'
+  ...
+# Subtest: integrated V2 platform retains all fifteen practice IDs in its single Game engine
+ok 155 - integrated V2 platform retains all fifteen practice IDs in its single Game engine
+  ---
+  duration_ms: 1.732263
+  type: 'test'
+  ...
+# Subtest: integrated engine exposes validated Duel recovery without changing the room-facing constructor
+ok 156 - integrated engine exposes validated Duel recovery without changing the room-facing constructor
+  ---
+  duration_ms: 0.292354
+  type: 'test'
+  ...
+# Subtest: new signup requires a usable email and preserves the password verbatim
+ok 157 - new signup requires a usable email and preserves the password verbatim
+  ---
+  duration_ms: 1.648641
+  type: 'test'
+  ...
+# Subtest: signup uses normal email verification and atomic profile metadata, with no admin auto-confirm
+ok 158 - signup uses normal email verification and atomic profile metadata, with no admin auto-confirm
+  ---
+  duration_ms: 17.574832
+  type: 'test'
+  ...
+# Subtest: email login does not expose or enumerate private username identities
+ok 159 - email login does not expose or enumerate private username identities
+  ---
+  duration_ms: 4.509256
+  type: 'test'
+  ...
+# Subtest: legacy recovery codes cannot reset an email account
+ok 160 - legacy recovery codes cannot reset an email account
+  ---
+  duration_ms: 5.963799
+  type: 'test'
+  ...
+# Subtest: callback inspection never exposes tokens or authorizes recovery by URL alone
+ok 161 - callback inspection never exposes tokens or authorizes recovery by URL alone
+  ---
+  duration_ms: 2.745589
+  type: 'test'
+  ...
+# Subtest: only a validated recovery event opens reset; completing it revokes sessions
+ok 162 - only a validated recovery event opens reset; completing it revokes sessions
+  ---
+  duration_ms: 7.22464
+  type: 'test'
+  ...
+# Subtest: ordinary sign-in cannot submit the recovery form
+ok 163 - ordinary sign-in cannot submit the recovery form
+  ---
+  duration_ms: 0.926546
+  type: 'test'
+  ...
+# Subtest: a new session of the same account clears validated recovery authorization
+ok 164 - a new session of the same account clears validated recovery authorization
+  ---
+  duration_ms: 2.949033
+  type: 'test'
+  ...
+# Subtest: token refresh within the same verified recovery session preserves reset authorization
+ok 165 - token refresh within the same verified recovery session preserves reset authorization
+  ---
+  duration_ms: 3.443323
+  type: 'test'
+  ...
+# Subtest: recovery and confirmation email links always return to the canonical website
+ok 166 - recovery and confirmation email links always return to the canonical website
+  ---
+  duration_ms: 1.33065
+  type: 'test'
+  ...
+# Subtest: reloading the same recovery session keeps the reset form after server verification and clears intent on success
+ok 167 - reloading the same recovery session keeps the reset form after server verification and clears intent on success
+  ---
+  duration_ms: 2.515987
+  type: 'test'
+  ...
+# Subtest: a recovery intent cannot carry into a different server-verified session
+ok 168 - a recovery intent cannot carry into a different server-verified session
+  ---
+  duration_ms: 1.331969
+  type: 'test'
+  ...
+# Subtest: a delayed recovery verification cannot enable reset after an account switch
+ok 169 - a delayed recovery verification cannot enable reset after an account switch
+  ---
+  duration_ms: 3.321416
+  type: 'test'
+  ...
+# Subtest: committed templates and subjects match the canonical email sources
+ok 170 - committed templates and subjects match the canonical email sources
+  ---
+  duration_ms: 21.204036
+  type: 'test'
+  ...
+# Subtest: export changes presentation only and cannot enable auth methods or notifications
+ok 171 - export changes presentation only and cannot enable auth methods or notifications
+  ---
+  duration_ms: 1.667536
+  type: 'test'
+  ...
+# Subtest: action links preserve Auth verification; reauthentication retains its OTP
+ok 172 - action links preserve Auth verification; reauthentication retains its OTP
+  ---
+  duration_ms: 1.357603
+  type: 'test'
+  ...
+# Subtest: email layout stays self contained, bilingual and usable without network assets
+ok 173 - email layout stays self contained, bilingual and usable without network assets
+  ---
+  duration_ms: 2.085023
+  type: 'test'
+  ...
+# Subtest: visual fixtures have inert links, escaped query separators and no live token
+ok 174 - visual fixtures have inert links, escaped query separators and no live token
+  ---
+  duration_ms: 1.628769
+  type: 'test'
+  ...
+# Subtest: CLI only exports a local payload and rejects hosted mutations
+ok 175 - CLI only exports a local payload and rejects hosted mutations
+  ---
+  duration_ms: 227.93864
+  type: 'test'
+  ...
+# Subtest: decorative rendering stops for hidden routes, hidden documents and reduced motion
+ok 176 - decorative rendering stops for hidden routes, hidden documents and reduced motion
+  ---
+  duration_ms: 0.741195
+  type: 'test'
+  ...
+# Subtest: all entry assets have finite geometry, bounded mesh complexity and local materials
+ok 177 - all entry assets have finite geometry, bounded mesh complexity and local materials
+  ---
+  duration_ms: 314.276963
+  type: 'test'
+  ...
+# Subtest: math display preserves BM tepi and English overlapping while converting the pi token
+ok 178 - math display preserves BM tepi and English overlapping while converting the pi token
+  ---
+  duration_ms: 9.31379
+  type: 'test'
+  ...
+# Subtest: pyramid volume renders the whole numerator over 3 with a semantic power
+ok 179 - pyramid volume renders the whole numerator over 3 with a semantic power
+  ---
+  duration_ms: 0.706909
+  type: 'test'
+  ...
+# Subtest: parentheses in surface area and separate equations keep their structure
+ok 180 - parentheses in surface area and separate equations keep their structure
+  ---
+  duration_ms: 0.381272
+  type: 'test'
+  ...
+# Subtest: spaces do not alter an equation and ordinary variable definitions stay readable
+ok 181 - spaces do not alter an equation and ordinary variable definitions stay readable
+  ---
+  duration_ms: 0.291774
+  type: 'test'
+  ...
+# Subtest: measurements use protected unit spacing and semantic square/cube powers
+ok 182 - measurements use protected unit spacing and semantic square/cube powers
+  ---
+  duration_ms: 0.693311
+  type: 'test'
+  ...
+# Subtest: rich text supports explicit strong/emphasis and line breaks while rendering math
+ok 183 - rich text supports explicit strong/emphasis and line breaks while rendering math
+  ---
+  duration_ms: 3.065511
+  type: 'test'
+  ...
+# Subtest: glossary emphasis uses complete longest phrases and does not alter spelling
+ok 184 - glossary emphasis uses complete longest phrases and does not alter spelling
+  ---
+  duration_ms: 8.376124
+  type: 'test'
+  ...
+# Subtest: rich markup never accepts HTML, event attributes, links or raw MathML
+ok 185 - rich markup never accepts HTML, event attributes, links or raw MathML
+  ---
+  duration_ms: 0.706487
+  type: 'test'
+  ...
+# Subtest: unsupported or incomplete expressions remain literal escaped text
+ok 186 - unsupported or incomplete expressions remain literal escaped text
+  ---
+  duration_ms: 1.048988
+  type: 'test'
+  ...
+# Subtest: math display escapes markup rather than introducing executable HTML
+ok 187 - math display escapes markup rather than introducing executable HTML
+  ---
+  duration_ms: 0.575212
+  type: 'test'
+  ...
+# Subtest: the complete app starts with one settings dialog and preserves saved utility and ease preferences
+ok 188 - the complete app starts with one settings dialog and preserves saved utility and ease preferences
+  ---
+  duration_ms: 969.372578
+  type: 'test'
+  ...
+# Subtest: shared language, contrast and audio settings keep a running practice game and its selected card intact
+ok 189 - shared language, contrast and audio settings keep a running practice game and its selected card intact
+  ---
+  duration_ms: 393.690872
+  type: 'test'
+  ...
+# Subtest: the Profile control keeps a localized explicit accessible name when its visible label is hidden
+ok 190 - the Profile control keeps a localized explicit accessible name when its visible label is hidden
+  ---
+  duration_ms: 263.857281
+  type: 'test'
+  ...
+# Subtest: help, report, edit and tutorial reuse one dialog while preserving R1/R2, hint and selected card
+ok 191 - help, report, edit and tutorial reuse one dialog while preserving R1/R2, hint and selected card
+  ---
+  duration_ms: 1429.532069
+  type: 'test'
+  ...
+# Subtest: BM/English report validation is inline, rejects long input and safely renders literal markup
+ok 192 - BM/English report validation is inline, rejects long input and safely renders literal markup
+  ---
+  duration_ms: 629.594341
+  type: 'test'
+  ...
+# Subtest: denied clipboard exposes a selectable preview and exports exactly the reviewed text
+ok 193 - denied clipboard exposes a selectable preview and exports exactly the reviewed text
+  ---
+  duration_ms: 363.739258
+  type: 'test'
+  ...
+# Subtest: language defaults to BM, persists English and rejects unsupported input
+ok 194 - language defaults to BM, persists English and rejects unsupported input
+  ---
+  duration_ms: 1.564971
+  type: 'test'
+  ...
+# Subtest: language changes still work when browser preference storage is denied
+ok 195 - language changes still work when browser preference storage is denied
+  ---
+  duration_ms: 0.261607
+  type: 'test'
+  ...
+# Subtest: both languages cover identical keys and interpolate without leaking key names
+ok 196 - both languages cover identical keys and interpolate without leaking key names
+  ---
+  duration_ms: 6.517276
+  type: 'test'
+  ...
+# Subtest: single-question review uses singular English while full rounds keep plural counts
+ok 197 - single-question review uses singular English while full rounds keep plural counts
+  ---
+  duration_ms: 0.454261
+  type: 'test'
+  ...
+# Subtest: all 15 translated questions preserve IDs, answer shapes, numbers and formula symbols without mutating source
+ok 198 - all 15 translated questions preserve IDs, answer shapes, numbers and formula symbols without mutating source
+  ---
+  duration_ms: 0.735889
+  type: 'test'
+  ...
+# Subtest: practice accessibility progress and transitions announce the true fifteen-question total
+ok 199 - practice accessibility progress and transitions announce the true fifteen-question total
+  ---
+  duration_ms: 0.572989
+  type: 'test'
+  ...
+# Subtest: descriptions distinguish a pyramid apex and a cone curved surface
+ok 200 - descriptions distinguish a pyramid apex and a cone curved surface
+  ---
+  duration_ms: 0.177433
+  type: 'test'
+  ...
+# Subtest: BM presentation uses KSSM surface and edge terms while preserving the source bank
+ok 201 - BM presentation uses KSSM surface and edge terms while preserving the source bank
+  ---
+  duration_ms: 0.195525
+  type: 'test'
+  ...
+# Subtest: English CSV localizes headers and category while stored legacy/new records keep stable values
+ok 202 - English CSV localizes headers and category while stored legacy/new records keep stable values
+  ---
+  duration_ms: 25.532985
+  type: 'test'
+  ...
+# Subtest: retry scores from the first published BM/BI version remain visible as legacy only
+ok 203 - retry scores from the first published BM/BI version remain visible as legacy only
+  ---
+  duration_ms: 0.472288
+  type: 'test'
+  ...
+# Subtest: archived history + scaling → crud → offline
+    # Subtest: reviewed fingerprints, wrapper ACLs and input guards survive composition
+    ok 1 - reviewed fingerprints, wrapper ACLs and input guards survive composition
+      ---
+      duration_ms: 17.174865
+      type: 'test'
+      ...
+    # Subtest: public snapshots take no row lock and heartbeat writes coalesce with room scoping
+    ok 2 - public snapshots take no row lock and heartbeat writes coalesce with room scoping
+      ---
+      duration_ms: 45.895846
+      type: 'test'
+      ...
+    # Subtest: owner, revision, archive and removed-membership guards retain authoritative history
+    ok 3 - owner, revision, archive and removed-membership guards retain authoritative history
+      ---
+      duration_ms: 108.602417
+      type: 'test'
+      ...
+    # Subtest: offline replay and history remain owner-bound, session-bound and separate from live scores
+    ok 4 - offline replay and history remain owner-bound, session-bound and separate from live scores
+      ---
+      duration_ms: 35.363606
+      type: 'test'
+      ...
+    1..4
+ok 204 - archived history + scaling → crud → offline
+  ---
+  duration_ms: 2889.604703
+  type: 'test'
+  ...
+# Subtest: archived history + crud → offline → scaling
+    # Subtest: reviewed fingerprints, wrapper ACLs and input guards survive composition
+    ok 1 - reviewed fingerprints, wrapper ACLs and input guards survive composition
+      ---
+      duration_ms: 18.609379
+      type: 'test'
+      ...
+    # Subtest: public snapshots take no row lock and heartbeat writes coalesce with room scoping
+    ok 2 - public snapshots take no row lock and heartbeat writes coalesce with room scoping
+      ---
+      duration_ms: 39.878767
+      type: 'test'
+      ...
+    # Subtest: owner, revision, archive and removed-membership guards retain authoritative history
+    ok 3 - owner, revision, archive and removed-membership guards retain authoritative history
+      ---
+      duration_ms: 96.561674
+      type: 'test'
+      ...
+    # Subtest: offline replay and history remain owner-bound, session-bound and separate from live scores
+    ok 4 - offline replay and history remain owner-bound, session-bound and separate from live scores
+      ---
+      duration_ms: 31.474209
+      type: 'test'
+      ...
+    1..4
+ok 205 - archived history + crud → offline → scaling
+  ---
+  duration_ms: 2256.084177
+  type: 'test'
+  ...
+# Subtest: CRUD presence contract remains standalone before scaling or offline SQL is installed
+ok 206 - CRUD presence contract remains standalone before scaling or offline SQL is installed
+  ---
+  duration_ms: 2035.301058
+  type: 'test'
+  ...
+# Subtest: load target requires an exact isolated host and unconditionally rejects production
+ok 207 - load target requires an exact isolated host and unconditionally rejects production
+  ---
+  duration_ms: 1.659846
+  type: 'test'
+  ...
+# Subtest: capacity profiles count actual people rather than confusing two-player matches with users
+ok 208 - capacity profiles count actual people rather than confusing two-player matches with users
+  ---
+  duration_ms: 1.214695
+  type: 'test'
+  ...
+# Subtest: classroom fixtures are checked once without copying the private account array
+ok 209 - classroom fixtures are checked once without copying the private account array
+  ---
+  duration_ms: 0.628118
+  type: 'test'
+  ...
+# Subtest: classroom fixtures reject duplicated credentials, mislabeled identities and expired sessions
+ok 210 - classroom fixtures reject duplicated credentials, mislabeled identities and expired sessions
+  ---
+  duration_ms: 0.540854
+  type: 'test'
+  ...
+# Subtest: recovery progress reflects only the verified host mode; request and sent states do not claim verification
+ok 211 - recovery progress reflects only the verified host mode; request and sent states do not claim verification
+  ---
+  duration_ms: 156.821084
+  type: 'test'
+  ...
+# Subtest: auth composition preserves existing errors, cooldown controls and host forms verbatim
+ok 212 - auth composition preserves existing errors, cooldown controls and host forms verbatim
+  ---
+  duration_ms: 16.93513
+  type: 'test'
+  ...
+# Subtest: profile keeps editable name/avatar separate from immutable escaped identity and the live preview
+ok 213 - profile keeps editable name/avatar separate from immutable escaped identity and the live preview
+  ---
+  duration_ms: 34.579008
+  type: 'test'
+  ...
+# Subtest: password card precedes the stable real-session region and retains policy and scope confirmations
+ok 214 - password card precedes the stable real-session region and retains policy and scope confirmations
+  ---
+  duration_ms: 16.182436
+  type: 'test'
+  ...
+# Subtest: session presentation uses only server records, shows the current record first and never invents activity
+ok 215 - session presentation uses only server records, shows the current record first and never invents activity
+  ---
+  duration_ms: 38.118759
+  type: 'test'
+  ...
+# Subtest: module records use the dedicated authenticated RPC without affecting game actions
+ok 216 - module records use the dedicated authenticated RPC without affecting game actions
+  ---
+  duration_ms: 5.891015
+  type: 'test'
+  ...
+# Subtest: a delayed module RPC is rejected after the account changes
+ok 217 - a delayed module RPC is rejected after the account changes
+  ---
+  duration_ms: 1.414368
+  type: 'test'
+  ...
+# Subtest: missing migration or denied class access has an actionable safe error
+ok 218 - missing migration or denied class access has an actionable safe error
+  ---
+  duration_ms: 1.559842
+  type: 'test'
+  ...
+# Subtest: module fragment links remain in the srcdoc document instead of loading the parent app
+ok 219 - module fragment links remain in the srcdoc document instead of loading the parent app
+  ---
+  duration_ms: 1.111874
+  type: 'test'
+  ...
+# Subtest: module copy translates complete explanations and changing counts without touching formula symbols or IDs
+ok 220 - module copy translates complete explanations and changing counts without touching formula symbols or IDs
+  ---
+  duration_ms: 1460.437201
+  type: 'test'
+  ...
+# Subtest: module translator remains self-contained after serialization into the sandbox
+ok 221 - module translator remains self-contained after serialization into the sandbox
+  ---
+  duration_ms: 12.169336
+  type: 'test'
+  ...
+# Subtest: module lab navigation sublabels use complete English action phrases
+ok 222 - module lab navigation sublabels use complete English action phrases
+  ---
+  duration_ms: 6.414478
+  type: 'test'
+  ...
+# Subtest: module activity descriptions and surface navigation have complete English labels
+ok 223 - module activity descriptions and surface navigation have complete English labels
+  ---
+  duration_ms: 5.098441
+  type: 'test'
+  ...
+# Subtest: module joining-edge guidance and validation errors are fully English
+ok 224 - module joining-edge guidance and validation errors are fully English
+  ---
+  duration_ms: 7.879055
+  type: 'test'
+  ...
+# Subtest: host translation leaves natively bilingual feature text and labels to their owner
+ok 225 - host translation leaves natively bilingual feature text and labels to their owner
+  ---
+  duration_ms: 4.607509
+  type: 'test'
+  ...
+# Subtest: every stylesheet and typography token in the pinned artifact receives text scaling while model dimensions stay unchanged
+ok 226 - every stylesheet and typography token in the pinned artifact receives text scaling while model dimensions stay unchanged
+  ---
+  duration_ms: 3282.051135
+  type: 'test'
+  ...
+# Subtest: the actual module artifact starts through the native bridge with current preferences and both independent protocols
+ok 227 - the actual module artifact starts through the native bridge with current preferences and both independent protocols
+  ---
+  duration_ms: 652.236433
+  type: 'test'
+  ...
+# Subtest: settings messages preserve document identity and measurements, reject stale instances, and update language/audio live
+ok 228 - settings messages preserve document identity and measurements, reject stale instances, and update language/audio live
+  ---
+  duration_ms: 907.892316
+  type: 'test'
+  ...
+# Subtest: guided labels localize while a learner prediction and paused model stay unchanged
+ok 229 - guided labels localize while a learner prediction and paused model stay unchanged
+  ---
+  duration_ms: 1663.597122
+  type: 'test'
+  ...
+# Subtest: English lab and print preview labels translate without changing SVG geometry or print-scale values
+ok 230 - English lab and print preview labels translate without changing SVG geometry or print-scale values
+  ---
+  duration_ms: 1549.546583
+  type: 'test'
+  ...
+# Subtest: teacher progress view distinguishes meaningful completion and unstarted activities
+ok 231 - teacher progress view distinguishes meaningful completion and unstarted activities
+  ---
+  duration_ms: 5.760533
+  type: 'test'
+  ...
+# Subtest: teacher view escapes learner text and ignores forged completion or broken timestamps
+ok 232 - teacher view escapes learner text and ignores forged completion or broken timestamps
+  ---
+  duration_ms: 0.271989
+  type: 'test'
+  ...
+# Subtest: HTTP preview can create an unpredictable module session without secure-context randomUUID
+ok 233 - HTTP preview can create an unpredictable module session without secure-context randomUUID
+  ---
+  duration_ms: 1.452519
+  type: 'test'
+  ...
+# Subtest: progress rejects malformed records and cannot complete from opening or prediction alone
+ok 234 - progress rejects malformed records and cannot complete from opening or prediction alone
+  ---
+  duration_ms: 0.440881
+  type: 'test'
+  ...
+# Subtest: merging out-of-order saves retains the highest milestone and completed evidence
+ok 235 - merging out-of-order saves retains the highest milestone and completed evidence
+  ---
+  duration_ms: 1.529575
+  type: 'test'
+  ...
+# Subtest: only the current iframe and nonce can save; ready/open never award completion
+ok 236 - only the current iframe and nonce can save; ready/open never award completion
+  ---
+  duration_ms: 0.885073
+  type: 'test'
+  ...
+# Subtest: guest records and accounts are isolated, including storage-denied session memory
+ok 237 - guest records and accounts are isolated, including storage-denied session memory
+  ---
+  duration_ms: 1.018338
+  type: 'test'
+  ...
+# Subtest: tampered stored records are bounded and unavailable storage keeps activity usable
+ok 238 - tampered stored records are bounded and unavailable storage keeps activity usable
+  ---
+  duration_ms: 0.339743
+  type: 'test'
+  ...
+# Subtest: delayed cloud reads cannot copy the previous account progress into a new account
+ok 239 - delayed cloud reads cannot copy the previous account progress into a new account
+  ---
+  duration_ms: 1.078407
+  type: 'test'
+  ...
+# Subtest: failed cloud saves retain local progress and retry without duplicating milestones
+ok 240 - failed cloud saves retain local progress and retry without duplicating milestones
+  ---
+  duration_ms: 1.195553
+  type: 'test'
+  ...
+# Subtest: serial cloud saves keep a newer edit queued while an older save is in flight
+ok 241 - serial cloud saves keep a newer edit queued while an older save is in flight
+  ---
+  duration_ms: 13.819795
+  type: 'test'
+  ...
+# Subtest: teachers and guests never send their practice records to the student save RPC
+ok 242 - teachers and guests never send their practice records to the student save RPC
+  ---
+  duration_ms: 0.666548
+  type: 'test'
+  ...
+# Subtest: module settings permit only the three supported presentation values
+ok 243 - module settings permit only the three supported presentation values
+  ---
+  duration_ms: 2.581088
+  type: 'test'
+  ...
+# Subtest: only the active opaque module can update a single supported learning preference
+ok 244 - only the active opaque module can update a single supported learning preference
+  ---
+  duration_ms: 9.332426
+  type: 'test'
+  ...
+# Subtest: load and ready recover current settings while sync leaves the existing document intact
+ok 245 - load and ready recover current settings while sync leaves the existing document intact
+  ---
+  duration_ms: 7.295418
+  type: 'test'
+  ...
+# Subtest: foreign windows, origins, versions and closed/old frames cannot open host settings
+ok 246 - foreign windows, origins, versions and closed/old frames cannot open host settings
+  ---
+  duration_ms: 12.422706
+  type: 'test'
+  ...
+# Subtest: help requests reuse the active frame and reject stale, foreign or forged messages
+ok 247 - help requests reuse the active frame and reject stale, foreign or forged messages
+  ---
+  duration_ms: 18.910213
+  type: 'test'
+  ...
+# Subtest: playback progress keeps the music icon stable between pointerdown and click
+ok 248 - playback progress keeps the music icon stable between pointerdown and click
+  ---
+  duration_ms: 3.992203
+  type: 'test'
+  ...
+# Subtest: the dedicated music button handles its own first gesture without starting audio before mute
+ok 249 - the dedicated music button handles its own first gesture without starting audio before mute
+  ---
+  duration_ms: 3.704673
+  type: 'test'
+  ...
+# Subtest: music waits for a user gesture, with one quiet looping media element
+ok 250 - music waits for a user gesture, with one quiet looping media element
+  ---
+  duration_ms: 7.232708
+  type: 'test'
+  ...
+# Subtest: menu and game routes switch without overlap or restarting the same track
+ok 251 - menu and game routes switch without overlap or restarting the same track
+  ---
+  duration_ms: 1.348105
+  type: 'test'
+  ...
+# Subtest: the saved music preference survives route changes and is updated by the toggle
+ok 252 - the saved music preference survives route changes and is updated by the toggle
+  ---
+  duration_ms: 0.340473
+  type: 'test'
+  ...
+# Subtest: unavailable storage does not prevent playing or changing the in-memory preference
+ok 253 - unavailable storage does not prevent playing or changing the in-memory preference
+  ---
+  duration_ms: 0.365015
+  type: 'test'
+  ...
+# Subtest: an autoplay rejection leaves accurate state and waits for an explicit gesture to retry
+ok 254 - an autoplay rejection leaves accurate state and waits for an explicit gesture to retry
+  ---
+  duration_ms: 3.408334
+  type: 'test'
+  ...
+# Subtest: hidden tabs pause and resume the same track position, unless the preference was turned off
+ok 255 - hidden tabs pause and resume the same track position, unless the preference was turned off
+  ---
+  duration_ms: 1.19972
+  type: 'test'
+  ...
+# Subtest: a rejected old request cannot block the newer scene request
+ok 256 - a rejected old request cannot block the newer scene request
+  ---
+  duration_ms: 0.582241
+  type: 'test'
+  ...
+# Subtest: a late old completion does not pause music already playing for the new scene
+ok 257 - a late old completion does not pause music already playing for the new scene
+  ---
+  duration_ms: 0.214454
+  type: 'test'
+  ...
+# Subtest: late play completions cannot restart audio after mute, hiding, or destruction
+ok 258 - late play completions cannot restart audio after mute, hiding, or destruction
+  ---
+  duration_ms: 0.648362
+  type: 'test'
+  ...
+# Subtest: repeated calls reuse an in-flight request and synchronous play failure is handled
+ok 259 - repeated calls reuse an in-flight request and synchronous play failure is handled
+  ---
+  duration_ms: 1.909591
+  type: 'test'
+  ...
+# Subtest: media unavailability and playback errors leave the application usable
+ok 260 - media unavailability and playback errors leave the application usable
+  ---
+  duration_ms: 0.466335
+  type: 'test'
+  ...
+# Subtest: standalone builds can supply embedded track URLs without global configuration
+ok 261 - standalone builds can supply embedded track URLs without global configuration
+  ---
+  duration_ms: 3.727474
+  type: 'test'
+  ...
+# Subtest: volume remains independent of mute, scene changes and visibility
+ok 262 - volume remains independent of mute, scene changes and visibility
+  ---
+  duration_ms: 0.364614
+  type: 'test'
+  ...
+# Subtest: retry policy handles HTTP dates, bad values and a server delay beyond its jitter cap
+ok 263 - retry policy handles HTTP dates, bad values and a server delay beyond its jitter cap
+  ---
+  duration_ms: 1.909752
+  type: 'test'
+  ...
+# Subtest: snapshot cache expires, bounds entries, isolates caller mutations and forgets rejected reads
+ok 264 - snapshot cache expires, bounds entries, isolates caller mutations and forgets rejected reads
+  ---
+  duration_ms: 1.662925
+  type: 'test'
+  ...
+# Subtest: Duel polling waits while the browser is offline and resumes one chain
+ok 265 - Duel polling waits while the browser is offline and resumes one chain
+  ---
+  duration_ms: 15.551199
+  type: 'test'
+  ...
+# Subtest: Duel background polling is slower without changing the authoritative clock
+ok 266 - Duel background polling is slower without changing the authoritative clock
+  ---
+  duration_ms: 1.599353
+  type: 'test'
+  ...
+# Subtest: Duel observes Retry-After and keeps the exact pending command on HTTP429
+ok 267 - Duel observes Retry-After and keeps the exact pending command on HTTP429
+  ---
+  duration_ms: 3.639017
+  type: 'test'
+  ...
+# Subtest: Duel terminal results stop background requests while retaining review data
+ok 268 - Duel terminal results stop background requests while retaining review data
+  ---
+  duration_ms: 1.751879
+  type: 'test'
+  ...
+# Subtest: Classroom coalesces and briefly caches identical snapshots then invalidates on mutation
+ok 269 - Classroom coalesces and briefly caches identical snapshots then invalidates on mutation
+  ---
+  duration_ms: 4.236922
+  type: 'test'
+  ...
+# Subtest: a cached Classroom response still checks the actual SDK account
+ok 270 - a cached Classroom response still checks the actual SDK account
+  ---
+  duration_ms: 1.654584
+  type: 'test'
+  ...
+# Subtest: the Edge exposes Retry-After so real cross-origin browsers can respect the rate limit
+ok 271 - the Edge exposes Retry-After so real cross-origin browsers can respect the rate limit
+  ---
+  duration_ms: 16.677398
+  type: 'test'
+  ...
+# Subtest: an explicit backend-update HTTP503 is not retried or retained as a pending game action
+ok 272 - an explicit backend-update HTTP503 is not retried or retained as a pending game action
+  ---
+  duration_ms: 0.947762
+  type: 'test'
+  ...
+# Subtest: an older successful poll cannot erase a newer server cooldown
+ok 273 - an older successful poll cannot erase a newer server cooldown
+  ---
+  duration_ms: 5.250012
+  type: 'test'
+  ...
+# Subtest: terminal capability errors stop periodic polling without forgetting the explicit reset session
+ok 274 - terminal capability errors stop periodic polling without forgetting the explicit reset session
+  ---
+  duration_ms: 1.952664
+  type: 'test'
+  ...
+# Subtest: a Realtime invalidation cannot let an older snapshot overwrite or return older account data
+ok 275 - a Realtime invalidation cannot let an older snapshot overwrite or return older account data
+  ---
+  duration_ms: 9.072893
+  type: 'test'
+  ...
+# Subtest: a snapshot cache hit rejects a rejected SDK session rather than returning the old profile
+ok 276 - a snapshot cache hit rejects a rejected SDK session rather than returning the old profile
+  ---
+  duration_ms: 1.274058
+  type: 'test'
+  ...
+# Subtest: a refreshed JWT with the same verified session may reuse a bounded snapshot cache
+ok 277 - a refreshed JWT with the same verified session may reuse a bounded snapshot cache
+  ---
+  duration_ms: 1.228942
+  type: 'test'
+  ...
+# Subtest: offline RPC deduplicates lost-response replays and preserves monotonic module progress
+ok 278 - offline RPC deduplicates lost-response replays and preserves monotonic module progress
+  ---
+  duration_ms: 4635.272371
+  type: 'test'
+  ...
+# Subtest: conflicting IDs and malformed records stay rejected while valid records in the batch succeed
+ok 279 - conflicting IDs and malformed records stay rejected while valid records in the batch succeed
+  ---
+  duration_ms: 2932.130609
+  type: 'test'
+  ...
+# Subtest: offline data is owner-only and revoked or cross-account sessions cannot send
+ok 280 - offline data is owner-only and revoked or cross-account sessions cannot send
+  ---
+  duration_ms: 11796.164361
+  type: 'test'
+  ...
+# Subtest: offline transport uses its dedicated owner-bound RPC and surfaces missing installation
+ok 281 - offline transport uses its dedicated owner-bound RPC and surfaces missing installation
+  ---
+  duration_ms: 16.271447
+  type: 'test'
+  ...
+# Subtest: offline transport rejects a delayed response after an account or session switch
+ok 282 - offline transport rejects a delayed response after an account or session switch
+  ---
+  duration_ms: 1.623388
+  type: 'test'
+  ...
+# Subtest: PostgREST HTTP status and expired-JWT codes request sign-in instead of retrying
+ok 283 - PostgREST HTTP status and expired-JWT codes request sign-in instead of retrying
+  ---
+  duration_ms: 6.95819
+  type: 'test'
+  ...
+# Subtest: server failures remain transient even when their error code resembles a permanent rejection
+ok 284 - server failures remain transient even when their error code resembles a permanent rejection
+  ---
+  duration_ms: 11.022545
+  type: 'test'
+  ...
+# Subtest: session listeners retain the session argument and may also read the SDK Auth event
+ok 285 - session listeners retain the session argument and may also read the SDK Auth event
+  ---
+  duration_ms: 18.564143
+  type: 'test'
+  ...
+# Subtest: offline session recovery accepts only the requested owner from SDK storage
+ok 286 - offline session recovery accepts only the requested owner from SDK storage
+  ---
+  duration_ms: 0.944933
+  type: 'test'
+  ...
+# Subtest: a delayed SDK recovery cannot restore a session after explicit sign-out or an account switch
+ok 287 - a delayed SDK recovery cannot restore a session after explicit sign-out or an account switch
+  ---
+  duration_ms: 0.704375
+  type: 'test'
+  ...
+# Subtest: an offline SDK refresh failure remains transient instead of asking the owner to sign in again
+ok 288 - an offline SDK refresh failure remains transient instead of asking the owner to sign in again
+  ---
+  duration_ms: 0.49498
+  type: 'test'
+  ...
+# Subtest: retryable SDK refresh failures with the cached owner remain network errors before or after an RPC
+ok 289 - retryable SDK refresh failures with the cached owner remain network errors before or after an RPC
+  ---
+  duration_ms: 4.054899
+  type: 'test'
+  ...
+# Subtest: retryable SDK errors cannot disguise a changed account or session
+ok 290 - retryable SDK errors cannot disguise a changed account or session
+  ---
+  duration_ms: 5.987557
+  type: 'test'
+  ...
+# Subtest: changing any cached asset or worker policy invalidates the offline package
+ok 291 - changing any cached asset or worker policy invalidates the offline package
+  ---
+  duration_ms: 1.791706
+  type: 'test'
+  ...
+# Subtest: offline builder emits a complete deployable subdirectory and a scoped install manifest
+ok 292 - offline builder emits a complete deployable subdirectory and a scoped install manifest
+  ---
+  duration_ms: 6.384775
+  type: 'test'
+  ...
+# Subtest: module teaching events enter the durable queue through the real progress controller
+ok 293 - module teaching events enter the durable queue through the real progress controller
+  ---
+  duration_ms: 13.860014
+  type: 'test'
+  ...
+# Subtest: completed solo histories queue once across a repeated finished-result rendering
+ok 294 - completed solo histories queue once across a repeated finished-result rendering
+  ---
+  duration_ms: 12.022189
+  type: 'test'
+  ...
+# Subtest: remembered ownership requires matching persisted Auth, while explicit logout returns to guest
+ok 295 - remembered ownership requires matching persisted Auth, while explicit logout returns to guest
+  ---
+  duration_ms: 1.847967
+  type: 'test'
+  ...
+# Subtest: guest results remain local and a new account cannot send another account queue
+ok 296 - guest results remain local and a new account cannot send another account queue
+  ---
+  duration_ms: 8.1438
+  type: 'test'
+  ...
+# Subtest: a transient null INITIAL_SESSION retains the persisted offline owner and new work
+ok 297 - a transient null INITIAL_SESSION retains the persisted offline owner and new work
+  ---
+  duration_ms: 0.844691
+  type: 'test'
+  ...
+# Subtest: missing persisted Auth and explicit sign-out cannot resurrect remembered ownership
+ok 298 - missing persisted Auth and explicit sign-out cannot resurrect remembered ownership
+  ---
+  duration_ms: 0.337187
+  type: 'test'
+  ...
+# Subtest: account switches close the old module session and the rebuilt controller accepts the new owner edits
+ok 299 - account switches close the old module session and the rebuilt controller accepts the new owner edits
+  ---
+  duration_ms: 2.060345
+  type: 'test'
+  ...
+# Subtest: an online wake recovers the same SDK owner once even when Auth notifies during recovery
+ok 300 - an online wake recovers the same SDK owner once even when Auth notifies during recovery
+  ---
+  duration_ms: 43.996152
+  type: 'test'
+  ...
+# Subtest: a transient SDK recovery failure keeps the owner queue retrying until recovery succeeds
+ok 301 - a transient SDK recovery failure keeps the owner queue retrying until recovery succeeds
+  ---
+  duration_ms: 5.627601
+  type: 'test'
+  ...
+# Subtest: an expired SDK refresh keeps a matching cached owner pending with backoff until the network recovers
+ok 302 - an expired SDK refresh keeps a matching cached owner pending with backoff until the network recovers
+  ---
+  duration_ms: 5.942669
+  type: 'test'
+  ...
+# Subtest: a reopened online app automatically recovers persisted Auth through the real SDK and sends its owner queue
+ok 303 - a reopened online app automatically recovers persisted Auth through the real SDK and sends its owner queue
+  ---
+  duration_ms: 61.414721
+  type: 'test'
+  ...
+# Subtest: the existing module retry action can recover after offline RPC installation
+ok 304 - the existing module retry action can recover after offline RPC installation
+  ---
+  duration_ms: 1.923318
+  type: 'test'
+  ...
+# Subtest: a missing server acknowledgement retains a durable event for replay
+ok 305 - a missing server acknowledgement retains a durable event for replay
+  ---
+  duration_ms: 8.348587
+  type: 'test'
+  ...
+# Subtest: a successful acknowledgement removes only named events, never another owner
+ok 306 - a successful acknowledgement removes only named events, never another owner
+  ---
+  duration_ms: 16.761478
+  type: 'test'
+  ...
+# Subtest: account switch during delivery cannot acknowledge the old request or apply old progress
+ok 307 - account switch during delivery cannot acknowledge the old request or apply old progress
+  ---
+  duration_ms: 28.848934
+  type: 'test'
+  ...
+# Subtest: delivery retries use the same ID and wait for backoff
+ok 308 - delivery retries use the same ID and wait for backoff
+  ---
+  duration_ms: 2.287824
+  type: 'test'
+  ...
+# Subtest: batching bounds each request and keeps the rest pending for the next turn
+ok 309 - batching bounds each request and keeps the rest pending for the next turn
+  ---
+  duration_ms: 24.703735
+  type: 'test'
+  ...
+# Subtest: expired sessions and a missing backend stop automatic retries without dropping records
+ok 310 - expired sessions and a missing backend stop automatic retries without dropping records
+  ---
+  duration_ms: 2.749248
+  type: 'test'
+  ...
+# Subtest: blocked storage never reports a durable save and guests never queue account data
+ok 311 - blocked storage never reports a durable save and guests never queue account data
+  ---
+  duration_ms: 0.556429
+  type: 'test'
+  ...
+# Subtest: payload normalization strips credentials and rejects malformed or official-game records
+ok 312 - payload normalization strips credentials and rejects malformed or official-game records
+  ---
+  duration_ms: 0.253256
+  type: 'test'
+  ...
+# Subtest: quota retry retains the unsaved event and cannot report success until persistence recovers
+ok 313 - quota retry retains the unsaved event and cannot report success until persistence recovers
+  ---
+  duration_ms: 4.846358
+  type: 'test'
+  ...
+# Subtest: unsaved account queues survive switching owners and recover without crossing accounts
+ok 314 - unsaved account queues survive switching owners and recover without crossing accounts
+  ---
+  duration_ms: 1.585316
+  type: 'test'
+  ...
+# Subtest: retrying an active save shares its write and waits for persistence before sending
+ok 315 - retrying an active save shares its write and waits for persistence before sending
+  ---
+  duration_ms: 0.55405
+  type: 'test'
+  ...
+# Subtest: a late failed save remains visible after an older delivery is acknowledged
+ok 316 - a late failed save remains visible after an older delivery is acknowledged
+  ---
+  duration_ms: 2.528943
+  type: 'test'
+  ...
+# Subtest: an unsaved immutable ID keeps its original normalized event when a conflicting value is retried
+ok 317 - an unsaved immutable ID keeps its original normalized event when a conflicting value is retried
+  ---
+  duration_ms: 0.418659
+  type: 'test'
+  ...
+# Subtest: a failed device acknowledgement retries the same durable event without claiming success
+ok 318 - a failed device acknowledgement retries the same durable event without claiming success
+  ---
+  duration_ms: 0.435435
+  type: 'test'
+  ...
+# Subtest: a stale empty queue read cannot hide a save that completed during the read
+ok 319 - a stale empty queue read cannot hide a save that completed during the read
+  ---
+  duration_ms: 6.182511
+  type: 'test'
+  ...
+# Subtest: a delayed acknowledgement cannot delete a conflicting replacement or start another identical write
+ok 320 - a delayed acknowledgement cannot delete a conflicting replacement or start another identical write
+  ---
+  duration_ms: 3.446589
+  type: 'test'
+  ...
+# Subtest: a delayed save failure updates only its owner and remains recoverable after switching back
+ok 321 - a delayed save failure updates only its owner and remains recoverable after switching back
+  ---
+  duration_ms: 1.109493
+  type: 'test'
+  ...
+# Subtest: another tab can acknowledge durable rows without leaving a phantom pending event in memory
+ok 322 - another tab can acknowledge durable rows without leaving a phantom pending event in memory
+  ---
+  duration_ms: 0.44688
+  type: 'test'
+  ...
+# Subtest: an ID conflict with a previously durable event cannot strand or replace the original queue entry
+ok 323 - an ID conflict with a previously durable event cannot strand or replace the original queue entry
+  ---
+  duration_ms: 0.523428
+  type: 'test'
+  ...
+# Subtest: security validates matching new passwords and current password without trimming secrets
+ok 324 - security validates matching new passwords and current password without trimming secrets
+  ---
+  duration_ms: 14.307479
+  type: 'test'
+  ...
+# Subtest: signup requires an email and normalizes username/email without changing the password
+ok 325 - signup requires an email and normalizes username/email without changing the password
+  ---
+  duration_ms: 0.387704
+  type: 'test'
+  ...
+# Subtest: signup and email link requests reject missing, malformed, and oversized email addresses
+ok 326 - signup and email link requests reject missing, malformed, and oversized email addresses
+  ---
+  duration_ms: 0.96395
+  type: 'test'
+  ...
+# Subtest: recovery and confirmation email requests do not require username, password, or a recovery code
+ok 327 - recovery and confirmation email requests do not require username, password, or a recovery code
+  ---
+  duration_ms: 0.218081
+  type: 'test'
+  ...
+# Subtest: login accepts either an email or a username and retains support for existing short passwords
+ok 328 - login accepts either an email or a username and retains support for existing short passwords
+  ---
+  duration_ms: 10.661722
+  type: 'test'
+  ...
+# Subtest: legacy code recovery and class invitations keep the username-only rule
+ok 329 - legacy code recovery and class invitations keep the username-only rule
+  ---
+  duration_ms: 0.610233
+  type: 'test'
+  ...
+# Subtest: a short signup password flags only the password after normalizing valid account fields
+ok 330 - a short signup password flags only the password after normalizing valid account fields
+  ---
+  duration_ms: 0.351608
+  type: 'test'
+  ...
+# Subtest: signup username normalization rejects invalid characters and lengths
+ok 331 - signup username normalization rejects invalid characters and lengths
+  ---
+  duration_ms: 2.53859
+  type: 'test'
+  ...
+# Subtest: reset accepts matching new passwords at both length boundaries without trimming
+ok 332 - reset accepts matching new passwords at both length boundaries without trimming
+  ---
+  duration_ms: 0.395381
+  type: 'test'
+  ...
+# Subtest: reset rejects mismatched or out-of-range confirmation and focuses the marked field
+ok 333 - reset rejects mismatched or out-of-range confirmation and focuses the marked field
+  ---
+  duration_ms: 0.734645
+  type: 'test'
+  ...
+# Subtest: actual auth rendering exposes email forms and derives reset exclusively from a verified recovery session
+ok 334 - actual auth rendering exposes email forms and derives reset exclusively from a verified recovery session
+  ---
+  duration_ms: 7.655324
+  type: 'test'
+  ...
+# Subtest: recovery and invalid callback screens take precedence over signed-in dashboards and legacy codes
+ok 335 - recovery and invalid callback screens take precedence over signed-in dashboards and legacy codes
+  ---
+  duration_ms: 1.945998
+  type: 'test'
+  ...
+# Subtest: actual auth handler sends the email API payloads, surfaces provider errors, and guards unverified resets
+ok 336 - actual auth handler sends the email API payloads, surfaces provider errors, and guards unverified resets
+  ---
+  duration_ms: 29.400252
+  type: 'test'
+  ...
+# Subtest: teacher workspace has one real identity rail and a linked class management surface
+ok 337 - teacher workspace has one real identity rail and a linked class management surface
+  ---
+  duration_ms: 1709.743961
+  type: 'test'
+  ...
+# Subtest: the workspace keeps roster and room pagination and retains a focused draft across refresh
+ok 338 - the workspace keeps roster and room pagination and retains a focused draft across refresh
+  ---
+  duration_ms: 2287.013939
+  type: 'test'
+  ...
+# Subtest: student records show actual validated reflections without inventing quiz scores or dates
+ok 339 - student records show actual validated reflections without inventing quiz scores or dates
+  ---
+  duration_ms: 332.782173
+  type: 'test'
+  ...
+# Subtest: live rooms retain server-derived progress and close only after explicit confirmation
+ok 340 - live rooms retain server-derived progress and close only after explicit confirmation
+  ---
+  duration_ms: 692.149099
+  type: 'test'
+  ...
+# Subtest: student room waits for the actual server state and only lists real participants
+ok 341 - student room waits for the actual server state and only lists real participants
+  ---
+  duration_ms: 544.593383
+  type: 'test'
+  ...
+# Subtest: direct Security entry keeps a truthful account rail while recovery never receives the signed-in shell
+ok 342 - direct Security entry keeps a truthful account rail while recovery never receives the signed-in shell
+  ---
+  duration_ms: 305.832361
+  type: 'test'
+  ...
+# Subtest: reinforcement practice covers all 15 stable IDs once, three per shape, without mutating the bank
+ok 343 - reinforcement practice covers all 15 stable IDs once, three per shape, without mutating the bank
+  ---
+  duration_ms: 117.738048
+  type: 'test'
+  ...
+# Subtest: practice runs past question 10 and completes only after the fifteenth matching pair
+ok 344 - practice runs past question 10 and completes only after the fifteenth matching pair
+  ---
+  duration_ms: 1.362491
+  type: 'test'
+  ...
+# Subtest: practice preserves one attempt, corrections, hints and exact denominators for mixed answers
+ok 345 - practice preserves one attempt, corrections, hints and exact denominators for mixed answers
+  ---
+  duration_ms: 1.256077
+  type: 'test'
+  ...
+# Subtest: quiz remains the default ten-question mode and unsupported modes are rejected
+ok 346 - quiz remains the default ten-question mode and unsupported modes are rejected
+  ---
+  duration_ms: 0.794278
+  type: 'test'
+  ...
+# Subtest: practice rejects an incomplete or duplicated bank instead of silently missing a question
+ok 347 - practice rejects an incomplete or duplicated bank instead of silently missing a question
+  ---
+  duration_ms: 0.385328
+  type: 'test'
+  ...
+# Subtest: practice results cannot enter the quiz leaderboard, including records disguised as ten questions
+ok 348 - practice results cannot enter the quiz leaderboard, including records disguised as ten questions
+  ---
+  duration_ms: 0.786774
+  type: 'test'
+  ...
+# Subtest: ease settings migrate into the complete utility record without resetting tutorial or audio choices
+ok 349 - ease settings migrate into the complete utility record without resetting tutorial or audio choices
+  ---
+  duration_ms: 5.685578
+  type: 'test'
+  ...
+# Subtest: legacy usability readers and writers share the canonical owner and preserve advanced preferences
+ok 350 - legacy usability readers and writers share the canonical owner and preserve advanced preferences
+  ---
+  duration_ms: 1.504206
+  type: 'test'
+  ...
+# Subtest: storage denial keeps the current complete preference record in memory
+ok 351 - storage denial keeps the current complete preference record in memory
+  ---
+  duration_ms: 0.379446
+  type: 'test'
+  ...
+# Subtest: settings persist, normalize and restore
+ok 352 - settings persist, normalize and restore
+  ---
+  duration_ms: 2.666161
+  type: 'test'
+  ...
+# Subtest: blocked and corrupt storage keep session preferences
+ok 353 - blocked and corrupt storage keep session preferences
+  ---
+  duration_ms: 0.790823
+  type: 'test'
+  ...
+# Subtest: storage reload synchronizes only normalized preferences
+ok 354 - storage reload synchronizes only normalized preferences
+  ---
+  duration_ms: 0.556673
+  type: 'test'
+  ...
+# Subtest: real PostgreSQL profile RPC enforces self ownership, validation and immutable permissions
+ok 355 - real PostgreSQL profile RPC enforces self ownership, validation and immutable permissions
+  ---
+  duration_ms: 8437.746625
+  type: 'test'
+  ...
+# Subtest: profile and module migrations are additive in both orders and preserve existing records
+ok 356 - profile and module migrations are additive in both orders and preserve existing records
+  ---
+  duration_ms: 7318.852494
+  type: 'test'
+  ...
+# Subtest: merged classroom, email and module SQL verification suites retain their rollback guarantees
+ok 357 - merged classroom, email and module SQL verification suites retain their rollback guarantees
+  ---
+  duration_ms: 8550.571592
+  type: 'test'
+  ...
+# Subtest: class detail migration exposes teacher names only for authorized classes and preserves dispatcher
+ok 358 - class detail migration exposes teacher names only for authorized classes and preserves dispatcher
+  ---
+  duration_ms: 2455.787921
+  type: 'test'
+  ...
+# Subtest: profile saves only allowed fields and updates heading and selected avatar
+ok 359 - profile saves only allowed fields and updates heading and selected avatar
+  ---
+  duration_ms: 474.695925
+  type: 'test'
+  ...
+# Subtest: save failure preserves draft, reports error and allows retry
+ok 360 - save failure preserves draft, reports error and allows retry
+  ---
+  duration_ms: 149.287967
+  type: 'test'
+  ...
+# Subtest: save blocks duplicate submits and announces pending state
+ok 361 - save blocks duplicate submits and announces pending state
+  ---
+  duration_ms: 131.12406
+  type: 'test'
+  ...
+# Subtest: invalid input stays local and focuses the named field
+ok 362 - invalid input stays local and focuses the named field
+  ---
+  duration_ms: 55.672375
+  type: 'test'
+  ...
+# Subtest: guest profile explains account requirement and links to existing login
+ok 363 - guest profile explains account requirement and links to existing login
+  ---
+  duration_ms: 27.93385
+  type: 'test'
+  ...
+# Subtest: refresh retains drafts and read-only identity data; user text is escaped
+ok 364 - refresh retains drafts and read-only identity data; user text is escaped
+  ---
+  duration_ms: 110.682271
+  type: 'test'
+  ...
+# Subtest: late save cannot overwrite a newer account session
+ok 365 - late save cannot overwrite a newer account session
+  ---
+  duration_ms: 104.812745
+  type: 'test'
+  ...
+# Subtest: draft name and avatar preview update locally, escape markup and survive refresh
+ok 366 - draft name and avatar preview update locally, escape markup and survive refresh
+  ---
+  duration_ms: 94.035818
+  type: 'test'
+  ...
+# Subtest: unsaved navigation supports keep editing, Escape and discard without saving
+ok 367 - unsaved navigation supports keep editing, Escape and discard without saving
+  ---
+  duration_ms: 260.50629
+  type: 'test'
+  ...
+# Subtest: save and continue waits for success, keeps a failed draft and permits retry
+ok 368 - save and continue waits for success, keeps a failed draft and permits retry
+  ---
+  duration_ms: 174.029121
+  type: 'test'
+  ...
+# Subtest: pending save and continue is single-flight and cannot leave on account change
+ok 369 - pending save and continue is single-flight and cannot leave on account change
+  ---
+  duration_ms: 153.529872
+  type: 'test'
+  ...
+# Subtest: host navigation uses the same guard; preferences keep the draft without a second settings store
+ok 370 - host navigation uses the same guard; preferences keep the draft without a second settings store
+  ---
+  duration_ms: 73.915433
+  type: 'test'
+  ...
+# Subtest: class details use escaped server names and open the selected classroom
+ok 371 - class details use escaped server names and open the selected classroom
+  ---
+  duration_ms: 118.727117
+  type: 'test'
+  ...
+# Subtest: students without classes get a working join shortcut; teachers do not get student enrollment
+ok 372 - students without classes get a working join shortcut; teachers do not get student enrollment
+  ---
+  duration_ms: 128.01846
+  type: 'test'
+  ...
+# Subtest: English profile translates draft controls and retains actual class and teacher names
+ok 373 - English profile translates draft controls and retains actual class and teacher names
+  ---
+  duration_ms: 54.182594
+  type: 'test'
+  ...
+# Subtest: a missing profile save response cannot discard the draft or announce success
+ok 374 - a missing profile save response cannot discard the draft or announce success
+  ---
+  duration_ms: 41.990517
+  type: 'test'
+  ...
+# Subtest: profile rejects blank, overlong and control-character display names
+ok 375 - profile rejects blank, overlong and control-character display names
+  ---
+  duration_ms: 1.480204
+  type: 'test'
+  ...
+# Subtest: profile accepts Unicode names using character count and built-in avatars
+ok 376 - profile accepts Unicode names using character count and built-in avatars
+  ---
+  duration_ms: 0.334216
+  type: 'test'
+  ...
+# Subtest: successive reflections persist immediately but coalesce into one cloud read/save
+ok 377 - successive reflections persist immediately but coalesce into one cloud read/save
+  ---
+  duration_ms: 8.109607
+  type: 'test'
+  ...
+# Subtest: a failed progress save retries without another UI event and preserves the newer record
+ok 378 - a failed progress save retries without another UI event and preserves the newer record
+  ---
+  duration_ms: 2.138916
+  type: 'test'
+  ...
+# Subtest: queued progress cannot send an old actor after switching accounts
+ok 379 - queued progress cannot send an old actor after switching accounts
+  ---
+  duration_ms: 2.208377
+  type: 'test'
+  ...
+# Subtest: offline progress keeps pending records without issuing doomed requests
+ok 380 - offline progress keeps pending records without issuing doomed requests
+  ---
+  duration_ms: 0.605718
+  type: 'test'
+  ...
+# Subtest: snapshot reads do not update or lock the profile as a presence write
+ok 381 - snapshot reads do not update or lock the profile as a presence write
+  ---
+  duration_ms: 3311.241009
+  type: 'test'
+  ...
+# Subtest: valid Duel state reads behind one school IP do not contend on the IP rate bucket
+ok 382 - valid Duel state reads behind one school IP do not contend on the IP rate bucket
+  ---
+  duration_ms: 38.349332
+  type: 'test'
+  ...
+# Subtest: invalid Duel capabilities share one bounded fingerprint budget without allocating arbitrary token buckets
+ok 383 - invalid Duel capabilities share one bounded fingerprint budget without allocating arbitrary token buckets
+  ---
+  duration_ms: 2537.301206
+  type: 'test'
+  ...
+# Subtest: rejection budget is configurable and expired fingerprint windows are cleaned with bounded storage
+ok 384 - rejection budget is configurable and expired fingerprint windows are cleaned with bounded storage
+  ---
+  duration_ms: 85.315037
+  type: 'test'
+  ...
+# Subtest: valid Duel state retains the 120 per-minute token guard without a shared-IP counter
+ok 385 - valid Duel state retains the 120 per-minute token guard without a shared-IP counter
+  ---
+  duration_ms: 179.976722
+  type: 'test'
+  ...
+# Subtest: candidate SQL wakes after the real 900000ms deadline and settles once with stable score and sequence
+ok 386 - candidate SQL wakes after the real 900000ms deadline and settles once with stable score and sequence
+  ---
+  duration_ms: 80.867737
+  type: 'test'
+  ...
+# Subtest: capacity configuration is private and existing data/scoring/ownership contracts still pass
+ok 387 - capacity configuration is private and existing data/scoring/ownership contracts still pass
+  ---
+  duration_ms: 290.756345
+  type: 'test'
+  ...
+# Subtest: capacity defaults can be explicitly raised or lowered without disabling global or token quotas
+ok 388 - capacity defaults can be explicitly raised or lowered without disabling global or token quotas
+  ---
+  duration_ms: 19.121637
+  type: 'test'
+  ...
+# Subtest: rollback restores exact reviewed routines and removes only the new operator policy
+ok 389 - rollback restores exact reviewed routines and removes only the new operator policy
+  ---
+  duration_ms: 24.897358
+  type: 'test'
+  ...
+# Subtest: all staging requests disable redirects globally and per request, including setup and static entry
+ok 390 - all staging requests disable redirects globally and per request, including setup and static entry
+  ---
+  duration_ms: 10.699311
+  type: 'test'
+  ...
+# Subtest: mixed fixtures use one SharedArray parse and no full per-VU account copy at 5000 users
+ok 391 - mixed fixtures use one SharedArray parse and no full per-VU account copy at 5000 users
+  ---
+  duration_ms: 31.83035
+  type: 'test'
+  ...
+# Subtest: all-Duel profiles need no private classroom fixtures or static frontend
+ok 392 - all-Duel profiles need no private classroom fixtures or static frontend
+  ---
+  duration_ms: 1.294448
+  type: 'test'
+  ...
+# Subtest: classroom selection uses globally unique IDs across scenario and generator boundaries
+ok 393 - classroom selection uses globally unique IDs across scenario and generator boundaries
+  ---
+  duration_ms: 2.885232
+  type: 'test'
+  ...
+# Subtest: fixture validation runs inside the shared callback before any HTTP request
+ok 394 - fixture validation runs inside the shared callback before any HTTP request
+  ---
+  duration_ms: 3.543993
+  type: 'test'
+  ...
+# Subtest: setup verifies every fixture identity authoritatively and returns no private data
+ok 395 - setup verifies every fixture identity authoritatively and returns no private data
+  ---
+  duration_ms: 2.591682
+  type: 'test'
+  ...
+# Subtest: preflight successes cannot dilute HTTP or semantic SLOs for the measured load
+ok 396 - preflight successes cannot dilute HTTP or semantic SLOs for the measured load
+  ---
+  duration_ms: 2.185706
+  type: 'test'
+  ...
+# Subtest: HTTP and semantic failures remain in metrics and every failed iteration is paced
+ok 397 - HTTP and semantic failures remain in metrics and every failed iteration is paced
+  ---
+  duration_ms: 7.313398
+  type: 'test'
+  ...
+# Subtest: credential and configuration failures abort without repeated requests or credential details
+ok 398 - credential and configuration failures abort without repeated requests or credential details
+  ---
+  duration_ms: 10.144628
+  type: 'test'
+  ...
+# Subtest: remote redirects fail closed before any production host can be requested
+ok 399 - remote redirects fail closed before any production host can be requested
+  ---
+  duration_ms: 49.632008
+  type: 'test'
+  ...
+# Subtest: unexpected request exceptions are paced and rethrown without private response data
+ok 400 - unexpected request exceptions are paced and rethrown without private response data
+  ---
+  duration_ms: 1.485383
+  type: 'test'
+  ...
+# Subtest: confirmed A global logout cannot remove B installed during local cleanup
+ok 401 - confirmed A global logout cannot remove B installed during local cleanup
+  ---
+  duration_ms: 28.051413
+  type: 'test'
+  ...
+# Subtest: A cleanup rechecks the actual stored SDK session before signing out
+ok 402 - A cleanup rechecks the actual stored SDK session before signing out
+  ---
+  duration_ms: 5.006658
+  type: 'test'
+  ...
+# Subtest: password change reauthenticates the canonical account without switching the persistent session
+ok 403 - password change reauthenticates the canonical account without switching the persistent session
+  ---
+  duration_ms: 7.653457
+  type: 'test'
+  ...
+# Subtest: mismatched passwords fail before any provider request
+ok 404 - mismatched passwords fail before any provider request
+  ---
+  duration_ms: 1.391401
+  type: 'test'
+  ...
+# Subtest: wrong current password is a field error and cannot update the password
+ok 405 - wrong current password is a field error and cannot update the password
+  ---
+  duration_ms: 0.769635
+  type: 'test'
+  ...
+# Subtest: expired or missing sessions cannot run authenticated security actions
+ok 406 - expired or missing sessions cannot run authenticated security actions
+  ---
+  duration_ms: 0.909164
+  type: 'test'
+  ...
+# Subtest: network failure is sanitized and does not claim password success
+ok 407 - network failure is sanitized and does not claim password success
+  ---
+  duration_ms: 0.792493
+  type: 'test'
+  ...
+# Subtest: lost update responses describe an uncertain outcome and are not automatically retried
+ok 408 - lost update responses describe an uncertain outcome and are not automatically retried
+  ---
+  duration_ms: 1.299819
+  type: 'test'
+  ...
+# Subtest: a new session of the same account cancels the pending password change
+ok 409 - a new session of the same account cancels the pending password change
+  ---
+  duration_ms: 6.522271
+  type: 'test'
+  ...
+# Subtest: untrusted or switched reauthentication identity cannot be updated
+ok 410 - untrusted or switched reauthentication identity cannot be updated
+  ---
+  duration_ms: 0.601812
+  type: 'test'
+  ...
+# Subtest: global logout requires an actual successful global revocation response
+ok 411 - global logout requires an actual successful global revocation response
+  ---
+  duration_ms: 1.268989
+  type: 'test'
+  ...
+# Subtest: SDK-suppressed 401, 403, 404 and missing logout requests never claim global success
+ok 412 - SDK-suppressed 401, 403, 404 and missing logout requests never claim global success
+  ---
+  duration_ms: 2.513179
+  type: 'test'
+  ...
+# Subtest: duplicate actions and leaving while reauthentication is pending cannot submit an update
+ok 413 - duplicate actions and leaving while reauthentication is pending cannot submit an update
+  ---
+  duration_ms: 2.821446
+  type: 'test'
+  ...
+# Subtest: stale cached identity is rejected before reauthentication when another account occupies SDK storage
+ok 414 - stale cached identity is rejected before reauthentication when another account occupies SDK storage
+  ---
+  duration_ms: 0.487504
+  type: 'test'
+  ...
+# Subtest: signed-in security form has accessible labels, matching errors and secret cleanup on success
+ok 415 - signed-in security form has accessible labels, matching errors and secret cleanup on success
+  ---
+  duration_ms: 632.420409
+  type: 'test'
+  ...
+# Subtest: reauthentication, expiry and network failures show sanitized feedback on the actual page
+ok 416 - reauthentication, expiry and network failures show sanitized feedback on the actual page
+  ---
+  duration_ms: 478.652945
+  type: 'test'
+  ...
+# Subtest: pending security requests disable duplicate submissions and exiting erases detached sensitive inputs
+ok 417 - pending security requests disable duplicate submissions and exiting erases detached sensitive inputs
+  ---
+  duration_ms: 131.667591
+  type: 'test'
+  ...
+# Subtest: global logout requires confirmation; Escape cancels and restores focus, then confirmed logout shows login
+ok 418 - global logout requires confirmation; Escape cancels and restores focus, then confirmed logout shows login
+  ---
+  duration_ms: 137.73512
+  type: 'test'
+  ...
+# Subtest: reveal buttons have clear state labels, paste is allowed, and leaving for the dashboard clears secrets
+ok 419 - reveal buttons have clear state labels, paste is allowed, and leaving for the dashboard clears secrets
+  ---
+  duration_ms: 175.591994
+  type: 'test'
+  ...
+# Subtest: switching sessions clears the old form before a late reauthentication response can update
+ok 420 - switching sessions clears the old form before a late reauthentication response can update
+  ---
+  duration_ms: 155.013692
+  type: 'test'
+  ...
+# Subtest: signed-in security remains usable when the classroom snapshot cannot load
+ok 421 - signed-in security remains usable when the classroom snapshot cannot load
+  ---
+  duration_ms: 102.626358
+  type: 'test'
+  ...
+# Subtest: real pinned SDK changes a legacy account password on the newly verified token, then cleans its temporary session
+ok 422 - real pinned SDK changes a legacy account password on the newly verified token, then cleans its temporary session
+  ---
+  duration_ms: 18.356305
+  type: 'test'
+  ...
+# Subtest: real SDK swallowed invalid-token logout errors cannot become a successful global logout
+ok 423 - real SDK swallowed invalid-token logout errors cannot become a successful global logout
+  ---
+  duration_ms: 17.444016
+  type: 'test'
+  ...
+# Subtest: leaving after reauthentication still gives verifier cleanup an independent live request signal
+ok 424 - leaving after reauthentication still gives verifier cleanup an independent live request signal
+  ---
+  duration_ms: 2.243698
+  type: 'test'
+  ...
+# Subtest: denied browser Locks falls back without replaying a task that already began
+ok 425 - denied browser Locks falls back without replaying a task that already began
+  ---
+  duration_ms: 1.019424
+  type: 'test'
+  ...
+# Subtest: quiz: R1, R2, chosen card, hint, colors/order and accumulated time survive cold recovery
+ok 426 - quiz: R1, R2, chosen card, hint, colors/order and accumulated time survive cold recovery
+  ---
+  duration_ms: 6.914619
+  type: 'test'
+  ...
+# Subtest: practice: R1, R2, chosen card, hint, colors/order and accumulated time survive cold recovery
+ok 427 - practice: R1, R2, chosen card, hint, colors/order and accumulated time survive cold recovery
+  ---
+  duration_ms: 0.619029
+  type: 'test'
+  ...
+# Subtest: review: R1, R2, chosen card, hint, colors/order and accumulated time survive cold recovery
+ok 428 - review: R1, R2, chosen card, hint, colors/order and accumulated time survive cold recovery
+  ---
+  duration_ms: 0.490917
+  type: 'test'
+  ...
+# Subtest: wrong-r1: recovery retains spent attempt and outstanding feedback/review delay
+ok 429 - wrong-r1: recovery retains spent attempt and outstanding feedback/review delay
+  ---
+  duration_ms: 1.187208
+  type: 'test'
+  ...
+# Subtest: wrong-r2: recovery retains spent attempt and outstanding feedback/review delay
+ok 430 - wrong-r2: recovery retains spent attempt and outstanding feedback/review delay
+  ---
+  duration_ms: 2.134867
+  type: 'test'
+  ...
+# Subtest: skip: recovery retains spent attempt and outstanding feedback/review delay
+ok 431 - skip: recovery retains spent attempt and outstanding feedback/review delay
+  ---
+  duration_ms: 0.676836
+  type: 'test'
+  ...
+# Subtest: correct: recovery retains spent attempt and outstanding feedback/review delay
+ok 432 - correct: recovery retains spent attempt and outstanding feedback/review delay
+  ---
+  duration_ms: 0.904882
+  type: 'test'
+  ...
+# Subtest: full rounds with fractional time restore after each answer and store finished quiz once by stable identity
+ok 433 - full rounds with fractional time restore after each answer and store finished quiz once by stable identity
+  ---
+  duration_ms: 6.725529
+  type: 'test'
+  ...
+# Subtest: damaged, old, cross-account, wrong-bank and forged progress are rejected without touching unrelated records
+ok 434 - damaged, old, cross-account, wrong-bank and forged progress are rejected without touching unrelated records
+  ---
+  duration_ms: 3.944052
+  type: 'test'
+  ...
+# Subtest: storage failures never report saved; actor keys isolate guest and accounts; Duel cannot be snapshotted
+ok 435 - storage failures never report saved; actor keys isolate guest and accounts; Duel cannot be snapshotted
+  ---
+  duration_ms: 1.001601
+  type: 'test'
+  ...
+# Subtest: randomized real-engine sessions survive checkpoint after every action and pause without changing outcomes
+ok 436 - randomized real-engine sessions survive checkpoint after every action and pause without changing outcomes
+  ---
+  duration_ms: 340.769611
+  type: 'test'
+  ...
+# Subtest: cold DOM reload restores selected R1, exact card SVG tones and R2 hint state without network
+ok 437 - cold DOM reload restores selected R1, exact card SVG tones and R2 hint state without network
+  ---
+  duration_ms: 1534.30145
+  type: 'test'
+  ...
+# Subtest: solo workbench keeps both canonical five-card banks and correction compares the actual selected R2 with the correct pair
+ok 438 - solo workbench keeps both canonical five-card banks and correction compares the actual selected R2 with the correct pair
+  ---
+  duration_ms: 275.375043
+  type: 'test'
+  ...
+# Subtest: a wrong R1 never fabricates a selected net in correction
+ok 439 - a wrong R1 never fabricates a selected net in correction
+  ---
+  duration_ms: 280.856821
+  type: 'test'
+  ...
+# Subtest: visible result tables use real quiz and wrong-question subset denominators without changing the saved quiz board
+ok 440 - visible result tables use real quiz and wrong-question subset denominators without changing the saved quiz board
+  ---
+  duration_ms: 789.712631
+  type: 'test'
+  ...
+# Subtest: practice result and local-board empty states retain honest scope, and recorded names stay literal in the four-column quiz board
+ok 441 - practice result and local-board empty states retain honest scope, and recorded names stay literal in the four-column quiz board
+  ---
+  duration_ms: 1093.328117
+  type: 'test'
+  ...
+# Subtest: new game confirmation cancels safely, damaged snapshot explains replacement, denied storage does not claim saved
+ok 442 - new game confirmation cancels safely, damaged snapshot explains replacement, denied storage does not claim saved
+  ---
+  duration_ms: 634.348564
+  type: 'test'
+  ...
+# Subtest: account identity change stops the old game, isolates snapshots and never puts Auth credentials into a game snapshot
+ok 443 - account identity change stops the old game, isolates snapshots and never puts Auth credentials into a game snapshot
+  ---
+  duration_ms: 280.120278
+  type: 'test'
+  ...
+# Subtest: ms: resume summary, discard confirmation and replacement use current language
+ok 444 - ms: resume summary, discard confirmation and replacement use current language
+  ---
+  duration_ms: 349.327876
+  type: 'test'
+  ...
+# Subtest: en: resume summary, discard confirmation and replacement use current language
+ok 445 - en: resume summary, discard confirmation and replacement use current language
+  ---
+  duration_ms: 299.152512
+  type: 'test'
+  ...
+# Subtest: the first-play page gates the clock and demo seeking never changes a game
+ok 446 - the first-play page gates the clock and demo seeking never changes a game
+  ---
+  duration_ms: 241.618256
+  type: 'test'
+  ...
+# Subtest: shared radio mode cards start real practice and an empty resume deep link fabricates no progress
+ok 447 - shared radio mode cards start real practice and an empty resume deep link fabricates no progress
+  ---
+  duration_ms: 560.119449
+  type: 'test'
+  ...
+# Subtest: header language and theme controls share the application preference owners
+ok 448 - header language and theme controls share the application preference owners
+  ---
+  duration_ms: 226.41043
+  type: 'test'
+  ...
+# Subtest: entry routes keep solo leave cancellation, help and validated resume under one owner
+ok 449 - entry routes keep solo leave cancellation, help and validated resume under one owner
+  ---
+  duration_ms: 371.087657
+  type: 'test'
+  ...
+# Subtest: Duel entry navigation reaches Classes and keeps the GeoMath header localized
+ok 450 - Duel entry navigation reaches Classes and keeps the GeoMath header localized
+  ---
+  duration_ms: 378.734568
+  type: 'test'
+  ...
+# Subtest: real signed-in solo completion enters the offline queue once and finished saves do not offer resume
+ok 451 - real signed-in solo completion enters the offline queue once and finished saves do not offer resume
+  ---
+  duration_ms: 746.369213
+  type: 'test'
+  ...
+# Subtest: classroom return to its portal clears an unconsumed entry destination
+ok 452 - classroom return to its portal clears an unconsumed entry destination
+  ---
+  duration_ms: 399.61376
+  type: 'test'
+  ...
+# Subtest: skip to content focuses the active main area without entering the Play hash route
+ok 453 - skip to content focuses the active main area without entering the Play hash route
+  ---
+  duration_ms: 369.865822
+  type: 'test'
+  ...
+# Subtest: scores persist across fresh storage repositories and round ID writes are idempotent
+ok 454 - scores persist across fresh storage repositories and round ID writes are idempotent
+  ---
+  duration_ms: 6.667785
+  type: 'test'
+  ...
+# Subtest: ranking uses score, then fewer mistakes, then elapsed time
+ok 455 - ranking uses score, then fewer mistakes, then elapsed time
+  ---
+  duration_ms: 2.177119
+  type: 'test'
+  ...
+# Subtest: leaderboard bounded to best fifty and deduplicates IDs
+ok 456 - leaderboard bounded to best fifty and deduplicates IDs
+  ---
+  duration_ms: 0.897747
+  type: 'test'
+  ...
+# Subtest: malformed/foreign/invalid records ignored, invalid result cannot be saved
+ok 457 - malformed/foreign/invalid records ignored, invalid result cannot be saved
+  ---
+  duration_ms: 2.087946
+  type: 'test'
+  ...
+# Subtest: storage failure keeps gameplay records in session memory
+ok 458 - storage failure keeps gameplay records in session memory
+  ---
+  duration_ms: 6.939595
+  type: 'test'
+  ...
+# Subtest: corrupt JSON does not crash and successful next save repairs the value
+ok 459 - corrupt JSON does not crash and successful next save repairs the value
+  ---
+  duration_ms: 0.22624
+  type: 'test'
+  ...
+# Subtest: saving re-reads current store to preserve another tab's records
+ok 460 - saving re-reads current store to preserve another tab's records
+  ---
+  duration_ms: 0.184061
+  type: 'test'
+  ...
+# Subtest: erase removes persistent and in-memory names and scores
+ok 461 - erase removes persistent and in-memory names and scores
+  ---
+  duration_ms: 0.158808
+  type: 'test'
+  ...
+# Subtest: CSV uses BOM, correct quote escaping and neutralizes spreadsheet formulas
+ok 462 - CSV uses BOM, correct quote escaping and neutralizes spreadsheet formulas
+  ---
+  duration_ms: 34.009512
+  type: 'test'
+  ...
+# Subtest: legacy retry scores remain separately readable and cannot outrank single-attempt results
+ok 463 - legacy retry scores remain separately readable and cannot outrank single-attempt results
+  ---
+  duration_ms: 0.521997
+  type: 'test'
+  ...
+# Subtest: score compatibility follows the ruleset across future application version bumps
+ok 464 - score compatibility follows the ruleset across future application version bumps
+  ---
+  duration_ms: 0.135922
+  type: 'test'
+  ...
+# Subtest: a completed engine result with wrong answers is valid and retains per-question analytics after reload
+ok 465 - a completed engine result with wrong answers is valid and retains per-question analytics after reload
+  ---
+  duration_ms: 3.955122
+  type: 'test'
+  ...
+# Subtest: automatic diagnostic context is an explicit allowlist, with no answer or personal data
+ok 466 - automatic diagnostic context is an explicit allowlist, with no answer or personal data
+  ---
+  duration_ms: 10.022325
+  type: 'test'
+  ...
+# Subtest: invalid and unrelated diagnostic fields cannot be smuggled into reports
+ok 467 - invalid and unrelated diagnostic fields cannot be smuggled into reports
+  ---
+  duration_ms: 0.320303
+  type: 'test'
+  ...
+# Subtest: all report fields validate, and long input is rejected without silently truncating it
+ok 468 - all report fields validate, and long input is rejected without silently truncating it
+  ---
+  duration_ms: 0.933701
+  type: 'test'
+  ...
+# Subtest: review text is localized and neutralizes obvious credential patterns in user descriptions
+ok 469 - review text is localized and neutralizes obvious credential patterns in user descriptions
+  ---
+  duration_ms: 2.358736
+  type: 'test'
+  ...
+# Subtest: snapshot cache checks keep a retryable SDK refresh failure transient before and after a hit
+ok 470 - snapshot cache checks keep a retryable SDK refresh failure transient before and after a hit
+  ---
+  duration_ms: 9.763414
+  type: 'test'
+  ...
+# Subtest: a retryable SDK error cannot authorize a cached snapshot after the owner or session changes
+ok 471 - a retryable SDK error cannot authorize a cached snapshot after the owner or session changes
+  ---
+  duration_ms: 5.459365
+  type: 'test'
+  ...
+# Subtest: coalesced classroom reads preserve CRUD errors and allow a new read after access is restored
+ok 472 - coalesced classroom reads preserve CRUD errors and allow a new read after access is restored
+  ---
+  duration_ms: 1.746678
+  type: 'test'
+  ...
+# Subtest: offline module edits enter the durable outbox immediately without scheduling the direct RPC debounce
+ok 473 - offline module edits enter the durable outbox immediately without scheduling the direct RPC debounce
+  ---
+  duration_ms: 8.263324
+  type: 'test'
+  ...
+# Subtest: wrong R1 consumes the only attempt, freezes time and requires explicit review continuation
+ok 474 - wrong R1 consumes the only attempt, freezes time and requires explicit review continuation
+  ---
+  duration_ms: 2.749902
+  type: 'test'
+  ...
+# Subtest: wrong R2 records the failed net while the accepted R1 remains green after blinking
+ok 475 - wrong R2 records the failed net while the accepted R1 remains green after blinking
+  ---
+  duration_ms: 0.420275
+  type: 'test'
+  ...
+# Subtest: pausing a correction preserves both review delay and frozen answer time
+ok 476 - pausing a correction preserves both review delay and frozen answer time
+  ---
+  duration_ms: 4.548137
+  type: 'test'
+  ...
+# Subtest: all positions change for both shelves across 500 rounds, including bounded RNG fallback
+ok 477 - all positions change for both shelves across 500 rounds, including bounded RNG fallback
+  ---
+  duration_ms: 60.332218
+  type: 'test'
+  ...
+# Subtest: palettes change per shape per question and do not reveal matching R1/R2
+ok 478 - palettes change per shape per question and do not reveal matching R1/R2
+  ---
+  duration_ms: 60.20678
+  type: 'test'
+  ...
+# Subtest: topics follow actual question content, including both cone formula questions
+ok 479 - topics follow actual question content, including both cone formula questions
+  ---
+  duration_ms: 0.529674
+  type: 'test'
+  ...
+# Subtest: analytics excludes unreached R2 stages, distinguishes skipped answers, and does not penalize hints
+ok 480 - analytics excludes unreached R2 stages, distinguishes skipped answers, and does not penalize hints
+  ---
+  duration_ms: 0.982343
+  type: 'test'
+  ...
+# Subtest: a guest needs only a trimmed nickname while old pupil/student validation stays strict
+ok 481 - a guest needs only a trimmed nickname while old pupil/student validation stays strict
+  ---
+  duration_ms: 4.348723
+  type: 'test'
+  ...
+# Subtest: settings use safe defaults for absent, malformed or denied preference storage
+ok 482 - settings use safe defaults for absent, malformed or denied preference storage
+  ---
+  duration_ms: 2.091083
+  type: 'test'
+  ...
+# Subtest: settings persist supported values and ignore injected/unbounded values
+ok 483 - settings persist supported values and ignore injected/unbounded values
+  ---
+  duration_ms: 0.383488
+  type: 'test'
+  ...
+# Subtest: missed-question practice selects only stable wrong/skipped IDs once, preserving the original result
+ok 484 - missed-question practice selects only stable wrong/skipped IDs once, preserving the original result
+  ---
+  duration_ms: 0.287531
+  type: 'test'
+  ...
+# Subtest: a review round uses exactly its validated subset with the existing single-attempt rules
+ok 485 - a review round uses exactly its validated subset with the existing single-attempt rules
+  ---
+  duration_ms: 1.111846
+  type: 'test'
+  ...
+# Subtest: guest quiz results persist, while review results cannot enter or replace the quiz board
+ok 486 - guest quiz results persist, while review results cannot enter or replace the quiz board
+  ---
+  duration_ms: 1.742741
+  type: 'test'
+  ...
+# Subtest: connection and expired-session errors give an action in the selected language
+ok 487 - connection and expired-session errors give an action in the selected language
+  ---
+  duration_ms: 1.336536
+  type: 'test'
+  ...
+# Subtest: known account errors remain specific, while internal errors never reach the learner
+ok 488 - known account errors remain specific, while internal errors never reach the learner
+  ---
+  duration_ms: 0.45692
+  type: 'test'
+  ...
+# Subtest: known classroom problems keep specific next steps and the real PIN wait duration
+ok 489 - known classroom problems keep specific next steps and the real PIN wait duration
+  ---
+  duration_ms: 1.969248
+  type: 'test'
+  ...
+1..489
+# tests 497
+# suites 0
+# pass 497
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 180016.09969

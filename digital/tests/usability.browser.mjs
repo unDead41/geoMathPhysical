@@ -73,12 +73,12 @@ cases['quiz-review']=async(harness,track)=>{
   for(const [index,q] of round.entries())await answer(page,q,index,10,{outcome:outcomes[index]||'correct',hint:index===1,afterSolid:index===1?async()=>{
     const before=await order(page);await settings(page,{language:'en',theme:'dark',textSize:125});assert.deepEqual(await order(page),before);assert.equal(await page.locator('#r1').isDisabled(),true);assert.equal(await page.locator('#score-value').innerText(),'0');
   }:undefined});
-  assert.equal(await page.locator('#result-score').innerText(),'7');assert.equal(await page.locator('#result-mistakes').innerText(),'2');assert.equal(await page.locator('#result-hints').innerText(),'1');
+  assert.equal(await page.locator('#result-score').innerText(),'7');
   assert.equal(await page.locator('#result-details').getAttribute('open'),null);assert.equal(await page.locator('#review-list').isVisible(),false,'Long review starts collapsed');await screenshot(harness,page,'quiz-result-collapsed');
   const original=await rawScores(page),saved=JSON.parse(original);assert.equal(saved.length,1);assert.equal(saved[0].player.category,'Tetamu');assert.equal(saved[0].player.className,'');
   assert.deepEqual(saved[0].answers.map(a=>a.id),round.map(q=>q.id));
   assert.deepEqual(saved[0].answers.filter(a=>a.outcome!=='correct').map(a=>a.id),[round[0].id,round[1].id,round[3].id]);
-  await page.locator('#result-details > summary').click();assert.equal(await page.locator('.review-card').count(),10);assert.equal(await page.locator('.review-card.wrong').count(),2);assert.equal(await page.locator('.review-card.skipped').count(),1);
+  await page.locator('#result-details > summary').click();assert.equal(await page.locator('#result-mistakes').innerText(),'2');assert.equal(await page.locator('#result-hints').innerText(),'1');assert.equal(await page.locator('.review-card').count(),10);assert.equal(await page.locator('.review-card.wrong').count(),2);assert.equal(await page.locator('.review-card.skipped').count(),1);
   const bars=await page.locator('.analysis-track span').evaluateAll(nodes=>nodes.map(n=>n.style.width));await settings(page,{language:'ms'});
   assert.deepEqual(await page.locator('.analysis-track span').evaluateAll(nodes=>nodes.map(n=>n.style.width)),bars);assert.equal(await rawScores(page),original);
   for(const language of ['ms','en'])for(const textSize of [125,150])for(const width of [390,320]){
@@ -117,8 +117,8 @@ async function practice(harness,track,{mixed=false,offline=false,rich=false}={})
     seen.add(q.id);const outcome=!mixed?'correct':[0,9].includes(index)?'wrongR1':index===1?'wrongR2':[3,14].includes(index)?'skipped':'correct';
     await answer(page,q,index,15,{outcome,hint:!rich&&[0,14].includes(index)});
   }
-  assert.deepEqual([...seen].sort(),QUESTIONS.map(q=>q.id).sort());assert.equal(await page.locator('#result-score').innerText(),mixed?'10':'15');assert.equal(await page.locator('#result-mistakes').innerText(),mixed?'3':'0');assert.equal(await page.locator('#result-first').innerText(),mixed?'11 / 15':'15 / 15');assert.equal(await page.locator('#result-hints').innerText(),rich?'15':'2');assert.equal(await rawScores(page),original,'Practice cannot alter quiz scores');
-  assert.equal(await page.locator('#result-details').getAttribute('open'),null);await page.locator('#result-details > summary').click();assert.equal(await page.locator('.review-card').count(),15);assert.equal(await page.locator('.review-card.wrong').count(),mixed?3:0);assert.equal(await page.locator('.review-card.skipped').count(),mixed?2:0);
+  assert.deepEqual([...seen].sort(),QUESTIONS.map(q=>q.id).sort());assert.equal(await page.locator('#result-score').innerText(),mixed?'10':'15');assert.equal(await rawScores(page),original,'Practice cannot alter quiz scores');
+  assert.equal(await page.locator('#result-details').getAttribute('open'),null);await page.locator('#result-details > summary').click();assert.equal(await page.locator('#result-mistakes').innerText(),mixed?'3':'0');assert.equal(await page.locator('#result-first').innerText(),mixed?'11 / 15':'15 / 15');assert.equal(await page.locator('#result-hints').innerText(),rich?'15':'2');assert.equal(await page.locator('.review-card').count(),15);assert.equal(await page.locator('.review-card.wrong').count(),mixed?3:0);assert.equal(await page.locator('.review-card.skipped').count(),mixed?2:0);
   for(const language of ['ms','en']){await settings(page,{language});assert.equal(await rawScores(page),original);assert.equal(await page.locator('#practice-result-note').isVisible(),true);assert.ok((await page.locator('#analysis-shapes .analysis-row-title > span').allTextContents()).every(text=>text.includes('/ 3')));if(rich)assert.ok(await page.locator('.review-prompt math').count()>0);await page.setViewportSize({width:320,height:844});await fits(page,'practice result '+language);}
   await page.locator('#replay-button').click();assert.equal(await page.locator('.progress-dot').count(),15);await page.locator('.leave-button').click();await page.locator('[data-dialog-action="home"]').click();await page.locator('#guest-button').click();assert.equal(await page.locator('#play-mode').inputValue(),'practice');
   await selectMode(page,'quiz');await page.locator('#player-form [type="submit"]').click();
@@ -187,9 +187,9 @@ cases.account=async(harness,track)=>{
 
 cases['classroom-fixture']=async(harness,track)=>{
   for(const role of ['teacher','student']){
-    let actions;const test=track(await newCase(harness,{setup:async context=>{actions=await classroomFixture(context,role);}})),{page}=test;await page.locator('#welcome-account-button').click();await page.locator('.portal-account-chip b').waitFor();assert.equal(await page.locator('.portal-account-chip b').innerText(),'Guru');
+    let actions;const test=track(await newCase(harness,{setup:async context=>{actions=await classroomFixture(context,role);}})),{page}=test;await page.locator('#welcome-account-button').click();await page.waitForFunction(()=>document.querySelector('#portal-account-identity b')?.textContent==='Guru');assert.equal(await page.locator('#portal-account-identity b').innerText(),'Guru');
     const className=page.locator(role==='teacher'?'.portal-class-choice b':'.portal-student-classes li b');assert.equal(await className.innerText(),'Bilik');await settings(page,{language:'en',theme:'dark',textSize:150});
-    assert.equal(await page.locator('.portal-account-chip b').innerText(),'Guru','Literal profile name does not translate');assert.equal(await className.innerText(),'Bilik','Literal class name does not translate');assert.equal(await page.locator('.portal-room-card h3').innerText(),'Kelas','Literal room name does not translate');assert.match(await page.locator('#portal-title').innerText(),role==='teacher'?/class|learn/i:/discover|match/i);
+    assert.equal(await page.locator('#portal-account-identity b').innerText(),'Guru','Literal profile name does not translate');assert.equal(await className.innerText(),'Bilik','Literal class name does not translate');assert.equal(await page.locator('.portal-room-card h3').innerText(),'Kelas','Literal room name does not translate');assert.match(await page.locator('#portal-title').innerText(),role==='teacher'?/class|learn/i:/explore/i);
     for(const width of [1365,390,320]){await page.setViewportSize({width,height:width===1365?980:844});await fits(page,role+' transport fixture');}await screenshot(harness,page,'classroom-'+role+'-fixture-en-320');assert.ok(actions.includes('snapshot'));assert.ok(actions.every(action=>['snapshot','heartbeat'].includes(action)));await test.context.close();
   }
   console.log('DETAIL classroom views used read-only fixture transport; no live classroom account/backend/email');
@@ -201,7 +201,7 @@ cases['classroom-errors-fixture']=async(harness,track)=>{
   const message=await page.locator('#portal-alert').innerText();assert.match(message,/connection|try again/i);assert.doesNotMatch(message,/Tekan|Muat semula|Data terakhir|masih dipaparkan/,'English network recovery message contains no BM suffix');
   await settings(page,{language:'ms'});assert.match(await page.locator('#portal-alert').innerText(),/Sambungan|sambungan/);assert.equal(await page.locator('.portal-load-error [data-portal-action="refresh"]').isVisible(),true,'Language change retains the recovery action');
   await settings(page,{language:'en'});assert.doesNotMatch(await page.locator('#portal-alert').innerText(),/Tekan|Muat semula|Data terakhir|masih dipaparkan/);
-  await page.locator('.portal-load-error [data-portal-action="refresh"]').click();await page.locator('.portal-account-chip b').waitFor();assert.equal(await page.locator('#portal-alert').innerText(),'');
+  await page.locator('.portal-load-error [data-portal-action="refresh"]').click();await page.waitForFunction(()=>!document.querySelector('.portal-load-error')&&document.querySelector('#portal-account-identity b')?.textContent==='Guru');assert.equal(await page.locator('#portal-alert').innerText(),'');
   assert.equal(actions.filter(action=>action==='snapshot').length,2);assert.ok(actions.every(action=>['snapshot','heartbeat'].includes(action)));
 };
 
@@ -219,14 +219,17 @@ async function classroomReview(harness,track,{single=false}={}){
   await page.locator('#result-screen').waitFor({state:'visible'});assert.equal(await page.locator('#result-score').innerText(),single?'9':'8');assert.equal(await rawScores(page),null,'Remote result is not saved to local quiz board');
   if(single)await settings(page,{language:'en'});
   await page.locator('#retry-wrong-button').click();const review=roundFor('review',ids);assert.equal(await page.locator('#online-game-bar').isVisible(),false);
+  const reviewSynced=page.waitForResponse(response=>response.request().method()==='POST'&&new URL(response.url()).pathname==='/rest/v1/rpc/geo_offline_sync');
   for(const [index,q] of review.entries())await answer(page,q,index,review.length);
+  await reviewSynced;assert.equal(actions.offlineEvents.length,1);const synced=actions.offlineEvents[0].payload;
+  assert.equal(synced.mode,'review');assert.equal(synced.score,ids.length);assert.equal(synced.total,ids.length);assert.equal(synced.mistakes,0);assert.equal(synced.hints,0);assert.equal(synced.skipped,0);assert.notEqual(synced.attempt_id,state.attemptId,'Local review history must not overwrite the classroom attempt');
   assert.equal(await page.locator('#result-score').innerText(),String(ids.length));assert.equal(await rawScores(page),null);assert.equal(JSON.stringify(state),original,'Local review leaves remote result object unchanged');
   assert.ok(actions.every(action=>['snapshot','heartbeat'].includes(action)),'Review issues no classroom score/answer action');
   if(single){
-    assert.equal(await page.locator('#result-total').innerText(),'/ 1 point');await page.setViewportSize({width:390,height:844});await screenshot(harness,page,'review-one-question-result-en-mobile');
+    assert.equal(await page.locator('#result-total').innerText(),'/ 1');await page.setViewportSize({width:390,height:844});await screenshot(harness,page,'review-one-question-result-en-mobile');
     await settings(page,{textSize:150,theme:'dark'});await page.setViewportSize({width:320,height:844});await fits(page,'One-question review result English 320px 150%');await screenshot(harness,page,'review-one-question-result-en-320-150');
   }
-  console.log('DETAIL completed classroom-result fixture → exact wrong/skipped local review; no score/answer backend action');
+  console.log('DETAIL completed classroom-result fixture → exact wrong/skipped local review; one canonical self-practice history event; no classroom score/answer action');
 }
 cases['classroom-review-fixture']=async(h,t)=>classroomReview(h,t);
 cases['review-one-fixture']=async(h,t)=>classroomReview(h,t,{single:true});

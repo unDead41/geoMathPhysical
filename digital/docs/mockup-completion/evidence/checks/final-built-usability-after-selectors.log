@@ -1,0 +1,74 @@
+EASE browser cases: quiz-review, practice-correct, practice-mixed, classroom-fixture, classroom-errors-fixture, classroom-review-fixture, review-one-fixture
+EVIDENCE_DIRECTORY /workspace/scratch/8354d9072f14/mockup-work/final-built-usability-after-selectors
+RUN quiz-review
+EVIDENCE ../../mockup-work/final-built-usability-after-selectors/quiz-result-collapsed.png
+EVIDENCE ../../mockup-work/final-built-usability-after-selectors/quiz-review-expanded-en-320-150.png
+EVIDENCE ../../mockup-work/final-built-usability-after-selectors/review-practice-original-three.png
+PASS quiz-review
+RUN practice-correct
+EVIDENCE ../../mockup-work/final-built-usability-after-selectors/rich-fraction-mobile-ms.png
+EVIDENCE ../../mockup-work/final-built-usability-after-selectors/rich-fraction-mobile-en.png
+FAIL practice-correct
+AssertionError [ERR_ASSERTION]: S2:ms:320: formula clipped
++ actual - expected
+
++ [
++   'L=2×π×j×(j+t)'
++ ]
+- []
+
+    at fits (file:///workspace/scratch/8354d9072f14/geomath-mockup/digital/tests/ease-browser-helpers.mjs:158:18)
+    at async practice (file:///workspace/scratch/8354d9072f14/geomath-mockup/digital/tests/usability.browser.mjs:113:108)
+    at async runEaseCases (file:///workspace/scratch/8354d9072f14/geomath-mockup/digital/tests/usability.browser.mjs:246:9)
+    at async file:///workspace/scratch/8354d9072f14/geomath-mockup/digital/tests/usability.browser.mjs:262:89
+EVIDENCE ../../mockup-work/final-built-usability-after-selectors/failure-practice-correct.png
+RUN practice-mixed
+PASS practice-mixed
+RUN classroom-fixture
+EVIDENCE ../../mockup-work/final-built-usability-after-selectors/classroom-teacher-fixture-en-320.png
+EVIDENCE ../../mockup-work/final-built-usability-after-selectors/classroom-student-fixture-en-320.png
+DETAIL classroom views used read-only fixture transport; no live classroom account/backend/email
+PASS classroom-fixture
+RUN classroom-errors-fixture
+PASS classroom-errors-fixture
+RUN classroom-review-fixture
+DETAIL completed classroom-result fixture → exact wrong/skipped local review; one canonical self-practice history event; no classroom score/answer action
+PASS classroom-review-fixture
+RUN review-one-fixture
+EVIDENCE ../../mockup-work/final-built-usability-after-selectors/review-one-question-result-en-mobile.png
+EVIDENCE ../../mockup-work/final-built-usability-after-selectors/review-one-question-result-en-320-150.png
+DETAIL completed classroom-result fixture → exact wrong/skipped local review; one canonical self-practice history event; no classroom score/answer action
+PASS review-one-fixture
+RESULT 6/7 browser cases passed; 1 failures
+file:///workspace/scratch/8354d9072f14/geomath-mockup/digital/tests/usability.browser.mjs:260
+  if(failures.length)throw new AggregateError(failures.map(item=>item.error),'Browser QA failed: '+failures.map(item=>item.case).join(', '));
+                           ^
+
+AggregateError: Browser QA failed: practice-correct
+    at runEaseCases (file:///workspace/scratch/8354d9072f14/geomath-mockup/digital/tests/usability.browser.mjs:260:28)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async file:///workspace/scratch/8354d9072f14/geomath-mockup/digital/tests/usability.browser.mjs:262:89 {
+  [errors]: [
+    AssertionError [ERR_ASSERTION]: S2:ms:320: formula clipped
+    + actual - expected
+    
+    + [
+    +   'L=2×π×j×(j+t)'
+    + ]
+    - []
+    
+        at fits (file:///workspace/scratch/8354d9072f14/geomath-mockup/digital/tests/ease-browser-helpers.mjs:158:18)
+        at async practice (file:///workspace/scratch/8354d9072f14/geomath-mockup/digital/tests/usability.browser.mjs:113:108)
+        at async runEaseCases (file:///workspace/scratch/8354d9072f14/geomath-mockup/digital/tests/usability.browser.mjs:246:9)
+        at async file:///workspace/scratch/8354d9072f14/geomath-mockup/digital/tests/usability.browser.mjs:262:89 {
+      generatedMessage: false,
+      code: 'ERR_ASSERTION',
+      actual: [ 'L=2×π×j×(j+t)' ],
+      expected: [],
+      operator: 'deepStrictEqual',
+      diff: 'simple'
+    }
+  ]
+}
+
+Node.js v24.22.1

@@ -56,7 +56,15 @@ export async function newCase(harness,{offline=false,denied=false,viewport={widt
   page.setDefaultTimeout(10000);
   page.on('pageerror',error=>errors.push(error.message));
   page.on('request',request=>{if(/^https?:/.test(request.url()))requests.push(request.url());});
-  try{await page.goto(offline?pathToFileURL(path.join(root,'artifacts/GeoDecoder_Digital_V2.html')).href:harness.origin);}
+  try{
+    await page.goto(offline?pathToFileURL(path.join(root,'artifacts/GeoDecoder_Digital_V2.html')).href:harness.origin);
+    if(offline){
+      // Chromium's request rules do not also update navigator for file pages.
+      const network=await context.newCDPSession(page);await network.send('Network.enable');
+      await network.send('Network.overrideNetworkState',{offline:true,latency:0,downloadThroughput:0,uploadThroughput:0,connectionType:'none'});
+      assert.equal(await page.evaluate(()=>navigator.onLine),false,'Offline emulation must expose the browser offline signal');
+    }
+  }
   catch(error){await context.close();throw error;}
   return {context,page,errors,requests,async done(){assert.deepEqual(errors,[],'No browser runtime errors');await context.close();}};
 }
@@ -87,7 +95,7 @@ export async function finishEntryGuide(page,{complete=false}={}){
     for(const step of [1,2,3])assert.equal(await page.locator(`[data-guide-step="${step}"]`).isVisible(),true);
     await page.locator('#entry-demo-position').press('End');
     assert.equal(await page.locator('.guide-step-active[data-guide-step="3"]').count(),1);
-    assert.equal(await page.locator('#entry-demo-time').textContent(),'00:24 / 00:24');
+    assert.equal(await page.locator('#entry-demo-time').textContent(),'00:04.8 / 00:04.8');
   }
   await page.locator('#guide-start-button').click();
 }
@@ -147,11 +155,39 @@ export async function fits(page,label,{math=false}={}){
   const geometry=await page.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth,dialog:document.querySelector('dialog[open]')?{width:document.querySelector('dialog[open]').clientWidth,scroll:document.querySelector('dialog[open]').scrollWidth}:null}));
   assert.ok(geometry.scroll<=geometry.width,`${label}: document overflow ${JSON.stringify(geometry)}`);
   if(geometry.dialog)assert.ok(geometry.dialog.scroll<=geometry.dialog.width+1,`${label}: dialog overflow ${JSON.stringify(geometry)}`);
-  if(math)assert.deepEqual(await page.locator('#question-detail math,#hint-text math').evaluateAll(nodes=>nodes.filter(el=>{
-    if(!el.checkVisibility())return false;
-    const r=el.getBoundingClientRect(),parent=el.closest('p').getBoundingClientRect();
-    return r.width<1||r.left<parent.left-1||r.right>parent.right+1;
-  }).map(el=>el.textContent)),[],`${label}: formula clipped`);
+  if(math){
+    assert.deepEqual(await page.locator('#question-detail math,#hint-text math').evaluateAll(nodes=>nodes.flatMap(el=>{
+      if(!el.checkVisibility())return [];
+      const r=el.getBoundingClientRect(),parent=el.closest('p').getBoundingClientRect(),scroller=el.closest('.formula-scroll');
+      if(!scroller)return r.width<1||r.left<parent.left-1||r.right>parent.right+1?[{formula:el.textContent,reason:'unbounded formula'}]:[];
+      const box=scroller.getBoundingClientRect(),overflow=scroller.scrollWidth>scroller.clientWidth+1,style=getComputedStyle(scroller);
+      return r.width<1||box.width<1||box.left<parent.left-1||box.right>parent.right+1||box.left< -1||box.right>innerWidth+1||scroller.tabIndex<0||overflow&&!['auto','scroll'].includes(style.overflowX)?[{formula:el.textContent,reason:'inaccessible or unbounded formula scroller',left:box.left,right:box.right,parentLeft:parent.left,parentRight:parent.right,overflowX:style.overflowX}]:[];
+    })),[],`${label}: formula clipped`);
+    const scrollers=page.locator('#question-detail .formula-scroll,#hint-text .formula-scroll');
+    for(let index=0;index<await scrollers.count();index++){
+      const scroller=scrollers.nth(index),state=await scroller.evaluate(node=>({visible:node.checkVisibility(),max:node.scrollWidth-node.clientWidth,original:node.scrollLeft}));
+      if(!state.visible||state.max<=1)continue;
+      const focused=await page.evaluateHandle(()=>document.activeElement);
+      try{
+        await scroller.evaluate(node=>{node.scrollLeft=0;});await scroller.focus();
+        assert.equal(await scroller.evaluate(node=>node===document.activeElement),true,`${label}: formula scroller is keyboard focusable`);
+        assert.deepEqual(await scroller.evaluate(node=>{const box=node.getBoundingClientRect();return [...node.querySelectorAll('math')].filter(el=>el.getBoundingClientRect().left<box.left-1).map(el=>el.textContent);}),[],`${label}: formula left edge is unreachable`);
+        for(let step=0;step<Math.ceil(state.max/20)+2;step++)await scroller.press('ArrowRight');
+        await page.waitForFunction(({index,max})=>{
+          const node=document.querySelectorAll('#question-detail .formula-scroll,#hint-text .formula-scroll')[index],box=node.getBoundingClientRect();
+          return node.scrollLeft>=max-1&&[...node.querySelectorAll('math')].every(el=>el.getBoundingClientRect().right<=box.right+1);
+        },{index,max:state.max},{timeout:3000}).catch(async()=>{
+          const bounds=await scroller.evaluate(node=>{const box=node.getBoundingClientRect();return {left:box.left,right:box.right,clientWidth:node.clientWidth,scrollWidth:node.scrollWidth,scrollLeft:node.scrollLeft,math:[...node.querySelectorAll('math')].map(el=>{const r=el.getBoundingClientRect();return {text:el.textContent,left:r.left,right:r.right};})};});
+          assert.fail(`${label}: keyboard cannot reach the formula right edge ${JSON.stringify(bounds)}`);
+        });
+        assert.deepEqual(await scroller.evaluate(node=>{const box=node.getBoundingClientRect();return [...node.querySelectorAll('math')].filter(el=>el.getBoundingClientRect().right>box.right+1).map(el=>el.textContent);}),[],`${label}: formula right edge is unreachable by keyboard`);
+        console.log(`DETAIL ${label}: keyboard formula scroll reached ${await scroller.evaluate(node=>node.scrollLeft)} / ${state.max}px`);
+      }finally{
+        await scroller.evaluate((node,value)=>{node.scrollLeft=value;},state.original);
+        await focused.evaluate(node=>{if(!node?.isConnected)return;if(node===node.ownerDocument.body)node.ownerDocument.activeElement?.blur();else node.focus({preventScroll:true});});await focused.dispose();
+      }
+    }
+  }
 }
 
 export async function screenshot(harness,page,name,{fullPage=true}={}){

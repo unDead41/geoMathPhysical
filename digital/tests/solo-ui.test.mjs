@@ -46,6 +46,86 @@ test('cold DOM reload restores selected R1, exact card SVG tones and R2 hint sta
 });
 import {QUESTIONS} from '../dist/questions.mjs';
 import {Game} from '../dist/core.mjs';
+import {describeShape} from '../dist/art.mjs';
+import {SCORE_KEY} from '../dist/storage.mjs';
+
+const savedGame=f=>JSON.parse(f.window.localStorage.getItem(SOLO_KEY+'guest'));
+const currentShape=f=>{const s=savedGame(f);return QUESTIONS.find(q=>q.id===s.questionIds[s.state.index]).shape;};
+function answerPair(f,{wrong=false,skip=false}={}){
+  if(skip)f.document.getElementById('skip-button').click();
+  else {
+    const shape=currentShape(f),solid=f.document.querySelector(`.choice[data-kind=solid][data-shape=${shape}]`);
+    solid.click();f.document.getElementById('r1').click();
+    const net=wrong?f.document.querySelector(`.choice[data-kind=net]:not([data-shape=${shape}])`):f.document.querySelector(`.choice[data-kind=net][data-shape=${shape}]`);
+    net.click();f.document.getElementById('r2').click();
+  }
+  f.tick(1801);
+  if(!f.document.getElementById('correction-panel').hidden)f.document.getElementById('continue-button').click();
+}
+
+test('solo workbench keeps both canonical five-card banks and correction compares the actual selected R2 with the correct pair',()=>{
+  const f=fixture();try{
+    start(f);const s=savedGame(f),shape=currentShape(f);
+    for(const kind of ['solid','net'])assert.deepEqual([...f.document.querySelectorAll(`#${kind}-choices .choice`)].map(card=>card.dataset.shape),s.state[kind+'Order']);
+    assert.equal(f.document.querySelectorAll('#solid-choices .choice').length,5);assert.equal(f.document.querySelectorAll('#net-choices .choice').length,5);
+    f.document.querySelector(`.choice[data-kind=solid][data-shape=${shape}]`).click();f.document.getElementById('r1').click();
+    assert.equal(f.document.getElementById('game-screen').dataset.stage,'net');assert.equal(f.document.getElementById('r1').classList.contains('filled'),true);assert.equal(f.document.getElementById('r2').classList.contains('is-active-step'),true);
+    const wrong=f.document.querySelector(`.choice[data-kind=net]:not([data-shape=${shape}])`);
+    wrong.click();f.document.getElementById('r2').click();
+    const chosen=f.document.querySelectorAll('#correction-attempt-pair .shape-art'),expected=f.document.querySelectorAll('#correction-pair .shape-art');
+    assert.equal(chosen[0].getAttribute('aria-label'),describeShape(shape,'solid'));assert.equal(chosen[1].getAttribute('aria-label'),describeShape(wrong.dataset.shape,'net'));
+    assert.equal(expected[0].getAttribute('aria-label'),describeShape(shape,'solid'));assert.equal(expected[1].getAttribute('aria-label'),describeShape(shape,'net'));
+    assert.equal(f.document.getElementById('continue-button').disabled,true);assert.equal(f.document.getElementById('score-value').textContent,'0');
+    assert.deepEqual(f.errors,[]);
+  }finally{f.window.close();}
+});
+
+test('a wrong R1 never fabricates a selected net in correction',()=>{
+  const f=fixture();try{
+    start(f);const shape=currentShape(f),wrong=f.document.querySelector(`.choice[data-kind=solid]:not([data-shape=${shape}])`);
+    wrong.click();f.document.getElementById('r1').click();
+    assert.equal(f.document.querySelectorAll('#correction-attempt-pair .shape-art').length,1);
+    assert.ok(f.document.querySelector('#correction-attempt-pair .correct-net .unscanned-choice'));
+    assert.equal(savedGame(f).state.answers[0].attempts.net,null);assert.deepEqual(f.errors,[]);
+  }finally{f.window.close();}
+});
+
+test('visible result tables use real quiz and wrong-question subset denominators without changing the saved quiz board',()=>{
+  const f=fixture();try{
+    start(f);for(let i=0;i<10;i++)answerPair(f,{wrong:i===0,skip:i===1});
+    assert.equal(f.document.getElementById('result-screen').hidden,false);
+    assert.equal(f.document.getElementById('result-score').textContent,'8');assert.equal(f.document.getElementById('result-total').textContent,' / 10');
+    assert.equal(f.document.querySelectorAll('#result-review-table tbody tr').length,10);
+    assert.equal(f.document.querySelectorAll('#result-review-table .answer-result.wrong').length,1);assert.equal(f.document.querySelectorAll('#result-review-table .answer-result.skipped').length,1);
+    assert.deepEqual([...f.document.querySelectorAll('#result-shape-table tbody td')].map(cell=>cell.textContent.split('/')[1].trim()),['2','2','2','2','2']);
+    assert.equal(f.document.getElementById('result-details').open,false);assert.equal(f.document.querySelectorAll('.review-card').length,10);
+    const original=JSON.parse(f.window.localStorage.getItem(SCORE_KEY));assert.equal(original.length,1);
+    f.document.getElementById('retry-wrong-button').click();assert.equal(savedGame(f).mode,'review');assert.equal(savedGame(f).questionIds.length,2);
+    answerPair(f);answerPair(f);
+    assert.equal(f.document.querySelectorAll('#result-review-table tbody tr').length,2);assert.equal(f.document.querySelector('#result-shape-table tfoot td').textContent,'2 / 2');
+    assert.deepEqual(JSON.parse(f.window.localStorage.getItem(SCORE_KEY)),original);assert.deepEqual(f.errors,[]);
+  }finally{f.window.close();}
+});
+
+test('practice result and local-board empty states retain honest scope, and recorded names stay literal in the four-column quiz board',()=>{
+  const f=fixture();try{
+    f.document.querySelector('.site-footer [data-action=scores]').click();assert.ok(f.document.querySelector('.quiz-scoreboard-art .geometry-scene'));assert.equal(f.document.querySelector('.quiz-scoreboard .score-table'),null);
+    f.document.getElementById('dialog-close').click();f.document.getElementById('guest-button').click();
+    f.document.getElementById('player-name').value='QA <b>literal</b>';f.document.getElementById('play-mode').value='practice';
+    f.document.getElementById('player-form').dispatchEvent(new f.window.Event('submit',{bubbles:true,cancelable:true}));
+    for(let i=0;i<15;i++)answerPair(f);
+    assert.equal(f.document.querySelectorAll('#result-review-table tbody tr').length,15);assert.equal(f.document.querySelector('#result-shape-table tfoot td').textContent,'15 / 15');
+    assert.equal(f.window.localStorage.getItem(SCORE_KEY),null);
+    f.document.querySelector('.result-actions [data-action=home]').click();f.document.getElementById('guest-button').click();
+    f.document.getElementById('player-name').value='QA <b>literal</b>';f.document.getElementById('play-mode').value='quiz';
+    f.document.getElementById('player-form').dispatchEvent(new f.window.Event('submit',{bubbles:true,cancelable:true}));
+    for(let i=0;i<10;i++)answerPair(f);
+    f.document.querySelector('.site-footer [data-action=scores]').click();
+    assert.equal(f.document.querySelectorAll('.quiz-scoreboard .score-table thead th').length,4);assert.equal(f.document.querySelectorAll('.quiz-scoreboard .score-table tbody tr').length,1);
+    assert.equal(f.document.querySelector('.quiz-scoreboard .score-table tbody tr td:nth-child(2)>b').textContent,'QA <b>literal</b>');assert.equal(f.document.querySelector('.quiz-scoreboard .score-table tbody tr td:nth-child(2)>b>b'),null);
+    assert.equal(f.document.querySelector('.quiz-scoreboard .score-rank').dataset.rank,'1');assert.deepEqual(f.errors,[]);
+  }finally{f.window.close();}
+});
 test('new game confirmation cancels safely, damaged snapshot explains replacement, denied storage does not claim saved',()=>{
  const a=fixture();let b,c;try{
   start(a);const original=a.window.localStorage.getItem(SOLO_KEY+'guest');
@@ -84,7 +164,7 @@ test('the first-play page gates the clock and demo seeking never changes a game'
   f.document.getElementById('player-form').dispatchEvent(new f.window.Event('submit',{bubbles:true,cancelable:true}));
   assert.equal(f.document.getElementById('guide-screen').hidden,false);assert.equal(f.document.getElementById('game-screen').hidden,true);
   assert.equal(f.window.localStorage.getItem(SOLO_KEY+'guest'),null);
-  f.change(f.document.getElementById('entry-demo-position'),'12');assert.equal(f.document.getElementById('entry-demo-time').textContent,'00:12 / 00:24');
+  f.change(f.document.getElementById('entry-demo-position'),'2.4');assert.equal(f.document.getElementById('entry-demo-time').textContent,'00:02.4 / 00:04.8');
   assert.equal(f.document.querySelector('[data-guide-step="2"]').classList.contains('guide-step-active'),true);
   f.document.getElementById('entry-demo-play').click();assert.equal(f.document.getElementById('entry-demo-play').getAttribute('aria-pressed'),'true');
   f.document.getElementById('entry-demo-play').click();assert.equal(f.document.getElementById('entry-demo-play').getAttribute('aria-pressed'),'false');

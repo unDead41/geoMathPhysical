@@ -84,7 +84,7 @@ test('a delayed learning report cannot rerender security secrets or restart poll
     const calls=f.state.snapshotCalls;
     await f.portal.refresh();f.doc.dispatchEvent(new f.dom.window.Event('visibilitychange'));await settle();
     assert.equal(f.state.snapshotCalls,calls);assert.equal(f.state.learningCalls,1);
-    assert.equal(f.doc.querySelector('[data-portal-action="open-module"]'),null);
+    assert.equal(f.doc.querySelector('.portal-workspace-main [data-portal-action="open-module"]'),null);
   }finally{gate.resolve();f.cleanup();}
 });
 

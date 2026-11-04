@@ -670,3 +670,590 @@ html[data-text-size=large]{font-size:1.25rem}html[data-text-size=largest]{font-s
 .portal-management-dialog .portal-management-actions{justify-content:flex-end}
 .portal-management-dialog .portal-field{margin-block:1rem}
 @media(max-width:480px){.portal-management-dialog .dialog-shell{padding:1rem}.portal-management-dialog .portal-management-actions>.button{flex:1 1 8rem}}
+
+/* Approved classroom workspace: one account rail beneath the shared header. */
+.portal-screen:has(.portal-workspace-shell) > .portal-topline {display:none}
+.portal-screen:has(.portal-workspace-shell) > .portal-feedback {min-height:0;margin:0 0 1rem}
+.portal-screen:has(.portal-workspace-shell) > .portal-feedback:has(.portal-notice:empty):not(:has(.portal-notice:not(:empty))) {margin:0}
+.portal-screen:has(.portal-workspace-shell) .portal-notice:empty {display:none}
+.portal-workspace-shell {display:grid;grid-template-columns:minmax(11rem,19%) minmax(0,1fr);gap:1.5rem;align-items:start;padding-top:1rem}
+.portal-workspace-shell > * {min-width:0}
+.portal-account-sidebar {position:sticky;top:1rem;display:flex;flex-direction:column;gap:1rem;min-width:0;min-height:calc(100dvh - 11rem);padding:1rem .75rem;background:linear-gradient(180deg,var(--surface),var(--blue-soft));border:1px solid var(--border);border-radius:var(--radius);}
+.portal-account-sidebar .portal-profile-link {width:100%;align-items:center;gap:.65rem;min-width:0;padding:.5rem .25rem;border:1px solid var(--border);background:var(--surface);border-radius:.65rem}
+.portal-account-sidebar .portal-profile-link > span:last-child {min-width:0}
+.portal-account-sidebar .portal-profile-link b {display:block;font-size:.875rem;line-height:1.4;overflow-wrap:anywhere}
+.portal-account-sidebar .portal-profile-link small {font-size:.6875rem;line-height:1.5;overflow-wrap:anywhere}
+.portal-account-sidebar .portal-avatar {width:2.25rem;height:2.25rem;border-radius:50%;font-size:1rem}
+.portal-role-badge {display:inline-block;margin-top:.35rem;padding:.15rem .65rem;border-radius:1rem;background:var(--mint-soft);color:var(--success);font-size:.6875rem;font-weight:700}
+.portal-account-sidebar nav,.portal-account-sidebar-footer {display:grid;gap:.35rem}
+.portal-account-sidebar-footer {margin-top:auto;padding-top:1.5rem}
+.portal-account-sidebar .button {justify-content:flex-start;gap:.6rem;min-height:44px;width:100%;padding:.65rem .6rem;font-size:.8125rem;text-align:left;white-space:normal;line-height:1.4;border:1px solid transparent;border-radius:.6rem}
+.portal-account-sidebar .button span {min-width:0;overflow-wrap:anywhere}
+.portal-account-sidebar .button .icon {width:1.1rem;height:1.1rem;flex-shrink:0}
+.portal-account-sidebar .button[aria-current="page"] {background:var(--blue-soft);color:var(--primary);border-color:var(--border);font-weight:750}
+.portal-workspace-main {padding:0 0 1rem;min-width:0}
+.portal-workspace-main .portal-panel {padding:1.15rem;border-radius:.85rem;box-shadow:none}
+.portal-workspace-main .portal-page-heading {margin:0 0 1.25rem;align-items:flex-start}
+.portal-workspace-main .portal-page-heading .card-kicker {display:none}
+.portal-workspace-main .portal-page-heading h1,.portal-workspace-main .portal-room-heading h1 {font-size:2rem;line-height:1.2;letter-spacing:-.8px;margin:0 0 .5rem}
+.portal-workspace-main .portal-page-heading p,.portal-workspace-main .portal-room-heading p {font-size:.875rem;line-height:1.65}
+.portal-workspace-main .portal-panel-title {gap:.75rem;margin-bottom:1rem;align-items:center}
+.portal-workspace-main .portal-panel-title h2 {font-size:1.15rem;letter-spacing:-.35px}
+.portal-workspace-main .portal-panel-title p {font-size:.75rem;line-height:1.6}
+.portal-workspace-main .portal-field-error:empty,.portal-workspace-main .portal-form-error:empty {display:none}
+.portal-workspace-main .portal-field-help {min-height:0}
+.portal-workspace-main .portal-freshness {gap:.75rem;margin-bottom:1rem;padding-bottom:.65rem;font-size:.6875rem}
+.portal-workspace-main .portal-freshness > .button {min-height:44px;padding:.5rem .6rem}
+.portal-dashboard-heading {display:flex;justify-content:space-between;align-items:flex-start;gap:1.5rem;margin-bottom:.5rem}
+.portal-dashboard-heading .portal-page-heading {margin:0;flex:1;min-width:0}
+.portal-section-link {text-decoration:none;white-space:normal;line-height:1.45;min-height:44px}
+.portal-section-link:focus-visible,.portal-class-room-link:focus-visible {outline:3px solid var(--primary);outline-offset:3px}
+.portal-teacher-layout {grid-template-columns:minmax(0,.38fr) minmax(0,.62fr);gap:1rem;align-items:stretch}
+.portal-workspace-main .portal-class-sidebar {padding:1rem}
+.portal-class-sidebar > .button {font-size:.6875rem;margin-bottom:.5rem}
+.portal-class-sidebar .portal-panel-title {margin:0 0 .75rem}
+.portal-class-list {max-height:23rem;margin:0 0 .75rem;padding:2px;scrollbar-gutter:auto}
+.portal-class-choice {min-height:5rem;padding:.75rem .6rem;margin:0 0 .65rem;background:var(--surface);border:1px solid var(--border);border-radius:.75rem;gap:.65rem}
+.portal-class-choice b {font-size:1rem;line-height:1.35}
+.portal-class-choice small {font-size:.6875rem;line-height:1.5}
+.portal-class-choice .portal-badge {font-size:.625rem;padding:.2rem .45rem;flex-shrink:0}
+.portal-class-choice .portal-class-icon {border:0;background:transparent}
+.portal-class-choice.is-selected .portal-class-icon {color:var(--primary)}
+.portal-class-sidebar form {padding:.85rem 0 0}
+.portal-class-sidebar form h3 {margin:0 0 .75rem}
+.portal-class-sidebar form .portal-field label {font-size:.75rem}
+.portal-class-sidebar form .portal-field input {min-height:44px}
+.portal-class-sidebar form .portal-submit {margin-top:.75rem}
+#portal-create-class,#portal-class-workspace,#portal-student-rooms {scroll-margin-top:1rem}
+.portal-class-overview {display:flex;flex-direction:column;min-height:24rem}
+.portal-class-overview .portal-panel-title h2 {font-size:1.6rem}
+.portal-class-overview .portal-panel-title > div {flex:1;min-width:0}
+.portal-class-overview-body {display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:1rem;align-items:center;margin:.25rem 0 1rem;flex:1;min-width:0}
+.portal-overview-scene {display:block;width:100%;height:auto;min-height:12rem;max-height:17rem;background:var(--blue-soft);border:1px solid var(--border);border-radius:.7rem}
+.portal-class-facts {margin:0;min-width:0;font-size:.8125rem}
+.portal-class-facts > div {display:flex;align-items:baseline;justify-content:space-between;gap:.75rem;padding:.75rem 0;border-bottom:1px solid var(--border)}
+.portal-class-facts > div:last-child {border:0}
+.portal-class-facts dt {color:var(--muted)}
+.portal-class-facts dd {margin:0;font-weight:650;text-align:right;overflow-wrap:anywhere}
+.portal-class-overview > .portal-section-link {align-self:flex-end}
+.portal-class-overview > .portal-management-actions {border-top:1px solid var(--border);padding-top:.75rem;margin:.85rem 0 0}
+.portal-workspace-main .portal-management-actions {gap:.4rem}
+.portal-workspace-main .portal-management-actions > .button {font-size:.6875rem;min-height:44px;padding:.5rem .65rem}
+.portal-empty-scene {display:block;width:100%;height:13rem}
+.portal-class-workspace {margin-top:2.5rem;min-width:0}
+.portal-class-workspace:focus {outline:none}
+.portal-class-workspace-heading {margin-bottom:1.1rem}
+.portal-breadcrumb {display:flex;align-items:center;gap:.4rem;color:var(--muted);font-size:.75rem;margin:0 0 .65rem}
+.portal-breadcrumb .icon {width:1rem;height:1rem}
+.portal-class-workspace-heading h2 {font-size:1.65rem;letter-spacing:-.6px;margin:0 0 .5rem}
+.portal-class-workspace-heading > p:last-child {font-size:.875rem;color:var(--muted);line-height:1.6;margin:0}
+.portal-class-access,.portal-class-management {display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:1rem;align-items:start;min-width:0}
+.portal-class-access {margin-bottom:1rem;align-items:stretch}
+.portal-class-access > *,.portal-class-management > * {min-width:0}
+.portal-workspace-main .portal-pin-panel {background:var(--blue-soft);border-color:var(--border);margin:0;padding:1.15rem;gap:.75rem 1rem;border-radius:.85rem;align-content:center}
+.portal-workspace-main .portal-pin-panel .portal-small-label {color:var(--ink);font-weight:750;letter-spacing:.03em;font-size:.875rem}
+.portal-workspace-main input.portal-pin {font-size:1.875rem;color:var(--ink);letter-spacing:.25em;width:9.5ch;min-height:44px;background:var(--surface);border:1px solid var(--border);border-radius:.4rem;padding:.2rem .4rem;margin:.5rem 0}
+.portal-workspace-main .portal-pin-panel > p {margin:0;line-height:1.65}
+.portal-workspace-main .portal-pin-actions {gap:.45rem}
+.portal-workspace-main .portal-pin-actions .button {min-height:44px;font-size:.6875rem;padding:.5rem .65rem}
+.portal-class-invite .portal-inline-form h3 {font-size:1rem;margin:0 0 .4rem}
+.portal-class-invite .portal-inline-form > div:first-child p {font-size:.75rem;margin:0 0 .75rem;line-height:1.6}
+.portal-class-invite .portal-inline-form-fields {gap:.65rem;grid-template-columns:minmax(0,1fr) auto}
+.portal-class-invite .portal-inline-form-fields > .button {margin-top:1.65rem;min-height:44px;align-self:start;font-size:.6875rem;padding:.5rem .6rem}
+.portal-class-invite .portal-field label {font-size:.6875rem;line-height:1.5}
+.portal-class-invite .portal-field input {min-height:44px;font-size:.75rem;padding:.6rem}
+.portal-class-invite .portal-field-help {font-size:.625rem}
+.portal-class-invite .portal-invites {margin:.75rem 0 0;border-top:1px solid var(--border);padding-top:.75rem}
+.portal-class-invite .portal-invites h3 {font-size:.8125rem}
+.portal-class-invite .portal-invites li {font-size:.75rem;gap:.5rem;padding:.65rem 0;flex-wrap:wrap}
+.portal-class-invite .portal-invites li > span {flex:1;min-width:0;overflow-wrap:anywhere}
+.portal-class-invite .portal-invites .button {font-size:.625rem;padding:.5rem}
+.portal-workspace-main .portal-search {width:100%;margin-bottom:.75rem}
+.portal-workspace-main .portal-search input {min-height:44px;font-size:.8125rem}
+.portal-workspace-main .portal-search button {width:44px;height:44px;top:0;right:0}
+.portal-workspace-main .portal-table th,.portal-workspace-main .portal-table td {padding:.75rem .65rem}
+.portal-workspace-main .portal-table thead th {font-size:.6875rem;color:var(--ink);background:var(--blue-soft)}
+.portal-roster-table {min-width:29rem}
+.portal-roster-table .portal-table-person {gap:.5rem}
+.portal-roster-table .portal-table-person b {font-size:.8125rem}
+.portal-roster-table .portal-table-person small {font-size:.6875rem}
+.portal-roster-seen {display:block;color:var(--muted);font-size:.625rem;margin-top:.5rem;line-height:1.6;white-space:normal}
+.portal-roster-records {font-size:.6875rem;margin-top:.3rem;white-space:normal}
+.portal-roster-records .portal-module-records {min-width:10rem;max-width:21rem;font-size:.75rem}
+.portal-roster-records .portal-module-records summary {padding:.4rem 0;font-size:.6875rem;gap:.25rem}
+.portal-roster-records .portal-module-records summary span {font-size:.625rem}
+.portal-roster-table .portal-presence {font-size:.625rem;white-space:normal}
+.portal-roster-table .button {font-size:.625rem;padding:.5rem .6rem;white-space:normal}
+.portal-workspace-main .portal-table-note {font-size:.6875rem;line-height:1.65;margin:.75rem 0 0}
+.portal-workspace-main .portal-pagination {gap:.75rem;margin-top:.75rem;font-size:.6875rem;flex-wrap:wrap}
+.portal-workspace-main .portal-pagination .button {min-height:44px;font-size:.6875rem;padding:.5rem .6rem}
+.portal-class-rooms > .button {font-size:.6875rem;padding:.5rem 0}
+.portal-class-rooms .portal-room-form {padding-bottom:.75rem;margin:.75rem 0}
+.portal-class-rooms .portal-room-form .portal-inline-form-fields {grid-template-columns:minmax(0,1fr) auto;gap:.65rem}
+.portal-class-rooms .portal-field label {font-size:.6875rem}
+.portal-class-rooms .portal-field input {font-size:.75rem;min-height:44px;padding:.6rem}
+.portal-class-rooms .portal-field-help {font-size:.625rem}
+.portal-class-rooms .portal-inline-form-fields > .button {min-height:44px;margin-top:1.65rem;font-size:.6875rem;padding:.5rem .6rem}
+.portal-workspace-main .portal-room-grid {display:grid;grid-template-columns:minmax(0,1fr);gap:.65rem}
+.portal-workspace-main .portal-room-card {padding:.75rem;border-radius:.65rem;background:var(--surface);min-width:0}
+.portal-room-card .portal-room-card-top {display:flex;align-items:center;gap:.65rem;margin-bottom:.5rem;flex-wrap:wrap}
+.portal-room-card .portal-room-card-top > div {flex:1;min-width:5rem}
+.portal-workspace-main .portal-room-card h3 {font-size:.9375rem;line-height:1.4;margin:0}
+.portal-workspace-main .portal-room-card p {font-size:.6875rem;line-height:1.5;margin:.2rem 0}
+.portal-room-card-top small {font-size:.625rem;color:var(--muted)}
+.portal-workspace-main .portal-room-symbol {width:2rem;height:2rem;border-radius:.5rem;color:var(--primary);background:var(--blue-soft)}
+.portal-workspace-main .portal-room-symbol .icon {width:1.1rem;height:1.1rem}
+.portal-workspace-main .portal-room-symbol-playing {background:var(--mint-soft);color:var(--success)}
+.portal-workspace-main .portal-room-symbol-closed {background:var(--bg);color:var(--muted)}
+.portal-workspace-main .portal-room-card .portal-badge {font-size:.625rem}
+.portal-workspace-main .portal-room-card-bottom {border:0;margin:0;padding:0;justify-content:flex-end;flex-wrap:wrap;gap:.5rem}
+.portal-workspace-main .portal-room-card-bottom .button {min-height:44px;font-size:.6875rem;padding:.5rem .65rem}
+.portal-workspace-main .portal-room-card .portal-management-actions {border-top:1px solid var(--border);margin:.65rem 0 0;padding-top:.5rem}
+.portal-room-card .portal-management-actions .button {font-size:.625rem}
+.portal-workspace-main .portal-room-navigation {margin:0 0 .85rem;gap:.75rem;font-size:.75rem;flex-wrap:wrap}
+.portal-workspace-main .portal-room-navigation .button {min-height:44px;padding:.4rem .65rem;border:1px solid var(--border);background:var(--surface);font-size:.75rem}
+.portal-workspace-main .portal-room-heading {margin-bottom:1.1rem;align-items:flex-start}
+.portal-workspace-main .portal-room-heading > div {min-width:0;flex:1}
+.portal-workspace-main .portal-room-heading > .portal-badge {min-height:2rem;white-space:normal;gap:.4rem;line-height:1.5}
+.portal-workspace-main .portal-room-heading > .portal-badge .icon {width:1rem;height:1rem;flex-shrink:0}
+.portal-room-live-hero {display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:1rem;align-items:stretch;margin-bottom:.75rem}
+.portal-room-scene {width:100%;height:100%;min-height:12rem;max-height:17rem;border:1px solid var(--border);background:var(--surface);border-radius:.85rem}
+.portal-workspace-main .portal-live-board {padding:1rem;min-width:0}
+.portal-live-board .portal-panel-title > div:first-child {flex:1;min-width:0}
+.portal-workspace-main .portal-board-counts {gap:1rem;padding:0;flex-wrap:wrap;width:auto;border:0}
+.portal-workspace-main .portal-board-counts b {font-size:1.125rem;display:inline;margin:0 .15rem 0 0}
+.portal-workspace-main .portal-board-counts > span {font-size:.625rem}
+.portal-workspace-main .portal-score-table {min-width:42rem;font-size:.75rem}
+.portal-workspace-main .portal-score-table tbody th {width:24%;min-width:8rem}
+.portal-workspace-main .portal-score-table td:nth-child(3) {min-width:6rem}
+.portal-workspace-main .portal-score-value {font-size:1rem}
+.portal-workspace-main .portal-score-kind {font-size:.5625rem;margin-top:.2rem}
+.portal-workspace-main .portal-table-name b {font-size:.8125rem}
+.portal-workspace-main .portal-table-name small {font-size:.625rem}
+.portal-workspace-main .portal-score-table .portal-presence {font-size:.625rem}
+.portal-question-progress {display:flex;align-items:center;gap:.5rem}
+.portal-question-progress progress {accent-color:var(--primary);width:5rem;min-width:3rem;height:.5rem;border:0;border-radius:1rem;overflow:hidden;background:var(--border)}
+.portal-question-progress progress::-webkit-progress-bar {background:var(--border);border-radius:1rem}
+.portal-question-progress progress::-webkit-progress-value {background:var(--primary);border-radius:1rem}
+.portal-question-progress progress::-moz-progress-bar {background:var(--primary);border-radius:1rem}
+.portal-workspace-main .portal-room-action-row {margin-top:1.1rem;gap:1rem;align-items:center;flex-direction:row;flex-wrap:wrap}
+.portal-workspace-main .portal-room-action-row > div:first-child {flex:1;min-width:13rem}
+.portal-workspace-main .portal-room-action-row h2 {font-size:1rem}
+.portal-workspace-main .portal-room-action-row p {font-size:.75rem;margin-top:.4rem;line-height:1.65}
+.portal-workspace-main .portal-control-buttons .button {min-height:44px;white-space:normal}
+.portal-teacher-room > .portal-management-actions {border-top:1px solid var(--border);padding-top:1rem;margin-top:1.25rem}
+.portal-room-results {display:grid;grid-template-columns:minmax(0,1.85fr) minmax(0,1fr);gap:1rem;align-items:start}
+.portal-room-results > * {min-width:0}
+.portal-results-scene {display:block;width:100%;height:100%;min-height:19rem;max-height:28rem;border:1px solid var(--border);border-radius:.85rem;background:var(--blue-soft)}
+.portal-workspace-main .portal-final-board .portal-panel-title {flex-wrap:wrap}
+.portal-workspace-main .portal-final-board .portal-score-table {min-width:30rem}
+.portal-workspace-main .portal-final-board .portal-score-table td:nth-child(3) {min-width:3rem}
+.portal-workspace-main .portal-final-board .portal-score-table tbody th {min-width:7rem}
+.portal-results-actions {display:flex;justify-content:flex-end;gap:.75rem;margin-top:1rem}
+.portal-student-welcome {display:grid;grid-template-columns:minmax(0,1fr) 13rem;gap:1rem;align-items:center;margin-bottom:1rem}
+.portal-student-welcome .portal-page-heading {margin:0}
+.portal-student-welcome-art {display:block;width:100%;height:8.5rem}
+.portal-workspace-main .portal-join-panel {background:var(--blue-soft);margin-bottom:1rem;padding:1.15rem;display:grid;grid-template-columns:minmax(0,1fr) minmax(18rem,1.3fr);gap:1rem;align-items:center}
+.portal-workspace-main .portal-join-panel h2 {font-size:1.25rem;margin:0 0 .5rem}
+.portal-workspace-main .portal-join-panel > div > p {font-size:.8125rem;line-height:1.6;margin:0}
+.portal-workspace-main .portal-join-panel form {display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.75rem;margin:0;align-items:start}
+.portal-workspace-main .portal-join-panel .portal-field {grid-row:span 2}
+.portal-workspace-main .portal-join-panel .portal-submit {margin-top:1.6rem;min-height:48px;font-size:.75rem;white-space:normal}
+.portal-workspace-main #portal-join-pin {font-size:1.4rem;letter-spacing:.35em;min-height:48px;padding:.5rem .75rem;background:var(--surface)}
+.portal-workspace-main #portal-join-pin::placeholder {letter-spacing:.35em}
+.portal-workspace-main .portal-student-top {grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1rem;margin-bottom:1rem;align-items:stretch}
+.portal-workspace-main .portal-student-classes li {padding:.65rem 0;gap:.65rem;min-width:0}
+.portal-class-room-link {display:grid;place-items:center;color:var(--primary);width:44px;height:44px;border-radius:.5rem;flex-shrink:0}
+.portal-class-room-link .icon {width:1rem;height:1rem}
+.portal-workspace-main .portal-student-top .portal-invites {margin:0}
+.portal-student-top .portal-invites li {gap:.65rem;padding:.65rem 0;flex-wrap:wrap}
+.portal-student-top .portal-invites li > div {flex-basis:7rem;min-width:0}
+.portal-student-top .portal-invites li b {font-size:.875rem}
+.portal-student-top .portal-invites .portal-invite-symbol {width:2rem;height:2rem}
+.portal-student-top .portal-invites .portal-invite-actions {display:flex;flex-wrap:wrap;gap:.4rem;flex:1 1 100%;justify-content:flex-end}
+.portal-invite-actions .button {min-height:44px;font-size:.6875rem;padding:.5rem .65rem}
+.portal-workspace-main .portal-module-card {display:block;margin-bottom:1rem}
+.portal-workspace-main .portal-module-card > div {width:100%}
+.portal-workspace-main .portal-module-card h2 {font-size:1.15rem;margin:0}
+.portal-module-card .portal-panel-title {flex-wrap:wrap;justify-content:space-between}
+.portal-module-card .portal-panel-title > .button {font-size:.6875rem;padding:.5rem .65rem}
+.portal-workspace-main .portal-learning-table {min-width:30rem;font-size:.75rem}
+.portal-workspace-main .portal-module-card .portal-module-records {margin-top:.4rem;font-size:.8125rem}
+.portal-record-status {font-size:.6875rem;color:var(--muted)}
+.portal-record-status.is-complete {color:var(--success);font-weight:650}
+.portal-student-rooms {margin-bottom:1rem}
+.portal-student-rooms .portal-room-grid {grid-template-columns:repeat(2,minmax(0,1fr))}
+.portal-student-room-grid {display:grid;grid-template-columns:minmax(0,1.85fr) minmax(0,1fr);gap:1rem;align-items:start}
+.portal-student-room-grid > * {min-width:0}
+.portal-room-model-stage {background:var(--blue-soft);border:1px solid var(--border);border-radius:.85rem;overflow:hidden}
+.portal-student-room-scene {display:block;width:100%;height:19rem}
+.portal-workspace-main .portal-student-play {display:block;padding-top:1rem;margin-bottom:0}
+.portal-workspace-main .portal-student-play h2 {font-size:1.2rem;line-height:1.4}
+.portal-workspace-main .portal-student-play p {font-size:.8125rem;line-height:1.65;margin-top:.5rem}
+.portal-student-start-row {display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;margin-top:1rem}
+.portal-student-start-row .button {min-height:44px;flex-shrink:0}
+.portal-workspace-main .portal-waiting-label {min-width:0;flex:1 1 12rem;font-size:.6875rem;line-height:1.65;padding:.65rem;background:var(--blue-soft);align-items:flex-start}
+.portal-waiting-label .icon {width:1rem;height:1rem;flex-shrink:0}
+.portal-workspace-main .portal-participants {padding:1rem}
+.portal-participants .portal-panel-title {margin-bottom:.75rem}
+.portal-participants h2 {display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.portal-participants h2 > .icon {width:1.15rem;height:1.15rem;color:var(--primary)}
+.portal-participants ul {list-style:none;padding:0;margin:0}
+.portal-participants li {display:flex;gap:.5rem;align-items:center;padding:.75rem 0;border-top:1px solid var(--border);flex-wrap:wrap}
+.portal-participants li > span:nth-child(2) {flex:1;min-width:6rem}
+.portal-participants b {display:block;font-size:.8125rem;overflow-wrap:anywhere;line-height:1.5}
+.portal-participants small {display:block;color:var(--muted);font-size:.625rem;overflow-wrap:anywhere}
+.portal-participants .portal-presence {font-size:.625rem;gap:.3rem;line-height:1.5;white-space:normal}
+.portal-server-note {display:flex;gap:.6rem;align-items:flex-start;background:var(--blue-soft);border:1px solid var(--border);border-radius:.55rem;font-size:.75rem;line-height:1.65;margin:1rem 0;padding:.75rem}
+.portal-server-note .icon {width:1rem;height:1rem;flex-shrink:0;margin-top:.1rem;color:var(--primary)}
+@media (max-width:1100px) {
+ .portal-workspace-shell {grid-template-columns:minmax(10rem,21%) minmax(0,1fr);gap:1rem}
+ .portal-account-sidebar {padding:.75rem .5rem}
+ .portal-account-sidebar .button {font-size:.75rem;padding:.6rem .4rem}
+ .portal-class-overview-body {grid-template-columns:minmax(0,1fr)}
+ .portal-overview-scene {min-height:10rem;max-height:12rem}
+ .portal-class-facts {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem}
+ .portal-class-facts > div {display:block;padding:.5rem}
+ .portal-class-facts dd {text-align:left;margin-top:.35rem}
+ .portal-class-access,.portal-class-management {grid-template-columns:minmax(0,1fr)}
+ .portal-workspace-main .portal-join-panel {grid-template-columns:minmax(0,1fr)}
+ .portal-workspace-main .portal-join-panel form {grid-template-columns:minmax(0,1fr) auto}
+ .portal-workspace-main .portal-join-panel .portal-submit {width:auto}
+ .portal-student-room-grid {grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)}
+ .portal-student-room-scene {height:16rem}
+ .portal-participants li > .portal-presence {flex-basis:100%;margin-left:2.65rem}
+ .portal-room-results {grid-template-columns:minmax(0,1fr)}
+ .portal-results-scene {min-height:12rem;max-height:16rem}
+}
+@media (max-width:800px) {
+ .portal-workspace-shell {grid-template-columns:minmax(0,1fr);gap:1.5rem;padding-top:.75rem}
+ .portal-account-sidebar {position:static;min-height:0;display:grid;grid-template-columns:minmax(0,1fr);gap:.75rem;padding:.75rem}
+ .portal-account-sidebar .portal-profile-link {padding:.5rem .65rem}
+ .portal-account-sidebar .portal-profile-link small {display:inline;margin-right:.5rem}
+ .portal-account-sidebar .portal-role-badge {margin-top:.15rem}
+ .portal-account-sidebar nav {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.4rem}
+ .portal-account-sidebar .button {font-size:.75rem;min-height:44px;padding:.6rem}
+ .portal-account-sidebar-footer {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin:0;padding:.5rem 0 0;border-top:1px solid var(--border)}
+ .portal-workspace-main .portal-page-heading,.portal-workspace-main .portal-room-heading {display:flex;flex-direction:row;align-items:flex-start;gap:1rem}
+ .portal-workspace-main .portal-page-heading h1,.portal-workspace-main .portal-room-heading h1 {font-size:1.75rem}
+ .portal-workspace-main .portal-page-heading p,.portal-workspace-main .portal-room-heading p {font-size:.8125rem}
+ .portal-dashboard-heading {flex-wrap:wrap;gap:.75rem;margin-bottom:1rem}
+ .portal-dashboard-heading > .portal-page-heading {flex-basis:100%}
+ .portal-teacher-layout {grid-template-columns:minmax(0,1fr)}
+ .portal-class-list {max-height:18rem}
+ .portal-class-overview {min-height:0}
+ .portal-class-overview-body {grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}
+ .portal-class-facts {display:block}
+ .portal-class-facts > div {display:block;border-bottom:1px solid var(--border)}
+ .portal-class-overview .portal-panel-title {flex-wrap:wrap}
+ .portal-class-overview .portal-panel-title h2 {font-size:1.4rem}
+ .portal-class-workspace {margin-top:2rem}
+ .portal-class-invite .portal-inline-form-fields,.portal-class-rooms .portal-room-form .portal-inline-form-fields {grid-template-columns:minmax(0,1fr)}
+ .portal-class-invite .portal-inline-form-fields > .button,.portal-class-rooms .portal-inline-form-fields > .button {margin-top:.5rem;justify-content:center;width:100%;margin-bottom:0}
+ .portal-workspace-main .portal-room-live-hero {grid-template-columns:minmax(0,1fr)}
+ .portal-room-scene {min-height:11rem;max-height:13rem}
+ .portal-workspace-main .portal-pin-panel > div:first-child {flex-basis:100%}
+ .portal-workspace-main .portal-pin-panel input {font-size:1.7rem}
+ .portal-workspace-main .portal-room-heading > div {width:auto}
+ .portal-workspace-main .portal-room-heading {flex-wrap:wrap}
+ .portal-workspace-main .portal-room-heading > .portal-badge {font-size:.6875rem}
+ .portal-workspace-main .portal-live-board .portal-panel-title {gap:.75rem}
+ .portal-workspace-main .portal-board-counts {border:0;padding:0;width:100%;gap:1rem}
+ .portal-workspace-main .portal-room-action-row {gap:.75rem}
+ .portal-workspace-main .portal-control-buttons {width:100%;flex-wrap:wrap}
+ .portal-workspace-main .portal-control-buttons > .button {flex:1}
+ .portal-student-welcome {grid-template-columns:minmax(0,1fr) 7rem;gap:.5rem}
+ .portal-student-welcome-art {height:8rem}
+ .portal-workspace-main .portal-join-panel {grid-template-columns:minmax(0,1fr);gap:.75rem}
+ .portal-workspace-main .portal-join-panel form {grid-template-columns:minmax(0,1fr)}
+ .portal-workspace-main .portal-join-panel .portal-submit {margin:0;width:100%;justify-content:center}
+ .portal-workspace-main .portal-join-panel .portal-field {grid-row:auto}
+ .portal-workspace-main .portal-student-top {grid-template-columns:minmax(0,1fr);gap:1rem}
+ .portal-workspace-main .portal-student-top .portal-invites li > div {flex-basis:8rem}
+ .portal-student-top .portal-invites .portal-invite-actions {flex-basis:100%;margin:0}
+ .portal-student-rooms .portal-room-grid {grid-template-columns:minmax(0,1fr)}
+ .portal-student-room-grid {grid-template-columns:minmax(0,1fr)}
+ .portal-student-room-scene {height:15rem}
+ .portal-student-start-row {align-items:stretch}
+ .portal-student-start-row > .button {width:100%}
+ .portal-workspace-main .portal-student-start-row .portal-waiting-label {margin:0;flex-basis:100%;width:100%}
+ .portal-participants li > .portal-presence {flex-basis:auto;margin-left:0}
+ .portal-workspace-main .portal-module-card {display:block}
+ .portal-module-card .portal-panel-title > .button {width:100%;justify-content:center;white-space:normal}
+ .portal-workspace-main .portal-close-confirmation > div:last-child {flex-direction:column}
+}
+@media (max-width:400px) {
+ .portal-workspace-main .portal-panel {padding:.85rem}
+ .portal-account-sidebar .button {font-size:.6875rem;padding:.5rem;gap:.4rem}
+ .portal-account-sidebar .button .icon {width:1rem;height:1rem}
+ .portal-student-welcome {grid-template-columns:minmax(0,1fr)}
+ .portal-student-welcome-art {height:7rem;justify-self:end;width:12rem;margin-top:-.5rem}
+ .portal-workspace-main .portal-page-heading h1,.portal-workspace-main .portal-room-heading h1 {font-size:1.6rem}
+ .portal-class-overview-body {grid-template-columns:minmax(0,1fr)}
+ .portal-overview-scene {min-height:12rem;max-height:14rem}
+ .portal-class-facts {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem}
+ .portal-workspace-main .portal-pagination > div {gap:.5rem}
+ .portal-workspace-main .portal-room-action-row > div:first-child {min-width:0}
+ .portal-workspace-main .portal-pin-actions .button {flex:1;white-space:normal}
+}
+@media (forced-colors:active) {
+ .portal-account-sidebar .button[aria-current="page"],.portal-section-link,.portal-class-room-link {border:1px solid Highlight}
+ .portal-role-badge,.portal-record-status,.portal-player-status {border:1px solid CanvasText}
+ .portal-question-progress progress {border:1px solid CanvasText}
+}
+@media print {
+ .portal-account-sidebar,.portal-section-link,.portal-class-room-link {display:none!important}
+ .portal-workspace-shell,.portal-room-results {display:block}
+}
+.portal-account-sidebar .button[data-block-while-busy] {padding-right:.65rem}
+.portal-account-sidebar .button[aria-busy="true"] {padding-right:2rem}
+.portal-workspace-main .portal-roster-table .button[data-block-while-busy] {padding:.5rem .6rem}
+.portal-workspace-main .portal-roster-table .button[aria-busy="true"] {padding-right:2rem}
+
+/* Approved account compositions. Shared colours and controls retain their canonical owners. */
+.portal-account-entry{grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);align-items:stretch;gap:1.75rem;padding:0 0 1.5rem}
+.portal-account-entry>*{min-width:0}
+.portal-account-entry .portal-auth-intro{position:relative;display:grid;grid-template-columns:minmax(0,1fr);align-content:center;min-height:34rem;padding:2rem;border-radius:var(--radius-lg);background:var(--blue-soft);overflow:hidden}
+.portal-account-entry .portal-auth-editorial{position:relative;z-index:1;align-self:start;max-width:23rem}
+.portal-account-entry .portal-auth-intro h1{max-width:10ch;margin:0 0 1rem;color:var(--ink);font-size:clamp(2.5rem,3.9vw,3.5rem);line-height:1.07;letter-spacing:-.04em}
+.portal-account-entry .portal-auth-editorial>p{max-width:24rem;margin:0;color:var(--ink);font-size:1rem;line-height:1.6}
+.portal-account-entry .portal-auth-scene{position:relative;display:block;align-self:end;justify-self:end;width:min(100%,27rem);height:auto;min-height:0;margin:1rem -1rem -1rem 0}
+.portal-account-entry .portal-auth-card{align-self:start;padding:1.5rem;border-radius:var(--radius-lg);box-shadow:none}
+.portal-account-entry .portal-auth-heading h2{margin:0 0 .5rem;color:var(--ink);font-size:1.75rem;line-height:1.2;letter-spacing:-.025em}
+.portal-account-entry .portal-auth-heading>p{margin:0 0 1.25rem;color:var(--muted);font-size:.875rem;line-height:1.55}
+.portal-account-entry .portal-auth-primary>form{display:grid;gap:.75rem}
+.portal-account-entry .portal-field{margin:0}
+.portal-account-entry .portal-field label{margin-bottom:.4rem;font-size:.875rem}
+.portal-account-entry .portal-field input{min-height:44px;border-radius:var(--radius-sm)}
+.portal-account-entry :is(.portal-field-help,.portal-field-error){min-height:0;font-size:.75rem;line-height:1.5}
+.portal-account-entry :is(.portal-field-help,.portal-field-error,.portal-form-error):empty{display:none;padding:0;margin:0}
+.portal-account-entry .portal-auth-submit .button{min-height:44px;justify-content:center;font-size:.875rem}
+.portal-account-entry .portal-auth-submit .icon{margin-left:auto}
+.portal-account-entry .portal-auth-links{gap:0 .75rem;align-items:start}
+.portal-account-entry .portal-auth-links .portal-text-button{text-align:left;padding-block:.6rem;font-size:.8125rem}
+.portal-account-entry .portal-auth-secondary{margin-top:.5rem}
+.portal-account-entry .portal-auth-modes{gap:.5rem;margin:0;padding:0;border:0;background:transparent;border-radius:0}
+.portal-account-entry .portal-auth-modes button{min-height:44px;border:1px solid var(--primary);border-radius:var(--radius-sm);color:var(--primary);font-size:.875rem;background:var(--surface)}
+.portal-account-entry .portal-auth-modes button[aria-pressed="true"]{border-color:var(--border);background:var(--bg);color:var(--ink)}
+.portal-account-entry .portal-auth-guest{display:flex;justify-content:center;border-top:1px solid var(--border);padding-top:.5rem;margin-top:1rem}
+.portal-account-entry .portal-auth-guest .button{color:var(--primary);min-height:44px;background:transparent;border-color:transparent}
+.portal-account-entry .portal-account-note{margin:1rem 0 0;padding-top:.75rem;font-size:.75rem;line-height:1.5}
+.portal-account-entry .portal-role-fieldset{margin:0}
+.portal-account-entry .portal-role-fieldset legend{font-size:.875rem;margin-bottom:.4rem}
+.portal-account-entry .portal-role-options{gap:.75rem}
+.portal-account-entry .portal-role-options label>span{min-height:44px;grid-template-columns:1.25rem minmax(0,1fr);gap:.15rem .4rem;padding:.5rem .75rem;border-radius:var(--radius-sm)}
+.portal-account-entry .portal-role-options b{font-size:.875rem}
+.portal-account-entry .portal-role-options small{font-size:.6875rem}
+.portal-account-entry .portal-role-options .icon{width:1.125rem;height:1.125rem}
+.portal-account-entry[data-auth-mode="signup"]{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.portal-account-entry[data-auth-mode="signup"] .portal-auth-intro{min-height:40rem}
+.portal-account-entry.portal-auth-recovery{grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr);gap:1.5rem}
+.portal-account-entry.portal-auth-recovery .portal-auth-intro{min-height:35rem;padding:1.5rem}
+.portal-account-entry.portal-auth-recovery .portal-auth-intro h1{font-size:clamp(2.1rem,3.2vw,3rem)}
+.portal-account-entry.portal-auth-recovery .portal-auth-editorial>p{font-size:.875rem}
+.portal-account-entry.portal-auth-recovery .portal-auth-card{align-self:stretch}
+.portal-recovery-steps{display:grid;grid-template-columns:1fr 1fr;list-style:none;padding:0;margin:1.25rem 0 1.5rem;gap:1rem}
+.portal-recovery-steps li{position:relative;display:grid;justify-items:center;align-content:start;gap:.5rem;text-align:center;color:var(--muted);font-size:.75rem;line-height:1.35}
+.portal-recovery-steps li:first-child::after{content:"";position:absolute;top:.8125rem;height:2px;left:calc(50% + 1rem);width:calc(100% - 1rem);background:var(--border)}
+.portal-recovery-steps li>span{position:relative;z-index:1;display:grid;place-items:center;width:1.75rem;height:1.75rem;min-width:1.75rem;border:1px solid var(--border);border-radius:50%;background:var(--surface);font-weight:700}
+.portal-recovery-steps .is-current{color:var(--ink)}
+.portal-recovery-steps .is-current>span{background:var(--portal-primary-fill);border-color:var(--portal-primary-fill);color:var(--portal-on-primary)}
+.portal-recovery-steps .is-complete>span{background:var(--mint-soft);border-color:var(--success);color:var(--success)}
+.portal-recovery-steps .is-complete::after{background:var(--success)}
+.portal-recovery-steps .icon{width:1rem;height:1rem}
+.portal-auth-recovery .portal-auth-form-layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);align-items:start;gap:1.25rem}
+.portal-recovery-verified{display:flex;align-items:center;gap:.5rem;margin:0 0 1rem;padding:.75rem;background:var(--mint-soft);color:var(--success);border:1px solid var(--success);border-radius:var(--radius-sm);font-size:.8125rem;line-height:1.5}
+.portal-recovery-verified .icon{width:1.25rem;height:1.25rem;flex-shrink:0}
+.portal-recovery-help{min-width:0;padding:1rem;background:var(--blue-soft);border:1px solid var(--border);border-radius:var(--radius)}
+.portal-recovery-help h3{margin:0 0 .5rem;font-size:1rem;line-height:1.3}
+.portal-recovery-help p{margin:.5rem 0 0;font-size:.8125rem;line-height:1.6;color:var(--ink)}
+.portal-recovery-help .portal-security-note{color:var(--muted);font-size:.75rem}
+.portal-auth-recovery .portal-email-summary{margin:1rem 0}
+.portal-auth-recovery .portal-auth-primary>.portal-inline-info{margin-top:0}
+
+.portal-profile-workspace,.portal-security-workspace{min-width:0}
+.portal-account-heading-icon{display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;margin-right:.5rem;color:var(--ink)}
+.portal-account-heading-icon .icon{width:1.5rem;height:1.5rem}
+.portal-workspace-main .portal-account-shortcuts{display:none}
+.portal-profile-workspace .portal-profile-layout{grid-template-columns:minmax(0,2.2fr) minmax(0,1fr);gap:1.25rem;margin-top:1rem;align-items:start}
+.portal-profile-workspace .portal-profile-editor{padding:1.25rem}
+.portal-profile-workspace .portal-profile-editor form{display:grid;gap:1rem;min-width:0}
+.portal-profile-workspace .portal-avatar-options{display:block;margin:0 0 .25rem;padding:0;border:0}
+.portal-profile-workspace .portal-avatar-options legend{font-size:.875rem;margin-bottom:.75rem}
+.portal-profile-workspace .portal-avatar-strip{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:.5rem}
+.portal-profile-workspace .portal-avatar-options label{position:relative;gap:.25rem;padding:.5rem .2rem;min-height:70px;min-width:0;border-radius:var(--radius-sm);font-size:.6875rem}
+.portal-profile-workspace .portal-avatar-options input{position:absolute;top:.25rem;right:.25rem;width:.875rem;height:.875rem;margin:0}
+.portal-profile-workspace .portal-avatar-options .portal-avatar{width:2.75rem;height:2.75rem;border-radius:var(--radius-sm);font-size:1.25rem}
+.portal-profile-workspace .portal-avatar-label{max-width:100%;overflow-wrap:anywhere;text-align:center;line-height:1.3}
+.portal-profile-workspace .portal-profile-editor .portal-field{display:grid;grid-template-columns:minmax(6.5rem,.42fr) minmax(0,1fr);align-items:center;gap:.25rem 1rem;margin:0}
+.portal-profile-workspace .portal-profile-editor .portal-field>label{margin:0;font-size:.8125rem}
+.portal-profile-workspace .portal-profile-editor .portal-field :is(.portal-field-help,.portal-field-error){grid-column:2;min-height:0;padding:0;font-size:.75rem}
+.portal-profile-workspace :is(.portal-field-help,.portal-field-error,.portal-form-error):empty{display:none;min-height:0;padding:0;margin:0}
+.portal-profile-workspace .portal-profile-editor .portal-field input{min-height:44px;border-radius:var(--radius-sm)}
+.portal-profile-workspace .portal-profile-facts{display:grid;gap:.75rem;margin:0}
+.portal-profile-workspace .portal-profile-facts>div{display:grid;grid-template-columns:minmax(6.5rem,.42fr) minmax(0,1fr);align-items:start;gap:1rem;min-width:0}
+.portal-profile-workspace .portal-profile-facts dt{margin:0;padding-top:.65rem;font-size:.8125rem;color:var(--ink)}
+.portal-profile-workspace .portal-profile-facts dd{min-width:0;margin:0;color:var(--ink);font-size:.875rem}
+.portal-profile-workspace .portal-profile-readonly{display:block;min-height:44px;padding:.65rem .75rem;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);line-height:1.5;overflow-wrap:anywhere}
+.portal-profile-workspace .portal-profile-facts small{display:block;margin-top:.25rem;font-size:.75rem;line-height:1.5;color:var(--muted)}
+.portal-profile-workspace .portal-profile-identity-state{display:inline-flex;align-items:center;min-height:44px;color:var(--muted)}
+.portal-profile-workspace .portal-profile-class-details{margin-top:.25rem}
+.portal-profile-workspace .portal-profile-class-details summary{min-height:44px;padding-block:.65rem;cursor:pointer;font-size:.75rem;color:var(--primary)}
+.portal-profile-workspace .portal-profile-classes{margin:0}
+.portal-profile-workspace .portal-profile-classes li{gap:.4rem;font-size:.8125rem}
+.portal-profile-workspace .portal-profile-actions{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;padding-top:.25rem}
+.portal-profile-workspace .portal-profile-actions .button{min-height:44px}
+.portal-profile-workspace .portal-profile-actions .button-quiet{border:1px solid var(--border);background:var(--surface)}
+.portal-profile-workspace .portal-profile-preview-card{padding:1.25rem;background:var(--blue-soft)}
+.portal-profile-workspace .portal-profile-preview-card h2{margin:0 0 .4rem;font-size:1.125rem;line-height:1.35;letter-spacing:0}
+.portal-profile-workspace .portal-profile-preview-card>p{margin:0;font-size:.75rem;line-height:1.5}
+.portal-profile-workspace .portal-profile-preview{display:flex;flex-direction:column;align-items:center;gap:.75rem;min-height:17rem;padding:1.5rem .75rem;margin:1rem 0 0;background:var(--surface);text-align:center;border-radius:var(--radius)}
+.portal-profile-workspace .portal-profile-preview>.portal-avatar{width:6rem;height:6rem;border-radius:50%;font-size:2.5rem;flex-shrink:0}
+.portal-profile-workspace [data-profile-preview-name]{font-size:1.125rem;line-height:1.35;max-width:100%;color:var(--ink)}
+.portal-profile-workspace [data-profile-preview-state]{color:var(--muted);font-size:.75rem;line-height:1.5;max-width:100%}
+.portal-profile-workspace .portal-profile-role-chip,.portal-profile-workspace .portal-profile-preview-classes li{padding:.3rem .65rem;background:var(--blue-soft);border:1px solid var(--border);border-radius:var(--radius-sm);font-size:.75rem;line-height:1.5;overflow-wrap:anywhere}
+.portal-profile-workspace .portal-profile-preview-classes{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;list-style:none;margin:0;padding:0;max-width:100%}
+.portal-profile-workspace .portal-profile-preview-empty{font-size:.75rem;color:var(--muted)}
+.portal-profile-workspace .portal-profile-confirm{padding:1rem}
+.portal-profile-workspace .portal-profile-confirm h2{font-size:1.125rem}
+
+.portal-security-workspace .portal-security-layout{grid-template-columns:minmax(0,1fr);gap:1.25rem;margin-top:1rem}
+.portal-security-workspace .portal-password-panel{padding:1.25rem}
+.portal-security-workspace .portal-password-panel .portal-panel-title{margin-bottom:1rem}
+.portal-security-workspace .portal-password-panel h2{display:flex;align-items:center;gap:.5rem;font-size:1.125rem;letter-spacing:0}
+.portal-security-workspace .portal-password-panel h2>.icon{width:1.25rem;height:1.25rem;flex-shrink:0;color:var(--primary)}
+.portal-security-workspace .portal-password-panel form{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:.75rem 1.25rem}
+.portal-security-workspace .portal-security-fields{display:grid;gap:.625rem;min-width:0}
+.portal-security-workspace .portal-security-fields .portal-field{display:grid;grid-template-columns:minmax(8rem,.48fr) minmax(0,1fr);gap:.2rem .75rem;align-items:center;margin:0}
+.portal-security-workspace .portal-security-fields label{margin:0;font-size:.8125rem}
+.portal-security-workspace .portal-security-fields input{min-height:44px;border-radius:var(--radius-sm)}
+.portal-security-workspace .portal-security-fields :is(.portal-field-help,.portal-field-error){grid-column:2;min-height:0;padding:0;font-size:.75rem}
+.portal-security-workspace :is(.portal-field-help,.portal-field-error,.portal-form-error):empty{display:none;padding:0;margin:0}
+.portal-security-workspace .portal-security-submit{align-self:end;margin-bottom:.125rem;max-width:15rem}
+.portal-security-workspace .portal-security-submit .button{white-space:normal;min-height:44px;justify-content:center}
+.portal-security-workspace .portal-security-layout form>.portal-form-error,.portal-security-workspace .portal-security-form-note{grid-column:1/-1}
+.portal-security-workspace .portal-security-form-note{margin-top:.25rem;font-size:.75rem;line-height:1.5}
+.portal-security-workspace .portal-security-form-note .button{padding:.25rem .5rem;font-size:.75rem}
+.portal-security-session-workspace{min-width:0;border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--surface);overflow:hidden}
+.portal-security-session-workspace .portal-active-sessions{border:0;border-radius:0;margin:0;padding:1.25rem;gap:.75rem}
+.portal-security-session-workspace .portal-active-sessions h2{font-size:1.125rem;letter-spacing:0}
+.portal-security-session-workspace .portal-active-sessions .portal-panel-title{align-items:start;gap:1rem}
+.portal-security-session-workspace .portal-active-sessions .portal-panel-title p{font-size:.75rem;line-height:1.5;margin-top:.35rem}
+.portal-security-session-workspace .portal-security-note{font-size:.75rem;line-height:1.5}
+.portal-security-session-workspace .portal-session-list{gap:.5rem}
+.portal-security-session-workspace .portal-session-row{display:grid;grid-template-columns:2rem minmax(0,1fr) auto;align-items:center;gap:.75rem;padding:.75rem;border-radius:var(--radius-sm)}
+.portal-security-session-workspace .portal-session-row.is-current{background:var(--mint-soft);border-color:var(--success)}
+.portal-security-session-workspace .portal-session-device{display:grid;place-items:center;color:var(--ink)}
+.portal-security-session-workspace .portal-session-device .icon{width:1.5rem;height:1.5rem}
+.portal-security-session-workspace .portal-session-description{min-width:0}
+.portal-security-session-workspace .portal-session-heading{justify-content:start;gap:.5rem;font-size:.8125rem}
+.portal-security-session-workspace .portal-session-heading b{overflow-wrap:anywhere}
+.portal-security-session-workspace .portal-session-current{background:var(--surface);color:var(--success);border:1px solid var(--success);font-size:.6875rem;padding:.2rem .5rem;line-height:1.35}
+.portal-security-session-workspace .portal-session-state{font-size:.75rem;line-height:1.5;color:var(--muted);margin-top:.2rem}
+.portal-security-session-workspace .portal-session-row dl{display:block;margin:0;min-width:0;font-size:.75rem;line-height:1.5}
+.portal-security-session-workspace .portal-session-row dt{color:var(--muted);font-size:.6875rem}
+.portal-security-session-workspace .portal-session-row dd{margin:0;overflow-wrap:anywhere}
+.portal-security-session-workspace .portal-session-actions{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem}
+.portal-security-session-workspace .portal-session-actions .button{min-height:44px;white-space:normal}
+.portal-security-session-workspace :is(.portal-session-actions,.portal-security-global)>.button-danger{color:var(--danger);border-color:var(--danger);background:var(--surface)}
+.portal-security-session-workspace :is(.portal-session-actions,.portal-security-global)>.button-danger:hover:not(:disabled){background:var(--red-soft)}
+.portal-security-session-workspace .portal-session-scope{font-size:.75rem;color:var(--muted);min-width:0}
+.portal-security-session-workspace .portal-session-scope summary{min-height:44px;padding-block:.65rem;cursor:pointer;color:var(--primary)}
+.portal-security-session-workspace .portal-session-scope p{padding-bottom:.5rem;line-height:1.6}
+.portal-security-session-workspace .portal-security-global{display:flex;align-items:start;justify-content:space-between;flex-wrap:wrap;gap:.75rem 1.25rem;padding:1rem 1.25rem;border-top:1px solid var(--border)}
+.portal-security-session-workspace .portal-security-global>div:first-child{min-width:0;flex:1 1 20rem}
+.portal-security-session-workspace .portal-security-global h3{margin:0 0 .35rem;font-size:1rem}
+.portal-security-session-workspace .portal-security-global>div>p{margin:0;font-size:.75rem;line-height:1.5;color:var(--muted)}
+.portal-security-session-workspace .portal-security-global>.button{min-height:44px;white-space:normal}
+.portal-security-session-workspace .portal-security-confirm{flex-basis:100%;margin:0}
+
+@media(min-width:1100px){
+  .portal-account-entry:not(.portal-auth-recovery) .portal-auth-intro{grid-template-columns:minmax(0,1fr) minmax(0,.85fr);align-items:center;min-height:35rem}
+  .portal-account-entry:not(.portal-auth-recovery) .portal-auth-editorial{align-self:center;min-width:0;z-index:2}
+  .portal-account-entry:not(.portal-auth-recovery) .portal-auth-intro h1{font-size:clamp(2.5rem,3.5vw,3.25rem)}
+  .portal-account-entry:not(.portal-auth-recovery) .portal-auth-scene{width:185%;max-width:none;margin:4rem -1.5rem 0 -5rem;align-self:end}
+}
+@media(max-width:1100px){
+  .portal-account-entry{gap:1.25rem}
+  .portal-account-entry .portal-auth-intro{padding:1.5rem;min-height:34rem}
+  .portal-account-entry .portal-auth-intro h1{font-size:2.75rem}
+  .portal-auth-recovery .portal-auth-form-layout{grid-template-columns:minmax(0,1fr)}
+  .portal-recovery-help{margin-top:.25rem}
+  .portal-profile-workspace .portal-profile-layout{grid-template-columns:minmax(0,1.8fr) minmax(0,1fr)}
+  .portal-profile-workspace .portal-avatar-strip{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .portal-security-workspace .portal-password-panel form{grid-template-columns:minmax(0,1fr)}
+  .portal-security-workspace .portal-security-submit{justify-self:end;max-width:none}
+}
+@media(max-width:800px){
+  .portal-account-entry,.portal-account-entry[data-auth-mode="signup"],.portal-account-entry.portal-auth-recovery{grid-template-columns:minmax(0,1fr);max-width:none;gap:1rem;margin:0}
+  .portal-account-entry .portal-auth-intro,.portal-account-entry[data-auth-mode="signup"] .portal-auth-intro,.portal-account-entry.portal-auth-recovery .portal-auth-intro{grid-template-columns:minmax(0,1fr) minmax(0,.8fr);align-items:center;min-height:15rem;padding:1.25rem}
+  .portal-account-entry .portal-auth-intro h1,.portal-account-entry.portal-auth-recovery .portal-auth-intro h1{font-size:2.25rem;margin-bottom:.75rem}
+  .portal-account-entry .portal-auth-editorial>p{font-size:.8125rem}
+  .portal-account-entry .portal-auth-scene{width:145%;max-width:none;margin:1rem -1rem 0 -3rem;align-self:end}
+  .portal-account-entry .portal-auth-card{padding:1.25rem}
+  .portal-account-entry .portal-auth-heading h2{font-size:1.5rem}
+  .portal-profile-workspace .portal-profile-layout{grid-template-columns:minmax(0,1fr)}
+  .portal-profile-workspace .portal-profile-preview-card{order:2}
+  .portal-profile-workspace .portal-avatar-strip{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .portal-profile-workspace .portal-profile-preview{min-height:0;padding:1.25rem}
+}
+@media(max-width:540px){
+  .portal-account-entry .portal-auth-intro,.portal-account-entry[data-auth-mode="signup"] .portal-auth-intro,.portal-account-entry.portal-auth-recovery .portal-auth-intro{grid-template-columns:minmax(0,1fr) minmax(0,.65fr);min-height:14rem;padding:1rem}
+  .portal-account-entry .portal-auth-intro h1,.portal-account-entry.portal-auth-recovery .portal-auth-intro h1{font-size:1.875rem;letter-spacing:-.035em;max-width:11ch}
+  .portal-account-entry .portal-auth-editorial>p{font-size:.75rem;line-height:1.5}
+  .portal-account-entry .portal-auth-scene{width:190%;margin:3rem -2rem 0 -4rem}
+  .portal-account-entry .portal-auth-card{padding:1rem}
+  .portal-account-entry .portal-auth-heading>p{font-size:.8125rem}
+  .portal-account-entry .portal-role-options label>span{padding:.5rem}
+  .portal-account-entry .portal-role-options small{font-size:.6875rem}
+  .portal-account-entry .portal-auth-modes{flex-wrap:wrap}
+  .portal-account-entry .portal-auth-modes button{flex:1 1 7rem}
+  .portal-profile-workspace .portal-profile-editor,.portal-profile-workspace .portal-profile-preview-card,.portal-security-workspace .portal-password-panel,.portal-security-session-workspace .portal-active-sessions{padding:1rem}
+  .portal-profile-workspace .portal-avatar-strip{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .portal-profile-workspace .portal-profile-editor .portal-field,.portal-profile-workspace .portal-profile-facts>div,.portal-security-workspace .portal-security-fields .portal-field{grid-template-columns:minmax(0,1fr);gap:.35rem}
+  .portal-profile-workspace .portal-profile-editor .portal-field :is(.portal-field-help,.portal-field-error),.portal-security-workspace .portal-security-fields :is(.portal-field-help,.portal-field-error){grid-column:1}
+  .portal-profile-workspace .portal-profile-facts dt{padding-top:0}
+  .portal-profile-workspace .portal-profile-facts{gap:1rem}
+  .portal-profile-workspace .portal-profile-actions>.button{flex:1 1 8rem;white-space:normal}
+  .portal-security-workspace .portal-security-submit,.portal-security-workspace .portal-security-submit>.button{width:100%}
+  .portal-security-session-workspace .portal-session-row{grid-template-columns:1.5rem minmax(0,1fr);gap:.5rem;padding:.75rem}
+  .portal-security-session-workspace .portal-session-row dl{grid-column:2}
+  .portal-security-session-workspace .portal-session-actions>.button{flex:1 1 10rem}
+  .portal-security-session-workspace .portal-security-global{padding:1rem}
+}
+@media(forced-colors:active){
+  .portal-account-entry .portal-auth-intro,.portal-profile-workspace .portal-profile-preview-card{border:1px solid CanvasText}
+  .portal-recovery-verified,.portal-security-session-workspace .portal-session-row.is-current{border:2px solid Highlight}
+}
+
+/* Keep the editorial copy and decorative solids in separate rows at every size. */
+.portal-account-entry .portal-auth-intro,.portal-account-entry:not(.portal-auth-recovery) .portal-auth-intro,.portal-account-entry[data-auth-mode="signup"] .portal-auth-intro,.portal-account-entry.portal-auth-recovery .portal-auth-intro{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);align-content:start;align-items:start;min-height:0;padding:var(--space-6);gap:var(--space-4)}
+.portal-account-entry .portal-auth-editorial,.portal-account-entry:not(.portal-auth-recovery) .portal-auth-editorial{max-width:none;align-self:start}
+.portal-account-entry .portal-auth-intro h1,.portal-account-entry:not(.portal-auth-recovery) .portal-auth-intro h1,.portal-account-entry.portal-auth-recovery .portal-auth-intro h1{max-width:15ch;font-size:calc(var(--text-title)*var(--text-scale,1));word-break:normal;overflow-wrap:normal;line-height:1.15;letter-spacing:-.03em;margin:0 0 var(--space-3)}
+.portal-account-entry .portal-auth-editorial>p,.portal-account-entry.portal-auth-recovery .portal-auth-editorial>p{max-width:42ch;font-size:calc(var(--text-small)*var(--text-scale,1))}
+.portal-account-entry .portal-auth-scene,.portal-account-entry:not(.portal-auth-recovery) .portal-auth-scene{width:100%;max-width:25rem;height:auto;max-height:20rem;align-self:center;justify-self:center;margin:0}
+@media(max-width:800px){.portal-account-entry .portal-auth-intro,.portal-account-entry:not(.portal-auth-recovery) .portal-auth-intro{grid-template-columns:minmax(0,1fr);padding:var(--space-4);gap:var(--space-3)}.portal-account-entry .portal-auth-scene,.portal-account-entry:not(.portal-auth-recovery) .portal-auth-scene{max-width:15rem;max-height:11rem}.portal-account-entry .portal-auth-intro h1,.portal-account-entry:not(.portal-auth-recovery) .portal-auth-intro h1{font-size:calc(var(--text-heading)*var(--text-scale,1))}}
+
+/* Bound decorative scenes independently of the entry page's generic SVG sizing. */
+.portal-class-access,.portal-workspace-main .portal-room-live-hero {align-items:start}
+.portal-workspace-main .portal-room-scene {height:12rem;min-height:0;max-height:12rem}
+.portal-workspace-main .portal-student-room-scene {height:16rem;min-height:0;max-height:16rem}
+.portal-workspace-main .portal-student-welcome-art {height:6rem;min-height:0;max-height:6rem}
+.portal-workspace-main .portal-score-table th,.portal-workspace-main .portal-score-table td {padding:.5rem .6rem}
+.portal-workspace-main .portal-class-invite .portal-pagination {min-height:0;margin-top:.35rem}
+.portal-workspace-main .portal-student-top .portal-invites li > .portal-invite-actions {flex:0 1 auto;gap:.35rem}
+.portal-workspace-main .portal-invite-actions .button[data-block-while-busy] {font-size:.6875rem;padding:.5rem .65rem;min-height:44px}
+.portal-workspace-main .portal-invite-actions .button[aria-busy="true"] {padding-right:2rem}
+@media(max-width:800px){
+ .portal-workspace-main .portal-student-room-scene {height:15rem;max-height:15rem}
+ .portal-workspace-main .portal-student-top .portal-invites li > .portal-invite-actions {flex:1 1 100%;justify-content:flex-end}
+ .portal-workspace-main .portal-student-welcome-art {height:6rem;max-height:6rem}
+}
+.portal-workspace-main .geometry-scene {overflow:hidden}
+.portal-roster-column {display:grid;gap:1rem;min-width:0}
+.portal-pending-panel .portal-invites {margin:0}
+.portal-pending-panel .portal-invites h3 {font-size:1rem;margin:0 0 .75rem}
+.portal-pending-panel .portal-invites li {gap:.6rem;padding:.65rem 0;flex-wrap:wrap}
+.portal-pending-panel .portal-invites li > span {flex:1;min-width:0;font-size:.75rem;overflow-wrap:anywhere}
+.portal-pending-panel .portal-invites li b {font-size:.8125rem}
+.portal-pending-panel .portal-invites .button {font-size:.6875rem;padding:.5rem .65rem;min-height:44px}

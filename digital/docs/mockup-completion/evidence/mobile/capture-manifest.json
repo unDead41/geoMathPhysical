@@ -1,0 +1,1221 @@
+{
+  "label": "final-canonical-mobile-vendored",
+  "capturedAt": "2026-11-04T06:39:28.795Z",
+  "sourceCommit": "ef697c86a5bfdf5a5658c3df92bce1d7f3f88652",
+  "sourceStatus": "M CHANGELOG.md\n M DESIGN.md\n M GeoDecoder_Digital_V1.html\n M GeoDecoder_Digital_V2.html\n M README.md\n M UX-CONTRACT.md\n M dist/GeoDecoder_Digital_V1.html\n M dist/GeoDecoder_Digital_V2.html\n M dist/account-copy.mjs\n M dist/active-sessions.mjs\n M dist/app.bundle.js\n M dist/app.mjs\n M dist/core.mjs\n M dist/entry-art.mjs\n M dist/entry-copy.mjs\n M dist/entry-ui.mjs\n M dist/entry.css\n M dist/help-copy.mjs\n M dist/help-support.css\n M dist/help-support.mjs\n M dist/i18n.mjs\n M dist/index.html\n M dist/module-copy.mjs\n M dist/portal-copy.mjs\n M dist/portal.css\n M dist/portal.mjs\n M dist/profile-view.mjs\n M dist/security-view.mjs\n M dist/style.css\n M dist/usability-ui.mjs\n M dist/usability.css\n M docs/design-system-evidence/GeoDecoder_Design_System.html\n M module/CHANGELOG.md\n M module/DESIGN.md\n M module/GeoDecoder_Modul_V1.html\n M module/README.md\n M module/package.json\n M module/src/accessibility.mjs\n M module/src/app.mjs\n M module/src/content.mjs\n M module/src/index.html\n M module/src/style.css\n M package-lock.json\n M package.json\n M tests/account-utilities-integration.test.mjs\n M tests/classroom-transport.fixture.mjs\n M tests/ease-browser-helpers.mjs\n M tests/help-support.browser.mjs\n M tests/portal-auth-validation.test.mjs\n M tests/solo-ui.test.mjs\n M tests/usability.browser.mjs\n M vendor/module-release.json\n M ../index.html\n?? dist/auth-view.mjs\n?? docs/mockup-completion/\n?? tests/mockup-account.test.mjs\n?? tests/mockup-notes.browser.mjs\n?? tests/mockup-review.README.md\n?? tests/mockup-review.capture.mjs\n?? tests/mockup-review.compare.py\n?? tests/mockup-review.fixture.mjs\n?? tests/portal-workspace.test.mjs\n?? vendor/module-v1.6.2.html\n?? ../docs/superpowers/plans/2026-11-04-geomath-mockup-completion.md",
+  "sourceEvidence": {
+    "bundleSha256": "fc07502c7846277a6da4c6e6cf1f50464792a4e9f974b75ba76606ad1eac8ab1",
+    "appSourceSha256": "51d4666e96c1b01f83d5b0fd41b5236620524b9c4c4ec33c23c45081006540fc",
+    "builtAppBundleSha256": "92ed8f577d146d403cb660b8b4cebc5ed72c171f15d38339bc2745196801023d",
+    "moduleMode": "packaged-vendor",
+    "moduleImport": "vendor/module-v1.6.2.html",
+    "moduleHtmlSha256": "7ddd5d60a25fbdf73c20f9f8e8fc0db4253e582fb50d17c944307b8f682066c4",
+    "moduleGitBlobSha1": "3af0469979d878c8e605d093db1be0c0649c6509",
+    "staticVisuals": {
+      "dist/design-tokens.css": "db9dbd721776728d14a03a5a9057f1c62ad30dbf37c477884f057198b2a5d145",
+      "dist/entry.css": "2704969f1f6c1ca785cebcf61b96aedc51bff42a5f1600921f882e02f68e002f",
+      "dist/foundation.css": "be2c5fd9ba363498d31008261d0d6cd81f9de55735483fee5d6d812f529ea8f0",
+      "dist/help-support.css": "15b61ccc115c5b95892f4913a36977410891c4f1040e958134199367a72cc40b",
+      "dist/index.html": "6e25ba38c30daa5cfaabd3c3600b7a5745abf63db3c38ebaca77dd7d992eb37b",
+      "dist/module-foundation.css": "087093fb4d74af106cc6f901f3bac20ea921153eb556d202f720e1906a6d551f",
+      "dist/portal.css": "d7c1933ab195b4c227e3ccdc8e100bcca1181b1f40f433c2660c9207f54731a6",
+      "dist/style.css": "1c25f41585ba4ae828a92e4f07324d9dfe66e0c3341c88a9ce480efa0732775a",
+      "dist/usability.css": "ce929047a11f0829e9897bd9a799c2b641d90e91ea3274dd8ee85462cbe34261"
+    }
+  },
+  "conceptCommit": "4d83561667cf74fbe5cd6144ce5e3e7f660a75cd",
+  "injectedModuleCss": null,
+  "environment": "Local real app/module/controllers, real PGlite classroom gateway + protocol 2 Duel handler, synthetic Auth and labelled synthetic records. No production requests.",
+  "profile": "mobile",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "requested": [
+    12,
+    13,
+    1,
+    6,
+    34,
+    5,
+    14,
+    17,
+    22,
+    25,
+    27,
+    29,
+    37,
+    39,
+    40
+  ],
+  "records": [
+    {
+      "screen": 12,
+      "name": "duel-play",
+      "file": "12-duel-play.png",
+      "fullFile": "12-duel-play-full.png",
+      "sha256": "6f46c80dd63b4477c9a8dd10e630674b51422414d4a89ba3ac6c899184219cf8",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "width": 380,
+        "height": 3385
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "language": "en",
+      "theme": "dark",
+      "textSize": "150",
+      "typography": {
+        "root": "16px",
+        "body": "24px",
+        "scale": "1.5",
+        "stageInstruction": "18px"
+      },
+      "title": "GeoMath \u2014 Duel in progress",
+      "actualScreen": "game",
+      "syntheticLabel": "SYNTHETIC QA ONLY \u2014 local PostgreSQL and Auth adapter",
+      "regions": {
+        "#solid-choices": {
+          "top": 2138.015625,
+          "bottom": 2522.265625,
+          "left": 31,
+          "right": 349,
+          "width": 318,
+          "height": 384.25
+        },
+        "#net-choices": {
+          "top": 2631.140625,
+          "bottom": 3015.390625,
+          "left": 31,
+          "right": 349,
+          "width": 318,
+          "height": 384.25
+        },
+        "#game-status": {
+          "top": 3040.390625,
+          "bottom": 3101.171875,
+          "left": 18,
+          "right": 362,
+          "width": 344,
+          "height": 60.78125
+        },
+        "#settings-panel": null,
+        "#support-preview": null
+      },
+      "moduleMetrics": null,
+      "supplemental": [],
+      "workflowChecks": {},
+      "errors": [],
+      "exception": "",
+      "workflow": "captured",
+      "visualMatch": "PENDING HUMAN IMAGE REVIEW"
+    },
+    {
+      "screen": 13,
+      "name": "duel-results",
+      "file": "13-duel-results.png",
+      "fullFile": "13-duel-results-full.png",
+      "sha256": "f26422b3718843e39798a1d7cdd571b205f04b303662797906648d8370d128ef",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "width": 380,
+        "height": 1877
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "language": "en",
+      "theme": "dark",
+      "textSize": "150",
+      "typography": {
+        "root": "16px",
+        "body": "24px",
+        "scale": "1.5",
+        "stageInstruction": "18px"
+      },
+      "title": "GeoMath \u2014 Duel results",
+      "actualScreen": "result",
+      "syntheticLabel": "SYNTHETIC QA ONLY \u2014 local PostgreSQL and Auth adapter",
+      "regions": {
+        "#solid-choices": null,
+        "#net-choices": null,
+        "#game-status": null,
+        "#settings-panel": null,
+        "#support-preview": null
+      },
+      "moduleMetrics": null,
+      "supplemental": [],
+      "workflowChecks": {},
+      "errors": [],
+      "exception": "",
+      "workflow": "captured",
+      "visualMatch": "PENDING HUMAN IMAGE REVIEW"
+    },
+    {
+      "screen": 1,
+      "name": "home",
+      "file": "01-home.png",
+      "fullFile": "01-home-full.png",
+      "sha256": "465a5f71165cc02febb158722be24212dd18fa712b7850a69409518eefeb7382",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "width": 380,
+        "height": 1747
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "language": "en",
+      "theme": "dark",
+      "textSize": "150",
+      "typography": {
+        "root": "16px",
+        "body": "24px",
+        "scale": "1.5",
+        "stageInstruction": "21px"
+      },
+      "title": "GeoMath \u2014 Home",
+      "actualScreen": "welcome",
+      "syntheticLabel": "SYNTHETIC QA ONLY \u2014 local PostgreSQL and Auth adapter",
+      "regions": {
+        "#solid-choices": null,
+        "#net-choices": null,
+        "#game-status": null,
+        "#settings-panel": null,
+        "#support-preview": null
+      },
+      "moduleMetrics": null,
+      "supplemental": [],
+      "workflowChecks": {},
+      "errors": [],
+      "exception": "",
+      "workflow": "captured",
+      "visualMatch": "PENDING HUMAN IMAGE REVIEW"
+    },
+    {
+      "screen": 6,
+      "name": "quiz-r2",
+      "file": "06-quiz-r2.png",
+      "fullFile": "06-quiz-r2-full.png",
+      "sha256": "7ac263fdf68294b3f1b6ee1e0156371b6d7fffdb94b8323133f89dfc77d2a1c0",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "width": 380,
+        "height": 2710
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "language": "en",
+      "theme": "dark",
+      "textSize": "150",
+      "typography": {
+        "root": "16px",
+        "body": "24px",
+        "scale": "1.5",
+        "stageInstruction": "21px"
+      },
+      "title": "GeoDecoder Digital \u2014 Playing",
+      "actualScreen": "game",
+      "syntheticLabel": "SYNTHETIC QA ONLY \u2014 local PostgreSQL and Auth adapter",
+      "regions": {
+        "#solid-choices": {
+          "top": 1861.75,
+          "bottom": 2113.75,
+          "left": 18,
+          "right": 362,
+          "width": 344,
+          "height": 252
+        },
+        "#net-choices": {
+          "top": 2182.1875,
+          "bottom": 2434.1875,
+          "left": 18,
+          "right": 362,
+          "width": 344,
+          "height": 252
+        },
+        "#game-status": {
+          "top": 355.09375,
+          "bottom": 356.09375,
+          "left": 17,
+          "right": 18,
+          "width": 1,
+          "height": 1
+        },
+        "#settings-panel": null,
+        "#support-preview": null
+      },
+      "moduleMetrics": null,
+      "supplemental": [],
+      "workflowChecks": {
+        "formula": {
+          "keyboard": [
+            {
+              "index": 1,
+              "width": 310,
+              "scrollWidth": 411,
+              "scrollLeft": 0,
+              "afterKeyboard": 40
+            }
+          ],
+          "bounds": {
+            ".question-panel": [
+              {
+                "width": 344,
+                "left": 18,
+                "right": 362,
+                "clientWidth": 342,
+                "scrollWidth": 342,
+                "overflowX": "visible",
+                "fontSize": "24px"
+              }
+            ],
+            ".question-content": [
+              {
+                "width": 310,
+                "left": 35,
+                "right": 345,
+                "clientWidth": 310,
+                "scrollWidth": 310,
+                "overflowX": "visible",
+                "fontSize": "24px"
+              }
+            ],
+            "#question-detail": [
+              {
+                "width": 310,
+                "left": 35,
+                "right": 345,
+                "clientWidth": 310,
+                "scrollWidth": 310,
+                "overflowX": "visible",
+                "fontSize": "27px"
+              }
+            ],
+            ".formula-line": [
+              {
+                "width": 310,
+                "left": 35,
+                "right": 345,
+                "clientWidth": 310,
+                "scrollWidth": 310,
+                "overflowX": "visible",
+                "fontSize": "36px"
+              }
+            ],
+            ".formula-scroll": [
+              {
+                "width": 310,
+                "left": 35,
+                "right": 345,
+                "clientWidth": 310,
+                "scrollWidth": 310,
+                "overflowX": "auto",
+                "fontSize": "36px"
+              },
+              {
+                "width": 310,
+                "left": 35,
+                "right": 345,
+                "clientWidth": 310,
+                "scrollWidth": 411,
+                "overflowX": "auto",
+                "fontSize": "36px"
+              }
+            ],
+            "math": [
+              {
+                "width": 229.109375,
+                "left": 35,
+                "right": 264.109375,
+                "clientWidth": 229,
+                "scrollWidth": 229,
+                "overflowX": "visible",
+                "fontSize": "38.88px"
+              },
+              {
+                "width": 411.46875,
+                "left": 35,
+                "right": 446.46875,
+                "clientWidth": 411,
+                "scrollWidth": 411,
+                "overflowX": "visible",
+                "fontSize": "38.88px"
+              }
+            ]
+          }
+        }
+      },
+      "errors": [],
+      "exception": "",
+      "workflow": "captured",
+      "visualMatch": "PENDING HUMAN IMAGE REVIEW"
+    },
+    {
+      "screen": 34,
+      "name": "projection-studio",
+      "file": "34-projection-studio.png",
+      "fullFile": "34-projection-studio-full.png",
+      "sha256": "588a6fe781a9d89defcb577e5e4036dce6676cad45d16cd83d956e6f04fc0691",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "width": 380,
+        "height": 1429
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "language": "en",
+      "theme": "dark",
+      "textSize": "150",
+      "typography": {
+        "root": "16px",
+        "body": "24px",
+        "scale": "1.5",
+        "stageInstruction": "21px"
+      },
+      "title": "GeoDecoder Digital \u2014 Learning module",
+      "actualScreen": "module",
+      "syntheticLabel": "SYNTHETIC QA ONLY \u2014 local PostgreSQL and Auth adapter",
+      "regions": {
+        "#solid-choices": null,
+        "#net-choices": null,
+        "#game-status": null,
+        "#settings-panel": null,
+        "#support-preview": null
+      },
+      "moduleMetrics": {
+        "width": 342,
+        "scrollWidth": 332,
+        "height": 718,
+        "scrollHeight": 10017,
+        "scrollY": 0,
+        "language": "en",
+        "theme": "dark",
+        "headings": [
+          "Plan & Elevation Studio",
+          "Object dimensions (cm)",
+          "3D model and actual dimensions",
+          "Worked example",
+          "Fixed arrangement \u00b7 Method 1",
+          "Drawing workspace \u00b7 Method 1",
+          "Draw with coordinates",
+          "Front elevation",
+          "Right side elevation",
+          "Plan",
+          "Build a net",
+          "Volume lab"
+        ],
+        "regions": {
+          "#projection-sheet": {
+            "top": 3411.9375,
+            "bottom": 3715.296875,
+            "left": 30,
+            "right": 292,
+            "width": 262,
+            "height": 303.359375,
+            "clientWidth": 262,
+            "scrollWidth": 262,
+            "clientHeight": 303,
+            "scrollHeight": 303
+          },
+          "#projection-grid-plan": {
+            "top": 3579.902587890625,
+            "bottom": 3704.36962890625,
+            "left": 169.8515625,
+            "right": 273.84375,
+            "width": 103.9921875,
+            "height": 124.467041015625,
+            "clientWidth": 0,
+            "scrollWidth": 0,
+            "clientHeight": 0,
+            "scrollHeight": 0
+          },
+          "#projection-grid-front": {
+            "top": 3431.670166015625,
+            "bottom": 3556.13720703125,
+            "left": 169.8515625,
+            "right": 273.84375,
+            "width": 103.9921875,
+            "height": 124.467041015625,
+            "clientWidth": 0,
+            "scrollWidth": 0,
+            "clientHeight": 0,
+            "scrollHeight": 0
+          },
+          "#projection-grid-right": null,
+          ".projection-sheet-scroll": {
+            "top": 3410.9375,
+            "bottom": 3716.296875,
+            "left": 29,
+            "right": 303,
+            "width": 274,
+            "height": 305.359375,
+            "clientWidth": 262,
+            "scrollWidth": 262,
+            "clientHeight": 303,
+            "scrollHeight": 303
+          },
+          "#labs-canvas": null,
+          "#net-grid": null
+        }
+      },
+      "supplemental": [
+        {
+          "file": "34-projection-studio-content.png",
+          "kind": "scrolled-content",
+          "selector": "#projection-panel",
+          "sha256": "0a28e4821390169c0bb303ae6baff84ac2ae9c02085911018b1b3e6d079be9ad",
+          "parentScroll": {
+            "x": 0,
+            "y": 441
+          },
+          "moduleScroll": {
+            "x": 0,
+            "y": 615
+          }
+        },
+        {
+          "file": "34-projection-studio-model.png",
+          "kind": "scrolled-model",
+          "selector": "#projection-sheet",
+          "sha256": "63755dc209c33db1ddc97c026fff8385ea56ca5e109d856a183877e712f038a4",
+          "parentScroll": {
+            "x": 0,
+            "y": 441
+          },
+          "moduleScroll": {
+            "x": 0,
+            "y": 3388
+          }
+        }
+      ],
+      "workflowChecks": {},
+      "errors": [],
+      "exception": "Canonical Method 1 board arrangement and all project rules preserved.",
+      "workflow": "captured",
+      "visualMatch": "PENDING HUMAN IMAGE REVIEW"
+    },
+    {
+      "screen": 5,
+      "name": "quiz-r1",
+      "file": "05-quiz-r1.png",
+      "fullFile": "05-quiz-r1-full.png",
+      "sha256": "5f64c172bc27997ab7d9c309aa30d79dbbec782c4fec35392ef6c5a90298991c",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "width": 380,
+        "height": 2326
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "language": "en",
+      "theme": "dark",
+      "textSize": "150",
+      "typography": {
+        "root": "16px",
+        "body": "24px",
+        "scale": "1.5",
+        "stageInstruction": "21px"
+      },
+      "title": "GeoDecoder Digital \u2014 Playing",
+      "actualScreen": "game",
+      "syntheticLabel": "SYNTHETIC QA ONLY \u2014 local PostgreSQL and Auth adapter",
+      "regions": {
+        "#solid-choices": {
+          "top": 1477.828125,
+          "bottom": 1729.828125,
+          "left": 18,
+          "right": 362,
+          "width": 344,
+          "height": 252
+        },
+        "#net-choices": {
+          "top": 1798.265625,
+          "bottom": 2050.265625,
+          "left": 18,
+          "right": 362,
+          "width": 344,
+          "height": 252
+        },
+        "#game-status": {
+          "top": 1347.390625,
+          "bottom": 1409.390625,
+          "left": 18,
+          "right": 362,
+          "width": 344,
+          "height": 62
+        },
+        "#settings-panel": null,
+        "#support-preview": null
+      },
+      "moduleMetrics": null,
+      "supplemental": [],
+      "workflowChecks": {},
+      "errors": [],
+      "exception": "",
+      "workflow": "captured",
+      "visualMatch": "PENDING HUMAN IMAGE REVIEW"
+    },
+    {
+      "screen": 14,
+      "name": "login",
+      "file": "14-login.png",
+      "fullFile": "14-login-full.png",
+      "sha256": "07d5ec6b172f8f8d45967153e0ce2d7f757c98af8696d3c4242e3d3cb8513045",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "width": 380,
+        "height": 1719
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "language": "en",
+      "theme": "dark",
+      "textSize": "150",
+      "typography": {
+        "root": "16px",
+        "body": "24px",
+        "scale": "1.5",
+        "stageInstruction": "21px"
+      },
+      "title": "Sign in to your classroom \u2014 GeoDecoder Digital",
+      "actualScreen": "portal",
+      "syntheticLabel": "SYNTHETIC QA ONLY \u2014 local PostgreSQL and Auth adapter",
+      "regions": {
+        "#solid-choices": null,
+        "#net-choices": null,
+        "#game-status": null,
+        "#settings-panel": null,
+        "#support-preview": null
+      },
+      "moduleMetrics": null,
+      "supplemental": [],
+      "workflowChecks": {},
+      "errors": [],
+      "exception": "",
+      "workflow": "captured",
+      "visualMatch": "PENDING HUMAN IMAGE REVIEW"
+    },
+    {
+      "screen": 17,
+      "name": "teacher-overview",
+      "file": "17-teacher-overview.png",
+      "fullFile": "17-teacher-overview-full.png",
+      "sha256": "415dbd2c260d0130dfd4309d4c7b2b80bde65f117bcffe46d1da5031fb1d901b",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "width": 380,
+        "height": 5521
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "language": "en",
+      "theme": "dark",
+      "textSize": "150",
+      "typography": {
+        "root": "16px",
+        "body": "24px",
+        "scale": "1.5",
+        "stageInstruction": "21px"
+      },
+      "title": "Teacher area \u2014 GeoDecoder Digital",
+      "actualScreen": "portal",
+      "syntheticLabel": "SYNTHETIC QA ONLY \u2014 local PostgreSQL and Auth adapter",
+      "regions": {
+        "#solid-choices": null,
+        "#net-choices": null,
+        "#game-status": null,
+        "#settings-panel": null,
+        "#support-preview": null
+      },
+      "moduleMetrics": null,
+      "supplemental": [],
+      "workflowChecks": {},
+      "errors": [],
+      "exception": "Overview of existing classes; workspace opened by genuine anchor.",
+      "workflow": "captured",
+      "visualMatch": "PENDING HUMAN IMAGE REVIEW"
+    },
+    {
+      "screen": 22,
+      "name": "student-waiting-room",
+      "file": "22-student-waiting-room.png",
+      "fullFile": "22-student-waiting-room-full.png",
+      "sha256": "a7f138ad0b2903e2a0ec1f1301b3ab80d4b266480bb780cc818bf836a39b3167",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "width": 380,
+        "height": 2560
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "language": "en",
+      "theme": "dark",
+      "textSize": "150",
+      "typography": {
+        "root": "16px",
+        "body": "24px",
+        "scale": "1.5",
+        "stageInstruction": "21px"
+      },
+      "title": "QA Ruang menunggu \u2014 GeoDecoder Digital",
+      "actualScreen": "portal",
+      "syntheticLabel": "SYNTHETIC QA ONLY \u2014 local PostgreSQL and Auth adapter",
+      "regions": {
+        "#solid-choices": null,
+        "#net-choices": null,
+        "#game-status": null,
+        "#settings-panel": null,
+        "#support-preview": null
+      },
+      "moduleMetrics": null,
+      "supplemental": [],
+      "workflowChecks": {},
+      "errors": [],
+      "exception": "Real waiting state, start action correctly unavailable until server permits.",
+      "workflow": "captured",
+      "visualMatch": "PENDING HUMAN IMAGE REVIEW"
+    },
+    {
+      "screen": 25,
+      "name": "explore",
+      "file": "25-explore.png",
+      "fullFile": "25-explore-full.png",
+      "sha256": "afc6e64615dfcfbc99edca08b7dac213a93c09e90947a37dcd7e27ec18c9906e",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "width": 380,
+        "height": 1429
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "language": "en",
+      "theme": "dark",
+      "textSize": "150",
+      "typography": {
+        "root": "16px",
+        "body": "24px",
+        "scale": "1.5",
+        "stageInstruction": "21px"
+      },
+      "title": "GeoDecoder Digital \u2014 Learning module",
+      "actualScreen": "module",
+      "syntheticLabel": "SYNTHETIC QA ONLY \u2014 local PostgreSQL and Auth adapter",
+      "regions": {
+        "#solid-choices": null,
+        "#net-choices": null,
+        "#game-status": null,
+        "#settings-panel": null,
+        "#support-preview": null
+      },
+      "moduleMetrics": {
+        "width": 342,
+        "scrollWidth": 332,
+        "height": 718,
+        "scrollHeight": 7055,
+        "scrollY": 0,
+        "language": "en",
+        "theme": "dark",
+        "headings": [
+          "Observe. Unfold. Understand.",
+          "Choose a model",
+          "Cube",
+          "Cube",
+          "From solid to net",
+          "Does the top view show all 6 faces of a cube?",
+          "Build a net",
+          "Volume lab",
+          "Surface area",
+          "Composite solids",
+          "One solid. Three ways to understand it.",
+          "Solid model"
+        ],
+        "regions": {
+          "#projection-sheet": null,
+          "#projection-grid-plan": null,
+          "#projection-grid-front": null,
+          "#projection-grid-right": null,
+          ".projection-sheet-scroll": null,
+          "#labs-canvas": null,
+          "#net-grid": null
+        }
+      },
+      "supplemental": [
+        {
+          "file": "25-explore-content.png",
+          "kind": "scrolled-content",
+          "selector": "#explore-panel",
+          "sha256": "70f50df6fa73c0ed38743b8ddb0fd3fc121b246ee43cbb2eb6cd38edfd938d59",
+          "parentScroll": {
+            "x": 0,
+            "y": 441
+          },
+          "moduleScroll": {
+            "x": 0,
+            "y": 1268
+          }
+        },
+        {
+          "file": "25-explore-model.png",
+          "kind": "scrolled-model",
+          "selector": "#model-canvas",
+          "sha256": "0f07061e889a2ca7760baa31c64ced4e49c7aae73d56fd4af58d97d2630ebe2b",
+          "parentScroll": {
+            "x": 0,
+            "y": 441
+          },
+          "moduleScroll": {
+            "x": 0,
+            "y": 1542
+          }
+        }
+      ],
+      "workflowChecks": {},
+      "errors": [],
+      "exception": "",
+      "workflow": "captured",
+      "visualMatch": "PENDING HUMAN IMAGE REVIEW"
+    },
+    {
+      "screen": 27,
+      "name": "notes",
+      "file": "27-notes.png",
+      "fullFile": "27-notes-full.png",
+      "sha256": "8e4924833207782b8cf3deb6035f435ce3e02565f6da7101478901609b20e09e",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "width": 380,
+        "height": 1429
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "language": "en",
+      "theme": "dark",
+      "textSize": "150",
+      "typography": {
+        "root": "16px",
+        "body": "24px",
+        "scale": "1.5",
+        "stageInstruction": "21px"
+      },
+      "title": "GeoDecoder Digital \u2014 Learning module",
+      "actualScreen": "module",
+      "syntheticLabel": "SYNTHETIC QA ONLY \u2014 local PostgreSQL and Auth adapter",
+      "regions": {
+        "#solid-choices": null,
+        "#net-choices": null,
+        "#game-status": null,
+        "#settings-panel": null,
+        "#support-preview": null
+      },
+      "moduleMetrics": {
+        "width": 342,
+        "scrollWidth": 332,
+        "height": 718,
+        "scrollHeight": 9841,
+        "scrollY": 0,
+        "language": "en",
+        "theme": "dark",
+        "headings": [
+          "Cube notes",
+          "Geometrical properties",
+          "Net",
+          "Surface area, L",
+          "Volume, V",
+          "Formulas and units",
+          "A 2D view is not a net",
+          "Build a net",
+          "Volume lab",
+          "Surface area",
+          "Composite solids",
+          "One solid. Three ways to understand it."
+        ],
+        "regions": {
+          "#projection-sheet": null,
+          "#projection-grid-plan": null,
+          "#projection-grid-front": null,
+          "#projection-grid-right": null,
+          ".projection-sheet-scroll": null,
+          "#labs-canvas": null,
+          "#net-grid": null
+        }
+      },
+      "supplemental": [
+        {
+          "file": "27-notes-content.png",
+          "kind": "scrolled-content",
+          "selector": "#study-panel",
+          "sha256": "cf556e26e7a79769deeb9fe7cef5c6f1cc76d2a6e0dbdea862b1356553ae77d3",
+          "parentScroll": {
+            "x": 0,
+            "y": 441
+          },
+          "moduleScroll": {
+            "x": 0,
+            "y": 738
+          }
+        },
+        {
+          "file": "27-notes-model.png",
+          "kind": "scrolled-model",
+          "selector": "#notes-net-model",
+          "sha256": "e56953a88baac9818837e8e2071011bc30bb7d161ecff0c2b1b1c05d121ebcda",
+          "parentScroll": {
+            "x": 0,
+            "y": 441
+          },
+          "moduleScroll": {
+            "x": 0,
+            "y": 2165
+          }
+        }
+      ],
+      "workflowChecks": {},
+      "errors": [],
+      "exception": "",
+      "workflow": "captured",
+      "visualMatch": "PENDING HUMAN IMAGE REVIEW"
+    },
+    {
+      "screen": 29,
+      "name": "net-studio",
+      "file": "29-net-studio.png",
+      "fullFile": "29-net-studio-full.png",
+      "sha256": "b1038c3a3ed6e500e831c99c1415031e7bddfdd8fa8046da71dcce08fbe44c64",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "width": 380,
+        "height": 1429
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "language": "en",
+      "theme": "dark",
+      "textSize": "150",
+      "typography": {
+        "root": "16px",
+        "body": "24px",
+        "scale": "1.5",
+        "stageInstruction": "21px"
+      },
+      "title": "GeoDecoder Digital \u2014 Learning module",
+      "actualScreen": "module",
+      "syntheticLabel": "SYNTHETIC QA ONLY \u2014 local PostgreSQL and Auth adapter",
+      "regions": {
+        "#solid-choices": null,
+        "#net-choices": null,
+        "#game-status": null,
+        "#settings-panel": null,
+        "#support-preview": null
+      },
+      "moduleMetrics": {
+        "width": 342,
+        "scrollWidth": 332,
+        "height": 718,
+        "scrollHeight": 9794,
+        "scrollY": 0,
+        "language": "en",
+        "theme": "dark",
+        "headings": [
+          "Build a Net",
+          "Explore and build nets",
+          "Predict \u2192 Try \u2192 Check \u2192 Explain",
+          "Build a net",
+          "Volume lab",
+          "Surface area",
+          "Composite solids",
+          "One solid. Three ways to understand it.",
+          "Solid model",
+          "Net",
+          "Orthographic views"
+        ],
+        "regions": {
+          "#projection-sheet": null,
+          "#projection-grid-plan": null,
+          "#projection-grid-front": null,
+          "#projection-grid-right": null,
+          ".projection-sheet-scroll": null,
+          "#labs-canvas": {
+            "top": 1338.484375,
+            "bottom": 1626.484375,
+            "left": 17,
+            "right": 315,
+            "width": 298,
+            "height": 288,
+            "clientWidth": 298,
+            "scrollWidth": 298,
+            "clientHeight": 288,
+            "scrollHeight": 288
+          },
+          "#net-grid": {
+            "top": 3203.703125,
+            "bottom": 3477.734375,
+            "left": 29,
+            "right": 303,
+            "width": 274,
+            "height": 274.03125,
+            "clientWidth": 272,
+            "scrollWidth": 272,
+            "clientHeight": 272,
+            "scrollHeight": 272
+          }
+        }
+      },
+      "supplemental": [
+        {
+          "file": "29-net-studio-content.png",
+          "kind": "scrolled-content",
+          "selector": "#labs-workspace",
+          "sha256": "ca31316232adfe8275eb7664ffd941eeee57d6650c60904265c33f6b6be15ce7",
+          "parentScroll": {
+            "x": 0,
+            "y": 441
+          },
+          "moduleScroll": {
+            "x": 0,
+            "y": 685
+          }
+        },
+        {
+          "file": "29-net-studio-model.png",
+          "kind": "scrolled-model",
+          "selector": "#labs-canvas",
+          "sha256": "b5a9a1c804edde40712bc21c2c9afdecefe890edecb03e5f4bab82eb8a528309",
+          "parentScroll": {
+            "x": 0,
+            "y": 441
+          },
+          "moduleScroll": {
+            "x": 0,
+            "y": 1314
+          }
+        }
+      ],
+      "workflowChecks": {},
+      "errors": [],
+      "exception": "Real cube-net editor selected through existing UI. Canonical preview/folding rules and gallery/studio alternatives preserved.",
+      "workflow": "captured",
+      "visualMatch": "PENDING HUMAN IMAGE REVIEW"
+    },
+    {
+      "screen": 37,
+      "name": "settings-light",
+      "file": "37-settings-light.png",
+      "fullFile": "37-settings-light-full.png",
+      "sha256": "df74751d089697bec3bd37f8cab6162bb9ad1a6fabb48aa1acd1441b7ec42007",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "width": 380,
+        "height": 1747
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "language": "en",
+      "theme": "dark",
+      "textSize": "150",
+      "typography": {
+        "root": "16px",
+        "body": "24px",
+        "scale": "1.5",
+        "stageInstruction": "21px"
+      },
+      "title": "GeoMath \u2014 Home",
+      "actualScreen": "welcome",
+      "syntheticLabel": "SYNTHETIC QA ONLY \u2014 local PostgreSQL and Auth adapter",
+      "regions": {
+        "#solid-choices": null,
+        "#net-choices": null,
+        "#game-status": null,
+        "#settings-panel": {
+          "top": 29,
+          "bottom": 1717.078125,
+          "left": 25,
+          "right": 355,
+          "width": 330,
+          "height": 1688.078125
+        },
+        "#support-preview": null
+      },
+      "moduleMetrics": null,
+      "supplemental": [],
+      "workflowChecks": {},
+      "errors": [],
+      "exception": "",
+      "workflow": "captured",
+      "visualMatch": "PENDING HUMAN IMAGE REVIEW"
+    },
+    {
+      "screen": 39,
+      "name": "help",
+      "file": "39-help.png",
+      "fullFile": "39-help-full.png",
+      "sha256": "dc3bdbd7f9d89f3fa4f699d562189574e030504c32062cfc9047ad802c6cf56d",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "width": 380,
+        "height": 1747
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "language": "en",
+      "theme": "dark",
+      "textSize": "150",
+      "typography": {
+        "root": "16px",
+        "body": "24px",
+        "scale": "1.5",
+        "stageInstruction": "21px"
+      },
+      "title": "GeoMath \u2014 Home",
+      "actualScreen": "welcome",
+      "syntheticLabel": "SYNTHETIC QA ONLY \u2014 local PostgreSQL and Auth adapter",
+      "regions": {
+        "#solid-choices": null,
+        "#net-choices": null,
+        "#game-status": null,
+        "#settings-panel": null,
+        "#support-preview": null
+      },
+      "moduleMetrics": null,
+      "supplemental": [],
+      "workflowChecks": {},
+      "errors": [],
+      "exception": "",
+      "workflow": "captured",
+      "visualMatch": "PENDING HUMAN IMAGE REVIEW"
+    },
+    {
+      "screen": 40,
+      "name": "support-report",
+      "file": "40-support-report.png",
+      "fullFile": "40-support-report-full.png",
+      "sha256": "3d49d6cdd7ef1e35b2ddeb093dba161819fcbb922930280e7594bcceb086d29c",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "width": 380,
+        "height": 1747
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "language": "en",
+      "theme": "dark",
+      "textSize": "150",
+      "typography": {
+        "root": "16px",
+        "body": "24px",
+        "scale": "1.5",
+        "stageInstruction": "21px"
+      },
+      "title": "GeoMath \u2014 Home",
+      "actualScreen": "welcome",
+      "syntheticLabel": "SYNTHETIC QA ONLY \u2014 local PostgreSQL and Auth adapter",
+      "regions": {
+        "#solid-choices": null,
+        "#net-choices": null,
+        "#game-status": null,
+        "#settings-panel": null,
+        "#support-preview": {
+          "top": 1212.84375,
+          "bottom": 1442.84375,
+          "left": 36,
+          "right": 344,
+          "width": 308,
+          "height": 230
+        }
+      },
+      "moduleMetrics": null,
+      "supplemental": [],
+      "workflowChecks": {},
+      "errors": [],
+      "exception": "Local report preview/copy/select/download; no automatic submission.",
+      "workflow": "captured",
+      "visualMatch": "PENDING HUMAN IMAGE REVIEW"
+    }
+  ],
+  "failures": [],
+  "fatalFailure": null,
+  "blockedExternalRequests": [],
+  "pageErrors": [],
+  "visualStatus": "Capture diagnostics and agent image findings are separate; see manualVisualReview and REVIEW.md. No pixel-perfect claim.",
+  "manualVisualReview": {
+    "reviewer": "Codex visual audit agent",
+    "method": "Direct image-viewer inspection against approved originals; all40 desktop frames inspected in10 final contact boards, plus individual refinement/fix images. Mobile entry and supplemental activity/model views inspected directly.",
+    "status": "Agent image review complete with explicit qualifications; root/user approval separate",
+    "report": "REVIEW.md",
+    "reviewedAt": "2026-11-04T06:48:19.020221+00:00",
+    "notAnAutomaticMatchScore": true
+  }
+}

@@ -1,0 +1,163 @@
+{
+  "verified_utc": "2026-11-04T06:46:55.457894+00:00",
+  "browser": "Chromium 151.0.7922.34",
+  "usability": {
+    "unique_cases_passed": 13,
+    "all_expected_cases_covered": true,
+    "cases": [
+      {
+        "case": "navigation",
+        "passed": true,
+        "log": "/workspace/scratch/8354d9072f14/mockup-work/final-built-usability.log"
+      },
+      {
+        "case": "quiz-review",
+        "passed": true,
+        "log": "/workspace/scratch/8354d9072f14/mockup-work/final-built-usability-after-selectors.log"
+      },
+      {
+        "case": "practice-correct",
+        "passed": true,
+        "log": "/workspace/scratch/8354d9072f14/mockup-work/final-built-practice-keyboard-final.log"
+      },
+      {
+        "case": "practice-mixed",
+        "passed": true,
+        "log": "/workspace/scratch/8354d9072f14/mockup-work/final-built-usability-after-selectors.log"
+      },
+      {
+        "case": "layout",
+        "passed": true,
+        "log": "/workspace/scratch/8354d9072f14/mockup-work/final-built-usability.log"
+      },
+      {
+        "case": "dialog-race",
+        "passed": true,
+        "log": "/workspace/scratch/8354d9072f14/mockup-work/final-built-usability.log"
+      },
+      {
+        "case": "drag",
+        "passed": true,
+        "log": "/workspace/scratch/8354d9072f14/mockup-work/final-built-usability.log"
+      },
+      {
+        "case": "storage",
+        "passed": true,
+        "log": "/workspace/scratch/8354d9072f14/mockup-work/final-built-usability.log"
+      },
+      {
+        "case": "account",
+        "passed": true,
+        "log": "/workspace/scratch/8354d9072f14/mockup-work/final-built-usability.log"
+      },
+      {
+        "case": "classroom-fixture",
+        "passed": true,
+        "log": "/workspace/scratch/8354d9072f14/mockup-work/final-built-usability-after-selectors.log"
+      },
+      {
+        "case": "classroom-errors-fixture",
+        "passed": true,
+        "log": "/workspace/scratch/8354d9072f14/mockup-work/final-built-usability-after-selectors.log"
+      },
+      {
+        "case": "classroom-review-fixture",
+        "passed": true,
+        "log": "/workspace/scratch/8354d9072f14/mockup-work/final-built-usability-after-selectors.log"
+      },
+      {
+        "case": "review-one-fixture",
+        "passed": true,
+        "log": "/workspace/scratch/8354d9072f14/mockup-work/final-built-usability-after-selectors.log"
+      }
+    ],
+    "single_clean_full_invocation": false,
+    "note": "Initial successful cases retained; obsolete presentation contracts updated; affected cases rerun; classroom review rerun after stronger separate-history assertions."
+  },
+  "help": {
+    "cases_passed": 7,
+    "cases": [
+      {
+        "case": "help-preview-download-keyboard-ms",
+        "passed": true
+      },
+      {
+        "case": "help-preview-download-keyboard-en",
+        "passed": true
+      },
+      {
+        "case": "clipboard-denied-long-validation-320-dark-150",
+        "passed": true,
+        "acceptedLength": 2000
+      },
+      {
+        "case": "offline-storage-denied-copy-solo-R1-R2-review",
+        "passed": true
+      },
+      {
+        "case": "module-iframe-prediction-active-tab-and-existing-guide-preserved",
+        "passed": true
+      },
+      {
+        "case": "Duel-clock-and-state-intercepted-transport",
+        "passed": true,
+        "actions": [
+          "state",
+          "state"
+        ]
+      },
+      {
+        "case": "classroom-clock-accepted-R1-hint-selection-intercepted-transport",
+        "passed": true,
+        "actions": [
+          "heartbeat",
+          "snapshot",
+          "join_room",
+          "snapshot",
+          "start_attempt"
+        ]
+      }
+    ],
+    "log": "/workspace/scratch/8354d9072f14/mockup-work/final-built-help-final.log",
+    "exit_code": 0
+  },
+  "additional_checks": {
+    "layout_combinations_passed": 216,
+    "layout_note": "Retained initial matrix; root covered final narrow-screen CSS amendment with final mobile captures of 14 screens.",
+    "rich_text_views_passed": 90,
+    "question_ids_covered": 15,
+    "offline_http_requests": 0,
+    "keyboard_scroll": [
+      {
+        "label": "S2:ms:320",
+        "scrollLeft": 34.0,
+        "maxScroll": 34.0
+      },
+      {
+        "label": "S2:en:320",
+        "scrollLeft": 34.0,
+        "maxScroll": 34.0
+      }
+    ]
+  },
+  "final_payload_inputs_changed_during_rerun": [],
+  "final_payload_snapshot": "/workspace/scratch/8354d9072f14/mockup-work/final-built-browser-inputs-after-css.json",
+  "maintained_test_files": [
+    {
+      "path": "digital/tests/ease-browser-helpers.mjs",
+      "sha256": "16270c87fd1d5f5136299ba684d93a426d8170aeb0b5a22b7bbfadb3ca7de925"
+    },
+    {
+      "path": "digital/tests/usability.browser.mjs",
+      "sha256": "ae9a363679adcae1a45e5867feabc5f46d568a6919a582f7886a952fd63a7a43"
+    },
+    {
+      "path": "digital/tests/help-support.browser.mjs",
+      "sha256": "6c43c1c4811b30c9a2f44f17f9cfc0eb7442e25479ad13460486af361fc3943e"
+    },
+    {
+      "path": "digital/tests/classroom-transport.fixture.mjs",
+      "sha256": "067b10294ad55b2bf4441a35261826bbb48e5318962f05c56826bd4e55c1659e"
+    }
+  ]
+}

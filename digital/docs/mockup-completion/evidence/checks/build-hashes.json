@@ -1,0 +1,38 @@
+{
+  "digital/dist/app.bundle.js": {
+    "bytes": 1924291,
+    "sha256": "92ed8f577d146d403cb660b8b4cebc5ed72c171f15d38339bc2745196801023d"
+  },
+  "digital/artifacts/GeoDecoder_Digital_V2.html": {
+    "bytes": 7867906,
+    "sha256": "b22ad79939ba8f145324a3613d3d208403b3b824d5a0a9d89b98937b80a3403e"
+  },
+  "digital/artifacts/site-index.html": {
+    "bytes": 2311336,
+    "sha256": "3ecf86533c3d45c8aedd87dd91a272d5bbbbe256fa5cc578fa3dc0d05a77ef0a"
+  },
+  "digital/vendor/module-v1.6.2.html": {
+    "bytes": 572718,
+    "sha256": "7ddd5d60a25fbdf73c20f9f8e8fc0db4253e582fb50d17c944307b8f682066c4"
+  },
+  "digital/dist/style.css": {
+    "bytes": 129430,
+    "sha256": "1c25f41585ba4ae828a92e4f07324d9dfe66e0c3341c88a9ce480efa0732775a"
+  },
+  "digital/dist/portal.css": {
+    "bytes": 116351,
+    "sha256": "d7c1933ab195b4c227e3ccdc8e100bcca1181b1f40f433c2660c9207f54731a6"
+  },
+  "digital/dist/entry.css": {
+    "bytes": 41614,
+    "sha256": "2704969f1f6c1ca785cebcf61b96aedc51bff42a5f1600921f882e02f68e002f"
+  },
+  "digital/dist/usability.css": {
+    "bytes": 16274,
+    "sha256": "ce929047a11f0829e9897bd9a799c2b641d90e91ea3274dd8ee85462cbe34261"
+  },
+  "digital/dist/help-support.css": {
+    "bytes": 22421,
+    "sha256": "15b61ccc115c5b95892f4913a36977410891c4f1040e958134199367a72cc40b"
+  }
+}

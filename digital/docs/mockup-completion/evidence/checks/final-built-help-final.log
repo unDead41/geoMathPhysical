@@ -1,0 +1,8 @@
+EVIDENCE ../../mockup-work/final-built-help-final/help-ms-desktop.png
+EVIDENCE ../../mockup-work/final-built-help-final/preview-ms.png
+EVIDENCE ../../mockup-work/final-built-help-final/help-en-phone.png
+EVIDENCE ../../mockup-work/final-built-help-final/preview-en.png
+EVIDENCE ../../mockup-work/final-built-help-final/clipboard-denied-320-dark-150.png
+EVIDENCE ../../mockup-work/final-built-help-final/offline-review-report-r2.png
+EVIDENCE ../../mockup-work/final-built-help-final/module-after-help.png
+PASS 7 help/report browser scenarios; evidence in docs/help-support-evidence

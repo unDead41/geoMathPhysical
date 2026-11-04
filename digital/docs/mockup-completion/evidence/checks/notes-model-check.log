@@ -1,0 +1,12 @@
+PASS cube: canonical solid and 2530 drawn net pixels
+PASS cuboid: canonical solid and 1898 drawn net pixels
+PASS pyramid: canonical solid and 2066 drawn net pixels
+PASS cylinder: canonical solid and 3350 drawn net pixels
+PASS cone: canonical solid and 2471 drawn net pixels
+PASS triangular-prism: canonical solid and 2591 drawn net pixels
+PASS tetrahedron: canonical solid and 1993 drawn net pixels
+PASS pentagonal-prism: canonical solid and 1910 drawn net pixels
+PASS hexagonal-prism: canonical solid and 1842 drawn net pixels
+PASS sphere: canonical solid and truthful no-net caption
+PASS hemisphere: canonical solid and truthful no-net caption
+PASS all11Notes views, correct no-net scope, no page errors

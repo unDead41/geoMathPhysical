@@ -1,0 +1,32 @@
+{
+  "verified_utc": "2026-11-04T06:19:54.711624+00:00",
+  "base": "ef697c86a5bfdf5a5658c3df92bce1d7f3f88652",
+  "suites": [
+    {
+      "suite": "app",
+      "log": "/workspace/scratch/8354d9072f14/runtime-final-app-complete.tap",
+      "sha256": "c02f7c961bfd80d48a65ad5b683652f3e72d82e155483230372715cd9edb0d90",
+      "exit_code": 0,
+      "tests": 497,
+      "pass": 497,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "duration_ms": 180016.09969
+    },
+    {
+      "suite": "module",
+      "log": "/workspace/scratch/8354d9072f14/runtime-final-module-after-account.tap",
+      "sha256": "43b39d7230c76c42c56bae052e14bece61e1122a16968bf3c228909e3e5e6d9c",
+      "exit_code": 0,
+      "tests": 341,
+      "pass": 341,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "duration_ms": 20081.49753
+    }
+  ]
+}

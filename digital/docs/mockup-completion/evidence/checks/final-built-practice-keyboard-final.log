@@ -1,0 +1,10 @@
+EASE browser cases: practice-correct
+EVIDENCE_DIRECTORY /workspace/scratch/8354d9072f14/mockup-work/final-built-practice-keyboard-final
+RUN practice-correct
+EVIDENCE ../../mockup-work/final-built-practice-keyboard-final/rich-fraction-mobile-ms.png
+EVIDENCE ../../mockup-work/final-built-practice-keyboard-final/rich-fraction-mobile-en.png
+DETAIL S2:ms:320: keyboard formula scroll reached 34 / 34px
+DETAIL S2:en:320: keyboard formula scroll reached 34 / 34px
+DETAIL all 15 IDs, 90 BM/English rich-text views, offline standalone with zero HTTP(S) requests
+PASS practice-correct
+RESULT 1/1 browser cases passed; 0 failures

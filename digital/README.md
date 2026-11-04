@@ -1,9 +1,9 @@
 # GeoDecoder Digital V2
 
-Versi Digital: **v2.9.0**. Branch integrasi: **main-digitalized**.
+Versi cadangan Digital: **v2.9.1**. Branch semakan: **digitalized-ux-mockup-completion**.
 
 Laman aktif: https://undead41.github.io/geodecoder-digital/ . Pages commit `c27f3bde56079c2ab7f519a43f0008dce9f20c81` / workflow `40323253926` berjaya; HTTP/hash laman sepadan artifak gabungan.
-Modul pembelajaran: **v1.6.1**. Firmware berada pada branch berasingan; `main` yang dibaca semasa integrasi ialah **v2.0.2**. Integrasi sumber v2.9.0 menyatukan UI utama/Duel/modul, offline, CRUD dan transport. Status sumber dan had rollout berada dalam [rekod integrasi](docs/integration-sync/README.md). Rekod penerbitan awam terdahulu v2.8.0 kekal dalam [RELEASE_V2_8.md](docs/RELEASE_V2_8.md).
+Modul pembelajaran: **v1.6.2**. Firmware berada pada branch berasingan; `main` yang dibaca semasa integrasi ialah **v2.0.2**. Integrasi sumber v2.9.0 menyatukan UI utama/Duel/modul, offline, CRUD dan transport. Status sumber dan had rollout berada dalam [rekod integrasi](docs/integration-sync/README.md). Rekod penerbitan awam terdahulu v2.8.0 kekal dalam [RELEASE_V2_8.md](docs/RELEASE_V2_8.md).
 
 > Rekod deployment v2.7.0: backend diaktifkan selepas kebenaran jelas melalui migration `20261026110959` dan Duel Edge v2/protocol2. Commit penerbitan awam `0486388a9c94942ab0973af5609be0168d27323c`. Lihat [RELEASE_V2_7.md](docs/RELEASE_V2_7.md). Ini rekod sejarah sebelum keluaran v2.8.0.
 
@@ -31,6 +31,8 @@ Pakej e-mel akaun: [Auth email v1.1.0](backend/email/README.md), pada branch
 `digitalized-utility-auth-email`. Lapan templat BM/English telah disediakan;
 dashboard masih memerlukan custom SMTP untuk mengaktifkan reka bentuk sendiri.
 Lihat [persediaan dan had penghantaran](docs/EMAIL_SETUP.md).
+
+Lihat [pelaksanaan 40 paparan mockup](docs/mockup-completion/README.md) untuk bukti visual dan had penerbitan.
 
 ## Pusat Bantuan & Lapor Masalah
 

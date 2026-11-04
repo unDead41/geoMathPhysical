@@ -1,17 +1,18 @@
 {
-  "version": "1.6.1",
-  "path": "module-v1.6.1.html",
+  "version": "1.6.2",
+  "path": "module-v1.6.2.html",
   "sourceRepository": "unDead41/geodecoder",
-  "sourceBranch": "main-digitalized",
-  "sourceCommit": "18b1e3e56c8dfd703392f6f70f29daffbafbf204",
+  "sourceBranch": "digitalized-ux-mockup-completion",
+  "sourceCommit": "7bba111209e15697cb4b704f6cef7c0fb120aa55",
   "sourcePath": "digital/module/GeoDecoder_Modul_V1.html",
-  "blob": "88e29085c17f0ff21993ba0799848833695acad1",
+  "blob": "3af0469979d878c8e605d093db1be0c0649c6509",
   "moduleFeatureCommit": "afe35b3bf87182403405f062c5bcbe2242866056",
   "designCommit": "eb42bb2ad1bbd2a362dfc04de387872017b913f5",
-  "previousRelease": "module-v1.6.0.html",
+  "previousRelease": "module-v1.6.1.html",
   "moduleUiSources": [
     "3ac761ce138c0286f144a74b16e25eed6906c1f7",
     "dcb5ef6f6ae2a56d52ce0f7f99893d8050d043e2",
     "0a1304652ff74b5e82aecdf416092fe57dda2131"
-  ]
+  ],
+  "mockupConceptCommit": "4d83561667cf74fbe5cd6144ce5e3e7f660a75cd"
 }

@@ -1,5 +1,5 @@
 import {duelCheckpoint,applyDuelState} from './duel-state.mjs';
-export const VERSION = '2.9.0';
+export const VERSION = '2.9.1';
 export const RULESET = 'single-attempt-v1';
 export const SHAPES = ['cube', 'cuboid', 'pyramid', 'cylinder', 'cone'];
 export const ROUND_SIZE = 10;

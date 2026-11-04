@@ -1,15 +1,26 @@
 import {helpVisual,installHelpVisuals} from './help-visuals.mjs';
 import {icon} from './art.mjs';
+import {sceneIllustration} from './entry-art.mjs';
 
 
 /** Dialog views only. Gameplay, language and audio continue to have one owner. */
 export function createUsabilityUI({storage,preferenceStore,t,openDialog,closeDialog,onStart,onTheme,onTestSound,onHelp}){
   const $=id=>document.getElementById(id),panel=$('settings-panel'),home=$('settings-home');
   installHelpVisuals($('dialog-content'));
+  for(const node of panel.querySelectorAll('[data-settings-art]'))node.innerHTML=sceneIllustration({variant:node.dataset.settingsArt});
   let step=0,beginAfterGuide=false,returnToHelp=false,themeChoice='system';
   try{const saved=storage.getItem('geodecoder.theme.v1');if(['light','dark'].includes(saved))themeChoice=saved;}catch{}
   document.addEventListener('geodecoder:theme',event=>{themeChoice=event.detail?.preference||'system';refreshSettings();});
   function persist(){refreshSettings();}
+  function selectSettingsTab(id,{focus=false}={}){
+    const tab=panel.querySelector(`[role="tab"][data-settings-tab="${id}"]`);if(!tab)return;
+    panel.dataset.settingsTab=id;
+    for(const node of panel.querySelectorAll('[role="tab"][data-settings-tab]')){
+      const selected=node===tab;node.setAttribute('aria-selected',String(selected));node.tabIndex=selected?0:-1;
+    }
+    for(const node of panel.querySelectorAll('[role="tabpanel"]'))node.hidden=node.id!==tab.getAttribute('aria-controls');
+    if(focus)tab.focus({preventScroll:true});
+  }
   function refreshSettings(){
     const preferences=preferenceStore.value;
     $('text-size-select').value=String(({normal:100,large:125,largest:150})[preferences.text]);$('theme-select').value=themeChoice;
@@ -20,7 +31,7 @@ export function createUsabilityUI({storage,preferenceStore,t,openDialog,closeDia
   function stash(){if(panel.parentElement!==home){panel.hidden=true;home.append(panel);}}
   function openSettings(){
     openDialog('settings',t('ease.settings'),'');
-    $('dialog-content').append(panel);panel.hidden=false;refreshSettings();$('language-select').focus({preventScroll:true});
+    $('dialog-content').append(panel);panel.hidden=false;selectSettingsTab('display');refreshSettings();$('language-select').focus({preventScroll:true});
   }
   function renderTutorial(){
     const active=step+1;
@@ -40,7 +51,13 @@ export function createUsabilityUI({storage,preferenceStore,t,openDialog,closeDia
   function changePreference(event){const node=event.target,key=node.dataset.pref;if(!key)return;preferenceStore.set({[key]:node.type==='checkbox'?node.checked:node.type==='range'?Number(node.value):node.value});refreshSettings();}
   panel.addEventListener('input',event=>{if(event.target.type==='range')changePreference(event);});
   panel.addEventListener('change',event=>{if(event.target.type!=='range')changePreference(event);});
-  panel.addEventListener('click',event=>{if(event.target.closest('[data-reset-preferences]')){preferenceStore.reset();themeChoice='system';onTheme(themeChoice);refreshSettings();}if(event.target.closest('[data-test-sound]'))onTestSound?.();});
+  panel.addEventListener('click',event=>{const tab=event.target.closest('[role="tab"][data-settings-tab]');if(tab)selectSettingsTab(tab.dataset.settingsTab);if(event.target.closest('[data-reset-preferences]')){preferenceStore.reset();themeChoice='system';onTheme(themeChoice);refreshSettings();}if(event.target.closest('[data-test-sound]'))onTestSound?.();});
+  panel.addEventListener('keydown',event=>{
+    const tab=event.target.closest('[role="tab"][data-settings-tab]');if(!tab)return;
+    const tabs=[...panel.querySelectorAll('[role="tab"][data-settings-tab]')],index=tabs.indexOf(tab);
+    const next=event.key==='ArrowRight'?(index+1)%tabs.length:event.key==='ArrowLeft'?(index+tabs.length-1)%tabs.length:event.key==='Home'?0:event.key==='End'?tabs.length-1:null;
+    if(next!==null){event.preventDefault();selectSettingsTab(tabs[next].dataset.settingsTab,{focus:true});}
+  });
   $('theme-select').addEventListener('change',event=>{themeChoice=event.target.value;onTheme(themeChoice);});
   refreshSettings();
   return {openSettings,openTutorial,handleAction,stash,persist,refreshSettings,refreshTutorial:renderTutorial};

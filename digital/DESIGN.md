@@ -232,3 +232,16 @@ scores or replaces the four formative reflections. Native BM/English roots follo
 host settings, keep session drafts across ordinary navigation and clear drafts
 when the account session changes. See module/DESIGN.md and module/UX-CONTRACT.md
 for mathematical boundaries, draft ownership and accessibility details.
+
+
+## Forty-screen mockup completion — 4 November 2026
+
+Concept `4d83561667cf74fbe5cd6144ce5e3e7f660a75cd` governs the full application.
+Home uses navy type and a geometry kit; game views use R1/R2 scenes, question
+content and complete independent five-card banks. Duel uses a compact live
+strip, scanner rail and adjacent solid/net banks on wide screens. Auth uses
+separate editorial/art and form areas; signed-in utilities share the real
+workspace rail. Settings/help use wide existing dialogs. Notes use an inner
+contents rail, canonical model/net and concise concept cards with full material
+in native disclosures. Existing tokens, fonts, fields and domain owners stay
+canonical; sceneIllustration reuses shapeArt for decorative clusters.

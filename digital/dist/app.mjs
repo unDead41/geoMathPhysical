@@ -10,7 +10,7 @@ import {ClassroomCloud} from './cloud.mjs';
 import {createPortal} from './portal.mjs';
 import {initTheme,setTheme} from './theme.mjs';
 import {createMusic} from './music.mjs';
-import moduleHtml from '../vendor/module-v1.6.1.html';
+import moduleHtml from '../vendor/module-v1.6.2.html';
 import {createModuleBridge} from './module-settings.mjs';
 
 import {createI18n, translate, localizeQuestion, shapeName} from './i18n.mjs';
@@ -21,6 +21,7 @@ import { Game, VERSION, ROUND_SIZE, PRACTICE_SIZE, SHAPES, formatTime, validateG
 import { nextVisualPlan } from './visuals.mjs';
 import { ScoreStore, csvScores, SCORE_KEY, LEGACY_SCORE_KEY } from './storage.mjs';
 import { shapeArt, icon, brandArt, describeShape } from './art.mjs';
+import {sceneIllustration} from './entry-art.mjs';
 
 const $ = id => document.getElementById(id);
 const pretty = value => formatRichText(value,locale.language);
@@ -186,6 +187,7 @@ function renderDuelViews(){
   $('duel-live-message').textContent=duelClient.error?t(duelErrorKey()):'';
   const leaveError=$('dialog-content').querySelector('.duel-leave-error');if(leaveError)leaveError.textContent=duelClient.error?t(duelErrorKey()):'';
   $('duel-live').hidden=game?.mode!=='duel';
+  const kit=$('duel-screen').querySelector('.duel-kit');if(kit&&!kit.querySelector('.geometry-scene'))kit.innerHTML=sceneIllustration({variant:'cluster'});
   $('duel-result').hidden=screen!=='result'||lastResult?.mode!=='duel'||!s;
   if(s){
     $('duel-room-code').value=s.room.code;
@@ -197,7 +199,7 @@ function renderDuelViews(){
     const verdict=duelVerdict(s);
     $('duel-result').dataset.verdict=verdict;
     if(lastResult?.mode==='duel')$('result-title').textContent=t(s.room.status==='complete'?'duel.ui.resultTitle':'duel.finished');
-    duelMarkup('duel-result-content',`<div class="duel-result-heading"><span class="eyebrow">GEOMATH DUEL</span><h2>${t(verdict)}</h2>${reason?`<p>${t(reason)}</p>`:''}</div><div class="duel-result-board"><div class="duel-players">${duelPlayersMarkup(s,'result')}</div><div class="duel-result-emblem" aria-hidden="true">${icon(s.room.status!=='complete'?'clock':s.room.winnerId?'trophy':'check')}</div></div><p class="duel-result-scope">${t('duel.resultScope')}</p>`);
+    duelMarkup('duel-result-content',`<div class="duel-result-heading"><span class="eyebrow">GEOMATH DUEL</span><h2>${t(verdict)}</h2>${reason?`<p>${t(reason)}</p>`:''}</div><div class="duel-result-board"><div class="duel-players">${duelPlayersMarkup(s,'result')}</div><div class="duel-result-emblem" aria-hidden="true">${sceneIllustration({variant:'cluster'})}<span class="duel-verdict-icon">${icon(s.room.status!=='complete'?'clock':s.room.winnerId?'trophy':'check')}</span></div></div><p class="duel-result-scope">${t('duel.resultScope')}</p>`);
     if(closed&&s.room.status!=='complete')$('duel-countdown').textContent=t('duel.closed');
     else if(s.room.status==='waiting')$('duel-countdown').textContent=t(s.opponent?'duel.waitReady':'duel.waitFriend');
   }
@@ -404,10 +406,12 @@ function renderChoices(kind, order) {
   }).join('');
 }
 
-const emptyScanner = target => `<span class="scan-target"><span class="target-corner tl"></span><span class="target-corner tr"></span><span class="target-corner bl"></span><span class="target-corner br"></span>${icon(target === 'r2' && game.stage === 'solid' ? 'lock':'cursor')}</span><span class="scanner-placeholder">${target==='r1'?t("Letak bongkah di sini"):game.stage==='solid'?t("Kemudian letak bentangan"):t("Letak kad bentangan di sini")}</span>`;
+const emptyScanner = target => `<span class="scan-target"><span class="target-corner tl"></span><span class="target-corner tr"></span><span class="target-corner bl"></span><span class="target-corner br"></span><b class="scanner-pad-id" aria-hidden="true">${target.toUpperCase()}</b>${icon(target === 'r2' && game.stage === 'solid' ? 'lock':'cursor')}</span><span class="scanner-placeholder">${target==='r1'?t("Letak bongkah di sini"):game.stage==='solid'?t("Kemudian letak bentangan"):t("Letak kad bentangan di sini")}</span>`;
 
 function renderState() {
   if (!game) return;
+  $('game-screen').dataset.mode=game.mode;
+  $('game-screen').dataset.stage=game.stage;
   $('session-mode').textContent=modeTitle(game.mode);
   $('score-total').textContent=' / '+game.total;
   const busy = !game.interactive || roomSending || !!roomPending || (game.mode==='duel'&&(duelBusy||!duelClient.connected||duelClient.pending||duelClient.clock()<(duelClient.snapshot?.me.nextReadyAt||duelClient.snapshot?.room.startsAt||0)));
@@ -433,7 +437,7 @@ function renderState() {
   $('step-progress').hidden=game.reviewing||game.status==='feedback';
   $('step-progress').textContent=t('ease.stepProgress',{step:game.stage==='solid'?1:2});
   $('input-instruction').textContent=t(window.matchMedia('(pointer:coarse)').matches||navigator.maxTouchPoints>0?'ease.tapInstruction':'ease.pointerInstruction');
-  $('stage-instruction').textContent = game.reviewing ? t("Lihat pasangan yang betul di bawah") : game.status==='feedback' ? t("Pasangan tepat! +1 markah") : game.stage==='solid'?t('ease.stepSolid'):t('ease.stepNet');
+  $('stage-instruction').textContent = game.reviewing ? t("Lihat pasangan yang betul di bawah") : game.status==='feedback' ? t("Pasangan tepat! +1 markah") : game.mode==='duel'?t(game.stage==='solid'?'ease.stepSolid':'ease.stepNet'):t(game.stage==='solid'?'game.view.stageSolid':'game.view.stageNet');
   document.querySelectorAll('.choice').forEach(button => {
     const isSelected = selected && button.dataset.kind === selected.kind && button.dataset.shape === selected.shape;
     button.setAttribute('aria-pressed', String(!!isSelected));
@@ -551,18 +555,16 @@ function renderCorrection(){
   $('correction-time-note').textContent=t(game.mode==='duel'?'duel.reviewClock':'Fahami padanannya dahulu. Masa dijeda.');
   $('game-screen').classList.add('is-review');$('correction-panel').hidden=false;
   $('correction-outcome').textContent=t(answer.outcome==='wrong'?'PERCUBAAN TAMAT · +0 MARKAH':'DILANGKAU · +0 MARKAH');
-  $('correction-title').textContent=t('Jawapan betul:')+' '+shapeName(q.shape,locale.language);
+  $('correction-title').textContent=t(answer.outcome==='wrong'?'game.view.reviewBanner':'game.view.skippedBanner');
   $('correction-attempt').textContent=answer.failedAt?t('correction.attempt',{target:answer.failedAt==='solid'?'R1':'R2',shape:shapeName(answer.attempts[answer.failedAt],locale.language),note:answer.failedAt==='net'?t('Bongkah R1 anda sudah betul.'):''}):t('Soalan ini dilangkau. Lihat pasangan yang sepadan.');
   $('correction-explanation').innerHTML=pretty(t(SHAPE_NOTES[q.shape]));
-  if(refreshingLanguage){
-    const model=$('correction-pair').querySelector('.correct-model'),net=$('correction-pair').querySelector('.correct-net');
-    model.querySelector('span').textContent='R1 · '+shapeName(q.shape,locale.language);
-    net.querySelector('span').textContent=t('R2 · Bentangannya');
-    model.querySelector('svg').setAttribute('aria-label',describeShape(q.shape,'solid',locale.language));
-    net.querySelector('svg').setAttribute('aria-label',describeShape(q.shape,'net',locale.language));
-  }else{
-    $('correction-pair').innerHTML=`<div class="correct-model">${shapeArt(q.shape,'solid',false,visualPlan.solid[q.shape],locale.language)}<span>R1 · ${shapeName(q.shape,locale.language)}</span></div><span class="correct-link" aria-hidden="true">${icon('arrow')}</span><div class="correct-net">${shapeArt(q.shape,'net',false,visualPlan.net[q.shape],locale.language)}<span>${t('R2 · Bentangannya')}</span></div>`;
-  }
+  const pairMarkup=attempts=>['solid','net'].map((kind,index)=>{
+    const shape=attempts[kind],cardClass=index===0?'correct-model':'correct-net';
+    return `${index?'<span class="correct-link" aria-hidden="true"></span>':''}<div class="${cardClass}">${shape?shapeArt(shape,kind,false,visualPlan[kind][shape],locale.language):`<span class="unscanned-choice"><span aria-hidden="true">—</span><span>${t('game.view.notScanned')}</span></span>`}<span>R${index+1}${shape?' · '+escapeHtml(shapeName(shape,locale.language)):''}</span></div>`;
+  }).join('');
+  // Only completed feedback owns this projection. Live Duel questions expose no answer.
+  $('correction-attempt-pair').innerHTML=pairMarkup(answer.attempts);
+  $('correction-pair').innerHTML=pairMarkup({solid:q.shape,net:q.shape});
   if(!refreshingLanguage)$('continue-button').disabled=!game.reviewReady(now());
   $('continue-button').innerHTML=$('continue-button').disabled?t('Perhatikan jawapan…'):t(game.index===game.total-1?'Lihat analisis':'Soalan seterusnya')+' '+icon('arrow');
 }
@@ -931,7 +933,7 @@ function requestHome(){
 
 function miniScoresMarkup(scores){
   if(!scores.length)return `<div class="empty-scores">${icon('trophy')}<h3>${t("Skor pertama menanti")}</h3><p>${t("Lengkapkan 10 soalan untuk merekodkan skor pertama.")}</p></div>`;
-  return scores.slice(0,5).map((r,i)=>`<div class="mini-score ${r.id===lastResult?.id?'mine':''}"><span class="mini-rank">${i+1}</span><span class="mini-player"><b>${escapeHtml(r.player.name)}${r.id===lastResult?.id?t("score.mine"):''}</b><small>${escapeHtml(r.player.className)} · ${t("score.wrong",{count:r.mistakes})}</small></span><span class="mini-points">${r.score}<small>${formatTime(r.elapsed)}</small></span></div>`).join('');
+  return scores.slice(0,5).map((r,i)=>`<div class="mini-score ${r.id===lastResult?.id?'mine':''}"><span class="mini-rank score-rank" data-rank="${i+1}">${i+1}</span><span class="mini-player"><b>${escapeHtml(r.player.name)}${r.id===lastResult?.id?t("score.mine"):''}</b><small>${escapeHtml(r.player.className)}${r.player.className?' · ':''}${t("score.wrong",{count:r.mistakes})}</small></span><span class="mini-points">${r.score} / 10<small>${formatTime(r.elapsed)}</small></span></div>`).join('');
 }
 function renderMiniScores(){ $('result-leaderboard').innerHTML=miniScoresMarkup(store.read());storageStatus(); }
 
@@ -939,9 +941,9 @@ function openScores(message=''){
   if(!refreshingLanguage)scoreNotice=message;
   const scores=store.read(),legacy=store.readLegacy();storageStatus();
   const visible=scoresExpanded?scores:scores.slice(0,10);
-  const table=scores.length?`<div class="score-table-wrap"><table class="score-table"><caption class="sr-only">${t("Skor terbaik dalam pelayar ini")}</caption><thead><tr><th scope="col">#</th><th scope="col">${t("Pemain")}</th><th scope="col">${t("Kelas")}</th><th scope="col">${t("Markah")}</th><th scope="col">${t("Salah / Masa")}</th></tr></thead><tbody>${visible.map((r,i)=>`<tr class="${r.id===lastResult?.id?'mine':''}"><td>${i+1}</td><td><b>${escapeHtml(r.player.name)}</b><small>${escapeHtml(t(r.player.category))}</small></td><td>${escapeHtml(r.player.className)}</td><td><b>${r.score} / 10</b></td><td>${t("score.shortWrong",{count:r.mistakes})}<small>${formatTime(r.elapsed)}</small></td></tr>`).join('')}</tbody></table></div>`:`<div class="empty-scores">${icon('trophy')}<h3>${t("Belum ada skor")}</h3><p>${t("Lengkapkan 10 soalan untuk merekodkan skor pertama.")}</p></div>`;
+  const table=scores.length?`<div class="score-table-wrap"><table class="score-table"><caption class="sr-only">${t("Skor terbaik dalam pelayar ini")}</caption><thead><tr><th scope="col">${t('game.view.rank')}</th><th scope="col">${t("Pemain")}</th><th scope="col">${t("Markah")}</th><th scope="col">${t("Masa")}</th></tr></thead><tbody>${visible.map((r,i)=>`<tr class="${r.id===lastResult?.id?'mine':i===0?'top-score':''}"><td><span class="score-rank" data-rank="${i+1}">${i+1}</span></td><td><b>${escapeHtml(r.player.name)}</b><small>${escapeHtml(t(r.player.category))}${r.player.className?' · '+escapeHtml(r.player.className):''}</small></td><td><b>${r.score} / 10</b><small>${t("score.shortWrong",{count:r.mistakes})}</small></td><td>${formatTime(r.elapsed)}</td></tr>`).join('')}</tbody></table></div>`:`<div class="score-table-wrap"><div class="empty-scores">${icon('trophy')}<h3>${t("Belum ada skor")}</h3><p>${t("Lengkapkan 10 soalan untuk merekodkan skor pertama.")}</p></div></div>`;
   const legacyMarkup=legacy.length?`<details class="legacy-scores"><summary>${t("legacy.count",{count:legacy.length})}</summary><p>${t("Peraturan lama membenarkan cuba semula. Rekod ini disimpan berasingan daripada kedudukan satu percubaan.")}</p><ol>${legacy.map(r=>`<li><b>${escapeHtml(r.player.name)}</b> · ${escapeHtml(r.player.className)} · ${r.score}/10 · ${formatTime(r.elapsed)}</li>`).join('')}</ol></details>`:'';
-  openDialog('scores',t("Papan skor"),`<p class="score-info"><b>${t("Mod satu percubaan.")}</b> ${store.failed?t("Skor sesi ini sahaja; simpanan pelayar tidak tersedia."):t("Rekod dalam pelayar ini sahaja. Maksimum 50 skor terbaik.")} ${t("Skor tertinggi dahulu, kemudian soalan salah paling sedikit dan masa terpantas.")}</p>${message?`<p class="help-note" role="status">${escapeHtml(t(message))}</p>`:''}${table}${legacyMarkup}<div class="score-toolbar"><span>${t("score.records",{shown:visible.length,total:scores.length})}</span>${scores.length>10&&!scoresExpanded?`<button class="button button-outline" data-dialog-action="show-all">${t("Lihat semua skor")}</button>`:''}<button class="button button-outline" data-dialog-action="export" ${!scores.length?'disabled':''}>${icon('download')} ${t('Eksport CSV')}</button><button class="button button-quiet score-delete" data-dialog-action="erase" ${!scores.length&&!legacy.length?'disabled':''}>${icon('trash')} ${t('Padam skor')}</button></div><div class="dialog-actions"><button class="button button-primary" data-dialog-action="close">${screen==='game'?t("Sambung permainan"):t("Tutup papan skor")}</button></div>`);
+  openDialog('scores',t('game.view.scoreTitle'),`<div class="quiz-scoreboard"><div class="quiz-scoreboard-art" aria-hidden="true">${sceneIllustration({variant:'cluster'})}</div><div class="quiz-scoreboard-main"><p class="score-scope-chip">${t('game.view.scope')}</p><p class="score-info"><b>${t("Mod satu percubaan.")}</b> ${store.failed?t("Skor sesi ini sahaja; simpanan pelayar tidak tersedia."):t("Rekod dalam pelayar ini sahaja. Maksimum 50 skor terbaik.")} ${t("Skor tertinggi dahulu, kemudian soalan salah paling sedikit dan masa terpantas.")}</p>${message?`<p class="help-note" role="status">${escapeHtml(t(message))}</p>`:''}${table}${legacyMarkup}<div class="score-toolbar"><span>${t("score.records",{shown:visible.length,total:scores.length})}</span>${scores.length>10&&!scoresExpanded?`<button class="button button-outline" data-dialog-action="show-all">${t("Lihat semua skor")}</button>`:''}<button class="button button-outline" data-dialog-action="export" ${!scores.length?'disabled':''}>${icon('download')} ${t('Eksport CSV')}</button><button class="button button-quiet score-delete" data-dialog-action="erase" ${!scores.length&&!legacy.length?'disabled':''}>${icon('trash')} ${t('Padam skor')}</button></div><div class="dialog-actions"><button class="button button-primary" data-dialog-action="close">${screen==='game'?t("Sambung permainan"):t("Tutup papan skor")}</button></div></div></div>`);
 }
 
 function openErase(){
@@ -977,12 +979,14 @@ function finishGame(){
 }
 function renderResult(){
   const r=lastResult;
-  $('result-title').textContent=r.mode==='duel'?t('duel.ui.resultTitle'):r.score===r.total?t("Hebat! Semua pasangan tepat."):r.score/r.total>=.7?t("Bagus, anda semakin mahir!"):t("Teruskan mencuba, teruskan belajar.");
+  $('result-screen').dataset.mode=r.mode;
+  $('result-title').textContent=t(r.mode==='duel'?'duel.ui.resultTitle':'game.view.finished');
+  $('solo-result-art').innerHTML=sceneIllustration({variant:'cluster'});
   const homeAction=$('result-screen').querySelector('.result-actions [data-action="home"]');
   homeAction.dataset.i18n=r.mode==='duel'?'Kembali ke mula':'Tukar pemain';homeAction.textContent=t(homeAction.dataset.i18n);
   $('result-player').textContent=r.player.name+' · '+t(r.player.category)+(r.player.className?' · '+r.player.className:'');
   $('result-score').textContent=r.score;
-  $('result-total').textContent=t('mode.points',{total:r.total});
+  $('result-total').textContent=' / '+r.total;
   $('practice-result-note').hidden=r.mode==='quiz';
   $('practice-result-note').textContent=t(r.mode==='review'?'ease.reviewScope':r.mode==='duel'?'duel.resultScope':'mode.practiceResult',{total:r.total});
   $('replay-label').textContent=t(r.mode==='review'?'ease.reviewRepeat':r.mode==='duel'?'duel.new':r.mode==='practice'?'mode.repeatPractice':'Main lagi');
@@ -991,6 +995,7 @@ function renderResult(){
   const rank=!roomState&&r.mode==='quiz'?store.read().findIndex(s=>s.id===r.id)+1:0;
   $('result-message').textContent=t("result.summary",{score:r.score,mistakes:r.mistakes,skipped:r.skipped})+(rank>0?t("result.rank",{rank}):'');
   $('result-time').textContent=formatTime(r.elapsed);
+  $('result-practice-count').textContent=t('game.view.toPractise',{count:reviewQuestionIds(r,QUESTIONS).length});
   $('result-first').textContent=`${analyseAnswers(r.answers).byStage[0].correct} / ${r.total}`;
   $('result-mistakes').textContent=r.mistakes;
   $('result-hints').textContent=r.hints;
@@ -1034,6 +1039,8 @@ function renderAnalysis(result){
   // A completed classroom attempt can open directly, without rendering a question first.
   if(!visualPlan)visualPlan=nextVisualPlan(null);
   const a=analyseAnswers(result.answers),weak=a.weakShapes.filter(row=>row.wrong),advice=[];
+  $('result-review-table').innerHTML=`<table class="result-compact-table"><caption class="sr-only">${t('game.view.reviewTitle')}</caption><thead><tr><th scope="col">${t('game.view.number')}</th><th scope="col">${t('game.view.yourAnswer')}</th><th scope="col">${t('game.view.outcome')}</th></tr></thead><tbody>${result.answers.map((answer,index)=>`<tr><th scope="row">${index+1}.</th><td><span class="answer-attempts">${['solid','net'].map((kind,i)=>`<span>R${i+1}: ${escapeHtml(answer.attempts[kind]?shapeName(answer.attempts[kind],locale.language):t('game.view.notScanned'))}</span>`).join('')}</span></td><td><span class="answer-result ${answer.outcome}">${icon(answer.outcome==='correct'?'check':answer.outcome==='skipped'?'skip':'help')}${t(answer.outcome==='correct'?'game.view.correct':answer.outcome==='skipped'?'game.view.skipped':'game.view.review')}</span></td></tr>`).join('')}</tbody></table>`;
+  $('result-shape-table').innerHTML=`<table class="result-compact-table shape-summary-table"><caption class="sr-only">${t('game.view.shapeTitle')}</caption><tbody>${a.byShape.map(row=>`<tr><th scope="row"><span class="shape-summary-name">${shapeArt(row.id,'solid',true,visualPlan.solid[row.id])}${escapeHtml(shapeName(row.id,locale.language))}</span></th><td>${row.total?`${row.correct} / ${row.total}`:t('Belum dicuba')}</td></tr>`).join('')}</tbody><tfoot><tr><th scope="row">${t('game.view.total')}</th><td>${result.score} / ${result.total}</td></tr></tfoot></table>`;
   let title,copy;
   if(result.score===result.total){title=t('Semua pasangan tepat!');copy=result.hints?t('analysis.hints',{count:result.hints}):t('Anda berjaya mengenal bongkah dan memadankan semua bentangan dalam pusingan ini.');}
   else if(!result.mistakes){title=t(result.skipped===result.total?'Cuba menjawab untuk melihat kekuatan anda.':'Padanan yang anda cuba sudah tepat.');copy=t('analysis.skipped',{count:result.skipped});}

@@ -9,6 +9,8 @@ import {DUEL_SESSION_KEY,DUEL_ENDPOINT} from '../dist/duel.mjs';
 const harness=await startHarness();
 harness.evidence=path.join(root,'docs/help-support-evidence',process.env.HELP_EVIDENCE_RUN||new Date().toISOString().replace(/[:.]/g,'-'));fs.mkdirSync(harness.evidence,{recursive:true});
 const receipts=[],cases=[];
+// The header question mark opens the guide; the footer owns the Help centre.
+const helpButton=page=>page.locator('button[data-action="help"]').first();
 async function fresh(options={}){const test=await newCase(harness,options);cases.push(test);return test;}
 const fill=async page=>{for(const [id,value] of Object.entries({description:'The scanner did not respond.',steps:'Select a card, then tap the scanner.',expected:'The card should be scanned.',actual:'The selected card stays on the shelf.'}))await page.locator('#support-'+id).fill(value);};
 const preview=async page=>{await page.locator('[data-help-action=report]').click();await fill(page);await page.locator('#support-form [type=submit]').click();return page.locator('#support-preview').inputValue();};
@@ -17,9 +19,9 @@ const noServices=async context=>{await context.route('https://**/*',route=>route
 try{
   for(const language of ['ms','en']){
     const test=await fresh({viewport:{width:language==='ms'?1365:390,height:language==='ms'?980:844},hasTouch:language==='en',setup:noServices});const {page}=test;
-    await settings(page,{language});await page.locator('#help-button').press('Enter');
+    await settings(page,{language});await helpButton(page).press('Enter');
     assert.equal(await page.locator('#dialog-title').innerText(),language==='ms'?'Pusat Bantuan':'Help centre');
-    assert.equal(await page.locator('.help-guides>details').count(),7);assert.equal(await page.locator('.help-more[open]').count(),0);
+    assert.equal(await page.locator('.help-guides>details').count(),7);assert.equal(await page.locator('.help-guides>details[open]').count(),0,'FAQ answers start collapsed');
     await page.locator('[data-demo-action=pause]').click();assert.equal(await page.locator('[data-help-demo]').getAttribute('data-demo-state'),'paused');
     await page.locator('[data-demo-action=replay]').click();assert.equal(await page.locator('[data-help-demo]').getAttribute('data-demo-state'),'playing');await fits(page,'Help '+language);
     await screenshot(harness,page,'help-'+language+(language==='ms'?'-desktop':'-phone'));
@@ -32,7 +34,7 @@ try{
     assert.equal(await page.locator('#support-preview').evaluate(n=>n.selectionEnd-n.selectionStart),report.length);
     await fits(page,'Preview '+language);await screenshot(harness,page,'preview-'+language);
     for(let i=0;i<12;i++){await page.keyboard.press('Tab');assert.equal(await page.evaluate(()=>document.activeElement===document.body||!!document.activeElement.closest('#app-dialog')),true,'Native modal prevents focus reaching background controls');}
-    await page.keyboard.press('Escape');assert.equal(await page.locator('#help-button').evaluate(n=>n===document.activeElement),true);
+    await page.keyboard.press('Escape');assert.equal(await helpButton(page).evaluate(n=>n===document.activeElement),true);
     await page.locator('#settings-button').click();await page.locator('[data-dialog-action=help-open]').click();assert.equal(await page.locator('[data-help-view=home]').isVisible(),true);
     await page.locator('[data-help-action=report]').click();assert.equal(await page.locator('#support-description').inputValue(),'The scanner did not respond.');
     assert.equal(test.requests.filter(u=>new URL(u).hostname.endsWith('supabase.co')).length,0,'Help and report make no service calls');
@@ -42,7 +44,7 @@ try{
     const test=await fresh({viewport:{width:320,height:844},setup:async context=>{
       await noServices(context);await context.addInitScript(()=>Object.defineProperty(navigator,'clipboard',{configurable:true,value:{writeText:()=>Promise.reject(new DOMException('Denied','NotAllowedError'))}}));
     }});const {page}=test;await settings(page,{language:'en',textSize:150,theme:'dark'});
-    await page.locator('#help-button').click();await page.locator('[data-help-action=report]').click();await fill(page);
+    await helpButton(page).click();await page.locator('[data-help-action=report]').click();await fill(page);
     await page.locator('#support-description').fill('');await page.locator('#support-form [type=submit]').click();
     assert.equal(await page.evaluate(()=>document.activeElement.id),'support-description');
     assert.equal(await page.locator('#support-description').evaluate(n=>{const r=n.getBoundingClientRect(),d=n.closest('dialog').getBoundingClientRect();return r.top>=d.top&&r.top<d.bottom;}),true,'First invalid field scrolls into the modal viewport');
@@ -61,15 +63,15 @@ try{
       await context.addInitScript(()=>Object.defineProperty(navigator,'clipboard',{configurable:true,value:{async writeText(text){window.__qaCopiedReport=text;}}}));
     }});const {page}=test;
     await startGuest(page);const q=roundFor()[0];await choice(page,'solid',q.shape).click();
-    const initial=await snapshot(page);await page.locator('#help-button').click();const clock=await page.locator('#time-value').innerText();await page.waitForTimeout(1200);assert.equal(await page.locator('#time-value').innerText(),clock,'Solo clock pauses');
+    const initial=await snapshot(page);await helpButton(page).click();const clock=await page.locator('#time-value').innerText();await page.waitForTimeout(1200);assert.equal(await page.locator('#time-value').innerText(),clock,'Solo clock pauses');
     const report=await preview(page);assert.match(report,/offline/);assert.match(report,new RegExp(q.id));assert.match(report,/R1/);
     await page.locator('[data-help-action=copy]').click();await page.waitForFunction(()=>!!window.__qaCopiedReport);
     assert.equal(await page.evaluate(()=>window.__qaCopiedReport),report);await page.locator('#dialog-close').click();assert.deepEqual(await snapshot(page),initial);
     await page.locator('#r1').click();await page.locator('#hint-button').click();await choice(page,'net',q.shape).click();
-    const r2=await snapshot(page);await page.locator('#help-button').click();assert.match(await preview(page),/R2/);await page.locator('#dialog-close').click();assert.deepEqual(await snapshot(page),r2);
+    const r2=await snapshot(page);await helpButton(page).click();assert.match(await preview(page),/R2/);await page.locator('#dialog-close').click();assert.deepEqual(await snapshot(page),r2);
     const wrong=await page.locator(`.choice[data-kind=net]:not([data-shape=${q.shape}])`).first().getAttribute('data-shape');await choice(page,'net',wrong).click();await page.locator('#r2').click();
     assert.equal(await page.locator('#correction-panel').isVisible(),true);const review=await snapshot(page);
-    await page.locator('#help-button').click();const text=await preview(page);assert.match(text,/R2/);assert.match(text,/Semakan jawapan/);
+    await helpButton(page).click();const text=await preview(page);assert.match(text,/R2/);assert.match(text,/Semakan jawapan/);
     await screenshot(harness,page,'offline-review-report-r2');await page.locator('#dialog-close').click();assert.deepEqual(await snapshot(page),review);
     assert.equal(test.requests.length,0,'Standalone help and play make zero HTTP requests offline');receipts.push({case:'offline-storage-denied-copy-solo-R1-R2-review',passed:true});await test.done();cases.pop();
   }
@@ -77,7 +79,7 @@ try{
     const test=await fresh({setup:noServices});const {page}=test;await settings(page,{language:'en'});await page.locator('#module-button').click();
     const frame=page.frameLocator('#module-frame');await frame.locator('#module-help').waitFor({state:'visible'});
     assert.equal(await frame.locator('#module-help').innerText(),'Help centre');
-    await frame.locator('#learn-labs').click();await frame.locator('#net-mode-editor').click();await frame.locator('#guided-prediction').fill('A sample prediction retained during help.');
+    await frame.locator('#learn-labs').click();await frame.locator('#lab-net').click();await frame.locator('.lab-mode-options > summary').click();await frame.locator('#net-mode-editor').click();await frame.locator('#guided-prediction').fill('A sample prediction retained during help.');
     const source=await page.locator('#module-frame').getAttribute('srcdoc');const before=await frame.locator('#guided-prediction').inputValue();
     await frame.locator('#module-help').click();await page.locator('[data-help-view=home]').waitFor({state:'visible'});
     const report=await preview(page);assert.match(report,/Learning module/);assert.match(report,/Question ID: Not applicable/);
@@ -99,7 +101,7 @@ try{
         await route.fulfill({json:{ok:true,protocol:2,serverNow:Date.now(),room:{id:roomId,code:'876543',status:'playing',total:10,startsAt:started,deadlineAt:started+900000},currentQuestion:{id:'duel-0',index:0,topic:'properties',copy:Object.fromEntries(['ms','en'].map(language=>{const q=localizeQuestion(round[0],language);return [language,{prompt:q.prompt,lines:q.lines}];}))},me:{id:'me',name:'PRIVATE_DUEL_ALIAS',score:0,answered:0,seq:0,elapsed:0,mistakes:0,skipped:0,hints:0,hintUsed:false,reviewPending:false,stage:'solid',attempts:{solid:null,net:null},answers:[],nextReadyAt:0,finishedAt:null},opponent:{id:'friend',name:'PRIVATE_OPPONENT',score:0,answered:0,finishedAt:null}}});
       });
     }});const {page}=test;await startGuest(page,{mode:'duel'});await page.locator('#game-screen').waitFor({state:'visible'});
-    await choice(page,'solid',round[0].shape).click();const before=await snapshot(page);await page.locator('#help-button').click();const clock=await page.locator('#time-value').innerText();
+    await choice(page,'solid',round[0].shape).click();const before=await snapshot(page);await helpButton(page).click();const clock=await page.locator('#time-value').innerText();
     await page.waitForTimeout(1250);assert.notEqual(await page.locator('#time-value').innerText(),clock,'Duel clock keeps running');
     const report=await preview(page);assert.doesNotMatch(report,/876543|PRIVATE_|aaaaaaaa/);assert.match(report,/Duel/);await page.locator('#dialog-close').click();assert.deepEqual(await snapshot(page),before);
     receipts.push({case:'Duel-clock-and-state-intercepted-transport',passed:true,actions});await test.done();cases.pop();
@@ -122,7 +124,7 @@ try{
       });
     }});const {page}=test;await page.locator('#welcome-account-button').click();await page.locator('[data-portal-action=join-room]').first().click();await page.locator('[data-portal-action=play]').click();await page.locator('#game-screen').waitFor({state:'visible'});
     await page.locator('#hint-button').click();await choice(page,'net',round[0].shape).click();const before=await snapshot(page);
-    await page.locator('#help-button').click();const clock=await page.locator('#time-value').innerText();await page.waitForTimeout(1250);assert.notEqual(await page.locator('#time-value').innerText(),clock,'Classroom server estimate keeps running');
+    await helpButton(page).click();const clock=await page.locator('#time-value').innerText();await page.waitForTimeout(1250);assert.notEqual(await page.locator('#time-value').innerText(),clock,'Classroom server estimate keeps running');
     const report=await preview(page);assert.match(report,/Bilik kelas/);assert.match(report,/R2/);assert.doesNotMatch(report,/PRIVATE_|private@|fixture-access|fixture-refresh|654321/);
     await page.locator('#dialog-close').click();assert.deepEqual(await snapshot(page),before);receipts.push({case:'classroom-clock-accepted-R1-hint-selection-intercepted-transport',passed:true,actions});await test.done();cases.pop();
   }

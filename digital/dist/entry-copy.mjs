@@ -69,7 +69,7 @@ export const ENTRY_COPY = {
   'entry.demoPosition':['Kedudukan tontonan contoh','Example playback position'],
   'entry.demoReady':['Tekan main untuk melihat contoh padanan kubus.','Press play to see an example with a cube.'],
   'entry.demoDone':['Selesai! Dua padanan betul memberikan +1 markah.','Done! Two correct matches earn +1 point.'],
-  'entry.keyboard':['Kawalan: klik atau sentuh kad, kemudian pengimbas. Papan kekunci: A–E untuk memilih, Enter untuk imbas.','Controls: click or tap a card, then its scanner. Keyboard: A–E to choose, Enter to scan.'],
+  'entry.keyboard':['Kawalan: klik atau sentuh kad, kemudian pengimbas. Papan kekunci: Tab untuk bergerak, Enter atau Space untuk memilih dan mengimbas.','Controls: click or tap a card, then its scanner. Keyboard: Tab to move, Enter or Space to choose and scan.'],
   'entry.understood':['Saya faham, mula','Got it, let’s play'],
   'entry.guideReturn':['Kembali ke permainan','Return to game'],
   'entry.themeLight':['Tukar kepada tema cerah','Switch to light theme'],

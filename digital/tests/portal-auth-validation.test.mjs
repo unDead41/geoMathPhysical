@@ -1,3 +1,4 @@
+import {renderAuthLayout} from '../dist/auth-view.mjs';
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -145,7 +146,7 @@ test('reset rejects mismatched or out-of-range confirmation and focuses the mark
 });
 
 test('actual auth rendering exposes email forms and derives reset exclusively from a verified recovery session', () => {
-  const context = vm.createContext({pt,
+  const context = vm.createContext({renderAuthLayout,pt,
     cloud: {ready: true, recoveryRequired: false}, authMode: 'signup', authEmail: 'nama@contoh.com',
     document: {title: ''}, callbackError: () => '', emailCooldownSeconds: () => 60,
     geometryKit: () => '', icon: () => '', esc: value => String(value).replace(/[&<>"']/g, '')
@@ -187,13 +188,13 @@ test('actual auth rendering exposes email forms and derives reset exclusively fr
 
 test('recovery and invalid callback screens take precedence over signed-in dashboards and legacy codes', () => {
   const content = {innerHTML: '', querySelector: () => null};
-  const context = vm.createContext({pt,
+  const context = vm.createContext({renderAuthLayout,pt,
     cloud: {session: {user: {id: 'verified-user'}}, recoveryRequired: true},
     active: true, destroyed: false, composing: false, renderDeferred: false, initializing: false,
     profileView: false, securityView: false, callbackErrorDismissed: false, authOnly: false, recoveryCode: 'old-code', snapshot: {}, profile: {}, roomId: null,
     clearSecurityFields() {},
     content, updateProfilePreview() {}, updateBusy() {}, renderAuth: () => 'AUTH', renderRecovery: () => 'LEGACY',
-    renderStudent: () => 'DASHBOARD', renderTeacher: () => 'DASHBOARD', isTeacher: () => false
+    renderStudent: () => 'DASHBOARD', renderTeacher: () => 'DASHBOARD', renderWorkspaceShell: html => html, isTeacher: () => false
   });
   vm.runInContext(`${functionSource('function signedIn()', 'function now(')}\n${functionSource('function render({', 'function updateEmailCooldown(')}`, context);
   vm.runInContext('render({preserve: false})', context);
@@ -215,7 +216,7 @@ test('actual auth handler sends the email API payloads, surfaces provider errors
   function harness({session = null, recovery = false, result = {}, failure = ''} = {}) {
     const calls = [], notices = [];
     const message = {textContent: '', setAttribute() {}, focus() { this.focused = true; }};
-    const context = vm.createContext({pt,
+    const context = vm.createContext({renderAuthLayout,pt,
       active: true, epoch: 0, operation: 0, pending: '', authPending: false, refreshAgain: false,
       authMode: 'login', authOnly: false, authEmail: '', callbackErrorDismissed: false,
       knownSession: '', knownRecovery: false, knownCallbackError: '', profile: null,
