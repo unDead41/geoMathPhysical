@@ -119,7 +119,10 @@ async function practice(harness,track,{mixed=false,offline=false,rich=false}={})
   assert.equal(await page.locator('#result-details').getAttribute('open'),null);await page.locator('#result-details > summary').click();assert.equal(await page.locator('.review-card').count(),15);assert.equal(await page.locator('.review-card.wrong').count(),mixed?3:0);assert.equal(await page.locator('.review-card.skipped').count(),mixed?2:0);
   for(const language of ['ms','en']){await settings(page,{language});assert.equal(await rawScores(page),original);assert.equal(await page.locator('#practice-result-note').isVisible(),true);assert.ok((await page.locator('#analysis-shapes .analysis-row-title > span').allTextContents()).every(text=>text.includes('/ 3')));if(rich)assert.ok(await page.locator('.review-prompt math').count()>0);await page.setViewportSize({width:320,height:844});await fits(page,'practice result '+language);}
   await page.locator('#replay-button').click();assert.equal(await page.locator('.progress-dot').count(),15);await page.locator('.leave-button').click();await page.locator('[data-dialog-action="home"]').click();await page.locator('#guest-button').click();assert.equal(await page.locator('#play-mode').inputValue(),'practice');
-  await page.locator('#play-mode').selectOption('quiz');await page.locator('#player-form [type="submit"]').click();await page.locator('#game-screen').waitFor({state:'visible'});assert.equal(await page.locator('.progress-dot').count(),10);
+  await page.locator('#play-mode').selectOption('quiz');await page.locator('#player-form [type="submit"]').click();
+  // The accepted solo-save flow protects the practice round abandoned above.
+  await page.locator('[data-dialog-action="solo-new"]').click();await page.locator('[data-dialog-action="solo-discard"]').click();
+  await page.locator('#game-screen').waitFor({state:'visible'});assert.equal(await page.locator('.progress-dot').count(),10);
   if(offline)assert.deepEqual(test.requests,[],'Standalone solo play makes zero HTTP(S) requests');
   if(rich)console.log(`DETAIL all 15 IDs, ${richViews} BM/English rich-text views, offline standalone with zero HTTP(S) requests`);
 }

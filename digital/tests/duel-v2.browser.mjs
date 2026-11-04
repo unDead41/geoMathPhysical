@@ -19,7 +19,7 @@ async function player(name,language='ms',width=1365,text='normal'){
  await page.locator('#duel-screen').waitFor({state:'visible'});return {page,context,name};
 }
 async function state(p){return p.page.evaluate(async key=>{const s=JSON.parse(sessionStorage.getItem(key));return (await fetch('/api/duel',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'state',protocol:2,token:s.token,roomId:s.roomId})})).json();},DUEL_SESSION_KEY);}
-async function waitCounter(p,n){await p.page.waitForFunction(n=>document.querySelector('#question-counter').textContent.includes(String(n).padStart(2,'0')+' / 10'),n);await p.page.locator('#r1:not([disabled])').waitFor();}
+async function waitCounter(p,n){await p.page.waitForFunction(n=>document.querySelector('#question-counter').textContent.includes(String(n).padStart(2,'0')+' / 10'),n);await p.page.locator('#r1:not([disabled])').waitFor();assert.ok((await p.page.locator('#duel-live-progress').textContent()).includes(n+' / 10'),'Live question counter follows the accepted server snapshot');}
 async function pick(p,kind,shape,target){const card=p.page.locator(`.choice[data-kind="${kind}"][data-shape="${shape}"]`);await card.focus();await card.press('Enter');await p.page.locator('#'+target).focus();await p.page.locator('#'+target).press('Enter');}
 async function resume(p){await p.page.reload();await p.page.locator('#duel-resume-button').click();await p.page.locator('#game-screen').waitFor({state:'visible'});}
 async function fits(p){assert.ok(await p.page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'horizontal viewport overflow');}
@@ -65,6 +65,7 @@ try{
    if(p===host&&i===2){await p.page.waitForFunction(()=>document.querySelector('#score-value').textContent==='3');await p.page.unroute('**/api/duel');assert.equal((await state(p)).me.score,3);pass('lost R2 ACK retries without a second point');}
    if(p===guest&&i===4){await p.page.locator('#correction-panel').waitFor({state:'visible'});const before=await state(p);assert.equal(before.me.reviewPending,true);assert.equal(before.currentQuestion,null);await resume(p);await p.page.locator('#correction-panel').waitFor({state:'visible'});assert.equal((await state(p)).me.answered,5);await screenshot(p,'review-restored-en-390-150');await p.page.locator('#continue-button:not([disabled])').waitFor();await p.page.locator('#continue-button').click();pass('wrong-answer correction and server pacing survive refresh');}
    if(i===3){await screenshot(p,p===host?'game-bm':'game-en-390-150');}
+   if(p===host&&i===9){await p.page.locator('#result-screen').waitFor({state:'visible'});assert.match(await p.page.locator('#result-title').textContent(),/Selesai menjawab/);assert.match(await p.page.locator('#duel-result-content').textContent(),/Menunggu keputusan lawan/);assert.equal(await p.page.locator('#duel-result .winner').count(),0);await screenshot(p,'waiting-result-bm');pass('own completion waits for the opponent without declaring the whole Duel complete or a winner');}
   }
  }
  await Promise.all([host.page.locator('#result-screen').waitFor({state:'visible'}),guest.page.locator('#result-screen').waitFor({state:'visible'})]);

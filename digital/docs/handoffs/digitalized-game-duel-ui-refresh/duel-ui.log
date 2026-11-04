@@ -1,0 +1,5 @@
+PASS: 18 locale/theme/text entry layouts; high contrast, native label, sanitized PIN and real invalid-PIN recovery
+PASS: stable pending button, double-click protection, expired PIN, empty slot, copy/fallback, ready and server countdown
+PASS: ten choices, retained selection/order/hint across language/theme/150%, pending R1 retry, R2 reload and durable reviews
+PASS: server-determined draw, expanded answer review and real local missed-question practice with Duel token forgotten
+PASS: no runtime errors; every external origin blocked

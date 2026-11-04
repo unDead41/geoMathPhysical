@@ -1,0 +1,67 @@
+{
+  "base": "391df985eea4fee15d9859e678068b1a3f613cba",
+  "source": [
+    {
+      "path": "digital/dist/app.mjs",
+      "sha256": "11e463354909e4f8e1b90594f8de8ebd05f5c940aed21e46770a3a422eed5b8d"
+    },
+    {
+      "path": "digital/dist/i18n.mjs",
+      "sha256": "8a201873654941346757dd72910a503ff48b5ce77ed8942898a34fc227a7abc3"
+    },
+    {
+      "path": "digital/dist/index.html",
+      "sha256": "c6f2a7bd9c3165d5817657734564a300052a26d95b621e901e9b326e595a5c1f"
+    },
+    {
+      "path": "digital/dist/style.css",
+      "sha256": "1b4f3604d103d0981bbd4a847b77f5e85f889a482dd1b07cedc0d33cea1ac031"
+    },
+    {
+      "path": "digital/tests/duel-v2.browser.mjs",
+      "sha256": "20db4abe5480f10ecc013ce0ceae4d154948ebc2ee95d938c36af7740d032b86"
+    },
+    {
+      "path": "digital/tests/duel-ui-refresh.browser.mjs",
+      "sha256": "4b71617d644d0e812dc5072baaa2cfdf4dad800023a87d8c3e93e9aa56cc7e07"
+    },
+    {
+      "path": "digital/tests/usability.browser.mjs",
+      "sha256": "5bee6aa5999ec013e55a286869b090c2483133df17c7e3b6648bd779cb9d6142"
+    }
+  ],
+  "unchangedOwners": [
+    {
+      "path": "digital/dist/duel.mjs",
+      "gitBlob": "790c4ca22b89fb98c5eaebf902434a104bebca4a"
+    },
+    {
+      "path": "digital/dist/duel-state.mjs",
+      "gitBlob": "bd7d821064d99b0565c9f11d57e1c72d6b8140d9"
+    },
+    {
+      "path": "digital/dist/core.mjs",
+      "gitBlob": "d21df3094992a5c3df610cfcc3d7441ed8cd0429"
+    },
+    {
+      "path": "digital/design-system/tokens.mjs",
+      "gitBlob": "94a77935bf3b9c67cf6c5cd5766bc677858b58b4"
+    },
+    {
+      "path": "digital/dist/foundation.css",
+      "gitBlob": "57fd9aa6deadb09daabe8d4c55b0ea73c99c4249"
+    },
+    {
+      "path": "digital/dist/preferences.mjs",
+      "gitBlob": "5f9bccb010390819015a2861d6e04d04743071b4"
+    },
+    {
+      "path": "digital/dist/module-settings.mjs",
+      "gitBlob": "ed7424a4be420beb34216b6ce8c6f11c386021b8"
+    },
+    {
+      "path": "digital/package.json",
+      "gitBlob": "911dac6034b917ea604c338a69bfe4b15c750c1b"
+    }
+  ]
+}
