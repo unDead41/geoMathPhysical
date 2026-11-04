@@ -11,10 +11,12 @@ candidate. The integration/release owner assigns a release version later.
 | Remote `main-digitalized` base | `391df985eea4fee15d9859e678068b1a3f613cba` |
 | Concept `ui/ux-redesign-concept` | `4d83561667cf74fbe5cd6144ce5e3e7f660a75cd` |
 | Firmware `main` observed | `25836eb1a6f24459aace8a3980ae880a13e3b488` |
+| Final tested implementation | `77ca2d13b30fd774b20d631778505bcd8d99b508` |
 
-The final tested implementation SHA is recorded in the receipt update below
-after the remote commit is created. A follow-up documentation commit records
-that SHA; a document cannot contain its own commit hash.
+The implementation above was pushed only to the work branch and read back from
+GitHub. This documentation-only receipt follows that source commit. Its own
+remote head is provided in the final response; the tested source SHA remains
+the implementation above. See [REMOTE_RECEIPT.json](REMOTE_RECEIPT.json).
 
 The private repository was read through the GitHub connection into an isolated
 linked worktree: `/workspace/scratch/b03317301a24/duel-ui-refresh`. The original

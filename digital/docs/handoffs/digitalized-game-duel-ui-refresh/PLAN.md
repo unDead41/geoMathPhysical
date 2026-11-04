@@ -19,7 +19,7 @@ Keep one Game, DuelClient, preferences owner, native dialog and token system.
   locale/theme/text preferences, reconnect/reload in R1/R2/review, tie and forfeit.
 - [x] Run design check, unit suite, isolated two-context Duel suite, build,
   local prepare, check, shared design/browser regressions and strict UI audit.
-- [ ] Save real desktop/mobile screenshots and verification receipts. Commit and
+- [x] Save real desktop/mobile screenshots and verification receipts. Commit and
   push only `digitalized-game-duel-ui-refresh`; read the remote SHA back.
 
 Review focus: names are escaped; empty slots never invent a player; polling must
