@@ -1,8 +1,10 @@
 # GeoDecoder Digital V2
 
-Versi cadangan Digital: **v2.9.1**. Branch semakan: **digitalized-ux-mockup-completion**.
+Versi Digital: **v2.10.0**. Integrasi: **main-digitalized**.
 
-Laman aktif: https://undead41.github.io/geodecoder-digital/ . Pages commit `c27f3bde56079c2ab7f519a43f0008dce9f20c81` / workflow `40323253926` berjaya; HTTP/hash laman sepadan artifak gabungan.
+Log masuk Google tersedia melalui **Teruskan dengan Google** pada Log masuk dan Daftar akaun. Akaun Google baharu melengkapkan nama pengguna, nama paparan dan peranan. Pilihan telefon/OTP SMS telah dikeluarkan atas permintaan pengguna; e-mel/nama pengguna dan kata laluan dikekalkan. Lihat [Google Auth](docs/AUTH_PROVIDERS.md).
+
+Laman aktif: https://undead41.github.io/geodecoder-digital/ . Rujuk `release.json` pada repository penerbitan untuk versi, SHA sumber dan hash artifak semasa. [Handoff Google v2.10.0](docs/google-auth-release/HANDOFF.md) merekodkan integrasi dan skop ujian.
 Modul pembelajaran: **v1.6.2**. Firmware berada pada branch berasingan; `main` yang dibaca semasa integrasi ialah **v2.0.2**. Integrasi sumber v2.9.0 menyatukan UI utama/Duel/modul, offline, CRUD dan transport. Status sumber dan had rollout berada dalam [rekod integrasi](docs/integration-sync/README.md). Rekod penerbitan awam terdahulu v2.8.0 kekal dalam [RELEASE_V2_8.md](docs/RELEASE_V2_8.md).
 
 > Rekod deployment v2.7.0: backend diaktifkan selepas kebenaran jelas melalui migration `20261026110959` dan Duel Edge v2/protocol2. Commit penerbitan awam `0486388a9c94942ab0973af5609be0168d27323c`. Lihat [RELEASE_V2_7.md](docs/RELEASE_V2_7.md). Ini rekod sejarah sebelum keluaran v2.8.0.

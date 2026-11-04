@@ -29,7 +29,7 @@ async function database(order){
       create function auth.uid() returns uuid language sql stable as $$select (auth.jwt()->>'sub')::uuid$$;
       grant usage on schema auth to authenticated,anon,service_role;
       grant execute on function auth.jwt(),auth.uid() to authenticated,anon,service_role;`);
-    assert.equal(history.migrations.length,11,'pending candidates must not become hosted receipts');
+    assert.equal(history.migrations.length,12,'pending candidates must not become hosted receipts');
     for(const migration of history.migrations){
       const sql=read('../../supabase/migrations/'+migration.file);
       assert.equal(createHash('sha256').update(sql).digest('hex'),migration.file_sha256,migration.file+' must remain immutable');

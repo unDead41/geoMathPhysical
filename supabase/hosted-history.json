@@ -1,7 +1,7 @@
 {
   "project_ref": "fkrlwzxvyufndavlpzbp",
   "source_base_sha": "790d989d666e64f3beabb507cd4140b832696367",
-  "captured_date": "2026-10-26",
+  "captured_date": "2026-11-04",
   "migrations": [
     {
       "version": "20261025172311",
@@ -79,6 +79,19 @@
       "file": "20261026110959_geodecoder_digital_v2_7_integration.sql",
       "file_sha256": "e1a7570ebe2bda4d3173b49782abd309dcc88ce6b1065f1d5f2cce585f55eb3a",
       "sql_sha256": "e1a7570ebe2bda4d3173b49782abd309dcc88ce6b1065f1d5f2cce585f55eb3a"
+    },
+    {
+      "version": "20261104061744",
+      "name": "geodecoder_auth_providers",
+      "file": "20261104053103_geodecoder_auth_providers.sql",
+      "file_sha256": "5b0775fe365e4d89d3dc314439dc2b3d39755ebb8d4220df83ac6d5fbc076075",
+      "sql_sha256": "5b0775fe365e4d89d3dc314439dc2b3d39755ebb8d4220df83ac6d5fbc076075"
     }
-  ]
+  ],
+  "supplemental_capture": {
+    "source_base_sha": "37bc2cd262cc0a54e8ee31339ea37471c1ecfda5",
+    "migration": "20261104061744",
+    "source_timestamp_differs_from_hosted_version": true,
+    "method": "read-only schema_migrations export; statements matched the immutable feature migration byte for byte"
+  }
 }

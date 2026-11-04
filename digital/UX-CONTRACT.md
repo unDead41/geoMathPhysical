@@ -301,3 +301,11 @@ workspace uses its actual anchor/controller; unsupported rematch/CSV/TP/XP actio
 are not invented. Settings/help remain app-owned dialogs with wide content.
 Auth composition lives in auth-view.mjs; profile/security/session views retain
 their owners. Workspace identity/nav extend portal.mjs; tokens remain centralized.
+
+
+## Google Auth v2.10.0
+
+- Log masuk dan daftar menawarkan Google bersama kaedah e-mel sedia ada. Tiada pilihan atau borang SMS.
+- Navigasi Google hanya melalui endpoint Auth projek yang dikonfigurasi dan callback canonical.
+- Sesi Google yang belum mempunyai profil membuka borang profil dahulu. Identiti dan pemilikan ditentukan pelayan; peranan sedia ada tidak berubah melalui retry.
+- Akaun Google sahaja tidak diminta memberikan kata laluan aplikasi; kawalan log keluar dan sesi kekal tersedia.

@@ -1,0 +1,19 @@
+{
+  "id": "./",
+  "name": "GeoMath",
+  "short_name": "GeoMath",
+  "lang": "ms",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F3F7FC",
+  "theme_color": "#142840",
+  "icons": [
+    {
+      "src": "./icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

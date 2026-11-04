@@ -1,5 +1,13 @@
 # GeoDecoder Digital changelog
 
+## v2.10.0 — 4 November 2026
+
+- Terbitkan log masuk Google pada UI akaun v2.9.1, menggunakan sesi Supabase sedia ada dan callback HTTPS canonical.
+- Akaun Google baharu melengkapkan profil sendiri; retry tidak mengubah peranan sedia ada.
+- Buang pilihan, borang, controller dan permintaan OTP SMS. Provider telefon kekal tidak aktif.
+- Akaun Google memaparkan panduan keselamatan Google serta kawalan sesi; log masuk e-mel/nama pengguna, pemulihan dan permainan dikekalkan.
+- Gunakan migration profil yang telah dipasang; tiada perubahan credentials atau migration hosted baharu.
+
 ## v2.9.1 — 4 November 2026 (calon semakan mockup)
 
 - Lengkapkan susun atur Home, mod, panduan, permainan, Duel, akaun, kelas,

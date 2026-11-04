@@ -8,9 +8,10 @@ import {renderLearningRecords} from './module-progress-view.mjs';
 import {mergeModuleProgress, MODULE_NAMES, MODULE_STAGE_NAMES} from './module-progress.mjs';
 import {securitySessionKey} from './account-security.mjs';
 import {renderProfileView} from './profile-view.mjs';
-import {renderSecurityView} from './security-view.mjs';
+import {renderSecurityView,passwordFormAvailable} from './security-view.mjs';
 import {renderActiveSessions} from './active-sessions.mjs';
 import {CLASSROOM_ERROR_KEYS} from './classroom-copy.mjs';
+import {authProviderError,AUTH_PROVIDER_ERROR_KEYS,renderProviderChoices,renderProviderProfile} from './auth-providers.mjs';
 
 // Only authored literals pass through pt(); user-provided values stay untouched.
 const portalOriginal=new Map([...Object.entries(MESSAGES.en).map(([key,text])=>[text,key]),...Object.entries(MESSAGES.ms).map(([key,text])=>[text,key])]);
@@ -37,7 +38,7 @@ function playerLabel(status) { return ({waiting: pt("Menunggu mula"), playing: p
 function hasAttempt(player) {
   return ['playing', 'review', 'finished'].includes(player.status) || Boolean(player.attempt_id || player.started_at || player.timer_started_at || number(player.question_index) || number(player.elapsed_ms) || number(player.score) || number(player.mistakes) || number(player.hints) || number(player.skipped));
 }
-function errorText(error) { return CLASSROOM_ERROR_KEYS[error?.code] ? pt(CLASSROOM_ERROR_KEYS[error.code]) : friendlyError(error,globalThis.document?.documentElement?.lang==='en'?'en':'ms'); }
+function errorText(error) { const key=CLASSROOM_ERROR_KEYS[error?.code]||AUTH_PROVIDER_ERROR_KEYS[error?.code];return key ? pt(key) : friendlyError(error,globalThis.document?.documentElement?.lang==='en'?'en':'ms'); }
 
 /** Account, class, invitation, and live-room UI. All authorization remains server-owned. */
 export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onPreferences = () => {}, onExit = () => {}, onError = () => {}} = {}) {
@@ -56,6 +57,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
   let learningPending = '';
 
   let profile = null;
+  let profileMissing = false;
   let profileView = false;
   let profileBaseline = null;
   let profileNext = null;
@@ -257,11 +259,11 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
   }
 
   function emailCooldownSeconds() { return Math.max(0, Math.ceil((emailCooldownUntil - Date.now()) / 1000)); }
-
   function renderAuth() {
     const modes = ['login', 'signup', 'recover-email', 'recover', 'resend-confirmation', 'confirmation', 'email-sent'];
-    const mode = cloud.recoveryRequired === true ? 'reset-password' : modes.includes(authMode) ? authMode : 'login';
+    const mode = cloud.recoveryRequired === true ? 'reset-password' : profileMissing && accountAvailable() ? 'complete-profile' : modes.includes(authMode) ? authMode : 'login';
     const signup = mode === 'signup';
+    const completing = mode === 'complete-profile';
     const legacy = mode === 'recover';
     const reset = mode === 'reset-password';
     const emailRequest = ['recover-email', 'resend-confirmation'].includes(mode);
@@ -277,12 +279,14 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
       'resend-confirmation': [pt("SAHKAN EMAIL ANDA"), pt("Minta pautan pengesahan"), pt("Masukkan email yang digunakan semasa mendaftar.")],
       confirmation: [pt("SEMAK EMAIL ANDA"), pt("Sahkan email untuk meneruskan"), pt("Buka pautan pengesahan dalam email sebelum log masuk.")],
       'email-sent': [pt("SEMAK EMAIL ANDA"), pt("Permintaan pemulihan diterima"), pt("Buka pautan pemulihan dalam email untuk memilih kata laluan baharu.")],
-      'reset-password': [pt("PAUTAN PEMULIHAN DISAHKAN"), pt("Tetapkan kata laluan baharu"), pt("Pilih kata laluan baharu untuk akaun anda. Selepas disimpan, log masuk semula.")]
+      'reset-password': [pt("PAUTAN PEMULIHAN DISAHKAN"), pt("Tetapkan kata laluan baharu"), pt("Pilih kata laluan baharu untuk akaun anda. Selepas disimpan, log masuk semula.")],
+      'complete-profile': [pt('PROFIL PERTAMA ANDA'),pt('Lengkapkan profil'),pt('Pilih nama dan peranan anda untuk membuka ruang kelas.')]
     }[mode];
     document.title = `${details[1]} — GeoDecoder Digital`;
     const modeLink = (label, next, secondary = false) => `<button type="button" class="portal-text-button${secondary ? ' portal-legacy-link' : ''}" data-portal-action="auth-mode" data-mode="${next}" data-block-while-busy data-base-disabled="false">${label}</button>`;
     let body = '';
-    if (sent) {
+    if (completing) body=renderProviderProfile({field,submit,formError,button,t:pt,esc});
+    else if (sent) {
       const kind = confirmation ? pt("pengesahan") : pt("pemulihan");
       const remaining = emailCooldownSeconds();
       body = `<div class="portal-inline-info"><b>${pt("Jika email ini berdaftar, pautan")} ${kind} ${pt("akan dihantar.")}</b><p>${pt("Semak peti masuk dan folder spam. Penghantaran email mungkin mengambil sedikit masa.")}</p></div>${authEmail ? `<p class="portal-email-summary"><span>${pt("Email yang dimasukkan")}</span><b>${esc(authEmail)}</b></p>` : ''}<div class="portal-auth-submit">${button(remaining ? `${pt("Hantar semula (")}${remaining}s)` : pt("Hantar pautan semula"), 'resend-email', {primary: true, disabled: !available || !authEmail, extra: `data-email-cooldown data-resend-kind="${confirmation ? 'resend-confirmation' : 'recover-email'}"`})}</div>${modeLink(pt("Kembali ke log masuk"), 'login')}`;
@@ -300,13 +304,14 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
       else if (mode === 'recover-email') body += `${modeLink(pt("Kembali ke log masuk"), 'login')}<div>${modeLink(pt("Akaun lama tanpa email?"), 'recover', true)}</div>`;
       else if (legacy) body += modeLink(pt("Kembali ke pemulihan email"), 'recover-email');
       else if (!reset) body += modeLink(pt("Kembali ke log masuk"), 'login');
+      if (mode==='login'||signup) body+=renderProviderChoices({button,t:pt,available});
     }
-    const note = legacy ? pt("Kod pemulihan hanya untuk akaun lama tanpa email. Jangan kongsi kata laluan atau kod anda.") : pt("Jangan kongsi kata laluan atau pautan pengesahan dan pemulihan akaun anda.");
+    const note = completing ? pt('Gunakan kaedah log masuk akaun anda untuk kembali.') : legacy ? pt("Kod pemulihan hanya untuk akaun lama tanpa email. Jangan kongsi kata laluan atau kod anda.") : pt("Jangan kongsi kata laluan atau pautan pengesahan dan pemulihan akaun anda.");
     return renderAuthLayout({mode, body, details, t: pt,
-      modes: !reset ? `<div class="portal-auth-modes" role="group" aria-label="${pt("Pilihan akaun")}"><button type="button" data-portal-action="auth-mode" data-mode="login" aria-pressed="${mode === 'login'}" data-block-while-busy data-base-disabled="false">${pt("Log masuk")}</button><button type="button" data-portal-action="auth-mode" data-mode="signup" aria-pressed="${signup}" data-block-while-busy data-base-disabled="false">${pt("Daftar akaun")}</button></div>` : '',
+      modes: !reset && !completing ? `<div class="portal-auth-modes" role="group" aria-label="${pt("Pilihan akaun")}"><button type="button" data-portal-action="auth-mode" data-mode="login" aria-pressed="${mode === 'login'}" data-block-while-busy data-base-disabled="false">${pt("Log masuk")}</button><button type="button" data-portal-action="auth-mode" data-mode="signup" aria-pressed="${signup}" data-block-while-busy data-base-disabled="false">${pt("Daftar akaun")}</button></div>` : '',
       warnings: `${invalidLink ? `<div class="portal-inline-warning" role="alert"><b>${pt("Pautan belum dapat digunakan.")}</b><p>${esc(invalidLink)}</p><p>${pt("Minta pautan baharu melalui email atau kembali ke log masuk.")}</p>${mode !== 'recover-email' ? modeLink(pt("Minta pautan pemulihan baharu"), 'recover-email') : ''}</div>` : ''}${!available ? `<div class="portal-inline-info"><b>${pt("Akaun dalam talian belum tersedia.")}</b><p>${pt("Anda masih boleh kembali ke mula dan bermain tanpa akaun.")}</p></div>` : ''}`,
       note: `${icon('lock')} ${note}`,
-      guest: !reset ? button(pt('Teruskan sebagai tetamu'), 'exit', {quiet: true}) : ''
+      guest: !reset && !completing ? button(pt('Teruskan sebagai tetamu'), 'exit', {quiet: true}) : ''
     });
   }
 
@@ -338,7 +343,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
   function renderProfile() {
     if (profile && !profileBaseline) profileBaseline = {display_name: profile.display_name, avatar: profile.avatar || 'initial'};
     document.title = pt('Profil Saya') + ' — GeoDecoder Digital';
-    return renderProfileView({profile, classes: list(snapshot?.classes), signedIn: signedIn(), confirming: Boolean(profileNext), accountHeading, avatarArt, button, field, formError, submit, esc, t: pt});
+    return renderProfileView({profile, authUser:cloud.session?.user, classes: list(snapshot?.classes), signedIn: signedIn(), confirming: Boolean(profileNext), accountHeading, avatarArt, button, field, formError, submit, esc, t: pt});
   }
 
   function profileValues() {
@@ -375,7 +380,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
 
   function renderSecurity() {
     document.title = pt('Kata Laluan & Keselamatan — GeoDecoder Digital');
-    return renderSecurityView({profile, confirming: securityConfirm, sessionsHTML: sessionMarkup(), accountHeading, button, field, formError, submit, icon, esc, t: pt});
+    return renderSecurityView({profile, authUser:cloud.session?.user, confirming: securityConfirm, sessionsHTML: sessionMarkup(), accountHeading, button, field, formError, submit, icon, esc, t: pt});
   }
 
   function sessionMarkup() { return renderActiveSessions({state:sessionsState,confirming:sessionsConfirm,button,esc,t:pt}); }
@@ -430,6 +435,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
 
   async function handleSecurity(form, values, type) {
     if (!securityView || !accountAvailable() || pending || type === 'logout-all' && !securityConfirm) return;
+    if (type==='change-password'&&!passwordFormAvailable(cloud.session?.user)) {clearSecurityFields();return;}
     if(type==='logout-others'&&sessionsConfirm!=='others'||type==='logout-current'&&sessionsConfirm!=='current')return;
     const token = epoch, identity = securitySessionKey(cloud.session), job = ++operation;
     const controller = new AbortController();
@@ -442,7 +448,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
       if (!active || token !== epoch || !securityView || identity !== securitySessionKey(cloud.session) && !(['logout-all','logout-current'].includes(type) && !signedIn())) return;
       clearSecurityFields();
       if (type === 'logout-all'||type==='logout-current') {
-        clearAccount(); knownSession = sessionKey(); authOnly = false; authMode = 'login';
+        clearAccount(); knownSession = sessionKey(); knownSecuritySession=securitySessionKey(cloud.session);authOnly = false; authMode = 'login';
         render({focus: true, preserve: false});
       } else if(type==='logout-others') {
         sessionsConfirm='';pending='';await loadSessions();
@@ -476,7 +482,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
   function setAccountView(view, nextRoom = null) {
     closeManagement({restoreFocus:false});
     profileBaseline = null; profileNext = null;
-    clearSecurityFields(); securityController?.abort(); securityController = null;
+    clearSecurityFields();  securityController?.abort(); securityController = null;
     clearSessions();
     epoch += 1; operation += 1;
     pending = ''; authPending = false; refreshAgain = false; refreshPromise = null;
@@ -633,10 +639,11 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
     else if (recoveryCode) body = renderRecovery();
     else if (profileView && !signedIn()) body = renderProfile();
     else if (authOnly || !signedIn()) body = renderAuth();
+    else if (profileMissing) body = renderAuth();
     else if (securityView) body = renderSecurity();
     else if (!snapshot || !profile) body = stale&&!snapshot?renderLoadError():`<div class="portal-panel portal-loading" aria-busy="true"><span class="portal-spinner" aria-hidden="true"></span><h1 id="portal-title" tabindex="-1">${pt("Memuatkan ruang kelas…")}</h1><p>${pt("Sedang mendapatkan kelas dan permainan anda.")}</p></div>`;
     else body = profileView ? renderProfile() : roomId ? renderRoom() : isTeacher() ? renderTeacher() : renderStudent();
-    content.innerHTML = accountAvailable() ? renderWorkspaceShell(body) : body;
+    content.innerHTML = accountAvailable() && !profileMissing ? renderWorkspaceShell(body) : body;
     if (saved && !focus) {
       for (const cell of content.querySelectorAll('[data-module-student]')) if (saved.disclosures.includes(cell.dataset.moduleStudent)) cell.querySelector('details')?.setAttribute('open', '');
       if (saved.ownDisclosure) content.querySelector('.portal-module-card details')?.setAttribute('open', '');
@@ -693,6 +700,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
     const save = content.querySelector('form[data-portal-form="profile"] [type="submit"] span');
     if (save) save.textContent = pt(pending === 'profile' ? 'Sedang menyimpan…' : 'Simpan');
     for (const input of content.querySelectorAll('form[data-portal-form="profile"] input')) input.disabled = pending === 'profile';
+    for(const form of content.querySelectorAll('form[data-portal-form="complete-profile"]'))for(const input of form.querySelectorAll('input'))input.disabled=pending===form.dataset.portalForm;
     for (const input of managementDialog.querySelectorAll('input')) input.disabled = pending === 'management' || Boolean(managementRefresh);
     managementDialog.querySelector('[data-portal-action="management-refresh"]')?.setAttribute('aria-busy',String(Boolean(managementRefresh)));
     updateEmailCooldown();
@@ -736,7 +744,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
   }
 
   function startLive() {
-    if (!active || !accountAvailable() || securityView) return;
+    if (!active || !accountAvailable() || securityView || profileMissing) return;
     if (!poll) poll = setInterval(() => { if (!document.hidden && (!roomId || !isTeacher() || connection !== 'live')) refresh({silent: true}); }, POLL_MS);
     if (!tick) tick = setInterval(updateLiveLabels, 1000);
     if (!roomId || !isTeacher()) { if (watchingRoom) stopWatch(); return; }
@@ -774,12 +782,21 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
     if (!data || !data.profile) return false;
     snapshot = {...data, classes: list(data.classes), invites: list(data.invites), rooms: list(data.rooms)};
     profile = data.profile;
+    profileMissing = false;
     const server = stamp(data.server_now);
     if (server !== null) { serverOffset = server - Date.now(); lastUpdated = server; }
     stale = false;
     roomError = '';
     if (classId && !snapshot.classes.some(item => String(item.id) === String(classId))) classId = null;
     return true;
+  }
+
+  function requireProfile() {
+    const first=!profileMissing;
+    profileMissing=true;snapshot=null;profile=null;
+    profileView=false;securityView=false;
+    roomId=null;cloud.setRoom?.(null);stopLive();stale=false;
+    announce('');render({focus:first,preserve:!first});
   }
 
   async function refresh({silent = false} = {}) {
@@ -794,6 +811,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
       try {
         const data = await cloud.rpc('snapshot', requestedRoom ? {room_id: requestedRoom} : {}, {expectedUserId: profile?.id || identity});
         if (!valid(token, identity) || String(requestedRoom || '') !== String(roomId || '')) return;
+        if(data?.profile_missing===true||data?.error?.code==='profile_missing'){requireProfile();return data;}
         const wasStale = stale;
         if (!applySnapshot(data)) throw new Error(pt("Maklumat akaun belum lengkap. Muat semula untuk mencuba lagi."));
         if (notice.tone === 'error' && wasStale) announce(pt("Sambungan berjaya dikemas kini."), 'success');
@@ -803,6 +821,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
         return data;
       } catch (error) {
         if (!valid(token, identity)) return;
+        if(error?.code==='profile_missing'){requireProfile();return;}
         if (requestedRoom && error?.code === 'forbidden') {
           setAccountView('dashboard');
           snapshot = null; learningData = null; learningError = '';
@@ -856,7 +875,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
     closeManagement({restoreFocus:false});
     showArchivedClasses = false; showArchivedRooms = false; invitePage = 1;
     profileBaseline = null; profileNext = null;
-    clearSecurityFields(); securityController?.abort(); securityController = null;
+    clearSecurityFields();  securityController?.abort(); securityController = null;
     clearSessions();
     profileView = false; securityView = false; securityConfirm = false;
     epoch += 1;
@@ -867,6 +886,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
     snapshot = null;
     learningRequest++; learningPending = ''; learningData = null; learningError = '';
     profile = null;
+    profileMissing = false;
     roomId = null;
     cloud.setRoom?.(null);
     classId = null;
@@ -893,7 +913,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
       const recovery = cloud.recoveryRequired === true;
       const linkError = String(cloud.callbackError || '');
       if (securityView && ['logout-all','logout-current'].includes(pending) && !signedIn()) { clearSessions();updateSessionRegion();return; }
-      const securityChanged = securityView && knownSecuritySession !== securitySessionKey(cloud.session);
+      const securityChanged = knownSecuritySession !== securitySessionKey(cloud.session);
       if (identity === knownSession && recovery === knownRecovery && linkError === knownCallbackError && !securityChanged) return;
       knownSession = identity;
       knownSecuritySession = securitySessionKey(cloud.session);
@@ -923,7 +943,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
       const input = form.elements.namedItem('username');
       if (input) input.value = username;
     }
-    if (['signup', 'recover', 'invite'].includes(type) && !/^[a-z0-9_]{3,24}$/.test(username || '')) errors.username = pt("Gunakan 3–24 aksara: huruf kecil, nombor atau garis bawah (_).");
+    if (['signup', 'recover', 'invite','complete-profile'].includes(type) && !/^[a-z0-9_]{3,24}$/.test(username || '')) errors.username = pt("Gunakan 3–24 aksara: huruf kecil, nombor atau garis bawah (_).");
     if (type === 'login' && !/^[a-z0-9_]{3,24}$/.test(username || '') && !validEmail(username)) errors.username = pt("Masukkan email yang sah atau nama pengguna 3–24 aksara.");
     if (['signup', 'recover-email', 'resend-confirmation'].includes(type)) {
       values.email = String(values.email || '').trim().toLowerCase();
@@ -935,6 +955,11 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
       const name = String(values.display_name || '').trim();
       if (Array.from(name).length < 2 || Array.from(name).length > 60 || /[\u0000-\u001f\u007f-\u009f]/.test(name)) errors.display_name = pt('Masukkan nama paparan 2–60 aksara tanpa aksara kawalan.');
       if (!['initial', 'cube', 'cuboid', 'pyramid', 'cylinder', 'cone'].includes(values.avatar)) errors.avatar = pt('Pilih avatar yang tersedia.');
+    }
+    if(type==='complete-profile') {
+      const name=String(values.display_name||'').trim();
+      if(Array.from(name).length<2||Array.from(name).length>60||/[\u0000-\u001f\u007f-\u009f]/.test(name))errors.display_name=pt('Masukkan nama paparan 2–60 aksara tanpa aksara kawalan.');
+      if(!['student','teacher'].includes(values.role))errors.role=pt('Pilih Pelajar atau Guru.');
     }
     if (type === 'signup' && (String(values.display_name || '').trim().length < 2 || String(values.display_name || '').trim().length > 60)) errors.display_name = pt("Masukkan nama paparan antara 2 hingga 60 aksara.");
     if (['signup', 'recover', 'reset-password', 'change-password'].includes(type) && (String(values.password || '').length < 10 || String(values.password || '').length > 128)) errors.password = pt("Gunakan kata laluan antara 10 hingga 128 aksara.");
@@ -999,6 +1024,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
       }
       clearAccount();
       knownSession = sessionKey();
+      knownSecuritySession = securitySessionKey(cloud.session);
       knownRecovery = cloud.recoveryRequired === true;
       knownCallbackError = String(cloud.callbackError || '');
       callbackErrorDismissed = true;
@@ -1039,6 +1065,62 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
         updateBusy();
         if (refreshAgain && !pending) { refreshAgain = false; refresh({silent: true}); }
       }
+    }
+  }
+
+  function providerFormError(form, type, error) {
+    const safe=authProviderError(error,type==='complete-profile'?'profile':type);
+    const current=form?.isConnected?form:content.querySelector(`form[data-portal-form="${type}"]`);
+    const message=errorText(safe);
+    const input=current?.elements.namedItem(safe.field);
+    const target=input?.setAttribute?input:input?.[0];
+    if(target) {
+      target.setAttribute('aria-invalid','true');
+      const node=[...current.querySelectorAll('[data-error-for]')].find(item=>item.dataset.errorFor===safe.field);
+      if(node)node.textContent=message;
+    }
+    const errorNode=current?.querySelector('[data-form-error]');
+    if(errorNode){errorNode.textContent=message;errorNode.setAttribute('tabindex','-1');(target||errorNode).focus({preventScroll:true});}
+    else announce(message,'error');
+  }
+
+  async function handleGoogleAuth() {
+    if(!active||pending||cloud.ready===false||signedIn()||cloud.recoveryRequired===true)return;
+    const token=epoch,identity=securitySessionKey(cloud.session),job=++operation;
+    pending='google-login';updateBusy();announce('');
+    try {
+      await cloud.auth('google-login',{});
+      if(!active||token!==epoch||job!==operation||identity!==securitySessionKey(cloud.session))return;
+      announce(pt('Membuka Google…'));
+    } catch(error) {
+      if(!active||token!==epoch||identity!==securitySessionKey(cloud.session))return;
+      providerFormError(null,'google-login',error);
+    } finally {
+      if(job===operation)pending='';
+      if(active)updateBusy();
+    }
+  }
+
+  async function handleCompleteProfile(form, values) {
+    if(!active||pending||!profileMissing||!accountAvailable())return;
+    const token=epoch,identity=securitySessionKey(cloud.session),job=++operation;
+    pending='complete-profile';updateBusy();announce('');
+    try {
+      if(typeof cloud.completeProfile!=='function')throw {code:'profile-unavailable'};
+      const result=await cloud.completeProfile({username:values.username,display_name:values.display_name.trim(),role:values.role});
+      if(!active||token!==epoch||identity!==securitySessionKey(cloud.session))return;
+      if(String(result?.profile?.id)!==sessionKey()||!applySnapshot(result))throw {code:'profile-failed'};
+      profileView=false;securityView=false;authOnly=false;authMode='login';
+      render({focus:true,preserve:false});announce(pt('Profil anda sudah sedia.'),'success');
+      startLive();void refreshLearning();
+    } catch(error) {
+      if(active&&token===epoch&&identity===securitySessionKey(cloud.session)){
+        if(job===operation){pending='';updateBusy();}
+        providerFormError(form,'complete-profile',error);
+      }
+    } finally {
+      if(job===operation)pending='';
+      if(active)updateBusy();
     }
   }
 
@@ -1105,6 +1187,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
     if (!validate(form, values, type)) return;
     if (['login', 'signup', 'recover', 'recover-email', 'resend-confirmation', 'reset-password'].includes(type)) return handleAuth(form, values, type);
     if (!accountAvailable()) return;
+    if(type==='complete-profile')return handleCompleteProfile(form,values);
     if (type === 'management' && management) {
       const m = management;
       const payload = m.kind === 'invite' ? {invite_id:m.id} : m.kind === 'member' ? {class_id:m.classId,user_id:m.id,expected_revision:m.revision} : {[m.kind+'_id']:m.id,expected_revision:m.revision};
@@ -1189,9 +1272,11 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
     if (pending) return;
     if (action === 'management-cancel') { if(!managementRefresh)closeManagement(); return; }
     if (action === 'management-refresh') return refreshManagement();
+    if(action==='google-login')return handleGoogleAuth();
     if (action === 'auth-mode') {
       if (cloud.recoveryRequired === true || !['login', 'signup', 'recover-email', 'recover', 'resend-confirmation'].includes(control.dataset.mode)) return;
       authMode = control.dataset.mode;
+
       announce('');
       render({preserve: false});
       content.querySelector('#portal-auth-title')?.focus({preventScroll: true});
@@ -1215,6 +1300,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
         if (!active || token !== epoch) return;
         clearAccount();
         knownSession = sessionKey();
+        knownSecuritySession = securitySessionKey(cloud.session);
         knownRecovery = cloud.recoveryRequired === true;
         knownCallbackError = String(cloud.callbackError || '');
         callbackErrorDismissed = true;
@@ -1255,7 +1341,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
     if (action === 'request-logout-all' && securityView) { clearSecurityFields(); sessionsConfirm=''; securityConfirm = true; render({preserve: false}); content.querySelector('[data-portal-action="cancel-logout-all"]')?.focus(); return; }
     if (action === 'cancel-logout-all' && securityView) { securityConfirm = false; render({preserve: false}); content.querySelector('[data-portal-action="request-logout-all"]')?.focus(); return; }
     if (action === 'logout-all') return handleSecurity(null, {}, action);
-    if (action === 'security-recover' && securityView) { setAccountView('dashboard'); authOnly = true; authMode = 'recover-email'; announce(''); render({focus: true, preserve: false}); return; }
+    if (action === 'security-recover' && securityView && passwordFormAvailable(cloud.session?.user)) { setAccountView('dashboard'); authOnly = true; authMode = 'recover-email'; announce(''); render({focus: true, preserve: false}); return; }
     if (action === 'open-module') { close(); onModule(); return; }
     if (action === 'select-class') {
       classId = control.dataset.id; rosterQuery = ''; rosterPage = roomPage = 1; learningData = null; learningError = ''; render({preserve: false}); void refreshLearning();
@@ -1299,7 +1385,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
   function compositionStart() { composing = true; }
 
   function visibility() { if (active && !document.hidden && accountAvailable()) {if(securityView){if(!pending)void loadSessions();}else refresh({silent: true});} }
-  function pageHide() { clearSecurityFields(); securityController?.abort(); clearSessions();updateSessionRegion(); }
+  function pageHide() { clearSecurityFields();  securityController?.abort(); clearSessions();updateSessionRegion(); }
   function keyboard(event) {
     if (event.key === 'Escape' && management) {event.preventDefault();event.stopPropagation();if(!pending&&!managementRefresh)closeManagement();return;}
     if (event.key === 'Escape' && profileNext && !pending) { event.preventDefault?.(); event.stopPropagation?.(); cancelProfileLeave(); return; }

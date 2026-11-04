@@ -1,0 +1,22 @@
+{
+  "version": "2.10.0",
+  "sourceBase": "37bc2cd262cc0a54e8ee31339ea37471c1ecfda5",
+  "providerInput": "28ba888ccaae12f842dd4abae618a51cb60cd1f2",
+  "fullTests": 541,
+  "passed": 541,
+  "failed": 0,
+  "targetedAuthTests": 85,
+  "build": "PASS",
+  "preparePages": "PASS",
+  "check": "PASS",
+  "moduleVersion": "1.6.2",
+  "googleEnabled": true,
+  "phoneEnabled": false,
+  "hostedMutation": false,
+  "realGoogleSignInPageReached": true,
+  "personalGoogleConsentTested": false,
+  "newRegressionCases": [
+    "cancelled callback retry",
+    "native browser fetch receiver"
+  ]
+}

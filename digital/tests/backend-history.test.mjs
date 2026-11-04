@@ -15,7 +15,7 @@ test('archived hosted history replays in order and passes all five SQL contracts
  const dir=new URL('../../supabase/migrations/',import.meta.url);
  const history=JSON.parse(fs.readFileSync(new URL('../../supabase/hosted-history.json',import.meta.url),'utf8'));
  const files=history.migrations.map(m=>m.file);
- assert.equal(files.length,11,'Review and update hosted baseline only after actual deployment');
+ assert.equal(files.length,12,'Review and update hosted baseline only after actual deployment');
  for(const f of files.filter(f=>!f.includes('digital_v2_7_integration')))await db.exec(fs.readFileSync(new URL(f,dir),'utf8'));
  for(const f of ['verify.sql','verify_email.sql','verify_profile.sql','verify_module_progress.sql','duel/verify.sql']) {
   let sql=fs.readFileSync(new URL('../backend/'+f,import.meta.url),'utf8');

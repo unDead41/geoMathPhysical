@@ -4,6 +4,8 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 import {translate} from '../dist/i18n.mjs';
+import {securitySessionKey} from '../dist/account-security.mjs';
+import {AUTH_PROVIDER_ERROR_KEYS,renderProviderChoices,renderProviderProfile} from '../dist/auth-providers.mjs';
 const pt=key=>translate('ms',key)||key;
 
 // Exercise the portal's actual form validator without adding a browser/DOM
@@ -15,7 +17,7 @@ function functionSource(name, next) {
   assert.ok(start >= 0 && end > start, `Portal ${name} was not found`);
   return source.slice(start, end).trim();
 }
-const validate = vm.runInNewContext(`(${functionSource('function validate(form, values, type) {', 'async function handleAuth(')})`,{pt});
+const validate = vm.runInNewContext(`(${functionSource('function validate(form, values, type) {', 'async function handleAuth(')})`,{pt,AUTH_PROVIDER_ERROR_KEYS});
 function formFor(values) {
   let focused = '';
   const fields = new Map(Object.entries(values).map(([name, value]) => [name, {
@@ -148,6 +150,7 @@ test('reset rejects mismatched or out-of-range confirmation and focuses the mark
 test('actual auth rendering exposes email forms and derives reset exclusively from a verified recovery session', () => {
   const context = vm.createContext({renderAuthLayout,pt,
     cloud: {ready: true, recoveryRequired: false}, authMode: 'signup', authEmail: 'nama@contoh.com',
+    profileMissing:false,renderProviderChoices,renderProviderProfile,
     document: {title: ''}, callbackError: () => '', emailCooldownSeconds: () => 60,
     geometryKit: () => '', icon: () => '', esc: value => String(value).replace(/[&<>"']/g, '')
   });
@@ -192,7 +195,7 @@ test('recovery and invalid callback screens take precedence over signed-in dashb
     cloud: {session: {user: {id: 'verified-user'}}, recoveryRequired: true},
     active: true, destroyed: false, composing: false, renderDeferred: false, initializing: false,
     profileView: false, securityView: false, callbackErrorDismissed: false, authOnly: false, recoveryCode: 'old-code', snapshot: {}, profile: {}, roomId: null,
-    clearSecurityFields() {},
+    profileMissing:false,clearSecurityFields() {},
     content, updateProfilePreview() {}, updateBusy() {}, renderAuth: () => 'AUTH', renderRecovery: () => 'LEGACY',
     renderStudent: () => 'DASHBOARD', renderTeacher: () => 'DASHBOARD', renderWorkspaceShell: html => html, isTeacher: () => false
   });
@@ -220,6 +223,7 @@ test('actual auth handler sends the email API payloads, surfaces provider errors
       active: true, epoch: 0, operation: 0, pending: '', authPending: false, refreshAgain: false,
       authMode: 'login', authOnly: false, authEmail: '', callbackErrorDismissed: false,
       knownSession: '', knownRecovery: false, knownCallbackError: '', profile: null,
+      knownSecuritySession:'',securitySessionKey,
       recoveryCode: '', recoveryUsername: '', emailCooldownTimer: null, emailCooldownUntil: 0,
       cooldownStarts: 0, refreshes: 0, renders: 0, resets: 0,
       cloud: {session, recoveryRequired: recovery, async auth(type, payload) {

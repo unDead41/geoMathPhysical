@@ -1,9 +1,11 @@
 import {icon} from './art.mjs';
 
 /** Render authored profile UI; identity and class values are escaped by the host. */
-export function renderProfileView({profile, classes, signedIn, confirming = false, accountHeading, avatarArt, button, field, formError, submit, esc, t}) {
+export function renderProfileView({profile, authUser, classes, signedIn, confirming = false, accountHeading, avatarArt, button, field, formError, submit, esc, t}) {
   if (!signedIn) return `<section class="portal-panel"><h1 id="portal-title" tabindex="-1">${t('Profil Saya')}</h1><p>${t('Anda sedang menggunakan mod tetamu. Log masuk untuk melihat dan menyimpan profil akaun anda.')}</p>${button(t('Log masuk'), 'profile-login', {primary: true})}</section>`;
-  const email = profile.email;
+  const user = authUser?.id === profile.id ? authUser : null;
+  const email = typeof user?.email === 'string' && user.email ? user.email : profile.email;
+  const emailVerified = user && email === user.email ? Boolean(user.email_confirmed_at) : profile.email_verified;
   const legacy = typeof email !== 'string' || email.endsWith('@accounts.geodecoder.invalid');
   const choices = [['initial', 'Inisial'], ['cube', 'Kubus'], ['cuboid', 'Kuboid'], ['pyramid', 'Piramid'], ['cylinder', 'Silinder'], ['cone', 'Kon']];
   const role = t(profile.role === 'teacher' ? 'Guru' : profile.role === 'student' ? 'Murid' : 'Belum tersedia');
@@ -17,7 +19,7 @@ export function renderProfileView({profile, classes, signedIn, confirming = fals
       <div class="portal-profile-details"><dl class="portal-profile-facts">
         <div><dt>${t('Nama pengguna')}</dt><dd><span class="portal-profile-readonly">@${esc(profile.username)}</span><small>${t('Tidak boleh diubah.')}</small></dd></div>
         <div><dt>${t('E-mel')}</dt><dd><span class="portal-profile-readonly">${legacy ? t('Tiada e-mel berdaftar (akaun lama).') : esc(email)}</span></dd></div>
-        <div><dt>${t('Status pengesahan e-mel')}</dt><dd><span class="portal-profile-identity-state">${legacy ? t('Tidak berkenaan') : profile.email_verified === true ? t('Disahkan') : profile.email_verified === false ? t('Belum disahkan') : t('Belum tersedia')}</span></dd></div>
+        <div><dt>${t('Status pengesahan e-mel')}</dt><dd><span class="portal-profile-identity-state">${legacy ? t('Tidak berkenaan') : emailVerified === true ? t('Disahkan') : emailVerified === false ? t('Belum disahkan') : t('Belum tersedia')}</span></dd></div>
         <div><dt>${t('Peranan')}</dt><dd><span class="portal-profile-readonly">${role}</span><small>${t('Peranan ditetapkan oleh sistem.')}</small></dd></div>
         <div><dt>${t('Kelas')}</dt><dd><span class="portal-profile-readonly">${classNames.length ? classNames.join(', ') : t('Belum ada kelas.')}</span><small>${t('Keahlian kelas diurus dalam ruang kelas.')}</small>${classes.length ? `<details class="portal-profile-class-details"><summary>${t('Lihat maklumat kelas')}</summary><ul class="portal-profile-classes">${classes.map(c => `<li><b>${esc(c.name)}</b><span>${t('Guru')}: ${c.teacher_name ? esc(c.teacher_name) : c.teacher_id === profile.id && profile.role === 'teacher' ? esc(profile.display_name) : t('Maklumat guru belum tersedia')}</span>${button(t('Buka kelas'), 'profile-class', {id: c.id, quiet: true})}</li>`).join('')}</ul></details>` : profile.role === 'student' ? `<p>${t('Gunakan PIN daripada guru untuk menyertai kelas.')}</p>${button(t('Sertai kelas'), 'profile-join', {primary: true})}` : button(t('Buka ruang kelas'), 'profile-back', {quiet: true})}</dd></div>
       </dl></div>
