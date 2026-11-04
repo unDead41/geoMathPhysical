@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "review_scope": "Prompt 1 independent source review",
+  "app_baseline": "38f061af963256528d5060ff076bae9ee05eafc3",
+  "canonical_reference": "37bc2cd262cc0a54e8ee31339ea37471c1ecfda5",
+  "integrity_checks": [
+    {
+      "check": "archived mockup PNG Git blob IDs versus app tree",
+      "status": "pass",
+      "files_checked": 12
+    },
+    {
+      "check": "present canonical module source Git blob IDs versus main-digitalized tree",
+      "status": "pass",
+      "files_checked": 72
+    }
+  ],
+  "commands": [
+    {
+      "command": "node --test tests/learning-mesh.test.mjs tests/geometry.test.mjs tests/calculation-steps.test.mjs tests/projection-geometry.test.mjs",
+      "working_directory": "audit/canonical/digital/module",
+      "evidence_class": "canonical JavaScript source unit tests",
+      "exit_code": 0,
+      "passed": 93,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "python tools/check_version.py",
+      "working_directory": "workers/review",
+      "evidence_class": "inherited firmware document consistency",
+      "exit_code": 0,
+      "reported_version": "v1.1.3"
+    },
+    {
+      "command": "flutter --version",
+      "evidence_class": "host SDK inventory",
+      "exit_code": 0,
+      "flutter": "3.47.9",
+      "dart": "3.13.7"
+    }
+  ],
+  "android_device_smoke": "not yet run",
+  "physical_phone": "not run",
+  "hosted_backend": "not run"
+}

@@ -1,0 +1,114 @@
+   Woah! You appear to be trying to run flutter as root.
+   We strongly recommend running the flutter tool without superuser privileges.
+  /
+📎
+00:00 +0: loading /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/foundation/report_accessibility_test.dart
+00:00 +0: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/foundation/report_accessibility_test.dart: 320 dp / 150% report keeps keyboard and back actions reachable
+00:03 +1: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/foundation/report_accessibility_test.dart: failed TXT export retains draft and never claims saved
+00:05 +2: loading /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/foundation/preview_bootstrap_contract_test.dart
+00:05 +2: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/foundation/preview_bootstrap_contract_test.dart: learning preview receives route, translation, service and migrated database
+00:07 +3: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/foundation/preview_bootstrap_contract_test.dart: cloud_game preview receives route, translation, service and migrated database
+00:08 +4: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/foundation/preview_bootstrap_contract_test.dart: feature cannot replace the foundation database owner
+00:08 +5: loading /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/foundation/back_policy_contract_test.dart
+00:09 +5: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/foundation/back_policy_contract_test.dart: synchronous reentrant back shares one confirmation and one pop
+00:09 +6: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/foundation/back_policy_contract_test.dart: confirmation for an old route cannot pop its replacement
+00:09 +7: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/foundation/back_policy_contract_test.dart: stay preserves a draft and allows a later deliberate back
+00:09 +8: loading /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/contracts/geometry_card_provider_test.dart
+00:10 +8: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/contracts/geometry_card_provider_test.dart: all five game shapes have canonical neutral solid and net cards
+00:10 +9: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/contracts/geometry_card_provider_test.dart: damaged card source does not produce a successful geometry DTO
+00:10 +10: loading /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/storage/sqlite_formative_records_test.dart
+00:11 +10: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/storage/sqlite_formative_records_test.dart: real SQLite saves guest records, reopens, and never enqueues guest upload
+00:11 +11: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/storage/sqlite_formative_records_test.dart: record and outbox commit atomically and survive reopen
+00:11 +12: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/storage/sqlite_formative_records_test.dart: queue failure after insertion rolls back record and event, without a receipt
+00:11 +13: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/storage/sqlite_formative_records_test.dart: actor switch during transaction rolls back the stale write and queue
+00:11 +14: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/storage/sqlite_formative_records_test.dart: missing signed-in queue cannot claim a durable or synced save
+00:12 +15: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/storage/sqlite_formative_records_test.dart: guest and A/B remain isolated, including stale reads and writes
+00:12 +16: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/storage/sqlite_formative_records_test.dart: watcher invalidates on scope change without leaking another owner
+00:12 +17: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/storage/sqlite_formative_records_test.dart: durable receipt waits for actual SQLite commit acknowledgment
+00:12 +18: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/storage/sqlite_formative_records_test.dart: closed SQLite write fails without a durable receipt
+00:12 +19: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/storage/sqlite_formative_records_test.dart: completed attempt is immutable; reflection stage never regresses
+00:12 +20: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/storage/sqlite_formative_records_test.dart: quiz history is bounded at fifty without pruning practice records
+00:12 +21: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/storage/sqlite_formative_records_test.dart: migration contributions are unique, durable, ordered and rollback failures
+00:12 +22: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/storage/sqlite_formative_records_test.dart: transaction handle expires when callback completes
+00:12 +23: loading /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/design/shared_widgets_test.dart
+00:13 +23: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/design/shared_widgets_test.dart: confirmation actions remain reachable with keyboard at 320 dp/150%
+00:15 +24: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/design/shared_widgets_test.dart: busy action is single flight and labeled field keeps its accessible name
+00:16 +25: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/design/shared_widgets_test.dart: shape/model/face controls wrap at 320 dp and have tap alternatives
+00:16 +26: loading /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/design/design_contract_test.dart
+00:17 +26: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/design/design_contract_test.dart: native semantic colours resolve canonical light/dark/strong tokens
+00:17 +27: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/design/design_contract_test.dart: cube and cuboid palette binds physical IDs and rejects fictitious faces
+00:17 +28: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/design/design_contract_test.dart: feature strings share one language owner with deterministic fallback
+00:17 +29: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/design/design_contract_test.dart: body text and status foregrounds remain readable in all four themes
+00:17 +30: loading /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/preferences/preferences_screen_test.dart
+00:18 +30: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/preferences/preferences_screen_test.dart: every native preference changes through the UI and reopens
+00:21 +31: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/preferences/preferences_screen_test.dart: failed save keeps old control value and retry saves the same intent
+00:22 +32: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/preferences/preferences_screen_test.dart: settings reachable at 320.0 dp, ms, dark/contrast/150%
+00:22 +33: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/preferences/preferences_screen_test.dart: settings reachable at 320.0 dp, en, dark/contrast/150%
+00:22 +34: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/preferences/preferences_screen_test.dart: settings reachable at 390.0 dp, ms, dark/contrast/150%
+00:23 +35: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/preferences/preferences_screen_test.dart: settings reachable at 390.0 dp, en, dark/contrast/150%
+00:23 +36: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/preferences/preferences_screen_test.dart: settings reachable at 430.0 dp, ms, dark/contrast/150%
+00:24 +37: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/preferences/preferences_screen_test.dart: settings reachable at 430.0 dp, en, dark/contrast/150%
+00:25 +38: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/preferences/preferences_screen_test.dart: settings reachable at 768.0 dp, ms, dark/contrast/150%
+00:25 +39: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/preferences/preferences_screen_test.dart: settings reachable at 768.0 dp, en, dark/contrast/150%
+00:25 +40: loading /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/preferences/preferences_repository_test.dart
+00:26 +40: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/preferences/preferences_repository_test.dart: all preferences survive a repository close and a fresh disk read
+00:26 +41: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/preferences/preferences_repository_test.dart: pending or failed persistence never publishes a saved snapshot
+00:26 +42: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/preferences/preferences_repository_test.dart: serialized saves cannot complete out of order or poison later writes
+00:26 +43: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/preferences/preferences_repository_test.dart: failed replacement preserves the last durable preferences on reopen
+00:26 +44: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/preferences/preferences_repository_test.dart: corrupt and future JSON are rejected without overwriting storage
+00:27 +45: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/preferences/preferences_repository_test.dart: JSON validates each field instead of accepting truthy or unknown values
+00:27 +46: loading /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/lifecycle/navigation_lifecycle_audio_test.dart
+00:28 +46: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/lifecycle/navigation_lifecycle_audio_test.dart: system and app-bar back share a single confirmation and preserve entry
+00:29 +47: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/lifecycle/navigation_lifecycle_audio_test.dart: a late confirmation cannot pop a new activity
+00:29 +48: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/lifecycle/navigation_lifecycle_audio_test.dart: synchronous policy reentry uses the published pending request
+00:29 +49: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/lifecycle/navigation_lifecycle_audio_test.dart: lifecycle maps native phases once and ignores duplicate transitions
+00:29 +50: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/lifecycle/navigation_lifecycle_audio_test.dart: audio revokes the old owner before granting the new one
+00:29 +51: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/lifecycle/navigation_lifecycle_audio_test.dart: failed audio pause prevents a second owner from starting
+00:29 +52: loading /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/features/feature_composition_test.dart
+00:30 +52: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/features/feature_composition_test.dart: learning preview registers all contributions through the same root
+00:31 +53: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/features/feature_composition_test.dart: cloud_game preview registers all contributions through the same root
+00:31 +54: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/features/feature_composition_test.dart: a service is lazy, typed, shared and disposed after its dependent
+00:31 +55: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/features/feature_composition_test.dart: cycles and name collisions fail before creating an ambiguous service
+00:31 +56: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/features/feature_composition_test.dart: composition rejects collisions in every contribution before factories
+00:31 +57: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/features/feature_composition_test.dart: localisations are immutable, namespaced and use the app fallback order
+00:31 +58: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/features/feature_composition_test.dart: feature strings cannot replace shared native string namespaces
+00:31 +59: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/features/feature_composition_test.dart: parameter routes resolve and equivalent parameter paths collide
+00:31 +60: loading /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/app/public_backend_configuration_test.dart
+00:32 +60: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/app/public_backend_configuration_test.dart: missing public configuration is unavailable without a bootstrap crash
+00:33 +61: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/app/public_backend_configuration_test.dart: only HTTPS public configuration and exact development callback accepted
+00:33 +62: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/app/public_backend_configuration_test.dart: service-role and secret credentials cannot be used as public configuration
+00:33 +63: loading /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/learning/module_asset_repository_test.dart
+00:35 +63: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/learning/module_asset_repository_test.dart: complete offline source-built assets are verified before ready is possible
+00:35 +64: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/learning/module_asset_repository_test.dart: missing manifest.json fails closed
+00:35 +65: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/learning/module_asset_repository_test.dart: corrupt manifest.json fails integrity verification
+00:35 +66: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/learning/module_asset_repository_test.dart: missing index.html fails closed
+00:35 +67: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/learning/module_asset_repository_test.dart: corrupt index.html fails integrity verification
+00:35 +68: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/learning/module_asset_repository_test.dart: missing native-adapter.js fails closed
+00:35 +69: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/learning/module_asset_repository_test.dart: corrupt native-adapter.js fails integrity verification
+00:35 +70: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/learning/module_asset_repository_test.dart: missing canonical-module.html fails closed
+00:35 +71: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/learning/module_asset_repository_test.dart: corrupt canonical-module.html fails integrity verification
+00:35 +72: loading /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/learning/module_host_failure_test.dart
+00:37 +72: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/learning/module_host_failure_test.dart: an absent offline bundle cannot construct WebView or emit ready
+00:37 +73: loading /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/core/formative_record_test.dart
+00:39 +73: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/core/formative_record_test.dart: reflection validation preserves canonical stages, limits and trimming
+00:39 +74: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/core/formative_record_test.dart: merging cannot regress stage or completed explanation
+00:39 +75: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/core/formative_record_test.dart: completed solo validates canonical mode, integer accounting and duration
+00:39 +76: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/core/formative_record_test.dart: outbox event only permits canonical formative fields
+00:39 +77: loading /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/core/session_network_test.dart
+00:41 +77: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/core/session_network_test.dart: guest partition survives reopen; same auth refresh preserves epoch
+00:41 +78: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/core/session_network_test.dart: failed identity persistence does not claim a stable guest partition
+00:41 +79: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/core/session_network_test.dart: protected adapter persists only through secure storage and clears
+00:41 +80: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/core/session_network_test.dart: late responses and callbacks after logout cannot affect another actor
+00:41 +81: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/core/session_network_test.dart: bounded retry respects Retry-After and halts terminal failures
+00:41 +82: loading /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/module/module_host_bridge_test.dart
+00:43 +82: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/module/module_host_bridge_test.dart: ready handshake and progress retain authoritative native actor
+00:44 +83: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/module/module_host_bridge_test.dart: native envelope version is distinct from progress and settings versions
+00:44 +84: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/module/module_host_bridge_test.dart: old epoch messages close the bridge after logout or actor/scope switch
+00:44 +85: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/module/module_host_bridge_test.dart: logout invalidates a signed-in bridge even when the guest partition exists
+00:44 +86: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/module/module_host_bridge_test.dart: same session token refresh preserves the bridge; changed scope closes it
+00:44 +87: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/module/module_host_bridge_test.dart: background blocks input and foreground resumes the same ready instance
+00:44 +88: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/module/module_host_bridge_test.dart: forged identity, document generation, actor and credentials are rejected
+00:44 +89: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/module/module_host_bridge_test.dart: malformed/unknown/oversize messages cannot make an instance ready
+00:44 +90: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/module/module_host_bridge_test.dart: progress validation enforces canonical stages, fields and inclusive limits
+00:45 +91: /workspace/scratch/5c9edfba3bf4/app-foundation/apps/geomath_flutter/test/module/module_host_bridge_test.dart: navigation uses an explicit native allowlist and cannot invoke RPC
+00:45 +92: All tests passed!

@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "feature": "contracts",
+  "source_commit": "37bc2cd262cc0a54e8ee31339ea37471c1ecfda5",
+  "files": [
+    {
+      "path": "assets/contracts/bank15.json",
+      "sha256": "3b7eb0c7fb8949452cc692cf35a075ac937526928491d14c9934a807689dff9b",
+      "bytes": 4930
+    },
+    {
+      "path": "assets/contracts/cards/cone-net.svg",
+      "sha256": "94081fca55b1ad24dc77a6d3220da283ee6f391de106d80b411af472ed5f54ff",
+      "bytes": 15377
+    },
+    {
+      "path": "assets/contracts/cards/cone-solid.svg",
+      "sha256": "1df1ed741747ab95c31dc07063df2f38b479aae3cabaf6dfb02042c1217f98f6",
+      "bytes": 15578
+    },
+    {
+      "path": "assets/contracts/cards/cube-net.svg",
+      "sha256": "b7d5d6f531d38abf020778627ecf9b2c409788b8c12a3e42517858a34023de8a",
+      "bytes": 1056
+    },
+    {
+      "path": "assets/contracts/cards/cube-solid.svg",
+      "sha256": "f0363873bbc040b31d7d9f7e99cfc7a58702e75b4f543f0e35c66fe29520ba43",
+      "bytes": 1064
+    },
+    {
+      "path": "assets/contracts/cards/cuboid-net.svg",
+      "sha256": "b88d909736d52feee245b79e7fc2dd4150f9235a5a3308e236198c12bbf187ea",
+      "bytes": 1058
+    },
+    {
+      "path": "assets/contracts/cards/cuboid-solid.svg",
+      "sha256": "295cb692a1b89f6afe5fd296a94ab336e48dae836a923d9504a12d2af59a9eea",
+      "bytes": 1063
+    },
+    {
+      "path": "assets/contracts/cards/cylinder-net.svg",
+      "sha256": "7dc0833484c07b5ee1f16b9e75fb26279e8d6824e8ab416a03fb7db6c56b51b3",
+      "bytes": 19230
+    },
+    {
+      "path": "assets/contracts/cards/cylinder-solid.svg",
+      "sha256": "862920cf0962369d1ffe4dd80438ba0265518c1ec2e4f2743d5914128d346e88",
+      "bytes": 19248
+    },
+    {
+      "path": "assets/contracts/cards/pyramid-net.svg",
+      "sha256": "f68992a34660e52eaceccd6a5d3b3b6a9e79790b48e9e022ca745835e56fdd8b",
+      "bytes": 827
+    },
+    {
+      "path": "assets/contracts/cards/pyramid-solid.svg",
+      "sha256": "05ce6db2fd51c8a5fec8f8d6c46a4eedad93f4cda8eb055e27d5e8d9eaf850b5",
+      "bytes": 833
+    },
+    {
+      "path": "assets/contracts/engine_golden.json",
+      "sha256": "8ff4839660bdf1875eb67bdcb8348168aea50617369e97472bf4ee4702623a70",
+      "bytes": 596720
+    },
+    {
+      "path": "assets/contracts/geometry_cards.json",
+      "sha256": "79c1c071a0efdffa3cc7f3086078299a09a680890dd62463edc226f7320cf693",
+      "bytes": 358325
+    },
+    {
+      "path": "assets/contracts/learning_catalogue.json",
+      "sha256": "3d6b88394c8b719669d337d3a76ee1e6e7910feaca89fb42e614e12a7fb16397",
+      "bytes": 16767
+    },
+    {
+      "path": "assets/contracts/ruleset.json",
+      "sha256": "d227ff089cf9c1d6e47400c16611c00cf3f447158be717bc04ad37f8a64cd348",
+      "bytes": 605
+    }
+  ]
+}

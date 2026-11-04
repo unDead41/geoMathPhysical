@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "source_commit": "37bc2cd262cc0a54e8ee31339ea37471c1ecfda5",
+  "digital_version": "2.9.1",
+  "module_version": "1.6.2",
+  "ruleset": "single-attempt-v1",
+  "quiz_size": 10,
+  "practice_size": 15,
+  "game_shapes": [
+    "cube",
+    "cuboid",
+    "pyramid",
+    "cylinder",
+    "cone"
+  ],
+  "blink_ms": 900,
+  "review_ms": 1800,
+  "bank_version": "bank15-sha256:6ea4e9057d1f04e4f485aeefd89ec3cb681deb07b2dad7e76862e78e22159065",
+  "module_progress_protocol": 1,
+  "module_settings_version": 1,
+  "native_bridge_version": 1,
+  "solo_snapshot_schema": 1,
+  "formative_schema": 1
+}
