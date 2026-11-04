@@ -1,21 +1,29 @@
 {
   "title": "GeoMath — Mula & panduan",
-  "review_url": "https://geomath-ui-ijamm.ijmahmad.chatgpt.site",
-  "audience": "owner-private",
-  "project_id": "appgprj_6aea3587e6488191be548e41745271bc",
-  "deployment_id": "appgdep_6aea3f03b968819180ffc11435f38680",
-  "saved_version_id": "appgprj_6aea3587e6488191be548e41745271bc~appgver_3bdd213eb9b48191b1e1f813ef089972",
-  "deployment_status": "succeeded",
-  "built_site_source_commit": "cf615b814f13669b7213ae1d5227cb99d7c6a68b",
+  "review_url": "https://undead41.github.io/geomath-ui-preview/#utama",
+  "hosting": "GitHub Pages",
+  "audience": "public-frontend-preview",
   "github_ui_source_commit": "0c968c65005a0413c4f4a0034670b4db825599c8",
   "work_branch": "digitalized-ux-ui-upgrade",
-  "integration_branches_changed": false,
-  "existing_pages_changed": false,
-  "verification_document": "ENTRY_UI_VERIFICATION.md",
-  "entry_routes": [
+  "preview_repository": "unDead41/geomath-ui-preview",
+  "preview_branch": "preview-ui-upgrade",
+  "preview_commit": "627f28765c9261fb93dc95a499599dbbf725d11c",
+  "pages_source_path": "/",
+  "deployment_status": "success",
+  "workflow_run": "https://github.com/unDead41/geomath-ui-preview/actions/runs/41753862683",
+  "verified_at": "2026-11-04",
+  "live_routes_verified": [
     "#utama",
     "#main",
     "#sambung",
     "#cara-bermain"
-  ]
+  ],
+  "integration_branches_changed": false,
+  "existing_pages_changed": false,
+  "verification_document": "ENTRY_UI_VERIFICATION.md",
+  "previous_preview": {
+    "review_url": "https://geomath-ui-ijamm.ijmahmad.chatgpt.site",
+    "hosting": "ChatGPT Sites",
+    "deployment_id": "appgdep_6aea3f03b968819180ffc11435f38680"
+  }
 }
