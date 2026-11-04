@@ -21,6 +21,25 @@ projek Flutter serta APK belum dibina.
 | Pelan pembangunan berperingkat | [Pelan Flutter](docs/geomath-app/docs/superpowers/plans/2026-11-04-geomath-flutter.md) |
 | Prompt mula semula | [RESUME_PROMPT.md](docs/geomath-app/RESUME_PROMPT.md) |
 | Pengesahan dan ujian yang diperlukan | [TEST_PLAN.md](docs/geomath-app/TEST_PLAN.md) |
+| Empat prompt untuk membina dan menjalankan Flutter | [Prompt pelaksanaan](docs/geomath-app-prompts/README.md) |
+
+## Empat chat pelaksanaan Flutter
+
+Prompt baharu disediakan untuk mula membina app apabila diminta:
+
+1. **Foundation** — Flutter runnable, komponen bersama dan kontrak freeze.
+2. **Belajar** — 11 model, warna muka, makmal, studio dan rekod offline.
+3. **Akaun, kelas dan permainan** — auth, CRUD, solo, Duel serta sync native.
+4. **Integrasi Android** — sambung feature, uji hasil gabungan, screenshot dan APK.
+
+Jalankan Prompt 1 dahulu; Prompt 2 dan 3 boleh serentak selepas foundation READY;
+Prompt 4 selepas kedua-duanya dipush. Setiap prompt mengarahkan 6 subagen awal
+dengan agen tambahan mengikut keperluan dan kapasiti runtime. Branch kerja
+menggunakan nama `app-foundation`, `app-learning`, `app-cloud-game` dan
+`app-integration`; hasil gabungan hanya dimajukan ke `app` selepas verification.
+
+[Buka empat prompt](docs/geomath-app-prompts/README.md).
+Penyediaan arahan ini tidak mengubah status app kepada telah dibina.
 
 ## Asas branch dan snapshot dokumen
 

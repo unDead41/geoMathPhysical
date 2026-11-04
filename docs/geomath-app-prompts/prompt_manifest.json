@@ -1,0 +1,182 @@
+{
+  "schema": 1,
+  "prompt_pack_version": "1.0.0",
+  "date": "2026-11-04",
+  "timezone": "Asia/Kuala_Lumpur",
+  "repository": "unDead41/geodecoder",
+  "app_root": "apps/geomath_flutter",
+  "status": "instructions_only_no_flutter_implementation",
+  "initial_workers_per_prompt": 6,
+  "cumulative_worker_limit": null,
+  "concurrency_policy": "actual runtime capacity; no recursive spawning without scoped work",
+  "phases": [
+    {
+      "id": 1,
+      "file": "01-flutter-foundation.md",
+      "branch": "app-foundation",
+      "base": "origin/app",
+      "depends_on": [],
+      "screen_ids": [
+        "01",
+        "04",
+        "37",
+        "38",
+        "39",
+        "40"
+      ],
+      "supplemental_states": [],
+      "sor_primary": [
+        "U01",
+        "U03",
+        "U04"
+      ]
+    },
+    {
+      "id": 2,
+      "file": "02-flutter-learning.md",
+      "branch": "app-learning",
+      "base": "same verified READY SHA on origin/app-foundation as phase3",
+      "depends_on": [
+        1
+      ],
+      "screen_ids": [
+        "25",
+        "26",
+        "27",
+        "28",
+        "29",
+        "30",
+        "31",
+        "32",
+        "33",
+        "34",
+        "35",
+        "36",
+        "41"
+      ],
+      "supplemental_states": [],
+      "sor_primary": [
+        "L01",
+        "L02",
+        "L03",
+        "L04",
+        "L05",
+        "L06",
+        "L07",
+        "L08",
+        "U02",
+        "O01"
+      ]
+    },
+    {
+      "id": 3,
+      "file": "03-flutter-cloud-game.md",
+      "branch": "app-cloud-game",
+      "base": "same verified READY SHA on origin/app-foundation as phase2",
+      "depends_on": [
+        1
+      ],
+      "screen_ids": [
+        "02",
+        "03",
+        "05",
+        "06",
+        "07",
+        "08",
+        "09",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "23",
+        "24",
+        "42",
+        "43",
+        "44",
+        "45",
+        "46",
+        "47",
+        "48"
+      ],
+      "supplemental_states": [
+        "EX01",
+        "EX02",
+        "EX03",
+        "EX04",
+        "EX05",
+        "EX06",
+        "EX07",
+        "EX08",
+        "EX09",
+        "EX10",
+        "EX11",
+        "EX12",
+        "EX13",
+        "EX14",
+        "EX15",
+        "EX16"
+      ],
+      "sor_primary": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06",
+        "D01",
+        "D02",
+        "D03",
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "O02",
+        "O03",
+        "O04",
+        "O05",
+        "N01",
+        "N02"
+      ]
+    },
+    {
+      "id": 4,
+      "file": "04-flutter-integration.md",
+      "branch": "app-integration",
+      "base": "origin/app then integrate tested feature branches",
+      "depends_on": [
+        2,
+        3
+      ],
+      "screen_ids": [],
+      "supplemental_states": [],
+      "acceptance_all_screens": true,
+      "sor_primary": [
+        "N03",
+        "R01",
+        "R02",
+        "R03"
+      ],
+      "publish_to": "app",
+      "publish_mode": "fast-forward without force after verification"
+    }
+  ],
+  "shared_contract": "COMMON_RULES.md",
+  "baseline_observed": {
+    "app": "262e9b92dc824f2a926a1f0ea6e4006776ffad4c",
+    "main-digitalized": "ef697c86a5bfdf5a5658c3df92bce1d7f3f88652",
+    "main": "25836eb1a6f24459aace8a3980ae880a13e3b488",
+    "digital_version": "2.9.0",
+    "module_version": "1.6.1"
+  },
+  "baseline_rule": "refresh remote at execution; these are historical observations, not future pin mandates"
+}
