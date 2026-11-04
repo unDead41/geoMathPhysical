@@ -24,7 +24,14 @@
     "client_form_prepared": true,
     "client_created": false,
     "secret_entered": false,
-    "provider_saved": false
+    "provider_saved": false,
+    "data_access_scopes": [
+      "openid",
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile"
+    ],
+    "data_access_saved": true,
+    "supabase_enable_switch_prepared": true
   },
   "phone": {
     "provider_enabled": false,
