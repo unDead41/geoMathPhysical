@@ -2,6 +2,7 @@ import {createClient} from '@supabase/supabase-js';
 import {CLOUD_CONFIG} from './cloud-config.mjs';
 import {runAccountSecurity,securitySessionKey,withAccountSessionLock} from './account-security.mjs';
 import {readSessionList,sessionListError} from './active-sessions.mjs';
+import {ScopedRequestCache,retryDelay} from './network-policy.mjs';
 
 const AUTH_REDIRECT='https://undead41.github.io/geodecoder-digital/';
 const CALLBACK_KEYS=['access_token','refresh_token','provider_token','provider_refresh_token','token_type','expires_in','expires_at','type','error','error_code','error_description','code','token_hash'];
@@ -33,9 +34,9 @@ function emailError(error){
   return 'Email belum dapat dihantar. Cuba lagi kemudian.';
 }
 export class ClassroomCloud {
-  constructor(config=CLOUD_CONFIG,options={}){this.config=config;this._client=null;this._session=null;this.listeners=new Set();this.roomId=null;this.roomScope=0;this.profile=null;this.room=null;this.heartbeatTimer=null;this.heartbeatPending=false;this.ready=!!config.url&&!!config.publishableKey;this._createClient=options.createClient||createClient;this._securityFetch=options.fetch||globalThis.fetch;this._location=options.location||globalThis.location;this._history=options.history||globalThis.history;this._callback=inspectAuthCallback(this._location?.href);this.hasAuthCallback=this._callback.present;this.authCallbackHandled=false;this.callbackError='';this.recoveryRequired=false;this._recoveryIdentity='';this._recoveryStorage=options.recoveryStorage===undefined?defaultRecoveryStorage():options.recoveryStorage;this.hasRecoveryIntent=false;try{this.hasRecoveryIntent=!!this._recoveryStorage?.getItem(RECOVERY_KEY);}catch{}this._restoredRecovery=false;this._initialization=null;this._callbackEvent=new Promise(resolve=>{this._resolveCallback=resolve;});}
+  constructor(config=CLOUD_CONFIG,options={}){this.config=config;this._client=null;this._session=null;this.listeners=new Set();this.roomId=null;this.roomScope=0;this.profile=null;this.room=null;this.heartbeatTimer=null;this.heartbeatPending=false;this._heartbeatEpoch=0;this._heartbeatActive=false;this._random=options.random||Math.random;this._snapshotCache=new ScopedRequestCache();this._dataRevision=0;this.ready=!!config.url&&!!config.publishableKey;this._createClient=options.createClient||createClient;this._securityFetch=options.fetch||globalThis.fetch;this._location=options.location||globalThis.location;this._history=options.history||globalThis.history;this._callback=inspectAuthCallback(this._location?.href);this.hasAuthCallback=this._callback.present;this.authCallbackHandled=false;this.callbackError='';this.recoveryRequired=false;this._recoveryIdentity='';this._recoveryStorage=options.recoveryStorage===undefined?defaultRecoveryStorage():options.recoveryStorage;this.hasRecoveryIntent=false;try{this.hasRecoveryIntent=!!this._recoveryStorage?.getItem(RECOVERY_KEY);}catch{}this._restoredRecovery=false;this._initialization=null;this._callbackEvent=new Promise(resolve=>{this._resolveCallback=resolve;});}
   get session(){return this._session;}
-  _setSession(session){if(this._recoveryIdentity&&securitySessionKey(session)!==this._recoveryIdentity)this._clearRecovery();if(this._session?.user?.id!==session?.user?.id){if(this._session?.user?.id)this._clearRecovery();this.profile=null;this.room=null;this.roomId=null;this.roomScope++;this.recoveryRequired=false;}this._session=session;if(!session){this._clearRecovery();this.stopHeartbeat();}}
+  _setSession(session){if(securitySessionKey(this._session)!==securitySessionKey(session)){this._snapshotCache.clear();this._dataRevision++;}if(this._recoveryIdentity&&securitySessionKey(session)!==this._recoveryIdentity)this._clearRecovery();if(this._session?.user?.id!==session?.user?.id){if(this._session?.user?.id)this._clearRecovery();this.profile=null;this.room=null;this.roomId=null;this.roomScope++;this.recoveryRequired=false;}this._session=session;if(!session){this._clearRecovery();this.stopHeartbeat();}}
   _clearRecovery(){this.recoveryRequired=false;this._recoveryIdentity='';this.hasRecoveryIntent=false;try{this._recoveryStorage?.removeItem(RECOVERY_KEY);}catch{}}
   _rememberRecovery(session){
     this.recoveryRequired=true;this._recoveryIdentity=securitySessionKey(session);this.stopHeartbeat();const sessionId=recoverySessionId(session);
@@ -162,13 +163,41 @@ export class ClassroomCloud {
     return result;
   }
   async rpc(action,payload={},options={}){
-    const identity=securitySessionKey(this._session),expectedUserId=options.expectedUserId||this._session?.user?.id,scope=this.roomScope;
-    const {data,error}=await this._boundRpc('geo_action',{action,payload},{expectedUserId});
-    if(error)throw Error(error.message==='JWT expired'?'Sesi tamat. Log masuk semula.':error.message||'Sambungan kelas terganggu. Cuba lagi.');
-    if(data?.error)throw Error(data.error.message||data.error||'Tindakan tidak dibenarkan.');
-    if(data?.profile&&data.profile.id!==expectedUserId)throw Object.assign(Error('Sesi akaun berubah. Log masuk semula untuk meneruskan.'),{code:'session-changed'});
-    if(identity===securitySessionKey(this._session)){if(data?.profile)this.profile=data.profile;if(data?.room&&scope===this.roomScope)this.room=data.room;}
+    const identity=securitySessionKey(this._session),expectedUserId=options.expectedUserId||this._session?.user?.id,scope=this.roomScope;let revision=this._dataRevision;
+    const read=async()=>{
+      const {data,error}=await this._boundRpc('geo_action',{action,payload},{expectedUserId});
+      if(error)throw Object.assign(Error(error.message==='JWT expired'?'Sesi tamat. Log masuk semula.':error.message||'Sambungan kelas terganggu. Cuba lagi.'),{code:error.code});
+      if(data?.error)throw Object.assign(Error(data.error.message||data.error||'Tindakan tidak dibenarkan.'),{code:data.error.code});
+      if(data?.profile&&data.profile.id!==expectedUserId)throw Object.assign(Error('Sesi akaun berubah. Log masuk semula untuk meneruskan.'),{code:'session-changed'});
+      return data;
+    };
+    let data;
+    if(action==='snapshot'){
+      for(let attempt=0;attempt<3;attempt++){
+        await this._checkSnapshotSession(expectedUserId,identity);
+        if(scope!==this.roomScope)throw Object.assign(Error('Paparan bilik berubah.'),{code:'stale-response'});
+        revision=this._dataRevision;
+        data=await this._snapshotCache.get(identity+':'+JSON.stringify(payload),read);
+        await this._checkSnapshotSession(expectedUserId,identity);
+        if(scope!==this.roomScope)throw Object.assign(Error('Paparan bilik berubah.'),{code:'stale-response'});
+        if(revision===this._dataRevision)break;
+        if(attempt===2)throw Object.assign(Error('Maklumat sedang berubah. Muat semula untuk mencuba lagi.'),{code:'stale-response'});
+      }
+    }else if(action==='heartbeat'){
+      data=await read(); // Presence does not invalidate a concurrent content read.
+    }else{
+      this._invalidateSnapshots();
+      try{data=await read();}finally{this._invalidateSnapshots();}
+    }
+    if(identity===securitySessionKey(this._session)&&(!['snapshot','heartbeat'].includes(action)||revision===this._dataRevision)){if(data?.profile)this.profile=data.profile;if(data?.room&&scope===this.roomScope)this.room=data.room;}
     return data;
+  }
+  _invalidateSnapshots(){this._snapshotCache.clear();this._dataRevision++;}
+  async _checkSnapshotSession(expectedUserId,identity){
+    await withAccountSessionLock(async()=>{
+      const actual=await this.client.auth.getSession();
+      if(this.recoveryRequired||actual.error||!actual.data?.session?.access_token||!expectedUserId||this._session?.user?.id!==expectedUserId||actual.data.session.user?.id!==expectedUserId||identity!==securitySessionKey(this._session)||identity!==securitySessionKey(actual.data.session))throw Object.assign(Error('Sesi akaun berubah. Log masuk semula untuk meneruskan.'),{code:'session-changed'});
+    });
   }
   async moduleProgress(action,payload={},options={}){
     const identity=this._session?.user?.id;
@@ -179,17 +208,21 @@ export class ClassroomCloud {
     return data;
   }
   onSessionChange(listener){this.listeners.add(listener);return()=>this.listeners.delete(listener);}
-  setRoom(roomId){const next=roomId||null;if(next!==this.roomId)this.roomScope++;this.roomId=next;}
+  setRoom(roomId){const next=roomId||null;if(next!==this.roomId){this.roomScope++;this._invalidateSnapshots();}this.roomId=next;}
   startHeartbeat(){
-    if(this.heartbeatTimer)return;
-    const beat=async()=>{if(this.heartbeatPending||!this._session)return;this.heartbeatPending=true;try{await this.rpc('heartbeat',this.roomId?{room_id:this.roomId}:{});}catch{}finally{this.heartbeatPending=false;}};
-    beat();this.heartbeatTimer=setInterval(beat,20000);
+    if(this._heartbeatActive)return;this._heartbeatActive=true;const epoch=++this._heartbeatEpoch;let failures=0;
+    const beat=async()=>{
+      if(!this._heartbeatActive||epoch!==this._heartbeatEpoch||!this._session)return;
+      try{if(!this.heartbeatPending&&globalThis.navigator?.onLine!==false){this.heartbeatPending=true;await this.rpc('heartbeat',this.roomId?{room_id:this.roomId}:{});failures=0;}}catch{failures++;}finally{this.heartbeatPending=false;}
+      if(this._heartbeatActive&&epoch===this._heartbeatEpoch)this.heartbeatTimer=setTimeout(beat,failures?retryDelay(failures,{baseMs:20000,maxMs:60000,random:this._random}):20000+Math.round(this._random()*5000));
+    };
+    this.heartbeatTimer=setTimeout(beat,Math.round(this._random()*2000));
   }
-  stopHeartbeat(){if(this.heartbeatTimer)clearInterval(this.heartbeatTimer);this.heartbeatTimer=null;}
+  stopHeartbeat(){this._heartbeatActive=false;this._heartbeatEpoch++;if(this.heartbeatTimer)clearTimeout(this.heartbeatTimer);this.heartbeatTimer=null;}
   watch(roomId,onChange,onStatus=()=>{}){
     if(!/^[a-f0-9-]{36}$/i.test(roomId))throw Error('Room tidak sah.');
     let timer=null,closed=false;
-    const channel=this.client.channel('geo-room-'+roomId).on('postgres_changes',{event:'*',schema:'public',table:'room_progress',filter:'room_id=eq.'+roomId},()=>{if(timer||closed)return;timer=setTimeout(()=>{timer=null;if(!closed)onChange();},200);}).subscribe(status=>{if(!closed)onStatus(status);});
+    const channel=this.client.channel('geo-room-'+roomId).on('postgres_changes',{event:'*',schema:'public',table:'room_progress',filter:'room_id=eq.'+roomId},()=>{if(timer||closed)return;this._invalidateSnapshots();timer=setTimeout(()=>{timer=null;if(!closed)onChange();},500);}).subscribe(status=>{if(!closed){this._invalidateSnapshots();onStatus(status);}});
     return()=>{closed=true;if(timer)clearTimeout(timer);this.client.removeChannel(channel);};
   }
 }

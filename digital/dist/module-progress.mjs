@@ -1,4 +1,5 @@
 // The parent owns storage/network. The opaque learning iframe owns teaching UI.
+import {retryDelay} from './network-policy.mjs';
 export const MODULE_PROGRESS_KEY='geodecoder.module.progress.v1.';
 export const MODULE_ACTIVITIES=['net','volume','area','composite'];
 export const MODULE_STAGES=['prediction','experiment','check','explanation'];
@@ -35,9 +36,10 @@ export function createModuleSession(crypto=globalThis.crypto){
 }
 
 export class ModuleProgress {
-  constructor({storage=null,cloud=null,onChange=()=>{},token=createModuleSession}={}){
+  constructor({storage=null,cloud=null,onChange=()=>{},token=createModuleSession,random=Math.random,isOnline=()=>globalThis.navigator?.onLine!==false}={}){
     this.storage=storage;this.cloud=cloud;this.onChange=onChange;this.token=token;
     this.account=null;this._actor='guest';this._epoch=0;this._memory=new Map();this._records=[];this._pending=new Map();this._syncPromise=null;
+    this._syncTimer=null;this._syncFailures=0;this._random=random;this._isOnline=isOnline;
     this.status='local';this.storageFailed=false;this.frame=null;this.session='';this.active=false;this.ready=false;this.theme='light';
     this._readLocal();
   }
@@ -60,7 +62,7 @@ export class ModuleProgress {
   setAccount(account){
     const next=account?.id?{id:String(account.id),role:account.role}:null,actor=next?.id||'guest';
     if(actor===this._actor&&next?.role===this.account?.role)return;
-    this.close();this._epoch++;this._syncPromise=null;this._pending.clear();this.account=next;this._actor=actor;
+    this._clearSyncTimer();this.close();this._epoch++;this._syncPromise=null;this._pending.clear();this._syncFailures=0;this.account=next;this._actor=actor;
     this.status='local';this.storageFailed=false;this._readLocal();this._emit();
   }
   open(frame){this.close();this.frame=frame;this.session=this.token();this.active=true;this.ready=false;}
@@ -80,11 +82,19 @@ export class ModuleProgress {
     if(same(merged,this._records))return true;
     this._records=merged;this._persist();
     if(this.canSync){this._pending.set(record.activity,this._records.find(r=>r.activity===record.activity));this.status='pending';}
-    this._emit();if(this.canSync)void this.sync();return true;
+    this._emit();if(this.canSync&&!this._syncPromise)this._scheduleSync();return true;
+  }
+  _clearSyncTimer(){if(this._syncTimer)clearTimeout(this._syncTimer);this._syncTimer=null;}
+  _scheduleSync(delay=500){
+    this._clearSyncTimer();const epoch=this._epoch;
+    this._syncTimer=setTimeout(()=>{this._syncTimer=null;if(epoch===this._epoch)void this.sync();},delay);
+    this._syncTimer?.unref?.();
   }
   sync(){
+    this._clearSyncTimer();
     if(!this.canSync)return Promise.resolve();
     if(this._syncPromise)return this._syncPromise;
+    if(!this._isOnline()){this.status='pending';this._emit();if(this._syncFailures++<5)this._scheduleSync(30000);return Promise.resolve();}
     const epoch=this._epoch,actor=this._actor,current=()=>epoch===this._epoch&&actor===this._actor;
     const task=(async()=>{
       this.status='syncing';this._emit();
@@ -100,9 +110,9 @@ export class ModuleProgress {
           this._records=mergeModuleProgress(saved?.records,this._records);this._persist();
           if(this._pending.get(activity)===record)this._pending.delete(activity);
         }
-        this.status='synced';
-      }catch{if(current())this.status='pending';}
-      finally{if(current()){this._syncPromise=null;this._emit();this._sendContext();}}
+        this.status='synced';this._syncFailures=0;
+      }catch{if(current()){this.status='pending';this._syncFailures++;}}
+      finally{if(current()){this._syncPromise=null;this._emit();this._sendContext();if(this.status==='pending'&&this._syncFailures<=5)this._scheduleSync(retryDelay(this._syncFailures-1,{baseMs:1000,maxMs:30000,random:this._random}));}}
     })();
     this._syncPromise=task;return task;
   }

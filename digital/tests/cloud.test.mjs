@@ -21,8 +21,8 @@ test('a delayed old-room response cannot replace the room currently being viewed
   const {cloud,complete}=fixture();cloud.setRoom('room-a');
   const old=cloud.rpc('snapshot',{room_id:'room-a'});
   cloud.setRoom('room-b');cloud.room={id:'room-b'};
-  complete({profile:{id:'account-a'},room:{id:'room-a'}});await old;
-  assert.equal(cloud.room.id,'room-b');assert.equal(cloud.profile.id,'account-a');
+  complete({profile:{id:'account-a'},room:{id:'room-a'}});await assert.rejects(old,{code:'stale-response'});
+  assert.equal(cloud.room.id,'room-b');assert.equal(cloud.profile,null);
 });
 test('logout clears profile, room and session and ignores a late heartbeat',async()=>{
   const {cloud,complete}=fixture();cloud.profile={id:'account-a'};cloud.room={id:'room-a'};cloud.setRoom('room-a');

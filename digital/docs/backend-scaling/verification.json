@@ -1,0 +1,223 @@
+{
+  "recorded_at_utc": "2026-11-04T02:25:23.238566+00:00",
+  "upstream_base": "391df985eea4fee15d9859e678068b1a3f613cba",
+  "branch": "digitalized-core-backend-scaling",
+  "digital_source_version": "2.8.0",
+  "module_pin": "1.6.0",
+  "unit_tests": {
+    "tests": 394,
+    "failed": 0,
+    "files": 61,
+    "coverage": "Every tests/*.test.mjs exactly once in the accepted evidence set; bounded batches, with batch2 repeated individually after its runner timed out.",
+    "runs": [
+      {
+        "batch": 1,
+        "files": [
+          "tests/account-utilities-integration.test.mjs",
+          "tests/active-sessions-qa.test.mjs",
+          "tests/branch-organization.test.mjs",
+          "tests/design-tokens.test.mjs",
+          "tests/duel-core.test.mjs",
+          "tests/ease-integration.test.mjs",
+          "tests/format.test.mjs",
+          "tests/load-policy.test.mjs",
+          "tests/module-native-language.test.mjs",
+          "tests/module-settings.test.mjs",
+          "tests/network-scaling.test.mjs",
+          "tests/preferences.test.mjs",
+          "tests/progress-scaling.test.mjs",
+          "tests/security-cloud.test.mjs",
+          "tests/solo-ui.test.mjs",
+          "tests/usability.test.mjs"
+        ],
+        "tests": 103,
+        "failed": 0,
+        "log_sha256": "56ca923909fa2c409a1f9c093ccc6be3adfcf1311961a0f14c73066a5287ee3e"
+      },
+      {
+        "batch": 3,
+        "files": [
+          "tests/active-sessions-cloud.test.mjs",
+          "tests/backend-history-gate.test.mjs",
+          "tests/cloud.test.mjs",
+          "tests/duel-client.test.mjs",
+          "tests/duel-edge.test.mjs",
+          "tests/email-cloud.test.mjs",
+          "tests/help-support-integration.test.mjs",
+          "tests/module-frame.test.mjs",
+          "tests/module-progress-view.test.mjs",
+          "tests/music.test.mjs",
+          "tests/practice.test.mjs",
+          "tests/profile-portal.test.mjs",
+          "tests/scaling-load-harness.test.mjs",
+          "tests/security-sdk.test.mjs",
+          "tests/support-report.test.mjs"
+        ],
+        "tests": 99,
+        "failed": 0,
+        "log_sha256": "622fbe4f45a6195c47bdc82ddf4f81efa3ed5e60329b0670262a75ec30763f24"
+      },
+      {
+        "batch": 4,
+        "files": [
+          "tests/active-sessions-portal.test.mjs",
+          "tests/backend-history.test.mjs",
+          "tests/core.test.mjs",
+          "tests/duel-content.test.mjs",
+          "tests/duel-protocol.test.mjs",
+          "tests/email-templates.test.mjs",
+          "tests/i18n.test.mjs",
+          "tests/module-language.test.mjs",
+          "tests/module-progress.test.mjs",
+          "tests/network-policy.test.mjs",
+          "tests/preferences-merge.test.mjs",
+          "tests/profile.test.mjs",
+          "tests/security-cleanup-race.test.mjs",
+          "tests/solo-save.test.mjs",
+          "tests/upgrade.test.mjs"
+        ],
+        "tests": 92,
+        "failed": 0,
+        "log_sha256": "0482fbcbe313324a612d00ba0acabef03a7b5e719e5735e35aa07e7368897707"
+      },
+      {
+        "file": "tests/active-sessions-backend.test.mjs",
+        "tests": 5,
+        "failed": 0,
+        "seconds": 27.0
+      },
+      {
+        "file": "tests/auth.test.mjs",
+        "tests": 5,
+        "failed": 0,
+        "seconds": 0.6
+      },
+      {
+        "file": "tests/cloud-session-binding.test.mjs",
+        "tests": 10,
+        "failed": 0,
+        "seconds": 3.6
+      },
+      {
+        "file": "tests/duel-client-lifecycle.test.mjs",
+        "tests": 10,
+        "failed": 0,
+        "seconds": 1.1
+      },
+      {
+        "file": "tests/duel-database.test.mjs",
+        "tests": 8,
+        "failed": 0,
+        "seconds": 12.1
+      },
+      {
+        "file": "tests/email-auth.test.mjs",
+        "tests": 4,
+        "failed": 0,
+        "seconds": 0.6
+      },
+      {
+        "file": "tests/game-settings-integration.test.mjs",
+        "tests": 3,
+        "failed": 0,
+        "seconds": 4.2
+      },
+      {
+        "file": "tests/module-cloud.test.mjs",
+        "tests": 3,
+        "failed": 0,
+        "seconds": 0.4
+      },
+      {
+        "file": "tests/module-native-settings.test.mjs",
+        "tests": 5,
+        "failed": 0,
+        "seconds": 23.1
+      },
+      {
+        "file": "tests/music-button.test.mjs",
+        "tests": 2,
+        "failed": 0,
+        "seconds": 0.4
+      },
+      {
+        "file": "tests/portal-auth-validation.test.mjs",
+        "tests": 13,
+        "failed": 0,
+        "seconds": 0.4
+      },
+      {
+        "file": "tests/profile-backend.test.mjs",
+        "tests": 4,
+        "failed": 0,
+        "seconds": 25.0
+      },
+      {
+        "file": "tests/scaling-database.test.mjs",
+        "tests": 9,
+        "failed": 0,
+        "seconds": 9.3
+      },
+      {
+        "file": "tests/security-portal.test.mjs",
+        "tests": 7,
+        "failed": 0,
+        "seconds": 2.5
+      },
+      {
+        "file": "tests/storage.test.mjs",
+        "tests": 12,
+        "failed": 0,
+        "seconds": 0.4
+      }
+    ]
+  },
+  "localhost_http": {
+    "scope": "localhost HTTP + real Edge handler + candidate SQL on PGlite; not a hosted capacity benchmark",
+    "users": 10,
+    "matches": 5,
+    "completedMatches": 5,
+    "fullMatches": 4,
+    "deadlineMatches": 1,
+    "answers": 100,
+    "scoreTotal": 81,
+    "intentionalDroppedAcknowledgements": 1,
+    "httpRequests": 355,
+    "p95Milliseconds": 30
+  },
+  "build": {
+    "build": true,
+    "prepare_pages_local_only": true,
+    "check": true,
+    "html_sha256": "4f202ea09f8272fb16d551705f993635f3056406d38cc6855230d327ebdb6f72"
+  },
+  "browser": {
+    "passed": false,
+    "reason": "No installed Chromium executable; /tmp/chromium is empty, official headless-shell download returned an empty/truncated archive."
+  },
+  "earlier_attempts": {
+    "default_parallel": "364 reported tests, 2 failures under contention: 25ms real HTTP timeout fixture and Duel SQL worker. Repeated successfully in isolated accepted runs.",
+    "long_sequential": "Exited without full TAP summary; not used as passing evidence.",
+    "batch2": "Runner exceeded 180s; all 15 files repeated individually, all passed."
+  },
+  "production": {
+    "migration_applied": false,
+    "edge_deployed": false,
+    "pages_published": false,
+    "paid_plan_changed": false,
+    "hosted_load_tested": false
+  },
+  "review": {
+    "independent_review": true,
+    "important_findings_fixed": 7,
+    "additional_workers": 2,
+    "open_critical_or_important_code_findings": 0
+  },
+  "limitations": [
+    "No hosted 5000-user capacity certification.",
+    "Mixed k6 model is HTTP/read focused; Realtime and progress-write scenarios required separately.",
+    "Actual k6 engine/distributed memory and physical devices unmeasured.",
+    "Conservative admission defaults require measured staging configuration.",
+    "Browser verification blocked; prior attempts are recorded, not claimed passing."
+  ]
+}
