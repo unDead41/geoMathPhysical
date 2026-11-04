@@ -1,0 +1,5 @@
+
+> geodecoder-digital@2.8.0 design:check
+> node tools/design-tokens.mjs --check
+
+PASS: portal/module token adapters match one canonical source.

@@ -1,0 +1,37 @@
+✔ module fragment links remain in the srcdoc document instead of loading the parent app (2.245657ms)
+✔ module copy translates complete explanations and changing counts without touching formula symbols or IDs (1757.247467ms)
+✔ module translator remains self-contained after serialization into the sandbox (11.38131ms)
+✔ module lab navigation sublabels use complete English action phrases (9.043325ms)
+✔ module activity descriptions and surface navigation have complete English labels (4.704293ms)
+✔ module joining-edge guidance and validation errors are fully English (9.712707ms)
+✔ host translation leaves natively bilingual feature text and labels to their owner (6.456688ms)
+✔ every stylesheet and typography token in the pinned artifact receives text scaling while model dimensions stay unchanged (3435.350788ms)
+✔ the actual module artifact starts through the native bridge with current preferences and both independent protocols (603.148828ms)
+✔ settings messages preserve document identity and measurements, reject stale instances, and update language/audio live (948.21992ms)
+✔ guided labels localize while a learner prediction and paused model stay unchanged (1892.514613ms)
+✔ English lab and print preview labels translate without changing SVG geometry or print-scale values (1799.381175ms)
+✔ teacher progress view distinguishes meaningful completion and unstarted activities (2.566638ms)
+✔ teacher view escapes learner text and ignores forged completion or broken timestamps (0.654762ms)
+✔ HTTP preview can create an unpredictable module session without secure-context randomUUID (2.686299ms)
+✔ progress rejects malformed records and cannot complete from opening or prediction alone (0.984678ms)
+✔ merging out-of-order saves retains the highest milestone and completed evidence (3.731168ms)
+✔ only the current iframe and nonce can save; ready/open never award completion (2.179702ms)
+✔ guest records and accounts are isolated, including storage-denied session memory (3.342619ms)
+✔ tampered stored records are bounded and unavailable storage keeps activity usable (0.72906ms)
+✔ delayed cloud reads cannot copy the previous account progress into a new account (1.202058ms)
+✔ failed cloud saves retain local progress and retry without duplicating milestones (1.925923ms)
+✔ serial cloud saves keep a newer edit queued while an older save is in flight (1.529618ms)
+✔ teachers and guests never send their practice records to the student save RPC (15.53711ms)
+✔ module settings permit only the three supported presentation values (5.012388ms)
+✔ only the active opaque module can update a single supported learning preference (10.413569ms)
+✔ load and ready recover current settings while sync leaves the existing document intact (5.78979ms)
+✔ foreign windows, origins, versions and closed/old frames cannot open host settings (10.508456ms)
+✔ help requests reuse the active frame and reject stale, foreign or forged messages (7.233058ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9686.944142

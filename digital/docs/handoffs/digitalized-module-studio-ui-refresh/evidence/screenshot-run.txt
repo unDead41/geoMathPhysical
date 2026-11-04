@@ -1,0 +1,8 @@
+Fixture ready
+Capture 34-studio-desktop-en-light.png
+Capture 35-calculation-desktop-ms-light.png
+Capture 36-records-desktop-en-light-fixture.png
+Capture 34-studio-390-en-dark-150.png
+Capture 35-calculation-390-en-dark-150.png
+Capture 36-records-390-en-dark-150-fixture.png
+PASS 0 responsive states; 0 real workflows; 133.0.6943.0

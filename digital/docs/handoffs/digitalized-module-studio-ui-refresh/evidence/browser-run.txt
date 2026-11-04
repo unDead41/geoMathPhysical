@@ -1,0 +1,6 @@
+Fixture ready
+Workflow passed
+Workflow passed
+Workflow passed
+Workflow passed
+PASS 48 responsive states; 4 real workflows; 133.0.6943.0

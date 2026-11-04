@@ -1,0 +1,2541 @@
+{
+  "matrix": [
+    {
+      "section": "projection",
+      "width": 1440,
+      "language": "ms",
+      "theme": "light",
+      "text": "100",
+      "viewport": 1440,
+      "availableWidth": 1440,
+      "scrollWidth": 1430,
+      "pageOverflow": false,
+      "settings": {
+        "language": "ms",
+        "textSize": 100,
+        "motionPaused": true,
+        "contrast": "standard",
+        "autoRotate": false,
+        "showLabels": true,
+        "audioEnabled": false,
+        "resume": false,
+        "lastSection": "explore"
+      },
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "moduleCount": "0 / 4 aktiviti selesai",
+      "fields": [
+        {
+          "id": "projection-shape",
+          "value": "cube",
+          "invalid": null
+        },
+        {
+          "id": "projection-scale",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-measure-a",
+          "value": "4",
+          "invalid": null
+        },
+        {
+          "id": "projection-active-view",
+          "value": "front",
+          "invalid": null
+        },
+        {
+          "id": "projection-tool",
+          "value": "line",
+          "invalid": null
+        },
+        {
+          "id": "projection-line-type",
+          "value": "visible",
+          "invalid": null
+        },
+        {
+          "id": "projection-guides",
+          "value": "on",
+          "invalid": null
+        },
+        {
+          "id": "projection-x1",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-y1",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-x2",
+          "value": "5",
+          "invalid": null
+        },
+        {
+          "id": "projection-y2",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-selection",
+          "value": "",
+          "invalid": null
+        }
+      ]
+    },
+    {
+      "section": "calculation",
+      "width": 1440,
+      "language": "ms",
+      "theme": "light",
+      "text": "100",
+      "viewport": 1440,
+      "availableWidth": 1440,
+      "scrollWidth": 1430,
+      "pageOverflow": false,
+      "settings": {
+        "language": "ms",
+        "textSize": 100,
+        "motionPaused": true,
+        "contrast": "standard",
+        "autoRotate": false,
+        "showLabels": true,
+        "audioEnabled": false,
+        "resume": false,
+        "lastSection": "explore"
+      },
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "moduleCount": "0 / 4 aktiviti selesai",
+      "fields": [
+        {
+          "id": "calculation-shape",
+          "value": "cube",
+          "invalid": null
+        },
+        {
+          "id": "calculation-quantity",
+          "value": "surface",
+          "invalid": null
+        },
+        {
+          "id": "calculation-context",
+          "value": "closed",
+          "invalid": null
+        },
+        {
+          "id": "calculation-target-unit",
+          "value": "cm²",
+          "invalid": null
+        },
+        {
+          "id": "calculation-dimension-a",
+          "value": "4",
+          "invalid": "false"
+        },
+        {
+          "id": "calculation-formula",
+          "value": "",
+          "invalid": "false"
+        }
+      ]
+    },
+    {
+      "section": "records",
+      "width": 1440,
+      "language": "ms",
+      "theme": "light",
+      "text": "100",
+      "overflow": false,
+      "rows": 4,
+      "title": "Perjalanan pembelajaran anda"
+    },
+    {
+      "section": "projection",
+      "width": 1440,
+      "language": "ms",
+      "theme": "light",
+      "text": "150",
+      "viewport": 1440,
+      "availableWidth": 1440,
+      "scrollWidth": 1430,
+      "pageOverflow": false,
+      "settings": {
+        "language": "ms",
+        "textSize": 150,
+        "motionPaused": true,
+        "contrast": "standard",
+        "autoRotate": false,
+        "showLabels": true,
+        "audioEnabled": false,
+        "resume": false,
+        "lastSection": "explore"
+      },
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "moduleCount": "0 / 4 aktiviti selesai",
+      "fields": [
+        {
+          "id": "projection-shape",
+          "value": "cube",
+          "invalid": null
+        },
+        {
+          "id": "projection-scale",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-measure-a",
+          "value": "4",
+          "invalid": null
+        },
+        {
+          "id": "projection-active-view",
+          "value": "front",
+          "invalid": null
+        },
+        {
+          "id": "projection-tool",
+          "value": "line",
+          "invalid": null
+        },
+        {
+          "id": "projection-line-type",
+          "value": "visible",
+          "invalid": null
+        },
+        {
+          "id": "projection-guides",
+          "value": "on",
+          "invalid": null
+        },
+        {
+          "id": "projection-x1",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-y1",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-x2",
+          "value": "5",
+          "invalid": null
+        },
+        {
+          "id": "projection-y2",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-selection",
+          "value": "",
+          "invalid": null
+        }
+      ]
+    },
+    {
+      "section": "calculation",
+      "width": 1440,
+      "language": "ms",
+      "theme": "light",
+      "text": "150",
+      "viewport": 1440,
+      "availableWidth": 1440,
+      "scrollWidth": 1430,
+      "pageOverflow": false,
+      "settings": {
+        "language": "ms",
+        "textSize": 150,
+        "motionPaused": true,
+        "contrast": "standard",
+        "autoRotate": false,
+        "showLabels": true,
+        "audioEnabled": false,
+        "resume": false,
+        "lastSection": "explore"
+      },
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "moduleCount": "0 / 4 aktiviti selesai",
+      "fields": [
+        {
+          "id": "calculation-shape",
+          "value": "cube",
+          "invalid": null
+        },
+        {
+          "id": "calculation-quantity",
+          "value": "surface",
+          "invalid": null
+        },
+        {
+          "id": "calculation-context",
+          "value": "closed",
+          "invalid": null
+        },
+        {
+          "id": "calculation-target-unit",
+          "value": "cm²",
+          "invalid": null
+        },
+        {
+          "id": "calculation-dimension-a",
+          "value": "4",
+          "invalid": "false"
+        },
+        {
+          "id": "calculation-formula",
+          "value": "",
+          "invalid": "false"
+        }
+      ]
+    },
+    {
+      "section": "records",
+      "width": 1440,
+      "language": "ms",
+      "theme": "light",
+      "text": "150",
+      "overflow": false,
+      "rows": 4,
+      "title": "Perjalanan pembelajaran anda"
+    },
+    {
+      "section": "projection",
+      "width": 1440,
+      "language": "ms",
+      "theme": "dark",
+      "text": "100",
+      "viewport": 1440,
+      "availableWidth": 1440,
+      "scrollWidth": 1430,
+      "pageOverflow": false,
+      "settings": {
+        "language": "ms",
+        "textSize": 100,
+        "motionPaused": true,
+        "contrast": "standard",
+        "autoRotate": false,
+        "showLabels": true,
+        "audioEnabled": false,
+        "resume": false,
+        "lastSection": "explore"
+      },
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "moduleCount": "0 / 4 aktiviti selesai",
+      "fields": [
+        {
+          "id": "projection-shape",
+          "value": "cube",
+          "invalid": null
+        },
+        {
+          "id": "projection-scale",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-measure-a",
+          "value": "4",
+          "invalid": null
+        },
+        {
+          "id": "projection-active-view",
+          "value": "front",
+          "invalid": null
+        },
+        {
+          "id": "projection-tool",
+          "value": "line",
+          "invalid": null
+        },
+        {
+          "id": "projection-line-type",
+          "value": "visible",
+          "invalid": null
+        },
+        {
+          "id": "projection-guides",
+          "value": "on",
+          "invalid": null
+        },
+        {
+          "id": "projection-x1",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-y1",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-x2",
+          "value": "5",
+          "invalid": null
+        },
+        {
+          "id": "projection-y2",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-selection",
+          "value": "",
+          "invalid": null
+        }
+      ]
+    },
+    {
+      "section": "calculation",
+      "width": 1440,
+      "language": "ms",
+      "theme": "dark",
+      "text": "100",
+      "viewport": 1440,
+      "availableWidth": 1440,
+      "scrollWidth": 1430,
+      "pageOverflow": false,
+      "settings": {
+        "language": "ms",
+        "textSize": 100,
+        "motionPaused": true,
+        "contrast": "standard",
+        "autoRotate": false,
+        "showLabels": true,
+        "audioEnabled": false,
+        "resume": false,
+        "lastSection": "explore"
+      },
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "moduleCount": "0 / 4 aktiviti selesai",
+      "fields": [
+        {
+          "id": "calculation-shape",
+          "value": "cube",
+          "invalid": null
+        },
+        {
+          "id": "calculation-quantity",
+          "value": "surface",
+          "invalid": null
+        },
+        {
+          "id": "calculation-context",
+          "value": "closed",
+          "invalid": null
+        },
+        {
+          "id": "calculation-target-unit",
+          "value": "cm²",
+          "invalid": null
+        },
+        {
+          "id": "calculation-dimension-a",
+          "value": "4",
+          "invalid": "false"
+        },
+        {
+          "id": "calculation-formula",
+          "value": "",
+          "invalid": "false"
+        }
+      ]
+    },
+    {
+      "section": "records",
+      "width": 1440,
+      "language": "ms",
+      "theme": "dark",
+      "text": "100",
+      "overflow": false,
+      "rows": 4,
+      "title": "Perjalanan pembelajaran anda"
+    },
+    {
+      "section": "projection",
+      "width": 1440,
+      "language": "ms",
+      "theme": "dark",
+      "text": "150",
+      "viewport": 1440,
+      "availableWidth": 1440,
+      "scrollWidth": 1430,
+      "pageOverflow": false,
+      "settings": {
+        "language": "ms",
+        "textSize": 150,
+        "motionPaused": true,
+        "contrast": "standard",
+        "autoRotate": false,
+        "showLabels": true,
+        "audioEnabled": false,
+        "resume": false,
+        "lastSection": "explore"
+      },
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "moduleCount": "0 / 4 aktiviti selesai",
+      "fields": [
+        {
+          "id": "projection-shape",
+          "value": "cube",
+          "invalid": null
+        },
+        {
+          "id": "projection-scale",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-measure-a",
+          "value": "4",
+          "invalid": null
+        },
+        {
+          "id": "projection-active-view",
+          "value": "front",
+          "invalid": null
+        },
+        {
+          "id": "projection-tool",
+          "value": "line",
+          "invalid": null
+        },
+        {
+          "id": "projection-line-type",
+          "value": "visible",
+          "invalid": null
+        },
+        {
+          "id": "projection-guides",
+          "value": "on",
+          "invalid": null
+        },
+        {
+          "id": "projection-x1",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-y1",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-x2",
+          "value": "5",
+          "invalid": null
+        },
+        {
+          "id": "projection-y2",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-selection",
+          "value": "",
+          "invalid": null
+        }
+      ]
+    },
+    {
+      "section": "calculation",
+      "width": 1440,
+      "language": "ms",
+      "theme": "dark",
+      "text": "150",
+      "viewport": 1440,
+      "availableWidth": 1440,
+      "scrollWidth": 1430,
+      "pageOverflow": false,
+      "settings": {
+        "language": "ms",
+        "textSize": 150,
+        "motionPaused": true,
+        "contrast": "standard",
+        "autoRotate": false,
+        "showLabels": true,
+        "audioEnabled": false,
+        "resume": false,
+        "lastSection": "explore"
+      },
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "moduleCount": "0 / 4 aktiviti selesai",
+      "fields": [
+        {
+          "id": "calculation-shape",
+          "value": "cube",
+          "invalid": null
+        },
+        {
+          "id": "calculation-quantity",
+          "value": "surface",
+          "invalid": null
+        },
+        {
+          "id": "calculation-context",
+          "value": "closed",
+          "invalid": null
+        },
+        {
+          "id": "calculation-target-unit",
+          "value": "cm²",
+          "invalid": null
+        },
+        {
+          "id": "calculation-dimension-a",
+          "value": "4",
+          "invalid": "false"
+        },
+        {
+          "id": "calculation-formula",
+          "value": "",
+          "invalid": "false"
+        }
+      ]
+    },
+    {
+      "section": "records",
+      "width": 1440,
+      "language": "ms",
+      "theme": "dark",
+      "text": "150",
+      "overflow": false,
+      "rows": 4,
+      "title": "Perjalanan pembelajaran anda"
+    },
+    {
+      "section": "projection",
+      "width": 1440,
+      "language": "en",
+      "theme": "light",
+      "text": "100",
+      "viewport": 1440,
+      "availableWidth": 1440,
+      "scrollWidth": 1430,
+      "pageOverflow": false,
+      "settings": {
+        "language": "en",
+        "textSize": 100,
+        "motionPaused": true,
+        "contrast": "standard",
+        "autoRotate": false,
+        "showLabels": true,
+        "audioEnabled": false,
+        "resume": false,
+        "lastSection": "explore"
+      },
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "moduleCount": "0 / 4 activities complete",
+      "fields": [
+        {
+          "id": "projection-shape",
+          "value": "cube",
+          "invalid": null
+        },
+        {
+          "id": "projection-scale",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-measure-a",
+          "value": "4",
+          "invalid": null
+        },
+        {
+          "id": "projection-active-view",
+          "value": "front",
+          "invalid": null
+        },
+        {
+          "id": "projection-tool",
+          "value": "line",
+          "invalid": null
+        },
+        {
+          "id": "projection-line-type",
+          "value": "visible",
+          "invalid": null
+        },
+        {
+          "id": "projection-guides",
+          "value": "on",
+          "invalid": null
+        },
+        {
+          "id": "projection-x1",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-y1",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-x2",
+          "value": "5",
+          "invalid": null
+        },
+        {
+          "id": "projection-y2",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-selection",
+          "value": "",
+          "invalid": null
+        }
+      ]
+    },
+    {
+      "section": "calculation",
+      "width": 1440,
+      "language": "en",
+      "theme": "light",
+      "text": "100",
+      "viewport": 1440,
+      "availableWidth": 1440,
+      "scrollWidth": 1430,
+      "pageOverflow": false,
+      "settings": {
+        "language": "en",
+        "textSize": 100,
+        "motionPaused": true,
+        "contrast": "standard",
+        "autoRotate": false,
+        "showLabels": true,
+        "audioEnabled": false,
+        "resume": false,
+        "lastSection": "explore"
+      },
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "moduleCount": "0 / 4 activities complete",
+      "fields": [
+        {
+          "id": "calculation-shape",
+          "value": "cube",
+          "invalid": null
+        },
+        {
+          "id": "calculation-quantity",
+          "value": "surface",
+          "invalid": null
+        },
+        {
+          "id": "calculation-context",
+          "value": "closed",
+          "invalid": null
+        },
+        {
+          "id": "calculation-target-unit",
+          "value": "cm²",
+          "invalid": null
+        },
+        {
+          "id": "calculation-dimension-a",
+          "value": "4",
+          "invalid": "false"
+        },
+        {
+          "id": "calculation-formula",
+          "value": "",
+          "invalid": "false"
+        }
+      ]
+    },
+    {
+      "section": "records",
+      "width": 1440,
+      "language": "en",
+      "theme": "light",
+      "text": "100",
+      "overflow": false,
+      "rows": 4,
+      "title": "Your learning journey"
+    },
+    {
+      "section": "projection",
+      "width": 1440,
+      "language": "en",
+      "theme": "light",
+      "text": "150",
+      "viewport": 1440,
+      "availableWidth": 1440,
+      "scrollWidth": 1430,
+      "pageOverflow": false,
+      "settings": {
+        "language": "en",
+        "textSize": 150,
+        "motionPaused": true,
+        "contrast": "standard",
+        "autoRotate": false,
+        "showLabels": true,
+        "audioEnabled": false,
+        "resume": false,
+        "lastSection": "explore"
+      },
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "moduleCount": "0 / 4 activities complete",
+      "fields": [
+        {
+          "id": "projection-shape",
+          "value": "cube",
+          "invalid": null
+        },
+        {
+          "id": "projection-scale",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-measure-a",
+          "value": "4",
+          "invalid": null
+        },
+        {
+          "id": "projection-active-view",
+          "value": "front",
+          "invalid": null
+        },
+        {
+          "id": "projection-tool",
+          "value": "line",
+          "invalid": null
+        },
+        {
+          "id": "projection-line-type",
+          "value": "visible",
+          "invalid": null
+        },
+        {
+          "id": "projection-guides",
+          "value": "on",
+          "invalid": null
+        },
+        {
+          "id": "projection-x1",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-y1",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-x2",
+          "value": "5",
+          "invalid": null
+        },
+        {
+          "id": "projection-y2",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-selection",
+          "value": "",
+          "invalid": null
+        }
+      ]
+    },
+    {
+      "section": "calculation",
+      "width": 1440,
+      "language": "en",
+      "theme": "light",
+      "text": "150",
+      "viewport": 1440,
+      "availableWidth": 1440,
+      "scrollWidth": 1430,
+      "pageOverflow": false,
+      "settings": {
+        "language": "en",
+        "textSize": 150,
+        "motionPaused": true,
+        "contrast": "standard",
+        "autoRotate": false,
+        "showLabels": true,
+        "audioEnabled": false,
+        "resume": false,
+        "lastSection": "explore"
+      },
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "moduleCount": "0 / 4 activities complete",
+      "fields": [
+        {
+          "id": "calculation-shape",
+          "value": "cube",
+          "invalid": null
+        },
+        {
+          "id": "calculation-quantity",
+          "value": "surface",
+          "invalid": null
+        },
+        {
+          "id": "calculation-context",
+          "value": "closed",
+          "invalid": null
+        },
+        {
+          "id": "calculation-target-unit",
+          "value": "cm²",
+          "invalid": null
+        },
+        {
+          "id": "calculation-dimension-a",
+          "value": "4",
+          "invalid": "false"
+        },
+        {
+          "id": "calculation-formula",
+          "value": "",
+          "invalid": "false"
+        }
+      ]
+    },
+    {
+      "section": "records",
+      "width": 1440,
+      "language": "en",
+      "theme": "light",
+      "text": "150",
+      "overflow": false,
+      "rows": 4,
+      "title": "Your learning journey"
+    },
+    {
+      "section": "projection",
+      "width": 1440,
+      "language": "en",
+      "theme": "dark",
+      "text": "100",
+      "viewport": 1440,
+      "availableWidth": 1440,
+      "scrollWidth": 1430,
+      "pageOverflow": false,
+      "settings": {
+        "language": "en",
+        "textSize": 100,
+        "motionPaused": true,
+        "contrast": "standard",
+        "autoRotate": false,
+        "showLabels": true,
+        "audioEnabled": false,
+        "resume": false,
+        "lastSection": "explore"
+      },
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "moduleCount": "0 / 4 activities complete",
+      "fields": [
+        {
+          "id": "projection-shape",
+          "value": "cube",
+          "invalid": null
+        },
+        {
+          "id": "projection-scale",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-measure-a",
+          "value": "4",
+          "invalid": null
+        },
+        {
+          "id": "projection-active-view",
+          "value": "front",
+          "invalid": null
+        },
+        {
+          "id": "projection-tool",
+          "value": "line",
+          "invalid": null
+        },
+        {
+          "id": "projection-line-type",
+          "value": "visible",
+          "invalid": null
+        },
+        {
+          "id": "projection-guides",
+          "value": "on",
+          "invalid": null
+        },
+        {
+          "id": "projection-x1",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-y1",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-x2",
+          "value": "5",
+          "invalid": null
+        },
+        {
+          "id": "projection-y2",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-selection",
+          "value": "",
+          "invalid": null
+        }
+      ]
+    },
+    {
+      "section": "calculation",
+      "width": 1440,
+      "language": "en",
+      "theme": "dark",
+      "text": "100",
+      "viewport": 1440,
+      "availableWidth": 1440,
+      "scrollWidth": 1430,
+      "pageOverflow": false,
+      "settings": {
+        "language": "en",
+        "textSize": 100,
+        "motionPaused": true,
+        "contrast": "standard",
+        "autoRotate": false,
+        "showLabels": true,
+        "audioEnabled": false,
+        "resume": false,
+        "lastSection": "explore"
+      },
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "moduleCount": "0 / 4 activities complete",
+      "fields": [
+        {
+          "id": "calculation-shape",
+          "value": "cube",
+          "invalid": null
+        },
+        {
+          "id": "calculation-quantity",
+          "value": "surface",
+          "invalid": null
+        },
+        {
+          "id": "calculation-context",
+          "value": "closed",
+          "invalid": null
+        },
+        {
+          "id": "calculation-target-unit",
+          "value": "cm²",
+          "invalid": null
+        },
+        {
+          "id": "calculation-dimension-a",
+          "value": "4",
+          "invalid": "false"
+        },
+        {
+          "id": "calculation-formula",
+          "value": "",
+          "invalid": "false"
+        }
+      ]
+    },
+    {
+      "section": "records",
+      "width": 1440,
+      "language": "en",
+      "theme": "dark",
+      "text": "100",
+      "overflow": false,
+      "rows": 4,
+      "title": "Your learning journey"
+    },
+    {
+      "section": "projection",
+      "width": 1440,
+      "language": "en",
+      "theme": "dark",
+      "text": "150",
+      "viewport": 1440,
+      "availableWidth": 1440,
+      "scrollWidth": 1430,
+      "pageOverflow": false,
+      "settings": {
+        "language": "en",
+        "textSize": 150,
+        "motionPaused": true,
+        "contrast": "standard",
+        "autoRotate": false,
+        "showLabels": true,
+        "audioEnabled": false,
+        "resume": false,
+        "lastSection": "explore"
+      },
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "moduleCount": "0 / 4 activities complete",
+      "fields": [
+        {
+          "id": "projection-shape",
+          "value": "cube",
+          "invalid": null
+        },
+        {
+          "id": "projection-scale",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-measure-a",
+          "value": "4",
+          "invalid": null
+        },
+        {
+          "id": "projection-active-view",
+          "value": "front",
+          "invalid": null
+        },
+        {
+          "id": "projection-tool",
+          "value": "line",
+          "invalid": null
+        },
+        {
+          "id": "projection-line-type",
+          "value": "visible",
+          "invalid": null
+        },
+        {
+          "id": "projection-guides",
+          "value": "on",
+          "invalid": null
+        },
+        {
+          "id": "projection-x1",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-y1",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-x2",
+          "value": "5",
+          "invalid": null
+        },
+        {
+          "id": "projection-y2",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-selection",
+          "value": "",
+          "invalid": null
+        }
+      ]
+    },
+    {
+      "section": "calculation",
+      "width": 1440,
+      "language": "en",
+      "theme": "dark",
+      "text": "150",
+      "viewport": 1440,
+      "availableWidth": 1440,
+      "scrollWidth": 1430,
+      "pageOverflow": false,
+      "settings": {
+        "language": "en",
+        "textSize": 150,
+        "motionPaused": true,
+        "contrast": "standard",
+        "autoRotate": false,
+        "showLabels": true,
+        "audioEnabled": false,
+        "resume": false,
+        "lastSection": "explore"
+      },
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "moduleCount": "0 / 4 activities complete",
+      "fields": [
+        {
+          "id": "calculation-shape",
+          "value": "cube",
+          "invalid": null
+        },
+        {
+          "id": "calculation-quantity",
+          "value": "surface",
+          "invalid": null
+        },
+        {
+          "id": "calculation-context",
+          "value": "closed",
+          "invalid": null
+        },
+        {
+          "id": "calculation-target-unit",
+          "value": "cm²",
+          "invalid": null
+        },
+        {
+          "id": "calculation-dimension-a",
+          "value": "4",
+          "invalid": "false"
+        },
+        {
+          "id": "calculation-formula",
+          "value": "",
+          "invalid": "false"
+        }
+      ]
+    },
+    {
+      "section": "records",
+      "width": 1440,
+      "language": "en",
+      "theme": "dark",
+      "text": "150",
+      "overflow": false,
+      "rows": 4,
+      "title": "Your learning journey"
+    },
+    {
+      "section": "projection",
+      "width": 390,
+      "language": "ms",
+      "theme": "light",
+      "text": "100",
+      "viewport": 390,
+      "availableWidth": 390,
+      "scrollWidth": 380,
+      "pageOverflow": false,
+      "settings": {
+        "language": "ms",
+        "textSize": 100,
+        "motionPaused": true,
+        "contrast": "standard",
+        "autoRotate": false,
+        "showLabels": true,
+        "audioEnabled": false,
+        "resume": false,
+        "lastSection": "explore"
+      },
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "moduleCount": "0 / 4 aktiviti selesai",
+      "fields": [
+        {
+          "id": "projection-shape",
+          "value": "cube",
+          "invalid": null
+        },
+        {
+          "id": "projection-scale",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-measure-a",
+          "value": "4",
+          "invalid": null
+        },
+        {
+          "id": "projection-active-view",
+          "value": "front",
+          "invalid": null
+        },
+        {
+          "id": "projection-tool",
+          "value": "line",
+          "invalid": null
+        },
+        {
+          "id": "projection-line-type",
+          "value": "visible",
+          "invalid": null
+        },
+        {
+          "id": "projection-guides",
+          "value": "on",
+          "invalid": null
+        },
+        {
+          "id": "projection-x1",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-y1",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-x2",
+          "value": "5",
+          "invalid": null
+        },
+        {
+          "id": "projection-y2",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-selection",
+          "value": "",
+          "invalid": null
+        }
+      ]
+    },
+    {
+      "section": "calculation",
+      "width": 390,
+      "language": "ms",
+      "theme": "light",
+      "text": "100",
+      "viewport": 390,
+      "availableWidth": 390,
+      "scrollWidth": 380,
+      "pageOverflow": false,
+      "settings": {
+        "language": "ms",
+        "textSize": 100,
+        "motionPaused": true,
+        "contrast": "standard",
+        "autoRotate": false,
+        "showLabels": true,
+        "audioEnabled": false,
+        "resume": false,
+        "lastSection": "explore"
+      },
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "moduleCount": "0 / 4 aktiviti selesai",
+      "fields": [
+        {
+          "id": "calculation-shape",
+          "value": "cube",
+          "invalid": null
+        },
+        {
+          "id": "calculation-quantity",
+          "value": "surface",
+          "invalid": null
+        },
+        {
+          "id": "calculation-context",
+          "value": "closed",
+          "invalid": null
+        },
+        {
+          "id": "calculation-target-unit",
+          "value": "cm²",
+          "invalid": null
+        },
+        {
+          "id": "calculation-dimension-a",
+          "value": "4",
+          "invalid": "false"
+        },
+        {
+          "id": "calculation-formula",
+          "value": "",
+          "invalid": "false"
+        }
+      ]
+    },
+    {
+      "section": "records",
+      "width": 390,
+      "language": "ms",
+      "theme": "light",
+      "text": "100",
+      "overflow": false,
+      "rows": 4,
+      "title": "Perjalanan pembelajaran anda"
+    },
+    {
+      "section": "projection",
+      "width": 390,
+      "language": "ms",
+      "theme": "light",
+      "text": "150",
+      "viewport": 390,
+      "availableWidth": 390,
+      "scrollWidth": 380,
+      "pageOverflow": false,
+      "settings": {
+        "language": "ms",
+        "textSize": 150,
+        "motionPaused": true,
+        "contrast": "standard",
+        "autoRotate": false,
+        "showLabels": true,
+        "audioEnabled": false,
+        "resume": false,
+        "lastSection": "explore"
+      },
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "moduleCount": "0 / 4 aktiviti selesai",
+      "fields": [
+        {
+          "id": "projection-shape",
+          "value": "cube",
+          "invalid": null
+        },
+        {
+          "id": "projection-scale",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-measure-a",
+          "value": "4",
+          "invalid": null
+        },
+        {
+          "id": "projection-active-view",
+          "value": "front",
+          "invalid": null
+        },
+        {
+          "id": "projection-tool",
+          "value": "line",
+          "invalid": null
+        },
+        {
+          "id": "projection-line-type",
+          "value": "visible",
+          "invalid": null
+        },
+        {
+          "id": "projection-guides",
+          "value": "on",
+          "invalid": null
+        },
+        {
+          "id": "projection-x1",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-y1",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-x2",
+          "value": "5",
+          "invalid": null
+        },
+        {
+          "id": "projection-y2",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-selection",
+          "value": "",
+          "invalid": null
+        }
+      ]
+    },
+    {
+      "section": "calculation",
+      "width": 390,
+      "language": "ms",
+      "theme": "light",
+      "text": "150",
+      "viewport": 390,
+      "availableWidth": 390,
+      "scrollWidth": 380,
+      "pageOverflow": false,
+      "settings": {
+        "language": "ms",
+        "textSize": 150,
+        "motionPaused": true,
+        "contrast": "standard",
+        "autoRotate": false,
+        "showLabels": true,
+        "audioEnabled": false,
+        "resume": false,
+        "lastSection": "explore"
+      },
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "moduleCount": "0 / 4 aktiviti selesai",
+      "fields": [
+        {
+          "id": "calculation-shape",
+          "value": "cube",
+          "invalid": null
+        },
+        {
+          "id": "calculation-quantity",
+          "value": "surface",
+          "invalid": null
+        },
+        {
+          "id": "calculation-context",
+          "value": "closed",
+          "invalid": null
+        },
+        {
+          "id": "calculation-target-unit",
+          "value": "cm²",
+          "invalid": null
+        },
+        {
+          "id": "calculation-dimension-a",
+          "value": "4",
+          "invalid": "false"
+        },
+        {
+          "id": "calculation-formula",
+          "value": "",
+          "invalid": "false"
+        }
+      ]
+    },
+    {
+      "section": "records",
+      "width": 390,
+      "language": "ms",
+      "theme": "light",
+      "text": "150",
+      "overflow": false,
+      "rows": 4,
+      "title": "Perjalanan pembelajaran anda"
+    },
+    {
+      "section": "projection",
+      "width": 390,
+      "language": "ms",
+      "theme": "dark",
+      "text": "100",
+      "viewport": 390,
+      "availableWidth": 390,
+      "scrollWidth": 380,
+      "pageOverflow": false,
+      "settings": {
+        "language": "ms",
+        "textSize": 100,
+        "motionPaused": true,
+        "contrast": "standard",
+        "autoRotate": false,
+        "showLabels": true,
+        "audioEnabled": false,
+        "resume": false,
+        "lastSection": "explore"
+      },
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "moduleCount": "0 / 4 aktiviti selesai",
+      "fields": [
+        {
+          "id": "projection-shape",
+          "value": "cube",
+          "invalid": null
+        },
+        {
+          "id": "projection-scale",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-measure-a",
+          "value": "4",
+          "invalid": null
+        },
+        {
+          "id": "projection-active-view",
+          "value": "front",
+          "invalid": null
+        },
+        {
+          "id": "projection-tool",
+          "value": "line",
+          "invalid": null
+        },
+        {
+          "id": "projection-line-type",
+          "value": "visible",
+          "invalid": null
+        },
+        {
+          "id": "projection-guides",
+          "value": "on",
+          "invalid": null
+        },
+        {
+          "id": "projection-x1",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-y1",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-x2",
+          "value": "5",
+          "invalid": null
+        },
+        {
+          "id": "projection-y2",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-selection",
+          "value": "",
+          "invalid": null
+        }
+      ]
+    },
+    {
+      "section": "calculation",
+      "width": 390,
+      "language": "ms",
+      "theme": "dark",
+      "text": "100",
+      "viewport": 390,
+      "availableWidth": 390,
+      "scrollWidth": 380,
+      "pageOverflow": false,
+      "settings": {
+        "language": "ms",
+        "textSize": 100,
+        "motionPaused": true,
+        "contrast": "standard",
+        "autoRotate": false,
+        "showLabels": true,
+        "audioEnabled": false,
+        "resume": false,
+        "lastSection": "explore"
+      },
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "moduleCount": "0 / 4 aktiviti selesai",
+      "fields": [
+        {
+          "id": "calculation-shape",
+          "value": "cube",
+          "invalid": null
+        },
+        {
+          "id": "calculation-quantity",
+          "value": "surface",
+          "invalid": null
+        },
+        {
+          "id": "calculation-context",
+          "value": "closed",
+          "invalid": null
+        },
+        {
+          "id": "calculation-target-unit",
+          "value": "cm²",
+          "invalid": null
+        },
+        {
+          "id": "calculation-dimension-a",
+          "value": "4",
+          "invalid": "false"
+        },
+        {
+          "id": "calculation-formula",
+          "value": "",
+          "invalid": "false"
+        }
+      ]
+    },
+    {
+      "section": "records",
+      "width": 390,
+      "language": "ms",
+      "theme": "dark",
+      "text": "100",
+      "overflow": false,
+      "rows": 4,
+      "title": "Perjalanan pembelajaran anda"
+    },
+    {
+      "section": "projection",
+      "width": 390,
+      "language": "ms",
+      "theme": "dark",
+      "text": "150",
+      "viewport": 390,
+      "availableWidth": 390,
+      "scrollWidth": 380,
+      "pageOverflow": false,
+      "settings": {
+        "language": "ms",
+        "textSize": 150,
+        "motionPaused": true,
+        "contrast": "standard",
+        "autoRotate": false,
+        "showLabels": true,
+        "audioEnabled": false,
+        "resume": false,
+        "lastSection": "explore"
+      },
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "moduleCount": "0 / 4 aktiviti selesai",
+      "fields": [
+        {
+          "id": "projection-shape",
+          "value": "cube",
+          "invalid": null
+        },
+        {
+          "id": "projection-scale",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-measure-a",
+          "value": "4",
+          "invalid": null
+        },
+        {
+          "id": "projection-active-view",
+          "value": "front",
+          "invalid": null
+        },
+        {
+          "id": "projection-tool",
+          "value": "line",
+          "invalid": null
+        },
+        {
+          "id": "projection-line-type",
+          "value": "visible",
+          "invalid": null
+        },
+        {
+          "id": "projection-guides",
+          "value": "on",
+          "invalid": null
+        },
+        {
+          "id": "projection-x1",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-y1",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-x2",
+          "value": "5",
+          "invalid": null
+        },
+        {
+          "id": "projection-y2",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-selection",
+          "value": "",
+          "invalid": null
+        }
+      ]
+    },
+    {
+      "section": "calculation",
+      "width": 390,
+      "language": "ms",
+      "theme": "dark",
+      "text": "150",
+      "viewport": 390,
+      "availableWidth": 390,
+      "scrollWidth": 380,
+      "pageOverflow": false,
+      "settings": {
+        "language": "ms",
+        "textSize": 150,
+        "motionPaused": true,
+        "contrast": "standard",
+        "autoRotate": false,
+        "showLabels": true,
+        "audioEnabled": false,
+        "resume": false,
+        "lastSection": "explore"
+      },
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "moduleCount": "0 / 4 aktiviti selesai",
+      "fields": [
+        {
+          "id": "calculation-shape",
+          "value": "cube",
+          "invalid": null
+        },
+        {
+          "id": "calculation-quantity",
+          "value": "surface",
+          "invalid": null
+        },
+        {
+          "id": "calculation-context",
+          "value": "closed",
+          "invalid": null
+        },
+        {
+          "id": "calculation-target-unit",
+          "value": "cm²",
+          "invalid": null
+        },
+        {
+          "id": "calculation-dimension-a",
+          "value": "4",
+          "invalid": "false"
+        },
+        {
+          "id": "calculation-formula",
+          "value": "",
+          "invalid": "false"
+        }
+      ]
+    },
+    {
+      "section": "records",
+      "width": 390,
+      "language": "ms",
+      "theme": "dark",
+      "text": "150",
+      "overflow": false,
+      "rows": 4,
+      "title": "Perjalanan pembelajaran anda"
+    },
+    {
+      "section": "projection",
+      "width": 390,
+      "language": "en",
+      "theme": "light",
+      "text": "100",
+      "viewport": 390,
+      "availableWidth": 390,
+      "scrollWidth": 380,
+      "pageOverflow": false,
+      "settings": {
+        "language": "en",
+        "textSize": 100,
+        "motionPaused": true,
+        "contrast": "standard",
+        "autoRotate": false,
+        "showLabels": true,
+        "audioEnabled": false,
+        "resume": false,
+        "lastSection": "explore"
+      },
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "moduleCount": "0 / 4 activities complete",
+      "fields": [
+        {
+          "id": "projection-shape",
+          "value": "cube",
+          "invalid": null
+        },
+        {
+          "id": "projection-scale",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-measure-a",
+          "value": "4",
+          "invalid": null
+        },
+        {
+          "id": "projection-active-view",
+          "value": "front",
+          "invalid": null
+        },
+        {
+          "id": "projection-tool",
+          "value": "line",
+          "invalid": null
+        },
+        {
+          "id": "projection-line-type",
+          "value": "visible",
+          "invalid": null
+        },
+        {
+          "id": "projection-guides",
+          "value": "on",
+          "invalid": null
+        },
+        {
+          "id": "projection-x1",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-y1",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-x2",
+          "value": "5",
+          "invalid": null
+        },
+        {
+          "id": "projection-y2",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-selection",
+          "value": "",
+          "invalid": null
+        }
+      ]
+    },
+    {
+      "section": "calculation",
+      "width": 390,
+      "language": "en",
+      "theme": "light",
+      "text": "100",
+      "viewport": 390,
+      "availableWidth": 390,
+      "scrollWidth": 380,
+      "pageOverflow": false,
+      "settings": {
+        "language": "en",
+        "textSize": 100,
+        "motionPaused": true,
+        "contrast": "standard",
+        "autoRotate": false,
+        "showLabels": true,
+        "audioEnabled": false,
+        "resume": false,
+        "lastSection": "explore"
+      },
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "moduleCount": "0 / 4 activities complete",
+      "fields": [
+        {
+          "id": "calculation-shape",
+          "value": "cube",
+          "invalid": null
+        },
+        {
+          "id": "calculation-quantity",
+          "value": "surface",
+          "invalid": null
+        },
+        {
+          "id": "calculation-context",
+          "value": "closed",
+          "invalid": null
+        },
+        {
+          "id": "calculation-target-unit",
+          "value": "cm²",
+          "invalid": null
+        },
+        {
+          "id": "calculation-dimension-a",
+          "value": "4",
+          "invalid": "false"
+        },
+        {
+          "id": "calculation-formula",
+          "value": "",
+          "invalid": "false"
+        }
+      ]
+    },
+    {
+      "section": "records",
+      "width": 390,
+      "language": "en",
+      "theme": "light",
+      "text": "100",
+      "overflow": false,
+      "rows": 4,
+      "title": "Your learning journey"
+    },
+    {
+      "section": "projection",
+      "width": 390,
+      "language": "en",
+      "theme": "light",
+      "text": "150",
+      "viewport": 390,
+      "availableWidth": 390,
+      "scrollWidth": 380,
+      "pageOverflow": false,
+      "settings": {
+        "language": "en",
+        "textSize": 150,
+        "motionPaused": true,
+        "contrast": "standard",
+        "autoRotate": false,
+        "showLabels": true,
+        "audioEnabled": false,
+        "resume": false,
+        "lastSection": "explore"
+      },
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "moduleCount": "0 / 4 activities complete",
+      "fields": [
+        {
+          "id": "projection-shape",
+          "value": "cube",
+          "invalid": null
+        },
+        {
+          "id": "projection-scale",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-measure-a",
+          "value": "4",
+          "invalid": null
+        },
+        {
+          "id": "projection-active-view",
+          "value": "front",
+          "invalid": null
+        },
+        {
+          "id": "projection-tool",
+          "value": "line",
+          "invalid": null
+        },
+        {
+          "id": "projection-line-type",
+          "value": "visible",
+          "invalid": null
+        },
+        {
+          "id": "projection-guides",
+          "value": "on",
+          "invalid": null
+        },
+        {
+          "id": "projection-x1",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-y1",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-x2",
+          "value": "5",
+          "invalid": null
+        },
+        {
+          "id": "projection-y2",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-selection",
+          "value": "",
+          "invalid": null
+        }
+      ]
+    },
+    {
+      "section": "calculation",
+      "width": 390,
+      "language": "en",
+      "theme": "light",
+      "text": "150",
+      "viewport": 390,
+      "availableWidth": 390,
+      "scrollWidth": 380,
+      "pageOverflow": false,
+      "settings": {
+        "language": "en",
+        "textSize": 150,
+        "motionPaused": true,
+        "contrast": "standard",
+        "autoRotate": false,
+        "showLabels": true,
+        "audioEnabled": false,
+        "resume": false,
+        "lastSection": "explore"
+      },
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "moduleCount": "0 / 4 activities complete",
+      "fields": [
+        {
+          "id": "calculation-shape",
+          "value": "cube",
+          "invalid": null
+        },
+        {
+          "id": "calculation-quantity",
+          "value": "surface",
+          "invalid": null
+        },
+        {
+          "id": "calculation-context",
+          "value": "closed",
+          "invalid": null
+        },
+        {
+          "id": "calculation-target-unit",
+          "value": "cm²",
+          "invalid": null
+        },
+        {
+          "id": "calculation-dimension-a",
+          "value": "4",
+          "invalid": "false"
+        },
+        {
+          "id": "calculation-formula",
+          "value": "",
+          "invalid": "false"
+        }
+      ]
+    },
+    {
+      "section": "records",
+      "width": 390,
+      "language": "en",
+      "theme": "light",
+      "text": "150",
+      "overflow": false,
+      "rows": 4,
+      "title": "Your learning journey"
+    },
+    {
+      "section": "projection",
+      "width": 390,
+      "language": "en",
+      "theme": "dark",
+      "text": "100",
+      "viewport": 390,
+      "availableWidth": 390,
+      "scrollWidth": 380,
+      "pageOverflow": false,
+      "settings": {
+        "language": "en",
+        "textSize": 100,
+        "motionPaused": true,
+        "contrast": "standard",
+        "autoRotate": false,
+        "showLabels": true,
+        "audioEnabled": false,
+        "resume": false,
+        "lastSection": "explore"
+      },
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "moduleCount": "0 / 4 activities complete",
+      "fields": [
+        {
+          "id": "projection-shape",
+          "value": "cube",
+          "invalid": null
+        },
+        {
+          "id": "projection-scale",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-measure-a",
+          "value": "4",
+          "invalid": null
+        },
+        {
+          "id": "projection-active-view",
+          "value": "front",
+          "invalid": null
+        },
+        {
+          "id": "projection-tool",
+          "value": "line",
+          "invalid": null
+        },
+        {
+          "id": "projection-line-type",
+          "value": "visible",
+          "invalid": null
+        },
+        {
+          "id": "projection-guides",
+          "value": "on",
+          "invalid": null
+        },
+        {
+          "id": "projection-x1",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-y1",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-x2",
+          "value": "5",
+          "invalid": null
+        },
+        {
+          "id": "projection-y2",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-selection",
+          "value": "",
+          "invalid": null
+        }
+      ]
+    },
+    {
+      "section": "calculation",
+      "width": 390,
+      "language": "en",
+      "theme": "dark",
+      "text": "100",
+      "viewport": 390,
+      "availableWidth": 390,
+      "scrollWidth": 380,
+      "pageOverflow": false,
+      "settings": {
+        "language": "en",
+        "textSize": 100,
+        "motionPaused": true,
+        "contrast": "standard",
+        "autoRotate": false,
+        "showLabels": true,
+        "audioEnabled": false,
+        "resume": false,
+        "lastSection": "explore"
+      },
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "moduleCount": "0 / 4 activities complete",
+      "fields": [
+        {
+          "id": "calculation-shape",
+          "value": "cube",
+          "invalid": null
+        },
+        {
+          "id": "calculation-quantity",
+          "value": "surface",
+          "invalid": null
+        },
+        {
+          "id": "calculation-context",
+          "value": "closed",
+          "invalid": null
+        },
+        {
+          "id": "calculation-target-unit",
+          "value": "cm²",
+          "invalid": null
+        },
+        {
+          "id": "calculation-dimension-a",
+          "value": "4",
+          "invalid": "false"
+        },
+        {
+          "id": "calculation-formula",
+          "value": "",
+          "invalid": "false"
+        }
+      ]
+    },
+    {
+      "section": "records",
+      "width": 390,
+      "language": "en",
+      "theme": "dark",
+      "text": "100",
+      "overflow": false,
+      "rows": 4,
+      "title": "Your learning journey"
+    },
+    {
+      "section": "projection",
+      "width": 390,
+      "language": "en",
+      "theme": "dark",
+      "text": "150",
+      "viewport": 390,
+      "availableWidth": 390,
+      "scrollWidth": 380,
+      "pageOverflow": false,
+      "settings": {
+        "language": "en",
+        "textSize": 150,
+        "motionPaused": true,
+        "contrast": "standard",
+        "autoRotate": false,
+        "showLabels": true,
+        "audioEnabled": false,
+        "resume": false,
+        "lastSection": "explore"
+      },
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "moduleCount": "0 / 4 activities complete",
+      "fields": [
+        {
+          "id": "projection-shape",
+          "value": "cube",
+          "invalid": null
+        },
+        {
+          "id": "projection-scale",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-measure-a",
+          "value": "4",
+          "invalid": null
+        },
+        {
+          "id": "projection-active-view",
+          "value": "front",
+          "invalid": null
+        },
+        {
+          "id": "projection-tool",
+          "value": "line",
+          "invalid": null
+        },
+        {
+          "id": "projection-line-type",
+          "value": "visible",
+          "invalid": null
+        },
+        {
+          "id": "projection-guides",
+          "value": "on",
+          "invalid": null
+        },
+        {
+          "id": "projection-x1",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-y1",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-x2",
+          "value": "5",
+          "invalid": null
+        },
+        {
+          "id": "projection-y2",
+          "value": "1",
+          "invalid": null
+        },
+        {
+          "id": "projection-selection",
+          "value": "",
+          "invalid": null
+        }
+      ]
+    },
+    {
+      "section": "calculation",
+      "width": 390,
+      "language": "en",
+      "theme": "dark",
+      "text": "150",
+      "viewport": 390,
+      "availableWidth": 390,
+      "scrollWidth": 380,
+      "pageOverflow": false,
+      "settings": {
+        "language": "en",
+        "textSize": 150,
+        "motionPaused": true,
+        "contrast": "standard",
+        "autoRotate": false,
+        "showLabels": true,
+        "audioEnabled": false,
+        "resume": false,
+        "lastSection": "explore"
+      },
+      "smallTargets": [],
+      "smallText": [],
+      "duplicateIds": [],
+      "externalResources": [],
+      "moduleCount": "0 / 4 activities complete",
+      "fields": [
+        {
+          "id": "calculation-shape",
+          "value": "cube",
+          "invalid": null
+        },
+        {
+          "id": "calculation-quantity",
+          "value": "surface",
+          "invalid": null
+        },
+        {
+          "id": "calculation-context",
+          "value": "closed",
+          "invalid": null
+        },
+        {
+          "id": "calculation-target-unit",
+          "value": "cm²",
+          "invalid": null
+        },
+        {
+          "id": "calculation-dimension-a",
+          "value": "4",
+          "invalid": "false"
+        },
+        {
+          "id": "calculation-formula",
+          "value": "",
+          "invalid": "false"
+        }
+      ]
+    },
+    {
+      "section": "records",
+      "width": 390,
+      "language": "en",
+      "theme": "dark",
+      "text": "150",
+      "overflow": false,
+      "rows": 4,
+      "title": "Your learning journey"
+    }
+  ],
+  "flows": [
+    "mobile stepper keeps the newly focused answer visible",
+    "projection coordinate square, active check, delete/Undo, toolbar, keyboard and language/navigation draft retention",
+    "calculation parser-invalid, hint/example, substitution provenance, four steps, wrong/right unit, revisit invalidation, retry and locale retention",
+    "records fixture, full reflection, canonical continue/revisit, achievement retention and new-session cleanup"
+  ],
+  "browser": "133.0.6943.0",
+  "errors": [],
+  "status": "pass"
+}

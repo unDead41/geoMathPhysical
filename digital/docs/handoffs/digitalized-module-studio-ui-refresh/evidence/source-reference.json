@@ -1,0 +1,11 @@
+{
+  "base": "391df985eea4fee15d9859e678068b1a3f613cba",
+  "concept": "4d83561667cf74fbe5cd6144ce5e3e7f660a75cd",
+  "mainObserved": "25836eb1a6f24459aace8a3980ae880a13e3b488",
+  "mainFirmwareVersion": "2.0.2",
+  "digitalVersion": "2.8.0",
+  "moduleVersion": "1.6.0",
+  "referenceBoard": "09-studio-and-progress.png",
+  "referenceSha256": "a4d30c7c3249c1463f661bc6b453e7ac9576f175e1b04e7f324a358c912e6b4e",
+  "referenceVerified": true
+}
