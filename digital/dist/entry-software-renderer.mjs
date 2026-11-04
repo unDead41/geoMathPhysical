@@ -87,11 +87,12 @@ export function createSoftwareRenderer(){
       const material=Array.isArray(object.material)?object.material[0]:object.material;
       if(!material||material.visible===false)return;
       const normalMatrix=new Matrix3().getNormalMatrix(object.matrixWorld);
+      const bounds=new Box3().setFromObject(object),floor=bounds.max.y<.09;
       if(object.isLineSegments){
         const position=object.geometry.getAttribute('position');
         for(let i=0;i<position.count;i+=2){
           const pts=[i,i+1].map(j=>projected(new Vector3().fromBufferAttribute(position,j).applyMatrix4(object.matrixWorld),camera));
-          draw.push({line:true,points:pts,z:(pts[0][2]+pts[1][2])/2,color:material.color.getStyle(SRGBColorSpace),opacity:material.opacity});
+          draw.push({layer:floor?1:3,line:true,points:pts,z:(pts[0][2]+pts[1][2])/2,color:material.color.getStyle(SRGBColorSpace),opacity:material.opacity});
         }
         return;
       }
@@ -108,17 +109,16 @@ export function createSoftwareRenderer(){
         const diffuse=.47+Math.max(0,normal.dot(light))*.78;
         const specular=Math.pow(Math.max(0,normal.dot(half)),30)*.3;
         const shaded=base.clone().multiplyScalar(diffuse).lerp(new Color('#FFFFFF'),specular);
-        draw.push({points,z:points.reduce((s,p)=>s+p[2],0)/points.length,color:shaded.getStyle(SRGBColorSpace),light:shaded.clone().lerp(new Color('#FFFFFF'),.12).getStyle(SRGBColorSpace),opacity:material.transparent?Math.max(.7,material.opacity):1});
+        draw.push({layer:floor?0:3,points,z:points.reduce((s,p)=>s+p[2],0)/points.length,color:shaded.getStyle(SRGBColorSpace),light:shaded.clone().lerp(new Color('#FFFFFF'),.12).getStyle(SRGBColorSpace),opacity:material.transparent?Math.max(.7,material.opacity):1});
       }
       // Convex projected contact silhouette, sorted onto the board like a face.
-      const bounds=new Box3().setFromObject(object);
       if(object.castShadow&&bounds.max.y>.24&&bounds.min.y>=-.08){
         const corners=[];
         for(const x of [bounds.min.x,bounds.max.x])for(const y of [bounds.min.y,bounds.max.y])for(const z of [bounds.min.z,bounds.max.z]){
           const delta=Math.max(0,y-.065);corners.push(projected(point(x+delta*.42,.065,z-delta*.46),camera));
         }
         const points=hull(corners),center=bounds.getCenter(new Vector3());
-        center.y=.067;draw.push({shadow:true,points,z:projected(center,camera)[2],opacity:.12});
+        center.y=.067;draw.push({layer:2,shadow:true,points,z:projected(center,camera)[2],opacity:.12});
       }
     });
     ctx.save();ctx.translate(0,canvas.height-height);ctx.beginPath();ctx.rect(0,0,width,height);ctx.clip();
@@ -128,7 +128,7 @@ export function createSoftwareRenderer(){
     const gradient=ctx.createRadialGradient(0,0,0,0,0,large);
     gradient.addColorStop(0,'rgba(30,65,110,.13)');gradient.addColorStop(1,'rgba(30,65,110,0)');
     ctx.fillStyle=gradient;ctx.fillRect(-large,-large,large*2,large*2);ctx.restore();
-    draw.sort((a,b)=>b.z-a.z);
+    draw.sort((a,b)=>a.layer-b.layer||b.z-a.z);
     for(const item of draw){
       ctx.globalAlpha=item.opacity??1;
       if(item.line){ctx.beginPath();ctx.moveTo(...item.points[0].slice(0,2));ctx.lineTo(...item.points[1].slice(0,2));ctx.strokeStyle=item.color;ctx.lineWidth=.8;ctx.stroke();continue;}
