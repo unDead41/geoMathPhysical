@@ -1,0 +1,158 @@
+{
+  "schema": "geomath-learning-preimplementation-request/1",
+  "branch": "app-learning",
+  "status": "WAITING_FOUNDATION_READY",
+  "requestType": "dependency_gate",
+  "implementationStarted": false,
+  "foundationSha": null,
+  "foundationContractVersion": null,
+  "foundationContractHashes": {},
+  "sameFoundationAs": "app-cloud-game",
+  "sameFoundationVerified": false,
+  "contributionEntry": null,
+  "routes": [],
+  "localisationDelegates": [],
+  "migrations": [],
+  "assets": [],
+  "dependencies": [],
+  "platformNeeds": [],
+  "sharedApiChanges": [],
+  "registrationNote": "All registration arrays are empty because no feature implementation exists yet. Planned routes below are catalogue proposals, not frozen or registered routes. Await foundation pins and extension points; do not add duplicate core services.",
+  "plannedScreens": [
+    {
+      "id": "25",
+      "title": "Teroka 3D",
+      "proposedRoute": "/learn/explore",
+      "requirements": [
+        "L01",
+        "L02",
+        "U02"
+      ],
+      "status": "BLOCKED_FOUNDATION"
+    },
+    {
+      "id": "26",
+      "title": "Pandangan 2D",
+      "proposedRoute": "/learn/views",
+      "requirements": [
+        "L03",
+        "U02"
+      ],
+      "status": "BLOCKED_FOUNDATION"
+    },
+    {
+      "id": "27",
+      "title": "Nota pembelajaran",
+      "proposedRoute": "/learn/notes/:shapeId",
+      "requirements": [
+        "L04"
+      ],
+      "status": "BLOCKED_FOUNDATION"
+    },
+    {
+      "id": "28",
+      "title": "Kalkulator ukuran",
+      "proposedRoute": "/learn/calculator/:shapeId",
+      "requirements": [
+        "L04"
+      ],
+      "status": "BLOCKED_FOUNDATION"
+    },
+    {
+      "id": "29",
+      "title": "Bina bentangan",
+      "proposedRoute": "/learn/labs/net",
+      "requirements": [
+        "L05",
+        "L08"
+      ],
+      "status": "BLOCKED_FOUNDATION"
+    },
+    {
+      "id": "30",
+      "title": "Makmal isi padu",
+      "proposedRoute": "/learn/labs/volume",
+      "requirements": [
+        "L05",
+        "L08"
+      ],
+      "status": "BLOCKED_FOUNDATION"
+    },
+    {
+      "id": "31",
+      "title": "Luas permukaan dan rumus",
+      "proposedRoute": "/learn/labs/area",
+      "requirements": [
+        "L05",
+        "L08"
+      ],
+      "status": "BLOCKED_FOUNDATION"
+    },
+    {
+      "id": "32",
+      "title": "Bongkah gabungan",
+      "proposedRoute": "/learn/labs/composite",
+      "requirements": [
+        "L05",
+        "L08"
+      ],
+      "status": "BLOCKED_FOUNDATION"
+    },
+    {
+      "id": "33",
+      "title": "Hab makmal",
+      "proposedRoute": "/learn/labs",
+      "requirements": [
+        "L05"
+      ],
+      "status": "BLOCKED_FOUNDATION"
+    },
+    {
+      "id": "34",
+      "title": "Pelan dan Dongakan",
+      "proposedRoute": "/learn/projection",
+      "requirements": [
+        "L06"
+      ],
+      "status": "BLOCKED_FOUNDATION"
+    },
+    {
+      "id": "35",
+      "title": "Semakan langkah pengiraan",
+      "proposedRoute": "/learn/calculation",
+      "requirements": [
+        "L07"
+      ],
+      "status": "BLOCKED_FOUNDATION"
+    },
+    {
+      "id": "36",
+      "title": "Rekod latihan kendiri",
+      "proposedRoute": "/learn/records",
+      "requirements": [
+        "L08",
+        "O03"
+      ],
+      "status": "BLOCKED_FOUNDATION"
+    },
+    {
+      "id": "41",
+      "title": "Hab Belajar",
+      "proposedRoute": "/learn",
+      "requirements": [
+        "L01",
+        "U01"
+      ],
+      "status": "BLOCKED_FOUNDATION"
+    }
+  ],
+  "requiredBeforeImplementation": [
+    "Publish origin/app-foundation with verifiable READY marker, FOUNDATION_CONTRACT.md and handoff.",
+    "Verify contract hashes, source lock, asset extension point, SDK pins and analyze/test/debug-build/device-smoke evidence.",
+    "Record the identical READY commit used by app-cloud-game before starting learning implementation.",
+    "Use the actual frozen contribution/preview, module bridge/lifecycle/back/audio, preferences, actor and formative writer/reader/database contracts without replacement."
+  ],
+  "observedSourceAuditSha": "37bc2cd262cc0a54e8ee31339ea37471c1ecfda5",
+  "observedSourceIsFoundationPin": false,
+  "handoff": "docs/handoffs/app-learning/LATEST.md"
+}

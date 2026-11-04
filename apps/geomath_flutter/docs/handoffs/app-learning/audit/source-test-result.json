@@ -1,0 +1,281 @@
+{
+  "schema_version": 1,
+  "audit_date_utc": "2026-11-04",
+  "status": "SOURCE_PASS_NATIVE_BLOCKED",
+  "repository": "unDead41/geodecoder",
+  "worker_branch": "app-learning-worker-6-2c9458ca",
+  "app_base_sha": "38f061af963256528d5060ff076bae9ee05eafc3",
+  "canonical_source_sha": "37bc2cd262cc0a54e8ee31339ea37471c1ecfda5",
+  "versions": {
+    "digital": "2.9.1",
+    "module": "1.6.2",
+    "firmware_unchanged": "v2.0.2",
+    "app": null
+  },
+  "remote_observations": {
+    "mechanism": "GitHub connector GET git/ref/heads/<branch>, 2026-11-04 UTC",
+    "app": {
+      "http_status": 200,
+      "sha": "38f061af963256528d5060ff076bae9ee05eafc3"
+    },
+    "main_digitalized": {
+      "http_status": 200,
+      "sha": "37bc2cd262cc0a54e8ee31339ea37471c1ecfda5"
+    },
+    "main": {
+      "http_status": 200,
+      "sha": "25836eb1a6f24459aace8a3980ae880a13e3b488",
+      "firmware_version_header_blob": "ad1c80a23cdc8b4131769d310ce735f8a721e037"
+    },
+    "app_foundation": {
+      "url": "https://api.github.com/repos/unDead41/geodecoder/git/ref/heads/app-foundation",
+      "http_status": 404,
+      "error_code": "NOT_FOUND",
+      "sha": null
+    }
+  },
+  "foundation": {
+    "ready_verified": false,
+    "contract_hashes": null,
+    "same_sha_with_prompt_3_confirmed": false,
+    "implementation_allowed": false,
+    "reason": "app-foundation ref absent; no contract/READY/handoff available"
+  },
+  "source_integrity": {
+    "initial_before_module_tests": {
+      "blob_count": 177,
+      "manifest_sha256": "325a0965806c3fafd6b7e7c5c3c7983ae71c79045f7bc872a583d625017f5327",
+      "mismatch_count": 0
+    },
+    "before_full_bridge_tests": {
+      "blob_count": 182,
+      "manifest_sha256": "282f6b8204fed2cd0ba2135d21f6b335cfaee7e8b3510cbb048b9a6765b389cc",
+      "mismatch_count": 0
+    },
+    "after_tests_code_changes": [],
+    "final": {
+      "final_blob_count": 183,
+      "manifest_sha256": "55ca2bfadef614ff95ec3ea41dd048e333dc175bfe5f7e650132d7cbbea13b65",
+      "refreshed_document_only": [
+        "digital/docs/integration-sync/README.md"
+      ],
+      "tested_code_changed": false
+    },
+    "shared_snapshot_mutated_by_worker": false
+  },
+  "runtime": {
+    "node": "v24.22.1",
+    "npm": "11.9.0",
+    "dependencies": {
+      "verified_blob_count": 182,
+      "verification_manifest_sha256": "282f6b8204fed2cd0ba2135d21f6b335cfaee7e8b3510cbb048b9a6765b389cc",
+      "added_files": [
+        "digital/vendor/module-release.json",
+        "digital/vendor/module-v1.5.0.html",
+        "digital/vendor/module-v1.6.0.html",
+        "digital/vendor/module-v1.6.1.html",
+        "digital/vendor/module-v1.6.2.html"
+      ],
+      "jsdom": {
+        "version": "30.1.3",
+        "package_json_sha256": "d05b7f08c60feb43d726447adf6f8eaec18913a8f0fe8cbd7e3af06f7c8510ba"
+      },
+      "@supabase/supabase-js": {
+        "version": "2.118.0",
+        "package_json_sha256": "16ce1954171a17e803be9aa55f19a63d017517aa50d01d9ab44d72b3853d0e85"
+      },
+      "dependency_directory": "/workspace/scratch/b0ae0ed7e4c1/source-snapshot/digital/node_modules"
+    },
+    "npm_ci_run": false,
+    "flutter_version_check": {
+      "command": "/workspace/scratch/dda77b0786fb/runtime-setup/flutter/bin/flutter --version --machine",
+      "exit_code": 0,
+      "framework_version": "3.47.9",
+      "dart_version": "3.13.7",
+      "framework_revision": "c197ca5199e9ee5661e865596c9c07294dfab51c",
+      "is_project_pin": false
+    },
+    "adb_in_path": false,
+    "dev_kvm_exists": false,
+    "android_device_enumeration_performed": false
+  },
+  "executed_source_tests": [
+    {
+      "id": "canonical-module",
+      "command": "npm test",
+      "cwd": "/workspace/scratch/2c9458ca3d01/verification-worker-6/source/digital/module",
+      "started_at_utc": "2026-11-04T14:30:59.895179+00:00",
+      "finished_at_utc": "2026-11-04T14:31:08.921835+00:00",
+      "exit_code": 0,
+      "summary": {
+        "tests": 341,
+        "suites": 0,
+        "pass": 341,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "log_path": "/workspace/scratch/2c9458ca3d01/verification-worker-6/module-npm-test.log",
+      "log_sha256": "daf7930371935c21e4f37baab36ae1e919c7e5eb15d4961bc47845fd4d1becde",
+      "canonical_source_sha": "37bc2cd262cc0a54e8ee31339ea37471c1ecfda5"
+    },
+    {
+      "id": "canonical-bridge-core",
+      "command": "node --test tests/module-frame.test.mjs tests/module-language.test.mjs tests/module-native-language.test.mjs tests/module-progress-view.test.mjs tests/module-progress.test.mjs",
+      "cwd": "/workspace/scratch/2c9458ca3d01/verification-worker-6/source/digital",
+      "started_at_utc": "2026-11-04T14:31:16.417364+00:00",
+      "finished_at_utc": "2026-11-04T14:31:18.292876+00:00",
+      "exit_code": 0,
+      "summary": {
+        "tests": 19,
+        "suites": 0,
+        "pass": 19,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "log_path": "/workspace/scratch/2c9458ca3d01/verification-worker-6/bridge-core-test.log",
+      "log_sha256": "1bf074e3ac832ff89cc7dc20a08af09e4839101f4737e0e2f0c4054fb5e732a9",
+      "canonical_source_sha": "37bc2cd262cc0a54e8ee31339ea37471c1ecfda5"
+    },
+    {
+      "id": "canonical-bridge-all",
+      "command": "node --test tests/module-*.test.mjs",
+      "argv": [
+        "node",
+        "--test",
+        "tests/module-cloud.test.mjs",
+        "tests/module-frame.test.mjs",
+        "tests/module-language.test.mjs",
+        "tests/module-native-language.test.mjs",
+        "tests/module-native-settings.test.mjs",
+        "tests/module-progress-view.test.mjs",
+        "tests/module-progress.test.mjs",
+        "tests/module-settings.test.mjs"
+      ],
+      "cwd": "/workspace/scratch/2c9458ca3d01/verification-worker-6/source/digital",
+      "started_at_utc": "2026-11-04T14:32:23.669089+00:00",
+      "finished_at_utc": "2026-11-04T14:32:38.601807+00:00",
+      "exit_code": 0,
+      "summary": {
+        "tests": 32,
+        "suites": 0,
+        "pass": 32,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "files": [
+        "tests/module-cloud.test.mjs",
+        "tests/module-frame.test.mjs",
+        "tests/module-language.test.mjs",
+        "tests/module-native-language.test.mjs",
+        "tests/module-native-settings.test.mjs",
+        "tests/module-progress-view.test.mjs",
+        "tests/module-progress.test.mjs",
+        "tests/module-settings.test.mjs"
+      ],
+      "log_path": "/workspace/scratch/2c9458ca3d01/verification-worker-6/bridge-all-test.log",
+      "log_sha256": "b0de7f5f07c44c9f26a33652b171897a9408c85a5a082fbf901badceb9e0277e",
+      "canonical_source_sha": "37bc2cd262cc0a54e8ee31339ea37471c1ecfda5"
+    }
+  ],
+  "distinct_canonical_test_count": 373,
+  "initial_subset_is_included_in_full_adapter_suite": true,
+  "source_characterization": {
+    "id": "source-characterization",
+    "command": "node probes/bridge-characterization.mjs",
+    "cwd": "/workspace/scratch/2c9458ca3d01/verification-worker-6",
+    "started_at_utc": "2026-11-04T14:34:29.767993+00:00",
+    "finished_at_utc": "2026-11-04T14:34:29.839677+00:00",
+    "exit_code": 0,
+    "script_sha256": "e789293c2d248affa3d1943d1e943c92f70523db842f5f0fe87affe0c7916743",
+    "log_sha256": "f8c22eb2fe783a0fe05c14d6fca19c792eb0e14bf8dcf64040557767c486fa82",
+    "observations": {
+      "label": "SOURCE_CHARACTERIZATION_ONLY",
+      "source": "37bc2cd262cc0a54e8ee31339ea37471c1ecfda5",
+      "foreign_source_rejected": true,
+      "old_nonce_rejected": true,
+      "current_session_older_completed_payload_reaccepted": true,
+      "replay_restored_older_result": true,
+      "unknown_padding_over_64KiB_accepted": true,
+      "old_actor_message_rejected": true,
+      "account_b_record_count": 0,
+      "old_nonce_after_reopen_rejected": true,
+      "storage_denied_handle_message_returned": true,
+      "storage_failed_flag": true
+    },
+    "canonical_source_sha": "37bc2cd262cc0a54e8ee31339ea37471c1ecfda5",
+    "script_source": "import assert from 'node:assert/strict';\nimport {ModuleProgress} from '../source/digital/dist/module-progress.mjs';\nconst values=new Map(),sent=[];\nlet serial=0;\nconst frame={postMessage:message=>sent.push(message)};\nconst controller=new ModuleProgress({storage:{getItem:key=>values.get(key)||null,setItem:(key,value)=>values.set(key,value)},token:()=>`audit-nonce-${++serial}`});\nconst open=()=>{controller.open(frame);assert.equal(controller.handleMessage({source:frame,data:{type:'geodecoder:module-ready',protocol:1}}),true);return sent.at(-1).session;};\nconst nonce=open();\nconst original={type:'geodecoder:module-progress',protocol:1,session:nonce,activity:'net',stage:'explanation',prediction:'Six faces',result:'First result',explanation:'Each original face closes the cube.',completed:true};\nconst send=(data,source=frame)=>controller.handleMessage({source,data});\nassert.equal(send(original,{}),false);\nassert.equal(send({...original,session:'old-nonce'}),false);\nassert.equal(send(original),true);\nassert.equal(send({...original,result:'Newer result'}),true);\nconst replayAccepted=send(original);\nconst replayRestoredOlderResult=controller.state.records[0].result==='First result';\nassert.equal(replayAccepted,true);assert.equal(replayRestoredOlderResult,true);\nconst unknownEnvelopeAccepted=send({...original,padding:'x'.repeat(65537)});\nassert.equal(unknownEnvelopeAccepted,true);\ncontroller.setAccount({id:'account-b',role:'student'});\nassert.equal(send(original),false);\nconst accountBRecords=controller.state.records.length;assert.equal(accountBRecords,0);\nopen();assert.equal(send(original),false);\nconst denied=new ModuleProgress({storage:{getItem(){throw Error('denied')},setItem(){throw Error('denied')}},token:()=> 'denied-storage-nonce'});\ndenied.open(frame);denied.handleMessage({source:frame,data:{type:'geodecoder:module-ready',protocol:1}});\nconst failedSaveAccepted=denied.handleMessage({source:frame,data:{...original,session:'denied-storage-nonce'}});\nassert.equal(failedSaveAccepted,true);assert.equal(denied.state.storageFailed,true);\nconsole.log(JSON.stringify({label:'SOURCE_CHARACTERIZATION_ONLY',source:'37bc2cd262cc0a54e8ee31339ea37471c1ecfda5',foreign_source_rejected:true,old_nonce_rejected:true,current_session_older_completed_payload_reaccepted:replayAccepted,replay_restored_older_result:replayRestoredOlderResult,unknown_padding_over_64KiB_accepted:unknownEnvelopeAccepted,old_actor_message_rejected:true,account_b_record_count:accountBRecords,old_nonce_after_reopen_rejected:true,storage_denied_handle_message_returned:failedSaveAccepted,storage_failed_flag:denied.state.storageFailed}));\n",
+    "counts_as_acceptance_suite": false
+  },
+  "vendor_release": {
+    "version": "1.6.2",
+    "path": "digital/vendor/module-v1.6.2.html",
+    "release_blob": "3af0469979d878c8e605d093db1be0c0649c6509",
+    "nested_source_commit": "7bba111209e15697cb4b704f6cef7c0fb120aa55",
+    "test_environment": "JSDOM with canvas/animation/observer stubs, not Android WebView"
+  },
+  "native_acceptance": {
+    "screen_ids": [
+      "25",
+      "26",
+      "27",
+      "28",
+      "29",
+      "30",
+      "31",
+      "32",
+      "33",
+      "34",
+      "35",
+      "36",
+      "41"
+    ],
+    "screen_status": "BLOCKED_UNIMPLEMENTED_AT_APP_BASE",
+    "sor_ids": [
+      "L01",
+      "L02",
+      "L03",
+      "L04",
+      "L05",
+      "L06",
+      "L07",
+      "L08",
+      "U02"
+    ],
+    "sor_status": "BLOCKED_FLUTTER_ACCEPTANCE",
+    "ex11": "NOT_RUN",
+    "formatter": "NOT_RUN",
+    "flutter_analyze": "NOT_RUN",
+    "flutter_tests": "NOT_RUN",
+    "webview_integration": "NOT_RUN",
+    "debug_apk": "NOT_BUILT",
+    "android_run": "NOT_RUN",
+    "visual_phone_tablet_bm_en_themes_text150": "NOT_RUN",
+    "talkback": "NOT_RUN",
+    "physical_phone": "NOT_RUN",
+    "ios": "NOT_RUN",
+    "hosted_services": "NOT_RUN"
+  },
+  "not_executed_by_this_worker": [
+    "full Digital npm test",
+    "module npm run build",
+    "module npm run check",
+    "browser suites",
+    "dependency installation",
+    "Flutter formatter/analyze/tests/build/run",
+    "APK/device/TalkBack/visual acceptance",
+    "push"
+  ],
+  "visual_reference_read_limitation": {
+    "command": "git show HEAD:docs/geomath-app/assets/GeoMath_Aliran_UIUX_App.png",
+    "exit_code": 128,
+    "reason": "missing sparse Git blob; no mockup visual verification claimed"
+  },
+  "raw_logs_committed": false,
+  "report": "06-verification.md"
+}
