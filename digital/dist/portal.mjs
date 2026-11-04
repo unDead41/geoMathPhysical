@@ -5,9 +5,10 @@ import {VERSION, formatTime} from './core.mjs';
 import {renderLearningRecords} from './module-progress-view.mjs';
 import {securitySessionKey} from './account-security.mjs';
 import {renderProfileView} from './profile-view.mjs';
-import {renderSecurityView} from './security-view.mjs';
+import {renderSecurityView,passwordFormAvailable} from './security-view.mjs';
 import {renderActiveSessions} from './active-sessions.mjs';
 import {CLASSROOM_ERROR_KEYS} from './classroom-copy.mjs';
+import {normalizePhone,isValidPhoneOTP,authProviderError,AUTH_PROVIDER_ERROR_KEYS,renderProviderChoices,renderPhoneAuth,renderProviderProfile} from './auth-providers.mjs';
 
 // Only authored literals pass through pt(); user-provided values stay untouched.
 const portalOriginal=new Map([...Object.entries(MESSAGES.en).map(([key,text])=>[text,key]),...Object.entries(MESSAGES.ms).map(([key,text])=>[text,key])]);
@@ -34,7 +35,7 @@ function playerLabel(status) { return ({waiting: pt("Menunggu mula"), playing: p
 function hasAttempt(player) {
   return ['playing', 'review', 'finished'].includes(player.status) || Boolean(player.attempt_id || player.started_at || player.timer_started_at || number(player.question_index) || number(player.elapsed_ms) || number(player.score) || number(player.mistakes) || number(player.hints) || number(player.skipped));
 }
-function errorText(error) { return CLASSROOM_ERROR_KEYS[error?.code] ? pt(CLASSROOM_ERROR_KEYS[error.code]) : friendlyError(error,globalThis.document?.documentElement?.lang==='en'?'en':'ms'); }
+function errorText(error) { const key=CLASSROOM_ERROR_KEYS[error?.code]||AUTH_PROVIDER_ERROR_KEYS[error?.code];return key ? pt(key) : friendlyError(error,globalThis.document?.documentElement?.lang==='en'?'en':'ms'); }
 
 /** Account, class, invitation, and live-room UI. All authorization remains server-owned. */
 export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onPreferences = () => {}, onExit = () => {}, onError = () => {}} = {}) {
@@ -53,6 +54,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
   let learningPending = '';
 
   let profile = null;
+  let profileMissing = false;
   let profileView = false;
   let profileBaseline = null;
   let profileNext = null;
@@ -72,6 +74,9 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
   let authOnly = false;
   let emailCooldownUntil = 0;
   let emailCooldownTimer = null;
+  let phoneNumber = '';
+  let phoneCooldownUntil = 0;
+  let phoneCooldownTimer = null;
   let callbackErrorDismissed = false;
   let knownRecovery = false;
   let knownCallbackError = '';
@@ -254,11 +259,24 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
   }
 
   function emailCooldownSeconds() { return Math.max(0, Math.ceil((emailCooldownUntil - Date.now()) / 1000)); }
+  function phoneCooldownSeconds() { return Math.max(0, Math.ceil((phoneCooldownUntil - Date.now()) / 1000)); }
+
+  function clearPhoneOTP() {
+    for (const input of content.querySelectorAll('[data-auth-otp]')) { input.value='';input.defaultValue=''; }
+  }
+
+  function clearPhoneState() {
+    clearPhoneOTP();
+    phoneNumber='';phoneCooldownUntil=0;
+    clearInterval(phoneCooldownTimer);phoneCooldownTimer=null;
+  }
 
   function renderAuth() {
-    const modes = ['login', 'signup', 'recover-email', 'recover', 'resend-confirmation', 'confirmation', 'email-sent'];
-    const mode = cloud.recoveryRequired === true ? 'reset-password' : modes.includes(authMode) ? authMode : 'login';
+    const modes = ['login', 'signup', 'recover-email', 'recover', 'resend-confirmation', 'confirmation', 'email-sent', 'phone-send', 'phone-verify'];
+    const mode = cloud.recoveryRequired === true ? 'reset-password' : profileMissing && accountAvailable() ? 'complete-profile' : modes.includes(authMode) ? authMode : 'login';
     const signup = mode === 'signup';
+    const completing = mode === 'complete-profile';
+    const phone = mode === 'phone-send' || mode === 'phone-verify';
     const legacy = mode === 'recover';
     const reset = mode === 'reset-password';
     const emailRequest = ['recover-email', 'resend-confirmation'].includes(mode);
@@ -274,12 +292,17 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
       'resend-confirmation': [pt("SAHKAN EMAIL ANDA"), pt("Minta pautan pengesahan"), pt("Masukkan email yang digunakan semasa mendaftar.")],
       confirmation: [pt("SEMAK EMAIL ANDA"), pt("Sahkan email untuk meneruskan"), pt("Buka pautan pengesahan dalam email sebelum log masuk.")],
       'email-sent': [pt("SEMAK EMAIL ANDA"), pt("Permintaan pemulihan diterima"), pt("Buka pautan pemulihan dalam email untuk memilih kata laluan baharu.")],
-      'reset-password': [pt("PAUTAN PEMULIHAN DISAHKAN"), pt("Tetapkan kata laluan baharu"), pt("Pilih kata laluan baharu untuk akaun anda. Selepas disimpan, log masuk semula.")]
+      'reset-password': [pt("PAUTAN PEMULIHAN DISAHKAN"), pt("Tetapkan kata laluan baharu"), pt("Pilih kata laluan baharu untuk akaun anda. Selepas disimpan, log masuk semula.")],
+      'phone-send': [pt('MASUK DENGAN TELEFON'),pt('Terima kod log masuk'),pt('Masukkan nombor telefon anda untuk menerima kod SMS. Akaun baharu dan sedia ada menggunakan langkah yang sama.')],
+      'phone-verify': [pt('SAHKAN NOMBOR ANDA'),pt('Masukkan kod SMS'),pt('Semak SMS anda. Kod enam digit mengesahkan nombor telefon anda.')],
+      'complete-profile': [pt('PROFIL PERTAMA ANDA'),pt('Lengkapkan profil'),pt('Pilih nama dan peranan anda untuk membuka ruang kelas.')]
     }[mode];
     document.title = `${details[1]} — GeoDecoder Digital`;
     const modeLink = (label, next, secondary = false) => `<button type="button" class="portal-text-button${secondary ? ' portal-legacy-link' : ''}" data-portal-action="auth-mode" data-mode="${next}" data-block-while-busy data-base-disabled="false">${label}</button>`;
     let body = '';
-    if (sent) {
+    if (completing) body=renderProviderProfile({field,submit,formError,button,t:pt,esc});
+    else if (phone) body=renderPhoneAuth({verify:mode==='phone-verify',phone:phoneNumber,remaining:phoneCooldownSeconds(),field,submit,formError,button,t:pt,esc,available});
+    else if (sent) {
       const kind = confirmation ? pt("pengesahan") : pt("pemulihan");
       const remaining = emailCooldownSeconds();
       body = `<div class="portal-inline-info"><b>${pt("Jika email ini berdaftar, pautan")} ${kind} ${pt("akan dihantar.")}</b><p>${pt("Semak peti masuk dan folder spam. Penghantaran email mungkin mengambil sedikit masa.")}</p></div>${authEmail ? `<p class="portal-email-summary"><span>${pt("Email yang dimasukkan")}</span><b>${esc(authEmail)}</b></p>` : ''}<div class="portal-auth-submit">${button(remaining ? `${pt("Hantar semula (")}${remaining}s)` : pt("Hantar pautan semula"), 'resend-email', {primary: true, disabled: !available || !authEmail, extra: `data-email-cooldown data-resend-kind="${confirmation ? 'resend-confirmation' : 'recover-email'}"`})}</div>${modeLink(pt("Kembali ke log masuk"), 'login')}`;
@@ -297,9 +320,10 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
       else if (mode === 'recover-email') body += `${modeLink(pt("Kembali ke log masuk"), 'login')}<div>${modeLink(pt("Akaun lama tanpa email?"), 'recover', true)}</div>`;
       else if (legacy) body += modeLink(pt("Kembali ke pemulihan email"), 'recover-email');
       else if (!reset) body += modeLink(pt("Kembali ke log masuk"), 'login');
+      if (mode==='login'||signup) body+=renderProviderChoices({button,t:pt,available});
     }
-    const note = legacy ? pt("Kod pemulihan hanya untuk akaun lama tanpa email. Jangan kongsi kata laluan atau kod anda.") : pt("Jangan kongsi kata laluan atau pautan pengesahan dan pemulihan akaun anda.");
-    return `<div class="portal-auth-layout"><div class="portal-auth-intro"><div class="eyebrow"><span class="tiny-cube"></span> ${pt("BELAJAR BERSAMA")}</div><h1 id="portal-title" tabindex="-1">${pt("Satu kelas.")}<br><span>${pt("Banyak penemuan.")}</span></h1><p>${pt("Guru sediakan bilik. Pelajar padankan bongkah dan bentangan. Lihat kemajuan kelas semasa permainan berlangsung.")}</p>${geometryKit()}<div class="portal-auth-facts"><span>${icon('user')} ${pt("Akaun guru &amp; pelajar")}</span><span>${icon('lock')} ${pt("Sertai melalui PIN")}</span><span>${icon('trophy')} ${pt("Skor kelas secara langsung")}</span></div></div><section class="portal-panel portal-auth-card" aria-labelledby="portal-auth-title">${!reset ? `<div class="portal-auth-modes" role="group" aria-label="${pt("Pilihan akaun")}"><button type="button" data-portal-action="auth-mode" data-mode="login" aria-pressed="${mode === 'login'}" data-block-while-busy data-base-disabled="false">${pt("Log masuk")}</button><button type="button" data-portal-action="auth-mode" data-mode="signup" aria-pressed="${signup}" data-block-while-busy data-base-disabled="false">${pt("Daftar akaun")}</button></div>` : ''}<p class="card-kicker">${details[0]}</p><h2 id="portal-auth-title" tabindex="-1">${details[1]}</h2><p class="portal-muted">${details[2]}</p>${invalidLink ? `<div class="portal-inline-warning" role="alert"><b>${pt("Pautan belum dapat digunakan.")}</b><p>${esc(invalidLink)}</p><p>${pt("Minta pautan baharu melalui email atau kembali ke log masuk.")}</p>${mode !== 'recover-email' ? modeLink(pt("Minta pautan pemulihan baharu"), 'recover-email') : ''}</div>` : ''}${!available ? `<div class="portal-inline-info"><b>${pt("Akaun dalam talian belum tersedia.")}</b><p>${pt("Anda masih boleh kembali ke mula dan bermain tanpa akaun.")}</p></div>` : ''}${body}<p class="portal-account-note">${icon('lock')} ${note}</p></section></div>`;
+    const note = phone ? pt('Jangan kongsi kod SMS anda.') : completing ? pt('Gunakan kaedah log masuk akaun anda untuk kembali.') : legacy ? pt("Kod pemulihan hanya untuk akaun lama tanpa email. Jangan kongsi kata laluan atau kod anda.") : pt("Jangan kongsi kata laluan atau pautan pengesahan dan pemulihan akaun anda.");
+    return `<div class="portal-auth-layout"><div class="portal-auth-intro"><div class="eyebrow"><span class="tiny-cube"></span> ${pt("BELAJAR BERSAMA")}</div><h1 id="portal-title" tabindex="-1">${pt("Satu kelas.")}<br><span>${pt("Banyak penemuan.")}</span></h1><p>${pt("Guru sediakan bilik. Pelajar padankan bongkah dan bentangan. Lihat kemajuan kelas semasa permainan berlangsung.")}</p>${geometryKit()}<div class="portal-auth-facts"><span>${icon('user')} ${pt("Akaun guru &amp; pelajar")}</span><span>${icon('lock')} ${pt("Sertai melalui PIN")}</span><span>${icon('trophy')} ${pt("Skor kelas secara langsung")}</span></div></div><section class="portal-panel portal-auth-card" aria-labelledby="portal-auth-title">${!reset&&!completing ? `<div class="portal-auth-modes" role="group" aria-label="${pt("Pilihan akaun")}"><button type="button" data-portal-action="auth-mode" data-mode="login" aria-pressed="${mode === 'login'||phone}" data-block-while-busy data-base-disabled="false">${pt("Log masuk")}</button><button type="button" data-portal-action="auth-mode" data-mode="signup" aria-pressed="${signup}" data-block-while-busy data-base-disabled="false">${pt("Daftar akaun")}</button></div>` : ''}<p class="card-kicker">${details[0]}</p><h2 id="portal-auth-title" tabindex="-1">${details[1]}</h2><p class="portal-muted">${details[2]}</p>${invalidLink ? `<div class="portal-inline-warning" role="alert"><b>${pt("Pautan belum dapat digunakan.")}</b><p>${esc(invalidLink)}</p><p>${pt("Minta pautan baharu melalui email atau kembali ke log masuk.")}</p>${mode !== 'recover-email' ? modeLink(pt("Minta pautan pemulihan baharu"), 'recover-email') : ''}</div>` : ''}${!available ? `<div class="portal-inline-info"><b>${pt("Akaun dalam talian belum tersedia.")}</b><p>${pt("Anda masih boleh kembali ke mula dan bermain tanpa akaun.")}</p></div>` : ''}${body}<p class="portal-account-note">${icon('lock')} ${note}</p></section></div>`;
   }
 
   function renderRecovery() {
@@ -320,7 +344,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
   function renderProfile() {
     if (profile && !profileBaseline) profileBaseline = {display_name: profile.display_name, avatar: profile.avatar || 'initial'};
     document.title = pt('Profil Saya') + ' — GeoDecoder Digital';
-    return renderProfileView({profile, classes: list(snapshot?.classes), signedIn: signedIn(), confirming: Boolean(profileNext), accountHeading, avatarArt, button, field, formError, submit, esc, t: pt});
+    return renderProfileView({profile, authUser:cloud.session?.user, classes: list(snapshot?.classes), signedIn: signedIn(), confirming: Boolean(profileNext), accountHeading, avatarArt, button, field, formError, submit, esc, t: pt});
   }
 
   function profileValues() {
@@ -357,7 +381,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
 
   function renderSecurity() {
     document.title = pt('Kata Laluan & Keselamatan — GeoDecoder Digital');
-    return renderSecurityView({profile, confirming: securityConfirm, sessionsHTML: sessionMarkup(), accountHeading, button, field, formError, submit, icon, esc, t: pt});
+    return renderSecurityView({profile, authUser:cloud.session?.user, confirming: securityConfirm, sessionsHTML: sessionMarkup(), accountHeading, button, field, formError, submit, icon, esc, t: pt});
   }
 
   function sessionMarkup() { return renderActiveSessions({state:sessionsState,confirming:sessionsConfirm,button,esc,t:pt}); }
@@ -412,6 +436,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
 
   async function handleSecurity(form, values, type) {
     if (!securityView || !accountAvailable() || pending || type === 'logout-all' && !securityConfirm) return;
+    if (type==='change-password'&&!passwordFormAvailable(cloud.session?.user)) {clearSecurityFields();return;}
     if(type==='logout-others'&&sessionsConfirm!=='others'||type==='logout-current'&&sessionsConfirm!=='current')return;
     const token = epoch, identity = securitySessionKey(cloud.session), job = ++operation;
     const controller = new AbortController();
@@ -424,7 +449,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
       if (!active || token !== epoch || !securityView || identity !== securitySessionKey(cloud.session) && !(['logout-all','logout-current'].includes(type) && !signedIn())) return;
       clearSecurityFields();
       if (type === 'logout-all'||type==='logout-current') {
-        clearAccount(); knownSession = sessionKey(); authOnly = false; authMode = 'login';
+        clearAccount(); knownSession = sessionKey(); knownSecuritySession=securitySessionKey(cloud.session);authOnly = false; authMode = 'login';
         render({focus: true, preserve: false});
       } else if(type==='logout-others') {
         sessionsConfirm='';pending='';await loadSessions();
@@ -458,7 +483,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
   function setAccountView(view, nextRoom = null) {
     closeManagement({restoreFocus:false});
     profileBaseline = null; profileNext = null;
-    clearSecurityFields(); securityController?.abort(); securityController = null;
+    clearSecurityFields(); clearPhoneOTP(); securityController?.abort(); securityController = null;
     clearSessions();
     epoch += 1; operation += 1;
     pending = ''; authPending = false; refreshAgain = false; refreshPromise = null;
@@ -565,7 +590,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
   function captureEdits({includeSecrets=false}={}) {
     const fields = new Map();
     for (const input of content.querySelectorAll('input[id]')) {
-      if (input.type!=='hidden' && (includeSecrets || input.type!=='password'&&!input.classList.contains('portal-password')) && !input.readOnly) fields.set(input.id, {value: input.value, checked: input.checked, invalid:input.getAttribute('aria-invalid')==='true'});
+      if (!input.hasAttribute('data-auth-otp') && input.type!=='hidden' && (includeSecrets || input.type!=='password'&&!input.classList.contains('portal-password')) && !input.readOnly) fields.set(input.id, {value: input.value, checked: input.checked, invalid:input.getAttribute('aria-invalid')==='true'});
     }
     const errors=[...content.querySelectorAll('[data-error-for],[data-form-error]')].filter(node=>node.textContent).map(node=>({id:node.id,field:node.dataset.errorFor,form:node.closest('form')?.dataset.portalForm,text:node.textContent}));
     const focused = document.activeElement;
@@ -584,12 +609,13 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
     if (composing && preserve && !focus) { renderDeferred = true; return; }
     renderDeferred = false;
     const saved = preserve ? captureEdits({includeSecrets:preserveSecrets}) : null;
-    clearSecurityFields();
+    clearSecurityFields(); clearPhoneOTP();
     if (initializing) content.innerHTML = `<div class="portal-panel portal-loading" aria-busy="true"><span class="portal-spinner" aria-hidden="true"></span><h1 id="portal-title" tabindex="-1">${pt("Membuka akaun…")}</h1></div>`;
     else if (cloud.recoveryRequired === true || callbackError()) content.innerHTML = renderAuth();
     else if (recoveryCode) content.innerHTML = renderRecovery();
     else if (profileView && !signedIn()) content.innerHTML = renderProfile();
     else if (authOnly || !signedIn()) content.innerHTML = renderAuth();
+    else if (profileMissing) content.innerHTML = renderAuth();
     else if (securityView) content.innerHTML = renderSecurity();
     else if (!snapshot || !profile) content.innerHTML = stale&&!snapshot?renderLoadError():`<div class="portal-panel portal-loading" aria-busy="true"><span class="portal-spinner" aria-hidden="true"></span><h1 id="portal-title" tabindex="-1">${pt("Memuatkan ruang kelas…")}</h1><p>${pt("Sedang mendapatkan kelas dan permainan anda.")}</p></div>`;
     else content.innerHTML = profileView ? renderProfile() : roomId ? renderRoom() : isTeacher() ? renderTeacher() : renderStudent();
@@ -637,6 +663,28 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
     emailCooldownTimer = setInterval(updateEmailCooldown, 1000);
   }
 
+  function updatePhoneCooldown() {
+    const remaining=phoneCooldownSeconds();
+    for(const control of screen.querySelectorAll('[data-phone-cooldown]')) {
+      control.disabled=Boolean(pending)||control.dataset.baseDisabled==='true'||remaining>0;
+      const label=control.querySelector('span');
+      if(label)label.textContent=remaining?`${pt('Hantar kod semula')} (${remaining}s)`:pt('Hantar kod semula');
+    }
+    const sendForm=content.querySelector('form[data-portal-form="phone-send"]');
+    const send=sendForm?.querySelector('[type="submit"]');
+    if(send) {
+      const waiting=phoneNumber&&normalizePhone(sendForm.elements.namedItem('phone')?.value)===phoneNumber?remaining:0;
+      send.disabled=Boolean(pending)||cloud.ready===false||waiting>0;
+      const label=send.querySelector('span');if(label)label.textContent=waiting?`${pt('Hantar kod SMS')} (${waiting}s)`:pt('Hantar kod SMS');
+    }
+    if(!remaining||!active||destroyed){clearInterval(phoneCooldownTimer);phoneCooldownTimer=null;}
+  }
+
+  function startPhoneCooldown() {
+    phoneCooldownUntil=Date.now()+60000;
+    clearInterval(phoneCooldownTimer);phoneCooldownTimer=setInterval(updatePhoneCooldown,1000);
+  }
+
   function updateBusy() {
     for (const control of screen.querySelectorAll('[data-block-while-busy]')) control.disabled = Boolean(pending) || Boolean(managementRefresh && managementDialog.contains(control)) || control.dataset.baseDisabled === 'true';
     for (const form of screen.querySelectorAll('form')) {
@@ -649,9 +697,11 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
     const save = content.querySelector('form[data-portal-form="profile"] [type="submit"] span');
     if (save) save.textContent = pt(pending === 'profile' ? 'Sedang menyimpan…' : 'Simpan');
     for (const input of content.querySelectorAll('form[data-portal-form="profile"] input')) input.disabled = pending === 'profile';
+    for(const form of content.querySelectorAll('form[data-portal-form="phone-send"],form[data-portal-form="phone-verify"],form[data-portal-form="complete-profile"]'))for(const input of form.querySelectorAll('input'))input.disabled=pending===form.dataset.portalForm;
     for (const input of managementDialog.querySelectorAll('input')) input.disabled = pending === 'management' || Boolean(managementRefresh);
     managementDialog.querySelector('[data-portal-action="management-refresh"]')?.setAttribute('aria-busy',String(Boolean(managementRefresh)));
     updateEmailCooldown();
+    updatePhoneCooldown();
   }
 
   function updateLiveLabels() {
@@ -692,7 +742,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
   }
 
   function startLive() {
-    if (!active || !accountAvailable() || securityView) return;
+    if (!active || !accountAvailable() || securityView || profileMissing) return;
     if (!poll) poll = setInterval(() => { if (!document.hidden && (!roomId || !isTeacher() || connection !== 'live')) refresh({silent: true}); }, POLL_MS);
     if (!tick) tick = setInterval(updateLiveLabels, 1000);
     if (!roomId || !isTeacher()) { if (watchingRoom) stopWatch(); return; }
@@ -730,12 +780,21 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
     if (!data || !data.profile) return false;
     snapshot = {...data, classes: list(data.classes), invites: list(data.invites), rooms: list(data.rooms)};
     profile = data.profile;
+    profileMissing = false;
     const server = stamp(data.server_now);
     if (server !== null) { serverOffset = server - Date.now(); lastUpdated = server; }
     stale = false;
     roomError = '';
     if (classId && !snapshot.classes.some(item => String(item.id) === String(classId))) classId = null;
     return true;
+  }
+
+  function requireProfile() {
+    const first=!profileMissing;
+    profileMissing=true;snapshot=null;profile=null;
+    profileView=false;securityView=false;
+    roomId=null;cloud.setRoom?.(null);stopLive();stale=false;
+    announce('');render({focus:first,preserve:!first});
   }
 
   async function refresh({silent = false} = {}) {
@@ -750,6 +809,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
       try {
         const data = await cloud.rpc('snapshot', requestedRoom ? {room_id: requestedRoom} : {}, {expectedUserId: profile?.id || identity});
         if (!valid(token, identity) || String(requestedRoom || '') !== String(roomId || '')) return;
+        if(data?.profile_missing===true||data?.error?.code==='profile_missing'){requireProfile();return data;}
         const wasStale = stale;
         if (!applySnapshot(data)) throw new Error(pt("Maklumat akaun belum lengkap. Muat semula untuk mencuba lagi."));
         if (notice.tone === 'error' && wasStale) announce(pt("Sambungan berjaya dikemas kini."), 'success');
@@ -759,6 +819,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
         return data;
       } catch (error) {
         if (!valid(token, identity)) return;
+        if(error?.code==='profile_missing'){requireProfile();return;}
         if (requestedRoom && error?.code === 'forbidden') {
           setAccountView('dashboard');
           snapshot = null; learningData = null; learningError = '';
@@ -812,7 +873,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
     closeManagement({restoreFocus:false});
     showArchivedClasses = false; showArchivedRooms = false; invitePage = 1;
     profileBaseline = null; profileNext = null;
-    clearSecurityFields(); securityController?.abort(); securityController = null;
+    clearSecurityFields(); clearPhoneState(); securityController?.abort(); securityController = null;
     clearSessions();
     profileView = false; securityView = false; securityConfirm = false;
     epoch += 1;
@@ -823,6 +884,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
     snapshot = null;
     learningRequest++; learningPending = ''; learningData = null; learningError = '';
     profile = null;
+    profileMissing = false;
     roomId = null;
     cloud.setRoom?.(null);
     classId = null;
@@ -849,7 +911,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
       const recovery = cloud.recoveryRequired === true;
       const linkError = String(cloud.callbackError || '');
       if (securityView && ['logout-all','logout-current'].includes(pending) && !signedIn()) { clearSessions();updateSessionRegion();return; }
-      const securityChanged = securityView && knownSecuritySession !== securitySessionKey(cloud.session);
+      const securityChanged = knownSecuritySession !== securitySessionKey(cloud.session);
       if (identity === knownSession && recovery === knownRecovery && linkError === knownCallbackError && !securityChanged) return;
       knownSession = identity;
       knownSecuritySession = securitySessionKey(cloud.session);
@@ -879,7 +941,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
       const input = form.elements.namedItem('username');
       if (input) input.value = username;
     }
-    if (['signup', 'recover', 'invite'].includes(type) && !/^[a-z0-9_]{3,24}$/.test(username || '')) errors.username = pt("Gunakan 3–24 aksara: huruf kecil, nombor atau garis bawah (_).");
+    if (['signup', 'recover', 'invite','complete-profile'].includes(type) && !/^[a-z0-9_]{3,24}$/.test(username || '')) errors.username = pt("Gunakan 3–24 aksara: huruf kecil, nombor atau garis bawah (_).");
     if (type === 'login' && !/^[a-z0-9_]{3,24}$/.test(username || '') && !validEmail(username)) errors.username = pt("Masukkan email yang sah atau nama pengguna 3–24 aksara.");
     if (['signup', 'recover-email', 'resend-confirmation'].includes(type)) {
       values.email = String(values.email || '').trim().toLowerCase();
@@ -892,6 +954,17 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
       if (Array.from(name).length < 2 || Array.from(name).length > 60 || /[\u0000-\u001f\u007f-\u009f]/.test(name)) errors.display_name = pt('Masukkan nama paparan 2–60 aksara tanpa aksara kawalan.');
       if (!['initial', 'cube', 'cuboid', 'pyramid', 'cylinder', 'cone'].includes(values.avatar)) errors.avatar = pt('Pilih avatar yang tersedia.');
     }
+    if(type==='complete-profile') {
+      const name=String(values.display_name||'').trim();
+      if(Array.from(name).length<2||Array.from(name).length>60||/[\u0000-\u001f\u007f-\u009f]/.test(name))errors.display_name=pt('Masukkan nama paparan 2–60 aksara tanpa aksara kawalan.');
+      if(!['student','teacher'].includes(values.role))errors.role=pt('Pilih Pelajar atau Guru.');
+    }
+    if(type==='phone-send') {
+      const phone=normalizePhone(values.phone);
+      if(!phone)errors.phone=pt(AUTH_PROVIDER_ERROR_KEYS['phone-invalid']);
+      else {values.phone=phone;const input=form.elements.namedItem('phone');if(input)input.value=phone;}
+    }
+    if(type==='phone-verify'&&!isValidPhoneOTP(values.token))errors.token=pt(AUTH_PROVIDER_ERROR_KEYS['otp-format']);
     if (type === 'signup' && (String(values.display_name || '').trim().length < 2 || String(values.display_name || '').trim().length > 60)) errors.display_name = pt("Masukkan nama paparan antara 2 hingga 60 aksara.");
     if (['signup', 'recover', 'reset-password', 'change-password'].includes(type) && (String(values.password || '').length < 10 || String(values.password || '').length > 128)) errors.password = pt("Gunakan kata laluan antara 10 hingga 128 aksara.");
     if (type === 'change-password' && (!values.current_password || values.current_password.length > 128)) errors.current_password = pt('Masukkan kata laluan semasa, maksimum 128 aksara.');
@@ -914,6 +987,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
       if (node) node.textContent = message;
     }
     if (Object.keys(errors).length) {
+      if(type==='phone-verify'){clearPhoneOTP();values.token='';}
       form.querySelector('[data-form-error]').textContent = pt("Semak ruangan yang ditandakan.");
       form.querySelector('[aria-invalid="true"]')?.focus();
       return false;
@@ -955,6 +1029,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
       }
       clearAccount();
       knownSession = sessionKey();
+      knownSecuritySession = securitySessionKey(cloud.session);
       knownRecovery = cloud.recoveryRequired === true;
       knownCallbackError = String(cloud.callbackError || '');
       callbackErrorDismissed = true;
@@ -995,6 +1070,90 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
         updateBusy();
         if (refreshAgain && !pending) { refreshAgain = false; refresh({silent: true}); }
       }
+    }
+  }
+
+  function providerFormError(form, type, error) {
+    const safe=authProviderError(error,type==='complete-profile'?'profile':type);
+    const current=form?.isConnected?form:content.querySelector(`form[data-portal-form="${type==='phone-send'&&authMode==='phone-verify'?'phone-verify':type}"]`);
+    const message=errorText(safe);
+    const input=current?.elements.namedItem(safe.field);
+    const target=input?.setAttribute?input:input?.[0];
+    if(target) {
+      target.setAttribute('aria-invalid','true');
+      const node=[...current.querySelectorAll('[data-error-for]')].find(item=>item.dataset.errorFor===safe.field);
+      if(node)node.textContent=message;
+    }
+    const errorNode=current?.querySelector('[data-form-error]');
+    if(errorNode){errorNode.textContent=message;errorNode.setAttribute('tabindex','-1');(target||errorNode).focus({preventScroll:true});}
+    else announce(message,'error');
+  }
+
+  async function handleProviderAuth(form, values, type) {
+    if(!active||pending||cloud.ready===false||signedIn()||cloud.recoveryRequired===true||callbackError())return;
+    if(!['google-login','phone-send','phone-verify'].includes(type))return;
+    if(type==='phone-verify'&&(authMode!=='phone-verify'||!phoneNumber))return;
+    if(type==='phone-send'&&values.phone===phoneNumber&&phoneCooldownSeconds())return;
+    const token=epoch,identity=securitySessionKey(cloud.session),job=++operation;
+    const payload=type==='google-login'?{}:type==='phone-send'?{phone:values.phone}:{phone:phoneNumber,token:values.token};
+    // The session owner stays active: an external login invalidates this request
+    // and also wipes the OTP. Successful verification may use that same path.
+    pending=form?type:type==='phone-send'?'phone-resend':type;
+    clearPhoneOTP();updateBusy();announce('');
+    try {
+      const result=await cloud.auth(type,payload);
+      if(!active||token!==epoch||job!==operation)return;
+      if(type==='phone-verify') {
+        const verified=securitySessionKey(result?.session);
+        if(!verified)throw {code:'auth-failed'};
+        if(verified!==securitySessionKey(cloud.session))return;
+        clearAccount();
+        knownSession=sessionKey();knownSecuritySession=verified;
+        knownRecovery=cloud.recoveryRequired===true;knownCallbackError=String(cloud.callbackError||'');
+        callbackErrorDismissed=true;authOnly=false;authMode='login';
+        announce(pt('Nombor telefon telah disahkan.'),'success');
+        render({focus:true,preserve:false});
+        if(accountAvailable())await refresh();
+        return;
+      }
+      if(identity!==securitySessionKey(cloud.session))return;
+      if(type==='phone-send') {
+        phoneNumber=payload.phone;authMode='phone-verify';
+        startPhoneCooldown();render({focus:true,preserve:false});
+        announce(pt('Kod SMS telah dihantar. Semak telefon anda.'),'success');
+      } else announce(pt('Membuka Google…'));
+    } catch(error) {
+      if(!active||token!==epoch||identity!==securitySessionKey(cloud.session))return;
+      if(job===operation){pending='';updateBusy();}
+      clearPhoneOTP();providerFormError(form,type,error);
+    } finally {
+      if('token' in payload)payload.token='';
+      if('token' in values)values.token='';
+      if(job===operation)pending='';
+      if(active)updateBusy();
+    }
+  }
+
+  async function handleCompleteProfile(form, values) {
+    if(!active||pending||!profileMissing||!accountAvailable())return;
+    const token=epoch,identity=securitySessionKey(cloud.session),job=++operation;
+    pending='complete-profile';updateBusy();announce('');
+    try {
+      if(typeof cloud.completeProfile!=='function')throw {code:'profile-unavailable'};
+      const result=await cloud.completeProfile({username:values.username,display_name:values.display_name.trim(),role:values.role});
+      if(!active||token!==epoch||identity!==securitySessionKey(cloud.session))return;
+      if(String(result?.profile?.id)!==sessionKey()||!applySnapshot(result))throw {code:'profile-failed'};
+      profileView=false;securityView=false;authOnly=false;authMode='login';
+      render({focus:true,preserve:false});announce(pt('Profil anda sudah sedia.'),'success');
+      startLive();void refreshLearning();
+    } catch(error) {
+      if(active&&token===epoch&&identity===securitySessionKey(cloud.session)){
+        if(job===operation){pending='';updateBusy();}
+        providerFormError(form,'complete-profile',error);
+      }
+    } finally {
+      if(job===operation)pending='';
+      if(active)updateBusy();
     }
   }
 
@@ -1060,7 +1219,9 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
     clearFormErrors(form);
     if (!validate(form, values, type)) return;
     if (['login', 'signup', 'recover', 'recover-email', 'resend-confirmation', 'reset-password'].includes(type)) return handleAuth(form, values, type);
+    if(type==='phone-send'||type==='phone-verify')return handleProviderAuth(form,values,type);
     if (!accountAvailable()) return;
+    if(type==='complete-profile')return handleCompleteProfile(form,values);
     if (type === 'management' && management) {
       const m = management;
       const payload = m.kind === 'invite' ? {invite_id:m.id} : m.kind === 'member' ? {class_id:m.classId,user_id:m.id,expected_revision:m.revision} : {[m.kind+'_id']:m.id,expected_revision:m.revision};
@@ -1145,9 +1306,25 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
     if (pending) return;
     if (action === 'management-cancel') { if(!managementRefresh)closeManagement(); return; }
     if (action === 'management-refresh') return refreshManagement();
+    if(action==='google-login')return handleProviderAuth(null,{},'google-login');
+    if(action==='phone-login') {
+      if(signedIn()||cloud.ready===false||cloud.recoveryRequired===true||callbackError())return;
+      clearPhoneOTP();authMode=phoneNumber?'phone-verify':'phone-send';
+      announce('');render({focus:true,preserve:false});return;
+    }
+    if(action==='phone-edit') {
+      if(signedIn()||authMode!=='phone-verify')return;
+      clearPhoneOTP();authMode='phone-send';announce('');render({preserve:false});
+      content.querySelector('#portal-phone')?.focus({preventScroll:true});return;
+    }
+    if(action==='phone-resend') {
+      if(authMode!=='phone-verify'||!phoneNumber||phoneCooldownSeconds())return;
+      return handleProviderAuth(null,{phone:phoneNumber},'phone-send');
+    }
     if (action === 'auth-mode') {
       if (cloud.recoveryRequired === true || !['login', 'signup', 'recover-email', 'recover', 'resend-confirmation'].includes(control.dataset.mode)) return;
       authMode = control.dataset.mode;
+      clearPhoneOTP();
       announce('');
       render({preserve: false});
       content.querySelector('#portal-auth-title')?.focus({preventScroll: true});
@@ -1171,6 +1348,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
         if (!active || token !== epoch) return;
         clearAccount();
         knownSession = sessionKey();
+        knownSecuritySession = securitySessionKey(cloud.session);
         knownRecovery = cloud.recoveryRequired === true;
         knownCallbackError = String(cloud.callbackError || '');
         callbackErrorDismissed = true;
@@ -1211,7 +1389,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
     if (action === 'request-logout-all' && securityView) { clearSecurityFields(); sessionsConfirm=''; securityConfirm = true; render({preserve: false}); content.querySelector('[data-portal-action="cancel-logout-all"]')?.focus(); return; }
     if (action === 'cancel-logout-all' && securityView) { securityConfirm = false; render({preserve: false}); content.querySelector('[data-portal-action="request-logout-all"]')?.focus(); return; }
     if (action === 'logout-all') return handleSecurity(null, {}, action);
-    if (action === 'security-recover' && securityView) { setAccountView('dashboard'); authOnly = true; authMode = 'recover-email'; announce(''); render({focus: true, preserve: false}); return; }
+    if (action === 'security-recover' && securityView && passwordFormAvailable(cloud.session?.user)) { setAccountView('dashboard'); authOnly = true; authMode = 'recover-email'; announce(''); render({focus: true, preserve: false}); return; }
     if (action === 'open-module') { close(); onModule(); return; }
     if (action === 'select-class') {
       classId = control.dataset.id; rosterQuery = ''; rosterPage = roomPage = 1; learningData = null; learningError = ''; render({preserve: false}); void refreshLearning();
@@ -1249,13 +1427,14 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
       const node = document.getElementById(`${fieldInput.id}-error`);
       if (node) node.textContent = '';
     }
+    if(event.target.closest('form[data-portal-form="phone-send"]'))updatePhoneCooldown();
     if (renderDeferred && !composing) render();
   }
 
   function compositionStart() { composing = true; }
 
   function visibility() { if (active && !document.hidden && accountAvailable()) {if(securityView){if(!pending)void loadSessions();}else refresh({silent: true});} }
-  function pageHide() { clearSecurityFields(); securityController?.abort(); clearSessions();updateSessionRegion(); }
+  function pageHide() { clearSecurityFields(); clearPhoneOTP(); securityController?.abort(); clearSessions();updateSessionRegion(); }
   function keyboard(event) {
     if (event.key === 'Escape' && management) {event.preventDefault();event.stopPropagation();if(!pending&&!managementRefresh)closeManagement();return;}
     if (event.key === 'Escape' && profileNext && !pending) { event.preventDefault?.(); event.stopPropagation?.(); cancelProfileLeave(); return; }

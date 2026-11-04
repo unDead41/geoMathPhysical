@@ -6,6 +6,18 @@ alongside the shared design system, animated entry pages, refreshed Duel/module
 views, offline outbox, classroom CRUD and bounded network policy.
 See docs/integration-sync/README.md for combined verification and source receipts.
 Hosted SQL/Edge and public PWA publication are separate rollout operations.
+
+Auth provider candidate: `digitalized-utility-auth-providers` extends the same
+portal and Auth owner with Google and SMS OTP. `dist/auth-providers.mjs` owns
+phone normalization, safe provider errors and shared form fragments;
+`dist/auth-provider-copy.mjs` supplies BM/English copy. Google/SMS availability
+comes from the project's public Auth settings. The existing implicit callback
+and verified recovery session retain their precedence. OTP values never enter
+draft restoration, preferences, offline records or logs. A verified account
+without a private profile sees the one-time profile form; only the actor-bound
+`geo_complete_profile` RPC may create it. Existing roles and profiles remain
+immutable through that RPC. Hosted migration/provider activation and publication
+are separate from this candidate. See [Auth providers](docs/AUTH_PROVIDERS.md).
 Original ease-of-use reference design:
 [approved specification](../docs/superpowers/specs/2026-10-26-ease-of-use-design.md).
 Firmware rounds remain a separate contract.

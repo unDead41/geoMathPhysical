@@ -1,0 +1,22 @@
+{
+  "project_ref": "fkrlwzxvyufndavlpzbp",
+  "observed_date_malaysia": "2026-11-04",
+  "external": {
+    "google": false,
+    "phone": false
+  },
+  "disable_signup": false,
+  "mailer_autoconfirm": false,
+  "phone_autoconfirm": false,
+  "google_client_id_present": false,
+  "google_client_secret_present": false,
+  "sms_provider": "twilio",
+  "sms_credentials_present": false,
+  "sms_otp_length": 6,
+  "sms_otp_expiry_seconds": 60,
+  "site_url": "https://undead41.github.io/geodecoder-digital/",
+  "redirect_urls": [
+    "https://undead41.github.io/geodecoder-digital/"
+  ],
+  "hosted_changes_applied": false
+}

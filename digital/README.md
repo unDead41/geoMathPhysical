@@ -2,6 +2,13 @@
 
 Versi Digital: **v2.9.0**. Branch integrasi: **main-digitalized**.
 
+Calon branch `digitalized-utility-auth-providers` menambah log masuk Google,
+telefon melalui SMS OTP dan langkah melengkapkan profil pertama. Kod ini
+memerlukan migration Auth dan kelayakan provider dalam Supabase sebelum
+diaktifkan. Lihat [persediaan Google/Phone](docs/AUTH_PROVIDERS.md) dan
+[handoff serta pengesahan](docs/handoffs/digitalized-utility-auth-providers/LATEST.md).
+Push branch ini tidak menerbitkan laman awam.
+
 Laman aktif: https://undead41.github.io/geodecoder-digital/ . Pages commit `c27f3bde56079c2ab7f519a43f0008dce9f20c81` / workflow `40323253926` berjaya; HTTP/hash laman sepadan artifak gabungan.
 Modul pembelajaran: **v1.6.1**. Firmware berada pada branch berasingan; `main` yang dibaca semasa integrasi ialah **v2.0.2**. Integrasi sumber v2.9.0 menyatukan UI utama/Duel/modul, offline, CRUD dan transport. Status sumber dan had rollout berada dalam [rekod integrasi](docs/integration-sync/README.md). Rekod penerbitan awam terdahulu v2.8.0 kekal dalam [RELEASE_V2_8.md](docs/RELEASE_V2_8.md).
 

@@ -3,6 +3,7 @@ import {CLOUD_CONFIG} from './cloud-config.mjs';
 import {runAccountSecurity,securitySessionKey,withAccountSessionLock} from './account-security.mjs';
 import {readSessionList,sessionListError} from './active-sessions.mjs';
 import {ScopedRequestCache,retryDelay} from './network-policy.mjs';
+import {normalizePhone,isValidPhoneOTP,authProviderError,AuthProviderError} from './auth-providers.mjs';
 
 const AUTH_REDIRECT='https://undead41.github.io/geodecoder-digital/';
 const CALLBACK_KEYS=['access_token','refresh_token','provider_token','provider_refresh_token','token_type','expires_in','expires_at','type','error','error_code','error_description','code','token_hash'];
@@ -36,7 +37,7 @@ function emailError(error){
 export class ClassroomCloud {
   constructor(config=CLOUD_CONFIG,options={}){this.config=config;this._client=null;this._session=null;this._sessionScope=0;this.listeners=new Set();this.roomId=null;this.roomScope=0;this.profile=null;this.room=null;this.heartbeatTimer=null;this.heartbeatPending=false;this._heartbeatEpoch=0;this._heartbeatActive=false;this._random=options.random||Math.random;this._snapshotCache=new ScopedRequestCache();this._dataRevision=0;this.ready=!!config.url&&!!config.publishableKey;this._createClient=options.createClient||createClient;this._securityFetch=options.fetch||globalThis.fetch;this._location=options.location||globalThis.location;this._history=options.history||globalThis.history;this._callback=inspectAuthCallback(this._location?.href);this.hasAuthCallback=this._callback.present;this.authCallbackHandled=false;this.callbackError='';this.recoveryRequired=false;this._recoveryIdentity='';this._recoveryStorage=options.recoveryStorage===undefined?defaultRecoveryStorage():options.recoveryStorage;this.hasRecoveryIntent=false;try{this.hasRecoveryIntent=!!this._recoveryStorage?.getItem(RECOVERY_KEY);}catch{}this._restoredRecovery=false;this._initialization=null;this._callbackEvent=new Promise(resolve=>{this._resolveCallback=resolve;});}
   get session(){return this._session;}
-  _setSession(session,event){if(event==='SIGNED_OUT'||this._session?.user?.id!==session?.user?.id)this._sessionScope++;if(event==='SIGNED_OUT'||securitySessionKey(this._session)!==securitySessionKey(session))this._invalidateSnapshots();if(this._recoveryIdentity&&securitySessionKey(session)!==this._recoveryIdentity)this._clearRecovery();if(this._session?.user?.id!==session?.user?.id){if(this._session?.user?.id)this._clearRecovery();this.profile=null;this.room=null;this.roomId=null;this.roomScope++;this.recoveryRequired=false;}this._session=session;if(!session){this._clearRecovery();this.stopHeartbeat();}}
+  _setSession(session,event){if(event==='SIGNED_OUT'||this._session?.user?.id!==session?.user?.id){this._sessionScope++;this._otpPhone='';}if(event==='SIGNED_OUT'||securitySessionKey(this._session)!==securitySessionKey(session))this._invalidateSnapshots();if(this._recoveryIdentity&&securitySessionKey(session)!==this._recoveryIdentity)this._clearRecovery();if(this._session?.user?.id!==session?.user?.id){if(this._session?.user?.id)this._clearRecovery();this.profile=null;this.room=null;this.roomId=null;this.roomScope++;this.recoveryRequired=false;}this._session=session;if(!session){this._clearRecovery();this.stopHeartbeat();}}
   _clearRecovery(){this.recoveryRequired=false;this._recoveryIdentity='';this.hasRecoveryIntent=false;try{this._recoveryStorage?.removeItem(RECOVERY_KEY);}catch{}}
   _rememberRecovery(session){
     this.recoveryRequired=true;this._recoveryIdentity=securitySessionKey(session);this.stopHeartbeat();const sessionId=recoverySessionId(session);
@@ -101,6 +102,7 @@ export class ClassroomCloud {
     finally{this.authCallbackHandled=true;try{this._history?.replaceState(null,'',cleanAuthCallbackUrl(this._location.href));}catch{/* File origins may prohibit history updates. */}}
   }
   async auth(action,payload={},options={}){
+    if(['google-login','phone-send','phone-verify'].includes(action))return this._providerAuth(action,payload);
     if(['change-password','logout-all','logout-others','logout-current','reset-password'].includes(action)){
       if(this._securityPending)throw Object.assign(Error('Tunggu permintaan keselamatan selesai.'),{code:'busy'});
       this._securityPending=true;
@@ -142,6 +144,104 @@ export class ClassroomCloud {
     this.callbackError='';this._clearRecovery();
     if(data.session)await withAccountSessionLock(async()=>{const {error}=await this.client.auth.setSession({access_token:data.session.access_token,refresh_token:data.session.refresh_token});if(error)throw Error('Sesi tidak dapat disimpan. Cuba log masuk semula.');this._setSession(data.session);this.startHeartbeat();});
     return data;
+  }
+  async _providerEnabled(provider){
+    if(!this.ready)throw new AuthProviderError('provider-unavailable');
+    try{
+      const response=await this._securityFetch(this.config.url+'/auth/v1/settings',{headers:{apikey:this.config.publishableKey},cache:'no-store',signal:AbortSignal.timeout(10000)});
+      if(!response.ok)throw new AuthProviderError(response.status===429?'rate-limit':'provider-unavailable');
+      const settings=await response.json();
+      if(settings?.external?.[provider]!==true)throw new AuthProviderError('provider-unavailable');
+    }catch(error){if(error instanceof AuthProviderError)throw error;throw new AuthProviderError('network');}
+  }
+  async _providerAuth(action,payload){
+    if(this._providerPending)throw new AuthProviderError('busy');
+    if(this._session||this.recoveryRequired)throw new AuthProviderError('session-changed');
+    if(globalThis.navigator?.onLine===false)throw new AuthProviderError('network');
+    const scope=this._sessionScope,identity=securitySessionKey(this._session);
+    const current=()=>scope===this._sessionScope&&identity===securitySessionKey(this._session);
+    const requireCurrent=()=>{if(!current())throw new AuthProviderError('session-changed');};
+    this._providerPending=true;
+    let temporary,verifiedSession,adopted=false;
+    try{
+      if(action==='google-login'){
+        await this._providerEnabled('google');requireCurrent();
+        const {data,error}=await this.client.auth.signInWithOAuth({provider:'google',options:{redirectTo:this.config.authRedirectUrl||AUTH_REDIRECT,skipBrowserRedirect:true,queryParams:{prompt:'select_account'}}});
+        requireCurrent();
+        if(error)throw authProviderError(error,'google');
+        // The SDK returns Supabase's authorize endpoint, never an arbitrary
+        // provider-supplied URL. Keep navigation bound to this configured project.
+        let target;try{target=new URL(data?.url);}catch{throw new AuthProviderError('provider-unavailable');}
+        if(target.origin!==new URL(this.config.url).origin||target.username||target.password||target.hash||target.pathname!=='/auth/v1/authorize'||target.searchParams.get('provider')!=='google'||target.searchParams.get('redirect_to')!==(this.config.authRedirectUrl||AUTH_REDIRECT))throw new AuthProviderError('provider-unavailable');
+        this.callbackError='';
+        this._location?.assign?.(target.href);
+        return data;
+      }
+      const phone=normalizePhone(payload.phone);
+      if(!phone)throw new AuthProviderError('phone-invalid');
+      if(action==='phone-send'){
+        const remaining=Math.ceil(((this._otpCooldownUntil||0)-Date.now())/1000);
+        if(remaining>0)throw Object.assign(new AuthProviderError('rate-limit'),{retry_after:remaining});
+        await this._providerEnabled('phone');requireCurrent();
+        const {error}=await this.client.auth.signInWithOtp({phone,options:{channel:'sms',shouldCreateUser:true}});
+        requireCurrent();
+        if(error)throw authProviderError(error,'phone-send');
+        this._otpPhone=phone;this._otpCooldownUntil=Date.now()+60000;this.callbackError='';
+        return {phone,otp_sent:true,retry_after:60};
+      }
+      if(!isValidPhoneOTP(payload.token)||this._otpPhone!==phone)throw new AuthProviderError('invalid-otp');
+      // Verify in a nonpersisting client. Auth-js installs a successful verifyOtp
+      // session immediately; isolating it prevents a late OTP from replacing a
+      // newer main-client login or a logout in this or another tab.
+      temporary=this._createClient(this.config.url,this.config.publishableKey,{auth:{storageKey:'geodecoder.phone.'+crypto.randomUUID(),persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}});
+      const {data,error}=await temporary.auth.verifyOtp({phone,token:payload.token,type:'sms'});
+      verifiedSession=data?.session;
+      requireCurrent();
+      if(error)throw authProviderError(error,'phone-verify');
+      if(!verifiedSession?.user?.id||data?.user?.id!==verifiedSession.user.id||!verifiedSession.access_token||!verifiedSession.refresh_token)throw new AuthProviderError('invalid-otp');
+      await withAccountSessionLock(async()=>{
+        requireCurrent();
+        const actual=await this.client.auth.getSession();
+        requireCurrent();
+        if(actual.error)throw new AuthProviderError('network');
+        if(securitySessionKey(actual.data?.session)!==identity)throw new AuthProviderError('session-changed');
+        const installed=await this.client.auth.setSession({access_token:verifiedSession.access_token,refresh_token:verifiedSession.refresh_token});
+        if(installed.error)throw authProviderError(installed.error,'phone-verify');
+        const session=installed.data?.session;
+        if(!session?.user?.id||session.user.id!==verifiedSession.user.id)throw new AuthProviderError('session-changed');
+        adopted=true;this._setSession(session);this.callbackError='';this._clearRecovery();this.startHeartbeat();
+      });
+      return {session:this._session};
+    }catch(error){
+      const safe=authProviderError(error,action==='google-login'?'google':action);
+      if(safe.code==='rate-limit'&&Number.isFinite(error?.retry_after))safe.retry_after=Math.max(1,Math.min(600,Math.ceil(error.retry_after)));
+      throw safe;
+    }finally{
+      if(temporary){
+        if(verifiedSession&&!adopted)try{await temporary.auth.signOut({scope:'local'});}catch{/* Best-effort revoke of a session that was never adopted. */}
+        temporary.auth.stopAutoRefresh?.();
+      }
+      this._providerPending=false;
+    }
+  }
+  async completeProfile(values){
+    const expectedUserId=this._session?.user?.id;
+    if(!expectedUserId||this.recoveryRequired)throw new AuthProviderError('session-expired');
+    if(this._profilePending)throw new AuthProviderError('busy');
+    const username=typeof values?.username==='string'?values.username.trim().toLowerCase():'';
+    const display_name=typeof values?.display_name==='string'?values.display_name.trim():'';
+    if(!/^[a-z0-9_]{3,24}$/.test(username))throw new AuthProviderError('username-invalid');
+    if(Array.from(display_name).length<2||Array.from(display_name).length>60||/[\u0000-\u001f\u007f-\u009f]/.test(display_name))throw new AuthProviderError('display-name-invalid');
+    if(!['teacher','student'].includes(values.role))throw new AuthProviderError('role-invalid');
+    this._profilePending=true;this._invalidateSnapshots();
+    try{
+      const {data,error}=await this._boundRpc('geo_complete_profile',{username,display_name,role:values.role},{expectedUserId});
+      if(error)throw authProviderError(error,'profile');
+      if(data?.error)throw authProviderError(data.error,'profile');
+      if(data?.profile?.id!==expectedUserId||this._session?.user?.id!==expectedUserId)throw new AuthProviderError('session-changed');
+      this.profile=data.profile;return data;
+    }catch(error){throw authProviderError(error,'profile');}
+    finally{this._profilePending=false;this._invalidateSnapshots();}
   }
   async securitySessions(options={}){
     const identity=securitySessionKey(this._session);

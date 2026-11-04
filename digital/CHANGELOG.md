@@ -1,5 +1,18 @@
 # GeoDecoder Digital changelog
 
+## Belum diterbitkan — Google dan Phone (4 November 2026)
+
+- Branch `digitalized-utility-auth-providers`, berasaskan Digital v2.9.0.
+- Google OAuth dan SMS OTP melalui SDK Supabase sedia ada; status provider
+  disemak sebelum membuka Google atau meminta SMS.
+- Profil kali pertama untuk identiti Google/telefon yang telah disahkan,
+  tanpa menukar profil atau peranan akaun sedia ada.
+- Cooldown SMS, ralat BM/English, pembersihan OTP dan perlindungan permintaan
+  lewat ketika sesi bertukar. Akaun Google/telefon memaparkan panduan keselamatan
+  mengikut penyedia masing-masing.
+- 187 ujian auth/profil/keselamatan/offline berkaitan lulus; build dan semakan
+  artifak lulus. Tiada provider, migration hosted atau Pages diaktifkan oleh push ini.
+
 ## v2.9.0 — 4 November 2026 (integrasi sumber main-digitalized)
 
 - Menyatukan UI utama dengan aset 3D, UI Duel dan tiga kemasan modul v1.6.1.

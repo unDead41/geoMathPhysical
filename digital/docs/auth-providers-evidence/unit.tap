@@ -1,0 +1,1132 @@
+TAP version 13
+# Subtest: profile, security, room and dashboard API targets remain mutually exclusive
+ok 1 - profile, security, room and dashboard API targets remain mutually exclusive
+  ---
+  duration_ms: 953.387467
+  type: 'test'
+  ...
+# Subtest: a delayed learning report cannot rerender security secrets or restart polling
+ok 2 - a delayed learning report cannot rerender security secrets or restart polling
+  ---
+  duration_ms: 155.469965
+  type: 'test'
+  ...
+# Subtest: header profile navigation aborts pending security and discards its late success
+ok 3 - header profile navigation aborts pending security and discards its late success
+  ---
+  duration_ms: 291.57301
+  type: 'test'
+  ...
+# Subtest: navigation during initial Auth loading settles on the newest target
+ok 4 - navigation during initial Auth loading settles on the newest target
+  ---
+  duration_ms: 115.301874
+  type: 'test'
+  ...
+# Subtest: language changes translate account UI and errors while keeping user content and live fields
+ok 5 - language changes translate account UI and errors while keeping user content and live fields
+  ---
+  duration_ms: 268.047625
+  type: 'test'
+  ...
+# Subtest: teacher practice disclosures survive refresh and English copy leaves learner records untouched
+ok 6 - teacher practice disclosures survive refresh and English copy leaves learner records untouched
+  ---
+  duration_ms: 196.344143
+  type: 'test'
+  ...
+# Subtest: real portal renders backend rows, one current label, estimates and no raw IDs or fabricated activity
+ok 7 - real portal renders backend rows, one current label, estimates and no raw IDs or fabricated activity
+  ---
+  duration_ms: 562.930276
+  type: 'test'
+  ...
+# Subtest: others action confirms its full scope, Escape restores focus and confirmed response reloads real list
+ok 8 - others action confirms its full scope, Escape restores focus and confirmed response reloads real list
+  ---
+  duration_ms: 609.169336
+  type: 'test'
+  ...
+# Subtest: loading, retryable network failure and session expiry clear untrusted or stale metadata
+ok 9 - loading, retryable network failure and session expiry clear untrusted or stale metadata
+  ---
+  duration_ms: 267.821995
+  type: 'test'
+  ...
+# Subtest: switching accounts during a list request cannot render the previous account metadata
+ok 10 - switching accounts during a list request cannot render the previous account metadata
+  ---
+  duration_ms: 249.112396
+  type: 'test'
+  ...
+# Subtest: current logout explains sign-in navigation, and all new labels translate to English
+ok 11 - current logout explains sign-in navigation, and all new labels translate to English
+  ---
+  duration_ms: 140.256795
+  type: 'test'
+  ...
+# Subtest: keyboard refresh returns focus after loading without stealing focus from a password field
+ok 12 - keyboard refresh returns focus after loading without stealing focus from a password field
+  ---
+  duration_ms: 144.871916
+  type: 'test'
+  ...
+# Subtest: account switch during post-logout list refresh cannot announce success in the new account
+ok 13 - account switch during post-logout list refresh cannot announce success in the new account
+  ---
+  duration_ms: 131.000312
+  type: 'test'
+  ...
+# Subtest: Google and phone identities hide password entry while retaining session controls
+ok 14 - Google and phone identities hide password entry while retaining session controls
+  ---
+  duration_ms: 253.704558
+  type: 'test'
+  ...
+# Subtest: email and existing legacy accounts retain password reauthentication
+ok 15 - email and existing legacy accounts retain password reauthentication
+  ---
+  duration_ms: 177.354174
+  type: 'test'
+  ...
+# Subtest: editable metadata cannot enable the password form or invent phone verification
+ok 16 - editable metadata cannot enable the password form or invent phone verification
+  ---
+  duration_ms: 24.758991
+  type: 'test'
+  ...
+# Subtest: phone-only profiles show the Auth number and confirmation without claiming a legacy account
+ok 17 - phone-only profiles show the Auth number and confirmation without claiming a legacy account
+  ---
+  duration_ms: 56.446065
+  type: 'test'
+  ...
+# Subtest: profile contact values are escaped and cannot cross account ownership
+ok 18 - profile contact values are escaped and cannot cross account ownership
+  ---
+  duration_ms: 28.095873
+  type: 'test'
+  ...
+# Subtest: provider guidance and phone contact labels translate into English
+ok 19 - provider guidance and phone contact labels translate into English
+  ---
+  duration_ms: 34.984624
+  type: 'test'
+  ...
+# Subtest: phone normalization accepts Malaysian local and explicit international forms
+ok 20 - phone normalization accepts Malaysian local and explicit international forms
+  ---
+  duration_ms: 3.252068
+  type: 'test'
+  ...
+# Subtest: phone normalization rejects text, extensions, controls and ambiguous or oversized numbers
+ok 21 - phone normalization rejects text, extensions, controls and ambiguous or oversized numbers
+  ---
+  duration_ms: 0.532585
+  type: 'test'
+  ...
+# Subtest: SMS verification accepts exactly six ASCII digits without trimming or coercing
+ok 22 - SMS verification accepts exactly six ASCII digits without trimming or coercing
+  ---
+  duration_ms: 0.520177
+  type: 'test'
+  ...
+# Subtest: provider error mapping uses known codes/status and never exposes provider descriptions
+ok 23 - provider error mapping uses known codes/status and never exposes provider descriptions
+  ---
+  duration_ms: 1.515403
+  type: 'test'
+  ...
+# Subtest: all stable authored provider errors have English translations
+ok 24 - all stable authored provider errors have English translations
+  ---
+  duration_ms: 0.429056
+  type: 'test'
+  ...
+# Subtest: provider choices expose stable actions and the host availability flag
+ok 25 - provider choices expose stable actions and the host availability flag
+  ---
+  duration_ms: 0.492009
+  type: 'test'
+  ...
+# Subtest: phone-send form reuses tel field and escapes the supplied phone draft
+ok 26 - phone-send form reuses tel field and escapes the supplied phone draft
+  ---
+  duration_ms: 0.892117
+  type: 'test'
+  ...
+# Subtest: phone-verify form leaves the SMS code empty and exposes cooldown/edit controls
+ok 27 - phone-verify form leaves the SMS code empty and exposes cooldown/edit controls
+  ---
+  duration_ms: 0.641031
+  type: 'test'
+  ...
+# Subtest: first-login profile form has bounded shared fields, stable role IDs and safe draft values
+ok 28 - first-login profile form has bounded shared fields, stable role IDs and safe draft values
+  ---
+  duration_ms: 4.074255
+  type: 'test'
+  ...
+# Subtest: provisioning requires a current Auth UUID and rejects a deleted or absent account
+ok 29 - provisioning requires a current Auth UUID and rejects a deleted or absent account
+  ---
+  duration_ms: 3780.273864
+  type: 'test'
+  ...
+# Subtest: unconfirmed Google and phone identities cannot create a profile
+ok 30 - unconfirmed Google and phone identities cannot create a profile
+  ---
+  duration_ms: 33.128557
+  type: 'test'
+  ...
+# Subtest: metadata provider and role claims cannot impersonate a confirmed provider identity
+ok 31 - metadata provider and role claims cannot impersonate a confirmed provider identity
+  ---
+  duration_ms: 26.296386
+  type: 'test'
+  ...
+# Subtest: provider identities must belong to the current user and match the confirmed canonical contact
+ok 32 - provider identities must belong to the current user and match the confirmed canonical contact
+  ---
+  duration_ms: 26.312207
+  type: 'test'
+  ...
+# Subtest: a verified phone-only user gets the full snapshot without an email or legacy identity
+ok 33 - a verified phone-only user gets the full snapshot without an email or legacy identity
+  ---
+  duration_ms: 43.233878
+  type: 'test'
+  ...
+# Subtest: verified Google users get a normalized profile and a private random recovery marker
+ok 34 - verified Google users get a normalized profile and a private random recovery marker
+  ---
+  duration_ms: 38.505221
+  type: 'test'
+  ...
+# Subtest: Google identities cannot provision a missing, malformed or synthetic email
+ok 35 - Google identities cannot provision a missing, malformed or synthetic email
+  ---
+  duration_ms: 26.114333
+  type: 'test'
+  ...
+# Subtest: first profile fields reject invalid names, controls and unsupported roles atomically
+ok 36 - first profile fields reject invalid names, controls and unsupported roles atomically
+  ---
+  duration_ms: 65.287608
+  type: 'test'
+  ...
+# Subtest: retries return the existing snapshot and never replace identity, display name or role
+ok 37 - retries return the existing snapshot and never replace identity, display name or role
+  ---
+  duration_ms: 30.604085
+  type: 'test'
+  ...
+# Subtest: existing email signup profiles retain their role and snapshot without changing their flow
+ok 38 - existing email signup profiles retain their role and snapshot without changing their flow
+  ---
+  duration_ms: 25.173531
+  type: 'test'
+  ...
+# Subtest: username collisions do not create a partial profile and permit a subsequent valid retry
+ok 39 - username collisions do not create a partial profile and permit a subsequent valid retry
+  ---
+  duration_ms: 34.892407
+  type: 'test'
+  ...
+# Subtest: a legacy email-marker collision rolls back the newly inserted profile
+ok 40 - a legacy email-marker collision rolls back the newly inserted profile
+  ---
+  duration_ms: 25.151996
+  type: 'test'
+  ...
+# Subtest: RPC grants deny anon and service-role callers and expose no writable private tables
+ok 41 - RPC grants deny anon and service-role callers and expose no writable private tables
+  ---
+  duration_ms: 34.807738
+  type: 'test'
+  ...
+# Subtest: random marker creation discovers pgcrypto when installed outside extensions
+ok 42 - random marker creation discovers pgcrypto when installed outside extensions
+  ---
+  duration_ms: 35.988289
+  type: 'test'
+  ...
+# Subtest: Google uses the real SDK authorization URL and configured callback without extra scopes
+ok 43 - Google uses the real SDK authorization URL and configured callback without extra scopes
+  ---
+  duration_ms: 14.073576
+  type: 'test'
+  ...
+# Subtest: Google defaults to the published canonical callback and asks the SDK to defer navigation
+ok 44 - Google defaults to the published canonical callback and asks the SDK to defer navigation
+  ---
+  duration_ms: 1.289292
+  type: 'test'
+  ...
+# Subtest: Google rejects provider failures and authorization URLs with untrusted destinations or URL credentials
+ok 45 - Google rejects provider failures and authorization URLs with untrusted destinations or URL credentials
+  ---
+  duration_ms: 7.270087
+  type: 'test'
+  ...
+# Subtest: disabled or missing provider settings never navigate or send SMS
+ok 46 - disabled or missing provider settings never navigate or send SMS
+  ---
+  duration_ms: 8.716572
+  type: 'test'
+  ...
+# Subtest: unreachable provider settings return a sanitized network error before provider actions
+ok 47 - unreachable provider settings return a sanitized network error before provider actions
+  ---
+  duration_ms: 1.825911
+  type: 'test'
+  ...
+# Subtest: real SDK sends normalized SMS with account creation enabled and installs no session
+ok 48 - real SDK sends normalized SMS with account creation enabled and installs no session
+  ---
+  duration_ms: 4.437596
+  type: 'test'
+  ...
+# Subtest: malformed phone destinations fail before sending SMS
+ok 49 - malformed phone destinations fail before sending SMS
+  ---
+  duration_ms: 1.197378
+  type: 'test'
+  ...
+# Subtest: phone formatting normalizes Malaysian local and explicit international destinations
+ok 50 - phone formatting normalizes Malaysian local and explicit international destinations
+  ---
+  duration_ms: 0.98894
+  type: 'test'
+  ...
+# Subtest: real SDK verifies SMS, validates its user and persists the main session once
+ok 51 - real SDK verifies SMS, validates its user and persists the main session once
+  ---
+  duration_ms: 7.542158
+  type: 'test'
+  ...
+# Subtest: verification uses a temporary SDK client with no persistence or refresh ownership
+ok 52 - verification uses a temporary SDK client with no persistence or refresh ownership
+  ---
+  duration_ms: 1.263298
+  type: 'test'
+  ...
+# Subtest: verification never authenticates a missing session, missing credentials or inconsistent SDK user
+ok 53 - verification never authenticates a missing session, missing credentials or inconsistent SDK user
+  ---
+  duration_ms: 3.242802
+  type: 'test'
+  ...
+# Subtest: OTP requires a successfully sent matching destination and a well-formed code
+ok 54 - OTP requires a successfully sent matching destination and a well-formed code
+  ---
+  duration_ms: 1.208812
+  type: 'test'
+  ...
+# Subtest: SMS provider, throttling and network failures expose only typed sanitized errors
+ok 55 - SMS provider, throttling and network failures expose only typed sanitized errors
+  ---
+  duration_ms: 6.186035
+  type: 'test'
+  ...
+# Subtest: expired OTP provider details never escape into errors or create a session
+ok 56 - expired OTP provider details never escape into errors or create a session
+  ---
+  duration_ms: 2.984132
+  type: 'test'
+  ...
+# Subtest: duplicate pending sends and verifications issue only one SDK request
+ok 57 - duplicate pending sends and verifications issue only one SDK request
+  ---
+  duration_ms: 4.063384
+  type: 'test'
+  ...
+# Subtest: resending observes the local cooldown and becomes available after sixty seconds
+ok 58 - resending observes the local cooldown and becomes available after sixty seconds
+  ---
+  duration_ms: 1.417872
+  type: 'test'
+  ...
+# Subtest: only the latest successfully sent phone can be verified
+ok 59 - only the latest successfully sent phone can be verified
+  ---
+  duration_ms: 1.054853
+  type: 'test'
+  ...
+# Subtest: a failed send to another destination preserves the previous successfully sent destination
+ok 60 - a failed send to another destination preserves the previous successfully sent destination
+  ---
+  duration_ms: 1.109019
+  type: 'test'
+  ...
+# Subtest: a delayed OTP cannot replace a newer login or resurrect a logged-out session
+ok 61 - a delayed OTP cannot replace a newer login or resurrect a logged-out session
+  ---
+  duration_ms: 1.149377
+  type: 'test'
+  ...
+# Subtest: a login during the final SDK ownership read cancels OTP installation
+ok 62 - a login during the final SDK ownership read cancels OTP installation
+  ---
+  duration_ms: 0.704834
+  type: 'test'
+  ...
+# Subtest: real SDK OTP verification cannot overwrite an account installed in shared storage
+ok 63 - real SDK OTP verification cannot overwrite an account installed in shared storage
+  ---
+  duration_ms: 4.125231
+  type: 'test'
+  ...
+# Subtest: a delayed send cannot authorize OTP after a later login and logout
+ok 64 - a delayed send cannot authorize OTP after a later login and logout
+  ---
+  duration_ms: 0.761715
+  type: 'test'
+  ...
+# Subtest: provider startup never replaces an existing authenticated account
+ok 65 - provider startup never replaces an existing authenticated account
+  ---
+  duration_ms: 0.601376
+  type: 'test'
+  ...
+# Subtest: profile completion sends only normalized self fields and invalidates the snapshot cache
+ok 66 - profile completion sends only normalized self fields and invalidates the snapshot cache
+  ---
+  duration_ms: 8.076625
+  type: 'test'
+  ...
+# Subtest: profile completion rejects absent sessions and invalid fields before writing
+ok 67 - profile completion rejects absent sessions and invalid fields before writing
+  ---
+  duration_ms: 1.28127
+  type: 'test'
+  ...
+# Subtest: profile completion rejects another returned profile without replacing the current cache
+ok 68 - profile completion rejects another returned profile without replacing the current cache
+  ---
+  duration_ms: 2.681557
+  type: 'test'
+  ...
+# Subtest: profile completion sanitizes server validation errors without replacing the current profile
+ok 69 - profile completion sanitizes server validation errors without replacing the current profile
+  ---
+  duration_ms: 2.28024
+  type: 'test'
+  ...
+# Subtest: profile completion checks actual SDK storage ownership before submitting account fields
+ok 70 - profile completion checks actual SDK storage ownership before submitting account fields
+  ---
+  duration_ms: 1.900388
+  type: 'test'
+  ...
+# Subtest: delayed profile completion cannot repopulate the next account profile
+ok 71 - delayed profile completion cannot repopulate the next account profile
+  ---
+  duration_ms: 2.059837
+  type: 'test'
+  ...
+# Subtest: email login and signup retain priority while Google uses one guarded provider action
+ok 72 - email login and signup retain priority while Google uses one guarded provider action
+  ---
+  duration_ms: 637.360253
+  type: 'test'
+  ...
+# Subtest: phone send normalizes Malaysia numbers, labels the OTP field and prevents cooldown bypass
+ok 73 - phone send normalizes Malaysia numbers, labels the OTP field and prevents cooldown bypass
+  ---
+  duration_ms: 239.4223
+  type: 'test'
+  ...
+# Subtest: OTP validation, provider failure, localization and navigation erase all entered codes
+ok 74 - OTP validation, provider failure, localization and navigation erase all entered codes
+  ---
+  duration_ms: 250.891528
+  type: 'test'
+  ...
+# Subtest: resend becomes available after sixty seconds and server rate limits remain authoritative
+ok 75 - resend becomes available after sixty seconds and server rate limits remain authoritative
+  ---
+  duration_ms: 207.06491
+  type: 'test'
+  ...
+# Subtest: first verified phone session completes a required profile with an explicit role and normalized username
+ok 76 - first verified phone session completes a required profile with an explicit role and normalized username
+  ---
+  duration_ms: 277.740415
+  type: 'test'
+  ...
+# Subtest: existing provider profile and role bypass onboarding and keep provider-aware security usable
+ok 77 - existing provider profile and role bypass onboarding and keep provider-aware security usable
+  ---
+  duration_ms: 114.289448
+  type: 'test'
+  ...
+# Subtest: a signed-in Google first login opens profile setup and maps missing migrations to safe feedback
+ok 78 - a signed-in Google first login opens profile setup and maps missing migrations to safe feedback
+  ---
+  duration_ms: 69.201849
+  type: 'test'
+  ...
+# Subtest: an external session switch invalidates late phone send and verification responses
+ok 79 - an external session switch invalidates late phone send and verification responses
+  ---
+  duration_ms: 213.939215
+  type: 'test'
+  ...
+# Subtest: a newer session for the same account prevents a late profile response from replacing its dashboard
+ok 80 - a newer session for the same account prevents a late profile response from replacing its dashboard
+  ---
+  duration_ms: 101.475412
+  type: 'test'
+  ...
+# Subtest: verified recovery and invalid callback UI keep precedence over provider choices and first profile setup
+ok 81 - verified recovery and invalid callback UI keep precedence over provider choices and first profile setup
+  ---
+  duration_ms: 52.500503
+  type: 'test'
+  ...
+# Subtest: username auth validates normalized handles, password, role and recovery shape
+ok 82 - username auth validates normalized handles, password, role and recovery shape
+  ---
+  duration_ms: 1.793718
+  type: 'test'
+  ...
+# Subtest: SHA256 recovery verification is deterministic and does not store the code
+ok 83 - SHA256 recovery verification is deterministic and does not store the code
+  ---
+  duration_ms: 13.917517
+  type: 'test'
+  ...
+# Subtest: public endpoint handles CORS, unsupported methods and missing configuration without privileged calls
+ok 84 - public endpoint handles CORS, unsupported methods and missing configuration without privileged calls
+  ---
+  duration_ms: 7.977142
+  type: 'test'
+  ...
+# Subtest: invalid login input is rejected before network/database access
+ok 85 - invalid login input is rejected before network/database access
+  ---
+  duration_ms: 4.600062
+  type: 'test'
+  ...
+# Subtest: a new username with a null identity response can request email confirmation
+ok 86 - a new username with a null identity response can request email confirmation
+  ---
+  duration_ms: 9.294498
+  type: 'test'
+  ...
+# Subtest: a stale cloud cache cannot synchronize account A practice through account B SDK storage
+ok 87 - a stale cloud cache cannot synchronize account A practice through account B SDK storage
+  ---
+  duration_ms: 37.533809
+  type: 'test'
+  ...
+# Subtest: the explicit progress actor prevents writes when the cloud cache has already changed accounts
+ok 88 - the explicit progress actor prevents writes when the cloud cache has already changed accounts
+  ---
+  duration_ms: 11.373107
+  type: 'test'
+  ...
+# Subtest: profile mutations reject a stale account cache before sending any classroom payload
+ok 89 - profile mutations reject a stale account cache before sending any classroom payload
+  ---
+  duration_ms: 9.090481
+  type: 'test'
+  ...
+# Subtest: an SDK account switch after validation cannot attach the new account JWT to an old payload
+ok 90 - an SDK account switch after validation cannot attach the new account JWT to an old payload
+  ---
+  duration_ms: 7.815501
+  type: 'test'
+  ...
+# Subtest: a legitimate token refresh keeps the same account session usable for module RPCs
+ok 91 - a legitimate token refresh keeps the same account session usable for module RPCs
+  ---
+  duration_ms: 8.777234
+  type: 'test'
+  ...
+# Subtest: the installed SDK can refresh a JWT within the same session without bypassing snapshot cache identity checks
+ok 92 - the installed SDK can refresh a JWT within the same session without bypassing snapshot cache identity checks
+  ---
+  duration_ms: 6.792016
+  type: 'test'
+  ...
+# Subtest: a recovery password update cannot operate through another account in shared SDK storage
+ok 93 - a recovery password update cannot operate through another account in shared SDK storage
+  ---
+  duration_ms: 5.924393
+  type: 'test'
+  ...
+# Subtest: recovery resets stay on the verified session when another SDK account appears after validation
+ok 94 - recovery resets stay on the verified session when another SDK account appears after validation
+  ---
+  duration_ms: 11.852173
+  type: 'test'
+  ...
+# Subtest: an old profile form cannot mutate the newly cached account before its UI callback arrives
+ok 95 - an old profile form cannot mutate the newly cached account before its UI callback arrives
+  ---
+  duration_ms: 966.764615
+  type: 'test'
+  ...
+# Subtest: reopening profile after SDK identity changes drops the previous account fields
+ok 96 - reopening profile after SDK identity changes drops the previous account fields
+  ---
+  duration_ms: 211.837304
+  type: 'test'
+  ...
+# Subtest: a delayed previous-account response cannot populate the new account cache
+ok 97 - a delayed previous-account response cannot populate the new account cache
+  ---
+  duration_ms: 5.873129
+  type: 'test'
+  ...
+# Subtest: a delayed old-room response cannot replace the room currently being viewed
+ok 98 - a delayed old-room response cannot replace the room currently being viewed
+  ---
+  duration_ms: 1.45833
+  type: 'test'
+  ...
+# Subtest: logout clears profile, room and session and ignores a late heartbeat
+ok 99 - logout clears profile, room and session and ignores a late heartbeat
+  ---
+  duration_ms: 1.873614
+  type: 'test'
+  ...
+# Subtest: classroom permission errors retain their code for access revocation
+ok 100 - classroom permission errors retain their code for access revocation
+  ---
+  duration_ms: 2.777764
+  type: 'test'
+  ...
+# Subtest: callback inspection never exposes tokens or authorizes recovery by URL alone
+ok 101 - callback inspection never exposes tokens or authorizes recovery by URL alone
+  ---
+  duration_ms: 5.556076
+  type: 'test'
+  ...
+# Subtest: only a validated recovery event opens reset; completing it revokes sessions
+ok 102 - only a validated recovery event opens reset; completing it revokes sessions
+  ---
+  duration_ms: 14.056763
+  type: 'test'
+  ...
+# Subtest: ordinary sign-in cannot submit the recovery form
+ok 103 - ordinary sign-in cannot submit the recovery form
+  ---
+  duration_ms: 2.654011
+  type: 'test'
+  ...
+# Subtest: a new session of the same account clears validated recovery authorization
+ok 104 - a new session of the same account clears validated recovery authorization
+  ---
+  duration_ms: 2.355523
+  type: 'test'
+  ...
+# Subtest: token refresh within the same verified recovery session preserves reset authorization
+ok 105 - token refresh within the same verified recovery session preserves reset authorization
+  ---
+  duration_ms: 1.940234
+  type: 'test'
+  ...
+# Subtest: recovery and confirmation email links always return to the canonical website
+ok 106 - recovery and confirmation email links always return to the canonical website
+  ---
+  duration_ms: 1.616191
+  type: 'test'
+  ...
+# Subtest: reloading the same recovery session keeps the reset form after server verification and clears intent on success
+ok 107 - reloading the same recovery session keeps the reset form after server verification and clears intent on success
+  ---
+  duration_ms: 5.339641
+  type: 'test'
+  ...
+# Subtest: a recovery intent cannot carry into a different server-verified session
+ok 108 - a recovery intent cannot carry into a different server-verified session
+  ---
+  duration_ms: 2.104438
+  type: 'test'
+  ...
+# Subtest: a delayed recovery verification cannot enable reset after an account switch
+ok 109 - a delayed recovery verification cannot enable reset after an account switch
+  ---
+  duration_ms: 2.50554
+  type: 'test'
+  ...
+# Subtest: offline transport uses its dedicated owner-bound RPC and surfaces missing installation
+ok 110 - offline transport uses its dedicated owner-bound RPC and surfaces missing installation
+  ---
+  duration_ms: 22.750503
+  type: 'test'
+  ...
+# Subtest: offline transport rejects a delayed response after an account or session switch
+ok 111 - offline transport rejects a delayed response after an account or session switch
+  ---
+  duration_ms: 0.919112
+  type: 'test'
+  ...
+# Subtest: PostgREST HTTP status and expired-JWT codes request sign-in instead of retrying
+ok 112 - PostgREST HTTP status and expired-JWT codes request sign-in instead of retrying
+  ---
+  duration_ms: 5.301975
+  type: 'test'
+  ...
+# Subtest: server failures remain transient even when their error code resembles a permanent rejection
+ok 113 - server failures remain transient even when their error code resembles a permanent rejection
+  ---
+  duration_ms: 5.341475
+  type: 'test'
+  ...
+# Subtest: session listeners retain the session argument and may also read the SDK Auth event
+ok 114 - session listeners retain the session argument and may also read the SDK Auth event
+  ---
+  duration_ms: 6.596995
+  type: 'test'
+  ...
+# Subtest: offline session recovery accepts only the requested owner from SDK storage
+ok 115 - offline session recovery accepts only the requested owner from SDK storage
+  ---
+  duration_ms: 1.581089
+  type: 'test'
+  ...
+# Subtest: a delayed SDK recovery cannot restore a session after explicit sign-out or an account switch
+ok 116 - a delayed SDK recovery cannot restore a session after explicit sign-out or an account switch
+  ---
+  duration_ms: 1.810957
+  type: 'test'
+  ...
+# Subtest: an offline SDK refresh failure remains transient instead of asking the owner to sign in again
+ok 117 - an offline SDK refresh failure remains transient instead of asking the owner to sign in again
+  ---
+  duration_ms: 0.966407
+  type: 'test'
+  ...
+# Subtest: retryable SDK refresh failures with the cached owner remain network errors before or after an RPC
+ok 118 - retryable SDK refresh failures with the cached owner remain network errors before or after an RPC
+  ---
+  duration_ms: 2.371505
+  type: 'test'
+  ...
+# Subtest: retryable SDK errors cannot disguise a changed account or session
+ok 119 - retryable SDK errors cannot disguise a changed account or session
+  ---
+  duration_ms: 2.772331
+  type: 'test'
+  ...
+# Subtest: module teaching events enter the durable queue through the real progress controller
+ok 120 - module teaching events enter the durable queue through the real progress controller
+  ---
+  duration_ms: 7.639901
+  type: 'test'
+  ...
+# Subtest: completed solo histories queue once across a repeated finished-result rendering
+ok 121 - completed solo histories queue once across a repeated finished-result rendering
+  ---
+  duration_ms: 4.514324
+  type: 'test'
+  ...
+# Subtest: remembered ownership requires matching persisted Auth, while explicit logout returns to guest
+ok 122 - remembered ownership requires matching persisted Auth, while explicit logout returns to guest
+  ---
+  duration_ms: 0.794841
+  type: 'test'
+  ...
+# Subtest: guest results remain local and a new account cannot send another account queue
+ok 123 - guest results remain local and a new account cannot send another account queue
+  ---
+  duration_ms: 5.153736
+  type: 'test'
+  ...
+# Subtest: a transient null INITIAL_SESSION retains the persisted offline owner and new work
+ok 124 - a transient null INITIAL_SESSION retains the persisted offline owner and new work
+  ---
+  duration_ms: 1.850821
+  type: 'test'
+  ...
+# Subtest: missing persisted Auth and explicit sign-out cannot resurrect remembered ownership
+ok 125 - missing persisted Auth and explicit sign-out cannot resurrect remembered ownership
+  ---
+  duration_ms: 0.443375
+  type: 'test'
+  ...
+# Subtest: account switches close the old module session and the rebuilt controller accepts the new owner edits
+ok 126 - account switches close the old module session and the rebuilt controller accepts the new owner edits
+  ---
+  duration_ms: 2.92767
+  type: 'test'
+  ...
+# Subtest: an online wake recovers the same SDK owner once even when Auth notifies during recovery
+ok 127 - an online wake recovers the same SDK owner once even when Auth notifies during recovery
+  ---
+  duration_ms: 16.762472
+  type: 'test'
+  ...
+# Subtest: a transient SDK recovery failure keeps the owner queue retrying until recovery succeeds
+ok 128 - a transient SDK recovery failure keeps the owner queue retrying until recovery succeeds
+  ---
+  duration_ms: 3.461396
+  type: 'test'
+  ...
+# Subtest: an expired SDK refresh keeps a matching cached owner pending with backoff until the network recovers
+ok 129 - an expired SDK refresh keeps a matching cached owner pending with backoff until the network recovers
+  ---
+  duration_ms: 6.58427
+  type: 'test'
+  ...
+# Subtest: a reopened online app automatically recovers persisted Auth through the real SDK and sends its owner queue
+ok 130 - a reopened online app automatically recovers persisted Auth through the real SDK and sends its owner queue
+  ---
+  duration_ms: 30.722333
+  type: 'test'
+  ...
+# Subtest: the existing module retry action can recover after offline RPC installation
+ok 131 - the existing module retry action can recover after offline RPC installation
+  ---
+  duration_ms: 2.283921
+  type: 'test'
+  ...
+# Subtest: security validates matching new passwords and current password without trimming secrets
+ok 132 - security validates matching new passwords and current password without trimming secrets
+  ---
+  duration_ms: 3.390456
+  type: 'test'
+  ...
+# Subtest: signup requires an email and normalizes username/email without changing the password
+ok 133 - signup requires an email and normalizes username/email without changing the password
+  ---
+  duration_ms: 0.617053
+  type: 'test'
+  ...
+# Subtest: signup and email link requests reject missing, malformed, and oversized email addresses
+ok 134 - signup and email link requests reject missing, malformed, and oversized email addresses
+  ---
+  duration_ms: 1.86236
+  type: 'test'
+  ...
+# Subtest: recovery and confirmation email requests do not require username, password, or a recovery code
+ok 135 - recovery and confirmation email requests do not require username, password, or a recovery code
+  ---
+  duration_ms: 1.310535
+  type: 'test'
+  ...
+# Subtest: login accepts either an email or a username and retains support for existing short passwords
+ok 136 - login accepts either an email or a username and retains support for existing short passwords
+  ---
+  duration_ms: 0.459523
+  type: 'test'
+  ...
+# Subtest: legacy code recovery and class invitations keep the username-only rule
+ok 137 - legacy code recovery and class invitations keep the username-only rule
+  ---
+  duration_ms: 0.667254
+  type: 'test'
+  ...
+# Subtest: a short signup password flags only the password after normalizing valid account fields
+ok 138 - a short signup password flags only the password after normalizing valid account fields
+  ---
+  duration_ms: 0.483035
+  type: 'test'
+  ...
+# Subtest: signup username normalization rejects invalid characters and lengths
+ok 139 - signup username normalization rejects invalid characters and lengths
+  ---
+  duration_ms: 0.550603
+  type: 'test'
+  ...
+# Subtest: reset accepts matching new passwords at both length boundaries without trimming
+ok 140 - reset accepts matching new passwords at both length boundaries without trimming
+  ---
+  duration_ms: 0.425827
+  type: 'test'
+  ...
+# Subtest: reset rejects mismatched or out-of-range confirmation and focuses the marked field
+ok 141 - reset rejects mismatched or out-of-range confirmation and focuses the marked field
+  ---
+  duration_ms: 1.545867
+  type: 'test'
+  ...
+# Subtest: actual auth rendering exposes email forms and derives reset exclusively from a verified recovery session
+ok 142 - actual auth rendering exposes email forms and derives reset exclusively from a verified recovery session
+  ---
+  duration_ms: 4.382441
+  type: 'test'
+  ...
+# Subtest: recovery and invalid callback screens take precedence over signed-in dashboards and legacy codes
+ok 143 - recovery and invalid callback screens take precedence over signed-in dashboards and legacy codes
+  ---
+  duration_ms: 1.947
+  type: 'test'
+  ...
+# Subtest: actual auth handler sends the email API payloads, surfaces provider errors, and guards unverified resets
+ok 144 - actual auth handler sends the email API payloads, surfaces provider errors, and guards unverified resets
+  ---
+  duration_ms: 10.66432
+  type: 'test'
+  ...
+# Subtest: profile saves only allowed fields and updates heading and selected avatar
+ok 145 - profile saves only allowed fields and updates heading and selected avatar
+  ---
+  duration_ms: 415.003706
+  type: 'test'
+  ...
+# Subtest: save failure preserves draft, reports error and allows retry
+ok 146 - save failure preserves draft, reports error and allows retry
+  ---
+  duration_ms: 120.39809
+  type: 'test'
+  ...
+# Subtest: save blocks duplicate submits and announces pending state
+ok 147 - save blocks duplicate submits and announces pending state
+  ---
+  duration_ms: 81.334548
+  type: 'test'
+  ...
+# Subtest: invalid input stays local and focuses the named field
+ok 148 - invalid input stays local and focuses the named field
+  ---
+  duration_ms: 44.638808
+  type: 'test'
+  ...
+# Subtest: guest profile explains account requirement and links to existing login
+ok 149 - guest profile explains account requirement and links to existing login
+  ---
+  duration_ms: 31.650545
+  type: 'test'
+  ...
+# Subtest: refresh retains drafts and read-only identity data; user text is escaped
+ok 150 - refresh retains drafts and read-only identity data; user text is escaped
+  ---
+  duration_ms: 85.067804
+  type: 'test'
+  ...
+# Subtest: late save cannot overwrite a newer account session
+ok 151 - late save cannot overwrite a newer account session
+  ---
+  duration_ms: 62.803135
+  type: 'test'
+  ...
+# Subtest: draft name and avatar preview update locally, escape markup and survive refresh
+ok 152 - draft name and avatar preview update locally, escape markup and survive refresh
+  ---
+  duration_ms: 54.360313
+  type: 'test'
+  ...
+# Subtest: unsaved navigation supports keep editing, Escape and discard without saving
+ok 153 - unsaved navigation supports keep editing, Escape and discard without saving
+  ---
+  duration_ms: 137.713868
+  type: 'test'
+  ...
+# Subtest: save and continue waits for success, keeps a failed draft and permits retry
+ok 154 - save and continue waits for success, keeps a failed draft and permits retry
+  ---
+  duration_ms: 109.950608
+  type: 'test'
+  ...
+# Subtest: pending save and continue is single-flight and cannot leave on account change
+ok 155 - pending save and continue is single-flight and cannot leave on account change
+  ---
+  duration_ms: 99.634386
+  type: 'test'
+  ...
+# Subtest: host navigation uses the same guard; preferences keep the draft without a second settings store
+ok 156 - host navigation uses the same guard; preferences keep the draft without a second settings store
+  ---
+  duration_ms: 43.56577
+  type: 'test'
+  ...
+# Subtest: class details use escaped server names and open the selected classroom
+ok 157 - class details use escaped server names and open the selected classroom
+  ---
+  duration_ms: 50.811089
+  type: 'test'
+  ...
+# Subtest: students without classes get a working join shortcut; teachers do not get student enrollment
+ok 158 - students without classes get a working join shortcut; teachers do not get student enrollment
+  ---
+  duration_ms: 74.053301
+  type: 'test'
+  ...
+# Subtest: English profile translates draft controls and retains actual class and teacher names
+ok 159 - English profile translates draft controls and retains actual class and teacher names
+  ---
+  duration_ms: 51.157528
+  type: 'test'
+  ...
+# Subtest: a missing profile save response cannot discard the draft or announce success
+ok 160 - a missing profile save response cannot discard the draft or announce success
+  ---
+  duration_ms: 51.057724
+  type: 'test'
+  ...
+# Subtest: profile rejects blank, overlong and control-character display names
+ok 161 - profile rejects blank, overlong and control-character display names
+  ---
+  duration_ms: 1.62607
+  type: 'test'
+  ...
+# Subtest: profile accepts Unicode names using character count and built-in avatars
+ok 162 - profile accepts Unicode names using character count and built-in avatars
+  ---
+  duration_ms: 0.651663
+  type: 'test'
+  ...
+# Subtest: confirmed A global logout cannot remove B installed during local cleanup
+ok 163 - confirmed A global logout cannot remove B installed during local cleanup
+  ---
+  duration_ms: 62.245786
+  type: 'test'
+  ...
+# Subtest: A cleanup rechecks the actual stored SDK session before signing out
+ok 164 - A cleanup rechecks the actual stored SDK session before signing out
+  ---
+  duration_ms: 35.519592
+  type: 'test'
+  ...
+# Subtest: password change reauthenticates the canonical account without switching the persistent session
+ok 165 - password change reauthenticates the canonical account without switching the persistent session
+  ---
+  duration_ms: 5.759814
+  type: 'test'
+  ...
+# Subtest: mismatched passwords fail before any provider request
+ok 166 - mismatched passwords fail before any provider request
+  ---
+  duration_ms: 1.462305
+  type: 'test'
+  ...
+# Subtest: wrong current password is a field error and cannot update the password
+ok 167 - wrong current password is a field error and cannot update the password
+  ---
+  duration_ms: 2.192052
+  type: 'test'
+  ...
+# Subtest: expired or missing sessions cannot run authenticated security actions
+ok 168 - expired or missing sessions cannot run authenticated security actions
+  ---
+  duration_ms: 0.559119
+  type: 'test'
+  ...
+# Subtest: network failure is sanitized and does not claim password success
+ok 169 - network failure is sanitized and does not claim password success
+  ---
+  duration_ms: 7.236499
+  type: 'test'
+  ...
+# Subtest: lost update responses describe an uncertain outcome and are not automatically retried
+ok 170 - lost update responses describe an uncertain outcome and are not automatically retried
+  ---
+  duration_ms: 0.809685
+  type: 'test'
+  ...
+# Subtest: a new session of the same account cancels the pending password change
+ok 171 - a new session of the same account cancels the pending password change
+  ---
+  duration_ms: 15.201394
+  type: 'test'
+  ...
+# Subtest: untrusted or switched reauthentication identity cannot be updated
+ok 172 - untrusted or switched reauthentication identity cannot be updated
+  ---
+  duration_ms: 0.571827
+  type: 'test'
+  ...
+# Subtest: global logout requires an actual successful global revocation response
+ok 173 - global logout requires an actual successful global revocation response
+  ---
+  duration_ms: 1.427268
+  type: 'test'
+  ...
+# Subtest: SDK-suppressed 401, 403, 404 and missing logout requests never claim global success
+ok 174 - SDK-suppressed 401, 403, 404 and missing logout requests never claim global success
+  ---
+  duration_ms: 13.565278
+  type: 'test'
+  ...
+# Subtest: duplicate actions and leaving while reauthentication is pending cannot submit an update
+ok 175 - duplicate actions and leaving while reauthentication is pending cannot submit an update
+  ---
+  duration_ms: 4.901868
+  type: 'test'
+  ...
+# Subtest: stale cached identity is rejected before reauthentication when another account occupies SDK storage
+ok 176 - stale cached identity is rejected before reauthentication when another account occupies SDK storage
+  ---
+  duration_ms: 0.609854
+  type: 'test'
+  ...
+# Subtest: signed-in security form has accessible labels, matching errors and secret cleanup on success
+ok 177 - signed-in security form has accessible labels, matching errors and secret cleanup on success
+  ---
+  duration_ms: 505.934646
+  type: 'test'
+  ...
+# Subtest: reauthentication, expiry and network failures show sanitized feedback on the actual page
+ok 178 - reauthentication, expiry and network failures show sanitized feedback on the actual page
+  ---
+  duration_ms: 281.475942
+  type: 'test'
+  ...
+# Subtest: pending security requests disable duplicate submissions and exiting erases detached sensitive inputs
+ok 179 - pending security requests disable duplicate submissions and exiting erases detached sensitive inputs
+  ---
+  duration_ms: 68.963761
+  type: 'test'
+  ...
+# Subtest: global logout requires confirmation; Escape cancels and restores focus, then confirmed logout shows login
+ok 180 - global logout requires confirmation; Escape cancels and restores focus, then confirmed logout shows login
+  ---
+  duration_ms: 100.266636
+  type: 'test'
+  ...
+# Subtest: reveal buttons have clear state labels, paste is allowed, and leaving for the dashboard clears secrets
+ok 181 - reveal buttons have clear state labels, paste is allowed, and leaving for the dashboard clears secrets
+  ---
+  duration_ms: 124.335152
+  type: 'test'
+  ...
+# Subtest: switching sessions clears the old form before a late reauthentication response can update
+ok 182 - switching sessions clears the old form before a late reauthentication response can update
+  ---
+  duration_ms: 79.568368
+  type: 'test'
+  ...
+# Subtest: signed-in security remains usable when the classroom snapshot cannot load
+ok 183 - signed-in security remains usable when the classroom snapshot cannot load
+  ---
+  duration_ms: 60.30122
+  type: 'test'
+  ...
+# Subtest: real pinned SDK changes a legacy account password on the newly verified token, then cleans its temporary session
+ok 184 - real pinned SDK changes a legacy account password on the newly verified token, then cleans its temporary session
+  ---
+  duration_ms: 24.424083
+  type: 'test'
+  ...
+# Subtest: real SDK swallowed invalid-token logout errors cannot become a successful global logout
+ok 185 - real SDK swallowed invalid-token logout errors cannot become a successful global logout
+  ---
+  duration_ms: 30.090491
+  type: 'test'
+  ...
+# Subtest: leaving after reauthentication still gives verifier cleanup an independent live request signal
+ok 186 - leaving after reauthentication still gives verifier cleanup an independent live request signal
+  ---
+  duration_ms: 4.119551
+  type: 'test'
+  ...
+# Subtest: denied browser Locks falls back without replaying a task that already began
+ok 187 - denied browser Locks falls back without replaying a task that already began
+  ---
+  duration_ms: 0.753236
+  type: 'test'
+  ...
+1..187
+# tests 187
+# suites 0
+# pass 187
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5229.538543

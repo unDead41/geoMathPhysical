@@ -1,0 +1,6 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> geodecoder-digital@2.9.0 prepare:pages
+> node tools/prepare-publication.mjs
+
+main-digitalized publication prepared: Digital v2.9.0, 7700470 bytes, SHA256 5c190183b9f18eb5c770094dd2f54e72dd538e134dafdf0bf5b1e48d4b97e8bb.
