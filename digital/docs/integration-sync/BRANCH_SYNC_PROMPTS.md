@@ -4,8 +4,8 @@ Tarikh audit: 4 November 2026. Repository sumber: `unDead41/geodecoder` (private
 
 **Rujukan integrasi sumber:**
 
-- Head `main-digitalized` yang disahkan: `main-digitalized remote terkini (rekodkan SHA penuh semasa fetch)`.
-- Keputusan penyelarasan branch: `Rujuk resit ref selepas operasi remote disahkan.`.
+- Commit sumber gabungan yang diuji: `b01a3250b571ae10d1dc412cc93755921f91798b`.
+- Keputusan penyelarasan branch: `26 branch fitur dan main-digitalized disahkan pada commit sumber tersebut; commit resit dokumentasi susulan boleh memajukan head.`.
 - Titik asas lapan calon yang diaudit: `391df985eea4fee15d9859e678068b1a3f613cba`.
 
 ## Keputusan penyelarasan semua branch fitur Digital
@@ -36,9 +36,9 @@ Sambung GeoMath dalam repository private unDead41/geodecoder pada BRANCH_KERJA.
 Tugas: selaraskan branch ini dengan main-digitalized remote terkini sambil
 mengekalkan semua fitur branch dan integrasi yang telah diterima, kemudian
 semak bahagian milik branch ini. Head integrasi rujukan ialah
-main-digitalized remote terkini (rekodkan SHA penuh semasa fetch); baca semula remote kerana head mungkin sudah bergerak.
+b01a3250b571ae10d1dc412cc93755921f91798b; baca semula remote kerana head mungkin sudah bergerak.
 Semua 26 branch fitur dijadualkan menerima asas gabungan yang sama; periksa
-resit Rujuk resit ref selepas operasi remote disahkan. dahulu. digitalized-release-legacy kekal beku dan
+resit 26 branch fitur dan main-digitalized disahkan pada commit sumber tersebut; commit resit dokumentasi susulan boleh memajukan head. dahulu. digitalized-release-legacy kekal beku dan
 bukan BRANCH_KERJA. Kekalkan nama digitalize/security-activeSession apabila
 itulah branch yang dipilih.
 

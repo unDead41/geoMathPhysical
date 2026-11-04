@@ -1,0 +1,330 @@
+{
+  "verifiedAt": "2026-11-04",
+  "repository": "unDead41/geodecoder",
+  "sourceIntegrationCommit": "b01a3250b571ae10d1dc412cc93755921f91798b",
+  "sourceTree": "ddcdc5d3f05475cb4c71074340fb11da4d5d3375",
+  "moduleSourceCommit": "18b1e3e56c8dfd703392f6f70f29daffbafbf204",
+  "method": "Normal fast-forward with expected old SHA and force=false",
+  "mainAndFeatureRefsVerified": [
+    {
+      "branch": "digitalize/security-activeSession",
+      "sha": "b01a3250b571ae10d1dc412cc93755921f91798b"
+    },
+    {
+      "branch": "digitalized-classroom-crud",
+      "sha": "b01a3250b571ae10d1dc412cc93755921f91798b"
+    },
+    {
+      "branch": "digitalized-core-backend",
+      "sha": "b01a3250b571ae10d1dc412cc93755921f91798b"
+    },
+    {
+      "branch": "digitalized-core-backend-scaling",
+      "sha": "b01a3250b571ae10d1dc412cc93755921f91798b"
+    },
+    {
+      "branch": "digitalized-core-portal",
+      "sha": "b01a3250b571ae10d1dc412cc93755921f91798b"
+    },
+    {
+      "branch": "digitalized-game-duel",
+      "sha": "b01a3250b571ae10d1dc412cc93755921f91798b"
+    },
+    {
+      "branch": "digitalized-game-duel-ui-refresh",
+      "sha": "b01a3250b571ae10d1dc412cc93755921f91798b"
+    },
+    {
+      "branch": "digitalized-game-language",
+      "sha": "b01a3250b571ae10d1dc412cc93755921f91798b"
+    },
+    {
+      "branch": "digitalized-module-content",
+      "sha": "b01a3250b571ae10d1dc412cc93755921f91798b"
+    },
+    {
+      "branch": "digitalized-module-design",
+      "sha": "b01a3250b571ae10d1dc412cc93755921f91798b"
+    },
+    {
+      "branch": "digitalized-module-explore-ui-refresh",
+      "sha": "b01a3250b571ae10d1dc412cc93755921f91798b"
+    },
+    {
+      "branch": "digitalized-module-guided",
+      "sha": "b01a3250b571ae10d1dc412cc93755921f91798b"
+    },
+    {
+      "branch": "digitalized-module-labs-ui-refresh",
+      "sha": "b01a3250b571ae10d1dc412cc93755921f91798b"
+    },
+    {
+      "branch": "digitalized-module-pelan-pengiraan",
+      "sha": "b01a3250b571ae10d1dc412cc93755921f91798b"
+    },
+    {
+      "branch": "digitalized-module-studio-ui-refresh",
+      "sha": "b01a3250b571ae10d1dc412cc93755921f91798b"
+    },
+    {
+      "branch": "digitalized-utility-auth-email",
+      "sha": "b01a3250b571ae10d1dc412cc93755921f91798b"
+    },
+    {
+      "branch": "digitalized-utility-help-support",
+      "sha": "b01a3250b571ae10d1dc412cc93755921f91798b"
+    },
+    {
+      "branch": "digitalized-utility-offline-sync",
+      "sha": "b01a3250b571ae10d1dc412cc93755921f91798b"
+    },
+    {
+      "branch": "digitalized-utility-preferences",
+      "sha": "b01a3250b571ae10d1dc412cc93755921f91798b"
+    },
+    {
+      "branch": "digitalized-utility-profile",
+      "sha": "b01a3250b571ae10d1dc412cc93755921f91798b"
+    },
+    {
+      "branch": "digitalized-utility-save-resume",
+      "sha": "b01a3250b571ae10d1dc412cc93755921f91798b"
+    },
+    {
+      "branch": "digitalized-utility-security",
+      "sha": "b01a3250b571ae10d1dc412cc93755921f91798b"
+    },
+    {
+      "branch": "digitalized-ux-design-system",
+      "sha": "b01a3250b571ae10d1dc412cc93755921f91798b"
+    },
+    {
+      "branch": "digitalized-ux-motion-audio",
+      "sha": "b01a3250b571ae10d1dc412cc93755921f91798b"
+    },
+    {
+      "branch": "digitalized-ux-ui-upgrade",
+      "sha": "b01a3250b571ae10d1dc412cc93755921f91798b"
+    },
+    {
+      "branch": "digitalized-ux-usability",
+      "sha": "b01a3250b571ae10d1dc412cc93755921f91798b"
+    },
+    {
+      "branch": "main-digitalized",
+      "sha": "b01a3250b571ae10d1dc412cc93755921f91798b"
+    }
+  ],
+  "operations": [
+    {
+      "branch": "digitalize/security-activeSession",
+      "before": "5a7a26cb13244ab6ec3088465db0956adcfab89c",
+      "after": "b01a3250b571ae10d1dc412cc93755921f91798b",
+      "success": true
+    },
+    {
+      "branch": "digitalized-classroom-crud",
+      "before": "1f0dedca55fd8d1291f5ea5c0b2fc74c059d4324",
+      "after": "b01a3250b571ae10d1dc412cc93755921f91798b",
+      "success": true
+    },
+    {
+      "branch": "digitalized-core-backend",
+      "before": "b3ae71c5ff8072dabeba1f19119a911a13195bf8",
+      "after": "b01a3250b571ae10d1dc412cc93755921f91798b",
+      "success": true
+    },
+    {
+      "branch": "digitalized-core-backend-scaling",
+      "before": "5904e4856c0fbab86224cd0a4f63ced77e707018",
+      "after": "b01a3250b571ae10d1dc412cc93755921f91798b",
+      "success": true
+    },
+    {
+      "branch": "digitalized-core-portal",
+      "before": "adc51627eaaace5d9543c7e033d2994986c8715d",
+      "after": "b01a3250b571ae10d1dc412cc93755921f91798b",
+      "success": true
+    },
+    {
+      "branch": "digitalized-game-duel",
+      "before": "594bf6c8fcb3e9c1323f331e4274bf2df346b6d9",
+      "after": "b01a3250b571ae10d1dc412cc93755921f91798b",
+      "success": true
+    },
+    {
+      "branch": "digitalized-game-duel-ui-refresh",
+      "before": "02f7614b0b28b7b867836bb2f83fbfc4437888cb",
+      "after": "b01a3250b571ae10d1dc412cc93755921f91798b",
+      "success": true
+    },
+    {
+      "branch": "digitalized-game-language",
+      "before": "b8f7360fc15cb7b23666b092ade8e1d2058878bb",
+      "after": "b01a3250b571ae10d1dc412cc93755921f91798b",
+      "success": true
+    },
+    {
+      "branch": "digitalized-module-content",
+      "before": "694c2c9623a76be1b885611e2c90575b734d0b00",
+      "after": "b01a3250b571ae10d1dc412cc93755921f91798b",
+      "success": true
+    },
+    {
+      "branch": "digitalized-module-design",
+      "before": "2a62091fe72f88c59b2f3ca393a29fc3f1b47263",
+      "after": "b01a3250b571ae10d1dc412cc93755921f91798b",
+      "success": true
+    },
+    {
+      "branch": "digitalized-module-explore-ui-refresh",
+      "before": "3ac761ce138c0286f144a74b16e25eed6906c1f7",
+      "after": "b01a3250b571ae10d1dc412cc93755921f91798b",
+      "success": true
+    },
+    {
+      "branch": "digitalized-module-guided",
+      "before": "4c3a165613fd310e5e7e889e793065d4818250b2",
+      "after": "b01a3250b571ae10d1dc412cc93755921f91798b",
+      "success": true
+    },
+    {
+      "branch": "digitalized-module-labs-ui-refresh",
+      "before": "dcb5ef6f6ae2a56d52ce0f7f99893d8050d043e2",
+      "after": "b01a3250b571ae10d1dc412cc93755921f91798b",
+      "success": true
+    },
+    {
+      "branch": "digitalized-module-pelan-pengiraan",
+      "before": "afe35b3bf87182403405f062c5bcbe2242866056",
+      "after": "b01a3250b571ae10d1dc412cc93755921f91798b",
+      "success": true
+    },
+    {
+      "branch": "digitalized-module-studio-ui-refresh",
+      "before": "0a1304652ff74b5e82aecdf416092fe57dda2131",
+      "after": "b01a3250b571ae10d1dc412cc93755921f91798b",
+      "success": true
+    },
+    {
+      "branch": "digitalized-utility-auth-email",
+      "before": "72473efaa5020d88fa339bf419c65805ba886deb",
+      "after": "b01a3250b571ae10d1dc412cc93755921f91798b",
+      "success": true
+    },
+    {
+      "branch": "digitalized-utility-help-support",
+      "before": "2b39f290f736f6cf324544c987bd2b30a22ab99f",
+      "after": "b01a3250b571ae10d1dc412cc93755921f91798b",
+      "success": true
+    },
+    {
+      "branch": "digitalized-utility-offline-sync",
+      "before": "b1125588ade0c18168f2fd0116d3e9084dfdd3ed",
+      "after": "b01a3250b571ae10d1dc412cc93755921f91798b",
+      "success": true
+    },
+    {
+      "branch": "digitalized-utility-preferences",
+      "before": "5c9699a1962103c1edcb906f383015c60dbad21c",
+      "after": "b01a3250b571ae10d1dc412cc93755921f91798b",
+      "success": true
+    },
+    {
+      "branch": "digitalized-utility-profile",
+      "before": "c08af6081af11913bc0815be44e5b42d03193290",
+      "after": "b01a3250b571ae10d1dc412cc93755921f91798b",
+      "success": true
+    },
+    {
+      "branch": "digitalized-utility-save-resume",
+      "before": "c5a88add985dd6a65912945ac18df7d4782bc0b2",
+      "after": "b01a3250b571ae10d1dc412cc93755921f91798b",
+      "success": true
+    },
+    {
+      "branch": "digitalized-utility-security",
+      "before": "80309ab7bdcddd6a96317f3088d0d8378d121a1f",
+      "after": "b01a3250b571ae10d1dc412cc93755921f91798b",
+      "success": true
+    },
+    {
+      "branch": "digitalized-ux-design-system",
+      "before": "eb42bb2ad1bbd2a362dfc04de387872017b913f5",
+      "after": "b01a3250b571ae10d1dc412cc93755921f91798b",
+      "success": true
+    },
+    {
+      "branch": "digitalized-ux-motion-audio",
+      "before": "cd451b98972d159217300fcb4824476c1d4cabef",
+      "after": "b01a3250b571ae10d1dc412cc93755921f91798b",
+      "success": true
+    },
+    {
+      "branch": "digitalized-ux-ui-upgrade",
+      "before": "fc50b3ed51c14774f3f75e8098df3988f4c6a07f",
+      "after": "b01a3250b571ae10d1dc412cc93755921f91798b",
+      "success": true
+    },
+    {
+      "branch": "digitalized-ux-usability",
+      "before": "51a0a0f852c1796e6e491c9abd91c2b776ecfffe",
+      "after": "b01a3250b571ae10d1dc412cc93755921f91798b",
+      "success": true
+    }
+  ],
+  "preservedRefsVerified": [
+    {
+      "branch": "codex/game-flow-rgb",
+      "sha": "e457b0536987d35042da4d47337fea65a0ad5d77"
+    },
+    {
+      "branch": "codex/question-audio-elevenlabs",
+      "sha": "09122e801b91041237b897c021229721a4bbcd6c"
+    },
+    {
+      "branch": "codex/question-bank-harmonised-lcd",
+      "sha": "d241ea5683c2af24d418af468cff3cdf394226ba"
+    },
+    {
+      "branch": "codex/serial-unassign",
+      "sha": "797a21f01ebcd47966aef5316aa813f2834e9347"
+    },
+    {
+      "branch": "digitalized-release-legacy",
+      "sha": "71db77c0206de664e50fa57ff57e1825af13f938"
+    },
+    {
+      "branch": "main",
+      "sha": "25836eb1a6f24459aace8a3980ae880a13e3b488"
+    },
+    {
+      "branch": "sharing",
+      "sha": "fa81fc0c1b88292b790978f86be90b22d14b01e1"
+    },
+    {
+      "branch": "testing/components",
+      "sha": "36d999a9016cf0389005cede7567b654c462b03d"
+    },
+    {
+      "branch": "ui/ux-redesign-concept",
+      "sha": "4d83561667cf74fbe5cd6144ce5e3e7f660a75cd"
+    }
+  ],
+  "publicMirrorUnchanged": [
+    {
+      "branch": "main",
+      "sha": "1856860cc4277f7ea9477b3ccbda52c0472d4d2a"
+    },
+    {
+      "branch": "main-digital",
+      "sha": "8cce135102618ffad2c1de46063fcb5042ba0907"
+    },
+    {
+      "branch": "main-digitalized",
+      "sha": "c27f3bde56079c2ab7f519a43f0008dce9f20c81"
+    }
+  ],
+  "hostedOperationsPerformed": [],
+  "notes": "This receipt records the tested source commit. A documentation-only receipt commit may advance these refs afterwards; it does not change tested application/module payloads."
+}
