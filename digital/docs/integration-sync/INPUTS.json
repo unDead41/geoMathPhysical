@@ -1,0 +1,218 @@
+{
+  "date": "2026-11-04",
+  "timezone": "Asia/Kuala_Lumpur",
+  "repository": "unDead41/geodecoder",
+  "integrationBranch": "main-digitalized",
+  "base": "391df985eea4fee15d9859e678068b1a3f613cba",
+  "sourceVersion": "2.9.0",
+  "moduleVersion": "1.6.1",
+  "moduleSourceCommit": "18b1e3e56c8dfd703392f6f70f29daffbafbf204",
+  "inputHeads": [
+    {
+      "name": "digitalized-classroom-crud",
+      "sha": "1f0dedca55fd8d1291f5ea5c0b2fc74c059d4324",
+      "mergeBase": "391df985eea4fee15d9859e678068b1a3f613cba"
+    },
+    {
+      "name": "digitalized-core-backend",
+      "sha": "b3ae71c5ff8072dabeba1f19119a911a13195bf8",
+      "mergeBase": "02fced51fb8b23442e57eda2890ad3882952b496"
+    },
+    {
+      "name": "digitalized-core-backend-scaling",
+      "sha": "5904e4856c0fbab86224cd0a4f63ced77e707018",
+      "mergeBase": "391df985eea4fee15d9859e678068b1a3f613cba"
+    },
+    {
+      "name": "digitalized-game-duel-ui-refresh",
+      "sha": "02f7614b0b28b7b867836bb2f83fbfc4437888cb",
+      "mergeBase": "391df985eea4fee15d9859e678068b1a3f613cba"
+    },
+    {
+      "name": "digitalized-module-explore-ui-refresh",
+      "sha": "3ac761ce138c0286f144a74b16e25eed6906c1f7",
+      "mergeBase": "391df985eea4fee15d9859e678068b1a3f613cba"
+    },
+    {
+      "name": "digitalized-module-labs-ui-refresh",
+      "sha": "dcb5ef6f6ae2a56d52ce0f7f99893d8050d043e2",
+      "mergeBase": "391df985eea4fee15d9859e678068b1a3f613cba"
+    },
+    {
+      "name": "digitalized-module-studio-ui-refresh",
+      "sha": "0a1304652ff74b5e82aecdf416092fe57dda2131",
+      "mergeBase": "391df985eea4fee15d9859e678068b1a3f613cba"
+    },
+    {
+      "name": "digitalized-utility-offline-sync",
+      "sha": "b1125588ade0c18168f2fd0116d3e9084dfdd3ed",
+      "mergeBase": "391df985eea4fee15d9859e678068b1a3f613cba"
+    },
+    {
+      "name": "digitalized-ux-ui-upgrade",
+      "sha": "fc50b3ed51c14774f3f75e8098df3988f4c6a07f",
+      "mergeBase": "391df985eea4fee15d9859e678068b1a3f613cba"
+    }
+  ],
+  "featureRefsBefore": [
+    {
+      "name": "digitalize/security-activeSession",
+      "sha": "5a7a26cb13244ab6ec3088465db0956adcfab89c"
+    },
+    {
+      "name": "digitalized-classroom-crud",
+      "sha": "1f0dedca55fd8d1291f5ea5c0b2fc74c059d4324"
+    },
+    {
+      "name": "digitalized-core-backend",
+      "sha": "b3ae71c5ff8072dabeba1f19119a911a13195bf8"
+    },
+    {
+      "name": "digitalized-core-backend-scaling",
+      "sha": "5904e4856c0fbab86224cd0a4f63ced77e707018"
+    },
+    {
+      "name": "digitalized-core-portal",
+      "sha": "adc51627eaaace5d9543c7e033d2994986c8715d"
+    },
+    {
+      "name": "digitalized-game-duel",
+      "sha": "594bf6c8fcb3e9c1323f331e4274bf2df346b6d9"
+    },
+    {
+      "name": "digitalized-game-duel-ui-refresh",
+      "sha": "02f7614b0b28b7b867836bb2f83fbfc4437888cb"
+    },
+    {
+      "name": "digitalized-game-language",
+      "sha": "b8f7360fc15cb7b23666b092ade8e1d2058878bb"
+    },
+    {
+      "name": "digitalized-module-content",
+      "sha": "694c2c9623a76be1b885611e2c90575b734d0b00"
+    },
+    {
+      "name": "digitalized-module-design",
+      "sha": "2a62091fe72f88c59b2f3ca393a29fc3f1b47263"
+    },
+    {
+      "name": "digitalized-module-explore-ui-refresh",
+      "sha": "3ac761ce138c0286f144a74b16e25eed6906c1f7"
+    },
+    {
+      "name": "digitalized-module-guided",
+      "sha": "4c3a165613fd310e5e7e889e793065d4818250b2"
+    },
+    {
+      "name": "digitalized-module-labs-ui-refresh",
+      "sha": "dcb5ef6f6ae2a56d52ce0f7f99893d8050d043e2"
+    },
+    {
+      "name": "digitalized-module-pelan-pengiraan",
+      "sha": "afe35b3bf87182403405f062c5bcbe2242866056"
+    },
+    {
+      "name": "digitalized-module-studio-ui-refresh",
+      "sha": "0a1304652ff74b5e82aecdf416092fe57dda2131"
+    },
+    {
+      "name": "digitalized-utility-auth-email",
+      "sha": "72473efaa5020d88fa339bf419c65805ba886deb"
+    },
+    {
+      "name": "digitalized-utility-help-support",
+      "sha": "2b39f290f736f6cf324544c987bd2b30a22ab99f"
+    },
+    {
+      "name": "digitalized-utility-offline-sync",
+      "sha": "b1125588ade0c18168f2fd0116d3e9084dfdd3ed"
+    },
+    {
+      "name": "digitalized-utility-preferences",
+      "sha": "5c9699a1962103c1edcb906f383015c60dbad21c"
+    },
+    {
+      "name": "digitalized-utility-profile",
+      "sha": "c08af6081af11913bc0815be44e5b42d03193290"
+    },
+    {
+      "name": "digitalized-utility-save-resume",
+      "sha": "c5a88add985dd6a65912945ac18df7d4782bc0b2"
+    },
+    {
+      "name": "digitalized-utility-security",
+      "sha": "80309ab7bdcddd6a96317f3088d0d8378d121a1f"
+    },
+    {
+      "name": "digitalized-ux-design-system",
+      "sha": "eb42bb2ad1bbd2a362dfc04de387872017b913f5"
+    },
+    {
+      "name": "digitalized-ux-motion-audio",
+      "sha": "cd451b98972d159217300fcb4824476c1d4cabef"
+    },
+    {
+      "name": "digitalized-ux-ui-upgrade",
+      "sha": "fc50b3ed51c14774f3f75e8098df3988f4c6a07f"
+    },
+    {
+      "name": "digitalized-ux-usability",
+      "sha": "51a0a0f852c1796e6e491c9abd91c2b776ecfffe"
+    }
+  ],
+  "preservedRefsBefore": [
+    {
+      "name": "codex/game-flow-rgb",
+      "sha": "e457b0536987d35042da4d47337fea65a0ad5d77"
+    },
+    {
+      "name": "codex/question-audio-elevenlabs",
+      "sha": "09122e801b91041237b897c021229721a4bbcd6c"
+    },
+    {
+      "name": "codex/question-bank-harmonised-lcd",
+      "sha": "d241ea5683c2af24d418af468cff3cdf394226ba"
+    },
+    {
+      "name": "codex/serial-unassign",
+      "sha": "797a21f01ebcd47966aef5316aa813f2834e9347"
+    },
+    {
+      "name": "digitalized-release-legacy",
+      "sha": "71db77c0206de664e50fa57ff57e1825af13f938"
+    },
+    {
+      "name": "main",
+      "sha": "25836eb1a6f24459aace8a3980ae880a13e3b488"
+    },
+    {
+      "name": "sharing",
+      "sha": "fa81fc0c1b88292b790978f86be90b22d14b01e1"
+    },
+    {
+      "name": "testing/components",
+      "sha": "36d999a9016cf0389005cede7567b654c462b03d"
+    },
+    {
+      "name": "ui/ux-redesign-concept",
+      "sha": "4d83561667cf74fbe5cd6144ce5e3e7f660a75cd"
+    }
+  ],
+  "publicMirrorRefsBefore": [
+    {
+      "name": "main",
+      "sha": "1856860cc4277f7ea9477b3ccbda52c0472d4d2a"
+    },
+    {
+      "name": "main-digital",
+      "sha": "8cce135102618ffad2c1de46063fcb5042ba0907"
+    },
+    {
+      "name": "main-digitalized",
+      "sha": "c27f3bde56079c2ab7f519a43f0008dce9f20c81"
+    }
+  ],
+  "syncMethod": "Expected-head checked ordinary fast-forward after integration; no ref update recorded in this input inventory.",
+  "hostedOperationsPerformed": [],
+  "publicPublicationPerformed": false
+}

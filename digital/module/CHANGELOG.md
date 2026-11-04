@@ -2,6 +2,16 @@
 
 Versi modul berasingan daripada permainan Digital dan firmware ESP32.
 
+## v1.6.1 — 4 November 2026 · integrasi UI tiga modul
+
+- Kemaskan shell GeoMath, pemilih 11 bongkah, model 3D dan enam pandangan 2D.
+- Nota dan kalkulator berkongsi ukuran, π dan controller yang sama; kalkulator
+  kini boleh dibuka terus daripada navigasi. Rumus dan renderer kekal.
+- Kekalkan tetapan induk, standalone/offline dan fungsi pembelajaran sedia ada.
+  Header aplikasi tidak berulang dalam iframe; Tetapan/Bantuan induk kekal.
+- CSS Modul 1 di-scope. Panel makmal/studio/rekod tidak diubah. Vendor pin dan
+  build gabungan parent diserahkan kepada integrator; tiada Pages diterbitkan.
+
 ## v1.6.0 — 26 Oktober 2026
 
 - Tambah Studio Pelan & Dongakan dengan model projek, latihan grid berskala,

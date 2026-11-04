@@ -1,0 +1,12 @@
+{
+  "before": {
+    "viewport": 900,
+    "inputTop": 1550.8125,
+    "inputBottom": 1611.203125,
+    "focused": true,
+    "visible": false
+  },
+  "cause": "goStep focused the answer with preventScroll:true",
+  "fix": "Default focus scrolling reveals the active answer",
+  "regression": "tools/studio-ui-refresh.browser.mjs: mobile stepper focus visibility assertion"
+}

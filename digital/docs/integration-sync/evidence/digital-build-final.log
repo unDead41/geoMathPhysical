@@ -1,0 +1,22 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> geodecoder-digital@2.9.0 build
+> node tools/standalone.mjs
+
+Generated portal CSS, offline module adapter and module CSS.
+GeoDecoder Digital: website 2117604 bytes; offline HTML 7674373 bytes including both complete music tracks and module v1.6.1.
+PASS: portal/module token adapters match one canonical source.
+Design reference: 210372 bytes, self-contained.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> geodecoder-digital@2.9.0 prepare:pages
+> node tools/prepare-publication.mjs
+
+main-digitalized publication prepared: Digital v2.9.0, 7674373 bytes, SHA256 207aeb396faaa863671487780a3273bc259a0dd6758ff17a0742726ec689a7bb.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> geodecoder-digital@2.9.0 check
+> node tools/check.mjs
+
+PASS: portal/module token adapters match one canonical source.
+PASS: standalone syntax/assets, 183 unique IDs, ARIA references, bank fidelity, 10 SVG diagrams, design-token drift and accessibility baselines.

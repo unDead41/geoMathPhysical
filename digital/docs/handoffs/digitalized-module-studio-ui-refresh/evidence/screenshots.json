@@ -1,0 +1,68 @@
+[
+  {
+    "file": "34-studio-390-en-dark-150.png",
+    "sha256": "aaabb1908a2894e414a66a6e7aaea42c47087aa1cb889b63f5156372fbd337f7",
+    "bytes": 490906,
+    "dimensions": [
+      348,
+      7046
+    ],
+    "kind": "actual built UI screenshot",
+    "records": "canonical model and example"
+  },
+  {
+    "file": "34-studio-desktop-en-light.png",
+    "sha256": "bccbfe81440677facb9a38c8ffeb7bd28a8e52d0a274a643411afa9d36797d53",
+    "bytes": 299416,
+    "dimensions": [
+      1296,
+      2664
+    ],
+    "kind": "actual built UI screenshot",
+    "records": "canonical model and example"
+  },
+  {
+    "file": "35-calculation-390-en-dark-150.png",
+    "sha256": "644de88dbe44ba8e23d0a4cd42ee1936f294cfb2f265c799ac8565ac6176d116",
+    "bytes": 180465,
+    "dimensions": [
+      348,
+      2905
+    ],
+    "kind": "actual built UI screenshot",
+    "records": "canonical model and example"
+  },
+  {
+    "file": "35-calculation-desktop-ms-light.png",
+    "sha256": "4bccb371c5bf07f16ce13d3a483d551c5c191b9d3f3fcf35845af00fb6945e89",
+    "bytes": 116620,
+    "dimensions": [
+      1296,
+      936
+    ],
+    "kind": "actual built UI screenshot",
+    "records": "canonical model and example"
+  },
+  {
+    "file": "36-records-390-en-dark-150-fixture.png",
+    "sha256": "ead6dd6525203020c306113fc5881ddf9321f281ae6da0dd79822167759a662c",
+    "bytes": 121502,
+    "dimensions": [
+      348,
+      1867
+    ],
+    "kind": "actual built UI screenshot",
+    "records": "synthetic local fixture"
+  },
+  {
+    "file": "36-records-desktop-en-light-fixture.png",
+    "sha256": "0bcc4c9a684a744fe7d0305b3fb46d93c02c3db4e03a547e4f79bada5162871c",
+    "bytes": 72881,
+    "dimensions": [
+      1296,
+      670
+    ],
+    "kind": "actual built UI screenshot",
+    "records": "synthetic local fixture"
+  }
+]

@@ -1,0 +1,68 @@
+{
+  "base": "391df985eea4fee15d9859e678068b1a3f613cba",
+  "branch": "digitalized-utility-offline-sync",
+  "date": "2026-11-04 Asia/Kuala_Lumpur",
+  "tests": {
+    "digital": 396,
+    "module": 328
+  },
+  "browser_scenarios": 7,
+  "commands": [
+    "cd digital && npm test",
+    "node --test digital/module/tests/*.test.mjs",
+    "cd digital && node tools/standalone.mjs",
+    "cd digital && node tools/prepare-publication.mjs",
+    "cd digital && node tools/check.mjs",
+    "cd digital && node tests/offline.browser.mjs"
+  ],
+  "source_sha256": {
+    "digital/backend/offline-sync.sql": "63480beadd07a15533a2b39e681bde69df30a034462120ce39de99b6582b157a",
+    "digital/dist/app.mjs": "9167bd350fcd6aa6cf453ea6238354e5f01d59429d529f9ef8818576bfd3f278",
+    "digital/dist/cloud.mjs": "5255d96f9b160ee8caa43a9e5c04926387f4a4ec669839245cfa03be050b0bc6",
+    "digital/dist/module-progress.mjs": "942a1206d0325d02509d9cb6ddbedb362faf08ff772a894b80a9e51f7c380e01",
+    "digital/dist/offline-db.mjs": "31feda8e89bd07840f90eb125067a2e4b1908989c8a8d63ba9c645f9a5e8a2ba",
+    "digital/dist/offline-package-client.mjs": "5d5d382321c748ef6b73c10e0c512bebc4d3d240d4c1f227271082cb1c814048",
+    "digital/dist/offline-records.mjs": "ca78d3932b1fb97fa7097d1371cefc2547a43aa015978f1082729f6bcce3db45",
+    "digital/dist/offline-runtime.mjs": "a7486d25674e2f936ea41ac7d6da5118034f7abaa11c727decc16d815ad667ab",
+    "digital/dist/offline-sync.mjs": "5c7f4d3558b2857f7685b3b8dd9bbb929a705525aca5811b83afe54a3d1f3335",
+    "digital/dist/offline-view.mjs": "107b1cc0a11ebdb1edb235a5c031267ad95f495328c66816c898fb1479a8235e",
+    "digital/pwa/icon.svg": "02e68e283b682bb76ad2fbcd3852e32bb3864db106d6221500e868ae9779552c",
+    "digital/pwa/sw.js": "a5186ad3f308fc59292df1b0659b21a27506b42122e4c72a5cb1e9eb9eed8e71",
+    "digital/tools/offline-package.mjs": "3ddfdea85e18f04b4ba014f7a1409fff39623093b4bea1704673a7094a0886ed",
+    "digital/tools/standalone.mjs": "b95f6238e7707db5574bdd767d5a8804111c819b313c6cd0585f715c076666d9"
+  },
+  "built_pwa": {
+    "assets/audio/map.mp3": {
+      "bytes": 2006517,
+      "sha256": "a86d0abe511f1ef5291c95b27b8aee42338d9dc5970af03d79fdef8e157aacb4"
+    },
+    "assets/audio/menu.mp3": {
+      "bytes": 2161058,
+      "sha256": "9843f7da5eb33dcde18e83401debf2d82e1355a07cea0df5e4a696b1e123b0b4"
+    },
+    "icons/icon.svg": {
+      "bytes": 345,
+      "sha256": "02e68e283b682bb76ad2fbcd3852e32bb3864db106d6221500e868ae9779552c"
+    },
+    "index.html": {
+      "bytes": 1384164,
+      "sha256": "25a5fd3fa14a2b80e58268d305d90414465e611af3baf166abb546aa9a88ad3b"
+    },
+    "manifest.webmanifest": {
+      "bytes": 346,
+      "sha256": "5717eb2b036e9ba0446b238057c17684829f6a47600d6973183bd94c90dc07c6"
+    },
+    "sw.js": {
+      "bytes": 2503,
+      "sha256": "872a6a2e23c23b1a0cdeec5c1fb485ae20f540f7d9cdd43ff79bd074e69f806c"
+    }
+  },
+  "limits": {
+    "hosted_auth_tested": false,
+    "hosted_migration_applied": false,
+    "pages_published": false,
+    "physical_device_tested": false,
+    "production_scale_tested": false,
+    "browser_signed_in_transport": "controlled fixture; native browser IndexedDB/cache and real PGlite SQL"
+  }
+}

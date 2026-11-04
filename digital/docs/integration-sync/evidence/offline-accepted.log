@@ -1,0 +1,7 @@
+PASS native IndexedDB survives page closure, isolates owners and acknowledges exact IDs
+PASS complete PWA caches both tracks and reloads the actual learning website offline
+PASS a partial resource failure never claims offline readiness
+PASS authorization requests and callback query URLs never enter the public cache
+PASS real app completion queues once offline; reconnect commits through controlled transport
+PASS switching accounts rebuilds the open module and removes the previous private draft
+PASS installing an update preserves the active game until explicit reload

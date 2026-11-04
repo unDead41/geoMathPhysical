@@ -21,12 +21,18 @@ test('a delayed old-room response cannot replace the room currently being viewed
   const {cloud,complete}=fixture();cloud.setRoom('room-a');
   const old=cloud.rpc('snapshot',{room_id:'room-a'});
   cloud.setRoom('room-b');cloud.room={id:'room-b'};
-  complete({profile:{id:'account-a'},room:{id:'room-a'}});await old;
-  assert.equal(cloud.room.id,'room-b');assert.equal(cloud.profile.id,'account-a');
+  complete({profile:{id:'account-a'},room:{id:'room-a'}});await assert.rejects(old,{code:'stale-response'});
+  assert.equal(cloud.room.id,'room-b');assert.equal(cloud.profile,null);
 });
 test('logout clears profile, room and session and ignores a late heartbeat',async()=>{
   const {cloud,complete}=fixture();cloud.profile={id:'account-a'};cloud.room={id:'room-a'};cloud.setRoom('room-a');
   const old=cloud.rpc('heartbeat',{room_id:'room-a'});await cloud.auth('logout');
   complete({profile:{id:'account-a'},room:{id:'room-a'}});await assert.rejects(old,error=>error.code==='session-changed');
   assert.equal(cloud.session,null);assert.equal(cloud.profile,null);assert.equal(cloud.room,null);assert.equal(cloud.roomId,null);
+});
+
+test('classroom permission errors retain their code for access revocation',async()=>{
+  const {cloud,complete}=fixture();const request=cloud.rpc('snapshot',{room_id:'revoked'});
+  complete({error:{code:'forbidden',message:'Bilik ini tidak boleh diakses.'}});
+  await assert.rejects(request,error=>error.code==='forbidden'&&error.message==='Bilik ini tidak boleh diakses.');
 });

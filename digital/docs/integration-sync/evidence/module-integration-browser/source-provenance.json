@@ -1,0 +1,85 @@
+{
+  "base": "391df985eea4fee15d9859e678068b1a3f613cba",
+  "canonicalSourceChecks": [
+    {
+      "path": "digital/module/src/geometry.mjs",
+      "unchangedFromBase": true,
+      "sha256": "07c832055b11b4c7968085e6121f6581b28edc349304a4881dcc8acf177387ba"
+    },
+    {
+      "path": "digital/module/src/lab-geometry.mjs",
+      "unchangedFromBase": true,
+      "sha256": "16d2c2736b236465866d8e94bc78e4d2d0460c0f7376760880047a3178ef1a98"
+    },
+    {
+      "path": "digital/module/src/learning-mesh.mjs",
+      "unchangedFromBase": true,
+      "sha256": "5dc74f31077e12d35852cbfb984ee2cf77244bfd0543298a66316371f9df2787"
+    },
+    {
+      "path": "digital/module/src/lessons.mjs",
+      "unchangedFromBase": true,
+      "sha256": "ef93b8ef46eb3ce6566b3bb95435d516c7dd7a574630bffb73cbf125a3bf71be"
+    },
+    {
+      "path": "digital/module/src/preset-nets.mjs",
+      "unchangedFromBase": true,
+      "sha256": "4c53cd7c9a991ed4fe89f20883dc6c008f31485d9bc92b05f673cbf84adcd5b7"
+    },
+    {
+      "path": "digital/module/src/volume-lab.mjs",
+      "unchangedFromBase": true,
+      "sha256": "4e2177fc9a295f3aedf04dd10c6fa06505a54194b307e663b0541dbb5f06549d"
+    },
+    {
+      "path": "digital/module/src/volume-transfer.mjs",
+      "unchangedFromBase": true,
+      "sha256": "231a4751e8abb0af6583e0c4686aaa1050a8b40b8a6b8f301f889177fb365f60"
+    },
+    {
+      "path": "digital/module/src/projection-geometry.mjs",
+      "unchangedFromBase": true,
+      "sha256": "ac348b0d72a73b190d58aa993f66d0d566bd9740a5c660389bec994ded224369"
+    },
+    {
+      "path": "digital/module/src/calculation-steps.mjs",
+      "unchangedFromBase": true,
+      "sha256": "bb816783f981a6289d3442f89af6c1f0d1b7237b9a3ace82f6e9f05448e4bce0"
+    },
+    {
+      "path": "digital/module/src/guided.mjs",
+      "unchangedFromBase": true,
+      "sha256": "8ea0b2b20d5343613a42f8af56dcca05ac8e2e0e9921b27c1491a11c160e0744"
+    },
+    {
+      "path": "digital/module/src/renderer.mjs",
+      "unchangedFromBase": true,
+      "sha256": "a38bc6ca1815efc0d3846bcd1dad37b6b572363dae839eb4335b8a6bb84033de"
+    },
+    {
+      "path": "digital/module/src/net-studio-geometry.mjs",
+      "unchangedFromBase": true,
+      "sha256": "95c6cc517712d29f441b90b770c641dfff6867f8926fdf5f0603273ea73cc619"
+    },
+    {
+      "path": "digital/module/src/net-studio.mjs",
+      "unchangedFromBase": true,
+      "sha256": "280299fa484ddbeda5df7a743dd3ed98da94da696e5f56ae26af92fd7e82a77f"
+    },
+    {
+      "path": "digital/module/src/net-print.mjs",
+      "unchangedFromBase": true,
+      "sha256": "558d61f8ab691b7aff0625a965848ae9b9bd47ffc147a79760744557ca419d60"
+    },
+    {
+      "path": "digital/module/src/surface-workshop.mjs",
+      "unchangedFromBase": true,
+      "sha256": "ca53b894f9201966b41310d256b2f47d10991006c665df235455aa8690c6b7a4"
+    }
+  ],
+  "standalone": {
+    "path": "digital/module/GeoDecoder_Modul_V1.html",
+    "bytes": 541207,
+    "sha256": "d100442db0fb39d6c21068fdcbc653c19b2ad0a4bcb98eb045dc0172082dc15e"
+  }
+}

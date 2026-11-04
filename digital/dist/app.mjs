@@ -1,14 +1,16 @@
 import {SoloStore,restoreSnapshot} from './solo-save.mjs';
+import {createOfflineRuntime} from './offline-runtime.mjs';
 import {reviewQuestionIds} from './usability.mjs';
 import {createPreferences,PREFERENCES_KEY,textSize} from './preferences.mjs';
 import {ModuleProgress} from './module-progress.mjs';
 import {createUsabilityUI} from './usability-ui.mjs';
+import {createEntryUI} from './entry-ui.mjs';
 import {createHelpSupport} from './help-support.mjs';
 import {ClassroomCloud} from './cloud.mjs';
 import {createPortal} from './portal.mjs';
 import {initTheme,setTheme} from './theme.mjs';
 import {createMusic} from './music.mjs';
-import moduleHtml from '../vendor/module-v1.6.0.html';
+import moduleHtml from '../vendor/module-v1.6.1.html';
 import {createModuleBridge} from './module-settings.mjs';
 
 import {createI18n, translate, localizeQuestion, shapeName} from './i18n.mjs';
@@ -27,7 +29,8 @@ let storage;
 try { storage = window.localStorage; } catch { storage = {getItem(){throw new Error('Storage unavailable');},setItem(){throw new Error('Storage unavailable');},removeItem(){throw new Error('Storage unavailable');}}; }
 const store = new ScoreStore(storage);
 const preferenceStore=createPreferences(storage);let preferences=preferenceStore.value;
-let usabilityUI=null,moduleBridge=null,helpSupport=null;
+let usabilityUI=null,moduleBridge=null,helpSupport=null,entryUI=null;
+let guideBeginAfter=false,guideReturn='welcome',pendingEntryRoute=null,applyingEntryHash=false;
 const locale = createI18n(storage);
 const t = (key,params) => translate(locale.language,key,params);
 const music=createMusic({storage,persistEnabled:false,onChange:renderMusicButton});
@@ -50,10 +53,12 @@ let drag = null, suppressClickUntil = 0, hiddenPause = false, sound = preference
 let scoresExpanded = false, lastClock = '', lastLed = {}, visualPlan = null, motionPaused = false;
 let roomState=null,roomReceivedAt=0,roomPending=null,roomSending=false,roomPolling=null,roomEpoch=0,roomInFlight=null;
 const cloud=new ClassroomCloud();
+const offline=createOfflineRuntime({cloud,storage});
 const soloStore=new SoloStore(storage,QUESTIONS);
-let soloActor=cloud.session?.user?.id||'guest',soloNotice='',soloNewAction=null;
-let moduleLaunchEpoch=0,moduleReturnToPortal=false;
-const moduleProgress=new ModuleProgress({storage,cloud,onChange:renderModuleSaveStatus});
+let soloActor=offline.actor,soloNotice='',soloNewAction=null;
+let moduleLaunchEpoch=0,moduleReturnToPortal=false,moduleFrameActor=null;
+const moduleProgress=new ModuleProgress({storage,cloud,onChange:renderModuleSaveStatus,syncAdapter:controller=>offline.syncModule(controller),onRecord:(actor,record)=>offline.recordModule(actor,record)});
+offline.attachModule(moduleProgress);
 const portal=createPortal({cloud,onPlay:openRoomGame,onModule:()=>void openLearningModule(true),onPreferences:()=>usabilityUI.openSettings(),onExit:returnHome,onError:()=>{}});
 const dialog = $('app-dialog');
 let refreshingLanguage=false, lastStatus=null, validationErrors=null, scoreNotice='', automaticPause=false;
@@ -105,15 +110,22 @@ function showScreen(next) {
   $('result-screen').hidden = next !== 'result';
   $('duel-screen').hidden = next !== 'duel';
   $('guest-screen').hidden=next!=='guest';
+  $('resume-screen').hidden=next!=='resume';
+  $('guide-screen').hidden=next!=='guide';
   $('portal-screen').hidden=next!=='portal';
   $('module-screen').hidden=next!=='module';
-  if(next!=='module'){moduleLaunchEpoch++;moduleProgress.close();moduleBridge?.clear();}
+  if(next!=='module'){moduleLaunchEpoch++;moduleFrameActor=null;moduleProgress.close();moduleBridge?.clear();}
   void music.setScene(next==='duel'?'game':next);
   updateTitle(next);
   updateSoloEntry();
+  entryUI?.sync(next);
+  syncEntryLocation(next);
   window.scrollTo({top:0,behavior:'instant'});
 }
 function updateTitle(next=screen) {
+  const duelView=next==='duel'||['game','result'].includes(next)&&game?.mode==='duel';
+  if(duelView){document.title=t(next==='game'?'duel.ui.playTitle':next==='result'?'duel.ui.resultPageTitle':'duel.pageTitle');return;}
+  if(['welcome','guest','resume','guide'].includes(next)){document.title='GeoMath — '+t(next==='welcome'?'entry.home':next==='guest'?'entry.chooseTitle':next==='resume'?'entry.resume':'entry.guide');return;}
   if(['guest','portal','module'].includes(next)){document.title=t('platform.title.'+next);return;}
   if(next==='duel'){document.title=t('duel.pageTitle');return;}
   document.title = next === 'welcome' ? t("GeoDecoder Digital — Jom main geometri") : next === 'game' ? t("GeoDecoder Digital — Sedang bermain") : t("GeoDecoder Digital — Keputusan pusingan");
@@ -127,31 +139,41 @@ function updateModeChoice(){
   const duel=$('play-mode').value==='duel';
   $('entry-question-count').textContent=selectedTotal();
   $('mode-description').textContent=t(duel?'duel.modeNote':practice?'mode.practiceNote':'mode.quizNote');
-  $('start-label').textContent=t(duel?'duel.open':practice?'mode.startPractice':'Mulakan permainan');
+  $('start-label').textContent=t(duel?'entry.duelStart':'entry.start');
+  entryUI?.syncMode();
   $('privacy-note-text').textContent=t(duel?'duel.privacy':'Nama dan skor disimpan dalam pelayar ini sahaja. Anda boleh gunakan nama panggilan.');
 }
 $('play-mode').addEventListener('change',updateModeChoice);
 
 function duelErrorKey(){const key='duel.error.'+duelClient.error;return t(key)?key:'duel.error';}
 function duelMarkup(id,html){if($(id).innerHTML!==html)$(id).innerHTML=html;}
-function duelPlayersMarkup(snapshot,final=false){
+function duelPlayersMarkup(snapshot,variant='live'){
   return [snapshot.me,snapshot.opponent].map((p,index)=>{
-    if(!p)return `<div class="duel-player waiting"><strong>${t('duel.friend')}</strong><p>${t('duel.waitFriend')}</p></div>`;
+    if(!p)return `<div class="duel-player waiting"><div class="duel-player-top"><span class="duel-avatar" aria-hidden="true">${icon('user')}</span><div><small>${t('duel.friend')}</small><strong>${t('duel.ui.openSlot')}</strong></div></div><p>${t('duel.waitFriend')}</p></div>`;
     const progress=Math.max(0,Math.min(10,p.answered||0));
     const away=index===1&&!p.finishedAt&&duelClient.clock()-p.lastSeenAt>15000;
-    const status=p.forfeited?t('duel.forfeited'):p.finishedAt?t('duel.finished'):away?t('duel.awayEstimated'):snapshot.room.status==='waiting'?(p.ready?t('duel.isReady'):t('duel.notReady')):t('duel.progress',{answered:progress});
-    return `<div class="duel-player ${index===0?'self':''}"><small>${t(index===0?'duel.you':'duel.friend')}</small><strong>${escapeHtml(p.name)}</strong><div><b>${p.score} / 10</b><span>${status}</span></div>${final&&p.finishedAt?`<p>${formatDuelTime(p.elapsed)}</p>`:''}<div class="duel-track" aria-hidden="true"><span style="width:${progress*10}%"></span></div></div>`;
+    const state=p.forfeited?'forfeit':p.finishedAt?'finished':(index===0&&!duelClient.connected||away)?'away':['waiting','countdown'].includes(snapshot.room.status)?(p.ready?'ready':'waiting'):'playing';
+    const status=p.forfeited?t('duel.forfeited'):p.finishedAt?t('duel.finished'):index===0&&!duelClient.connected?t('duel.ui.disconnected'):away?t('duel.awayEstimated'):['waiting','countdown'].includes(snapshot.room.status)?(p.ready?t('duel.isReady'):t('duel.notReady')):t('duel.progress',{answered:progress});
+    const winner=snapshot.room.status==='complete'&&snapshot.room.winnerId===p.id;
+    return `<div class="duel-player ${index===0?'self':''} ${winner?'winner':''}" data-state="${state}"><div class="duel-player-top"><span class="duel-avatar" aria-hidden="true">${escapeHtml(Array.from(p.name)[0]?.toLocaleUpperCase(locale.language)||'?')}</span><div><small>${t(index===0?'duel.you':'duel.friend')}</small><strong>${escapeHtml(p.name)}</strong></div>${winner?`<span class="duel-winner-label">${icon('check')}${t('duel.ui.winner')}</span>`:''}</div><div class="duel-player-metrics">${variant!=='lobby'?`<b>${p.score}<span> / 10</span></b>`:''}<span class="duel-player-status">${['ready','finished'].includes(state)?icon('check'):''}${status}</span></div>${variant==='result'&&p.finishedAt?`<p class="duel-player-time">${icon('clock')}<span>${t('Masa')}: ${formatDuelTime(p.elapsed)}</span></p>`:''}${variant!=='lobby'?`<div class="duel-track" aria-hidden="true"><span style="width:${progress*10}%"></span></div>`:''}</div>`;
   }).join('');
 }
 function renderDuelViews(){
   const s=duelClient.snapshot,closed=s&&['complete','cancelled','expired'].includes(s.room.status);
+  $('game-screen').dataset.mode=game?.mode||'';
+  $('result-screen').dataset.mode=lastResult?.mode||'';
+  const titleKey=!s?'duel.title':closed?'duel.ui.closedTitle':s.room.status==='waiting'&&!s.opponent?'duel.ui.waitingTitle':s.room.status==='countdown'?'duel.ui.countdownTitle':'duel.ui.lobbyTitle';
+  $('duel-title').dataset.i18n=titleKey;$('duel-title').textContent=t(titleKey);
+  $('duel-screen').dataset.phase=s?.room.status||'entry';
+  $('duel-steps').querySelectorAll('li').forEach((step,index)=>{const current=!s?0:!s.opponent?1:2;if(index===current)step.setAttribute('aria-current','step');else step.removeAttribute('aria-current');});
   $('duel-resume-banner').hidden=!duelClient.hasSession;
   if(lastResult)renderReviewAction();
   $('duel-entry').hidden=!!s;
   $('duel-room').hidden=!s;
   $('duel-create').disabled=duelBusy||duelClient.pending;
   $('duel-join').disabled=duelBusy||duelClient.pending;
-  $('duel-pin').disabled=duelBusy;
+  for(const id of ['duel-create','duel-join','duel-ready','duel-retry','duel-live-retry','duel-result-retry'])$(id).setAttribute('aria-busy',String(duelBusy));
+  $('duel-pin').disabled=duelBusy||duelClient.pending;
   $('duel-ready').disabled=duelBusy||!duelClient.connected||duelClient.pending||!s||s.room.status!=='waiting'||s.me.ready;
   $('duel-ready').textContent=t(s?.me.ready?'duel.isReady':'duel.ready');
   const reconnect=duelClient.hasSession&&(!duelClient.connected||duelClient.pending);
@@ -160,6 +182,7 @@ function renderDuelViews(){
   const connection=duelBusy?t('duel.connecting'):duelClient.connected?t('duel.connected'):['invalid_token','room_expired'].includes(duelClient.error)?t('duel.closed'):duelClient.session?.roomId?t('duel.offline'):'';
   $('duel-connection').textContent=connection;$('duel-live-connection').textContent=connection;
   $('duel-message').textContent=duelClient.error?t(duelErrorKey()):duelNoticeKey?t(duelNoticeKey):'';
+  $('duel-message').dataset.tone=duelClient.error?'error':'info';
   $('duel-live-message').textContent=duelClient.error?t(duelErrorKey()):'';
   const leaveError=$('dialog-content').querySelector('.duel-leave-error');if(leaveError)leaveError.textContent=duelClient.error?t(duelErrorKey()):'';
   $('duel-live').hidden=game?.mode!=='duel';
@@ -167,10 +190,14 @@ function renderDuelViews(){
   if(s){
     $('duel-room-code').value=s.room.code;
     $('duel-live-code').textContent='PIN '+s.room.code;
-    duelMarkup('duel-lobby-players',duelPlayersMarkup(s));duelMarkup('duel-live-players',duelPlayersMarkup(s));
+    duelMarkup('duel-lobby-players',duelPlayersMarkup(s,'lobby'));duelMarkup('duel-live-players',duelPlayersMarkup(s));
+    $('duel-live-progress').textContent=t('duel.ui.questionProgress',{number:Math.min(10,s.me.answered+(s.me.reviewPending?0:1))});
     $('duel-live-note').textContent=s.opponent&&!s.opponent.finishedAt&&duelClient.clock()-s.opponent.lastSeenAt>15000?t('duel.presenceAway'):t('duel.clockNote');
     const reason={score:'duel.byScore',time:'duel.byTime',forfeit:'duel.byForfeit',deadline:'duel.byDeadline'}[s.room.reason];
-    duelMarkup('duel-result-content',`<span class="eyebrow">GEODECODER DUEL</span><h2>${t(duelVerdict(s))}</h2>${reason?`<p>${t(reason)}</p>`:''}<div class="duel-players">${duelPlayersMarkup(s,true)}</div><p>${t('duel.resultScope')}</p>`);
+    const verdict=duelVerdict(s);
+    $('duel-result').dataset.verdict=verdict;
+    if(lastResult?.mode==='duel')$('result-title').textContent=t(s.room.status==='complete'?'duel.ui.resultTitle':'duel.finished');
+    duelMarkup('duel-result-content',`<div class="duel-result-heading"><span class="eyebrow">GEOMATH DUEL</span><h2>${t(verdict)}</h2>${reason?`<p>${t(reason)}</p>`:''}</div><div class="duel-result-board"><div class="duel-players">${duelPlayersMarkup(s,'result')}</div><div class="duel-result-emblem" aria-hidden="true">${icon(s.room.status!=='complete'?'clock':s.room.winnerId?'trophy':'check')}</div></div><p class="duel-result-scope">${t('duel.resultScope')}</p>`);
     if(closed&&s.room.status!=='complete')$('duel-countdown').textContent=t('duel.closed');
     else if(s.room.status==='waiting')$('duel-countdown').textContent=t(s.opponent?'duel.waitReady':'duel.waitFriend');
   }
@@ -263,8 +290,9 @@ $('duel-join-form').addEventListener('submit',async event=>{
   event.preventDefault();
   if(!/^[0-9]{6}$/.test($('duel-pin').value)){duelClient.error='invalid_request';$('duel-pin').setAttribute('aria-invalid','true');renderDuelViews();$('duel-pin').focus();return;}
   if(await duelTask(()=>duelClient.join(player.name,$('duel-pin').value)))duelClient.startPolling();
+  else if(['invalid_request','room_unavailable','room_full','room_expired'].includes(duelClient.error)){$('duel-pin').setAttribute('aria-invalid','true');$('duel-pin').focus();}
 });
-$('duel-pin').addEventListener('input',()=>{$('duel-pin').value=$('duel-pin').value.replace(/[^0-9]/g,'').slice(0,6);$('duel-pin').removeAttribute('aria-invalid');if(duelClient.error==='invalid_request'){duelClient.error='';renderDuelViews();}});
+$('duel-pin').addEventListener('input',()=>{$('duel-pin').value=$('duel-pin').value.replace(/[^0-9]/g,'').slice(0,6);$('duel-pin').removeAttribute('aria-invalid');if(!duelClient.session?.roomId&&['invalid_request','room_unavailable','room_full','room_expired'].includes(duelClient.error)){duelClient.error='';renderDuelViews();}});
 $('duel-ready').addEventListener('click',()=>duelTask(()=>duelClient.act('ready')));
 $('duel-copy').addEventListener('click',async()=>{
   try{await navigator.clipboard.writeText($('duel-room-code').value);duelNoticeKey='duel.copied';}
@@ -297,7 +325,7 @@ $('player-form').addEventListener('submit', event => {
   }
   player = result.player;
   playMode=$('play-mode').value;
-  if(!preferences.tutorialSeen)usabilityUI.openTutorial({start:true});else beginSelectedMode();
+  if(!preferences.tutorialSeen)openEntryGuide({start:true});else beginSelectedMode();
 });
 for (const [id,key] of [['player-name','name']]) {
   $(id).addEventListener('input', () => { $(id).removeAttribute('aria-invalid'); $(key+'-error').textContent = '';if(validationErrors)delete validationErrors[key]; });
@@ -554,6 +582,8 @@ document.addEventListener('click', event => {
   if (action==='home') requestHome();
 });
 $('brand-home').addEventListener('click',event=>{event.preventDefault();requestHome();});
+// #main is also the entry Play route; skipping navigation only moves focus.
+document.querySelector('.skip-link').addEventListener('click',event=>{event.preventDefault();$('main').focus({preventScroll:true});$('main').scrollIntoView({block:'start',behavior:'instant'});});
 $('hint-button').addEventListener('click',async()=>{
   if(roomState&&!game.hintUsed){roomCommand('hint',{},()=>{game.hintOpen=true;setStatus('Petunjuk dibuka. Baca petunjuk dan teruskan memilih.','hint','bulb');renderState();});return;}
   if(game?.mode==='duel'){
@@ -598,7 +628,7 @@ function renderModuleSaveStatus(state){
 async function openLearningModule(fromPortal=false){
   if(portal.requestLeave(()=>void openLearningModule(fromPortal)))return;
   moduleReturnToPortal=fromPortal;const request=++moduleLaunchEpoch;
-  showScreen('module');moduleProgress.close();moduleBridge.clear();
+  showScreen('module');moduleFrameActor=null;moduleProgress.close();moduleBridge.clear();
   $('module-back-button').innerHTML=icon('home')+t(fromPortal?'platform.backClass':'ease.backHome');
   $('module-sync-status').textContent=t('module.opening');$('module-sync-retry').hidden=true;
   $('module-title').focus({preventScroll:true});
@@ -609,8 +639,8 @@ async function openLearningModule(fromPortal=false){
     if(cloud.session?.user?.id&&!cloud.profile)await cloud.rpc('snapshot').catch(()=>{});
   }catch{/* Local learning remains available if the account service is unavailable. */}
   if(request!==moduleLaunchEpoch||screen!=='module')return;
-  moduleProgress.setAccount(cloud.session?.user?.id?{id:cloud.session.user.id,role:cloud.profile?.role}:null);
-  moduleBridge.open(moduleHtml);moduleProgress.open($('module-frame').contentWindow);
+  offline.updateAccount(cloud.session,{remember:false});moduleProgress.setAccount(offline.account);
+  moduleFrameActor=offline.actor;moduleBridge.open(moduleHtml);moduleProgress.open($('module-frame').contentWindow);
   moduleProgress.setTheme(document.documentElement.dataset.theme);renderModuleSaveStatus(moduleProgress.state);
   void moduleProgress.sync();
 }
@@ -620,9 +650,9 @@ $('module-sync-retry').addEventListener('click',()=>void moduleProgress.sync());
 window.addEventListener('message',event=>moduleProgress.handleMessage(event));
 document.addEventListener('geodecoder:theme',event=>moduleProgress.setTheme(event.detail?.theme));
 cloud.onSessionChange(()=>{
-  const actor=cloud.session?.user?.id||'guest';
+  const actor=offline.actor;
   if(actor!==soloActor){saveSolo();soloActor=actor;soloNewAction=null;if(game&&!roomState&&game.mode!=='duel'){game=null;lastResult=null;returnHome();}if(['solo','solo-new'].includes(dialogMode))closeDialog();updateSoloEntry();}
-  if(actor!==moduleProgress.state.actor){moduleProgress.setAccount(cloud.session?.user?.id?{id:actor,role:cloud.profile?.role}:null);if(screen==='module'&&$('module-frame').hasAttribute('srcdoc'))void openLearningModule(moduleReturnToPortal);}
+  if(screen==='module'&&$('module-frame').hasAttribute('srcdoc')&&(actor!==moduleFrameActor||!moduleProgress.active))void openLearningModule(moduleReturnToPortal);
 });
 $('online-retry').addEventListener('click',()=>{if(roomPending)sendRoomPending();});
 $('online-room-back').addEventListener('click',()=>openAccounts(roomState?.roomId));
@@ -631,15 +661,56 @@ function stopRoomPolling(){if(roomPolling)clearInterval(roomPolling);roomPolling
 function resetRoomRequests(){roomEpoch++;roomPending=null;roomSending=false;roomInFlight=null;stopRoomPolling();}
 function returnHome(){
   if(portal.requestLeave(returnHome))return;
+  const nextEntryRoute=pendingEntryRoute;pendingEntryRoute=null;
   saveSolo();
   cancelDrag();resetRoomRequests();game=null;roomState=null;selected=null;acceptedSolid=null;acceptedNet=null;cloud.setRoom(null);
   dialogTrigger=null;if(dialog.open)closeDialog();
   showScreen('welcome');$('guest-button').focus({preventScroll:true});
+  if(nextEntryRoute&&nextEntryRoute!=='home')navigateEntry(nextEntryRoute);
 }
 function openGuest(){
   if(portal.requestLeave(openGuest))return;
   cancelDrag();resetRoomRequests();game=null;roomState=null;selected=null;cloud.setRoom(null);
   showScreen('guest');$('player-name').focus({preventScroll:true});
+}
+
+// The shell has one navigation owner. Existing game/account leave guards win.
+const ENTRY_PATHS={welcome:'utama',guest:'main',resume:'sambung',guide:'cara-bermain',module:'belajar',portal:'kelas',game:'permainan',result:'keputusan',duel:'duel'};
+const ENTRY_DESTINATIONS={utama:'home',main:'play',sambung:'resume','cara-bermain':'guide',belajar:'learn',kelas:'classes'};
+function syncEntryLocation(next){
+  const hash='#'+(ENTRY_PATHS[next]||'utama');
+  if(location.hash===hash)return;
+  // Auth fragments are left for the validated SDK callback, never interpreted here.
+  if(cloud.hasAuthCallback||cloud.hasRecoveryIntent)return;
+  try{history[applyingEntryHash||!location.hash?'replaceState':'pushState'](null,'',hash);}catch{}
+}
+function openEntryGuide({start=false}={}){
+  if(game&&screen==='game'){usabilityUI.openTutorial();return;}
+  guideReturn=screen==='guest'?'guest':'welcome';guideBeginAfter=start;
+  entryUI.resetGuide();showScreen('guide');$('guide-title').focus({preventScroll:true});
+}
+function navigateEntry(destination){
+  if(destination==='guide'&&screen==='game'){usabilityUI.openTutorial();return;}
+  if(playMode==='duel'&&['duel','game','result'].includes(screen)){
+    pendingEntryRoute=destination;requestHome();return;
+  }
+  if(destination==='classes'){requestAccounts();return;}
+  if(screen==='game'){
+    pendingEntryRoute=destination;requestHome();return;
+  }
+  if(portal.requestLeave(()=>navigateEntry(destination)))return;
+  if(dialog.open)closeDialog();
+  if(destination==='home')returnHome();
+  else if(destination==='play')openGuest();
+  else if(destination==='resume'){soloNewAction=null;openSolo();}
+  else if(destination==='guide')openEntryGuide();
+  else if(destination==='learn')void openLearningModule();
+}
+function navigateEntryHash(){
+  const destination=ENTRY_DESTINATIONS[location.hash.slice(1)];
+  if(!destination)return;
+  applyingEntryHash=true;
+  try{navigateEntry(destination);syncEntryLocation(screen);}finally{applyingEntryHash=false;}
 }
 function displayedGameTime(time=now()){return roomState?roomState.elapsed+(roomState.status==='running'?Math.max(0,time-roomReceivedAt):0):game.time(time);}
 async function openAccounts(roomId=null,target={}){
@@ -800,18 +871,19 @@ function settleDialogClose(){
   if(trigger?.isConnected)trigger.focus({preventScroll:true});
 }
 function closeDialog(){if(dialog.open)dialog.close();settleDialogClose();}
-$('dialog-close').addEventListener('click',closeDialog);
+function cancelDialog(){pendingEntryRoute=null;closeDialog();}
+$('dialog-close').addEventListener('click',cancelDialog);
 dialog.addEventListener('close',settleDialogClose);
-dialog.addEventListener('cancel',event=>{event.preventDefault();closeDialog();});
+dialog.addEventListener('cancel',event=>{event.preventDefault();cancelDialog();});
 dialog.addEventListener('click',event=>{
   const action=event.target.closest('[data-dialog-action]')?.dataset.dialogAction;
   if(usabilityUI?.handleAction(action))return;
   if(action==='help-open')openHelp();
   if(action==='solo-resume')resumeSolo();
-  if(action==='solo-new'){openDialog('solo-new',sr('new'),`<p class="dialog-copy">${sr('confirm')}</p><div class="dialog-actions"><button class="button button-outline" data-dialog-action="solo-back" data-autofocus>${sr('cancel')}</button><button class="button button-danger" data-dialog-action="solo-discard">${sr('new')}</button></div>`);}
+  if(action==='solo-new')openNewSoloDialog();
   if(action==='solo-back')openSolo();
   if(action==='solo-discard'){const action=soloNewAction;soloNewAction=null;if(soloStore.clear(soloActor)){closeDialog();if(action)action();else openGuest();}else{soloNotice='failed';openSolo();}}
-  if(action==='close')closeDialog();
+  if(action==='close')cancelDialog();
   if(action==='home')returnHome();
   if(action==='open-portal')openAccounts(null,requestedPortalTarget);
   if(action==='request-home')requestHome();
@@ -845,7 +917,7 @@ function openPause(automatic=false){
 }
 
 function requestHome(){
-  if(roomState){openAccounts(roomState.roomId);return;}
+  if(roomState){pendingEntryRoute=null;openAccounts(roomState.roomId);return;}
   if(playMode==='duel'&&['duel','game','result'].includes(screen)){
     if(duelClient.snapshot&&!duelClient.snapshot.me.finishedAt&&['waiting','countdown','playing'].includes(duelClient.snapshot.room.status)){
       openDialog('duel-leave',t('duel.leaveTitle'),`<p class="dialog-copy">${t('duel.leaveCopy')}</p><p class="duel-leave-error" role="status"></p><div class="dialog-actions"><button class="button button-outline" data-dialog-action="close" data-autofocus>${t('Terus bermain')}</button><button class="button button-danger" data-dialog-action="duel-leave">${t('duel.confirmLeave')}</button></div>`);
@@ -891,6 +963,7 @@ function finishGame(){
     if(dialog.open)closeDialog();
   }
   lastResult=lastResult?.id===roundId?lastResult:game.result(roundId);
+  void offline.recordSolo(lastResult,{classroom:Boolean(roomState)});
   saveSolo();
   $('result-details').open=false;
   if(!roomState&&lastResult.mode==='quiz'&&!store.read().some(row=>row.id===roundId))store.save(lastResult);
@@ -904,7 +977,9 @@ function finishGame(){
 }
 function renderResult(){
   const r=lastResult;
-  $('result-title').textContent=r.score===r.total?t("Hebat! Semua pasangan tepat."):r.score/r.total>=.7?t("Bagus, anda semakin mahir!"):t("Teruskan mencuba, teruskan belajar.");
+  $('result-title').textContent=r.mode==='duel'?t('duel.ui.resultTitle'):r.score===r.total?t("Hebat! Semua pasangan tepat."):r.score/r.total>=.7?t("Bagus, anda semakin mahir!"):t("Teruskan mencuba, teruskan belajar.");
+  const homeAction=$('result-screen').querySelector('.result-actions [data-action="home"]');
+  homeAction.dataset.i18n=r.mode==='duel'?'Kembali ke mula':'Tukar pemain';homeAction.textContent=t(homeAction.dataset.i18n);
   $('result-player').textContent=r.player.name+' · '+t(r.player.category)+(r.player.className?' · '+r.player.className:'');
   $('result-score').textContent=r.score;
   $('result-total').textContent=t('mode.points',{total:r.total});
@@ -1052,14 +1127,17 @@ function updateSoloEntry(){
  button.textContent=sr('resume');
  // An explicit entry also explains blocked or incompatible storage.
  const snapshot=soloStore.read(soloActor);
- button.hidden=!snapshot&&!['failed','invalid'].includes(soloStore.status);
+ button.hidden=(!snapshot||snapshot.state.status==='finished')&&!['failed','invalid'].includes(soloStore.status);
+ if(screen==='resume')entryUI?.renderResume(snapshot,soloStore.status);
  if(game&&!roomState&&game.mode!=='duel'){$('solo-save-status').textContent=sr(soloNotice||'saved');}
  else $('solo-save-status').hidden=true;
 }
 function openSolo(){
- const snapshot=soloStore.read(soloActor),status=soloStore.status;
- const summary=snapshot?`<p><b>${escapeHtml(snapshot.player.name)}</b> · ${escapeHtml(modeTitle(snapshot.mode))}</p><p>${snapshot.state.answers.length} / ${snapshot.questionIds.length} ${sr('summary')} · ${snapshot.state.stage==='solid'?'R1':'R2'}</p><p>${sr('score')}: ${snapshot.state.score} · ${sr('time')}: ${formatTime(snapshot.elapsed)}</p>`:`<p>${sr(status==='empty'?'empty':status==='invalid'?'invalid':'failed')}</p>`;
- openDialog('solo',sr('resume'),`<div class="dialog-copy">${summary}${soloNotice==='failed'?`<p role="status">${sr('failed')}</p>`:''}<p>${sr('scope')}</p></div><div class="dialog-actions"><button class="button button-outline" data-dialog-action="solo-new">${sr('new')}</button>${snapshot?`<button class="button button-primary" data-dialog-action="solo-resume" data-autofocus>${sr('resume')}</button>`:''}</div>`);
+ if(dialog.open)closeDialog();
+ showScreen('resume');$('resume-title').focus({preventScroll:true});
+}
+function openNewSoloDialog(){
+ openDialog('solo-new',sr('new'),`<p class="dialog-copy">${sr('confirm')}</p><div class="dialog-actions"><button class="button button-outline" data-dialog-action="solo-back" data-autofocus>${sr('cancel')}</button><button class="button button-danger" data-dialog-action="solo-discard">${sr('new')}</button></div>`);
 }
 function resumeSolo(){
  const snapshot=soloStore.read(soloActor);if(!snapshot){openSolo();return;}
@@ -1095,6 +1173,7 @@ function applyStaticLanguage(){
   updateTitle();updateSound();updateMotion();updateModeChoice();renderDuelViews();renderMusicButton(music.state);portal.localize();
   renderModuleSaveStatus(moduleProgress.state);
   updateSoloEntry();
+  entryUI?.syncLanguage();
   if(screen==='module')$('module-back-button').innerHTML=icon('home')+t(moduleReturnToPortal?'platform.backClass':'ease.backHome');
 }
 function applyLanguage(){
@@ -1147,6 +1226,16 @@ $('language-select').addEventListener('change',event=>{
 moduleBridge=createModuleBridge({frame:$('module-frame'),getSettings:()=>({language:locale.language,textSize:textSize(preferences.text),motionPaused,contrast:preferences.contrast,autoRotate:preferences.autoRotate,showLabels:preferences.labels,resume:preferences.resume,lastSection:preferences.lastSection,audioEnabled:!preferences.muted}),openSettings:()=>usabilityUI.openSettings(),openHelp,onChoice:patch=>preferenceStore.set(patch)});
 usabilityUI=createUsabilityUI({storage,preferenceStore,t,openDialog,closeDialog,onStart:beginSelectedMode,onTheme:setTheme,onTestSound:()=>tone('solid'),onHelp:openHelp});
 helpSupport=createHelpSupport({t,getLanguage:()=>locale.language,getContext:supportContext,openDialog,openTutorial:()=>usabilityUI.openTutorial({fromHelp:true}),openSettings:()=>usabilityUI.openSettings(),openModuleGuide:()=>{closeDialog();moduleBridge.showGuide();}});
+entryUI=createEntryUI({t,getLanguage:()=>locale.language,onNavigate:navigateEntry,
+  onToggleMotion:()=>preferenceStore.set({motion:motionPaused?'full':'reduce'}),
+  onLanguage:language=>{if(locale.setLanguage(language)){cancelDrag();applyLanguage();announce(t('language.changed'));}},
+  onResume:resumeSolo,onNew:()=>{
+    const snapshot=soloStore.read(soloActor);
+    if(snapshot&&snapshot.state.status!=='finished'||soloStore.status==='invalid')openNewSoloDialog();else openGuest();
+  },
+  onGuideBack:()=>{guideBeginAfter=false;guideReturn==='guest'?openGuest():returnHome();},
+  onGuideFinish:()=>{const begin=guideBeginAfter;guideBeginAfter=false;preferenceStore.set({tutorialSeen:true});if(begin)beginSelectedMode();else openGuest();}
+});
 function applyPreferences(value){
   preferences=value;document.documentElement.dataset.textSize=String(textSize(value.text));document.documentElement.style.setProperty('--text-scale',String(textSize(value.text)/100));document.documentElement.dataset.contrast=value.contrast;
   sound=value.effects;updateSound();updateMotion();music.setVolume(value.musicVolume/100);void music.setEnabled(value.music&&!value.muted);
@@ -1156,6 +1245,12 @@ function applyPreferences(value){
 preferenceStore.subscribe(applyPreferences);applyPreferences(preferenceStore.value);
 window.addEventListener('storage',event=>{if(event.key===PREFERENCES_KEY||event.key===null)preferenceStore.reload();});
 applyLanguage();
+
+if(!cloud.hasAuthCallback&&!cloud.hasRecoveryIntent){
+  const initial=ENTRY_DESTINATIONS[location.hash.slice(1)];
+  if(initial)navigateEntryHash();else syncEntryLocation('welcome');
+}
+window.addEventListener('hashchange',navigateEntryHash);
 
 if(cloud.hasAuthCallback||cloud.hasRecoveryIntent)void openAccounts();
 

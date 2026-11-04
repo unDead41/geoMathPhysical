@@ -1,5 +1,24 @@
 # GeoDecoder Digital changelog
 
+## v2.9.0 — 4 November 2026 (integrasi sumber main-digitalized)
+
+- Menyatukan UI utama dengan aset 3D, UI Duel dan tiga kemasan modul v1.6.1.
+- Menambah pakej PWA, cache offline serta outbox rekod latihan/kegiatan modul
+  yang terikat kepada pemilik dan sesi; tindakan kelas dan Duel kekal online.
+- Menggabungkan CRUD kelas/room/invitation dengan cache, request coalescing,
+  polling/backoff dan simpanan modul. Wrapper kelas mengekalkan snapshot baca
+  sahaja dan heartbeat berkala apabila digabungkan dengan scaling.
+- Mengemas kini pin modul daripada hasil binaan gabungan, alias HTML dan bundle.
+- Semua kepala branch sumber dikekalkan dalam ancestry integrasi; branch kerja
+  aktif menerima upstream secara fast-forward selepas pengesahan.
+
+Ini integrasi kod private. Migration hosted, deployment Edge dan penerbitan
+mirror/Pages belum dilaksanakan oleh integrasi ini. Fail scaling/offline masih
+mempunyai langkah pendaftaran dan rollout tersendiri. Lihat
+[rekod integrasi](docs/integration-sync/README.md),
+[urutan SQL](docs/integration-sync/SQL_ORDER.md) dan
+[prompt sambungan](docs/integration-sync/BRANCH_SYNC_PROMPTS.md).
+
 ## v2.8.0 — 26 Oktober 2026 (main-digitalized)
 
 Modul dinaik taraf kepada v1.6.0; firmware kekal v1.1.3. Keluaran ini menyatukan

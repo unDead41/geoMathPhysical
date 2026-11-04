@@ -1,0 +1,13 @@
+{
+  "genericAuditExitCode": 1,
+  "findings": 92,
+  "ruleId": "affordance.actionless-button",
+  "verdict": "false positives; not reported as a strict audit PASS",
+  "reason": "The generic auditor only detects inline onclick/@click/v-on:click. It excludes .mjs source and does not resolve external addEventListener bindings. This project uses canonical .mjs controllers for every literal action.",
+  "changedActions": {
+    "learn-measures": "src/app.mjs: click -> switchLearningView(notes, calculator); tests/explore-refresh.test.mjs + browser matrix",
+    "calculate-measures": "src/notes.mjs: click/Enter -> validate(); unit regression + opaque sandbox browser invalid/focus check"
+  },
+  "unchangedActions": "Labs, studio and progress source/panels remain byte-identical to base; covered by 331 project-owned tests.",
+  "resolution": "Preserve real controller bindings; do not add inline handlers or alter unrelated feature panels merely to silence the generic regex."
+}

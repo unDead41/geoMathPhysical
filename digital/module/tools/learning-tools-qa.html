@@ -6,7 +6,7 @@ body{margin:16px;font:15px/1.5 system-ui;color:#18334b;background:#eaf0f6}h1{fon
 </style>
 <h1>GeoDecoder · Ujian dua fungsi pembelajaran</h1>
 <p>Alat pembangunan sahaja. Bingkai memuatkan HTML keluaran sebenar dengan jambatan tetapan aplikasi sebenar. Lebar iframe mensimulasikan viewport CSS, bukan peranti fizikal. Pilihan reduced motion, bahasa, kontras dan saiz teks ialah tetapan ujian.</p>
-<nav aria-label="Lebar ujian"><button data-width="320">320 px</button><button data-width="390">390 px</button><button data-width="768">768 px</button><button data-width="1280">1280 px</button><button id="qa-inspect">Semak paparan</button></nav>
+<nav aria-label="Lebar ujian"><button data-width="320">320 px</button><button data-width="390">390 px</button><button data-width="768">768 px</button><button data-width="1280">1280 px</button><button data-width="1440">1440 px</button><button id="qa-inspect">Semak paparan</button></nav>
 <nav aria-label="Tetapan ujian">
  <label>Bahasa<select id="qa-language"><option value="ms">BM</option><option value="en">English</option></select></label>
  <label>Tema<select id="qa-theme"><option value="light">Cerah</option><option value="dark">Gelap</option></select></label>
@@ -16,19 +16,22 @@ body{margin:16px;font:15px/1.5 system-ui;color:#18334b;background:#eaf0f6}h1{fon
  <button id="qa-new-session">Simulasi sesi baharu</button>
 </nav>
 <nav aria-label="Bahagian ujian"><button data-section="explore">Teroka</button><button data-section="notes">Nota</button><button data-section="labs">Makmal</button><button data-section="projection">Studio</button><button data-section="calculation">Pengiraan</button></nav>
+<nav aria-label="Fixture rekod setempat"><button id="qa-empty-records">Rekod kosong</button><button id="qa-fixture-records">Muat fixture rekod</button><span id="qa-fixture-label">Fixture setempat · tiada akaun atau backend</span></nav>
 <iframe id="qa-frame" title="Aplikasi GeoDecoder sebenar"></iframe>
 <h2>Keputusan DOM pelayar</h2><pre id="qa-result" role="status">Sedang memuatkan HTML…</pre>
 <script type="module">
 import {prepareModuleFrame,MODULE_CHANNEL} from '../../dist/module-frame.mjs';
-const qaFrame=document.getElementById('qa-frame'),qaOut=document.getElementById('qa-result'),qaInstance='learning-tools-qa',qaReports=[];let qaSession='learning-tools-qa-1',qaSequence=1;
+const qaFrame=document.getElementById('qa-frame'),qaOut=document.getElementById('qa-result'),qaInstance='learning-tools-qa',qaReports=[];let qaSession='learning-tools-qa-1',qaSequence=1,qaProgress=[];
 const qaSettings=()=>({language:document.getElementById('qa-language').value,textSize:Number(document.getElementById('qa-text').value),motionPaused:document.getElementById('qa-motion').value==='true',contrast:document.getElementById('qa-contrast').value,autoRotate:false,showLabels:true,audioEnabled:false,resume:false,lastSection:'explore'});
-function qaContext(){qaFrame.contentWindow.postMessage({type:'geodecoder:module-context',protocol:1,session:qaSession,theme:document.getElementById('qa-theme').value,progress:[]},'*');}
+function qaContext(){qaFrame.contentWindow.postMessage({type:'geodecoder:module-context',protocol:1,session:qaSession,theme:document.getElementById('qa-theme').value,progress:qaProgress},'*');}
 window.addEventListener('message',event=>{if(event.source!==qaFrame.contentWindow)return;if(event.data?.type==='geodecoder:module-ready')qaContext();});
+document.getElementById('qa-empty-records').addEventListener('click',()=>{qaProgress=[];qaContext();});
+document.getElementById('qa-fixture-records').addEventListener('click',()=>{qaProgress=[{activity:'net',stage:'explanation',prediction:'Enam muka yang bersambung boleh membentuk kubus.',result:'Bentangan dilipat dan keenam-enam muka tidak bertindih.',explanation:'Muka bertemu pada rusuk yang sepadan.',completed:true},{activity:'volume',stage:'explanation',prediction:'Tiga lapisan enam kiub memberikan 18 kiub.',result:'18 kiub unit mengisi kuboid.',explanation:'Setiap lapisan mengandungi enam kiub. Tiga lapisan mengisi ruang yang sama.',completed:true}];qaContext();});
 for(const b of document.querySelectorAll('[data-width]'))b.addEventListener('click',()=>{qaFrame.style.width=b.dataset.width+'px';qaFrame.style.height=Number(b.dataset.width)<500?'900px':'1000px';});
 for(const b of document.querySelectorAll('[data-section]'))b.addEventListener('click',()=>qaFrame.contentDocument.getElementById('learn-'+b.dataset.section).click());
 for(const id of ['qa-language','qa-text','qa-contrast','qa-motion'])document.getElementById(id).addEventListener('change',()=>qaFrame.contentWindow.postMessage({channel:MODULE_CHANNEL,version:1,instanceId:qaInstance,type:'settings',settings:qaSettings()},'*'));
 document.getElementById('qa-theme').addEventListener('change',qaContext);
-document.getElementById('qa-new-session').addEventListener('click',()=>{qaSession='learning-tools-qa-'+(++qaSequence);qaContext();});
+document.getElementById('qa-new-session').addEventListener('click',()=>{qaSession='learning-tools-qa-'+(++qaSequence);qaProgress=[];qaContext();});
 document.getElementById('qa-inspect').addEventListener('click',()=>{
  const d=qaFrame.contentDocument,w=qaFrame.contentWindow,root=d.documentElement,visible=e=>Boolean(e.getClientRects().length),rect=e=>e.getBoundingClientRect();
  const active=['explore','notes','labs','projection','calculation'].find(key=>d.getElementById('learn-'+key).getAttribute('aria-pressed')==='true');

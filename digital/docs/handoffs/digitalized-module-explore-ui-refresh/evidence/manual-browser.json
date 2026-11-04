@@ -1,0 +1,11 @@
+{
+  "yawBefore": "0.55",
+  "yawAfterKey": "0.68",
+  "zoomAfterKey": "1.1",
+  "zoomAfterHome": "1",
+  "opened": "1",
+  "closed": "0",
+  "extraShapeByKeyboard": "Hemisfera",
+  "invalidFocusByEnter": true,
+  "validAreaByKeyboard": "96 cm²"
+}

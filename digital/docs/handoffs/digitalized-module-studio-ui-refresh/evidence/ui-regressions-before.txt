@@ -1,0 +1,83 @@
+✔ workshop initializes lazily and exposes only relevant measurement fields (24.186766ms)
+✔ checking is sequential and editing an earlier step invalidates later confirmations (6.26993ms)
+✔ a hint precedes revealing the current solution, without filling pupil inputs (7.081672ms)
+✔ language refresh and section changes preserve answers, dimensions, pi and confirmations (6.981779ms)
+✔ explicit changed note context replaces measurements and invalidates confirmations (4.529352ms)
+✔ invalid edited dimensions remove valid results and restore a safe sequential start (1.610093ms)
+✔ diameter entry halves the given value and contextual geometry exposes contact-face guidance (20.052258ms)
+✔ question givens retain entered precision rather than rounding the dimensions (0.783644ms)
+✖ wizard shows one step, gates navigation and lets checked answers be revisited (4.868917ms)
+✖ wizard position and draft survive locale/navigation; a session reset returns to formula (1.206397ms)
+✔ construction is lazy, and independent practice follows a worked example without copying it (35.124177ms)
+✔ keyboard coordinate entry, selection, delete, undo and clear edit the real three-view drafts (27.897253ms)
+✔ each view has independent feedback and feedback clears after editing that view (7.120984ms)
+✔ language, close and reopen preserve drafts while a new context erases them (11.517931ms)
+✔ scale and shape changes invalidate old checks, use new geometry and clearly restart the guide (38.450266ms)
+✔ bad coordinates never create zero-length, non-finite, negative-radius or off-board primitives (20.530129ms)
+✔ board arrows and Enter offer a non-drag drawing alternative and Escape cancels a pending point (9.632232ms)
+✔ the optional speech transcript follows the open studio, changed scale and active language (27.394458ms)
+✔ compact view headings separate the view name from its viewing-axis caption (34.115638ms)
+✖ toolbar shortcuts use the canonical tool; Undo affects only the active view (3.65262ms)
+✖ records show real reflections; revisit keeps achievement and session change clears the view (81.536133ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 17
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 411.966838
+
+✖ failing tests:
+
+test at tests/calculation-workshop.test.mjs:102:1
+✖ wizard shows one step, gates navigation and lets checked answers be revisited (4.868917ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/048b66497555/geodecoder-module3/digital/module/tests/calculation-workshop.test.mjs:104:71)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/calculation-workshop.test.mjs:113:1
+✖ wizard position and draft survive locale/navigation; a session reset returns to formula (1.206397ms)
+  TypeError [Error]: Cannot read properties of undefined (reading 'click')
+      at TestContext.<anonymous> (file:///workspace/scratch/048b66497555/geodecoder-module3/digital/module/tests/calculation-workshop.test.mjs:114:159)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/projection-studio.test.mjs:102:1
+✖ toolbar shortcuts use the canonical tool; Undo affects only the active view (3.65262ms)
+  TypeError [Error]: Cannot read properties of undefined (reading 'disabled')
+      at TestContext.<anonymous> (file:///workspace/scratch/048b66497555/geodecoder-module3/digital/module/tests/projection-studio.test.mjs:104:65)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/studio-records-ui.test.mjs:6:1
+✖ records show real reflections; revisit keeps achievement and session change clears the view (81.536133ms)
+  TypeError [Error]: Cannot read properties of undefined (reading 'textContent')
+      at TestContext.<anonymous> (file:///workspace/scratch/048b66497555/geodecoder-module3/digital/module/tests/studio-records-ui.test.mjs:8:53)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)

@@ -40,3 +40,51 @@
 .calc-scope{margin:0}
 @media(max-width:900px){.calc-layout{grid-template-columns:minmax(0,1fr)}.calc-setup{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.calc-setup h3,.calc-dimensions,.calc-setup>p,.calc-setup>button{grid-column:1/-1}.calc-dimensions{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:600px){.calc-setup,.calc-question,.calc-step,.calc-solution{padding:var(--space-4)}.calc-setup{grid-template-columns:minmax(0,1fr)}.calc-dimensions{grid-template-columns:minmax(0,1fr)}.calc-actions>button{flex:1 1 10rem}.calc-unit-row{grid-template-columns:minmax(0,1fr)}.calc-symbols>div{gap:var(--space-1)}}
+
+/* GeoMath screen 35: one focused answer alongside canonical model/givens. */
+.calc-header{display:flex;align-items:flex-start;gap:var(--space-4);margin-top:var(--space-5)}
+.calc-header>.ui-icon{width:3rem;height:3rem;flex-shrink:0;padding:var(--space-2);border-radius:var(--radius-control);color:var(--primary);background:var(--blue-soft)}
+.calc-header h2{font-family:var(--font-display);font-size:var(--text-title)}
+.calc-header .body-copy{color:var(--muted)}
+.calc-stepper{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--space-3)}
+.calc-step-link{display:flex;align-items:center;justify-content:flex-start;gap:var(--space-3);min-width:0;text-align:start;font:inherit;font-size:var(--text-small);padding:var(--space-3);border:var(--border-width) solid var(--border-control);border-radius:var(--radius-control);background:var(--surface);color:var(--ink)}
+.calc-step-number{display:grid;place-items:center;width:2rem;height:2rem;flex-shrink:0;background:var(--bg);border:var(--border-width) solid var(--border-control);border-radius:var(--radius);font-family:var(--font-mono);font-weight:700}
+.calc-step-link[aria-current="step"]{background:var(--blue-soft);border-color:var(--primary);color:var(--primary-dark);box-shadow:inset 0 -3px var(--primary)}
+.calc-step-link[aria-current="step"] .calc-step-number{background:var(--primary-fill);color:var(--on-primary-fill);border-color:var(--primary-fill)}
+.calc-step-link[data-complete="true"]:not([aria-current="step"]) .calc-step-number{background:var(--mint-soft);color:var(--success)}
+.calc-step-link:disabled{opacity:1;color:var(--muted);background:var(--bg);cursor:not-allowed}
+.calc-layout{grid-template-columns:minmax(17rem,24rem) minmax(0,1fr)}
+.calc-reference{display:flex;flex-direction:column;gap:var(--space-4);min-width:0}
+.calc-question .body-copy{font-size:var(--text-small)}
+.calc-question>h3{font-size:var(--text-small);color:var(--muted)}
+.calc-question #calculation-question{font-size:var(--text-body);font-weight:600}
+.calc-figure{border:var(--border-width) solid var(--border)}
+#calculation-diagram{max-height:14rem}
+.calc-symbols{gap:var(--space-2)}
+.calc-symbols>div{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--space-3);padding-bottom:var(--space-2);border-bottom:var(--border-width) solid var(--border)}
+.calc-symbols dd{max-width:13rem;text-align:end}
+.calc-setup{display:block}
+.calc-setup>summary{min-height:var(--control-size);align-content:center;font-weight:700;cursor:pointer}
+.calc-setup>.lab-field,.calc-setup>.calc-dimensions{margin-top:var(--space-4)}
+.calc-setup .lab-field[hidden],.calc-dimension-field[hidden]{display:none}
+.calc-guidance{font-size:var(--text-small)}
+.calc-guidance>summary{min-height:var(--control-size);align-content:center;font-weight:650;cursor:pointer}
+.calc-step{border-top:3px solid var(--primary);padding:var(--space-6)}
+.calc-step[hidden]{display:none}
+.calc-step h3{font-family:var(--font-display);font-size:var(--text-heading)}
+.calc-step>label:not(.calc-answer-label){font-weight:400;font-size:var(--text-body);margin-bottom:var(--space-5);line-height:var(--leading-body)}
+.calc-answer-label{color:var(--ink);font-weight:700}
+.calc-step input{padding:var(--space-4);min-height:3.5rem;background:var(--bg)}
+.calc-step .lab-feedback{margin-top:var(--space-4);padding:var(--space-4);border-radius:var(--radius-control);background:var(--bg);color:var(--muted);font-size:var(--text-small)}
+.calc-step .lab-feedback[data-success="true"]{background:var(--mint-soft);color:var(--success)}
+.calc-step .lab-feedback[data-success="false"]{background:var(--danger-soft);color:var(--danger)}
+.calc-wizard-actions{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--space-3)}
+.calc-wizard-actions>button{min-width:10rem}
+.calc-actions{padding-top:var(--space-4);border-top:var(--border-width) solid var(--border)}
+.calc-scope{font-size:var(--text-small);color:var(--muted)}
+@media(max-width:1000px){.calc-layout{grid-template-columns:minmax(0,1fr)}.calc-reference{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start}}
+@media(max-width:650px){.calc-header h2{font-size:var(--text-heading)}.calc-stepper{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-2)}.calc-step-link{gap:var(--space-2);padding:var(--space-2)}.calc-reference{display:flex}.calc-step{padding:var(--space-4)}.calc-step-number{width:1.75rem;height:1.75rem}.calc-wizard-actions>button{flex:1 1 100%}.calc-symbols>div{grid-template-columns:minmax(0,1fr)}.calc-symbols dd{text-align:start;max-width:none}}
+@media(forced-colors:active){.calc-step-link[aria-current="step"]{outline:3px solid Highlight;box-shadow:none}.calc-step-number{border:1px solid CanvasText}}
+
+.calculation-workshop .calculation-status:empty{display:none}
+@media(max-width:420px){.calc-step-link{display:grid;grid-template-columns:minmax(0,1fr);justify-items:start;gap:var(--space-1)}}

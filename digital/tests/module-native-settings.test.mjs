@@ -48,7 +48,11 @@ test('the actual module artifact starts through the native bridge with current p
     assert.equal(f.window.document.getElementById('labels').checked,true);
     assert.equal(f.window.document.getElementById('auto-rotate').getAttribute('aria-pressed'),'false');
     assert.equal(f.window.document.getElementById('module-settings').textContent,'Settings');
-    for(const label of ['Display options','Four activity summary','Model direction controls','Comparison of eleven solid properties','Formula summary for eleven solids','Activity steps','Ways to explore nets','Follow faces in the preset net'])assert.ok(f.window.document.querySelector('[aria-label="'+label+'"]'),'English accessible label: '+label);
+    for(const label of ['Display options','Model direction controls','Comparison of eleven solid properties','Formula summary for eleven solids','Activity steps','Ways to explore nets','Follow faces in the preset net'])assert.ok(f.window.document.querySelector('[aria-label="'+label+'"]'),'English accessible label: '+label);
+    const records=f.window.document.querySelector('details.progress-summary');
+    assert.equal(records.getAttribute('aria-labelledby'),'module-records-title');
+    assert.equal(f.window.document.getElementById('module-records-title').textContent,'Your learning journey');
+    assert.equal(records.querySelectorAll('[id^="module-record-action-"]').length,4,'All four activity actions remain in the named disclosure');
     for(const direction of ['left','right','up','down']){
       const control=f.window.document.getElementById('orbit-'+direction);
       assert.equal(control.getAttribute('aria-label'),'Rotate solid '+direction);assert.equal(control.getAttribute('title'),'Rotate '+direction);

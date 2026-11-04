@@ -1,0 +1,22 @@
+{
+  "status": "pass",
+  "checks": {
+    "indexOutsideProgressUnchanged": true,
+    "styleOnlyAppendedProgressBlock": true,
+    "app.mjsUnchanged": true,
+    "projection-geometry.mjsUnchanged": true,
+    "calculation-steps.mjsUnchanged": true,
+    "guided.mjsUnchanged": true,
+    "labs.mjsUnchanged": true,
+    "renderer.mjsUnchanged": true,
+    "central-tokens.mjsUnchanged": true,
+    "design-tokens.cssUnchanged": true,
+    "digital/module/tools/build.mjsUnchanged": true,
+    "digital/dist/module-progress.mjsUnchanged": true,
+    "digital/dist/module-progress-view.mjsUnchanged": true,
+    "digital/vendor/module-release.jsonUnchanged": true,
+    "ModuleAccess.progressUnchanged": true,
+    "ModuleAccess.applyThemeUnchanged": true,
+    "ModuleAccess.initUnchanged": true
+  }
+}

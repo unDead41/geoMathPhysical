@@ -37,9 +37,9 @@ export async function startHarness(){
   }
   process.env.TMPDIR||='/dev/shm/geodecoder-richtext-qa';fs.mkdirSync(process.env.TMPDIR,{recursive:true});
   let browser;
-  try{browser=await chromium.launch({headless:true,executablePath:process.env.PLAYWRIGHT_CHROMIUM_PATH||(fs.existsSync('/tmp/chromium')?'/tmp/chromium':chromium.executablePath()),args:['--no-sandbox','--disable-dev-shm-usage']});}
+  try{browser=await chromium.launch({headless:true,executablePath:process.env.PLAYWRIGHT_CHROMIUM_PATH||(fs.existsSync('/tmp/chromium')&&fs.statSync('/tmp/chromium').size?'/tmp/chromium':chromium.executablePath()),args:['--no-sandbox','--disable-dev-shm-usage']});}
   catch(error){await new Promise(resolve=>server.close(resolve));throw error;}
-  const evidence=path.join(root,'docs/ease-evidence',process.env.EASE_EVIDENCE_RUN||new Date().toISOString().replace(/[:.]/g,'-'));
+  const evidence=process.env.EASE_EVIDENCE_DIR||path.join(root,'docs/ease-evidence',process.env.EASE_EVIDENCE_RUN||new Date().toISOString().replace(/[:.]/g,'-'));
   fs.mkdirSync(evidence,{recursive:true});
   const origin=`http://127.0.0.1:${server.address().port}/`;
   return {browser,evidence,origin,async close(){await browser.close();await new Promise(resolve=>server.close(resolve));}};
@@ -74,18 +74,30 @@ export async function settings(page,{language,theme,textSize}={},keepOpen=false)
   }
 }
 
+export async function selectMode(page,mode){
+  const radio=page.locator(`input[name="game-mode-option"][value="${mode}"]`);
+  if(await page.evaluate(()=>navigator.maxTouchPoints>0))await radio.tap();else await radio.check();
+  assert.equal(await page.locator('#play-mode').inputValue(),mode,'Visible radio cards update the existing game-mode owner');
+}
+
+export async function finishEntryGuide(page,{complete=false}={}){
+  if(!await page.locator('#guide-screen').isVisible())return;
+  assert.equal(await page.locator('[data-guide-step]').count(),3);
+  if(complete){
+    for(const step of [1,2,3])assert.equal(await page.locator(`[data-guide-step="${step}"]`).isVisible(),true);
+    await page.locator('#entry-demo-position').press('End');
+    assert.equal(await page.locator('.guide-step-active[data-guide-step="3"]').count(),1);
+    assert.equal(await page.locator('#entry-demo-time').textContent(),'00:24 / 00:24');
+  }
+  await page.locator('#guide-start-button').click();
+}
+
 export async function startGuest(page,{name=player.name,mode='quiz',tutorial='skip'}={}){
   await page.locator('#guest-button').click();
   await page.locator('#player-name').fill(name);
-  await page.locator('#play-mode').selectOption(mode);
+  await selectMode(page,mode);
   await page.locator('#player-form [type="submit"]').click();
-  if(await page.locator('#tutorial-progress').isVisible()){
-    if(tutorial==='complete'){
-      await page.locator('[data-dialog-action="tutorial-next"]').click();
-      await page.locator('[data-dialog-action="tutorial-next"]').click();
-      await page.locator('[data-dialog-action="tutorial-finish"]').click();
-    }else await page.locator('[data-dialog-action="tutorial-skip"]').click();
-  }
+  await finishEntryGuide(page,{complete:tutorial==='complete'});
   await page.locator('#game-screen').waitFor({state:'visible'});
 }
 

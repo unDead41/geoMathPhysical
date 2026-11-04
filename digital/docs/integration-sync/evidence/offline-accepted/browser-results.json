@@ -1,0 +1,14 @@
+{
+  "cases": [
+    "native IndexedDB survives page closure, isolates owners and acknowledges exact IDs",
+    "complete PWA caches both tracks and reloads the actual learning website offline",
+    "a partial resource failure never claims offline readiness",
+    "authorization requests and callback query URLs never enter the public cache",
+    "real app completion queues once offline; reconnect commits through controlled transport",
+    "switching accounts rebuilds the open module and removes the previous private draft",
+    "installing an update preserves the active game until explicit reload"
+  ],
+  "passed": 7,
+  "hostedAuth": false,
+  "transport": "controlled fixture for signed-in completion; native browser storage and service worker"
+}

@@ -43,6 +43,20 @@ dengan sumber induk dan token sesi yang sah.
 Sumber perniagaan: arahan pengguna dan docs/SOURCE.md. Rupa: ../DESIGN.md,
 dengan varian modul dalam DESIGN.md. Tidak mengubah kontrak kuiz Digital.
 
+## Shell GeoMath v1.6.1 · branch UI
+
+`app.mjs` owns the shell and `studyMode` (`notes` / `calculator`). Direct calculator
+navigation opens `study-panel`, sharing LearningNotes dimensions, validation,
+π and calculation state. Only the active notes/calculator navigation is pressed.
+`jump-calculate` reveals the calculator before focusing its heading. Section
+navigation retains camera, selected solid, progress and the current note draft.
+
+The standalone header identifies GeoMath. Embedded mode hides that header and
+moves the existing host Settings/Help controls into the rail. The preference
+and progress protocols retain their source/session/instance checks. Resizing
+redraws without resetting activity state. Notes preview uses the canonical
+ModelRenderer and a closed model; no concept artwork is used for geometry.
+
 ## Canonical UI Map
 
 | Capability | Canonical owner | Source of truth | Allowed variants | Verification |

@@ -5,7 +5,7 @@ const MUTATIONS = new Set(['ready','leave','hint','skip','scan','advance']);
 const QUESTIONS = new Set(['hint','skip','scan','advance']);
 const SHAPES = new Set(['cube','cuboid','pyramid','cylinder','cone']);
 const STATUS = Object.freeze({invalid_request:400,invalid_token:401,room_unavailable:404,room_full:409,room_expired:410,not_started:409,not_ready:409,question_mismatch:409,stage_mismatch:409,sequence_mismatch:409,sequence_conflict:409,rate_limited:429,client_update_required:426,backend_update_required:503,server_error:500});
-const CORS = Object.freeze({'Access-Control-Allow-Origin':'*','Access-Control-Allow-Methods':'POST, OPTIONS','Access-Control-Allow-Headers':'content-type, authorization, apikey, x-client-info','Access-Control-Expose-Headers':'X-GeoDecoder-Duel-Protocol','X-GeoDecoder-Duel-Protocol':'2','Access-Control-Max-Age':'86400','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});
+const CORS = Object.freeze({'Access-Control-Allow-Origin':'*','Access-Control-Allow-Methods':'POST, OPTIONS','Access-Control-Allow-Headers':'content-type, authorization, apikey, x-client-info','Access-Control-Expose-Headers':'X-GeoDecoder-Duel-Protocol, Retry-After','X-GeoDecoder-Duel-Protocol':'2','Access-Control-Max-Age':'86400','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});
 const MAX_BODY = 4096;
 const encoder = new TextEncoder();
 const hex = bytes => [...new Uint8Array(bytes)].map(byte=>byte.toString(16).padStart(2,'0')).join('');

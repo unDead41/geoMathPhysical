@@ -1,0 +1,81 @@
+{
+  "recordedAt": "2026-11-04T03:57:47.420642+00:00",
+  "artifactBeforeEofOnlyRebuild": {
+    "standaloneSha256": "207aeb396faaa863671487780a3273bc259a0dd6758ff17a0742726ec689a7bb",
+    "bundleSha256": "85fc49967704396d5336f79b3569bdeb6b17327a2661f62c445c5360102e5e8c"
+  },
+  "attempts": [
+    {
+      "suite": "duel-ui-refresh.browser.mjs",
+      "result": "pass",
+      "groupedChecks": 5,
+      "receipt": "/workspace/scratch/8354d9072f14/ui-browser-evidence/ui-browser-results.json",
+      "scope": "18 locale/theme/text layouts, PIN/lobby/countdown, retries/restoration, server draw/local review, no errors; source-composed fixture before final module pin"
+    },
+    {
+      "suite": "offline.browser.mjs",
+      "result": "pass",
+      "cases": 7,
+      "receipt": "/workspace/scratch/8354d9072f14/ui-offline-evidence/browser-results.json",
+      "artifactSha256": "833cc1dad561d5d7706a41091814ae6332774e9864db7d583695ff722708c816"
+    },
+    {
+      "suite": "offline.browser.mjs",
+      "result": "pass",
+      "cases": 7,
+      "receipt": "/workspace/scratch/8354d9072f14/ui-offline-final/browser-results.json",
+      "artifactSha256": "207aeb396faaa863671487780a3273bc259a0dd6758ff17a0742726ec689a7bb"
+    },
+    {
+      "suite": "solo.browser.mjs",
+      "result": "partial",
+      "passed": [
+        "ms-desktop",
+        "ms-mobile",
+        "en-desktop"
+      ],
+      "failed": "en-mobile",
+      "error": "locator.click timeout 10000 ms at resume-continue-button after visible, enabled, stable and scrolling into view; no reported runtime error",
+      "evidence": "/workspace/scratch/8354d9072f14/ui-solo-final"
+    },
+    {
+      "suite": "solo.browser.mjs",
+      "result": "pass",
+      "selectedCases": [
+        "en-mobile",
+        "offline",
+        "denied",
+        "damaged"
+      ],
+      "evidence": "/workspace/scratch/8354d9072f14/ui-solo-retry",
+      "note": "Isolated retry; all original recovery, state and storage assertions retained. This completed all seven distinct solo cases."
+    },
+    {
+      "suite": "usability.browser.mjs",
+      "result": "partial",
+      "passed": [
+        "quiz-review"
+      ],
+      "failed": "navigation",
+      "error": "locator.check timeout 10000 ms on visible practice mode radio after scrolling in touch viewport; no reported runtime error",
+      "evidence": "/workspace/scratch/8354d9072f14/ui-usability-final",
+      "failureScreenshot": "/workspace/scratch/8354d9072f14/ui-usability-final/failure-navigation.png"
+    },
+    {
+      "suite": "usability.browser.mjs",
+      "result": "pass",
+      "selectedCases": [
+        "navigation"
+      ],
+      "evidence": "/workspace/scratch/8354d9072f14/ui-usability-nav-retry",
+      "note": "Native touch mode activation; full navigation assertions passed, including first-play guide, keyboard skip-link focus, paused settings/tutorials, R1/R2 scoring and reload resume.",
+      "cases": 1
+    }
+  ],
+  "finalArtifactAfterEofOnlyRebuild": {
+    "standaloneBytes": 7674372,
+    "standaloneSha256": "36cad7cd883f92478dff6fa623341140122f7691da7733162338bd5b0cfae924",
+    "bundleSha256": "85fc49967704396d5336f79b3569bdeb6b17327a2661f62c445c5360102e5e8c",
+    "siteAndPwaSha256": "ae95868f160c5865ab4dafa6af764454413a963f963c28ee9139be2aa762c77b"
+  }
+}

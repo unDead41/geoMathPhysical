@@ -1,6 +1,6 @@
 {
   "name": "geodecoder-digital",
-  "version": "2.8.0",
+  "version": "2.9.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -24,11 +24,12 @@
     "test:help-visuals": "node tests/help-visuals.browser.mjs"
   },
   "dependencies": {
-    "@supabase/supabase-js": "2.118.0"
+    "@supabase/supabase-js": "2.118.0",
+    "three": "0.180.0"
   },
   "devDependencies": {
-    "esbuild": "0.28.2",
     "@electric-sql/pglite": "0.5.11",
+    "esbuild": "0.28.2",
     "jsdom": "30.1.3"
   }
 }

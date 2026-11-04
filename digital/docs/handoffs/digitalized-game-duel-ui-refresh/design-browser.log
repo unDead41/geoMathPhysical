@@ -1,0 +1,34 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> geodecoder-digital@2.8.0 test:design
+> node tests/design-system.browser.mjs && node tests/design-reference.browser.mjs
+
+PASS Home and Auth desktop light
+PASS Home and Auth desktop dark
+PASS Phone150 ms light
+PASS Phone150 ms dark
+PASS Phone150 en light
+PASS Phone150 en dark
+PASS All 15 English question layouts at 320px and 150%
+PASS profile controlled fixture light
+PASS profile controlled fixture dark
+PASS security controlled fixture light
+PASS security controlled fixture dark
+PASS reset controlled fixture light
+PASS reset controlled fixture dark
+PASS Embedded pinned module preferences and math preserve values
+PASS Downloaded HTML offline uses same controls
+15 design-system product browser cases passed.
+PASS: portal/module token adapters match one canonical source.
+PASS reference-light-desktop
+PASS reference-dark-desktop
+PASS reference-ms-light-standard-320-150
+PASS reference-ms-light-strong-320-150
+PASS reference-ms-dark-standard-320-150
+PASS reference-ms-dark-strong-320-150
+PASS reference-en-light-standard-320-150
+PASS reference-en-light-strong-320-150
+PASS reference-en-dark-standard-320-150
+PASS reference-en-dark-strong-320-150
+PASS reference-system-reduced-motion
+PASS 11 reference browser scenarios; screenshots and report in docs/design-system-evidence/duel-ui-refresh-verification

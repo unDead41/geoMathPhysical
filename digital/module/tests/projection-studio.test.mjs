@@ -98,3 +98,13 @@ test('compact view headings separate the view name from its viewing-axis caption
   f.setLanguage('en');assert.equal(f.studio.boards.side.title.textContent,'Right side elevation');assert.equal(f.studio.boards.side.direction.textContent,'+X → −X');
  }finally{f.restore();}
 });
+
+test('toolbar shortcuts use the canonical tool; Undo affects only the active view',()=>{
+ const f=projectionFixture();try{
+  f.studio.open();assert.equal(f.nodes['projection-quick-line'].disabled,true);for(let i=0;i<3;i++)f.nodes['projection-guide-next'].click();f.nodes['projection-practise'].click();
+  f.nodes['projection-quick-circle'].click();assert.equal(f.studio.state.tool,'circle');assert.equal(f.nodes['projection-tool'].value,'circle');projectionAdd(f,{x1:3,y1:3,radius:2});f.nodes['projection-quick-line'].click();
+  f.nodes['projection-active-view'].value='plan';f.nodes['projection-active-view'].emit('change');projectionAdd(f,{x1:1,y1:1,x2:5,y2:1});f.nodes['projection-undo'].click();
+  assert.equal(f.studio.state.drawings.plan.length,0);assert.equal(f.studio.state.drawings.front.length,1);f.nodes['projection-check-active'].click();assert.equal(f.studio.state.results.plan.valid,false);
+  f.setLanguage('en');assert.match(f.nodes['projection-quick-circle'].textContent,/Circle/);
+ }finally{f.restore();}
+});

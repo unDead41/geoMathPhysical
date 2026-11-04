@@ -57,6 +57,6 @@ export function restoreSnapshot(s,bank,actor,now=0){
 export class SoloStore{
   constructor(storage,bank){this.storage=storage;this.bank=bank;this.status='empty';}
   read(actor){try{const raw=this.storage.getItem(SOLO_KEY+actor);if(!raw){this.status='empty';return null;}const s=JSON.parse(raw);restoreSnapshot(s,this.bank,actor);this.status='saved';return s;}catch(error){this.status=error instanceof SyntaxError||error.message==='Invalid solo snapshot'?'invalid':'failed';return null;}}
-  save(game,context,now){try{const s=makeSnapshot(game,this.bank,context,now);this.storage.setItem(SOLO_KEY+context.actor,JSON.stringify(s));this.status='saved';return true;}catch{this.status='failed';return false;}}
+  save(game,context,now){try{const s=makeSnapshot(game,this.bank,context,now);s.savedAt=Date.now();this.storage.setItem(SOLO_KEY+context.actor,JSON.stringify(s));this.status='saved';return true;}catch{this.status='failed';return false;}}
   clear(actor){try{this.storage.removeItem(SOLO_KEY+actor);this.status='empty';return true;}catch{this.status='failed';return false;}}
 }

@@ -1,4 +1,4 @@
-import {uiNode,uiSvg} from './ui.mjs';
+import {uiNode,uiSvg,uiIcon} from './ui.mjs';
 import {learningMesh} from './learning-mesh.mjs';
 import {workshopMesh} from './surface-workshop.mjs';
 import {compositionMesh} from './lab-geometry.mjs';
@@ -7,8 +7,9 @@ import {calculationShapeNames,calculationUnitOptions,calculationContextOptions,c
 
 const calcSteps=['formula','substitution','calculation','unit'];
 const calcCopy={
- title:['Semakan langkah pengiraan','Check calculation steps'],eyebrow:['BENGKEL PENGIRAAN · 6.3 / 6.4','CALCULATION WORKSHOP · 6.3 / 6.4'],
- intro:['Bina penyelesaian sendiri. Semak satu langkah pada satu masa, baca petunjuk dan baiki jawapan. Tiada markah disimpan.','Build your own solution. Check one step at a time, read a hint and improve your answer. No score is saved.'],
+ title:['Semakan langkah pengiraan','Check calculation steps'],eyebrow:['GEOMATH · BENGKEL 6.3 / 6.4','GEOMATH · WORKSHOP 6.3 / 6.4'],
+ intro:['Fahami setiap langkah. Bina penyelesaian anda, satu langkah pada satu masa.','Understand each step. Build your solution, one step at a time.'],
+ sequence:['Empat langkah penyelesaian','Four solution steps'],previousStep:['Langkah sebelumnya','Previous step'],nextStep:['Langkah seterusnya','Next step'],syntaxHelp:['Panduan menulis jawapan','How to write your answer'],answer:['Jawapan','Answer'],stepCount:['Langkah','Step'],
  setup:['Tetapkan soalan','Set the problem'],shape:['Bentuk','Solid'],quantity:['Cari','Find'],surface:['Luas permukaan','Surface area'],volume:['Isi padu','Volume'],context:['Keadaan permukaan','Surface context'],closed:['Bentuk tertutup','Closed solid'],open:['Bekas terbuka di atas','Open-top vessel'],'cube-pyramid':['Kubus + piramid','Cube + pyramid'],'cylinder-cone':['Silinder + kon','Cylinder + cone'],
  given:['Ukuran bulatan diberi','Given circular measure'],radius:['Jejari','Radius'],diameter:['Diameter','Diameter'],pi:['Nilai π','Value of π'],piRatio:['π ≈ 22/7','π ≈ 22/7'],piDecimal:['π ≈ 3.142','π ≈ 3.142'],piFull:['Nilai π penuh','Full value of π'],target:['Unit jawapan diminta','Requested answer unit'],dimensions:['Ukuran diberi (cm)','Given dimensions (cm)'],
  dimensionHelp:['Masukkan 0.1–1000 cm. Koma atau titik perpuluhan diterima. Ukuran ini mengubah soalan dan rajah bengkel sahaja.','Enter 0.1–1000 cm. Decimal commas and points are accepted. These dimensions change this workshop’s question and diagram.'],
@@ -50,15 +51,17 @@ function calcDrawDiagram(svg,problem,language){
 }
 
 export class CalculationWorkshop{
- constructor({root,announce=()=>{},prefersReduced=()=>true,getLanguage=()=> 'ms',onDescribe=()=>{},onNotes=()=>{}}={}){Object.assign(this,{root,announce,prefersReduced,getLanguage,onDescribe,onNotes});this.ready=false;this.active=false;this.nodes={};this.bindings=[];this.draft=null;this.problem=null;this.problemIndex=0;this.statusKey='';}
+ constructor({root,announce=()=>{},prefersReduced=()=>true,getLanguage=()=> 'ms',onDescribe=()=>{},onNotes=()=>{}}={}){Object.assign(this,{root,announce,prefersReduced,getLanguage,onDescribe,onNotes});this.ready=false;this.active=false;this.nodes={};this.bindings=[];this.draft=null;this.problem=null;this.problemIndex=0;this.statusKey='';this.activeStep=0;}
  text(key){return calcText(key,this.language());}
  language(){return this.getLanguage()==='en'?'en':'ms';}
  init(){
   if(this.ready)return;this.ready=true;this.root=this.root||document.getElementById('calculation-panel');if(!this.root)return;
   this.root.setAttribute('data-module-native-language','true');this.root.setAttribute('class','calculation-workshop');
   const make=(tag,id,attrs={},key)=>{const node=uiNode(tag,{...attrs,...(id?{id}:{} )});if(id)this.nodes[id]=node;if(key)this.bindings.push({node,key});return node;};
-  const header=make('div',null,{class:'calc-header'}),intro=make('div');intro.append(make('p',null,{class:'eyebrow'},'eyebrow'),make('h2','calculation-title',{tabindex:'-1'},'title'),make('p',null,{class:'body-copy'},'intro'));header.append(intro);this.root.append(header);
-  const layout=make('div',null,{class:'calc-layout'}),setup=make('section',null,{class:'calc-setup','aria-labelledby':'calculation-setup-title'}),main=make('div',null,{class:'calc-main'});setup.append(make('h3','calculation-setup-title',{},'setup'));
+  const header=make('div',null,{class:'calc-header'}),intro=make('div');intro.append(make('p',null,{class:'eyebrow'},'eyebrow'),make('h2','calculation-title',{tabindex:'-1'},'title'),make('p',null,{class:'body-copy'},'intro'));header.append(uiIcon('check'),intro);this.root.append(header);
+  const stepper=make('nav',null,{class:'calc-stepper','aria-label':this.text('sequence')});this.bindings.push({node:stepper,key:'sequence',attribute:'aria-label'});
+  for(const [index,step] of calcSteps.entries()){const button=make('button','calculation-go-'+step,{type:'button',class:'calc-step-link','aria-controls':'calculation-card-'+step}),label=make('span','calculation-nav-label-'+step);button.append(uiNode('span',{class:'calc-step-number','aria-hidden':'true'},String(index+1)),label);button.addEventListener('click',()=>this.goStep(index));stepper.append(button);}this.root.append(stepper);
+  const layout=make('div',null,{class:'calc-layout'}),setup=make('details',null,{class:'calc-setup','aria-labelledby':'calculation-setup-title'}),main=make('div',null,{class:'calc-main'});setup.append(make('summary','calculation-setup-title',{},'setup'));
   const select=(key,labelKey,options)=>{const wrap=make('div','calculation-field-'+key,{class:'lab-field'}),label=make('label',null,{for:'calculation-'+key},labelKey),input=make('select','calculation-'+key);for(const [value,key] of options){const option=make('option',null,{value},key);input.append(option);}wrap.append(label,input);setup.append(wrap);return input;};
   const shapes=select('shape','shape',[]);for(const [key,names] of Object.entries(calculationShapeNames)){const option=make('option',null,{value:key});option.textContent=names[0];shapes.append(option);}
   shapes.addEventListener('change',()=>this.setShape(shapes.value));
@@ -74,21 +77,22 @@ export class CalculationWorkshop{
   }setup.append(dimensions,make('p','calculation-dimension-help',{class:'body-copy'},'dimensionHelp'));
   const noteButton=make('button','calculation-notes',{type:'button',class:'button'},'notes');noteButton.addEventListener('click',()=>this.onNotes(this.draft.shape));setup.append(noteButton);
   const question=make('section',null,{class:'calc-question','aria-labelledby':'calculation-question-title'});question.append(make('h3','calculation-question-title',{},'question'),make('p','calculation-question'),make('p','calculation-context-note',{class:'body-copy'}));
-  const figure=make('figure',null,{class:'calc-figure'}),diagram=uiSvg('svg',{id:'calculation-diagram',viewBox:'0 0 320 240',role:'img'});this.nodes['calculation-diagram']=diagram;figure.append(diagram,make('figcaption','calculation-diagram-caption',{class:'body-copy'}));question.append(figure,make('dl','calculation-symbols',{class:'calc-symbols'}));main.append(question);
-  const guidance=make('div',null,{class:'calc-guidance'});guidance.append(make('p',null,{class:'body-copy'},'questionHelp'),make('p','calculation-syntax',{class:'body-copy'},'syntax'),make('p',null,{class:'body-copy'},'rounding'));main.append(guidance);
+  const figure=make('figure',null,{class:'calc-figure'}),diagram=uiSvg('svg',{id:'calculation-diagram',viewBox:'0 0 320 240',role:'img'});this.nodes['calculation-diagram']=diagram;figure.append(diagram,make('figcaption','calculation-diagram-caption',{class:'body-copy'}));question.append(figure,make('dl','calculation-symbols',{class:'calc-symbols'}));const reference=make('div',null,{class:'calc-reference'});reference.append(question,setup);
+  const guidance=make('details',null,{class:'calc-guidance'});guidance.append(make('summary',null,{},'syntaxHelp'),make('p',null,{class:'body-copy'},'questionHelp'),make('p','calculation-syntax',{class:'body-copy'},'syntax'),make('p',null,{class:'body-copy'},'rounding'));main.append(guidance);
   const steps=make('div',null,{class:'calc-steps'});
   for(const [index,step] of calcSteps.entries()){
-   const card=make('section','calculation-card-'+step,{class:'calc-step','aria-labelledby':'calculation-label-'+step}),title=make('h3','calculation-label-'+step),prompt=make('label','calculation-prompt-'+step,{for:step==='unit'?'calculation-unit-value':'calculation-'+step});card.append(title,prompt);
+   const card=make('section','calculation-card-'+step,{class:'calc-step','aria-labelledby':'calculation-label-'+step}),title=make('h3','calculation-label-'+step),prompt=make('label','calculation-prompt-'+step,{for:step==='unit'?'calculation-unit-value':'calculation-'+step});card.append(make('p','calculation-position-'+step,{class:'eyebrow'}),title,prompt);
    const input=make('input',step==='unit'?'calculation-unit-value':'calculation-'+step,{type:'text',autocomplete:'off',spellcheck:'false',maxlength:'480','aria-describedby':'calculation-feedback-'+step,...(step==='unit'?{inputmode:'decimal'}:{})});input.addEventListener('input',()=>{this.draft.answers[step==='unit'?'unitValue':step]=input.value;this.invalidateFrom(index);this.updateSteps();});input.addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();this.check(step);}});
-   const row=make('div',null,{class:step==='unit'?'calc-unit-row':'calc-answer-row'});row.append(input);if(step==='unit'){const unit=make('select','calculation-unit',{'aria-label':this.text('answerUnit')});unit.append(make('option',null,{value:''},'chooseUnit'));for(const value of [...calculationUnitOptions.surface,...calculationUnitOptions.volume])unit.append(uiNode('option',{value},value));unit.addEventListener('change',()=>{this.draft.answers.unit=unit.value;this.invalidateFrom(index);this.updateSteps();});row.append(unit);}card.append(row);
+   const row=make('div',null,{class:step==='unit'?'calc-unit-row':'calc-answer-row'});row.append(input);if(step==='unit'){const unit=make('select','calculation-unit',{'aria-label':this.text('answerUnit')});unit.append(make('option',null,{value:''},'chooseUnit'));for(const value of [...calculationUnitOptions.surface,...calculationUnitOptions.volume])unit.append(uiNode('option',{value},value));unit.addEventListener('change',()=>{this.draft.answers.unit=unit.value;this.invalidateFrom(index);this.updateSteps();});row.append(unit);}card.append(make('label',null,{class:'calc-answer-label',for:step==='unit'?'calculation-unit-value':'calculation-'+step},'answer'),row);
    const actions=make('div',null,{class:'lab-actions'}),check=make('button','calculation-check-'+step,{type:'button',class:'button primary'},'check'),hint=make('button','calculation-hint-'+step,{type:'button',class:'button'},'hint');check.addEventListener('click',()=>this.check(step));hint.addEventListener('click',()=>this.hint(step));actions.append(check,hint);card.append(actions,make('p','calculation-feedback-'+step,{class:'lab-feedback',role:'status'}),make('p','calculation-hint-copy-'+step,{class:'calc-hint',hidden:'hidden'}));steps.append(card);
   }main.append(steps);
+  const wizardActions=make('div',null,{class:'calc-wizard-actions'});for(const [key,offset] of [['previousStep',-1],['nextStep',1]]){const button=make('button','calculation-'+(offset===1?'next':'previous')+'-step',{type:'button',class:'button'+(offset===1?' primary':'')},key);button.addEventListener('click',()=>this.goStep(this.activeStep+offset));wizardActions.append(button);}main.append(wizardActions);
   const actions=make('div',null,{class:'calc-actions lab-actions'});for(const [key,handler] of [['retry',()=>{this.clearAnswers();this.statusKey='retryReady';this.update(true);this.nodes['calculation-formula'].focus();}],['reveal',()=>this.reveal()],['example',()=>this.showExample()],['new-problem',()=>this.newProblem()]]){const node=make('button','calculation-'+key,{type:'button',class:key==='new-problem'?'button primary':'button'},key==='new-problem'?'newProblem':key);node.addEventListener('click',handler);actions.append(node);}
-  main.append(actions,make('p','calculation-reveal-guidance',{class:'body-copy'},'hintReady'),make('p','calculation-workshop-status',{class:'calculation-status',role:'status'}),make('section','calculation-solution',{class:'calc-solution',hidden:'hidden'}),make('section','calculation-example-panel',{class:'calc-solution',hidden:'hidden'}));layout.append(setup,main);this.root.append(layout,make('p',null,{class:'body-copy calc-scope'},'scope'));
+  main.append(actions,make('p','calculation-reveal-guidance',{class:'body-copy'},'hintReady'),make('p','calculation-workshop-status',{class:'calculation-status',role:'status'}),make('section','calculation-solution',{class:'calc-solution',hidden:'hidden'}),make('section','calculation-example-panel',{class:'calc-solution',hidden:'hidden'}));layout.append(reference,main);this.root.append(layout,make('p',null,{class:'body-copy calc-scope'},'scope'));
  }
  open(shape,context){
   this.init();if(!this.root)return;const chosen=Object.hasOwn(calculationShapeNames,shape)?shape:this.draft?.shape||'cube';
-  if(!this.draft||this.draft.shape!==chosen)this.draft=calcDraft(chosen);
+  if(!this.draft||this.draft.shape!==chosen){this.draft=calcDraft(chosen);this.activeStep=0;}
   if(context?.dimensions||context?.piMode){
    const same=this.draft.context==='closed'&&(!context.piMode||context.piMode===this.draft.piMode)&&(!context.dimensions||calculationFields(chosen).every(key=>readDimension(context.dimensions[key])===readDimension(this.draft.dimensions[key])));
    if(!same){this.draft.context='closed';if(context.dimensions)this.draft.dimensions=Object.fromEntries(calculationFields(chosen).map(key=>[key,String(context.dimensions[key]??'')]));if(['22/7','3.142','full'].includes(context.piMode))this.draft.piMode=context.piMode;this.invalidate();}
@@ -98,12 +102,12 @@ export class CalculationWorkshop{
  close(){this.active=false;if(this.root)this.root.hidden=true;}
  refreshLanguage(){if(this.ready&&this.draft)this.update();}
  resetContext(){if(!this.draft)return;this.clearAnswers();this.statusKey='';if(this.ready)this.update(true);}
- setShape(shape){if(!Object.hasOwn(calculationShapeNames,shape))return;this.draft=calcDraft(shape);this.statusKey='';this.update(true);}
- invalidate(){this.draft.checks={};this.draft.hints.clear();this.draft.revealed=false;this.draft.example=false;this.statusKey='changed';}
+ setShape(shape){if(!Object.hasOwn(calculationShapeNames,shape))return;this.draft=calcDraft(shape);this.activeStep=0;this.statusKey='';this.update(true);}
+ invalidate(){this.activeStep=0;this.draft.checks={};this.draft.hints.clear();this.draft.revealed=false;this.draft.example=false;this.statusKey='changed';}
  invalidateFrom(index){for(let i=index;i<calcSteps.length;i++)delete this.draft.checks[calcSteps[i]];this.draft.revealed=false;}
- clearAnswers(){this.draft.answers={formula:'',substitution:'',calculation:'',unit:'',unitValue:''};this.draft.checks={};this.draft.hints.clear();this.draft.revealed=false;this.draft.example=false;}
+ clearAnswers(){this.activeStep=0;this.draft.answers={formula:'',substitution:'',calculation:'',unit:'',unitValue:''};this.draft.checks={};this.draft.hints.clear();this.draft.revealed=false;this.draft.example=false;}
  update(fillFields=false){
-  if(!this.ready||!this.draft||!this.root)return;const d=this.draft,n=this.nodes,language=this.language();for(const binding of this.bindings)binding.node.textContent=this.text(binding.key);
+  if(!this.ready||!this.draft||!this.root)return;const d=this.draft,n=this.nodes,language=this.language();for(const binding of this.bindings){if(binding.attribute)binding.node.setAttribute(binding.attribute,this.text(binding.key));else binding.node.textContent=this.text(binding.key);}
   for(const option of n['calculation-shape'].children)option.textContent=calculationShapeNames[option.getAttribute('value')]?.[language==='en'?1:0]||'';
   n['calculation-context'].replaceChildren(...calculationContextOptions(d.shape).map(value=>uiNode('option',{value},this.text(value))));
   n['calculation-target-unit'].replaceChildren(...calculationUnitOptions[d.quantity].map(value=>uiNode('option',{value},value)));
@@ -136,16 +140,23 @@ export class CalculationWorkshop{
   if(sides){const area=sides===3?'√3 × a² / 4':sides===5?'√(25 + 10√5) × a² / 4':'3√3 × a² / 2';append(this.text('baseArea'),area+' cm²');append(this.text('perimeter'),sides+' × a cm');}
  }
  updateSteps(){
-  if(!this.draft||!this.problem)return;const n=this.nodes,d=this.draft;for(const [index,step] of calcSteps.entries()){
+  if(!this.draft||!this.problem)return;const n=this.nodes,d=this.draft;
+  const firstUnchecked=calcSteps.findIndex(step=>!d.checks[step]?.correct),available=firstUnchecked<0?3:firstUnchecked;
+  this.activeStep=Math.min(this.activeStep,available);
+  for(const [index,step] of calcSteps.entries()){
+   const nav=n['calculation-go-'+step];nav.disabled=!this.problem.valid||index>available;nav.setAttribute('aria-current',index===this.activeStep?'step':'false');nav.setAttribute('data-complete',String(Boolean(d.checks[step]?.correct)));n['calculation-nav-label-'+step].textContent=this.text(step);
+   n['calculation-card-'+step].hidden=index!==this.activeStep;n['calculation-position-'+step].textContent=this.text('stepCount')+' '+(index+1)+' / 4';
    const enabled=this.problem.valid&&(index===0||d.checks[calcSteps[index-1]]?.correct),result=d.checks[step],label=(index+1)+'. '+this.text(step);n['calculation-label-'+step].textContent=label;n['calculation-prompt-'+step].textContent=this.text(step+'Prompt')+(step==='calculation'?' ('+this.problem.baseUnit+')':'');
    for(const key of ['calculation-check-'+step,'calculation-hint-'+step,step==='unit'?'calculation-unit-value':'calculation-'+step])n[key].disabled=!enabled;if(step==='unit')n['calculation-unit'].disabled=!enabled;n['calculation-check-'+step].setAttribute('aria-label',this.text('check')+' '+label);n['calculation-hint-'+step].setAttribute('aria-label',this.text('hint')+' '+label);
    const input=n[step==='unit'?'calculation-unit-value':'calculation-'+step];input.setAttribute('aria-invalid',String(Boolean(result&&!result.correct)));
    const feedback=n['calculation-feedback-'+step];feedback.textContent=result?calculationFeedback(result.code,this.language(),this.problem):this.text(enabled?'unchecked':this.problem.valid?'locked':'invalid');feedback.setAttribute('data-success',result?String(result.correct):'');
    const hint=n['calculation-hint-copy-'+step];hint.hidden=!d.hints.has(step);hint.textContent=d.hints.has(step)?calculationHint(this.problem,step,this.language()):'';
   }
+  n['calculation-previous-step'].disabled=this.activeStep===0;n['calculation-next-step'].disabled=this.activeStep>=3||!this.problem.valid||!d.checks[calcSteps[this.activeStep]]?.correct;n['calculation-next-step'].hidden=this.activeStep===3;
   n['calculation-reveal'].disabled=!this.problem.valid||!d.hints.size;n['calculation-reveal'].setAttribute('aria-expanded',String(d.revealed));n['calculation-example'].setAttribute('aria-expanded',String(d.example));n['calculation-reveal-guidance'].hidden=Boolean(d.hints.size);
   n['calculation-workshop-status'].textContent=!this.problem.valid?this.text('invalid'):calcSteps.every(step=>d.checks[step]?.correct)?this.text('complete'):this.statusKey?this.text(this.statusKey):'';n['calculation-solution'].hidden=!d.revealed;n['calculation-example-panel'].hidden=!d.example;
  }
+ goStep(index){if(index<0||index>=calcSteps.length||this.nodes['calculation-go-'+calcSteps[index]].disabled)return;this.activeStep=index;this.updateSteps();this.nodes[index===3?'calculation-unit-value':'calculation-'+calcSteps[index]].focus();}
  check(step){
   const index=calcSteps.indexOf(step);if(index<0||!this.problem?.valid)return;if(index>0&&!this.draft.checks[calcSteps[index-1]]?.correct){this.announce(calculationFeedback('sequence',this.language()));return;}
   const value=step==='unit'?{value:this.draft.answers.unitValue,unit:this.draft.answers.unit}:this.draft.answers[step],result=calculationCheckStep(this.problem,step,value);this.invalidateFrom(index);this.draft.checks[step]=result;this.statusKey='';this.updateSteps();this.announce((index+1)+'. '+this.text(step)+': '+calculationFeedback(result.code,this.language(),this.problem));

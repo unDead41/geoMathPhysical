@@ -1,0 +1,4 @@
+PASS create, rename, archive, restore and delete empty class and room
+PASS stale edit, explicit refresh and failed-save retry in English dark mobile
+PASS remove learner preserves real stored attempt and denies subsequent room access
+PASS student invitation decline and management permissions

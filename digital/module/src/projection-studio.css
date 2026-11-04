@@ -73,3 +73,48 @@
 @media(max-width:900px){.projection-top{grid-template-columns:minmax(0,1fr)}.projection-checks{grid-template-columns:minmax(0,1fr)}.projection-check-card .lab-feedback{min-height:0}.projection-tool-row{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:600px){.projection-card,.projection-dimensions{padding:var(--space-4)}.projection-setup{grid-template-columns:minmax(0,1fr)}.projection-coordinates{grid-template-columns:repeat(2,minmax(0,1fr))}.projection-actions>button{flex:1 1 100%}.projection-entry .projection-actions>button{flex:1 1 10rem}#projection-model{height:20rem}.projection-camera button{flex-basis:8rem}.projection-legend{flex-direction:column}.projection-measure-row>.lab-field{max-width:none}}
 @media(forced-colors:active){.projection-stroke,.projection-dimension,.projection-model-extension{stroke:CanvasText}.projection-transfer{stroke:GrayText}.projection-grid-bg{fill:Canvas;stroke:CanvasText}.projection-selected,.projection-cursor{stroke:Highlight}.projection-marker-text,.projection-board-title,.projection-grid-number,.projection-model-label,.projection-axis-label{fill:CanvasText;stroke:none}}
+
+/* GeoMath screens 34: view recipes only; projection geometry keeps its owner. */
+.projection-header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:var(--space-4);margin-block:var(--space-5)}
+.projection-identity{display:flex;align-items:flex-start;gap:var(--space-4);min-width:0;flex:1 1 24rem}
+.projection-identity>.ui-icon{width:3rem;height:3rem;padding:var(--space-2);border-radius:var(--radius-control);background:var(--blue-soft);color:var(--primary);flex-shrink:0}
+.projection-header h2{margin-bottom:var(--space-2);font-family:var(--font-display);font-size:var(--text-title)}
+.projection-header .projection-intro{margin:0;color:var(--muted)}
+.projection-quick-tools{display:flex;flex-wrap:wrap;gap:var(--space-2)}
+.projection-quick-tools .button{display:flex;align-items:center;gap:var(--space-2)}
+.projection-quick-tools [aria-pressed="true"]{background:var(--primary-fill);color:var(--on-primary-fill);border-color:var(--primary-fill)}
+.projection-configuration{margin-bottom:var(--space-4)}
+.projection-configuration>summary{min-height:var(--control-size);align-content:center;font-weight:700;cursor:pointer}
+.projection-configuration .projection-setup{margin-top:var(--space-4)}
+.projection-configuration .projection-dimensions{padding:var(--space-4);background:var(--bg)}
+.projection-workspace{display:grid;grid-template-columns:minmax(16rem,22rem) minmax(0,1fr);gap:var(--space-4);align-items:start;margin-top:var(--space-4)}
+.projection-workspace .projection-top{display:flex;flex-direction:column;gap:var(--space-4);margin:0}
+.projection-top>.projection-card{width:100%}
+.projection-model-card{padding:var(--space-4)}
+.projection-model-card h3{font-size:var(--text-small)}
+#projection-model{height:18rem}
+.projection-model-card #projection-model-description{margin-top:var(--space-3)}
+.projection-model-card .projection-camera button{flex-basis:5rem}
+.projection-guide .projection-actions>button{flex:1 1 8rem}
+.projection-guide #projection-guide-step{padding:var(--space-3);background:var(--blue-soft);border-radius:var(--radius-control)}
+.projection-tools .projection-note{margin-bottom:0}
+.projection-tools .projection-legend{padding-top:var(--space-3);margin-top:var(--space-3);border-top:var(--border-width) solid var(--border)}
+.projection-sheet-section{margin:0;padding:var(--space-4);background:var(--surface);border:var(--border-width) solid var(--border);border-radius:var(--radius)}
+.projection-sheet-scroll{background:var(--stage-bg)}
+.projection-entry{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--space-3) var(--space-5);align-items:start;background:var(--blue-soft)}
+.projection-entry>h3,.projection-entry>.projection-note,.projection-entry>.projection-selection,.projection-entry>#projection-cursor-status{grid-column:1/-1}
+.projection-entry>h3,.projection-entry>.projection-note{margin:0}
+.projection-entry #projection-check-active{align-self:end}
+.projection-entry .projection-selection{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--space-4);align-items:end;margin-top:var(--space-2)}
+.projection-entry .projection-actions{margin:0}
+.projection-coordinates{grid-template-columns:repeat(4,minmax(0,1fr))}
+.projection-coordinates .lab-field[hidden]{display:none}
+.projection-check-card .lab-feedback{min-height:0;padding:var(--space-3);background:var(--bg);border-radius:var(--radius-control)}
+.projection-check-card .lab-feedback[data-success="true"]{background:var(--mint-soft);color:var(--success)}
+.projection-check-card .lab-feedback[data-success="false"]{background:var(--danger-soft);color:var(--danger)}
+.projection-explanation>summary{font-weight:600;line-height:var(--leading-body)}
+.projection-studio .projection-setup .lab-field[hidden],.projection-studio .projection-measure-row .lab-field[hidden]{display:none}
+@media(max-width:1100px){.projection-workspace{grid-template-columns:minmax(0,1fr)}.projection-workspace .projection-top{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.projection-entry{grid-template-columns:minmax(0,1fr)}.projection-entry .projection-selection{grid-template-columns:minmax(0,1fr)}.projection-entry #projection-check-active{justify-self:start}}
+@media(max-width:700px){.projection-header h2{font-size:var(--text-heading)}.projection-identity>.ui-icon{width:2.75rem;height:2.75rem}.projection-quick-tools{width:100%}.projection-quick-tools .button{flex:1 1 9rem;justify-content:center}.projection-workspace .projection-top{grid-template-columns:minmax(0,1fr)}.projection-coordinates{grid-template-columns:repeat(2,minmax(0,1fr))}.projection-entry #projection-check-active{width:100%}.projection-sheet-section{padding:var(--space-3)}.projection-tool-row{grid-template-columns:minmax(0,1fr)}}
+
+.projection-tool-help>summary{min-height:var(--control-size);align-content:center;font-weight:600;cursor:pointer;font-size:var(--text-small)}

@@ -1,0 +1,13 @@
+✔ every stylesheet and typography token in the pinned artifact receives text scaling while model dimensions stay unchanged (5294.148989ms)
+✔ the actual module artifact starts through the native bridge with current preferences and both independent protocols (1046.208404ms)
+✔ settings messages preserve document identity and measurements, reject stale instances, and update language/audio live (1857.21517ms)
+✔ guided labels localize while a learner prediction and paused model stay unchanged (2758.431131ms)
+✔ English lab and print preview labels translate without changing SVG geometry or print-scale values (2298.728663ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14623.015687

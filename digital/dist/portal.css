@@ -659,3 +659,14 @@ html[data-text-size=large]{font-size:1.25rem}html[data-text-size=largest]{font-s
 .portal-profile-classes li{display:flex;flex-direction:column;gap:.25rem;padding-block:.75rem;border-bottom:1px solid var(--border)}
 .portal-profile-classes .button{align-self:flex-start}
 .portal-profile-confirm .dialog-actions{flex-wrap:wrap}
+.portal-management-actions{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem;margin-block:.8rem}
+.portal-management-actions>.button{max-width:100%;white-space:normal;overflow-wrap:anywhere}
+.portal-management-dialog{box-sizing:border-box;width:min(36rem,calc(100vw - 2rem));max-height:calc(100dvh - 2rem);padding:0;border:1px solid var(--border);border-radius:var(--radius-lg,1.5rem);background:var(--surface);color:var(--ink);overflow:auto;box-shadow:var(--shadow-dialog,0 1rem 3rem #18334b33)}
+.portal-management-dialog::backdrop{background:#10263888}
+.portal-management-dialog .dialog-shell{padding:1.5rem;min-width:0}
+.portal-management-dialog h2{margin:0;font-family:var(--font-display);overflow-wrap:anywhere}
+.portal-management-dialog p{overflow-wrap:anywhere}
+.portal-management-object{font-weight:700;font-size:1.125em;margin-block:.75rem}
+.portal-management-dialog .portal-management-actions{justify-content:flex-end}
+.portal-management-dialog .portal-field{margin-block:1rem}
+@media(max-width:480px){.portal-management-dialog .dialog-shell{padding:1rem}.portal-management-dialog .portal-management-actions>.button{flex:1 1 8rem}}

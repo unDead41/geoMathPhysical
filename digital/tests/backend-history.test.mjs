@@ -23,7 +23,9 @@ test('archived hosted history replays in order and passes all five SQL contracts
   await db.exec(sql);
  }
  const pending=fs.readdirSync(dir).filter(f=>f.endsWith('.sql')&&!files.includes(f)).sort();
- assert.deepEqual(pending,[]);
+ // This additive candidate is tested after the immutable hosted baseline;
+ // its presence does not alter hosted-history.json or claim production deploy.
+ assert.deepEqual(pending,['20261104014958_geodecoder_classroom_crud.sql']);
  for(const f of files.filter(f=>f.includes('digital_v2_7_integration')))await db.exec(fs.readFileSync(new URL(f,dir),'utf8'));
  for(const f of pending)await db.exec(fs.readFileSync(new URL(f,dir),'utf8'));
  await db.exec(fs.readFileSync(new URL('../backend/duel/verify-v2.sql',import.meta.url),'utf8'));

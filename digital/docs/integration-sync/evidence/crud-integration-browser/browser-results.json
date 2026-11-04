@@ -1,0 +1,21 @@
+{
+  "environment": "local Chromium, real PostgreSQL via PGlite, synthetic Auth adapter",
+  "cases": [
+    {
+      "name": "create, rename, archive, restore and delete empty class and room",
+      "pass": true
+    },
+    {
+      "name": "stale edit, explicit refresh and failed-save retry in English dark mobile",
+      "pass": true
+    },
+    {
+      "name": "remove learner preserves real stored attempt and denies subsequent room access",
+      "pass": true
+    },
+    {
+      "name": "student invitation decline and management permissions",
+      "pass": true
+    }
+  ]
+}

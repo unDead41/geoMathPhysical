@@ -4,6 +4,8 @@ import {ACCOUNT_COPY} from './account-copy.mjs';
 import {SESSION_COPY} from './session-copy.mjs';
 import {SETTINGS_COPY} from './settings.mjs';
 import {HELP_COPY} from './help-copy.mjs';
+import {ENTRY_COPY} from './entry-copy.mjs';
+import {CLASSROOM_COPY} from './classroom-copy.mjs';
 // Local KSSM BM/English presentation data. No network translation. See docs/DWI_LANGUAGE.md.
 // Presentation emphasis follows DWI_GLOSSARY.md; these strings never select an answer.
 export const RICH_TERMS = {
@@ -856,9 +858,28 @@ const QUESTION_BM_COPY = {
   C2: {hint:'Tinggi sendeng diukur dari tepi tapak ke puncak di sepanjang garis lurus pada permukaan melengkung.'}
 };
 const duelMessages = {
+  'duel.ui.createTitle':['Cipta Duel','Create a duel'],
+  'duel.ui.createNote':['Cipta PIN bilik dan jemput seorang kawan.','Create a room PIN and invite a friend.'],
+  'duel.ui.joinTitle':['Sertai Duel','Join a duel'],
+  'duel.ui.joinNote':['Masukkan PIN yang dikongsi oleh kawan anda.','Enter the PIN your friend shared with you.'],
+  'duel.ui.pinLifetime':['PIN sah selama 10 minit.','The PIN is valid for 10 minutes.'],
+  'duel.ui.pinHelp':['Taip atau tampal keenam-enam digit PIN.','Type or paste all six digits of the PIN.'],
+  'duel.ui.roomPin':['PIN Duel','Duel PIN'],
+  'duel.ui.openSlot':['Ruang untuk kawan','A place for your friend'],
+  'duel.ui.disconnected':['Terputus sambungan','Disconnected'],
+  'duel.ui.winner':['Pemenang','Winner'],
+  'duel.ui.waitingTitle':['Menunggu kawan anda','Waiting for your friend'],
+  'duel.ui.lobbyTitle':['Lobi Duel','Duel lobby'],
+  'duel.ui.countdownTitle':['Bersedia untuk Duel','Get ready to duel'],
+  'duel.ui.closedTitle':['Lobi ditutup','Lobby closed'],
+  'duel.ui.questionProgress':['Soalan {number} / 10','Question {number} / 10'],
+  'duel.ui.resultTitle':['Duel selesai','Duel complete'],
+  'duel.ui.homeLabel':['GeoMath, halaman mula','GeoMath, home page'],
+  'duel.ui.playTitle':['GeoMath — Duel berlangsung','GeoMath — Duel in progress'],
+  'duel.ui.resultPageTitle':['GeoMath — Keputusan Duel','GeoMath — Duel results'],
   'duel.mode':['Duel · 2 pemain','Duel · 2 players'],
   'duel.title':['Duel bersama kawan','Duel with a friend'],
-  'duel.pageTitle':['GeoDecoder Digital — Duel','GeoDecoder Digital — Duel'],
+  'duel.pageTitle':['GeoMath — Duel','GeoMath — Duel'],
   'duel.modeNote':['Cipta PIN enam digit atau masukkan PIN kawan. Dua pemain menjawab 10 soalan yang sama. Internet diperlukan.','Create a six-digit PIN or enter your friend’s PIN. Two players answer the same 10 questions. Internet required.'],
   'duel.privacy':['Nama panggilan anda dikongsi dengan pelayan dan kawan dalam bilik. Kelas dan kategori kekal pada peranti ini.','Your nickname is shared with the server and your friend in the room. Class and category stay on this device.'],
   'duel.open':['Buka Duel','Open Duel'],
@@ -980,6 +1001,8 @@ for(const [key,en] of Object.entries(PORTAL_COPY)){MESSAGES.ms[key]=key;MESSAGES
 for(const [key,en] of Object.entries({...ACCOUNT_COPY,...SESSION_COPY}))if(!Object.hasOwn(MESSAGES.ms,key)){MESSAGES.ms[key]=key;MESSAGES.en[key]=en;}
 for(const [key,[ms,en]] of Object.entries(SETTINGS_COPY)){MESSAGES.ms[key]=ms;MESSAGES.en[key]=en;}
 for(const [key,[ms,en]] of Object.entries(HELP_COPY)){MESSAGES.ms[key]=ms;MESSAGES.en[key]=en;}
+for(const [key,[ms,en]] of Object.entries(ENTRY_COPY)){MESSAGES.ms[key]=ms;MESSAGES.en[key]=en;}
+for(const [key,en] of Object.entries(CLASSROOM_COPY)){MESSAGES.ms[key]=key;MESSAGES.en[key]=en;}
 export const LANGUAGE_KEY = 'geodecoder.digital.language';
 export function createI18n(storage) {
   let language = 'ms';

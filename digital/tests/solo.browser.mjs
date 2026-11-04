@@ -1,11 +1,16 @@
 import assert from 'node:assert/strict';
 import {startHarness,newCase,startGuest,settings,choice,order,roundFor,fits} from './ease-browser-helpers.mjs';
 import {SOLO_KEY} from '../dist/solo-save.mjs';
+const selected=new Set((process.env.SOLO_BROWSER_CASES||'').split(',').filter(Boolean));
+const available=['ms-desktop','ms-mobile','en-desktop','en-mobile','offline','denied','damaged'];
+for(const name of selected)assert.ok(available.includes(name),'Unknown solo browser case: '+name);
+const runs=name=>!selected.size||selected.has(name);
 const harness=await startHarness();
 const read=page=>page.evaluate(key=>JSON.parse(localStorage.getItem(key)),SOLO_KEY+'guest');
-async function resume(page){await page.locator('#solo-resume-button').click();await page.locator('[data-dialog-action=solo-resume]').click();await page.locator('#game-screen').waitFor({state:'visible'});}
+async function resume(page){await page.locator('#solo-resume-button').click();await page.locator('#resume-screen').waitFor({state:'visible'});if(await page.evaluate(()=>navigator.maxTouchPoints>0))await page.locator('#resume-continue-button').tap();else await page.locator('#resume-continue-button').click();await page.locator('#game-screen').waitFor({state:'visible'});}
 try{
  for(const language of ['ms','en'])for(const mobile of [false,true]){
+  if(!runs(language+'-'+(mobile?'mobile':'desktop')))continue;
   const f=await newCase(harness,{hasTouch:mobile,viewport:mobile?{width:390,height:844}:{width:1365,height:980}});const {page}=f;
   try{
    await settings(page,{language});await startGuest(page,{mode:'practice'});
@@ -26,7 +31,8 @@ try{
   }finally{await f.done();}
  }
  for(const opts of [{offline:true},{denied:true}]){
+  if(!runs(opts.offline?'offline':'denied'))continue;
   const f=await newCase(harness,opts);try{await startGuest(f.page);if(opts.offline){await f.page.reload();await resume(f.page);assert.equal((await read(f.page)).state.index,0);}else assert.match(await f.page.locator('#solo-save-status').innerText(),/belum dapat disimpan/);console.log('PASS '+JSON.stringify(opts));}finally{await f.done();}
  }
- const f=await newCase(harness);try{await f.page.evaluate(key=>localStorage.setItem(key,'{bad'),SOLO_KEY+'guest');await f.page.reload();await f.page.locator('#solo-resume-button').click();assert.match(await f.page.locator('#dialog-content').innerText(),/rosak/);await f.page.locator('[data-dialog-action=solo-new]').click();await f.page.locator('[data-dialog-action=solo-back]').click();assert.equal(await f.page.evaluate(key=>localStorage.getItem(key),SOLO_KEY+'guest'),'{bad');console.log('PASS damaged data and cancel discard');}finally{await f.done();}
+ if(runs('damaged')){const f=await newCase(harness);try{await f.page.evaluate(key=>localStorage.setItem(key,'{bad'),SOLO_KEY+'guest');await f.page.reload();await f.page.locator('#solo-resume-button').click();assert.match(await f.page.locator('#resume-subtitle').innerText(),/rosak/);await f.page.locator('#resume-new-button').click();await f.page.locator('[data-dialog-action=solo-back]').click();assert.equal(await f.page.evaluate(key=>localStorage.getItem(key),SOLO_KEY+'guest'),'{bad');console.log('PASS damaged data and cancel discard');}finally{await f.done();}}
 }finally{await harness.close();}

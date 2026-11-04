@@ -1,4 +1,5 @@
 import {formatTime} from './core.mjs';
+import {parseRetryAfter,retryDelay,transientError,duelPollDelay} from './network-policy.mjs';
 // Public endpoint only. Privileged keys and score validation remain on the server.
 export const DUEL_ENDPOINT='https://fkrlwzxvyufndavlpzbp.supabase.co/functions/v1/geodecoder-duel';
 // Publishable project identifier, not a privileged key or player credential.
@@ -12,9 +13,10 @@ export function duelVerdict(snapshot){
   return !snapshot.room.winnerId?'duel.draw':snapshot.room.winnerId===snapshot.me.id?'duel.youWin':'duel.youLose';
 }
 export class DuelClient{
-  constructor({storage=null,endpoint=DUEL_ENDPOINT,onChange=()=>{},requestTimeoutMs=25000}={}){
+  constructor({storage=null,endpoint=DUEL_ENDPOINT,onChange=()=>{},requestTimeoutMs=25000,random=Math.random,now=Date.now,isOnline=()=>globalThis.navigator?.onLine!==false,isHidden=()=>globalThis.document?.hidden===true}={}){
     this.storage=storage;this.endpoint=endpoint;this.onChange=onChange;
     this.requestTimeoutMs=requestTimeoutMs;
+    this.random=random;this.now=now;this.isOnline=isOnline;this.isHidden=isHidden;this.retryAt=0;this.retryCode='rate_limited';this.pollFailures=0;
     this.session=null;this.snapshot=null;this.connected=false;this.error='';this.busy=false;this.timer=null;this.polling=false;this.generation=0;this.receivedAt=0;this.lastClock=0;
     this.pollEpoch=0;this.refreshInFlight=null;this.controllers=new Set();this.requestSerial=0;this.lastAcceptedSerial=0;
     try{const value=JSON.parse(storage?.getItem(DUEL_SESSION_KEY)||'null');if(value&&/^[a-f0-9]{64}$/.test(value.token)&&(!value.roomId||/^[\da-f-]{36}$/.test(value.roomId)))this.session=value;}catch{/* A denied session store does not block online play. */}
@@ -31,28 +33,41 @@ export class DuelClient{
     if(!this.session)throw Object.assign(new Error('stale_request'),{code:'stale_request'});
     if(this.session.roomId&&snapshot.room.id!==this.session.roomId||this.snapshot&&snapshot.me.id!==this.snapshot.me.id)throw Object.assign(new Error('invalid_response'),{code:'invalid_response'});
     if(this.snapshot&&(snapshot.me.seq<this.snapshot.me.seq||snapshot.serverNow<this.snapshot.serverNow))return false;
-    this.snapshot=snapshot;this.receivedAt=performance.now();this.connected=true;this.error='';
+    this.snapshot=snapshot;this.receivedAt=performance.now();
+    const cooling=this.retryAt>this.now();this.connected=!cooling;this.error=cooling?this.retryCode:'';
+    if(!cooling){this.pollFailures=0;this.retryAt=0;}
     this.lastAcceptedSerial=Math.max(this.lastAcceptedSerial,serial);
     this.session.roomId=snapshot.room.id;this.save();this.notify();
     return true;
   }
   async request(body,context={generation:this.generation,session:this.session}){
     if(!this.isCurrent(context))throw Object.assign(new Error('stale_request'),{code:'stale_request'});
+    if(this.retryAt>this.now())throw Object.assign(new Error(this.retryCode),{code:this.retryCode,retryAfterMs:this.retryAt-this.now()});
     const serial=++this.requestSerial,controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),this.requestTimeoutMs);
     this.controllers.add(controller);
     try{
       const response=await fetch(this.endpoint,{method:'POST',headers:{'Content-Type':'application/json',apikey:DUEL_PUBLIC_KEY},body:JSON.stringify({...body,protocol:DUEL_PROTOCOL}),signal:controller.signal,credentials:'omit',cache:'no-store'});
-      const data=await response.json();
+      const data=await response.json().catch(()=>null);
       if(!this.isCurrent(context))throw Object.assign(new Error('stale_request'),{code:'stale_request'});
-      if(response.status===400&&data.error==='invalid_request'&&response.headers.get('X-GeoDecoder-Duel-Protocol')!=='2')throw Object.assign(new Error('backend_update_required'),{code:'backend_update_required'});
-      if(!response.ok||!data.ok)throw Object.assign(new Error(data.error||'server_error'),{code:data.error||'server_error'});
+      if(response.status===400&&data?.error==='invalid_request'&&response.headers.get('X-GeoDecoder-Duel-Protocol')!=='2')throw Object.assign(new Error('backend_update_required'),{code:'backend_update_required'});
+      if(!response.ok||!data?.ok){
+        const protocolError=['backend_update_required','client_update_required'].includes(data?.error);
+        const code=response.status===429?'rate_limited':protocolError?data.error:response.status>=500?'server_error':data?.error||'server_error';
+        const retryAfterMs=parseRetryAfter(response.headers?.get?.('Retry-After'),this.now());
+        throw Object.assign(new Error(code),{code,retryAfterMs});
+      }
       this.accept(data,serial);return this.snapshot;
     }catch(error){
       const current=this.isCurrent(context);
       const code=!current?'stale_request':typeof error.code==='string'&&error.name!=='AbortError'&&error.name!=='TimeoutError'?error.code:'network_error';
       // A failed older poll must not override a newer confirmed answer.
-      if(current&&serial>=this.lastAcceptedSerial){this.connected=false;this.error=code;this.notify();}
-      throw Object.assign(new Error(code,{cause:error}),{code});
+      if(current&&serial>=this.lastAcceptedSerial){
+        this.connected=false;this.error=code;this.pollFailures++;
+        if(error.retryAfterMs||code==='rate_limited'){this.retryCode=code;this.retryAt=this.now()+Math.max(error.retryAfterMs||0,1000);}
+        this.notify();
+      }
+      if(current&&['invalid_token','room_expired','room_unavailable','backend_update_required','client_update_required'].includes(code))this.stopPolling();
+      throw Object.assign(new Error(code,{cause:error}),{code,retryAfterMs:error.retryAfterMs||0});
     }finally{clearTimeout(timeout);this.controllers.delete(controller);}
   }
   async mutate(body){
@@ -63,13 +78,13 @@ export class DuelClient{
     try{
       let result;
       for(let attempt=0;attempt<2;attempt++){
-        try{result=await this.request(body,context);break;}catch(error){if(!['network_error','server_error'].includes(error.code)||attempt===1)throw error;await new Promise(r=>setTimeout(r,300));}
+        try{result=await this.request(body,context);break;}catch(error){if(!['network_error','server_error'].includes(error.code)||error.retryAfterMs||attempt===1)throw error;await new Promise(r=>setTimeout(r,retryDelay(attempt,{random:this.random})));}
       }
       if(!this.isCurrent(context))throw Object.assign(new Error('stale_request'),{code:'stale_request'});
       if(this.session.pending===body){this.session.pending=null;this.save();}
       return result;
     }catch(error){
-      if(this.isCurrent(context)&&this.session.pending===body&&!['network_error','server_error'].includes(error.code)){this.session.pending=null;this.save();}
+      if(this.isCurrent(context)&&this.session.pending===body&&!transientError(error.code)){this.session.pending=null;this.save();}
       throw error;
     }finally{if(this.isCurrent(context)){this.busy=false;this.notify();}}
   }
@@ -111,16 +126,20 @@ export class DuelClient{
     if(this.polling)return;this.polling=true;const epoch=++this.pollEpoch;
     const poll=async()=>{
       if(!this.polling||epoch!==this.pollEpoch)return;
-      try{if(!this.busy)await this.refresh();}catch{/* Status is visible; retry without clearing the session. */}
-      if(this.polling&&epoch===this.pollEpoch)this.timer=setTimeout(poll,this.connected?2000:5000);
+      try{if(!this.busy&&this.isOnline()&&this.retryAt<=this.now())await this.refresh();}catch{/* Status is visible; retry without clearing the session. */}
+      if(!this.polling||epoch!==this.pollEpoch)return;
+      const delay=this.isOnline()?duelPollDelay(this.snapshot,{hidden:this.isHidden(),failures:this.pollFailures,random:this.random}):30000;
+      if(delay===null){this.stopPolling();return;}
+      if(this.polling&&epoch===this.pollEpoch)this.timer=setTimeout(poll,Math.min(60000,Math.max(delay,this.retryAt-this.now())));
     };
-    this.timer=setTimeout(poll,2000);
+    if(duelPollDelay(this.snapshot)===null){this.stopPolling();return;}
+    this.timer=setTimeout(poll,1500+Math.round(this.random()*500));
   }
   stopPolling(){this.polling=false;this.pollEpoch++;clearTimeout(this.timer);this.timer=null;}
   forget(){
     this.stopPolling();this.generation++;
     for(const controller of this.controllers)controller.abort();
     this.controllers.clear();this.refreshInFlight=null;this.busy=false;
-    this.session=null;this.snapshot=null;this.connected=false;this.error='';this.lastClock=0;this.receivedAt=0;this.lastAcceptedSerial=0;this.save();this.notify();
+    this.session=null;this.snapshot=null;this.connected=false;this.error='';this.lastClock=0;this.receivedAt=0;this.lastAcceptedSerial=0;this.retryAt=0;this.pollFailures=0;this.save();this.notify();
   }
 }

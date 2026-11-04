@@ -1,9 +1,11 @@
 # GeoDecoder Digital V2 UX contract
 
-Current integration candidate: Digital v2.8.0 / module v1.6.0; firmware v1.1.3.
-The ease-of-use, shared game/module settings and v2.7.0 account/game contracts
-remain in force alongside the central design system, visual help and new module
-learning tools. Combined verification and v2.8.0 Pages publication are pending.
+Current source integration: Digital v2.9.0 / module v1.6.1. Firmware is maintained
+on its separate branch. The existing game/account contracts remain in force
+alongside the shared design system, animated entry pages, refreshed Duel/module
+views, offline outbox, classroom CRUD and bounded network policy.
+See docs/integration-sync/README.md for combined verification and source receipts.
+Hosted SQL/Edge and public PWA publication are separate rollout operations.
 Original ease-of-use reference design:
 [approved specification](../docs/superpowers/specs/2026-10-26-ease-of-use-design.md).
 Firmware rounds remain a separate contract.
@@ -12,6 +14,8 @@ Firmware rounds remain a separate contract.
 
 | Capability | Canonical owner | Source of truth | Allowed variants | Verification |
 |---|---|---|---|---|
+| Entry shell/cards/guide | index.html shell + entry-components.mjs + entry-ui.mjs | approved GeoMath reference; docs/ENTRY_UI.md | Home, mode radio cards, real resume, guide page | solo-ui.test.mjs + entry browser QA |
+| Entry 3D presentation | entry-models.mjs + entry-scenes.mjs | DESIGN.md; existing PALETTES and preferences | shared hero/mode/resume/guide assets; static SVG fallback | entry-scenes.test.mjs + live Pages visual checks |
 | Design tokens | design-system/tokens.mjs → tools/design-tokens.mjs | DESIGN.md / docs/DESIGN_SYSTEM.md | light/dark, standard/strong; generated module adapter | design:check; design-tokens.test.mjs |
 | Button / field / panel | dist/foundation.css + dist/module-foundation.css | DESIGN.md | brand, neutral, danger, icon; legacy class adapters | tests/design-system.browser.mjs; reference gallery |
 | Form | core validators + portal form owner; support-report.mjs for reports | account/game validation and report contract | guest, login/signup/recovery, profile/security, local report | core, portal-auth-validation, support integration/browser |
@@ -24,6 +28,7 @@ Firmware rounds remain a separate contract.
 | Help and support | help-support.mjs + support-report.mjs | HELP_SUPPORT_PLAN.md + HELP_SUPPORT_AUDIT.md + HELP_VISUAL_UPDATE.md | visual guide, report draft, read-only preview, copy/download | privacy/integration/browser |
 | Text and math | i18n.mjs + local copy modules + format.mjs | docs/DWI_GLOSSARY.md; stable question IDs | BM/English, SVG/MathML | catalog/bank/browser |
 | Direct manipulation | app Pointer Events controller | core.mjs and gameplay contract | pointer, touch, click, keyboard | browser stage/selection |
+| Offline progress | offline-runtime.mjs + offline-sync.mjs + OfflineDB | docs/OFFLINE_SYNC.md; owner-scoped formative records | module reflections, completed solo records, local status/retry | offline-runtime, offline-sync and real app completion tests |
 | Scores and solo resume | storage.mjs and actor-scoped SoloStore | single-attempt ruleset; docs/SAVE_RESUME.md | save, list, CSV, erase, legacy, explicit local resume | storage/solo tests + browser |
 | Modes | one Game engine | core.mjs | quiz10, practice15, review subset, Duel10 | core/browser |
 | Classroom | cloud.mjs + portal.mjs | backend/schema.sql; server state/RLS | accounts, roster, rooms | cloud/auth tests + portal UI |
@@ -32,20 +37,53 @@ Firmware rounds remain a separate contract.
 
 ## Home, guest and settings
 
+The GeoMath entry preview provides `#utama`, `#main`, `#sambung` and
+`#cara-bermain` as direct entry routes. Header links use the single application
+navigation owner and retain existing game/account leave guards. Mode cards use
+native radio semantics and update the existing play-mode value; Game remains
+the only rules owner. The first-play guide is now a page before the solo clock
+starts. During active play, help still opens a modal without replacing the game.
+Resume is a page rather than the former summary modal. It shows only validated
+unfinished progress for the current browser/account. Missing/corrupt/blocked
+storage has an explicit state; no sample progress is inserted. Optional savedAt
+metadata localizes the save date but never determines elapsed game time.
+Starting over retains the existing destructive confirmation and focus owner.
+The new fixed cube demo is 24 seconds, supports seeking, replay and pause, and
+never reads a live answer or starts a round. It pauses on navigation/background.
+
 Home groups Main, Belajar and Akaun/Kelas. Main opens nickname and mode
 selection: quiz10, practice15, Duel. A guest has category Tetamu and an empty
 class. Old Murid/Pelajar profiles still require a class and remain valid.
-Solo play does not initialize Auth or call Duel. Back/Home focuses Main;
+Fresh guest solo play does not initialize Auth or call Duel. A persisted account
+reuses the Auth SDK lifecycle for its own offline queue. Back/Home focuses Main;
 unfinished solo play still confirms leaving. Account role and class fields
 are unchanged.
 
-The first guest start offers a skippable three-step illustrated guide before
-the solo clock starts. Cara main reopens it. Native dialog Escape/close and
-focus restoration remain available. Settings groups the single language
+The first guest start opens the three-step illustrated guide page before
+the solo clock starts. Back returns to the form; the explicit start action
+marks the guide seen and begins the selected mode. Cara main opens the guide
+page from entry and the existing tutorial modal during active play. Native
+dialog Escape/close and focus restoration remain available for game dialogs. Settings groups the single language
 selector, light/dark/system theme, music, scan sounds, text100/125/150% and
 motion. Existing language/theme/music keys remain; the versioned device-only
 preferences key stores no profile, credential or answer. Denied storage keeps
 preferences working in memory and does not block play.
+
+### Classroom management candidate (4 November 2026)
+
+Lifecycle, permissions, retention and API authority: [classroom management contract](backend/classroom-crud/README.md). `portal.mjs` reuses the existing field/button/notice/validation owners for all class and room edits. A single portal management dialog variant is attached only while a management action is open, uses the native modal focus boundary and restores the originating control on Cancel/Escape. It is removed on close or session change and never replaces the game's help/settings owner. Native dialogs for game/help/settings remain unchanged.
+
+Teacher archive filters are explicit and reversible. Delete is reserved for empty records; archive preserves results. Successful mutations return to the owning list or current room and clamp pages. Conflicts preserve drafts and require an explicit refresh of the captured revision. Pending saves block duplicate submit and dismissal; user names remain literal escaped text. Capability `classroom_crud:1` gates the new controls against older backends. Roster and invitations page at 20, room cards at 6. BM/English uses `classroom-copy.mjs` through the existing catalog. Verification: `classroom-crud-backend.test.mjs`, `classroom-crud-portal.test.mjs` and `classroom-crud.browser.mjs`.
+
+## Offline progress and capture
+
+`offline-runtime.mjs` owns the account-scoped durable queue through the existing
+ModuleProgress hooks and completed solo result capture. Re-rendering results
+keeps the same attempt ID. Guest records remain local; classroom and Duel
+results retain server authority and never enter the solo outbox. Session changes
+select the matching owner before rebuilding the embedded module, so the prior
+account draft cannot cross into the new session. Boot, retry and reconnection
+reuse the existing Auth owner and never attach credentials to progress payloads.
 
 ## Gameplay and input
 

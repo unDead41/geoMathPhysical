@@ -6,7 +6,7 @@ import {pathToFileURL} from 'node:url';
 import {QUESTIONS} from '../dist/questions.mjs';
 import {Game,SHAPES} from '../dist/core.mjs';
 import {classroomFixture} from './classroom-transport.fixture.mjs';
-import {startHarness,newCase,settings,startGuest,roundFor,choice,order,answer,assertQuestion,fits,screenshot,rawScores,scoreKey,player} from './ease-browser-helpers.mjs';
+import {startHarness,newCase,settings,startGuest,selectMode,roundFor,choice,order,answer,assertQuestion,fits,screenshot,rawScores,scoreKey,player} from './ease-browser-helpers.mjs';
 const expectedMath={P2:1,S2:2,K2:2,C1:1,C2:1,B2:1};
 const oldScore={id:'quiz-before',version:'2.3.0',ruleset:'single-attempt-v1',mode:'quiz',player:{name:'Existing pupil',category:'Murid',className:'1 A'},score:9,total:10,mistakes:1,hints:0,skipped:0,firstTry:9,elapsed:30000,completedAt:10000};
 const cases={};
@@ -18,24 +18,26 @@ cases.navigation=async(harness,track)=>{
   assert.equal(await page.locator('#language-select').count(),1,'One Settings language control');
   await page.setViewportSize({width:1365,height:980});await screenshot(harness,page,'home-bm-desktop');
   await settings(page,{language:'en'});await page.setViewportSize({width:390,height:844});
-  assert.match(await page.locator('#welcome-title').innerText(),/Discover/);await screenshot(harness,page,'home-en-mobile');
+  assert.match(await page.locator('#welcome-title').innerText(),/Geometry[\s\S]*can explore/);await screenshot(harness,page,'home-en-mobile');
   await page.locator('#module-button').click();assert.equal(await page.locator('#module-frame').isVisible(),true);await page.waitForFunction(()=>document.querySelector('#module-frame').getAttribute('srcdoc')?.length>10000);assert.ok((await page.locator('#module-frame').getAttribute('srcdoc')).length>10000,'Learn opens the embedded pinned module after asynchronous session preparation');await page.locator('#module-back-button').click();assert.equal(await page.locator('#module-frame').getAttribute('srcdoc'),null);
   await page.locator('#guest-button').click();
   assert.equal(await page.locator('#player-class,input[name="category"]').count(),0,'Only nickname is required for a guest');
   await page.locator('#player-form [type="submit"]').click();assert.match(await page.locator('#name-error').innerText(),/2.*60/);
-  await page.locator('#player-name').fill('Guru');await page.locator('#play-mode').selectOption('practice');
+  await page.locator('#player-name').fill('Guru');await selectMode(page,'practice');
   await settings(page,{language:'ms'});assert.equal(await page.locator('#player-name').inputValue(),'Guru');assert.equal(await page.locator('#play-mode').inputValue(),'practice');
-  await page.locator('#play-mode').selectOption('quiz');await page.locator('#player-form [type="submit"]').click();
-  assert.match(await page.locator('#tutorial-progress').innerText(),/1.*3/);
-  assert.equal(await page.locator('#game-screen').isVisible(),false,'First tutorial precedes creating a solo game');
+  await selectMode(page,'quiz');await page.locator('#player-form [type="submit"]').click();
+  assert.equal(await page.locator('#guide-screen').isVisible(),true);assert.equal(await page.locator('[data-guide-step]').count(),3);
+  assert.equal(await page.locator('#game-screen').isVisible(),false,'First guide precedes creating a solo game');
   await page.waitForTimeout(1100);assert.equal(await page.locator('#game-screen').isVisible(),false);
-  await screenshot(harness,page,'tutorial-bm-mobile');await page.keyboard.press('Escape');
+  await screenshot(harness,page,'tutorial-bm-mobile');await page.locator('#guide-back-button').click();
   assert.equal(await page.locator('#guest-screen').isVisible(),true);
-  await page.locator('#player-form [type="submit"]').click();assert.match(await page.locator('#tutorial-progress').innerText(),/1.*3/);
-  await page.locator('[data-dialog-action="tutorial-skip"]').click();await page.locator('#game-screen').waitFor({state:'visible'});
+  await page.locator('#player-form [type="submit"]').click();assert.equal(await page.locator('#guide-screen').isVisible(),true);
+  await page.locator('#guide-start-button').click();await page.locator('#game-screen').waitFor({state:'visible'});
   assert.equal(await page.locator('#score-value').innerText(),'0');assert.match(await page.locator('#question-counter').innerText(),/01 \/ 10/);
   assert.equal(await page.locator('#time-value').innerText(),'00:00');assert.match(await page.locator('#step-progress').innerText(),/1.*2/);
   assert.equal(await page.locator('#r2').isDisabled(),true);
+  const gameHash=await page.evaluate(()=>location.hash);await page.locator('.skip-link').focus();await page.locator('.skip-link').press('Enter');
+  assert.equal(await page.locator('#main').evaluate(node=>node===document.activeElement),true);assert.equal(await page.evaluate(()=>location.hash),gameHash);assert.equal(await page.locator('#app-dialog').isVisible(),false,'Skip to content must not invoke the Play route');
   assert.match(await page.locator('#input-instruction').innerText(),/Sentuh kad.*sentuh pengimbas/,'Touch devices lead with tap-card/tap-scanner instructions');
   const q=roundFor()[0];await assertQuestion(page,q,0,10);await choice(page,'solid',q.shape).tap();
   assert.equal(await page.locator('#score-value').innerText(),'0');assert.equal(await page.locator('#r2').isDisabled(),true,'Selection spends no attempt');
@@ -62,7 +64,7 @@ cases.navigation=async(harness,track)=>{
   await page.waitForFunction(()=>document.querySelector('#question-counter').textContent.includes('02 / 10'));assert.equal(await page.locator('#score-value').innerText(),'1','Touch and keyboard scans agree');
   await page.reload();assert.equal(await page.locator('html').getAttribute('lang'),'en');
   await settings(page,{},true);assert.equal(await page.locator('#sound-button').getAttribute('aria-pressed'),'true');assert.equal(await page.locator('#music-button').getAttribute('aria-pressed'),'false');assert.equal(await page.locator('#motion-select').inputValue(),'reduce');
-  await page.locator('#dialog-close').click();await startGuest(page);assert.equal(await page.locator('#app-dialog').isVisible(),false,'First tutorial stays dismissed after reload');
+  await page.locator('#dialog-close').click();await page.locator('#solo-resume-button').click();await page.locator('#resume-continue-button').click();assert.equal(await page.locator('#guide-screen').isVisible(),false,'First guide stays dismissed after reload');assert.equal(await page.locator('#app-dialog').isVisible(),false);
 };
 
 cases['quiz-review']=async(harness,track)=>{
@@ -119,7 +121,10 @@ async function practice(harness,track,{mixed=false,offline=false,rich=false}={})
   assert.equal(await page.locator('#result-details').getAttribute('open'),null);await page.locator('#result-details > summary').click();assert.equal(await page.locator('.review-card').count(),15);assert.equal(await page.locator('.review-card.wrong').count(),mixed?3:0);assert.equal(await page.locator('.review-card.skipped').count(),mixed?2:0);
   for(const language of ['ms','en']){await settings(page,{language});assert.equal(await rawScores(page),original);assert.equal(await page.locator('#practice-result-note').isVisible(),true);assert.ok((await page.locator('#analysis-shapes .analysis-row-title > span').allTextContents()).every(text=>text.includes('/ 3')));if(rich)assert.ok(await page.locator('.review-prompt math').count()>0);await page.setViewportSize({width:320,height:844});await fits(page,'practice result '+language);}
   await page.locator('#replay-button').click();assert.equal(await page.locator('.progress-dot').count(),15);await page.locator('.leave-button').click();await page.locator('[data-dialog-action="home"]').click();await page.locator('#guest-button').click();assert.equal(await page.locator('#play-mode').inputValue(),'practice');
-  await page.locator('#play-mode').selectOption('quiz');await page.locator('#player-form [type="submit"]').click();await page.locator('#game-screen').waitFor({state:'visible'});assert.equal(await page.locator('.progress-dot').count(),10);
+  await selectMode(page,'quiz');await page.locator('#player-form [type="submit"]').click();
+  // The accepted solo-save flow protects the practice round abandoned above.
+  await page.locator('#resume-new-button').click();await page.locator('[data-dialog-action="solo-discard"]').click();
+  await page.locator('#game-screen').waitFor({state:'visible'});assert.equal(await page.locator('.progress-dot').count(),10);
   if(offline)assert.deepEqual(test.requests,[],'Standalone solo play makes zero HTTP(S) requests');
   if(rich)console.log(`DETAIL all 15 IDs, ${richViews} BM/English rich-text views, offline standalone with zero HTTP(S) requests`);
 }

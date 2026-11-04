@@ -105,11 +105,23 @@ notes or feedback to 7–11px to fit a phone. Text wraps; tables scroll locally.
 
 ## Layout
 
-Maximum page width 85rem (the explicit module variant). Shared spacing scale 4, 8, 12, 16, 20, 24, 32 and 40px.
-Desktop exploration and notes use a 20rem reference column. Two-column content
-stacks at 900px. Phone padding is 16px; cards use 16px padding below 600px.
-Three section actions remain labelled and wrap into a vertical set on phones.
-The five shape previews remain visible together. The model gets the wide column.
+GeoMath v1.6.1 overrides the older layout description below for the shell and
+Explore/Notes only. The 85rem shell uses an 11.5rem navigation rail and a 10rem
+model picker. Explore has the larger canonical canvas plus a 13rem property
+column. At 1200px the picker moves above the workbench; at 960px properties and
+reading references stack; at 760px navigation becomes two columns in document
+flow. All five project models remain visible; six extras use the native select.
+Six orthographic views sit beside the closed model on wide screens. Direction,
+tempo and face controls use native disclosures. Notes and calculator are two
+views of one controller. No token, geometry or lab/studio recipe changes.
+Embedded mode hides the application header and moves its existing host settings
+and help controls into the rail. Standalone retains the GeoMath identity header.
+
+
+Maximum page width remains 85rem (the module variant). Shared spacing stays
+4, 8, 12, 16, 20, 24, 32 and 40px. Notes keep natural document height and local
+horizontal table scrolling. Full model names and all six native extra options
+remain available even where the closed select truncates its current label.
 
 Model instructions and camera controls live in normal flow, outside the canvas;
 they never cover geometry, focus or the progress slider. Camera/header rows wrap

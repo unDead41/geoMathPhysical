@@ -22,7 +22,7 @@ export class LearningLabs{
  constructor({announce,prefersReduced,onProgress=()=>{},onActivity=()=>{},onDescribe=()=>{}}){
   Object.assign(this,{onProgress,onActivity,onDescribe});this.guided=Object.fromEntries(['net','volume','area','composite'].map(k=>[k,new GuidedActivity(k)]));this.histories=Object.fromEntries(Object.keys(this.guided).map(k=>[k,new LabHistory()]));this.touched=new Set();this.guideFeedback='';this.lastProgressSent={};this.discoveries=new Set();
   this.announce=announce;this.prefersReduced=prefersReduced;this.ready=false;this.active=false;this.kind='net';this.raf=0;this.anim=null;this.paused=null;this.framing=null;this.step=time=>this.frame(time);
-  this.speed=.5;this.suspended=new Map();this.guideKey='';
+  this.speed=.5;this.suspended=new Map();this.guideKey='';this.showHub=true;this.hubRenderers=new Map();
   this.camera={yaw:.48,pitch:.3,zoom:1};this.net={mode:'gallery',preset:'cube',presetFace:null,presetDirty:true,cells:NET_PRESETS.cross.map(p=>[...p]),progress:0,selected:0,dirty:true,notice:'',drag:null,suppressUntil:0};
   this.volume={kind:'compare',units:0,d:{p:3,l:2,t:3},size:3,height:4,pours:0,progress:0,full:true};
   this.compare={count:2,transfer:0,included:[true,true],amountRaw:'1',unit:'cm3',allowOverflow:false,spill:0,lastTransfer:null,feedback:'',items:[{key:'cube',d:{a:3},fill:0},{key:'cuboid',d:{p:4,l:3,t:2},fill:0}]};
@@ -43,7 +43,14 @@ export class LearningLabs{
   this.printDirty=true;this.studio=new NetStudio({mount:labEl('net-studio-mount'),onBeforeChange:()=>this.beginEdit(),onChange:()=>{this.stop();this.net.progress=0;this.printDirty=true;this.render();}});
   this.printer=new NetPrinter({mount:labEl('net-print-mount'),printMount:labEl('net-print-sheet')});
   this.workshop=new SurfaceWorkshop({mount:labEl('surface-workshop-mount'),onBeforeChange:()=>this.beginEdit(),onChange:()=>{this.stop();this.render();},onView:()=>{this.camera={yaw:.4,pitch:1.2,zoom:1};this.render();}});
-  for(const kind of Object.keys(LAB_COPY))this.bind('lab-'+kind,()=>this.choose(kind));
+  for(const kind of Object.keys(LAB_COPY))this.bind('lab-'+kind,()=>this.openActivity(kind));
+  labEl('lab-switch').replaceChildren(...Object.keys(LAB_COPY).map(kind=>labNode('option',{value:kind},LAB_COPY[kind][0])));
+  this.bind('lab-switch',()=>this.openActivity(labEl('lab-switch').value),'change');
+  this.bind('lab-home',()=>{this.showHub=true;this.pause();this.onActivity();this.focusPanel('labs-title');});
+  this.bind('lab-reflect',()=>this.focusPanel('guided-title'));
+  this.bind('guided-model',()=>this.revealStage());
+  this.bind('labs-projection',()=>labEl('learn-projection').click());
+  this.bind('labs-calculation',()=>labEl('learn-calculation').click());
   for(const mode of ['gallery','editor','studio'])this.bind('net-mode-'+mode,()=>{this.stop();this.net.mode=mode;this.net.progress=0;this.net.dirty=true;this.printDirty=true;});
   const choices=()=>PRESET_NETS.map(p=>labNode('option',{value:p.key},p.name));
   labEl('net-preset').replaceChildren(...choices());
@@ -107,7 +114,46 @@ export class LearningLabs{
   canvas.addEventListener('wheel',e=>{e.preventDefault();this.camera.zoom+=e.deltaY<0?.08:-.08;this.boundCamera();this.render();},{passive:false});
   canvas.addEventListener('keydown',e=>{if(e.isComposing)return;const controls={ArrowLeft:'lab-left',ArrowRight:'lab-right',ArrowUp:'lab-up',ArrowDown:'lab-down','+':'lab-zoom-in','=':'lab-zoom-in','-':'lab-zoom-out',Home:'lab-reset-camera'};if(controls[e.key]){e.preventDefault();labEl(controls[e.key]).click();}});
   document.addEventListener('visibilitychange',()=>{if(document.hidden)this.pause();else if(this.active)this.render();});
-  if(typeof ResizeObserver!=='undefined'){this.resize=new ResizeObserver(()=>{if(this.active)this.draw();});this.resize.observe(canvas);}
+  if(typeof ResizeObserver!=='undefined'){this.resize=new ResizeObserver(()=>{if(this.active)this.draw();});this.resize.observe(canvas);for(const kind of Object.keys(LAB_COPY))this.resize.observe(labEl('lab-preview-'+kind));}
+ }
+ // The hub is a presentation of the existing activities, not a second lab state.
+ openActivity(kind){if(!LAB_COPY[kind])return;this.showHub=false;this.choose(kind);this.render();this.focusPanel('labs-title');}
+ focusPanel(id){const target=labEl(id);target.focus({preventScroll:true});target.scrollIntoView({behavior:this.prefersReduced()?'instant':'smooth',block:'start'});}
+ renderHub(){
+  const en=window.__geodecoderModuleHost?.language==='en',text=(id,ms,english)=>{const target=labEl(id),value=en?english:ms;if(target.textContent!==value)target.textContent=value;};
+  labEl('labs-hub').hidden=!this.showHub;labEl('labs-workspace').hidden=this.showHub;labEl('labs-panel').dataset.hub=String(this.showHub);
+  text('labs-eyebrow','MAKMAL INTERAKTIF','INTERACTIVE LABS');
+  text('labs-title',this.showHub?'Pilih cara anda belajar.':'Makmal interaktif',this.showHub?'Choose how you learn.':'Interactive labs');
+  text('labs-subtitle',this.showHub?'Teroka bentangan, isi padu, luas permukaan dan bongkah gabungan. Bina, ubah dan fahami apa yang anda perhatikan.':'Bina pada model, semak pemerhatian dan terangkan dengan ayat sendiri.',this.showHub?'Explore nets, volume, surface area and composite solids. Build, change and make sense of what you observe.':'Experiment with the model, check what you observe and explain in your own words.');
+  const titles={net:['Bina Bentangan','Build a Net'],volume:['Makmal Isi Padu','Volume Lab'],area:['Luas Permukaan & Rumus','Surface Area & Formulae'],composite:['Bongkah Gabungan','Composite Solids']};
+  if(!this.showHub)text('labs-title',...titles[this.kind]);
+  const descriptions={net:['Galeri bentangan, editor kubus dan studio sambungan muka.','Ready-made nets, a cube editor and a face-connection studio.'],volume:['Susun kiub, bandingkan isi dan teroka pindahan.','Arrange unit cubes, compare contents and explore transfers.'],area:['Jejaki permukaan, bekas terbuka dan rongga.','Trace surfaces, open containers and through cavities.'],composite:['Cantum bongkah dan kenal pasti permukaan luar.','Join solids and identify the exposed surfaces.']};
+  const states={prediction:['Ramalan disimpan','Prediction saved'],experiment:['Eksperimen diperhatikan','Experiment observed'],check:['Semakan tepat','Answer checked'],explanation:['Penerangan disimpan','Explanation saved']};
+  for(const [index,kind] of Object.keys(LAB_COPY).entries()){
+   text('lab-card-title-'+kind,...titles[kind]);text('lab-card-description-'+kind,...descriptions[kind]);text('lab-card-open-'+kind,'Buka aktiviti','Open activity');
+   const record=this.guided[kind].record,status=record.completed?['Refleksi selesai','Reflection complete']:record.prediction?states[record.stage]:['Belum dimulakan','Not started'];
+   text('lab-card-state-'+kind,...status);labEl('lab-card-state-'+kind).dataset.completed=String(record.completed);
+   labEl('lab-switch').children[index].textContent=titles[kind][en?1:0];
+  }
+  labEl('lab-switch').value=this.kind;
+  for(const [id,ms,english] of [['lab-home-label','Hab makmal','Lab hub'],['lab-switch-label','Aktiviti','Activity'],['lab-reflect-label','Refleksi berpandu','Guided reflection'],['labs-other-label','Aktiviti lain','More activities'],['labs-projection-label','Pelan & Dongakan','Plans & Elevations'],['labs-calculation-label','Semakan Pengiraan','Calculation Steps'],['net-print-summary','Cetak dan bina model','Print and build a model'],['guided-model-label','Kembali ke model','Back to the model'],['guided-eyebrow','REFLEKSI BERPANDU','GUIDED REFLECTION']])text(id,ms,english);
+  text('labs-hub-note','Belajar ikut rentak sendiri. Rekod ini ialah refleksi latihan kendiri, bukan gred TP.','Learn at your own pace. These records are self-study reflections, not TP grades.');
+  const a=this.guided[this.kind],stage=a.checked?'explanation':a.observed?'check':a.draft.prediction?'experiment':'prediction',stages=['prediction','experiment','check','explanation'];
+  for(const [i,key] of stages.entries()){
+   const names=[['Ramalkan','Predict'],['Cuba','Try'],['Semak','Check'],['Terangkan','Explain']][i];text('lab-path-label-'+key,...names);text('guided-label-'+key,...names);
+   labEl('lab-path-'+key).setAttribute('aria-current',key===stage?'step':'false');labEl('lab-path-'+key).dataset.done=String(i<stages.indexOf(stage)||a.draft.completed);
+   labEl('guided-step-'+key).dataset.current=String(key===stage);
+  }
+  labEl('lab-reflection-path').setAttribute('aria-label',en?'Reflection steps':'Aliran refleksi');
+  labEl('labs-hub').querySelector('nav').setAttribute('aria-label',en?'Choose a lab':'Pilih makmal');
+ }
+ drawHub(){
+  if(!this.showHub)return;
+  for(const kind of Object.keys(LAB_COPY)){
+   if(!this.hubRenderers.has(kind))this.hubRenderers.set(kind,new ModelRenderer(labEl('lab-preview-'+kind)));
+   const scene=kind==='net'?{mesh:presetNetMesh('cube',0),yaw:0,pitch:.12}:kind==='volume'?{mesh:unitCubeMesh({p:3,l:2,t:2},8)}:kind==='area'?{shape:'pyramid'}:{mesh:compositionMesh('roof',{a:3,t:2},.5)};
+   this.hubRenderers.get(kind).draw({shape:'lab',mini:true,...scene});
+  }
  }
  open(){this.init();this.active=true;this.render();}
  close(){this.pause();this.active=false;this.net.drag=null;labEl('net-drag-ghost').hidden=true;}
@@ -206,12 +252,12 @@ export class LearningLabs{
   const supported=this.guidedSupported();labEl('guided-scope').textContent=supported?'Latihan berpandu untuk mod ini. Rekod ialah refleksi kendiri, bukan gred TP.':this.kind==='net'?'Galeri dan studio kekal untuk penerokaan. Pilih Susun petak kubus untuk latihan pembaikan berpandu.':this.kind==='volume'?'Perbandingan A/B kekal untuk penerokaan. Pilih Kiub unit atau Tiga tuangan untuk latihan berpandu.':'Bentuk tambahan, bekas dan rongga kekal untuk penerokaan. Latihan berpandu meliputi lima bongkah tertutup asal.';
   for(const id of ['guided-prediction','guided-begin','lab-retry'])labEl(id).disabled=!supported;
   labEl('guided-challenge').textContent=prompts[this.kind]+(this.kind==='net'?' Susunan sah ditemui dalam sesi: '+this.discoveries.size+'.':'');
-  labEl('guided-stage').textContent='Tahap semasa: '+names[a.checked?'explanation':a.observed?'check':a.draft.prediction?'experiment':'prediction']+(a.record.completed?' · Pencapaian disimpan':'');labEl('guided-observation').textContent=a.observed?'2. Diperhatikan: '+a.draft.result:'2. Cuba menggunakan kawalan makmal. Hasil direkod selepas eksperimen lengkap.';
+  labEl('guided-stage').textContent='Tahap semasa: '+names[a.checked?'explanation':a.observed?'check':a.draft.prediction?'experiment':'prediction']+(a.record.completed?' · Pencapaian disimpan':'');labEl('guided-observation').textContent=a.observed?'2. Diperhatikan: '+a.draft.result:'2. Cuba menggunakan kawalan makmal di atas. Hasil direkod selepas eksperimen lengkap.';
   labEl('guided-check').disabled=!supported||!a.observed;labEl('guided-complete').disabled=!supported||!a.checked;labEl('guided-explanation').disabled=!supported||!a.checked;labEl('lab-undo').disabled=!this.histories[this.kind].size;
   const select=this.kind==='net'||this.kind==='area';labEl('guided-answer').hidden=select;labEl('guided-term').hidden=!select;labEl('guided-answer').disabled=!supported;labEl('guided-term').disabled=!supported;
   const options=this.kind==='net'?[['','Pilih sebab'],['distinct','Enam muka menutup enam arah berbeza tanpa bertindih'],['count','Asalkan ada enam petak, semua susunan sah'],['vertices','Bertemu pada bucu sahaja sudah mencukupi']]:[['','Pilih sebutan'],...['a²','p × t','l × t','p × l','½as','2πjt','πj²','πjs'].map(x=>[x,x])];
   const key=this.kind+(this.kind==='area'?this.area.shape:'');if(this.guideOptionsKey!==key){labEl('guided-term').replaceChildren(...options.map(([value,text])=>labNode('option',{value},text)));labEl('guided-term').value='';this.guideOptionsKey=key;}
-  labEl('guided-question').textContent=this.kind==='net'?'3. Mengapa susunan yang dibaiki sah?':this.kind==='volume'?(this.volume.kind==='unit'?'3. Berapa kiub unit memenuhi kapasiti ini?':'3. Berapa tuangan sumber penuh mengisi penerima dengan tapak dan tinggi yang sama?'):this.kind==='area'?'3. Sebutan rumus manakah mewakili permukaan 1 ('+studySurfacePieces(this.area.shape,this.area.d)[0].name+')?':'3. Berapa permukaan tapak perlu ditolak daripada jumlah dua bongkah? Pilih juga permukaan luar di bawah.';
+  labEl('guided-question').textContent=this.kind==='net'?'3. Mengapa susunan yang dibaiki sah?':this.kind==='volume'?(this.volume.kind==='unit'?'3. Berapa kiub unit memenuhi kapasiti ini?':'3. Berapa tuangan sumber penuh mengisi penerima dengan tapak dan tinggi yang sama?'):this.kind==='area'?'3. Sebutan rumus manakah mewakili permukaan 1 ('+studySurfacePieces(this.area.shape,this.area.d)[0].name+')?':'3. Berapa permukaan tapak perlu ditolak daripada jumlah dua bongkah? Pilih juga permukaan luar pada panel kawalan.';
   labEl('guided-question').setAttribute('for',select?'guided-term':'guided-answer');labEl('guided-feedback').textContent=this.guideFeedback;
  }
  restoreProgress(records){for(const r of records)this.guided[r.activity]?.restore(r);if(this.active)this.render();}
@@ -254,14 +300,14 @@ export class LearningLabs{
   labEl('lab-title').textContent=LAB_COPY[k][0];labEl('lab-intro').textContent=LAB_COPY[k][1];
   if(k==='net')this.renderNet();if(k==='volume')this.renderVolume();if(k==='area')this.renderArea();if(k==='composite')this.renderComposite();
   labEl('lab-zoom-level').textContent=Math.round(this.camera.zoom*100)+'%';labEl('lab-zoom-out').disabled=this.camera.zoom<=.6;labEl('lab-zoom-in').disabled=this.camera.zoom>=2;
-  this.observeGuided();this.renderGuided();this.onDescribe(LAB_COPY[k][0]+'. '+labEl('guided-scope').textContent+' '+labEl('lab-caption').textContent);this.refreshPlayback();this.renderGuide();this.draw();
+  this.observeGuided();this.renderGuided();this.renderHub();this.onDescribe(this.showHub?labEl('labs-subtitle').textContent+' '+labEl('labs-hub-note').textContent:LAB_COPY[k][0]+'. '+labEl('guided-scope').textContent+' '+labEl('lab-caption').textContent);this.refreshPlayback();this.renderGuide();this.draw();
  }
  renderNet(){
   const n=this.net,gallery=n.mode==='gallery',studio=n.mode==='studio',data=PRESET_NETS.find(p=>p.key===n.preset),status=cubeNetState(n.cells),locked=n.progress>0||Boolean(this.anim);
   labEl('net-mode-gallery').setAttribute('aria-pressed',String(gallery));labEl('net-mode-editor').setAttribute('aria-pressed',String(n.mode==='editor'));labEl('net-mode-studio').setAttribute('aria-pressed',String(studio));labEl('net-preset-panel').hidden=!gallery;labEl('net-editor-panel').hidden=n.mode!=='editor';labEl('net-studio-mount').hidden=!studio;labEl('net-feedback').hidden=studio;
   labEl('net-preset').value=n.preset;labEl('net-preset').disabled=Boolean(this.anim);
   labEl('net-fold').disabled=(gallery?false:studio?!this.studio.state.treeValid:n.cells.length!==6||!status.connected)||n.progress===1;labEl('net-flat').disabled=n.progress===0;
-  if(gallery){labEl('net-preset-tag').textContent=data.project?'Bongkah GeoDecoder':'Pengayaan · contoh tambahan';labEl('net-preset-summary').textContent=data.description;
+  if(gallery){labEl('net-preset-tag').textContent=data.project?'Bongkah GeoMath':'Pengayaan · contoh tambahan';labEl('net-preset-summary').textContent=data.description;
    if(n.presetDirty){const mesh=presetNetMesh(n.preset,0),colors=new Map(mesh.map(f=>[f.id,f.color]));labEl('net-preset-faces').replaceChildren(...data.labels.map((name,id)=>{const b=labNode('button',{type:'button',class:'face-chip','aria-pressed':String(n.presetFace===id)},(id+1)+'. '+name),swatch=labNode('i',{'aria-hidden':'true',class:'preset-swatch'});swatch.style.backgroundColor=colors.get(id);b.append(swatch);b.addEventListener('click',()=>{n.presetFace=n.presetFace===id?null:id;n.presetFocusPending=id;n.presetDirty=true;this.render();});return b;}));if(n.presetFocusPending!==undefined){labEl('net-preset-faces').children[n.presetFocusPending]?.focus({preventScroll:true});delete n.presetFocusPending;}n.presetDirty=false;}
    labEl('net-feedback').textContent=this.paused?'Gerakan dijeda. Tekan Sambung animasi apabila bersedia.':this.anim?'Perhatikan muka yang sedang bergerak. Gunakan Jeda untuk memeriksa sambungannya.':n.progress===1?data.name+' telah terbentuk. Buka rata untuk menjejaki muka semula.':'Bentangan siap yang sah. Tekan Lipat perlahan untuk membentuk '+data.name.toLowerCase()+'.';labEl('net-feedback').dataset.success=n.progress===1?'true':'neutral';
   }else if(studio){this.studio.render({progress:n.progress,busy:Boolean(this.anim||this.paused)});labEl('net-feedback').textContent=this.studio.state.message;labEl('net-feedback').dataset.success=String(this.studio.valid);
@@ -346,7 +392,7 @@ export class LearningLabs{
   labEl('lab-outcome').textContent='Isi padu gabungan ialah jumlah kedua-dua isi padu; luas luar mengecualikan kedua-dua muka yang bercantum.';
  }
  draw(){
-  if(!this.ready||!this.active)return;const k=this.kind;let mesh,progress=0,labels=false,selected=null;
+  if(!this.ready||!this.active)return;this.drawHub();const k=this.kind;let mesh,progress=0,labels=false,selected=null;
   if(k==='net'){progress=this.net.progress;mesh=this.net.mode==='gallery'?presetNetMesh(this.net.preset,progress):this.net.mode==='studio'?this.studio.mesh(progress):cubeNetMesh(this.net.cells,progress);labels=true;selected=this.net.mode==='gallery'?this.net.presetFace:null;}
   if(k==='volume'){const v=this.volume;progress=v.kind==='compare'?this.compare.transfer:v.kind==='unit'?v.units/this.unitCapacity():v.progress;mesh=v.kind==='compare'?volumeComparisonMesh(this.compare.items,this.compare.count):v.kind==='unit'?unitCubeMesh(v.d,v.units):pourMesh(v.kind,this.pourDims(),v.pours,v.progress,v.full);}
   if(k==='area'){const a=this.area;progress=a.progress;mesh=a.mode==='closed'?learningMesh(a.shape,progress,144,a.d):this.workshop.mesh();labels=a.mode==='closed';selected=a.mode==='closed'?[...a.selected]:this.workshop.selectedFaces();}

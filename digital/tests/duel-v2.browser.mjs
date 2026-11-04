@@ -4,7 +4,7 @@ import {mkdirSync,writeFileSync} from 'node:fs';
 import {createDuelFixture} from './duel-v2-fixture.mjs';
 import {DUEL_SESSION_KEY} from '../dist/duel.mjs';
 const require=createRequire(import.meta.url),{chromium}=require(process.env.PLAYWRIGHT_MODULE_PATH||'playwright');
-const fixture=await createDuelFixture(),evidence=new URL('../docs/duel-v2-evidence/',import.meta.url);mkdirSync(evidence,{recursive:true});
+const fixture=await createDuelFixture(),evidence=new URL(process.env.DUEL_V2_EVIDENCE_DIR||'../docs/duel-v2-evidence/',import.meta.url);mkdirSync(evidence,{recursive:true});
 const browser=await chromium.launch({headless:true,executablePath:process.env.PLAYWRIGHT_CHROMIUM_PATH||chromium.executablePath(),args:['--no-sandbox']});
 const errors=[],checks=[],contexts=[];
 const pass=name=>{checks.push(name);console.log('PASS:',name);};
@@ -15,11 +15,11 @@ async function player(name,language='ms',width=1365,text='normal'){
  await context.addInitScript(({language,text})=>{if(window!==window.top)return;localStorage.setItem('geodecoder.digital.preferences.v1',JSON.stringify({tutorialSeen:true,music:false,effects:false,motion:'reduce',text}));localStorage.setItem('geodecoder.digital.language',language);},{language,text});
  const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));await page.goto(fixture.origin);
  await page.locator('#settings-button').click();await page.locator('#language-select').selectOption(language);await page.locator('#dialog-close').click();
- await page.locator('#guest-button').click();await page.locator('#play-mode').selectOption('duel');await page.locator('#player-name').fill(name);await page.locator('.start-button').click();
+ await page.locator('#guest-button').click();await page.locator('input[name="game-mode-option"][value="duel"]').check();await page.locator('#player-name').fill(name);await page.locator('.start-button').click();
  await page.locator('#duel-screen').waitFor({state:'visible'});return {page,context,name};
 }
 async function state(p){return p.page.evaluate(async key=>{const s=JSON.parse(sessionStorage.getItem(key));return (await fetch('/api/duel',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'state',protocol:2,token:s.token,roomId:s.roomId})})).json();},DUEL_SESSION_KEY);}
-async function waitCounter(p,n){await p.page.waitForFunction(n=>document.querySelector('#question-counter').textContent.includes(String(n).padStart(2,'0')+' / 10'),n);await p.page.locator('#r1:not([disabled])').waitFor();}
+async function waitCounter(p,n){await p.page.waitForFunction(n=>document.querySelector('#question-counter').textContent.includes(String(n).padStart(2,'0')+' / 10'),n);await p.page.locator('#r1:not([disabled])').waitFor();assert.ok((await p.page.locator('#duel-live-progress').textContent()).includes(n+' / 10'),'Live question counter follows the accepted server snapshot');}
 async function pick(p,kind,shape,target){const card=p.page.locator(`.choice[data-kind="${kind}"][data-shape="${shape}"]`);await card.focus();await card.press('Enter');await p.page.locator('#'+target).focus();await p.page.locator('#'+target).press('Enter');}
 async function resume(p){await p.page.reload();await p.page.locator('#duel-resume-button').click();await p.page.locator('#game-screen').waitFor({state:'visible'});}
 async function fits(p){assert.ok(await p.page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'horizontal viewport overflow');}
@@ -65,6 +65,7 @@ try{
    if(p===host&&i===2){await p.page.waitForFunction(()=>document.querySelector('#score-value').textContent==='3');await p.page.unroute('**/api/duel');assert.equal((await state(p)).me.score,3);pass('lost R2 ACK retries without a second point');}
    if(p===guest&&i===4){await p.page.locator('#correction-panel').waitFor({state:'visible'});const before=await state(p);assert.equal(before.me.reviewPending,true);assert.equal(before.currentQuestion,null);await resume(p);await p.page.locator('#correction-panel').waitFor({state:'visible'});assert.equal((await state(p)).me.answered,5);await screenshot(p,'review-restored-en-390-150');await p.page.locator('#continue-button:not([disabled])').waitFor();await p.page.locator('#continue-button').click();pass('wrong-answer correction and server pacing survive refresh');}
    if(i===3){await screenshot(p,p===host?'game-bm':'game-en-390-150');}
+   if(p===host&&i===9){await p.page.locator('#result-screen').waitFor({state:'visible'});assert.match(await p.page.locator('#result-title').textContent(),/Selesai menjawab/);assert.match(await p.page.locator('#duel-result-content').textContent(),/Menunggu keputusan lawan/);assert.equal(await p.page.locator('#duel-result .winner').count(),0);await screenshot(p,'waiting-result-bm');pass('own completion waits for the opponent without declaring the whole Duel complete or a winner');}
   }
  }
  await Promise.all([host.page.locator('#result-screen').waitFor({state:'visible'}),guest.page.locator('#result-screen').waitFor({state:'visible'})]);

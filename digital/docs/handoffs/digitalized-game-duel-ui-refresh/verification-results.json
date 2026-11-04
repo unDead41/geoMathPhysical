@@ -1,0 +1,82 @@
+{
+  "date": "2026-11-04T01:43:13.448Z",
+  "sequential": true,
+  "previousAttempts": [
+    {
+      "name": "practice-browser",
+      "command": "npm run test:practice",
+      "exitCode": 1,
+      "durationMs": 87214,
+      "reason": "Legacy practice test did not acknowledge the existing solo-save Start new/discard flow; fixture corrected."
+    }
+  ],
+  "results": [
+    {
+      "name": "design-check",
+      "command": "npm run design:check",
+      "exitCode": 0,
+      "durationMs": 416
+    },
+    {
+      "name": "unit",
+      "command": "npm test",
+      "exitCode": 0,
+      "durationMs": 39705
+    },
+    {
+      "name": "duel",
+      "command": "npm run test:duel",
+      "exitCode": 0,
+      "durationMs": 47765
+    },
+    {
+      "name": "duel-ui",
+      "command": "node tests/duel-ui-refresh.browser.mjs",
+      "exitCode": 0,
+      "durationMs": 29063
+    },
+    {
+      "name": "build",
+      "command": "npm run build",
+      "exitCode": 0,
+      "durationMs": 927
+    },
+    {
+      "name": "prepare-pages",
+      "command": "npm run prepare:pages",
+      "exitCode": 0,
+      "durationMs": 554
+    },
+    {
+      "name": "check",
+      "command": "npm run check",
+      "exitCode": 0,
+      "durationMs": 774
+    },
+    {
+      "name": "design-browser",
+      "command": "npm run test:design",
+      "exitCode": 0,
+      "durationMs": 98458
+    },
+    {
+      "name": "practice-browser",
+      "command": "npm run test:practice",
+      "exitCode": 0,
+      "durationMs": 75253
+    },
+    {
+      "name": "premium-audit",
+      "command": "python /root/.codex/plugins/cache/openai-curated-remote/frontend-design-premium/1.4.0/skills/frontend-design-premium/scripts/audit_project.py /workspace/scratch/b03317301a24/duel-ui-refresh/digital --mode strict --output /workspace/scratch/b03317301a24/duel-ui-refresh/digital/docs/handoffs/digitalized-game-duel-ui-refresh/premium-audit.json",
+      "exitCode": 0,
+      "durationMs": 77
+    },
+    {
+      "name": "design-lint",
+      "command": "npx -y -p @google/design.md designmd lint DESIGN.md",
+      "exitCode": 0,
+      "durationMs": 8412
+    }
+  ],
+  "logNote": "practice-browser.log ends at the successful 2/2 summary. A NUL-separated tail from an earlier aborted runner was separated into practice-browser-previous-attempt.log; the successful subprocess exit was 0."
+}

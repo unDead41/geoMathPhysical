@@ -98,6 +98,16 @@ test('a legitimate token refresh keeps the same account session usable for modul
     assert.equal(f.requests.find(r=>r.type==='rpc').subject,users.a);
   }finally{f.close();}
 });
+test('the installed SDK can refresh a JWT within the same session without bypassing snapshot cache identity checks',async()=>{
+  const f=await fixture();try{
+    await f.cloud.rpc('snapshot');const calls=f.requests.filter(r=>r.type==='rpc').length;
+    await f.switchTo('a','a',1);
+    const result=await f.cloud.rpc('snapshot');assert.equal(result.profile.id,users.a);
+    assert.equal(f.requests.filter(r=>r.type==='rpc').length,calls);
+    await f.other.auth.signOut();
+    await assert.rejects(f.cloud.rpc('snapshot'),error=>['session-changed','session-expired'].includes(error.code));
+  }finally{f.close();}
+});
 
 test('a recovery password update cannot operate through another account in shared SDK storage',async()=>{
   const f=await fixture();try{

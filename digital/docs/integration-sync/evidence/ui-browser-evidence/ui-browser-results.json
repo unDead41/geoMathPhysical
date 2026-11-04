@@ -1,0 +1,16 @@
+{
+  "date": "2026-11-04T03:43:59.858Z",
+  "environment": "Chromium; real protocol 2 Edge handler + isolated PGlite; two independent browser contexts",
+  "checks": [
+    "18 locale/theme/text entry layouts; high contrast, native label, sanitized PIN and real invalid-PIN recovery",
+    "stable pending button, double-click protection, expired PIN, empty slot, copy/fallback, ready and server countdown",
+    "ten choices, retained selection/order/hint across language/theme/150%, pending R1 retry, R2 reload and durable reviews",
+    "server-determined draw, expanded answer review and real local missed-question practice with Duel token forgotten",
+    "no runtime errors; every external origin blocked"
+  ],
+  "errors": [],
+  "limitations": [
+    "PGlite serializes SQL requests; not a PostgreSQL contention test.",
+    "Network offline and touch are browser emulation; no physical device or screen-reader test."
+  ]
+}

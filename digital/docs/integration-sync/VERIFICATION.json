@@ -1,0 +1,117 @@
+{
+  "application": {
+    "command": "node --test --test-concurrency=1 tests/*.test.mjs",
+    "passed": 482,
+    "failed": 0,
+    "skipped": 0,
+    "exitCode": 0,
+    "durationMs": 259250.242609
+  },
+  "module": {
+    "command": "npm test -- --test-concurrency=1",
+    "passed": 341,
+    "failed": 0,
+    "skipped": 0,
+    "exitCode": 0
+  },
+  "buildCheck": {
+    "digitalVersion": "2.9.0",
+    "moduleVersion": "1.6.1",
+    "moduleBuildCheck": "pass",
+    "digitalBuildPrepareCheck": "pass",
+    "canonicalTokenDrift": "pass"
+  },
+  "browser": {
+    "engine": "Chromium133 local Linux; CSS viewport emulation, synthetic Auth",
+    "offlineFinal": {
+      "passed": 7,
+      "failed": 0,
+      "receipt": "evidence/offline-accepted/browser-results.json"
+    },
+    "crud": {
+      "groupsPassed": 4,
+      "failed": 0,
+      "receipt": "evidence/crud-integration-browser/browser-results.json"
+    },
+    "duelUi": {
+      "groupsPassed": 5,
+      "localeThemeTextLayouts": 18
+    },
+    "module": {
+      "exploreLayoutStates": 64,
+      "labsChecks": 202,
+      "studioLayoutStates": 48,
+      "studioWorkflows": 4,
+      "runtimeErrors": 0
+    },
+    "solo": {
+      "distinctCasesPassed": 7,
+      "note": "Accepted cases span initial run and isolated touch retry; see ui-browser-attempts.json."
+    },
+    "usability": {
+      "navigation": "pass after native touch activation",
+      "quizReview": "pass",
+      "note": "Scopes selected intentionally, not a claim that all unrelated legacy browser suites ran."
+    }
+  },
+  "independentReview": {
+    "specCompliance": "pass",
+    "codeQuality": "pass",
+    "unresolvedCriticalImportant": 0,
+    "report": "integration-final-review.md"
+  },
+  "attempts": {
+    "initialApplicationSuite": {
+      "passed": 481,
+      "failed": 1,
+      "cause": "Old test expected obsolete Four activity summary aria-label; new disclosure is labelled by localized heading. Corrected assertion additionally checks four real actions; focus5/5 and full482/482 pass."
+    },
+    "touchBrowserAttempts": "ui-browser-attempts.json"
+  },
+  "artifacts": [
+    {
+      "path": "digital/GeoDecoder_Digital_V2.html",
+      "bytes": 7674372,
+      "sha256": "36cad7cd883f92478dff6fa623341140122f7691da7733162338bd5b0cfae924",
+      "gitBlob": "61cf7337b88e661f02ccb37d8f9a5c56996fe4db"
+    },
+    {
+      "path": "digital/dist/app.bundle.js",
+      "bytes": 1863442,
+      "sha256": "85fc49967704396d5336f79b3569bdeb6b17327a2661f62c445c5360102e5e8c",
+      "gitBlob": "c048d2f3a03269b94e9f03abc3700f9e0aa648b6"
+    },
+    {
+      "path": "digital/module/GeoDecoder_Modul_V1.html",
+      "bytes": 541207,
+      "sha256": "d100442db0fb39d6c21068fdcbc653c19b2ad0a4bcb98eb045dc0172082dc15e",
+      "gitBlob": "88e29085c17f0ff21993ba0799848833695acad1"
+    },
+    {
+      "path": "digital/artifacts/pwa/index.html",
+      "bytes": 2117802,
+      "sha256": "ae95868f160c5865ab4dafa6af764454413a963f963c28ee9139be2aa762c77b",
+      "gitBlob": "54301e9741a6c7421d3665336762f962bc06294b"
+    },
+    {
+      "path": "digital/artifacts/pwa/sw.js",
+      "bytes": 2503,
+      "sha256": "e4131f75958c12631474990b0581d42f6e78c5f4d0ab2fda2d008c27c3ad9140",
+      "gitBlob": "630c542bd384ae43fe4033ce9e9d44f6ee6d2028"
+    },
+    {
+      "path": "digital/artifacts/pwa/manifest.webmanifest",
+      "bytes": 346,
+      "sha256": "5717eb2b036e9ba0446b238057c17684829f6a47600d6973183bd94c90dc07c6",
+      "gitBlob": "f03b608492a289f80a08881f56c4acda3ed675a8"
+    }
+  ],
+  "deployment": {
+    "sourceOnly": true,
+    "productionMigration": false,
+    "edgeDeployment": false,
+    "publicPagesPublication": false,
+    "canonicalScalingOfflineMigrationRegistration": "required before rollout",
+    "certified5000Users": false
+  }
+}
