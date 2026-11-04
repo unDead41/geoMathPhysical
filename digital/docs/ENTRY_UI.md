@@ -44,6 +44,10 @@ Resume and guide: the same solid materials/board with a valid six-square cube
 net. These are presentation assets; learning geometry and live answers are
 untouched. Theme changes rebuild material colours without changing page state.
 
+When WebGL is unavailable, entry-software-renderer.mjs renders those same model
+transforms and camera using Canvas2D, shaded chamfer faces and projected shadows,
+capped at 20 FPS. If both renderers are unavailable, the exact SVG remains.
+
 Three.js 0.180.0 (MIT) is pinned in package.json/package-lock.json and bundled
 by the existing builder. No runtime CDN/HDRI/model downloads. Failed/unsupported
 WebGL keeps accessible copy, SVG artwork and every ordinary control available.

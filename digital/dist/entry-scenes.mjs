@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 import {buildEntryModel} from './entry-models.mjs';
 import {entryIcon} from './entry-art.mjs';
+import {createSoftwareRenderer} from './entry-software-renderer.mjs';
 
 export const SCENE_FPS=30;
 export const SCENE_PIXEL_RATIO=1.5;
@@ -39,7 +40,10 @@ export function createEntryScenes({t,onToggleMotion}){
   function init(){
     if(renderer||failed)return !!renderer;
     try{
-      renderer=new THREE.WebGLRenderer({alpha:true,antialias:true,powerPreference:'low-power'});
+      const canvas=document.createElement('canvas');
+      const context=canvas.getContext('webgl2',{alpha:true,antialias:true,powerPreference:'low-power'});
+      if(!context){renderer=createSoftwareRenderer();if(!renderer){fallback();return false;}return true;}
+      renderer=new THREE.WebGLRenderer({canvas,context,alpha:true,antialias:true,powerPreference:'low-power'});
       renderer.setPixelRatio(1);renderer.setClearColor(0x000000,0);
       renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
       renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.18;
@@ -47,11 +51,15 @@ export function createEntryScenes({t,onToggleMotion}){
       const room=new RoomEnvironment();environment=pmrem.fromScene(room,.04);room.dispose();
       renderer.domElement.addEventListener('webglcontextlost',event=>{event.preventDefault();fallback();});
       return true;
-    }catch{fallback();return false;}
+    }catch{
+      renderer=createSoftwareRenderer();
+      if(renderer)return true;
+      fallback();return false;
+    }
   }
   function createWorld(type){
     if(cache.has(type))return cache.get(type);
-    const scene=new THREE.Scene();scene.environment=environment.texture;
+    const scene=new THREE.Scene();scene.environment=environment?.texture||null;
     const model=buildEntryModel(type,theme);scene.add(model.group);
     scene.add(new THREE.HemisphereLight('#EAF5FF','#8A9AB2',2.1));
     const key=new THREE.DirectionalLight('#FFFFFF',3.4);key.position.set(-4,9,6);key.castShadow=true;
@@ -96,14 +104,14 @@ export function createEntryScenes({t,onToggleMotion}){
       const context=e.canvas.getContext('2d');
       if(!context){e.node.dataset.renderer='fallback';continue;}
       context.clearRect(0,0,w,h);context.drawImage(renderer.domElement,0,height-h,w,h,0,0,w,h);
-      e.node.dataset.rendered='true';e.node.dataset.renderer='webgl';e.dirty=false;
+      e.node.dataset.rendered='true';e.node.dataset.renderer=renderer.kind==='software'?'canvas-3d':'webgl';e.dirty=false;
     }
   }
   function tick(at){
     frame=0;if(disposed||failed)return;
     const visible=visibleEntries(),active=sceneMotionAllowed({paused:isPaused(),hidden:document.hidden,visible:visible.length>0});
     if(document.hidden||!visible.length){previous=0;return;}
-    if(active&&at-lastFrame>=1000/SCENE_FPS){time+=previous?Math.min((at-previous)/1000,.1):0;previous=at;lastFrame=at;render(visible);}
+    if(active&&at-lastFrame>=1000/(renderer?.kind==='software'?20:SCENE_FPS)){time+=previous?Math.min((at-previous)/1000,.1):0;previous=at;lastFrame=at;render(visible);}
     else if(visible.some(e=>e.dirty))render(visible);
     if(active)frame=requestAnimationFrame(tick);else previous=0;
   }
