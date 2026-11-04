@@ -1,3 +1,19 @@
-.studio-connections{display:flex;flex-direction:column;gap:8px;margin:17px 0}.studio-connection{border:1px solid var(--border);border-radius:8px;padding:0 10px}.studio-connection>summary{font-size:var(--text-caption);font-weight:700;min-height:44px;padding:11px 0;cursor:pointer}.studio-connection label{display:block;font-size:var(--text-caption);font-weight:700;margin:9px 0 6px}.studio-connection select{display:block;width:100%;min-width:0;min-height:44px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--ink);font:var(--text-small) var(--font-body);padding:8px;margin-bottom:12px}.net-print-preview{max-height:340px;overflow:auto;border:1px solid var(--border);border-radius:10px;background:white;margin-top:14px}.net-print-preview>svg{display:block;width:100%;height:auto;min-width:200px}.net-print-grid-toggle{display:flex;align-items:center;gap:8px;font-size:var(--text-small);min-height:36px}.net-print-grid-toggle input{width:16px;height:16px;accent-color:var(--primary)}.net-print-sheet{display:none}#net-print-mount{margin-top:22px;padding-top:20px;border-top:1px solid var(--border)}#net-print-mount h4{margin:0 0 8px;font-size:var(--text-body)}.net-print-preview:empty{display:none}
+/* Laboratory presentation only. The physical SVG/mm print contract below is unchanged. */
+#labs-panel .studio-connections{display:flex;flex-direction:column;gap:var(--space-2);margin-block:var(--space-4)}
+#labs-panel .studio-connection{border:var(--border-width) solid var(--border);border-radius:var(--radius-control);padding-inline:var(--space-3);background:var(--surface)}
+#labs-panel .studio-connection>summary{font-size:var(--text-small);font-weight:700;min-height:var(--control-size);padding-block:var(--space-3);cursor:pointer}
+#labs-panel .studio-connection[open]{border-color:var(--primary);background:var(--blue-soft)}
+#labs-panel .studio-connection label{display:block;font-size:var(--text-small);font-weight:700;margin-block:var(--space-3) var(--space-2)}
+#labs-panel .studio-connection select{display:block;width:100%;min-width:0;min-height:var(--control-size);border:var(--border-width) solid var(--border-control);border-radius:var(--radius-control);background:var(--field-bg);color:var(--ink);font:var(--text-small) var(--font-body);padding:var(--space-2);margin-bottom:var(--space-3)}
+#labs-panel .net-print-details{margin-top:var(--space-5);border-top:var(--border-width) solid var(--border);padding-top:var(--space-3)}
+#labs-panel .net-print-details>summary{min-height:var(--control-size);font-size:var(--text-small);font-weight:700;padding-block:var(--space-3);color:var(--primary-dark);cursor:pointer}
+#labs-panel #net-print-mount{margin-top:var(--space-3)}
+#labs-panel #net-print-mount h4{margin:0 0 var(--space-2);font-size:var(--text-body)}
+#labs-panel .net-print-preview{max-height:21rem;overflow:auto;border:var(--border-width) solid var(--border-control);border-radius:var(--radius-control);background:white;margin-top:var(--space-4);scrollbar-gutter:stable}
+#labs-panel .net-print-preview>svg{display:block;width:100%;height:auto;min-width:200px}
+#labs-panel .net-print-preview:empty{display:none}
+#labs-panel .net-print-grid-toggle{display:flex;align-items:center;gap:var(--space-2);font-size:var(--text-small);min-height:var(--control-size)}
+#labs-panel .net-print-grid-toggle input{width:1.25rem;height:1.25rem;accent-color:var(--primary)}
+.net-print-sheet{display:none}
 @page{size:A4 portrait;margin:10mm}
 @media print{body[data-net-printing="true"]{margin:0!important;padding:0!important;background:white!important}body[data-net-printing="true"]>*{display:none!important}body[data-net-printing="true"]>#net-print-sheet{display:block!important;margin:0!important;padding:0!important;border:0!important;background:white!important;max-width:none!important;width:190mm!important}body[data-net-printing="true"]>#net-print-sheet>svg{display:block!important;width:auto!important;height:auto!important;max-width:none!important}}

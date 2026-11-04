@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GeoMath labs UI — browser verification</title>
+<style>
+body{margin:16px;font:14px/1.5 system-ui;background:#eaf0f6;color:#18334b}h1{font-size:20px;margin:0 0 8px}nav{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:12px 0}label{display:flex;align-items:center;gap:6px}button,select{font:inherit;min-height:44px;padding:8px 12px;border:1px solid #7d94a8;border-radius:8px;background:white;color:inherit;cursor:pointer}button:focus-visible,select:focus-visible{outline:3px solid #215ff0;outline-offset:3px}iframe{display:block;box-sizing:content-box;border:1px solid #7d94a8;width:1440px;height:960px;background:white}pre{white-space:pre-wrap;max-width:1440px;max-height:12rem;overflow:auto;font:12px/1.6 monospace}p{margin:8px 0}
+</style>
+<h1>GeoMath labs — actual standalone build in an iframe</h1>
+<p>Development fixture. Canonical host settings/language adapter; CSS viewport sizes. Touch, reduced motion and print interception are labelled simulations, not physical-device tests.</p>
+<nav aria-label="Preview configuration">
+ <label>Width<select id="qa-width"><option>1440</option><option>390</option></select></label>
+ <label>Language<select id="qa-language"><option value="ms">BM</option><option value="en">English</option></select></label>
+ <label>Theme<select id="qa-theme"><option value="light">Light</option><option value="dark">Dark</option></select></label>
+ <label>Text<select id="qa-text"><option>100</option><option>125</option><option>150</option></select></label>
+ <label>Contrast<select id="qa-contrast"><option value="standard">Standard</option><option value="strong">Strong</option></select></label>
+ <label><input id="qa-motion" type="checkbox" checked>Reduced motion simulation</label>
+ <button id="qa-top">Show labs heading</button><button id="qa-inspect">Inspect reflow</button><button id="qa-input">Test keyboard and touch input</button><button id="qa-run">Run lab regressions</button><button id="qa-all">Run all checks</button><button id="qa-matrix">Run display matrix</button><button id="qa-export">Download evidence JSON</button>
+</nav>
+<iframe id="qa-preview" title="Actual GeoMath standalone module"></iframe>
+<pre id="qa-report" role="status">Loading the actual compiled module…</pre>
+<script type="module">
+import {prepareModuleFrame,MODULE_CHANNEL} from '../../dist/module-frame.mjs';
+const frame=document.getElementById('qa-preview'),report=document.getElementById('qa-report'),instanceId='labs-ui-refresh-qa',session='labs-ui-qa-context';
+let settings={language:'ms',textSize:100,motionPaused:true,contrast:'standard',audioEnabled:false,autoRotate:false,showLabels:true},results=[],progress=[];
+const html=await(await fetch('../GeoDecoder_Modul_V1.html')).text();
+const buildSha256=crypto.subtle?[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(html)))].map(x=>x.toString(16).padStart(2,'0')).join(''):null;
+window.addEventListener('message',event=>{const r=event.data;if(event.source===frame.contentWindow&&r?.type==='geodecoder:module-progress'&&r.protocol===1&&r.session===session)progress=[...progress.filter(p=>p.activity!==r.activity),r];});
+const d=()=>frame.contentDocument,w=()=>frame.contentWindow,$=id=>d().getElementById(id),wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+const settle=()=>new Promise(resolve=>setTimeout(resolve,30));
+function sync(){frame.contentWindow.postMessage({channel:MODULE_CHANNEL,version:1,instanceId,type:'settings',settings},'*');frame.contentWindow.postMessage({type:'geodecoder:module-context',protocol:1,session,theme:document.getElementById('qa-theme').value,progress},'*');}
+frame.onload=async()=>{sync();await settle();$('learn-labs').click();await settle();top();report.textContent='Ready. No production data or services are used.';};
+frame.srcdoc=prepareModuleFrame(html,{settings,instanceId});
+function top(){$('labs-title').scrollIntoView({block:'start',behavior:'instant'});}
+for(const id of ['qa-language','qa-text','qa-contrast','qa-motion','qa-theme'])document.getElementById(id).onchange=async()=>{settings={...settings,language:document.getElementById('qa-language').value,textSize:Number(document.getElementById('qa-text').value),contrast:document.getElementById('qa-contrast').value,motionPaused:document.getElementById('qa-motion').checked};sync();await settle();top();};
+document.getElementById('qa-width').onchange=async e=>{frame.style.width=e.target.value+'px';await settle();top();};
+document.getElementById('qa-top').onclick=top;
+function inspect(){
+ const doc=d(),win=w(),visible=e=>Boolean(e.getClientRects().length),root=doc.documentElement;
+ const overflow=[...$('labs-panel').querySelectorAll('*')].filter(visible).filter(e=>{const r=e.getBoundingClientRect();return r.right>root.clientWidth+1||r.left< -1;}).map(e=>e.id||e.className||e.tagName);
+ const controls=[...$('labs-panel').querySelectorAll('button,input,select,summary,textarea')].filter(visible),smallTargets=controls.filter(e=>!e.classList.contains('net-cell')&&e.type!=='checkbox'&&(e.getBoundingClientRect().width<43.9||e.getBoundingClientRect().height<43.9)).map(e=>e.id||e.tagName);
+ return {viewport:win.innerWidth,textSize:settings.textSize,language:settings.language,theme:document.getElementById('qa-theme').value,contrast:settings.contrast,reduced:settings.motionPaused,scrollWidth:root.scrollWidth,availableWidth:root.clientWidth,lab:$('lab-switch').value,overflow,smallTargets,hub:!$('labs-hub').hidden,canvas:{...$('labs-canvas').dataset}};
+}
+document.getElementById('qa-inspect').onclick=()=>{report.textContent=JSON.stringify(inspect(),null,2);};
+function check(name,pass,details={}){results.push({name,pass:Boolean(pass),details});report.textContent='Running: '+name+' · '+results.length+' checks';if(!pass)throw new Error(name+' '+JSON.stringify(details));}
+async function click(id){$(id).click();await settle();}
+async function change(id,value,type='change'){const el=$(id);el.value=String(value);el.dispatchEvent(new (w().Event)(type,{bubbles:true}));await settle();}
+async function open(kind){if(!$('labs-hub').hidden)await click('lab-'+kind);else await change('lab-switch',kind);}
+async function finish(){const end=performance.now()+12000;while(!$('lab-pause').disabled&&performance.now()<end)await wait(100);await settle();check('playback reaches its endpoint',$('lab-pause').disabled);}
+async function reflect(kind,prediction,experiment,answer,explanation){
+ await open(kind);await change('guided-prediction',prediction,'input');await click('guided-begin');check(kind+' blocks premature check',$('guided-check').disabled);
+ await experiment();check(kind+' observes the real experiment',!$('guided-check').disabled);
+ if(kind==='net'||kind==='area')await change('guided-term',answer);else await change('guided-answer',answer,'input');
+ await click('guided-check');check(kind+' unlocks explanation',!$('guided-complete').disabled);await change('guided-explanation',explanation,'input');await click('guided-complete');check(kind+' records a completed reflection',$('lab-card-state-'+kind).dataset.completed==='true');
+}
+document.getElementById('qa-run').onclick=async event=>{
+ event.target.disabled=true;results=[];try{
+ check('starts with a hub',!$('labs-hub').hidden||!$('labs-workspace').hidden);await open('net');await click('net-mode-gallery');
+ check('nine gallery choices',$('net-preset').options.length===9);
+ for(const option of [...$('net-preset').options]){await change('net-preset',option.value);await change('lab-progress',1000,'input');check('gallery fold '+option.value,$('labs-canvas').dataset.progress==='1');await change('lab-progress',0,'input');check('gallery print '+option.value,!$('net-print-action').disabled);}
+ await click('net-mode-editor');await change('net-example','overlap');await change('lab-progress',1000,'input');check('overlap is explained',$('labs-canvas').dataset.valid==='false'&&$('net-print-action').disabled&&$('net-feedback').textContent.length>20);await change('lab-progress',0,'input');await click('net-clear');check('empty net is blocked',$('net-fold').disabled&&$('net-print-action').disabled);
+ await click('net-mode-studio');check('seven constrained studio solids',$('studio-shape').options.length===7);
+ for(const option of [...$('studio-shape').options]){await change('studio-shape',option.value);check('studio '+option.value,$('labs-canvas').dataset.valid==='true');}
+ await change('studio-shape','cube');for(let i=0;i<11;i++){await change('studio-example',i);check('cube net '+(i+1),$('labs-canvas').dataset.valid==='true'&&!$('net-print-action').disabled);}
+ await change('studio-side-1','inside');check('invalid studio blocks printing',$('net-print-action').disabled);await click('lab-undo');check('undo restores a valid print',!$('net-print-action').disabled);
+ await change('net-print-scale',.5);check('print geometry remains millimetres',$('net-print-mount').querySelector('svg').getAttribute('width').endsWith('mm'));
+ let printed=false;const originalPrint=w().print;w().print=()=>printed=true;await click('net-print-action');check('explicit print uses the canonical physical sheet',printed&&$('net-print-sheet').querySelector('svg').getAttribute('width').endsWith('mm'));w().dispatchEvent(new (w().Event)('afterprint'));w().print=originalPrint;
+ await open('volume');await change('volume-kind','compare');check('all eleven volume solids',$('compare-shape-a').options.length===11);
+ for(const option of [...$('compare-shape-a').options]){await change('compare-shape-a',option.value);await change('compare-fill-a',500,'input');check('volume fraction '+option.value,$('labs-canvas').dataset.fillA==='0.5');}
+ await change('compare-shape-a','cube');await change('compare-shape-b','cuboid');for(const [id,value] of [['compare-a-a',3],['compare-b-p',4],['compare-b-l',3],['compare-b-t',2]])await change(id,value,'input');await change('compare-fill-a',1000,'input');await change('compare-fill-b',0,'input');await change('compare-amount',27,'input');await change('compare-overflow','spill');await change('lab-speed',1);await click('compare-transfer-ab');await finish();check('27 cm³ transfer conserves A+B+spill',$('labs-canvas').dataset.fillA==='0'&&$('labs-canvas').dataset.fillB==='1'&&$('labs-canvas').dataset.spill==='3',{$ledger:$('compare-ledger').textContent});
+ await change('compare-amount','invalid','input');check('invalid amount has a correction and no fabricated transfer',$('compare-amount').getAttribute('aria-invalid')==='true'&&$('compare-transfer-ab').disabled);
+ await change('compare-count',1);check('single solid hides B',$('compare-card-b').hidden);await change('compare-count',2);
+ for(const kind of ['cone','pyramid']){await change('volume-kind',kind);for(let i=0;i<3;i++){await click('pour-one');await finish();if(i<2)await click('pour-refill');}check(kind+' three complete pours',$('labs-canvas').dataset.pours==='3'&&$('pour-one').disabled);}
+ await open('area');await change('area-mode','closed');check('all eleven surface solids',$('area-shape').options.length===11);
+ for(const option of [...$('area-shape').options]){await change('area-shape',option.value);if(!['sphere','hemisphere'].includes(option.value))await change('lab-progress',1000,'input');await click('area-all');check('surface selection '+option.value,$('area-total').textContent.includes('cm²'));}
+ await change('area-mode','container');let closed=$('workshop-area').textContent;$('workshop-lid').checked=false;$('workshop-lid').dispatchEvent(new (w().Event)('change',{bubbles:true}));await settle();check('open lid changes area',closed!==$('workshop-area').textContent);await change('area-mode','cavity');await click('workshop-all');check('cavity includes inner walls',$('workshop-area').textContent.includes('170')&&$('workshop-chosen').textContent.includes('170'));
+ for(const kind of ['roof','rocket']){await open('composite');await change('comp-kind',kind);await change('lab-progress',1000,'input');await click('comp-check');check(kind+' incorrect selection has feedback',$('comp-feedback').textContent.includes('Semak'));for(const key of ['side','bottom','roofSide'])$('comp-groups').querySelector('[data-group="'+key+'"]').click();await click('comp-check');check(kind+' exterior selection is correct',$('comp-feedback').textContent.includes('Tepat'));}
+ await open('net');await click('net-mode-editor');await reflect('net','Enam arah berbeza.',async()=>{for(const cell of ['0,0','2,0','3,1','1,2'])$('net-grid').querySelector('[data-cell="'+cell+'"]').click();await change('lab-progress',1000,'input');},'distinct','Enam muka menutup enam arah tanpa pertindihan.');
+ await open('volume');await change('volume-kind','unit');await reflect('volume','18 kiub.',async()=>{await click('unit-fill');await finish();},'18','Tiga lapisan dengan enam kiub pada setiap lapisan.');
+ await open('area');await change('area-mode','closed');await change('area-shape','cube');await reflect('area','96 cm².',async()=>{await change('lab-progress',1000,'input');await click('area-all');},'a²','Enam muka segi empat sama, setiap satu seluas a kuasa dua.');
+ await open('composite');await change('comp-kind','roof');await reflect('composite','Dua tapak menjadi dalaman.',async()=>{await change('lab-progress',1000,'input');for(const key of ['side','bottom','roofSide'])$('comp-groups').querySelector('[data-group="'+key+'"]').click();await settle();},'2','Dua tapak yang bertemu berada di dalam.');
+ check('four formative records',$('module-count').textContent.includes('4 / 4'));await click('lab-retry');check('retry preserves earned reflection and closes live check',$('module-count').textContent.includes('4 / 4')&&$('guided-complete').disabled);
+ await open('net');await click('net-mode-gallery');await click('net-fold');await wait(400);await click('lab-home');const pose=$('labs-canvas').dataset.progress;await wait(300);await click('lab-net');check('hub preserves a paused pose',$('labs-canvas').dataset.progress===pose&&!$('lab-pause').disabled);await change('lab-progress',0,'input');await click('lab-home');
+ report.textContent=JSON.stringify({suite:'laboratory-regressions',passed:results.length,results},null,2);top();
+ }catch(error){report.textContent=JSON.stringify({suite:'laboratory-regressions',error:error.message,results},null,2);}finally{event.target.disabled=false;}
+};
+document.getElementById('qa-matrix').onclick=async event=>{
+ event.target.disabled=true;const matrix=[];try{
+ for(const width of [1440,390])for(const language of ['ms','en'])for(const theme of ['light','dark'])for(const size of [100,150]){
+  frame.style.width=width+'px';document.getElementById('qa-width').value=String(width);document.getElementById('qa-language').value=language;document.getElementById('qa-text').value=String(size);document.getElementById('qa-theme').value=theme;settings={...settings,language,textSize:size,motionPaused:true};sync();await settle();
+  for(const kind of ['hub','net','volume','area','composite']){if(kind==='hub'){if($('labs-hub').hidden)await click('lab-home');}else await open(kind);const r=inspect();matrix.push({...r,pass:r.overflow.length===0&&r.smallTargets.length===0&&r.scrollWidth<=r.availableWidth+1});}
+ }
+ for(const [width,language,theme] of [[1440,'ms','light'],[390,'en','dark']]){
+  frame.style.width=width+'px';document.getElementById('qa-width').value=String(width);document.getElementById('qa-language').value=language;document.getElementById('qa-text').value='125';document.getElementById('qa-theme').value=theme;document.getElementById('qa-contrast').value='strong';settings={...settings,language,textSize:125,contrast:'strong',motionPaused:true};sync();await settle();
+  for(const kind of ['hub','net','volume','area','composite']){if(kind==='hub'){if($('labs-hub').hidden)await click('lab-home');}else await open(kind);const r=inspect();matrix.push({...r,pass:r.overflow.length===0&&r.smallTargets.length===0&&r.scrollWidth<=r.availableWidth+1});}
+ }
+ results.push(...matrix.map((r,i)=>({name:'display-'+i,pass:r.pass,details:r})));report.textContent=JSON.stringify({suite:'display-matrix',cases:matrix.length,failed:matrix.filter(x=>!x.pass)},null,2);
+ }catch(error){report.textContent=JSON.stringify({error:error.message,matrix},null,2);}finally{event.target.disabled=false;}
+};
+document.getElementById('qa-input').onclick=async()=>{
+ try{
+  await open('net');await click('net-mode-editor');await change('lab-progress',0,'input');const canvas=$('labs-canvas'),before=Number(canvas.dataset.yaw);
+  canvas.focus();canvas.dispatchEvent(new (w().KeyboardEvent)('keydown',{key:'ArrowRight',bubbles:true}));await settle();check('canvas keyboard alternative changes yaw',Number(canvas.dataset.yaw)>before);
+  const capture=canvas.setPointerCapture,has=canvas.hasPointerCapture,release=canvas.releasePointerCapture,r=canvas.getBoundingClientRect(),yaw=Number(canvas.dataset.yaw);
+  try{canvas.setPointerCapture=()=>{};canvas.hasPointerCapture=()=>false;canvas.releasePointerCapture=()=>{};
+   for(const [type,dx,dy] of [['pointerdown',0,0],['pointermove',50,20],['pointercancel',50,20],['pointermove',100,40]])canvas.dispatchEvent(new (w().PointerEvent)(type,{pointerId:77,pointerType:'touch',isPrimary:true,button:0,buttons:1,clientX:r.x+r.width/2+dx,clientY:r.y+r.height/2+dy,bubbles:true}));
+  }finally{canvas.setPointerCapture=capture;canvas.hasPointerCapture=has;canvas.releasePointerCapture=release;}
+  check('simulated touch drag and pointer cancellation',Math.abs(Number(canvas.dataset.yaw)-yaw-.45)<1e-7);
+  const slider=$('lab-progress');slider.focus();slider.value='1000';slider.dispatchEvent(new (w().Event)('input',{bubbles:true}));await settle();check('non-drag range endpoint folds the net',canvas.dataset.progress==='1');
+  await change('lab-progress',0,'input');await click('lab-reflect');check('reflection link places keyboard focus',$('guided-title')===d().activeElement);await click('guided-model');check('model return places keyboard focus',canvas===d().activeElement);
+  report.textContent=JSON.stringify({suite:'input-alternatives',checks:results.filter(x=>/keyboard|touch|non-drag|focus/.test(x.name))},null,2);
+ }catch(error){report.textContent=JSON.stringify({error:error.message,results},null,2);}
+};
+document.getElementById('qa-all').onclick=async event=>{
+ event.target.disabled=true;
+ try{for(const id of ['qa-run','qa-input','qa-matrix']){await document.getElementById(id).onclick({target:document.getElementById(id)});const state=JSON.parse(report.textContent);if(state.error){results.push({name:id+' execution',pass:false,details:{error:state.error}});break;}if(results.some(r=>!r.pass))break;}report.textContent=JSON.stringify({suite:'all-checks',checks:results.length,failed:results.filter(r=>!r.pass)},null,2);}finally{event.target.disabled=false;}
+};
+document.getElementById('qa-export').onclick=()=>{const exported=JSON.stringify({buildSha256,settings,results},null,2);report.textContent=exported;const a=document.createElement('a'),url=URL.createObjectURL(new Blob([exported],{type:'application/json'}));a.href=url;a.download='labs-ui-browser-evidence.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+</script></html>
