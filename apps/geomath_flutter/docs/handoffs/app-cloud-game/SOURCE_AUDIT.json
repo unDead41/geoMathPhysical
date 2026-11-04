@@ -1,0 +1,213 @@
+{
+  "schema_version": 1,
+  "status": "BLOCKED_FOUNDATION",
+  "scope": "independent_source_audit_only",
+  "request_date": "2026-11-04",
+  "request_timezone": "Asia/Kuala_Lumpur",
+  "repository": "unDead41/geodecoder",
+  "branch": "app-cloud-game",
+  "instruction_ref": "app",
+  "instruction_sha": "38f061af963256528d5060ff076bae9ee05eafc3",
+  "instruction_tree_sha": "0df709881a96a4021657fbffc6389a30e54ee1c6",
+  "remote_refs_observed": {
+    "app": "38f061af963256528d5060ff076bae9ee05eafc3",
+    "main": "25836eb1a6f24459aace8a3980ae880a13e3b488",
+    "main-digitalized": "37bc2cd262cc0a54e8ee31339ea37471c1ecfda5",
+    "digitalized-utility-auth-providers": "28ba888ccaae12f842dd4abae618a51cb60cd1f2",
+    "app-foundation": null,
+    "app-learning": null
+  },
+  "versions_observed": {
+    "main_firmware": "2.0.2",
+    "app_inherited_firmware": "1.1.3",
+    "app_digital": "2.9.0",
+    "latest_digital": "2.9.1",
+    "flutter_app": null
+  },
+  "foundation_gate": {
+    "status": "MISSING_REF",
+    "ready": false,
+    "foundation_sha": null,
+    "learning_foundation_sha": null,
+    "contract_version": null,
+    "contract_hashes": null,
+    "asset_hashes": null,
+    "evidence": [
+      {
+        "method": "GET",
+        "url": "https://api.github.com/repos/unDead41/geodecoder/branches?per_page=100",
+        "result": "Complete branch list contained no app-foundation or app-learning branch"
+      },
+      {
+        "method": "GitHub fetch_file",
+        "ref": "app-foundation",
+        "path": "apps/geomath_flutter/FOUNDATION_READY.json",
+        "status": 404,
+        "message": "No commit found for the ref app-foundation",
+        "note": "Initial attempted path was noncanonical; no-commit-for-ref error proved the missing branch. Canonical marker is under docs/ and was checked separately."
+      },
+      {
+        "method": "GET",
+        "url": "https://api.github.com/repos/unDead41/geodecoder/git/ref/heads/app-foundation",
+        "status": 404,
+        "result": "Not Found"
+      },
+      {
+        "method": "GET",
+        "url": "https://api.github.com/repos/unDead41/geodecoder/git/ref/heads/app-learning",
+        "status": 404,
+        "result": "Not Found"
+      },
+      {
+        "method": "GitHub fetch_file",
+        "ref": "app-foundation",
+        "path": "apps/geomath_flutter/docs/FOUNDATION_READY.json",
+        "status": 404,
+        "message": "No commit found for the ref app-foundation"
+      }
+    ],
+    "rule": "COMMON_RULES.md: If not READY, audit independent sources and report dependency; do not build duplicate foundation.",
+    "expected_ready_path": "apps/geomath_flutter/docs/FOUNDATION_READY.json"
+  },
+  "checkout": {
+    "type": "private sparse Git worktree",
+    "git_commit_and_tree_hash_verified": true,
+    "base_clean": true,
+    "source_blobs_materialized": 397,
+    "total_base_blobs": 1130,
+    "missing_visual_assets": "All 12 mockup PNGs and flow PNG were not materialized; no visual inspection claimed.",
+    "private_worker_count": 6,
+    "shared_worktrees_untouched": true
+  },
+  "canonical_comparison": [
+    {
+      "path": "digital/dist/core.mjs",
+      "app_blob": "551a2167caa0f5cf344c7f75b969f4d0a7837713",
+      "main_digitalized_blob": "f132ee6a360e452a5ec62a1fab522b6a0e04a479",
+      "match": false
+    },
+    {
+      "path": "digital/dist/questions.mjs",
+      "app_blob": "f1368f40149231d359de74d3bdef53f7ad9b27be",
+      "main_digitalized_blob": "f1368f40149231d359de74d3bdef53f7ad9b27be",
+      "match": true
+    },
+    {
+      "path": "digital/dist/solo-save.mjs",
+      "app_blob": "681b577f920e290cd7bf737899d2622203b0dde5",
+      "main_digitalized_blob": "681b577f920e290cd7bf737899d2622203b0dde5",
+      "match": true
+    },
+    {
+      "path": "digital/dist/cloud.mjs",
+      "app_blob": "b1de83046ced49e5318c9463906f0d44ac6a77f9",
+      "main_digitalized_blob": "b1de83046ced49e5318c9463906f0d44ac6a77f9",
+      "match": true
+    },
+    {
+      "path": "digital/dist/duel.mjs",
+      "app_blob": "2d9ba80cc89b09de7daba106daa3961d6c6409f2",
+      "main_digitalized_blob": "2d9ba80cc89b09de7daba106daa3961d6c6409f2",
+      "match": true
+    },
+    {
+      "path": "digital/dist/duel-state.mjs",
+      "app_blob": "bd7d821064d99b0565c9f11d57e1c72d6b8140d9",
+      "main_digitalized_blob": "bd7d821064d99b0565c9f11d57e1c72d6b8140d9",
+      "match": true
+    },
+    {
+      "path": "digital/dist/offline-sync.mjs",
+      "app_blob": "001b62bb8db1ae7bdeb9c542309de85d56b750fe",
+      "main_digitalized_blob": "001b62bb8db1ae7bdeb9c542309de85d56b750fe",
+      "match": true
+    },
+    {
+      "path": "digital/dist/offline-db.mjs",
+      "app_blob": "265def342d3e45771c0d0d21974f877fc4dbc95f",
+      "main_digitalized_blob": "265def342d3e45771c0d0d21974f877fc4dbc95f",
+      "match": true
+    },
+    {
+      "path": "digital/dist/offline-runtime.mjs",
+      "app_blob": "9a8b0f0f4b6112727c9e6b0576175695af97da24",
+      "main_digitalized_blob": "9a8b0f0f4b6112727c9e6b0576175695af97da24",
+      "match": true
+    },
+    {
+      "path": "digital/dist/offline-records.mjs",
+      "app_blob": "1095f75a99cc52d531cd3ac273965dfad79abec4",
+      "main_digitalized_blob": "1095f75a99cc52d531cd3ac273965dfad79abec4",
+      "match": true
+    },
+    {
+      "path": "digital/dist/account-security.mjs",
+      "app_blob": "cd4a8c5f3411cef8fd07f6e1e570115602c7425d",
+      "main_digitalized_blob": "cd4a8c5f3411cef8fd07f6e1e570115602c7425d",
+      "match": true
+    },
+    {
+      "path": "digital/dist/active-sessions.mjs",
+      "app_blob": "65d027a936612045d69647557167070d1d2745c5",
+      "main_digitalized_blob": "edb75ec9acb3ea2748199578392031b30230441b",
+      "match": false
+    },
+    {
+      "path": "digital/backend/offline-sync.sql",
+      "app_blob": "8ab6a1e7506d1efae88c344cfe4120d082772d90",
+      "main_digitalized_blob": "8ab6a1e7506d1efae88c344cfe4120d082772d90",
+      "match": true
+    },
+    {
+      "path": "supabase/migrations/20261104014958_geodecoder_classroom_crud.sql",
+      "app_blob": "fd6e69d8c6f8bc319fa94ac2d58a079ba9c34cc6",
+      "main_digitalized_blob": "fd6e69d8c6f8bc319fa94ac2d58a079ba9c34cc6",
+      "match": true
+    },
+    {
+      "path": "digital/backend/classroom-crud/README.md",
+      "app_blob": "1d54c0e50b4ed34d6709d14e905152eeb342520f",
+      "main_digitalized_blob": "1d54c0e50b4ed34d6709d14e905152eeb342520f",
+      "match": true
+    }
+  ],
+  "delta_review": {
+    "core": "VERSION 2.9.0 -> 2.9.1 only; engine behavior unchanged in inspected diff",
+    "active_sessions": "UI icon/layout, current-device-first ordering and disclosure presentation; no command/authorization change"
+  },
+  "local_tool_availability": {
+    "flutter_on_path": false,
+    "dart_on_path": false,
+    "adb_on_path": false,
+    "node": "24.22.1",
+    "apk_build": "NOT_RUN",
+    "android_integration": "NOT_RUN"
+  },
+  "excluded_claims": [
+    "Flutter implementation complete",
+    "Dart/JS parity complete",
+    "Android run or screenshots",
+    "native cold/warm callback verified",
+    "hosted auth/CRUD/sync activation",
+    "Google consent or SMS delivery",
+    "Duel staging two-client verification",
+    "5000-user capacity"
+  ],
+  "remote_refs_observed_stage": "initial audit",
+  "final_gate_readback": {
+    "app-foundation": {
+      "status": 404,
+      "ready": false,
+      "canonical_ready_path": "apps/geomath_flutter/docs/FOUNDATION_READY.json"
+    },
+    "app-learning": {
+      "sha": "5ab7102193e070d853c1622f2ae038b2b37a833d",
+      "handoff_status": "WAITING_FOUNDATION_READY",
+      "implementationStarted": false,
+      "foundationSha": null,
+      "sameFoundationVerified": false,
+      "handoff_blob": "1e9a179cf9783ac9b9004a46a94957667108b217",
+      "integration_request_blob": "f92432b797171db8e3d371b815148449c45a1a96"
+    }
+  }
+}

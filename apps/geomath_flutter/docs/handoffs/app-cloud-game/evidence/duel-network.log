@@ -1,0 +1,16 @@
+✔ Duel polling waits while the browser is offline and resumes one chain (27.079745ms)
+✔ Duel background polling is slower without changing the authoritative clock (1.250342ms)
+✔ Duel observes Retry-After and keeps the exact pending command on HTTP429 (4.327399ms)
+✔ Duel terminal results stop background requests while retaining review data (1.471196ms)
+✔ the Edge exposes Retry-After so real cross-origin browsers can respect the rate limit (20.286552ms)
+✔ an explicit backend-update HTTP503 is not retried or retained as a pending game action (0.713846ms)
+✔ an older successful poll cannot erase a newer server cooldown (1.44666ms)
+✔ terminal capability errors stop periodic polling without forgetting the explicit reset session (3.444758ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 356.183209

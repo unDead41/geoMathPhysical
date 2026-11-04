@@ -1,0 +1,387 @@
+{
+  "schema_version": 1,
+  "branch": "app-cloud-game",
+  "status": "SOURCE_AUDIT_VERIFIED_NATIVE_BLOCKED",
+  "foundation_sha": null,
+  "native_implementation": false,
+  "sdk": {
+    "node": "24.22.1",
+    "source_dependencies": {
+      "@supabase/supabase-js": "2.118.0",
+      "@electric-sql/pglite": "0.5.11",
+      "jsdom": "30.1.3"
+    }
+  },
+  "counting_note": "Suites overlap between workers; do not sum these as unique tests. Source test success does not resolve reproduced source gaps or prove native/hosted behavior.",
+  "commands": [
+    {
+      "name": "auth-baseline",
+      "source_sha": "38f061af963256528d5060ff076bae9ee05eafc3",
+      "cwd": "baseline source snapshot root",
+      "command": "node --test --test-concurrency=1 digital/tests/auth.test.mjs digital/tests/email-auth.test.mjs digital/tests/email-cloud.test.mjs digital/tests/portal-auth-validation.test.mjs digital/tests/profile.test.mjs digital/tests/profile-backend.test.mjs digital/tests/profile-portal.test.mjs digital/tests/security-cloud.test.mjs digital/tests/security-sdk.test.mjs digital/tests/security-portal.test.mjs digital/tests/security-cleanup-race.test.mjs digital/tests/active-sessions-backend.test.mjs digital/tests/active-sessions-cloud.test.mjs digital/tests/active-sessions-portal.test.mjs digital/tests/active-sessions-qa.test.mjs digital/tests/cloud-session-binding.test.mjs",
+      "exit_code": 0,
+      "passed": 112,
+      "evidence": "evidence/auth-baseline.log"
+    },
+    {
+      "name": "auth-provider",
+      "source_sha": "28ba888ccaae12f842dd4abae618a51cb60cd1f2",
+      "cwd": "provider source snapshot root",
+      "command": "node --test --test-concurrency=1 digital/tests/auth-provider-helpers.test.mjs digital/tests/auth-providers-cloud.test.mjs digital/tests/auth-providers-backend.test.mjs",
+      "exit_code": 0,
+      "passed": 52,
+      "evidence": "evidence/auth-provider.log"
+    },
+    {
+      "name": "classroom",
+      "source_sha": "38f061af963256528d5060ff076bae9ee05eafc3",
+      "cwd": "source snapshot root",
+      "command": "node --test --test-concurrency=1 digital/tests/classroom-crud-backend.test.mjs digital/tests/classroom-crud-portal.test.mjs digital/tests/cloud-session-binding.test.mjs digital/tests/integration-sync-backend.test.mjs digital/tests/backend-history.test.mjs",
+      "exit_code": 0,
+      "passed": 38,
+      "evidence": "evidence/classroom.log"
+    },
+    {
+      "name": "solo",
+      "source_sha": "38f061af963256528d5060ff076bae9ee05eafc3",
+      "cwd": "digital",
+      "commands": [
+        "node --test tests/core.test.mjs tests/practice.test.mjs tests/solo-save.test.mjs tests/storage.test.mjs tests/i18n.test.mjs",
+        "node --test tests/upgrade.test.mjs tests/usability.test.mjs tests/ease-integration.test.mjs"
+      ],
+      "captured_combined_equivalent": "node --test tests/core.test.mjs tests/practice.test.mjs tests/solo-save.test.mjs tests/storage.test.mjs tests/i18n.test.mjs tests/upgrade.test.mjs tests/usability.test.mjs tests/ease-integration.test.mjs",
+      "exit_code": 0,
+      "passed": 73,
+      "evidence": "evidence/solo.log"
+    },
+    {
+      "name": "duel-transport",
+      "source_sha": "38f061af963256528d5060ff076bae9ee05eafc3",
+      "cwd": "digital",
+      "command": "node --test --test-concurrency=1 tests/duel-client.test.mjs tests/duel-client-lifecycle.test.mjs tests/duel-core.test.mjs tests/duel-content.test.mjs tests/duel-protocol.test.mjs tests/duel-edge.test.mjs tests/network-policy.test.mjs",
+      "exit_code": 0,
+      "passed": 44,
+      "evidence": "evidence/duel-transport.log"
+    },
+    {
+      "name": "duel-network",
+      "source_sha": "38f061af963256528d5060ff076bae9ee05eafc3",
+      "cwd": "digital",
+      "command": "node --test --test-concurrency=1 --test-name-pattern='Duel|Edge exposes|backend-update|older successful poll|terminal capability errors' tests/network-scaling.test.mjs",
+      "exit_code": 0,
+      "passed": 8,
+      "evidence": "evidence/duel-network.log"
+    },
+    {
+      "name": "duel-database",
+      "source_sha": "38f061af963256528d5060ff076bae9ee05eafc3",
+      "cwd": "digital",
+      "command": "node --test --test-concurrency=1 tests/duel-database.test.mjs tests/integration-sync-backend.test.mjs",
+      "exit_code": 0,
+      "passed": 19,
+      "evidence": "evidence/duel-database.log"
+    },
+    {
+      "name": "sync",
+      "source_sha": "38f061af963256528d5060ff076bae9ee05eafc3",
+      "cwd": "digital",
+      "command": "node --test --test-concurrency=1 tests/offline-sync.test.mjs tests/offline-cloud.test.mjs tests/offline-runtime.test.mjs tests/offline-backend.test.mjs tests/integration-sync-backend.test.mjs",
+      "exit_code": 0,
+      "passed": 55,
+      "evidence": "evidence/sync.log"
+    },
+    {
+      "name": "lead-solo-replay",
+      "source_sha": "38f061af963256528d5060ff076bae9ee05eafc3",
+      "cwd": "repository root",
+      "command": "node apps/geomath_flutter/docs/handoffs/app-cloud-game/evidence/replay-solo-trace.mjs",
+      "exit_code": 0,
+      "action_states": 247,
+      "explicit_rng_draws": 1741,
+      "fallback_draws": 49,
+      "source_hashes_verified": true,
+      "bank_identity_verified": true,
+      "evidence": "evidence/solo-replay.log"
+    },
+    {
+      "name": "solo-web-ui-blocker",
+      "source_sha": "38f061af963256528d5060ff076bae9ee05eafc3",
+      "cwd": "digital",
+      "command": "node --test tests/solo-ui.test.mjs",
+      "exit_code": 1,
+      "status": "BLOCKED_DEPENDENCY",
+      "reason": "esbuild was absent in worker 3 environment; jsdom was also absent there. No UI assertions executed.",
+      "evidence": "evidence/solo-ui-blocker.log"
+    }
+  ],
+  "source_gap_reproductions": [
+    {
+      "name": "delayed-login-adoption",
+      "exit_code": 0,
+      "outcome": "staleGatewayOverwroteNewerAccount:true",
+      "status": "SOURCE_DEFECT_REPRODUCED_NOT_FIXED",
+      "evidence": "evidence/auth-stale-login.log"
+    },
+    {
+      "name": "sync-policy-and-lifecycle",
+      "exit_code": 0,
+      "outcome": "Retry-After ignored, unbounded transient retries, enqueue reopens blocked and active send emits after stop",
+      "status": "SOURCE_GAPS_REPRODUCED_NOT_FIXED",
+      "evidence": "evidence/sync-probes.log"
+    }
+  ],
+  "worker_commit_imports": [
+    {
+      "worker": 2,
+      "commit": "8a4a22dfe5d8b59d12a00f07a357319cf316d5e5",
+      "path": "apps/geomath_flutter/docs/handoffs/app-cloud-game/audit/02-classroom.md",
+      "sha256": "6636c85a09945ff1ccba00d71c01d5d6c1adf87c292ef1666472708c8ab06ffa"
+    },
+    {
+      "worker": 3,
+      "commit": "8ccb37be502ed4f7cf22f3b72a1020fa4842df80",
+      "path": "apps/geomath_flutter/docs/handoffs/app-cloud-game/audit/03-solo-trace.json",
+      "sha256": "65ff79d598ca5d8271e3e2e1364128fedc85d091cf38de4c518599d47489fa5a"
+    },
+    {
+      "worker": 3,
+      "commit": "8ccb37be502ed4f7cf22f3b72a1020fa4842df80",
+      "path": "apps/geomath_flutter/docs/handoffs/app-cloud-game/audit/03-solo.md",
+      "sha256": "f3c1e329a30edaee18fb3f07907f88bb57823a58ca82e890c78d4cb10a877bf5"
+    },
+    {
+      "worker": 4,
+      "commit": "2e27c1d6999a98b40267ad9218b42a081c0cad7c",
+      "path": "apps/geomath_flutter/docs/handoffs/app-cloud-game/audit/04-duel.md",
+      "sha256": "e77b51e0dd796f371f3caefa9e3a918ad702077db6d9eae0a2801014bcc9e1f4"
+    },
+    {
+      "worker": 5,
+      "commit": "27491581241e2e8e7f3978581f75578cb5bc2a5b",
+      "path": "apps/geomath_flutter/docs/handoffs/app-cloud-game/audit/05-sync.md",
+      "sha256": "0768733f61f9a0fec3bda046e74a15e9d28ce8df8a5667e830181174c993278b"
+    },
+    {
+      "worker": 1,
+      "commit": "5a3f137e7f1a279f7921ff891be7e1a863229a4d",
+      "path": "apps/geomath_flutter/docs/handoffs/app-cloud-game/audit/01-auth.md",
+      "sha256": "93ef8223dfa44b85783e19b59ea8e249ffaeca0303fa37092f70232912197d3f"
+    },
+    {
+      "worker": 6,
+      "commit": "7e303aabf8d00469a4f3f460e84d650dc6dc11a3",
+      "path": "apps/geomath_flutter/docs/handoffs/app-cloud-game/audit/06-acceptance.md",
+      "sha256": "361996673864cb9c0966246e769078b82b5169ce73d32309a6e9e2f9161822dd"
+    },
+    {
+      "worker": 6,
+      "commit": "7e303aabf8d00469a4f3f460e84d650dc6dc11a3",
+      "path": "apps/geomath_flutter/docs/handoffs/app-cloud-game/audit/06-screen-matrix.json",
+      "sha256": "6546b093913c032b8110f700739d018c72f9fabe5eed8486ce121249fe444d99"
+    }
+  ],
+  "lead_edits_after_import": [
+    "Aligned acceptance SMS scope to the current disabled/excluded product decision.",
+    "Added final learning-branch readback; its status remains WAITING_FOUNDATION_READY with null foundation SHA.",
+    "Consolidated handoff/integration request/evidence and portable JS replay."
+  ],
+  "evidence": [
+    {
+      "file": "evidence/auth-baseline.log",
+      "sha256": "dd14dc3685d1b8a9f0f1c74342bafed95f0c222c1e57cd56a06c86e01beb2af1",
+      "bytes": 11424,
+      "summary": {
+        "tests": 112,
+        "suites": 0,
+        "pass": 112,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 37689.227714
+      }
+    },
+    {
+      "file": "evidence/auth-provider.log",
+      "sha256": "4f534b6c2b0f02759f2a1a556c4335b64741f14d4fb8f2ac5f0e95ee7c5f6742",
+      "bytes": 5170,
+      "summary": {
+        "tests": 52,
+        "suites": 0,
+        "pass": 52,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 6143.531343
+      }
+    },
+    {
+      "file": "evidence/auth-stale-login.log",
+      "sha256": "bf182fb66d70b37d95915795e985d1e2b7cd5e7a4deb3e0f8030186a7dc69ea6",
+      "bytes": 97,
+      "summary": {}
+    },
+    {
+      "file": "evidence/classroom.log",
+      "sha256": "685a7fc75f06eb1c444c39d08fd5b0051703b8c7e455d4968893568be31fa5b4",
+      "bytes": 4111,
+      "summary": {
+        "tests": 38,
+        "suites": 0,
+        "pass": 38,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 64586.7962
+      }
+    },
+    {
+      "file": "evidence/solo.log",
+      "sha256": "bdb34e770fc3da480a2409850cb7d70c3c21a5144b566c6b81e9ba8ccd8e7d7a",
+      "bytes": 7195,
+      "summary": {
+        "tests": 73,
+        "suites": 0,
+        "pass": 73,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 857.219154
+      }
+    },
+    {
+      "file": "evidence/solo-replay.log",
+      "sha256": "1bac1ead075496a35d56792dfbea38c19a52a0e36ed295a60d53ff55128d1ecb",
+      "bytes": 216,
+      "summary": {}
+    },
+    {
+      "file": "evidence/duel-transport.log",
+      "sha256": "490ef23f5c354d2fe80fd1b1a73f0a5ddc94c4946cd4bbbe11f946f4cdaccadf",
+      "bytes": 4423,
+      "summary": {
+        "tests": 44,
+        "suites": 0,
+        "pass": 44,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 7224.892852
+      }
+    },
+    {
+      "file": "evidence/duel-network.log",
+      "sha256": "3ee5869422fa7ba30affac2a93dc217d02b1fdcd203f867762cfe36e707faa58",
+      "bytes": 875,
+      "summary": {
+        "tests": 8,
+        "suites": 0,
+        "pass": 8,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 356.183209
+      }
+    },
+    {
+      "file": "evidence/duel-database.log",
+      "sha256": "194ca4222b6869a5830c47798487933f6f2010cddceee12d0ac3ac5852bed66c",
+      "bytes": 2101,
+      "summary": {
+        "tests": 19,
+        "suites": 0,
+        "pass": 19,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 28050.989862
+      }
+    },
+    {
+      "file": "evidence/sync.log",
+      "sha256": "5bb9229ac67173561a3eaeddc347793e8f0babd99664df973645ff16311c5c55",
+      "bytes": 5795,
+      "summary": {
+        "tests": 55,
+        "suites": 0,
+        "pass": 55,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 34013.222203
+      }
+    },
+    {
+      "file": "evidence/sync-probes.log",
+      "sha256": "22c42cdd1478f493a4f6783b360677409cea73f1aa4f4bfe3369036b16168e86",
+      "bytes": 390,
+      "summary": {}
+    },
+    {
+      "file": "evidence/solo-ui-blocker.log",
+      "sha256": "6894ff9be0f207a1108dc560c9f1e5e123d660f4312484604387811c911de7bb",
+      "bytes": 1331,
+      "summary": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 244.146543
+      }
+    }
+  ],
+  "native_and_hosted_checks": {
+    "formatter": "NOT_RUN",
+    "flutter_analyze": "NOT_RUN",
+    "flutter_unit_widget_database": "NOT_RUN",
+    "android_integration": "NOT_RUN",
+    "android_preview_run": "NOT_RUN",
+    "apk": "NOT_BUILT",
+    "native_screenshots": "NONE",
+    "hosted_auth_crud_sync": "NOT_VERIFIED",
+    "duel_two_clients_staging": "NOT_VERIFIED",
+    "google_consent_sms_delivery": "NOT_VERIFIED",
+    "5000_user_capacity": "NOT_MEASURED"
+  },
+  "lead_final_checks": {
+    "matrix_catalog_source_evidence_hash_checks": {
+      "exit_code": 0,
+      "native_screens": 29,
+      "extra_states": 16,
+      "all_native_statuses": "BLOCKED_FOUNDATION"
+    },
+    "credential_pattern_scan": {
+      "exit_code": 0,
+      "scope": "new handoff artifacts; no JWT-shaped strings"
+    },
+    "version_checker": {
+      "command": "python tools/check_version.py",
+      "exit_code": 0,
+      "inherited_version": "1.1.3"
+    },
+    "whitespace": {
+      "command": "git diff --cached --check",
+      "exit_code": 0
+    },
+    "read_only_review": {
+      "worker": 6,
+      "status": "READY_TO_PUBLISH_AUDIT_ONLY",
+      "defects_resolved": [
+        "Noncanonical initial READY lookup labeled; actual canonical docs/READY404 added."
+      ],
+      "new_learning_chronology_reviewed": true,
+      "native_claims_reviewed": false,
+      "note": "No release-blocking audit-document defect; native implementation remains unimplemented."
+    }
+  }
+}

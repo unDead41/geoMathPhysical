@@ -1,0 +1,29 @@
+✔ additive Duel migration preserves existing rooms and does not widen table or RPC privileges (8436.575808ms)
+✔ wrong-answer review survives refresh and cannot be skipped before the server-paced advance (76.316475ms)
+✔ same-sequence duplicate/conflicting requests settle one answer and one advance only (67.6169ms)
+✔ two players share ten unique questions; final score, time and last review remain authoritative (256.661437ms)
+✔ deadline, lobby expiry and surrender complete isolated fixtures with no client clock or score (55.467683ms)
+✔ prepared backend verification rolls back every fixture and migration rollback preserves existing rooms (60.606273ms)
+✔ equal scores and equal server finish times produce a draw (237.709691ms)
+✔ equal scores use the earlier server finish time (346.377905ms)
+▶ archived history + scaling → crud → offline
+  ✔ reviewed fingerprints, wrapper ACLs and input guards survive composition (129.858694ms)
+  ✔ public snapshots take no row lock and heartbeat writes coalesce with room scoping (116.902622ms)
+  ✔ owner, revision, archive and removed-membership guards retain authoritative history (159.101599ms)
+  ✔ offline replay and history remain owner-bound, session-bound and separate from live scores (83.472389ms)
+✔ archived history + scaling → crud → offline (6917.080281ms)
+▶ archived history + crud → offline → scaling
+  ✔ reviewed fingerprints, wrapper ACLs and input guards survive composition (34.868327ms)
+  ✔ public snapshots take no row lock and heartbeat writes coalesce with room scoping (60.465322ms)
+  ✔ owner, revision, archive and removed-membership guards retain authoritative history (167.822028ms)
+  ✔ offline replay and history remain owner-bound, session-bound and separate from live scores (432.135742ms)
+✔ archived history + crud → offline → scaling (5717.047286ms)
+✔ CRUD presence contract remains standalone before scaling or offline SQL is installed (5235.523638ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 28050.989862
