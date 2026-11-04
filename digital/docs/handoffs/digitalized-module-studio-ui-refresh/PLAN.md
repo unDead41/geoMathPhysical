@@ -13,7 +13,7 @@ Product direction: white/blue geometry workbench, existing navy/primary tokens, 
 - [x] Records: upgrade existing progress-summary disclosure into four rows with real stages, predictions/observations/reflections and continue/revisit through existing learn-labs/lab-* buttons. Change only ModuleAccess summary presentation and its existing presentation refresh; no bridge/storage changes.
 - [x] Add meaningful regressions for wizard invalidation/revisiting, toolbar undo and records/session isolation. Reuse all geometry/parser/protocol suites.
 - [x] Build standalone through original builder. Test module build/test/check, parent design:check and affected host suites. Exercise learning-tools browser fixture at 1440/390, BM/EN, light/dark, 150%, keyboard and reduced motion. Capture actual UI.
-- [ ] Review allowed-file diff, save evidence and handoff, commit and publish only digitalized-module-studio-ui-refresh via the connected GitHub account. Verify remote SHA and untouched protected refs.
+- [x] Review allowed-file diff, save evidence and handoff, commit and publish only digitalized-module-studio-ui-refresh via the connected GitHub account. Verify remote SHA and untouched protected refs.
 
 Ownership: index.html only progress-summary and panel mounts; style.css only UX-REDESIGN:PROGRESS; accessibility.mjs only summary presentation and its existing locale refresh. No app.mjs/build hooks are planned. Generated module standalone is built for review, parent vendor/pin remains for integrator.
 

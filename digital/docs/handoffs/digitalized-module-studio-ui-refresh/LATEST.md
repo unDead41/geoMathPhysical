@@ -11,7 +11,11 @@ Tarikh: 4 November 2026 (Malaysia). Branch penghantaran sahaja:
 | Konsep ui/ux-redesign-concept | `4d83561667cf74fbe5cd6144ce5e3e7f660a75cd` |
 | main diperiksa, tanpa pindaan | `25836eb1a6f24459aace8a3980ae880a13e3b488` |
 | Versi sumber Digital / modul | `2.8.0` / `1.6.0` |
-| Commit akhir pelaksanaan | Direkod dalam resit penghantaran selepas commit sumber dicipta. |
+| Commit akhir pelaksanaan | `2c35cefa79e3157b16d0bd9fb2e40f12a77df7e2` |
+
+Commit pelaksanaan di atas mengandungi semua source, standalone, ujian dan screenshot.
+Commit metadata susulan memuktamadkan handoff ini; SHA tip remote disahkan dalam
+serahan chat.
 
 Nombor sumber dikekalkan untuk mengelakkan tiga branch modul memilih nombor
 keluaran yang bercanggah. Integrator menetapkan nombor keluaran gabungan kemudian.
