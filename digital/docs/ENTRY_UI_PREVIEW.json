@@ -1,17 +1,16 @@
 {
-  "title": "GeoMath — Mula & panduan",
+  "title": "GeoMath — Animated 3D entry preview",
   "review_url": "https://undead41.github.io/geomath-ui-preview/#utama",
   "hosting": "GitHub Pages",
   "audience": "public-frontend-preview",
-  "github_ui_source_commit": "0c968c65005a0413c4f4a0034670b4db825599c8",
+  "github_ui_source_commit": "f213e1d9c6c17ae49aa49a2bb02eb674e8b754ea",
   "work_branch": "digitalized-ux-ui-upgrade",
   "preview_repository": "unDead41/geomath-ui-preview",
   "preview_branch": "preview-ui-upgrade",
-  "preview_commit": "627f28765c9261fb93dc95a499599dbbf725d11c",
-  "pages_source_path": "/",
+  "preview_commit": "c63d31bc2388d11ed40c086119eab6b1f26d97ca",
   "deployment_status": "success",
-  "workflow_run": "https://github.com/unDead41/geomath-ui-preview/actions/runs/41753862683",
-  "verified_at": "2026-11-04",
+  "workflow_run": "https://github.com/unDead41/geomath-ui-preview/actions/runs/41757354297",
+  "verified_on": "2026-11-04",
   "live_routes_verified": [
     "#utama",
     "#main",
@@ -20,10 +19,5 @@
   ],
   "integration_branches_changed": false,
   "existing_pages_changed": false,
-  "verification_document": "ENTRY_UI_VERIFICATION.md",
-  "previous_preview": {
-    "review_url": "https://geomath-ui-ijamm.ijmahmad.chatgpt.site",
-    "hosting": "ChatGPT Sites",
-    "deployment_id": "appgdep_6aea3f03b968819180ffc11435f38680"
-  }
+  "verification_document": "ENTRY_UI_3D_VERIFICATION.md"
 }
