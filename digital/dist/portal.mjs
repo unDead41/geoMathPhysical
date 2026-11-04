@@ -7,6 +7,7 @@ import {securitySessionKey} from './account-security.mjs';
 import {renderProfileView} from './profile-view.mjs';
 import {renderSecurityView} from './security-view.mjs';
 import {renderActiveSessions} from './active-sessions.mjs';
+import {CLASSROOM_ERROR_KEYS} from './classroom-copy.mjs';
 
 // Only authored literals pass through pt(); user-provided values stay untouched.
 const portalOriginal=new Map([...Object.entries(MESSAGES.en).map(([key,text])=>[text,key]),...Object.entries(MESSAGES.ms).map(([key,text])=>[text,key])]);
@@ -33,7 +34,7 @@ function playerLabel(status) { return ({waiting: pt("Menunggu mula"), playing: p
 function hasAttempt(player) {
   return ['playing', 'review', 'finished'].includes(player.status) || Boolean(player.attempt_id || player.started_at || player.timer_started_at || number(player.question_index) || number(player.elapsed_ms) || number(player.score) || number(player.mistakes) || number(player.hints) || number(player.skipped));
 }
-function errorText(error) { return friendlyError(error,globalThis.document?.documentElement?.lang==='en'?'en':'ms'); }
+function errorText(error) { return CLASSROOM_ERROR_KEYS[error?.code] ? pt(CLASSROOM_ERROR_KEYS[error.code]) : friendlyError(error,globalThis.document?.documentElement?.lang==='en'?'en':'ms'); }
 
 /** Account, class, invitation, and live-room UI. All authorization remains server-owned. */
 export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onPreferences = () => {}, onExit = () => {}, onError = () => {}} = {}) {
@@ -75,6 +76,12 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
   let knownRecovery = false;
   let knownCallbackError = '';
   let closeConfirmation = false;
+  let management = null;
+  let managementRefresh = null;
+  let managementFocus = null;
+  let showArchivedClasses = false;
+  let showArchivedRooms = false;
+  let invitePage = 1;
   let pending = '';
   let operation = 0;
   let authPending = false;
@@ -110,6 +117,11 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
   const content = screen.querySelector('#portal-content');
   const statusNode = screen.querySelector('#portal-notice');
   const alertNode = screen.querySelector('#portal-alert');
+  const managementDialog = document.createElement('dialog');
+  managementDialog.id = 'portal-management-dialog';
+  managementDialog.className = 'portal-management-dialog';
+  managementDialog.setAttribute('aria-labelledby', 'portal-management-title');
+  managementDialog.setAttribute('aria-describedby', 'portal-management-description');
 
   function sessionKey() {
     const session = cloud.session;
@@ -123,6 +135,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
   function currentClass() { return list(snapshot?.classes).find(item => String(item.id) === String(classId)) || null; }
   function currentRoom() { return snapshot?.room && String(snapshot.room.id) === String(roomId) ? snapshot.room : null; }
   function isTeacher() { return profile?.role === 'teacher'; }
+  function canManage() { return isTeacher() && snapshot?.classroom_crud === 1; }
   function valid(token, identity) { return active && !destroyed && token === epoch && identity === sessionKey() && accountAvailable(); }
   function report(error) { try { onError(error); } catch { /* Host feedback must not break account recovery. */ } }
 
@@ -149,6 +162,88 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
   }
 
   function formError() { return '<p class="portal-form-error" data-form-error role="alert"></p>'; }
+
+  function managementButtons(entity, kind) {
+    if (!canManage()) return '';
+    const action = kind === 'class' ? 'manage-class' : 'manage-room';
+    return `<div class="portal-management-actions" role="group" aria-label="${pt(kind === 'class' ? 'Pengurusan kelas' : 'Pengurusan bilik')}">${button(pt('Sunting nama'), action, {id:entity.id, quiet:true, extra:'data-operation="rename"'})}${button(pt(entity.archived_at ? 'Pulihkan' : 'Arkibkan'), action, {id:entity.id, extra:`data-operation="${entity.archived_at ? 'restore' : 'archive'}"`})}${button(pt('Padam rekod kosong'), action, {id:entity.id, danger:true, extra:'data-operation="delete"'})}</div>`;
+  }
+
+  function closeManagement({restoreFocus=true}={}) {
+    if (!management) return;
+    management = null;
+    managementRefresh = null;
+    if (managementDialog.open) managementDialog.close();
+    managementDialog.replaceChildren();
+    managementDialog.remove();
+    if (restoreFocus) {
+      const source = managementFocus;
+      const control = [...content.querySelectorAll('[data-portal-action]')].find(n => source && Object.entries(source).every(([k,v]) => n.dataset[k] === v));
+      (control || content.querySelector('#portal-title'))?.focus({preventScroll:true});
+    }
+    managementFocus = null;
+  }
+
+  function renderManagement() {
+    if (!management) return;
+    const oldInput = managementDialog.querySelector('input[name="name"]');
+    const draft = oldInput?.value ?? management.name;
+    const error = managementDialog.querySelector('[data-form-error]')?.textContent || '';
+    const {kind,operation,name} = management;
+    const title = ({rename_class:'Sunting nama kelas',rename_room:'Sunting nama bilik',archive_class:'Arkibkan kelas',archive_room:'Arkibkan bilik',restore_class:'Pulihkan kelas',restore_room:'Pulihkan bilik',delete_class:'Padam kelas kosong',delete_room:'Padam bilik kosong',remove_member:'Keluarkan pelajar',cancel_invite:'Batalkan jemputan',decline_invite:'Tolak jemputan'})[management.action];
+    const description = operation === 'rename' ? '2–60 aksara, tanpa aksara kawalan.' : operation === 'archive' ? 'Arkib menyimpan ahli dan keputusan. PIN lama dibatalkan. Tutup permainan yang sedang berjalan dahulu.' : operation === 'restore' ? 'Rekod akan kembali ke senarai aktif. Keputusan dan status permainan dikekalkan. Jana PIN baharu untuk jemputan seterusnya.' : kind === 'member' ? 'Akses kelas dan bilik pelajar ini ditarik balik. Keputusan terdahulu kekal. Pelajar boleh menyertai semula dengan PIN atau jemputan yang sah.' : kind === 'invite' ? 'Jemputan ini akan dibatalkan. Keahlian kelas yang sudah diterima tidak berubah.' : 'Hanya rekod tanpa ahli, jemputan atau rekod berkaitan boleh dipadam. Pemadaman ini kekal.';
+    const label = ({rename:'Simpan perubahan',archive:'Arkibkan',restore:'Pulihkan',delete:'Padam rekod kosong',remove:'Keluarkan',cancel:'Batalkan jemputan',decline:'Tolak jemputan'})[operation];
+    managementDialog.innerHTML = `<div class="dialog-shell"><header class="dialog-header"><h2 id="portal-management-title">${pt(title)}</h2></header><p class="portal-management-object">${esc(name)}</p><p id="portal-management-description">${pt(description)}</p><form data-portal-form="management" novalidate>${operation === 'rename' ? field('portal-management-name',pt('Nama baharu'),{name:'name',min:2,max:120,value:draft,help:pt('2–60 aksara, tanpa aksara kawalan.')}) : ''}${formError()}<div class="portal-management-actions">${button(pt('Batal'),'management-cancel',{quiet:true})}<button type="submit" class="button ${['delete','remove','cancel','decline'].includes(operation) ? 'button-danger' : 'button-primary'} portal-submit" data-block-while-busy data-base-disabled="false"><span>${pt(label)}</span></button></div>${kind !== 'invite' ? button(pt('Muat semula rekod'),'management-refresh',{quiet:true}) : ''}</form></div>`;
+    managementDialog.querySelector('[data-form-error]').textContent = pt(error);
+    updateBusy();
+  }
+
+  function openManagement(control) {
+    if (!snapshot?.classroom_crud || !accountAvailable()) return;
+    const kind = control.dataset.portalAction.replace('manage-','');
+    const operation = control.dataset.operation || (kind === 'member' ? 'remove' : 'cancel');
+    let entity;
+    if (kind === 'class' && canManage()) entity = list(snapshot.classes).find(n=>String(n.id)===control.dataset.id);
+    if (kind === 'room' && canManage()) entity = list(snapshot.rooms).find(n=>String(n.id)===control.dataset.id);
+    if (kind === 'member' && canManage()) entity = list(currentClass()?.members).find(n=>String(n.id)===control.dataset.id);
+    if (kind === 'invite') entity = isTeacher() ? list(currentClass()?.pending_invites).find(n=>String(n.id)===control.dataset.id) : list(snapshot.invites).find(n=>String(n.id)===control.dataset.id);
+    if (!entity) return;
+    const action = kind === 'member' ? 'remove_member' : kind === 'invite' ? isTeacher() ? 'cancel_invite' : 'decline_invite' : `${operation}_${kind}`;
+    managementFocus = {...control.dataset};
+    management = {kind,operation:kind==='invite'&&!isTeacher()?'decline':operation,action,id:entity.id,classId:classId,revision:kind==='member'?currentClass().revision:entity.revision,name:entity.name||entity.display_name||entity.class_name||entity.username};
+    renderManagement();
+    screen.append(managementDialog);
+    managementDialog.showModal();
+    managementDialog.querySelector(operation==='rename'?'input[name="name"]':'[data-portal-action="management-cancel"]')?.focus();
+  }
+
+  async function refreshManagement() {
+    const open = management;
+    if (!open || pending || managementRefresh) return;
+    managementRefresh=open;updateBusy();
+    let focusTarget=null;
+    try {
+      const refreshed = await refresh({silent:true});
+      if (management !== open) return;
+      if (stale || !refreshed) {
+        focusTarget=managementDialog.querySelector('[data-form-error]');
+        focusTarget.textContent=alertNode.textContent || pt('Rekod tidak lagi tersedia. Muat semula senarai.');
+        focusTarget.setAttribute('tabindex','-1');
+        return;
+      }
+      const entity = open.kind==='member' ? list(snapshot.classes).find(n=>n.id===open.classId && list(n.members).some(m=>m.id===open.id)) : open.kind==='class' ? list(snapshot.classes).find(n=>n.id===open.id) : list(snapshot.rooms).find(n=>n.id===open.id);
+      if (!entity) {closeManagement();announce(pt('Rekod tidak lagi tersedia. Muat semula senarai.'),'error');return;}
+      open.revision=entity.revision;
+      if(open.kind!=='member')open.name=entity.name;
+      managementDialog.querySelector('[data-form-error]').textContent='';
+      renderManagement();
+      focusTarget=managementDialog.querySelector('input') || managementDialog.querySelector('[data-portal-action="management-cancel"]');
+    } finally {
+      if(managementRefresh===open)managementRefresh=null;
+      updateBusy();
+      if(management===open)focusTarget?.focus({preventScroll:true});
+    }
+  }
   function badge(status) { return `<span class="portal-badge portal-badge-${esc(status)}">${statusLabel(status)}</span>`; }
   function presence(value) {
     return `<span class="portal-presence ${online(value) ? 'is-online' : ''}" data-presence="${esc(value || '')}"><i aria-hidden="true"></i><span>${online(value) ? pt("Aktif sekarang") : pt("Tidak aktif")}</span></span>`;
@@ -361,6 +456,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
 
   // Navigation owns a fresh epoch. Clear detached secrets before changing views.
   function setAccountView(view, nextRoom = null) {
+    closeManagement({restoreFocus:false});
     profileBaseline = null; profileNext = null;
     clearSecurityFields(); securityController?.abort(); securityController = null;
     clearSessions();
@@ -380,7 +476,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
   }
 
   function pinPanel(owner, kind) {
-    if (!owner || kind === 'room' && owner.status === 'closed') return '';
+    if (!owner || owner.archived_at || owner.class_archived_at || kind === 'room' && owner.status === 'closed') return '';
     if (!owner.pin) return `<div class="portal-pin-panel"><div><span class="portal-small-label">PIN ${kind === 'class' ? pt("KELAS") : pt("BILIK")}</span><p>${pt("Tiada PIN aktif. Jana PIN baharu untuk menjemput pelajar.")}</p></div><div class="portal-pin-actions">${button(pt("PIN baharu"), 'rotate-pin', {id: owner.id, symbol: 'refresh', extra: `data-kind="${kind}"`})}</div><p>${pt("PIN baharu sah selama 24 jam.")}</p></div>`;
     const expiresAt = stamp(owner.pin_expires_at);
     const expired = expiresAt !== null && expiresAt <= now();
@@ -388,7 +484,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
   }
 
   function renderClassList(classes) {
-    return `<aside class="portal-class-sidebar portal-panel"><div class="portal-panel-title"><h2>${pt("Kelas saya")}</h2><span class="portal-count">${classes.length}</span></div><div class="portal-class-list">${classes.length ? classes.map(item => `<button type="button" class="portal-class-choice ${String(item.id) === String(classId) ? 'is-selected' : ''}" data-portal-action="select-class" data-id="${esc(item.id)}" aria-pressed="${String(item.id) === String(classId)}" data-block-while-busy data-base-disabled="false"><span class="portal-class-icon">${icon('user')}</span><span><b>${esc(item.name)}</b><small>${list(item.members).length} ${pt("pelajar")}</small></span>${icon('chevron')}</button>`).join('') : `<p class="portal-empty-note">${pt("Belum ada kelas. Cipta kelas pertama anda di bawah.")}</p>`}</div><form data-portal-form="create-class" novalidate><h3>${pt("Cipta kelas")}</h3>${field('portal-class-name', pt("Nama kelas"), {name: 'name', max: 80, placeholder: pt("Contoh: 1 Bestari"), help: pt("Gunakan nama yang dikenali pelajar.")})}${formError()}${submit(pt("Cipta kelas"), false)}</form></aside>`;
+    return `<aside class="portal-class-sidebar portal-panel"><div class="portal-panel-title"><h2>${pt("Kelas saya")}</h2><span class="portal-count">${classes.length}</span></div>${canManage() ? button(pt(showArchivedClasses ? 'Lihat kelas aktif' : 'Lihat arkib kelas'),'class-archive-filter',{quiet:true}) : ''}<div class="portal-class-list">${classes.length ? classes.map(item => `<button type="button" class="portal-class-choice ${String(item.id) === String(classId) ? 'is-selected' : ''}" data-portal-action="select-class" data-id="${esc(item.id)}" aria-pressed="${String(item.id) === String(classId)}" data-block-while-busy data-base-disabled="false"><span class="portal-class-icon">${icon('user')}</span><span><b>${esc(item.name)}</b><small>${list(item.members).length} ${pt("pelajar")}</small></span>${icon('chevron')}</button>`).join('') : `<p class="portal-empty-note">${pt(showArchivedClasses ? "Belum ada kelas dalam arkib." : "Belum ada kelas. Cipta kelas pertama anda di bawah.")}</p>`}</div><form data-portal-form="create-class" novalidate><h3>${pt("Cipta kelas")}</h3>${field('portal-class-name', pt("Nama kelas"), {name: 'name', min: 2, max: 120, placeholder: pt("Contoh: 1 Bestari"), help: pt("Gunakan nama yang dikenali pelajar.")})}${formError()}${submit(pt("Cipta kelas"), false)}</form></aside>`;
   }
 
   function pager(total, page, size, target) {
@@ -403,21 +499,28 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
     const query = rosterQuery.toLocaleLowerCase('ms-MY');
     const filtered = members.filter(member => `${member.display_name || ''} ${member.username || ''}`.toLocaleLowerCase('ms-MY').includes(query));
     rosterPage = Math.min(rosterPage, Math.max(1, Math.ceil(filtered.length / PAGE_SIZE)));
-    return `<section class="portal-panel portal-roster-panel" aria-labelledby="portal-roster-title"><div class="portal-panel-title"><div><h2 id="portal-roster-title">${pt("Pelajar dalam kelas")}</h2><p><span data-online-count>${members.filter(member => online(member.last_seen)).length}</span> ${pt("aktif sekarang daripada")} ${members.length} ${pt("pelajar")}</p></div><div class="portal-search"><label class="sr-only" for="portal-roster-search">${pt("Cari nama atau nama pengguna")}</label><input id="portal-roster-search" type="search" autocomplete="off" placeholder="${pt("Cari pelajar")}" value="${esc(rosterQuery)}"><button type="button" data-portal-action="clear-search" aria-label="${pt("Kosongkan carian pelajar")}" ${rosterQuery ? '' : 'hidden'}>${icon('close')}</button></div></div><div class="portal-table-scroll" tabindex="0" role="region" aria-label="${pt("Senarai pelajar, leret untuk melihat semua lajur")}"><table class="portal-table"><caption class="sr-only">${pt("Senarai pelajar bagi kelas")} ${esc(item.name)}</caption><thead><tr><th scope="col">${pt("Pelajar")}</th><th scope="col">${pt("Kehadiran")}</th><th scope="col">${pt("Terakhir aktif (MYT)")}</th><th scope="col">${pt("Kemajuan modul")}</th></tr></thead><tbody>${filtered.length ? filtered.slice((rosterPage - 1) * PAGE_SIZE, rosterPage * PAGE_SIZE).map(member => `<tr><th scope="row"><span class="portal-table-person"><span class="portal-avatar portal-avatar-small">${esc(initial(member.display_name))}</span><span><b>${esc(member.display_name)}</b><small>@${esc(member.username)}</small></span></span></th><td>${presence(member.last_seen)}</td><td class="portal-muted">${esc(dateText(member.last_seen))}</td><td data-module-student="${esc(member.id)}">${learningData?.class_id === item.id ? renderLearningRecords(list(learningData.students).find(student => student.user_id === member.id)?.records) : `<span class="portal-muted">${pt("Belum dimuatkan")}</span>`}</td></tr>`).join('') : `<tr><td colspan="4" class="portal-empty-cell">${query ? pt("Tiada pelajar sepadan. Cuba nama atau nama pengguna lain.") : pt("Belum ada pelajar. Kongsi PIN kelas atau jemput menggunakan nama pengguna.")}</td></tr>`}</tbody></table></div>${pager(filtered.length, rosterPage, PAGE_SIZE, 'roster')}<p class="portal-table-note">${pt("“Aktif sekarang” bermaksud akaun dikesan dalam 45 saat terakhir.")} ${pt("Rekod modul ialah latihan yang dilaporkan oleh pelajar dan bukan markah penilaian.")}</p>${learningError ? `<p class="portal-module-warning" role="status">${esc(pt(learningError))}</p>` : ''}</section>`;
+    return `<section class="portal-panel portal-roster-panel" aria-labelledby="portal-roster-title"><div class="portal-panel-title"><div><h2 id="portal-roster-title">${pt("Pelajar dalam kelas")}</h2><p><span data-online-count>${members.filter(member => online(member.last_seen)).length}</span> ${pt("aktif sekarang daripada")} ${members.length} ${pt("pelajar")}</p></div><div class="portal-search"><label class="sr-only" for="portal-roster-search">${pt("Cari nama atau nama pengguna")}</label><input id="portal-roster-search" type="search" autocomplete="off" placeholder="${pt("Cari pelajar")}" value="${esc(rosterQuery)}"><button type="button" data-portal-action="clear-search" aria-label="${pt("Kosongkan carian pelajar")}" ${rosterQuery ? '' : 'hidden'}>${icon('close')}</button></div></div><div class="portal-table-scroll" tabindex="0" role="region" aria-label="${pt("Senarai pelajar, leret untuk melihat semua lajur")}"><table class="portal-table"><caption class="sr-only">${pt("Senarai pelajar bagi kelas")} ${esc(item.name)}</caption><thead><tr><th scope="col">${pt("Pelajar")}</th><th scope="col">${pt("Kehadiran")}</th><th scope="col">${pt("Terakhir aktif (MYT)")}</th><th scope="col">${pt("Kemajuan modul")}</th>${canManage() ? `<th scope="col">${pt("Tindakan")}</th>` : ''}</tr></thead><tbody>${filtered.length ? filtered.slice((rosterPage - 1) * PAGE_SIZE, rosterPage * PAGE_SIZE).map(member => `<tr><th scope="row"><span class="portal-table-person"><span class="portal-avatar portal-avatar-small">${esc(initial(member.display_name))}</span><span><b>${esc(member.display_name)}</b><small>@${esc(member.username)}</small></span></span></th><td>${presence(member.last_seen)}</td><td class="portal-muted">${esc(dateText(member.last_seen))}</td><td data-module-student="${esc(member.id)}">${learningData?.class_id === item.id ? renderLearningRecords(list(learningData.students).find(student => student.user_id === member.id)?.records) : `<span class="portal-muted">${pt("Belum dimuatkan")}</span>`}</td>${canManage() ? `<td>${button(pt('Keluarkan'),'manage-member',{id:member.id,danger:true})}</td>` : ''}</tr>`).join('') : `<tr><td colspan="${canManage()?5:4}" class="portal-empty-cell">${query ? pt("Tiada pelajar sepadan. Cuba nama atau nama pengguna lain.") : pt("Belum ada pelajar. Kongsi PIN kelas atau jemput menggunakan nama pengguna.")}</td></tr>`}</tbody></table></div>${pager(filtered.length, rosterPage, PAGE_SIZE, 'roster')}<p class="portal-table-note">${pt("“Aktif sekarang” bermaksud akaun dikesan dalam 45 saat terakhir.")} ${pt("Rekod modul ialah latihan yang dilaporkan oleh pelajar dan bukan markah penilaian.")}</p>${learningError ? `<p class="portal-module-warning" role="status">${esc(pt(learningError))}</p>` : ''}</section>`;
   }
 
   function renderRoomCards(rooms, teacher) {
     roomPage = Math.min(roomPage, Math.max(1, Math.ceil(rooms.length / ROOM_PAGE_SIZE)));
-    return `${rooms.length ? `<div class="portal-room-grid">${rooms.slice((roomPage - 1) * ROOM_PAGE_SIZE, roomPage * ROOM_PAGE_SIZE).map(room => `<article class="portal-room-card"><div class="portal-room-card-top"><span class="portal-room-symbol">${icon('trophy')}</span>${badge(room.status)}</div><h3>${esc(room.name)}</h3><p>${esc(room.class_name || currentClass()?.name || '')}</p><div class="portal-room-card-bottom"><span>${number(room.members_count)} ${pt("pelajar")}</span>${button(teacher ? pt("Pantau bilik") : room.status === 'closed' ? pt("Lihat keputusan") : pt("Masuk bilik"), teacher || room.status === 'closed' ? 'view-room' : 'join-room', {id: room.id, symbol: 'arrow', disabled: !teacher && room.status === 'closed' && room.is_member !== true})}${!teacher && room.status === 'closed' && room.is_member !== true ? `<small>${pt("Anda tidak menyertai bilik ini.")}</small>` : ''}</div></article>`).join('')}</div>` : '<div class="portal-empty-state"><span class="portal-empty-art" aria-hidden="true">' + shapeArt('pyramid', 'solid', true, 'violet') + `</span><h3>${pt("Belum ada bilik permainan")}</h3><p>` + (teacher ? pt("Cipta bilik untuk melihat kemajuan pelajar bersama-sama.") : pt("Bilik daripada guru anda akan muncul di sini.")) + '</p></div>'}${pager(rooms.length, roomPage, ROOM_PAGE_SIZE, 'rooms')}`;
+    return `${rooms.length ? `<div class="portal-room-grid">${rooms.slice((roomPage - 1) * ROOM_PAGE_SIZE, roomPage * ROOM_PAGE_SIZE).map(room => `<article class="portal-room-card"><div class="portal-room-card-top"><span class="portal-room-symbol">${icon('trophy')}</span>${badge(room.status)}${room.archived_at || room.class_archived_at ? `<span class="portal-badge">${pt('Dalam arkib')}</span>` : ''}</div><h3>${esc(room.name)}</h3><p>${esc(room.class_name || currentClass()?.name || '')}</p><div class="portal-room-card-bottom"><span>${number(room.members_count)} ${pt("pelajar")}</span>${button(teacher ? pt("Pantau bilik") : room.status === 'closed' ? pt("Lihat keputusan") : pt("Masuk bilik"), teacher || room.status === 'closed' ? 'view-room' : 'join-room', {id: room.id, symbol: 'arrow', disabled: !teacher && (room.status === 'closed' && room.is_member !== true || room.status !== 'closed' && Boolean(room.archived_at || room.class_archived_at))})}${!teacher && room.status === 'closed' && room.is_member !== true ? `<small>${pt("Anda tidak menyertai bilik ini.")}</small>` : ''}</div>${teacher ? managementButtons(room,'room') : ''}</article>`).join('')}</div>` : '<div class="portal-empty-state"><span class="portal-empty-art" aria-hidden="true">' + shapeArt('pyramid', 'solid', true, 'violet') + `</span><h3>${pt(showArchivedRooms ? "Belum ada bilik dalam paparan ini." : "Belum ada bilik permainan")}</h3><p>` + (teacher ? pt("Cipta bilik untuk melihat kemajuan pelajar bersama-sama.") : pt("Bilik daripada guru anda akan muncul di sini.")) + '</p></div>'}${pager(rooms.length, roomPage, ROOM_PAGE_SIZE, 'rooms')}`;
+  }
+
+  function renderPendingInvites(item) {
+    if (!canManage() || !list(item.pending_invites).length) return '';
+    const invites=list(item.pending_invites);
+    invitePage=Math.min(invitePage,Math.max(1,Math.ceil(invites.length/PAGE_SIZE)));
+    return `<section class="portal-invites"><h3>${pt('Jemputan menunggu')}</h3><ul>${invites.slice((invitePage-1)*PAGE_SIZE,invitePage*PAGE_SIZE).map(i=>`<li><span><b>${esc(i.display_name)}</b> @${esc(i.username)}</span>${button(pt('Batalkan jemputan'),'manage-invite',{id:i.id,quiet:true})}</li>`).join('')}</ul>${pager(invites.length,invitePage,PAGE_SIZE,'invites')}</section>`;
   }
 
   function renderTeacher() {
     document.title = pt("Ruang guru — GeoDecoder Digital");
-    const classes = list(snapshot?.classes);
-    if (!currentClass()) classId = classes[0]?.id || null;
+    const classes = list(snapshot?.classes).filter(c=>Boolean(c.archived_at)===showArchivedClasses);
+    if (!classes.some(c=>c.id===classId)) classId = classes[0]?.id || null;
     const selected = currentClass();
-    const rooms = list(snapshot?.rooms).filter(room => !selected || String(room.class_id) === String(selected.id));
-    return `${accountHeading(pt("RUANG GURU"), pt("Kelas anda, belajar bersama."), pt("Urus pelajar, kongsi PIN dan pantau permainan kelas."))}${button(pt("Kata Laluan & Keselamatan"), "security", {quiet: true, symbol: "lock"})}${freshness()}<p>${button(pt("Teroka modul pembelajaran"), "open-module", {symbol: "arrow"})}</p><div class="portal-teacher-layout">${renderClassList(classes)}<div class="portal-class-main">${selected ? `<section class="portal-panel portal-class-overview"><div class="portal-panel-title"><div><p class="card-kicker">${pt("KELAS DIPILIH")}</p><h2>${esc(selected.name)}</h2><p>${list(selected.members).length} ${pt("pelajar berdaftar")}</p></div><span class="portal-class-geometry" aria-hidden="true">${shapeArt('cuboid', 'solid', true, 'orange')}</span></div>${pinPanel(selected, 'class')}<form data-portal-form="invite" novalidate class="portal-inline-form"><div><h3>${pt("Jemput pelajar")}</h3><p>${pt("Masukkan nama pengguna tepat. Pelajar perlu menerima jemputan dalam akaunnya.")}</p></div><div class="portal-inline-form-fields">${field('portal-invite-username', pt("Nama pengguna pelajar"), {name: 'username', max: 24, placeholder: 'nama_pengguna', help: pt("Huruf besar ditukar kepada huruf kecil. Gunakan username berdaftar pelajar.")})}${submit(pt("Hantar jemputan"), false)}</div>${formError()}</form></section>${renderRoster(selected)}<section class="portal-panel" aria-labelledby="portal-rooms-title"><div class="portal-panel-title"><div><h2 id="portal-rooms-title">${pt("Bilik permainan")}</h2><p>${pt("Setiap bilik mempunyai PIN dan papan skor sendiri.")}</p></div><span class="portal-count">${rooms.length}</span></div><form data-portal-form="create-room" novalidate class="portal-room-form"><div class="portal-inline-form-fields">${field('portal-room-name', pt("Nama bilik"), {name: 'name', max: 80, placeholder: pt("Contoh: Latihan bongkah"), help: pt("Pelajar akan melihat nama ini.")})}${submit(pt("Cipta bilik"))}</div>${formError()}</form>${renderRoomCards(rooms, true)}</section>` : '<section class="portal-panel portal-first-class"><div class="portal-empty-state">' + geometryKit() + `<h2>${pt("Sediakan kelas pertama anda")}</h2><p>${pt("Masukkan nama kelas di sebelah. Kemudian kongsi PIN atau jemput pelajar menggunakan nama pengguna.")}</p></div></section>`}</div></div>`;
+    const rooms = list(snapshot?.rooms).filter(room => !selected || String(room.class_id) === String(selected.id)).filter(room=>Boolean(room.archived_at)===showArchivedRooms);
+    return `${accountHeading(pt("RUANG GURU"), pt("Kelas anda, belajar bersama."), pt("Urus pelajar, kongsi PIN dan pantau permainan kelas."))}${button(pt("Kata Laluan & Keselamatan"), "security", {quiet: true, symbol: "lock"})}${freshness()}<p>${button(pt("Teroka modul pembelajaran"), "open-module", {symbol: "arrow"})}</p><div class="portal-teacher-layout">${renderClassList(classes)}<div class="portal-class-main">${selected ? `<section class="portal-panel portal-class-overview"><div class="portal-panel-title"><div><p class="card-kicker">${pt("KELAS DIPILIH")}</p><h2>${esc(selected.name)}</h2><p>${list(selected.members).length} ${pt("pelajar berdaftar")}</p></div><span class="portal-class-geometry" aria-hidden="true">${shapeArt('cuboid', 'solid', true, 'orange')}</span></div>${managementButtons(selected,'class')}${selected.archived_at ? `<p class="portal-inline-info">${pt('Kelas ini dalam arkib. Ahli dan keputusan dikekalkan; aktiviti baharu dihentikan.')}</p>` : ''}${pinPanel(selected, 'class')}${!selected.archived_at ? `<form data-portal-form="invite" novalidate class="portal-inline-form"><div><h3>${pt("Jemput pelajar")}</h3><p>${pt("Masukkan nama pengguna tepat. Pelajar perlu menerima jemputan dalam akaunnya.")}</p></div><div class="portal-inline-form-fields">${field('portal-invite-username', pt("Nama pengguna pelajar"), {name: 'username', max: 24, placeholder: 'nama_pengguna', help: pt("Huruf besar ditukar kepada huruf kecil. Gunakan username berdaftar pelajar.")})}${submit(pt("Hantar jemputan"), false)}</div>${formError()}</form>` : ''}${renderPendingInvites(selected)}</section>${renderRoster(selected)}<section class="portal-panel" aria-labelledby="portal-rooms-title"><div class="portal-panel-title"><div><h2 id="portal-rooms-title">${pt("Bilik permainan")}</h2><p>${pt("Setiap bilik mempunyai PIN dan papan skor sendiri.")}</p></div><span class="portal-count">${rooms.length}</span></div>${canManage() ? button(pt(showArchivedRooms ? 'Lihat bilik aktif' : 'Lihat arkib bilik'),'room-archive-filter',{quiet:true}) : ''}${!selected.archived_at ? `<form data-portal-form="create-room" novalidate class="portal-room-form"><div class="portal-inline-form-fields">${field('portal-room-name', pt("Nama bilik"), {name: 'name', min: 2, max: 120, placeholder: pt("Contoh: Latihan bongkah"), help: pt("Pelajar akan melihat nama ini.")})}${submit(pt("Cipta bilik"))}</div>${formError()}</form>` : ''}${renderRoomCards(rooms, true)}</section>` : '<section class="portal-panel portal-first-class"><div class="portal-empty-state">' + geometryKit() + `<h2>${pt("Sediakan kelas pertama anda")}</h2><p>${pt("Masukkan nama kelas di sebelah. Kemudian kongsi PIN atau jemput pelajar menggunakan nama pengguna.")}</p></div></section>`}</div></div>`;
   }
 
   function renderStudent() {
@@ -425,7 +528,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
     const classes = list(snapshot?.classes);
     const invites = list(snapshot?.invites);
     const rooms = list(snapshot?.rooms);
-    return `${accountHeading(pt("RUANG PELAJAR"), pt("Jom temui padanannya."), pt("Sertai kelas anda dan tunggu guru memulakan permainan."))}${button(pt("Kata Laluan & Keselamatan"), "security", {quiet: true, symbol: "lock"})}${freshness()}<section class="portal-panel portal-module-card"><div><p class="card-kicker">${pt("BELAJAR SENDIRI")}</p><h2>${pt("Latihan modul anda")}</h2><p>${pt("Rekod latihan kendiri membantu anda menyambung pembelajaran. Rekod ini bukan markah penilaian.")}</p>${renderLearningRecords(learningData?.records)}${learningError ? `<p class="portal-module-warning" role="status">${esc(pt(learningError))}</p>` : ''}</div>${button(pt("Teroka modul pembelajaran"), "open-module", {symbol: "arrow"})}</section><div class="portal-student-top"><section class="portal-panel portal-join-panel"><div><p class="card-kicker">${pt("ADA PIN DARIPADA GURU?")}</p><h2>${pt("Sertai kelas atau bilik")}</h2><p>${pt("Masukkan enam digit PIN yang diberi oleh guru.")}</p></div><form data-portal-form="join-pin" novalidate>${field('portal-join-pin', pt("PIN enam digit"), {name: 'pin', max: 6, inputmode: 'numeric', placeholder: '000000', help: pt("PIN kelas menambah anda ke kelas. PIN bilik membuka bilik permainan.")})}${formError()}${submit(pt("Sertai dengan PIN"))}</form></section><section class="portal-panel portal-student-classes"><div class="portal-panel-title"><h2>${pt("Kelas saya")}</h2><span class="portal-count">${classes.length}</span></div>${classes.length ? `<ul>${classes.map(item => `<li data-class-target="${esc(item.id)}"><span class="portal-class-icon">${icon('user')}</span><span><b>${esc(item.name)}</b><small>${pt("Anda ahli kelas ini")}</small></span>${icon('check')}</li>`).join('')}</ul>` : `<p class="portal-empty-note">${pt("Kelas anda akan muncul selepas menyertai melalui PIN atau menerima jemputan.")}</p>`}</section></div>${invites.length ? `<section class="portal-panel portal-invites"><div class="portal-panel-title"><div><h2>${pt("Jemputan kelas")}</h2><p>${pt("Semak nama guru dan kelas sebelum menerima.")}</p></div><span class="portal-count">${invites.length}</span></div><ul>${invites.map(invite => `<li><span class="portal-invite-symbol">${icon('user')}</span><div><b>${esc(invite.class_name)}</b><p>${pt("Daripada")} ${esc(invite.teacher_name)}</p></div>${button(pt("Terima jemputan"), 'accept-invite', {id: invite.id, primary: true, symbol: 'check'})}</li>`).join('')}</ul></section>` : ''}<section class="portal-panel" aria-labelledby="portal-rooms-title"><div class="portal-panel-title"><div><h2 id="portal-rooms-title">${pt("Bilik permainan kelas")}</h2><p>${pt("Masuk ke bilik untuk melihat status dan papan skor.")}</p></div><span class="portal-count">${rooms.length}</span></div>${renderRoomCards(rooms, false)}</section>`;
+    return `${accountHeading(pt("RUANG PELAJAR"), pt("Jom temui padanannya."), pt("Sertai kelas anda dan tunggu guru memulakan permainan."))}${button(pt("Kata Laluan & Keselamatan"), "security", {quiet: true, symbol: "lock"})}${freshness()}<section class="portal-panel portal-module-card"><div><p class="card-kicker">${pt("BELAJAR SENDIRI")}</p><h2>${pt("Latihan modul anda")}</h2><p>${pt("Rekod latihan kendiri membantu anda menyambung pembelajaran. Rekod ini bukan markah penilaian.")}</p>${renderLearningRecords(learningData?.records)}${learningError ? `<p class="portal-module-warning" role="status">${esc(pt(learningError))}</p>` : ''}</div>${button(pt("Teroka modul pembelajaran"), "open-module", {symbol: "arrow"})}</section><div class="portal-student-top"><section class="portal-panel portal-join-panel"><div><p class="card-kicker">${pt("ADA PIN DARIPADA GURU?")}</p><h2>${pt("Sertai kelas atau bilik")}</h2><p>${pt("Masukkan enam digit PIN yang diberi oleh guru.")}</p></div><form data-portal-form="join-pin" novalidate>${field('portal-join-pin', pt("PIN enam digit"), {name: 'pin', max: 6, inputmode: 'numeric', placeholder: '000000', help: pt("PIN kelas menambah anda ke kelas. PIN bilik membuka bilik permainan.")})}${formError()}${submit(pt("Sertai dengan PIN"))}</form></section><section class="portal-panel portal-student-classes"><div class="portal-panel-title"><h2>${pt("Kelas saya")}</h2><span class="portal-count">${classes.length}</span></div>${classes.length ? `<ul>${classes.map(item => `<li data-class-target="${esc(item.id)}"><span class="portal-class-icon">${icon('user')}</span><span><b>${esc(item.name)}</b><small>${pt("Anda ahli kelas ini")}</small></span>${icon('check')}</li>`).join('')}</ul>` : `<p class="portal-empty-note">${pt("Kelas anda akan muncul selepas menyertai melalui PIN atau menerima jemputan.")}</p>`}</section></div>${invites.length ? `<section class="portal-panel portal-invites"><div class="portal-panel-title"><div><h2>${pt("Jemputan kelas")}</h2><p>${pt("Semak nama guru dan kelas sebelum menerima.")}</p></div><span class="portal-count">${invites.length}</span></div><ul>${invites.map(invite => `<li><span class="portal-invite-symbol">${icon('user')}</span><div><b>${esc(invite.class_name)}</b><p>${pt("Daripada")} ${esc(invite.teacher_name)}</p></div>${button(pt("Terima jemputan"), 'accept-invite', {id: invite.id, primary: true, symbol: 'check'})}${snapshot?.classroom_crud===1 ? button(pt('Tolak jemputan'),'manage-invite',{id:invite.id,quiet:true}) : ''}</li>`).join('')}</ul></section>` : ''}<section class="portal-panel" aria-labelledby="portal-rooms-title"><div class="portal-panel-title"><div><h2 id="portal-rooms-title">${pt("Bilik permainan kelas")}</h2><p>${pt("Masuk ke bilik untuk melihat status dan papan skor.")}</p></div><span class="portal-count">${rooms.length}</span></div>${renderRoomCards(rooms, false)}</section>`;
   }
 
   function elapsed(player) {
@@ -456,7 +559,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
     document.title = `${room.name} — GeoDecoder Digital`;
     const attempt = room.my_attempt;
     const finished = attempt?.status === 'finished';
-    return `<div class="portal-room-navigation">${button(pt("Kembali ke kelas"), 'dashboard', {quiet: true, symbol: 'home'})}<span>${esc(room.class_name)}</span></div><header class="portal-room-heading"><div><p class="card-kicker">${pt("BILIK PERMAINAN")}</p><h1 id="portal-title" tabindex="-1">${esc(room.name)}</h1><p>${esc(room.class_name)}</p></div>${badge(room.status)}</header>${freshness()}<section class="portal-panel portal-room-controls">${isTeacher() ? `${pinPanel(room, 'room')}<div class="portal-room-action-row"><div><h2>${room.status === 'open' ? pt("Semua sudah bersedia?") : room.status === 'playing' ? pt("Permainan sedang berlangsung") : pt("Bilik sudah ditutup")}</h2><p>${room.status === 'open' ? pt("Pelajar boleh masuk dahulu. Tekan mula apabila kelas sudah bersedia.") : room.status === 'playing' ? pt("Pantau markah dan masa menjawab dalam papan skor di bawah.") : pt("Markah akhir kekal dipaparkan. Bilik yang ditutup tidak boleh dimulakan semula.")}</p></div><div class="portal-control-buttons">${room.status === 'open' ? button(pt("Mulakan permainan"), 'start-room', {id: room.id, primary: true, symbol: 'arrow'}) : ''}${room.status !== 'closed' ? button(pt("Tutup bilik"), 'request-close-room', {id: room.id, quiet: true, symbol: 'close'}) : ''}</div></div>${closeConfirmation && room.status !== 'closed' ? `<div class="portal-close-confirmation" role="group" aria-labelledby="portal-close-title"><div><h3 id="portal-close-title">${pt("Tutup bilik “")}${esc(room.name)}”?</h3><p>${pt("Pelajar tidak boleh meneruskan atau memulakan permainan dalam bilik ini. Markah yang sudah direkodkan kekal. Bilik tidak boleh dibuka semula.")}</p></div><div>${button(pt("Kekalkan bilik"), 'cancel-close-room')}${button(pt("Ya, tutup bilik"), 'close-room', {id: room.id, danger: true})}</div></div>` : ''}` : `<div class="portal-student-play"><span class="portal-room-play-art" aria-hidden="true">${shapeArt('cone', 'solid', true, 'orange')}</span><div><h2>${finished ? pt("Permainan anda sudah selesai") : room.status === 'closed' ? pt("Bilik ini sudah ditutup") : room.status === 'open' ? pt("Anda sudah berada dalam bilik") : attempt ? pt("Sambung penemuan anda") : pt("Permainan sudah bermula")}</h2><p>${finished ? pt("Lihat keputusan dan semakan jawapan anda, atau bandingkan kemajuan dalam papan skor.") : room.status === 'closed' ? pt("Lihat markah akhir dalam papan skor di bawah.") : room.status === 'open' ? pt("Tunggu guru memulakan permainan. Status akan dikemas kini di sini.") : pt("Selesaikan 10 soalan dengan memadankan bongkah di R1 dan bentangan di R2.")}</p></div>${finished ? button(pt("Lihat keputusan saya"), 'play-result', {primary: true, symbol: 'trophy'}) : room.status === 'playing' && attempt?.status !== 'closed' ? button(attempt ? pt("Sambung permainan") : pt("Mula bermain"), 'play', {id: room.id, primary: true, symbol: 'arrow'}) : `<span class="portal-waiting-label">${icon(room.status === 'closed' ? 'lock' : 'clock')}${room.status === 'closed' ? pt("Permainan ditamatkan") : pt("Menunggu guru")}</span>`}</div>`}</section>${renderLeaderboard(room)}`;
+    return `${managementButtons(room,'room')}${room.archived_at || room.class_archived_at ? `<p class="portal-inline-info">${pt('Bilik ini dalam arkib. Keputusan dikekalkan; aktiviti baharu dihentikan.')}</p>` : ''}<div class="portal-room-navigation">${button(pt("Kembali ke kelas"), 'dashboard', {quiet: true, symbol: 'home'})}<span>${esc(room.class_name)}</span></div><header class="portal-room-heading"><div><p class="card-kicker">${pt("BILIK PERMAINAN")}</p><h1 id="portal-title" tabindex="-1">${esc(room.name)}</h1><p>${esc(room.class_name)}</p></div>${badge(room.status)}</header>${freshness()}<section class="portal-panel portal-room-controls">${isTeacher() ? `${pinPanel(room, 'room')}${!room.archived_at && !room.class_archived_at ? `<div class="portal-room-action-row"><div><h2>${room.status === 'open' ? pt("Semua sudah bersedia?") : room.status === 'playing' ? pt("Permainan sedang berlangsung") : pt("Bilik sudah ditutup")}</h2><p>${room.status === 'open' ? pt("Pelajar boleh masuk dahulu. Tekan mula apabila kelas sudah bersedia.") : room.status === 'playing' ? pt("Pantau markah dan masa menjawab dalam papan skor di bawah.") : pt("Markah akhir kekal dipaparkan. Bilik yang ditutup tidak boleh dimulakan semula.")}</p></div><div class="portal-control-buttons">${room.status === 'open' ? button(pt("Mulakan permainan"), 'start-room', {id: room.id, primary: true, symbol: 'arrow'}) : ''}${room.status !== 'closed' ? button(pt("Tutup bilik"), 'request-close-room', {id: room.id, quiet: true, symbol: 'close'}) : ''}</div></div>${closeConfirmation && room.status !== 'closed' ? `<div class="portal-close-confirmation" role="group" aria-labelledby="portal-close-title"><div><h3 id="portal-close-title">${pt("Tutup bilik “")}${esc(room.name)}”?</h3><p>${pt("Pelajar tidak boleh meneruskan atau memulakan permainan dalam bilik ini. Markah yang sudah direkodkan kekal. Bilik tidak boleh dibuka semula.")}</p></div><div>${button(pt("Kekalkan bilik"), 'cancel-close-room')}${button(pt("Ya, tutup bilik"), 'close-room', {id: room.id, danger: true})}</div></div>` : ''}` : ''}` : `<div class="portal-student-play"><span class="portal-room-play-art" aria-hidden="true">${shapeArt('cone', 'solid', true, 'orange')}</span><div><h2>${finished ? pt("Permainan anda sudah selesai") : room.status === 'closed' ? pt("Bilik ini sudah ditutup") : room.status === 'open' ? pt("Anda sudah berada dalam bilik") : attempt ? pt("Sambung penemuan anda") : pt("Permainan sudah bermula")}</h2><p>${finished ? pt("Lihat keputusan dan semakan jawapan anda, atau bandingkan kemajuan dalam papan skor.") : room.status === 'closed' ? pt("Lihat markah akhir dalam papan skor di bawah.") : room.status === 'open' ? pt("Tunggu guru memulakan permainan. Status akan dikemas kini di sini.") : pt("Selesaikan 10 soalan dengan memadankan bongkah di R1 dan bentangan di R2.")}</p></div>${finished ? button(pt("Lihat keputusan saya"), 'play-result', {primary: true, symbol: 'trophy'}) : room.status === 'playing' && attempt?.status !== 'closed' ? button(attempt ? pt("Sambung permainan") : pt("Mula bermain"), 'play', {id: room.id, primary: true, symbol: 'arrow'}) : `<span class="portal-waiting-label">${icon(room.status === 'closed' ? 'lock' : 'clock')}${room.status === 'closed' ? pt("Permainan ditamatkan") : pt("Menunggu guru")}</span>`}</div>`}</section>${renderLeaderboard(room)}`;
   }
 
   function captureEdits({includeSecrets=false}={}) {
@@ -535,9 +638,9 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
   }
 
   function updateBusy() {
-    for (const control of screen.querySelectorAll('[data-block-while-busy]')) control.disabled = Boolean(pending) || control.dataset.baseDisabled === 'true';
+    for (const control of screen.querySelectorAll('[data-block-while-busy]')) control.disabled = Boolean(pending) || Boolean(managementRefresh && managementDialog.contains(control)) || control.dataset.baseDisabled === 'true';
     for (const form of screen.querySelectorAll('form')) {
-      const busy = pending === form.dataset.portalForm;
+      const busy = pending === form.dataset.portalForm || form.dataset.portalForm==='management' && Boolean(managementRefresh);
       form.setAttribute('aria-busy', String(busy));
       const submitButton = form.querySelector('[type="submit"]');
       if (submitButton) submitButton.setAttribute('aria-busy', String(busy));
@@ -546,6 +649,8 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
     const save = content.querySelector('form[data-portal-form="profile"] [type="submit"] span');
     if (save) save.textContent = pt(pending === 'profile' ? 'Sedang menyimpan…' : 'Simpan');
     for (const input of content.querySelectorAll('form[data-portal-form="profile"] input')) input.disabled = pending === 'profile';
+    for (const input of managementDialog.querySelectorAll('input')) input.disabled = pending === 'management' || Boolean(managementRefresh);
+    managementDialog.querySelector('[data-portal-action="management-refresh"]')?.setAttribute('aria-busy',String(Boolean(managementRefresh)));
     updateEmailCooldown();
   }
 
@@ -651,8 +756,18 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
         render();
         startLive();
         if (!requestedRoom) void refreshLearning();
+        return data;
       } catch (error) {
         if (!valid(token, identity)) return;
+        if (requestedRoom && error?.code === 'forbidden') {
+          setAccountView('dashboard');
+          snapshot = null; learningData = null; learningError = '';
+          cloud.room = null;
+          announce(pt('Akses bilik telah ditarik balik. Senarai kelas sedang dimuat semula.'),'error');
+          render({focus:true,preserve:false});
+          queueMicrotask(()=>void refresh());
+          return;
+        }
         stale = true;
         if (requestedRoom && !currentRoom()) { roomError = errorText(error); render(); }
         announce([errorText(error),lastUpdated?'Data terakhir masih dipaparkan. Tekan Muat semula untuk mencuba lagi.':'Tekan Muat semula untuk mencuba lagi.'], 'error');
@@ -694,6 +809,8 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
   }
 
   function clearAccount() {
+    closeManagement({restoreFocus:false});
+    showArchivedClasses = false; showArchivedRooms = false; invitePage = 1;
     profileBaseline = null; profileNext = null;
     clearSecurityFields(); securityController?.abort(); securityController = null;
     clearSessions();
@@ -786,7 +903,10 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
     }
     if (type === 'recover' && !/^[a-fA-F0-9]{32}$/.test(String(values.recovery_code || '').trim())) errors.recovery_code = pt("Masukkan kod pemulihan 32 aksara yang anda simpan.");
     if (type === 'join-pin' && !/^\d{6}$/.test(values.pin.trim())) errors.pin = pt("Masukkan tepat enam digit PIN daripada guru.");
-    if (['create-class', 'create-room'].includes(type) && (!values.name.trim() || values.name.trim().length > 80)) errors.name = pt("Masukkan nama antara 1 hingga 80 aksara.");
+    if (['create-class', 'create-room'].includes(type) || type === 'management' && management?.operation === 'rename') {
+      const name = String(values.name || '').trim();
+      if (Array.from(name).length < 2 || Array.from(name).length > 60 || /[\u0000-\u001f\u007f-\u009f]/.test(name)) errors.name = pt('Nama mestilah 2 hingga 60 aksara tanpa aksara kawalan.');
+    }
     for (const [name, message] of Object.entries(errors)) {
       const input = form.elements.namedItem(name);
       (input?.setAttribute ? input : input?.[0])?.setAttribute?.('aria-invalid', 'true');
@@ -899,13 +1019,16 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
       if (action === 'update_profile' && (!result?.profile || String(result.profile.id) !== identity)) throw new Error(pt('Profil belum dapat disahkan. Cuba simpan semula.'));
       if (action === 'update_profile') profileBaseline = null;
       else form?.reset();
+      const managed = Boolean(management && management.action === action);
+      if (managed) closeManagement({restoreFocus:false});
+      if (result?.deleted_room_id) { roomId=null; cloud.setRoom?.(null); stopWatch(); }
       if (navigateClass && result?.class_id) { classId = result.class_id; rosterPage = roomPage = 1; rosterQuery = ''; }
       const nextRoom = navigateRoom ? result?.room_id || result?.room?.id : null;
       if (nextRoom) { roomId = nextRoom; cloud.setRoom?.(roomId); boardPage = 1; closeConfirmation = false; epoch += 1; stopWatch(); }
       if (action === 'set_room') closeConfirmation = false;
       applySnapshot(result);
       announce(action === 'join_pin' ? nextRoom ? pt("Anda telah masuk ke bilik permainan.") : pt("Anda kini ahli kelas ini. Bilik daripada guru anda akan muncul di sini.") : success, 'success');
-      render({focus: Boolean(nextRoom) || action === 'update_profile', preserve: action === 'update_profile' ? false : !nextRoom});
+      render({focus: Boolean(nextRoom) || action === 'update_profile' || managed, preserve: managed || action === 'update_profile' ? false : !nextRoom});
       await refresh({silent: true});
       startLive();
       return true;
@@ -932,11 +1055,19 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
     event.preventDefault();
     if (pending || cloud.ready === false || event.isComposing || composing) return;
     const type = form.dataset.portalForm;
+    if(type==='management'&&managementRefresh)return;
     const values = Object.fromEntries(new FormData(form));
     clearFormErrors(form);
     if (!validate(form, values, type)) return;
     if (['login', 'signup', 'recover', 'recover-email', 'resend-confirmation', 'reset-password'].includes(type)) return handleAuth(form, values, type);
     if (!accountAvailable()) return;
+    if (type === 'management' && management) {
+      const m = management;
+      const payload = m.kind === 'invite' ? {invite_id:m.id} : m.kind === 'member' ? {class_id:m.classId,user_id:m.id,expected_revision:m.revision} : {[m.kind+'_id']:m.id,expected_revision:m.revision};
+      if (m.operation==='rename') payload.name=values.name.trim();
+      const success=({rename:'Nama berjaya dikemas kini.',archive:'Rekod berjaya diarkibkan.',restore:'Rekod berjaya dipulihkan.',delete:'Rekod kosong berjaya dipadam.',remove:'Pelajar telah dikeluarkan. Keputusan terdahulu dikekalkan.',cancel:'Jemputan telah dibatalkan.',decline:'Jemputan telah ditolak.'})[m.operation];
+      return mutate(m.action,payload,{form,success:pt(success)});
+    }
     if (type === 'profile') return mutate('update_profile', {display_name: values.display_name.trim(), avatar: values.avatar}, {form, success: pt('Profil berjaya disimpan.')});
     if (type === 'change-password') return handleSecurity(form, values, type);
     if (type === 'create-class') return mutate('create_class', {name: values.name.trim()}, {form, success: pt("Kelas berjaya dicipta. Kongsi PIN untuk menambah pelajar."), navigateClass: true});
@@ -1012,6 +1143,8 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
       return;
     }
     if (pending) return;
+    if (action === 'management-cancel') { if(!managementRefresh)closeManagement(); return; }
+    if (action === 'management-refresh') return refreshManagement();
     if (action === 'auth-mode') {
       if (cloud.recoveryRequired === true || !['login', 'signup', 'recover-email', 'recover', 'resend-confirmation'].includes(control.dataset.mode)) return;
       authMode = control.dataset.mode;
@@ -1051,12 +1184,15 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
     }
     if (action === 'profile-login') { setAccountView('dashboard'); authMode = 'login'; render({focus: true, preserve: false}); return; }
     if (!accountAvailable()) return;
+    if (['manage-class','manage-room','manage-member','manage-invite'].includes(action)) {openManagement(control);return;}
+    if (action === 'class-archive-filter' && canManage()) {showArchivedClasses=!showArchivedClasses;classId=null;rosterPage=roomPage=invitePage=1;render({preserve:false});return;}
+    if (action === 'room-archive-filter' && canManage()) {showArchivedRooms=!showArchivedRooms;roomPage=1;render({preserve:false});return;}
     if (action === 'profile') { setAccountView('profile'); announce(''); render({focus: true, preserve: false}); return refresh({silent: true}); }
     if (action === 'profile-class' || action === 'profile-join') {
       const selected = control.dataset.id;
       if (selected && !list(snapshot?.classes).some(item => String(item.id) === String(selected))) return;
       setAccountView('dashboard');
-      if (selected) classId = selected;
+      if (selected) {classId = selected;showArchivedClasses=Boolean(list(snapshot?.classes).find(c=>String(c.id)===String(selected))?.archived_at);}
       render({focus: true, preserve: false});
       await refresh({silent: true});
       if (action === 'profile-join') content.querySelector('form[data-portal-form="join-pin"] input')?.focus({preventScroll: true});
@@ -1084,7 +1220,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
       return;
     }
     if (action === 'clear-search') { rosterQuery = ''; rosterPage = 1; render({preserve: false}); content.querySelector('#portal-roster-search')?.focus({preventScroll: true}); return; }
-    if (action === 'page') { const page = Math.max(1, Number(control.dataset.page) || 1); if (control.dataset.target === 'roster') rosterPage = page; else if (control.dataset.target === 'board') boardPage = page; else roomPage = page; render(); return; }
+    if (action === 'page') { const page = Math.max(1, Number(control.dataset.page) || 1); if (control.dataset.target === 'roster') rosterPage = page; else if (control.dataset.target === 'board') boardPage = page; else if(control.dataset.target==='invites')invitePage=page; else roomPage = page; render(); return; }
     if (action === 'view-room') return showRoom(control.dataset.id);
     if (action === 'dashboard') { setAccountView('dashboard'); announce(''); render({focus: true, preserve: false}); return refresh(); }
     if (action === 'join-room') return mutate('join_room', {room_id: control.dataset.id}, {success: pt("Anda telah masuk ke bilik permainan."), navigateRoom: true});
@@ -1121,6 +1257,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
   function visibility() { if (active && !document.hidden && accountAvailable()) {if(securityView){if(!pending)void loadSessions();}else refresh({silent: true});} }
   function pageHide() { clearSecurityFields(); securityController?.abort(); clearSessions();updateSessionRegion(); }
   function keyboard(event) {
+    if (event.key === 'Escape' && management) {event.preventDefault();event.stopPropagation();if(!pending&&!managementRefresh)closeManagement();return;}
     if (event.key === 'Escape' && profileNext && !pending) { event.preventDefault?.(); event.stopPropagation?.(); cancelProfileLeave(); return; }
     if(event.key==='Escape'&&sessionsConfirm&&!pending){event.preventDefault?.();event.stopPropagation?.();const source='request-logout-'+sessionsConfirm;sessionsConfirm='';updateSessionRegion();content.querySelector(`[data-portal-action="${source}"]`)?.focus();return;}
     if (event.key === 'Escape' && securityConfirm && !pending) { event.preventDefault?.(); event.stopPropagation?.(); securityConfirm = false; render({preserve: false}); content.querySelector('[data-portal-action="request-logout-all"]')?.focus(); return; }
@@ -1133,6 +1270,7 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
     }
   }
   screen.addEventListener('click', click);
+  managementDialog.addEventListener('cancel',event=>{event.preventDefault();if(!pending&&!managementRefresh)closeManagement();});
   screen.addEventListener('submit', submitForm);
   screen.addEventListener('input', input);
   screen.addEventListener('change', input);
@@ -1218,5 +1356,5 @@ export function createPortal({cloud, onPlay = () => {}, onModule = () => {}, onP
     globalThis.removeEventListener?.('beforeunload', beforeUnload);
   }
 
-  return {open, close, refresh, showRoom, destroy, requestLeave, localize(){if(roomError)roomError=pt(roomError);render({preserveSecrets:true});if(notice.text)announce(notice.parts||notice.text,notice.tone);}, get isOpen() { return active; }};
+  return {open, close, refresh, showRoom, destroy, requestLeave, localize(){if(roomError)roomError=pt(roomError);render({preserveSecrets:true});renderManagement();if(notice.text)announce(notice.parts||notice.text,notice.tone);}, get isOpen() { return active; }};
 }

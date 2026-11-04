@@ -165,7 +165,7 @@ export class ClassroomCloud {
     const identity=securitySessionKey(this._session),expectedUserId=options.expectedUserId||this._session?.user?.id,scope=this.roomScope;
     const {data,error}=await this._boundRpc('geo_action',{action,payload},{expectedUserId});
     if(error)throw Error(error.message==='JWT expired'?'Sesi tamat. Log masuk semula.':error.message||'Sambungan kelas terganggu. Cuba lagi.');
-    if(data?.error)throw Error(data.error.message||data.error||'Tindakan tidak dibenarkan.');
+    if(data?.error)throw Object.assign(Error(data.error.message||data.error||'Tindakan tidak dibenarkan.'),{code:data.error.code||'request_failed'});
     if(data?.profile&&data.profile.id!==expectedUserId)throw Object.assign(Error('Sesi akaun berubah. Log masuk semula untuk meneruskan.'),{code:'session-changed'});
     if(identity===securitySessionKey(this._session)){if(data?.profile)this.profile=data.profile;if(data?.room&&scope===this.roomScope)this.room=data.room;}
     return data;

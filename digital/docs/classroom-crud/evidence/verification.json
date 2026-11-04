@@ -1,0 +1,62 @@
+{
+  "base_sha": "391df985eea4fee15d9859e678068b1a3f613cba",
+  "branch": "digitalized-classroom-crud",
+  "source_sha256": {
+    "digital/dist/classroom-copy.mjs": "7b69d42294e70a986e96597c8e7751045504bd07e2ce79b8438a34bb4f0276ac",
+    "digital/dist/portal.mjs": "1f7630bafd831473ceedcdc0b87ea72570636d0abf538a015a4abe21c9eb8979",
+    "digital/dist/portal.css": "daa2a9c1a50cb64f09680225f1697d00c090b2488029a6bc3f824bdcfa6ef5a9",
+    "digital/dist/cloud.mjs": "1122fff9c11658deced4b2110934836470aee3c036a8bb9b43d257821c29bcbd",
+    "digital/dist/i18n.mjs": "f45f70e369aae029dda07bee4131074fed13c736aa3161336efd5902e001d060",
+    "supabase/migrations/20261104014958_geodecoder_classroom_crud.sql": "32d8e95cd601ce70cea76a4bd47cc605fca6b52833df4217e344dc25f436b8c1"
+  },
+  "checks": [
+    {
+      "command": "node --test --test-concurrency=2 tests/*.test.mjs",
+      "result": "PASS",
+      "tests": 367,
+      "passed": 367,
+      "failed": 0
+    },
+    {
+      "command": "node --test classroom CRUD backend, portal and cloud tests",
+      "result": "PASS",
+      "tests": 20
+    },
+    {
+      "command": "node tests/classroom-crud.browser.mjs",
+      "result": "PASS",
+      "cases": 4,
+      "auth": "synthetic local adapter; real ClassroomCloud and PGlite gateway"
+    },
+    {
+      "command": "node tests/design-system.browser.mjs",
+      "result": "PASS",
+      "cases": 15
+    },
+    {
+      "command": "npm run build && npm run prepare:pages && npm run check",
+      "result": "PASS",
+      "deployment": false
+    },
+    {
+      "command": "npm run design:check",
+      "result": "PASS"
+    },
+    {
+      "command": "audit_project.py digital --mode strict",
+      "result": "PASS",
+      "errors": 0,
+      "violations": 0
+    },
+    {
+      "command": "node tests/design-reference.browser.mjs",
+      "result": "TIMEOUT",
+      "scope": "unchanged standalone component reference; light/dark desktop passed in quiet rerun"
+    }
+  ],
+  "limitations": [
+    "No production migration, Pages publication, real GoTrue or Realtime delivery test, load test or multi-session Postgres race test.",
+    "Initial default-concurrency full suite hit historical 1.8-second review gate while heavily loaded; bounded-concurrency full suite passed.",
+    "Unchanged component-reference browser gallery did not complete: 8-second interaction/viewport-stability timeouts on three attempts; quiet rerun passed both desktop cases before timing out later."
+  ]
+}

@@ -32,6 +32,12 @@ Firmware rounds remain a separate contract.
 
 ## Home, guest and settings
 
+### Classroom management candidate (4 November 2026)
+
+Lifecycle, permissions, retention and API authority: [classroom management contract](backend/classroom-crud/README.md). `portal.mjs` reuses the existing field/button/notice/validation owners for all class and room edits. A single portal management dialog variant is attached only while a management action is open, uses the native modal focus boundary and restores the originating control on Cancel/Escape. It is removed on close or session change and never replaces the game's help/settings owner. Native dialogs for game/help/settings remain unchanged.
+
+Teacher archive filters are explicit and reversible. Delete is reserved for empty records; archive preserves results. Successful mutations return to the owning list or current room and clamp pages. Conflicts preserve drafts and require an explicit refresh of the captured revision. Pending saves block duplicate submit and dismissal; user names remain literal escaped text. Capability `classroom_crud:1` gates the new controls against older backends. Roster and invitations page at 20, room cards at 6. BM/English uses `classroom-copy.mjs` through the existing catalog. Verification: `classroom-crud-backend.test.mjs`, `classroom-crud-portal.test.mjs` and `classroom-crud.browser.mjs`.
+
 Home groups Main, Belajar and Akaun/Kelas. Main opens nickname and mode
 selection: quiz10, practice15, Duel. A guest has category Tetamu and an empty
 class. Old Murid/Pelajar profiles still require a class and remain valid.

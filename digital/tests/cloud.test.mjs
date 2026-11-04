@@ -30,3 +30,9 @@ test('logout clears profile, room and session and ignores a late heartbeat',asyn
   complete({profile:{id:'account-a'},room:{id:'room-a'}});await assert.rejects(old,error=>error.code==='session-changed');
   assert.equal(cloud.session,null);assert.equal(cloud.profile,null);assert.equal(cloud.room,null);assert.equal(cloud.roomId,null);
 });
+
+test('classroom permission errors retain their code for access revocation',async()=>{
+  const {cloud,complete}=fixture();const request=cloud.rpc('snapshot',{room_id:'revoked'});
+  complete({error:{code:'forbidden',message:'Bilik ini tidak boleh diakses.'}});
+  await assert.rejects(request,error=>error.code==='forbidden'&&error.message==='Bilik ini tidak boleh diakses.');
+});
