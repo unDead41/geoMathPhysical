@@ -4,6 +4,7 @@ import {fileURLToPath} from 'node:url';
 import {build} from 'esbuild';
 import {execFileSync} from 'node:child_process';
 import {buildDesignReference} from './design-reference.mjs';
+import {buildOfflinePackage} from './offline-package.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 execFileSync(process.execPath,[path.join(root,'tools/design-tokens.mjs')],{stdio:'inherit'});
 const moduleRelease=JSON.parse(fs.readFileSync(path.join(root,'vendor/module-release.json'),'utf8'));
@@ -18,7 +19,8 @@ function page(script){
 }
 fs.mkdirSync(path.join(root,'artifacts'),{recursive:true});
 // Pages loads music on demand, keeping the first Home download small.
-fs.writeFileSync(path.join(root,'artifacts/site-index.html'),page(javascript));
+const website=buildOfflinePackage({root,html:page(javascript)});
+fs.writeFileSync(path.join(root,'artifacts/site-index.html'),website.html);
 // The downloadable HTML carries both complete tracks and the pinned module.
 let offline=javascript;
 for(const name of ['menu','map']){

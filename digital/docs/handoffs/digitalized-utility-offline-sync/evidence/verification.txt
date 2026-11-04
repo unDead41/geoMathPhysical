@@ -1,0 +1,46 @@
+offline-final-tests.txt
+✔ guest quiz results persist, while review results cannot enter or replace the quiz board (11.764029ms)
+✔ connection and expired-session errors give an action in the selected language (0.967346ms)
+✔ known account errors remain specific, while internal errors never reach the learner (13.002088ms)
+✔ known classroom problems keep specific next steps and the real PIN wait duration (6.721096ms)
+ℹ tests 396
+ℹ suites 0
+ℹ pass 396
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 34068.47869
+
+offline-module-tests.txt
+✔ one or both selected volumes count only their actual contents (1.06176ms)
+✔ impossible volumes are rejected (1.642472ms)
+✔ comparison defaults fit their actual 1–8 cm native range controls (1.067279ms)
+✔ sphere and hemisphere clipped fluid has outward caps and <0.4% full-capacity volume error (657.232433ms)
+ℹ tests 328
+ℹ suites 0
+ℹ pass 328
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7316.741882
+
+offline-build.txt
+Generated portal CSS, offline module adapter and module CSS.
+GeoDecoder Digital: website 1383965 bytes; offline HTML 6940734 bytes including both complete music tracks and module v1.6.0.
+PASS: portal/module token adapters match one canonical source.
+Design reference: 189538 bytes, self-contained.
+
+offline-check.txt
+PASS: portal/module token adapters match one canonical source.
+PASS: standalone syntax/assets, 159 unique IDs, ARIA references, bank fidelity, 10 SVG diagrams, design-token drift and accessibility baselines.
+
+offline-browser.txt
+PASS native IndexedDB survives page closure, isolates owners and acknowledges exact IDs
+PASS complete PWA caches both tracks and reloads the actual learning website offline
+PASS a partial resource failure never claims offline readiness
+PASS authorization requests and callback query URLs never enter the public cache
+PASS real app completion queues once offline; reconnect commits through controlled transport
+PASS switching accounts rebuilds the open module and removes the previous private draft
+PASS installing an update preserves the active game until explicit reload

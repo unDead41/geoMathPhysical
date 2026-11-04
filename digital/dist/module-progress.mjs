@@ -35,7 +35,8 @@ export function createModuleSession(crypto=globalThis.crypto){
 }
 
 export class ModuleProgress {
-  constructor({storage=null,cloud=null,onChange=()=>{},token=createModuleSession}={}){
+  constructor({storage=null,cloud=null,onChange=()=>{},token=createModuleSession,syncAdapter=null,onRecord=null}={}){
+    this.syncAdapter=syncAdapter;this.onRecord=onRecord;
     this.storage=storage;this.cloud=cloud;this.onChange=onChange;this.token=token;
     this.account=null;this._actor='guest';this._epoch=0;this._memory=new Map();this._records=[];this._pending=new Map();this._syncPromise=null;
     this.status='local';this.storageFailed=false;this.frame=null;this.session='';this.active=false;this.ready=false;this.theme='light';
@@ -80,9 +81,16 @@ export class ModuleProgress {
     if(same(merged,this._records))return true;
     this._records=merged;this._persist();
     if(this.canSync){this._pending.set(record.activity,this._records.find(r=>r.activity===record.activity));this.status='pending';}
-    this._emit();if(this.canSync)void this.sync();return true;
+    this._emit();if(this.canSync){if(this.onRecord)void this.onRecord(this._actor,record);else void this.sync();}return true;
+  }
+  applyOfflineState({actor,records=[],status='pending'}){
+    if(actor!==this._actor||!this.canSync)return;
+    const merged=mergeModuleProgress(records,this._records);
+    if(!same(merged,this._records)){this._records=merged;this._persist();this._sendContext();}
+    this.status=['synced','syncing'].includes(status)?status:'pending';this._emit();
   }
   sync(){
+    if(this.syncAdapter)return this.syncAdapter(this);
     if(!this.canSync)return Promise.resolve();
     if(this._syncPromise)return this._syncPromise;
     const epoch=this._epoch,actor=this._actor,current=()=>epoch===this._epoch&&actor===this._actor;

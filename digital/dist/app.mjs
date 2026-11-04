@@ -1,4 +1,5 @@
 import {SoloStore,restoreSnapshot} from './solo-save.mjs';
+import {createOfflineRuntime} from './offline-runtime.mjs';
 import {reviewQuestionIds} from './usability.mjs';
 import {createPreferences,PREFERENCES_KEY,textSize} from './preferences.mjs';
 import {ModuleProgress} from './module-progress.mjs';
@@ -50,10 +51,12 @@ let drag = null, suppressClickUntil = 0, hiddenPause = false, sound = preference
 let scoresExpanded = false, lastClock = '', lastLed = {}, visualPlan = null, motionPaused = false;
 let roomState=null,roomReceivedAt=0,roomPending=null,roomSending=false,roomPolling=null,roomEpoch=0,roomInFlight=null;
 const cloud=new ClassroomCloud();
+const offline=createOfflineRuntime({cloud,storage});
 const soloStore=new SoloStore(storage,QUESTIONS);
-let soloActor=cloud.session?.user?.id||'guest',soloNotice='',soloNewAction=null;
-let moduleLaunchEpoch=0,moduleReturnToPortal=false;
-const moduleProgress=new ModuleProgress({storage,cloud,onChange:renderModuleSaveStatus});
+let soloActor=offline.actor,soloNotice='',soloNewAction=null;
+let moduleLaunchEpoch=0,moduleReturnToPortal=false,moduleFrameActor=null;
+const moduleProgress=new ModuleProgress({storage,cloud,onChange:renderModuleSaveStatus,syncAdapter:controller=>offline.syncModule(controller),onRecord:(actor,record)=>offline.recordModule(actor,record)});
+offline.attachModule(moduleProgress);
 const portal=createPortal({cloud,onPlay:openRoomGame,onModule:()=>void openLearningModule(true),onPreferences:()=>usabilityUI.openSettings(),onExit:returnHome,onError:()=>{}});
 const dialog = $('app-dialog');
 let refreshingLanguage=false, lastStatus=null, validationErrors=null, scoreNotice='', automaticPause=false;
@@ -107,7 +110,7 @@ function showScreen(next) {
   $('guest-screen').hidden=next!=='guest';
   $('portal-screen').hidden=next!=='portal';
   $('module-screen').hidden=next!=='module';
-  if(next!=='module'){moduleLaunchEpoch++;moduleProgress.close();moduleBridge?.clear();}
+  if(next!=='module'){moduleLaunchEpoch++;moduleFrameActor=null;moduleProgress.close();moduleBridge?.clear();}
   void music.setScene(next==='duel'?'game':next);
   updateTitle(next);
   updateSoloEntry();
@@ -598,7 +601,7 @@ function renderModuleSaveStatus(state){
 async function openLearningModule(fromPortal=false){
   if(portal.requestLeave(()=>void openLearningModule(fromPortal)))return;
   moduleReturnToPortal=fromPortal;const request=++moduleLaunchEpoch;
-  showScreen('module');moduleProgress.close();moduleBridge.clear();
+  showScreen('module');moduleFrameActor=null;moduleProgress.close();moduleBridge.clear();
   $('module-back-button').innerHTML=icon('home')+t(fromPortal?'platform.backClass':'ease.backHome');
   $('module-sync-status').textContent=t('module.opening');$('module-sync-retry').hidden=true;
   $('module-title').focus({preventScroll:true});
@@ -609,8 +612,8 @@ async function openLearningModule(fromPortal=false){
     if(cloud.session?.user?.id&&!cloud.profile)await cloud.rpc('snapshot').catch(()=>{});
   }catch{/* Local learning remains available if the account service is unavailable. */}
   if(request!==moduleLaunchEpoch||screen!=='module')return;
-  moduleProgress.setAccount(cloud.session?.user?.id?{id:cloud.session.user.id,role:cloud.profile?.role}:null);
-  moduleBridge.open(moduleHtml);moduleProgress.open($('module-frame').contentWindow);
+  offline.updateAccount(cloud.session,{remember:false});moduleProgress.setAccount(offline.account);
+  moduleFrameActor=offline.actor;moduleBridge.open(moduleHtml);moduleProgress.open($('module-frame').contentWindow);
   moduleProgress.setTheme(document.documentElement.dataset.theme);renderModuleSaveStatus(moduleProgress.state);
   void moduleProgress.sync();
 }
@@ -620,9 +623,9 @@ $('module-sync-retry').addEventListener('click',()=>void moduleProgress.sync());
 window.addEventListener('message',event=>moduleProgress.handleMessage(event));
 document.addEventListener('geodecoder:theme',event=>moduleProgress.setTheme(event.detail?.theme));
 cloud.onSessionChange(()=>{
-  const actor=cloud.session?.user?.id||'guest';
+  const actor=offline.actor;
   if(actor!==soloActor){saveSolo();soloActor=actor;soloNewAction=null;if(game&&!roomState&&game.mode!=='duel'){game=null;lastResult=null;returnHome();}if(['solo','solo-new'].includes(dialogMode))closeDialog();updateSoloEntry();}
-  if(actor!==moduleProgress.state.actor){moduleProgress.setAccount(cloud.session?.user?.id?{id:actor,role:cloud.profile?.role}:null);if(screen==='module'&&$('module-frame').hasAttribute('srcdoc'))void openLearningModule(moduleReturnToPortal);}
+  if(screen==='module'&&$('module-frame').hasAttribute('srcdoc')&&(actor!==moduleFrameActor||!moduleProgress.active))void openLearningModule(moduleReturnToPortal);
 });
 $('online-retry').addEventListener('click',()=>{if(roomPending)sendRoomPending();});
 $('online-room-back').addEventListener('click',()=>openAccounts(roomState?.roomId));
@@ -891,6 +894,7 @@ function finishGame(){
     if(dialog.open)closeDialog();
   }
   lastResult=lastResult?.id===roundId?lastResult:game.result(roundId);
+  void offline.recordSolo(lastResult,{classroom:Boolean(roomState)});
   saveSolo();
   $('result-details').open=false;
   if(!roomState&&lastResult.mode==='quiz'&&!store.read().some(row=>row.id===roundId))store.save(lastResult);

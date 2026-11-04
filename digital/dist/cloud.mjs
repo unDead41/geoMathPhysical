@@ -1,4 +1,4 @@
-import {createClient} from '@supabase/supabase-js';
+import {createClient,isAuthRetryableFetchError} from '@supabase/supabase-js';
 import {CLOUD_CONFIG} from './cloud-config.mjs';
 import {runAccountSecurity,securitySessionKey,withAccountSessionLock} from './account-security.mjs';
 import {readSessionList,sessionListError} from './active-sessions.mjs';
@@ -33,9 +33,9 @@ function emailError(error){
   return 'Email belum dapat dihantar. Cuba lagi kemudian.';
 }
 export class ClassroomCloud {
-  constructor(config=CLOUD_CONFIG,options={}){this.config=config;this._client=null;this._session=null;this.listeners=new Set();this.roomId=null;this.roomScope=0;this.profile=null;this.room=null;this.heartbeatTimer=null;this.heartbeatPending=false;this.ready=!!config.url&&!!config.publishableKey;this._createClient=options.createClient||createClient;this._securityFetch=options.fetch||globalThis.fetch;this._location=options.location||globalThis.location;this._history=options.history||globalThis.history;this._callback=inspectAuthCallback(this._location?.href);this.hasAuthCallback=this._callback.present;this.authCallbackHandled=false;this.callbackError='';this.recoveryRequired=false;this._recoveryIdentity='';this._recoveryStorage=options.recoveryStorage===undefined?defaultRecoveryStorage():options.recoveryStorage;this.hasRecoveryIntent=false;try{this.hasRecoveryIntent=!!this._recoveryStorage?.getItem(RECOVERY_KEY);}catch{}this._restoredRecovery=false;this._initialization=null;this._callbackEvent=new Promise(resolve=>{this._resolveCallback=resolve;});}
+  constructor(config=CLOUD_CONFIG,options={}){this.config=config;this._client=null;this._session=null;this._sessionScope=0;this.listeners=new Set();this.roomId=null;this.roomScope=0;this.profile=null;this.room=null;this.heartbeatTimer=null;this.heartbeatPending=false;this.ready=!!config.url&&!!config.publishableKey;this._createClient=options.createClient||createClient;this._securityFetch=options.fetch||globalThis.fetch;this._location=options.location||globalThis.location;this._history=options.history||globalThis.history;this._callback=inspectAuthCallback(this._location?.href);this.hasAuthCallback=this._callback.present;this.authCallbackHandled=false;this.callbackError='';this.recoveryRequired=false;this._recoveryIdentity='';this._recoveryStorage=options.recoveryStorage===undefined?defaultRecoveryStorage():options.recoveryStorage;this.hasRecoveryIntent=false;try{this.hasRecoveryIntent=!!this._recoveryStorage?.getItem(RECOVERY_KEY);}catch{}this._restoredRecovery=false;this._initialization=null;this._callbackEvent=new Promise(resolve=>{this._resolveCallback=resolve;});}
   get session(){return this._session;}
-  _setSession(session){if(this._recoveryIdentity&&securitySessionKey(session)!==this._recoveryIdentity)this._clearRecovery();if(this._session?.user?.id!==session?.user?.id){if(this._session?.user?.id)this._clearRecovery();this.profile=null;this.room=null;this.roomId=null;this.roomScope++;this.recoveryRequired=false;}this._session=session;if(!session){this._clearRecovery();this.stopHeartbeat();}}
+  _setSession(session,event){if(event==='SIGNED_OUT'||this._session?.user?.id!==session?.user?.id)this._sessionScope++;if(this._recoveryIdentity&&securitySessionKey(session)!==this._recoveryIdentity)this._clearRecovery();if(this._session?.user?.id!==session?.user?.id){if(this._session?.user?.id)this._clearRecovery();this.profile=null;this.room=null;this.roomId=null;this.roomScope++;this.recoveryRequired=false;}this._session=session;if(!session){this._clearRecovery();this.stopHeartbeat();}}
   _clearRecovery(){this.recoveryRequired=false;this._recoveryIdentity='';this.hasRecoveryIntent=false;try{this._recoveryStorage?.removeItem(RECOVERY_KEY);}catch{}}
   _rememberRecovery(session){
     this.recoveryRequired=true;this._recoveryIdentity=securitySessionKey(session);this.stopHeartbeat();const sessionId=recoverySessionId(session);
@@ -58,10 +58,10 @@ export class ClassroomCloud {
     if(!this._client){
       this._client=this._createClient(this.config.url,this.config.publishableKey,{auth:{storageKey:'geodecoder.cloud.auth',persistSession:true,autoRefreshToken:true,skipAutoInitialize:true,detectSessionInUrl:['recovery','confirmation'].includes(this._callback.kind),flowType:'implicit'}});
       this._client.auth.onAuthStateChange((event,session)=>{
-        this._setSession(session);
+        this._setSession(session,event);
         if(event==='PASSWORD_RECOVERY'&&session?.user?.id){this._rememberRecovery(session);this.callbackError='';this._resolveCallback();}
         else if(event==='SIGNED_IN'&&session?.user?.id){this._resolveCallback();}
-        setTimeout(()=>{for(const listener of this.listeners)listener(session);},0);
+        setTimeout(()=>{for(const listener of this.listeners)listener(session,event);},0);
       });
     }
     return this._client;
@@ -70,6 +70,22 @@ export class ClassroomCloud {
     if(!this._initialization)this._initialization=this._initCallback();
     await this._initialization;
     const {data,error}=await this.client.auth.getSession();if(error)throw Error('Sesi tidak dapat dibaca. Log masuk semula.');this._setSession(data.session);await this._restoreRecovery(data.session);if(this._session&&!this.recoveryRequired&&!this.callbackError)this.startHeartbeat();return this._session;
+  }
+  async recoverOfflineSession(expectedUserId){
+    if(!expectedUserId||this.recoveryRequired||this.hasAuthCallback&&!this.authCallbackHandled||this.hasRecoveryIntent)return null;
+    const scope=this._sessionScope,initialId=this._session?.user?.id;
+    const current=()=>!this.recoveryRequired&&(!this._session?.user?.id||this._session.user.id===expectedUserId)&&(this._sessionScope===scope||!initialId&&this._sessionScope===scope+1&&this._session?.user?.id===expectedUserId);
+    if(!current())return null;
+    return withAccountSessionLock(async()=>{
+      if(!current())return null;
+      // The SDK reads/refreshes its own session. Remembered ownership supplies
+      // only the required owner; it never supplies a token or authorizes a send.
+      const {data,error}=await this.client.auth.getSession();
+      if(!current())return null;
+      if(isAuthRetryableFetchError(error))throw Object.assign(Error('Sambungan akaun belum tersedia.'),{code:'network'});
+      if(error||data?.session?.user?.id!==expectedUserId||!data.session.access_token)return null;
+      this._setSession(data.session);return this._session;
+    });
   }
   async _initCallback(){
     if(!this.hasAuthCallback){const result=await withAccountSessionLock(()=>this.client.auth.initialize?.());if(result?.error)throw Error('Sesi tidak dapat dibaca. Log masuk semula.');return;}
@@ -143,20 +159,25 @@ export class ClassroomCloud {
     const original=this._session,identity=securitySessionKey(original);
     const changed=()=>Object.assign(Error('Sesi akaun berubah. Log masuk semula untuk meneruskan.'),{code:'session-changed'});
     const current=()=>Boolean(expectedUserId&&this._session?.user?.id===expectedUserId&&securitySessionKey(this._session)===identity);
+    const readSession=async()=>{
+      const actual=await this.client.auth.getSession(),session=actual.data?.session;
+      if(!current()||session&&(session.user?.id!==expectedUserId||securitySessionKey(session)!==identity))throw changed();
+      if(isAuthRetryableFetchError(actual.error))throw Object.assign(Error('Sambungan akaun belum tersedia.'),{code:'network'});
+      if(actual.error||!session?.access_token)throw changed();
+      return session;
+    };
     if(!identity||!original?.access_token)throw Object.assign(Error('Sesi tamat. Log masuk semula sebelum mencuba lagi.'),{code:'session-expired'});
     if(!current())throw changed();
     const prepared=await withAccountSessionLock(async()=>{
-      const actual=await this.client.auth.getSession();
-      if(actual.error||!actual.data?.session?.access_token||!current()||actual.data.session.user?.id!==expectedUserId||securitySessionKey(actual.data.session)!==identity)throw changed();
+      const actual=await readSession();
       // The JWT belongs to the verified actor. SDK storage may change after this
       // lock is released; fetchWithAuth must never substitute the new account.
-      const request=this.client.rpc(name,args).setHeader('Authorization','Bearer '+actual.data.session.access_token).abortSignal(signal?AbortSignal.any([signal,AbortSignal.timeout(20000)]):AbortSignal.timeout(20000));
+      const request=this.client.rpc(name,args).setHeader('Authorization','Bearer '+actual.access_token).abortSignal(signal?AbortSignal.any([signal,AbortSignal.timeout(20000)]):AbortSignal.timeout(20000));
       return {request};
     });
     const result=await prepared.request;
     await withAccountSessionLock(async()=>{
-      const actual=await this.client.auth.getSession();
-      if(actual.error||!current()||actual.data?.session?.user?.id!==expectedUserId||securitySessionKey(actual.data.session)!==identity)throw changed();
+      await readSession();
     });
     if(!current())throw changed();
     return result;
@@ -176,6 +197,17 @@ export class ClassroomCloud {
     const {data,error}=await this._boundRpc('geo_module_progress',{action,payload},{expectedUserId:options.expectedUserId||identity});
     if(error)throw Error('Rekod latihan awan belum tersedia. Kemajuan pada peranti masih boleh digunakan.');
     if(data?.error)throw Error(data.error.message||'Rekod latihan tidak boleh diakses.');
+    return data;
+  }
+  async offlineSync(action,payload={},options={}){
+    if(this.recoveryRequired)throw Object.assign(Error('Log masuk semula.'),{code:'session-expired'});
+    const {data,error,status}=await this._boundRpc('geo_offline_sync',{action,payload},{expectedUserId:options.expectedUserId,signal:options.signal});
+    if(error){
+      const httpStatus=status||error.status;
+      const code=httpStatus>=500?'network':httpStatus===401||['PGRST301','PGRST303'].includes(error.code)?'session-expired':httpStatus===403||error.code==='42501'?'forbidden':['PGRST202','42883'].includes(error.code)?'service-unavailable':error.code||'network';
+      throw Object.assign(Error('Penyelarasan belum berjaya.'),{code});
+    }
+    if(data?.error)throw Object.assign(Error('Rekod belum diselaraskan.'),{code:data.error.code||'invalid_payload'});
     return data;
   }
   onSessionChange(listener){this.listeners.add(listener);return()=>this.listeners.delete(listener);}

@@ -55,10 +55,11 @@ test('new game confirmation cancels safely, damaged snapshot explains replacemen
 test('account identity change stops the old game, isolates snapshots and never puts Auth credentials into a game snapshot',()=>{
  const f=fixture();try{
   start(f);const cloud=f.window.__soloQACloud;assert.ok(cloud);const guest=f.window.localStorage.getItem(SOLO_KEY+'guest');
-  cloud._setSession({user:{id:'account-a'},access_token:'secret-a'});for(const cb of cloud.listeners)cb(cloud.session);
+  const accountA='11111111-1111-4111-8111-111111111111',accountB='22222222-2222-4222-8222-222222222222';
+  cloud._setSession({user:{id:accountA},access_token:'secret-a'});for(const cb of cloud.listeners)cb(cloud.session);
   assert.equal(f.document.getElementById('game-screen').hidden,true);assert.equal(f.document.getElementById('solo-resume-button').hidden,true);
-  start(f);assert.ok(f.window.localStorage.getItem(SOLO_KEY+'account-a'));assert.equal(f.window.localStorage.getItem(SOLO_KEY+'account-a').includes('secret-a'),false);
-  cloud._setSession({user:{id:'account-b'},access_token:'secret-b'});for(const cb of cloud.listeners)cb(cloud.session);assert.equal(f.document.getElementById('solo-resume-button').hidden,true);
+  start(f);assert.ok(f.window.localStorage.getItem(SOLO_KEY+accountA));assert.equal(f.window.localStorage.getItem(SOLO_KEY+accountA).includes('secret-a'),false);
+  cloud._setSession({user:{id:accountB},access_token:'secret-b'});for(const cb of cloud.listeners)cb(cloud.session);assert.equal(f.document.getElementById('solo-resume-button').hidden,true);
   cloud._setSession(null);for(const cb of cloud.listeners)cb(null);assert.equal(f.document.getElementById('solo-resume-button').hidden,false);assert.ok(guest);
  }finally{f.window.close();}
 });
