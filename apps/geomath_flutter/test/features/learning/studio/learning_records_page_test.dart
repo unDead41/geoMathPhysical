@@ -212,8 +212,9 @@ class _Ports implements FormativeRecordReader, FormativeRecordWriter {
     ActorBinding actor,
   ) => streams.putIfAbsent(actor, () => StreamController.broadcast(sync: true));
   void emit(ActorBinding actor, Result<List<ModuleReflection>> result) {
-    if (result case Success<List<ModuleReflection>>(:final value))
+    if (result case Success<List<ModuleReflection>>(:final value)) {
       values[actor] = value;
+    }
     _stream(actor).add(result);
   }
 

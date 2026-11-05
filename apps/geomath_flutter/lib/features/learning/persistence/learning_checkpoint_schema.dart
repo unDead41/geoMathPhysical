@@ -758,7 +758,7 @@ abstract final class LearningCheckpointSchema {
       return false;
     }
     final w = workshop as Map;
-    return const {'container', 'cavity'}.contains(w['mode']) &&
+    return const {'closed', 'container', 'cavity'}.contains(w['mode']) &&
         const {'cylinder', 'cuboid'}.contains(w['shape']) &&
         w['closed'] is bool &&
         _dimensions(w['d']) &&

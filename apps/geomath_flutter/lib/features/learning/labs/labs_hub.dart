@@ -13,7 +13,7 @@ class LearningLabsHub extends StatelessWidget {
   final VoidCallback? onBack;
 
   void _open(BuildContext context, String route, [String? mode]) {
-    final arguments = <String, Object?>{if (mode != null) 'mode': mode};
+    final arguments = <String, Object?>{'mode': ?mode};
     if (onOpen case final open?) {
       open(route, arguments);
     } else {

@@ -14,16 +14,14 @@ export 'learning_checkpoint_schema.dart' show LearningCheckpointSchema;
 /// The native binding determines partition/scope; none is accepted from JSON.
 final class LearningCheckpointRepository {
   LearningCheckpointRepository({
-    required AppDatabase database,
-    required AuthSession sessions,
-    Clock clock = const SystemClock(),
-  }) : _database = database,
-       _sessions = sessions,
-       _clock = clock;
+    required this.database,
+    required this.sessions,
+    this.clock = const SystemClock(),
+  });
 
-  final AppDatabase _database;
-  final AuthSession _sessions;
-  final Clock _clock;
+  final AppDatabase database;
+  final AuthSession sessions;
+  final Clock clock;
 
   static const table = 'learning_checkpoints';
   static const maximumBytes = LearningCheckpointSchema.maximumBytes;
@@ -54,7 +52,7 @@ final class LearningCheckpointRepository {
     try {
       _ensureCurrent(actor);
       _ensureSlot(slot);
-      final value = await _database.transaction((transaction) async {
+      final value = await database.transaction((transaction) async {
         _ensureCurrent(actor);
         final rows = await transaction.query(
           'SELECT schema_version, source_commit, module_version, payload '
@@ -112,8 +110,8 @@ final class LearningCheckpointRepository {
         throw const _CheckpointFailure(_invalidFailure);
       }
       final encoded = jsonEncode(payload);
-      final timestamp = _clock.now().toUtc().millisecondsSinceEpoch;
-      await _database.transaction((transaction) async {
+      final timestamp = clock.now().toUtc().millisecondsSinceEpoch;
+      await database.transaction((transaction) async {
         _ensureCurrent(actor);
         await transaction.rawInsert(
           'INSERT OR REPLACE INTO $table '
@@ -144,7 +142,7 @@ final class LearningCheckpointRepository {
   }
 
   void _ensureCurrent(ActorBinding actor) {
-    if (!_sessions.isCurrent(actor)) {
+    if (!sessions.isCurrent(actor)) {
       throw const _CheckpointFailure(_staleFailure);
     }
   }

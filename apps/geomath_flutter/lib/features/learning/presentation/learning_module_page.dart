@@ -67,8 +67,9 @@ class _LearningModulePageState extends State<LearningModulePage> {
       final dialog = _nativeDialogContext;
       if (dialog != null &&
           dialog.mounted &&
-          ModalRoute.of(dialog)?.isCurrent == true)
+          ModalRoute.of(dialog)?.isCurrent == true) {
         Navigator.pop(dialog);
+      }
     });
     final arguments =
         AppRouteScope.maybeOf(context)?.entry.arguments ??
@@ -81,8 +82,9 @@ class _LearningModulePageState extends State<LearningModulePage> {
     _routeSeedConsumed = true;
     _back = services.get(learningBackCoordinatorKey);
     _routeInstance = AppRouteScope.maybeOf(context)?.entry.instance;
-    if (_routeInstance case final instance?)
+    if (_routeInstance case final instance?) {
       _back!.register(instance, _guardLeave);
+    }
     _reflections = services.get(learningReflectionControllerKey);
     final controller = LearningModuleController(
       sessions: app.dependencies.sessions,
@@ -108,8 +110,9 @@ class _LearningModulePageState extends State<LearningModulePage> {
       onWorkflow: (section, checkpoint) {
         if (!mounted ||
             _controller?.isCurrent != true ||
-            AppRouteScope.maybeOf(context)?.isCurrent != true)
+            AppRouteScope.maybeOf(context)?.isCurrent != true) {
           return;
+        }
         final route = 'learning-$section';
         if (!app.dependencies.composition.routes.contains(route)) return;
         final explore = checkpoint['explore'];
@@ -179,12 +182,13 @@ class _LearningModulePageState extends State<LearningModulePage> {
                   try {
                     await Clipboard.setData(ClipboardData(text: content));
                     if (dialogContext.mounted) Navigator.pop(dialogContext);
-                    if (mounted)
+                    if (mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text(text('Disalin', 'Copied'))),
                       );
+                    }
                   } catch (_) {
-                    if (mounted)
+                    if (mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text(
@@ -195,6 +199,7 @@ class _LearningModulePageState extends State<LearningModulePage> {
                           ),
                         ),
                       );
+                    }
                   }
                 },
                 child: Text(text('Salin', 'Copy')),
@@ -212,8 +217,9 @@ class _LearningModulePageState extends State<LearningModulePage> {
   @override
   void didUpdateWidget(covariant LearningModulePage oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.mode != widget.mode)
+    if (oldWidget.mode != widget.mode) {
       unawaited(_controller!.launchMode(widget.mode));
+    }
   }
 
   void _reopen() {
@@ -493,7 +499,7 @@ class _LearningModulePageState extends State<LearningModulePage> {
       ],
       onChanged: c.isReady
           ? (shape) {
-              if (shape != null)
+              if (shape != null) {
                 unawaited(
                   c.action({
                     'action': 'launch',
@@ -502,6 +508,7 @@ class _LearningModulePageState extends State<LearningModulePage> {
                     if (widget.mode != null) 'mode': widget.mode,
                   }),
                 );
+              }
             }
           : null,
     );
@@ -588,8 +595,9 @@ class _LearningModulePageState extends State<LearningModulePage> {
     onSelected: c.isReady
         ? (view) async {
             final result = await c.action({'action': 'view', 'view': view});
-            if (mounted && result.isSuccess)
+            if (mounted && result.isSuccess) {
               setState(() => _selectedView = view);
+            }
           }
         : null,
   );

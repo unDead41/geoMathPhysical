@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart' show Brightness;
 
 import '../../../core/audio/audio_coordinator.dart';
 import '../../../core/lifecycle/app_lifecycle.dart';
@@ -89,8 +88,9 @@ final class LearningModuleController extends ChangeNotifier {
     if (currentSection == 'calculation') {
       final calculation = snapshot?['calculation'];
       final draft = calculation is Map ? calculation['draft'] : null;
-      if (draft is Map && draft['shape'] is String)
+      if (draft is Map && draft['shape'] is String) {
         return draft['shape'] as String;
+      }
     }
     return (snapshot?['explore'] as Map?)?['shape'] as String? ?? initialShape;
   }
@@ -183,11 +183,7 @@ final class LearningModuleController extends ChangeNotifier {
     if (!isCurrent) return _stale();
     mode = next;
     _lastCheckpoint = null;
-    return action({
-      'action': 'launch',
-      'section': section,
-      if (next != null) 'mode': next,
-    });
+    return action({'action': 'launch', 'section': section, 'mode': ?next});
   }
 
   Future<Result<void>> action(Map<String, Object?> payload) {
@@ -375,8 +371,9 @@ final class LearningModuleController extends ChangeNotifier {
     final captured = await action({'action': 'checkpoint'});
     if (captured is Failed<void> || !isCurrent) return captured;
     final value = snapshot;
-    if (value == null || value['section'] != section)
+    if (value == null || value['section'] != section) {
       return const Success<void>(null);
+    }
     final encoded = jsonEncode(value);
     if (_lastCheckpoint == encoded) return const Success<void>(null);
     final saved = await checkpoints.save(actor, slot, value);
@@ -402,8 +399,9 @@ final class LearningModuleController extends ChangeNotifier {
       'calculation',
     };
     final target = checkpoint['section'];
-    if (target is! String || !sections.contains(target) || target == section)
+    if (target is! String || !sections.contains(target) || target == section) {
       return;
+    }
     try {
       final previous = _lastStableSnapshot;
       if (previous != null) {
@@ -413,8 +411,9 @@ final class LearningModuleController extends ChangeNotifier {
         });
         if (!restored.isSuccess) return;
       }
-      if (isCurrent && _visible && lifecycle.isForeground)
+      if (isCurrent && _visible && lifecycle.isForeground) {
         onWorkflow?.call(target, checkpoint);
+      }
     } finally {
       _transferring = false;
       if (isCurrent) notifyListeners();
@@ -447,16 +446,18 @@ final class LearningModuleController extends ChangeNotifier {
   }
 
   void _recordsChanged() {
-    if (isCurrent && host.phase == ModuleLoadPhase.ready)
+    if (isCurrent && host.phase == ModuleLoadPhase.ready) {
       unawaited(_syncReflections());
+    }
   }
 
   Future<void> _syncReflections() async {
     if (!isCurrent ||
         reflections.actor != actor ||
         reflections.loading ||
-        reflections.readFailure != null)
+        reflections.readFailure != null) {
       return;
+    }
     final value = jsonEncode(
       reflections.records.map((r) => r.toJson()).toList(),
     );

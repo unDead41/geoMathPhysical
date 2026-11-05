@@ -16,19 +16,17 @@ const learningReflectionControllerKey =
 /// Failed reflections remain in memory for an explicit retry in the same actor.
 final class LearningReflectionController extends ChangeNotifier {
   LearningReflectionController({
-    required FormativeRecordReader reader,
-    required FormativeRecordWriter writer,
-    required AuthSession sessions,
-  }) : _reader = reader,
-       _writer = writer,
-       _sessions = sessions {
+    required this.reader,
+    required this.writer,
+    required this.sessions,
+  }) {
     _sessionSubscription = sessions.bindings.listen(_bind);
     _bind(sessions.current);
   }
 
-  final FormativeRecordReader _reader;
-  final FormativeRecordWriter _writer;
-  final AuthSession _sessions;
+  final FormativeRecordReader reader;
+  final FormativeRecordWriter writer;
+  final AuthSession sessions;
   late final StreamSubscription<ActorBinding> _sessionSubscription;
   StreamSubscription<Result<List<ModuleReflection>>>? _readerSubscription;
   Future<void> _saveTail = Future<void>.value();
@@ -63,7 +61,7 @@ final class LearningReflectionController extends ChangeNotifier {
       !_disposed &&
       generation == _generation &&
       _actor == actor &&
-      _sessions.isCurrent(actor);
+      sessions.isCurrent(actor);
 
   void _bind(ActorBinding actor) {
     if (_disposed || _actor == actor) {
@@ -95,7 +93,7 @@ final class LearningReflectionController extends ChangeNotifier {
     _loading = true;
     _readFailure = null;
     try {
-      _readerSubscription = _reader
+      _readerSubscription = reader
           .watchReflections(actor)
           .listen(
             (result) {
@@ -129,7 +127,7 @@ final class LearningReflectionController extends ChangeNotifier {
   }
 
   void retryRead() {
-    if (!_disposed && _sessions.isCurrent(actor)) {
+    if (!_disposed && sessions.isCurrent(actor)) {
       _startRead();
     }
   }
@@ -138,10 +136,10 @@ final class LearningReflectionController extends ChangeNotifier {
     ModuleReflection reflection, {
     ActorBinding? actor,
   }) {
-    final capturedActor = actor ?? _sessions.current;
+    final capturedActor = actor ?? sessions.current;
     final generation = _generation;
     if (!_current(capturedActor, generation)) {
-      return Future.value(const Failed(_staleFailure));
+      return Future.value(const Failed<DurableRecordReceipt>(_staleFailure));
     }
     final request = ++_nextSave;
     _latestSave[reflection.activity] = request;
@@ -155,19 +153,19 @@ final class LearningReflectionController extends ChangeNotifier {
       }
       Result<DurableRecordReceipt> result;
       try {
-        result = await _writer.saveReflection(
+        result = await writer.saveReflection(
           actor: capturedActor,
           reflection: reflection,
         );
       } catch (_) {
-        result = const Failed(_storageFailure);
+        result = const Failed<DurableRecordReceipt>(_storageFailure);
       }
       if (!_current(capturedActor, generation)) {
         return const Failed<DurableRecordReceipt>(_staleFailure);
       }
       if (result case Success<DurableRecordReceipt>(:final value)) {
         if (value.actor != capturedActor) {
-          result = const Failed(_staleFailure);
+          result = const Failed<DurableRecordReceipt>(_staleFailure);
         }
       }
       _activeSaves.remove(request);
@@ -195,7 +193,7 @@ final class LearningReflectionController extends ChangeNotifier {
     final capturedActor = actor;
     final pending = failedReflections;
     for (final reflection in pending) {
-      if (_disposed || !_sessions.isCurrent(capturedActor)) {
+      if (_disposed || !sessions.isCurrent(capturedActor)) {
         return;
       }
       await save(reflection, actor: capturedActor);

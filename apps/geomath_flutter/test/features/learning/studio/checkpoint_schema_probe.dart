@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+// This probe runs with the standalone Dart SDK without Flutter package resolution.
+// ignore: avoid_relative_lib_imports
 import '../../../../lib/features/learning/persistence/learning_checkpoint_schema.dart';
 import 'checkpoint_fixture.dart';
 

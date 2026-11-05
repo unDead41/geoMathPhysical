@@ -249,7 +249,7 @@ void main() {
                 .brightness,
             theme == AppTheme.dark ? Brightness.dark : Brightness.light,
           );
-          expect(identical(_view(tester), first), isTrue);
+          expect(identical(_view(tester).platform, first.platform), isTrue);
           state = await _act(tester, first, {'action': 'checkpoint'});
           _expectPose((state['checkpoint'] as Map)['explore'] as Map, pose);
           expect((state['diagnostics'] as Map)['faceColors'], palette);
@@ -387,7 +387,7 @@ void main() {
         await tester.tap(retry);
         await tester.pump();
         final next = await _readyView(tester, 'calculation');
-        expect(identical(next, previous), isFalse);
+        expect(identical(next.platform, previous.platform), isFalse);
         return next;
       }
 
@@ -643,8 +643,13 @@ void _openPath(AppDependencies app, GeoMathRouter router, String path) {
   router.open(match.route.name, arguments: match.parameters);
 }
 
-WebViewController _view(WidgetTester tester) =>
-    tester.widget<WebViewWidget>(find.byType(WebViewWidget).last).controller;
+WebViewController _view(WidgetTester tester) => WebViewController.fromPlatform(
+  tester
+      .widget<WebViewWidget>(find.byType(WebViewWidget).last)
+      .platform
+      .params
+      .controller,
+);
 
 Future<WebViewController> _readyView(
   WidgetTester tester,
@@ -708,8 +713,9 @@ Future<Map<String, Object?>> _act(
   Map<String, Object?>? result;
   await _until(tester, () async {
     final state = await _snapshot(view);
-    if ((state['sequence'] as num) < sequence || state['pending'] == true)
+    if ((state['sequence'] as num) < sequence || state['pending'] == true) {
       return false;
+    }
     result = state;
     return true;
   });
