@@ -232,8 +232,8 @@
     },
     "android_screenshots": {
       "status": "blocked",
-      "evidence": "docs/handoffs/app-foundation/evidence/ci-41971048550.txt",
-      "reason": "Actual Home/Settings captured; module screenshot awaits bounded real scrolling to its off-screen Home CTA."
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41973098124.txt",
+      "reason": "Full source/build/device checks pass at f5aeddd; the normal-app module screenshot still shows loading at8seconds. Await targeted capture of the same verified APK after the canonical canvas becomes visible."
     }
   },
   "android_local": {
@@ -247,7 +247,7 @@
     "screenshots": []
   },
   "blockers": [
-    "Complete normal-app module screenshot after correcting the capture script to scroll the small real Android viewport. Native integration4/4 and normal APK run already passed."
+    "Full source/build/device checks pass at f5aeddd; the normal-app module screenshot still shows loading at8seconds. Await targeted capture of the same verified APK after the canonical canvas becomes visible."
   ],
   "not_claimed": [
     "physical Android phone",
@@ -364,6 +364,20 @@
       "normal_apk_artifact_id": 13390101358,
       "evidence_artifact_id": 13389912548,
       "evidence": "docs/handoffs/app-foundation/evidence/ci-41971048550.txt"
+    },
+    {
+      "run_id": 41973098124,
+      "url": "https://github.com/unDead41/geodecoder/actions/runs/41973098124",
+      "tested_commit": "f5aeddd58d81e490b1e67b8bf4a21311645d3631",
+      "job": 127065623084,
+      "verify": "passed",
+      "android_smoke": "passed_4_of_4",
+      "normal_apk_run": "passed",
+      "workflow": "success",
+      "screenshots": "normal_module_loading_not_accepted",
+      "normal_apk_artifact_id": 13390878421,
+      "evidence_artifact_id": 13390733823,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41973098124.txt"
     }
   ],
   "android_ci": {

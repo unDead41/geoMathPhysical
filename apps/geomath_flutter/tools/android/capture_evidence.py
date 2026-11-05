@@ -55,6 +55,29 @@ def main():
             raise RuntimeError('ADB did not return a PNG screenshot.')
         (output/name).write_bytes(data)
 
+    def wait_for_model():
+        # A screenshot file can exist while the real WebView is still loading.
+        # Wait for the canonical canvas's accessibility label, and retain the
+        # actual Android hierarchy used to establish its visible bounds.
+        deadline = time.monotonic() + 60
+        while time.monotonic() < deadline:
+            try:
+                raw, root = hierarchy()
+                (output/'module-hierarchy.xml').write_bytes(raw)
+                for node in root.iter('node'):
+                    label = (node.get('content-desc', '') + ' ' + node.get('text', '')).casefold()
+                    if 'modul pembelajaran luar talian tidak tersedia' in label or 'offline learning module is unavailable' in label:
+                        raise RuntimeError('The normal app reports a failed offline module load.')
+                    if 'model interaktif kubus' in label:
+                        bounds = [int(v) for v in re.findall(r'\d+', node.get('bounds', ''))]
+                        if len(bounds) == 4 and bounds[2]-bounds[0] >= 64 and bounds[3]-bounds[1] >= 64:
+                            time.sleep(2)
+                            return
+            except (subprocess.SubprocessError, ET.ParseError):
+                pass
+            time.sleep(2)
+        raise RuntimeError('Canonical model canvas did not become visible in the normal Android app.')
+
     # Caller installs the main application APK, not an integration-test runner.
     adb('shell', 'am', 'force-stop', 'com.geomath.dev')
     adb('shell', 'am', 'start', '-n', 'com.geomath.dev/.MainActivity')
@@ -69,7 +92,7 @@ def main():
                              scroll=True, evidence_name='home-actions')
     shot('01-home-actions.png')
     adb('shell', 'input', 'tap', str(explore[0]), str(explore[1]))
-    time.sleep(8)
+    wait_for_model()
     shot('module-preview.png')
     (output/'webview.txt').write_bytes(adb('shell', 'dumpsys', 'webviewupdate'))
     device = {name: adb('shell', 'getprop', prop).decode().strip() for name, prop in {

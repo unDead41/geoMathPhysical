@@ -1,0 +1,30 @@
+GitHub Actions full acceptance receipt
+Run:https://github.com/unDead41/geodecoder/actions/runs/41973098124
+Source:f5aeddd58d81e490b1e67b8bf4a21311645d3631
+Job:127065623084
+Workflow and every source/device/build step:SUCCESS.
+77 files format-clean; analyze clean;92 Flutter tests;12 Node contracts;4 actual Android tests;normal APK installed and launched after integration.
+Android15/API35 AOSP;WebView com.android.webview124.0.6367.219;radios disabled.
+NormalAPK artifact13390878421,172051208bytes,SHA256ae533c5f573adee45304a732dd4d9f39840f84da71ace0fc4c2035aea0dd213d.
+ArchiveSHA256754e866ba82c46c49894a3a3815109b019e2ea4286bb0acc953a6b9e9486f7b0. All20bundled assets match source.
+Source/device evidence artifact13390733823;archiveSHA256c1dfae0bc1eb22176d78bbe85bd75757b3c34cda10da5f09e12d46bb100c46bd.
+
+Visual inspection: Home, Settings and scrolled Home actions are genuine rendered UI. module-preview.png and final-state PNG still show WebView loading after the fixed8second delay. They are NOT accepted as rendered-module proof, despite workflow exit0. READY remains blocked only on a visible normal-app module capture.
+The next targeted capture reuses the exact verified normal APK, checks its archive/APK hashes and all20asset bytes, verifies101 runtime files are unchanged, and waits for the real canonical canvas accessibility label. No application, bridge, canonical asset, contract, unit/integration-test assertion or native deadline changes. Full source/device gates already passed here and need no repeat for this screenshot-only correction.
+
+Selected actual source/device lines (ephemeral VM-service URLs omitted):
+2026-11-05T05:19:13.2834599Z Formatted 77 files (0 changed) in 0.39 seconds.
+2026-11-05T05:19:26.6858241Z No issues found! (ran in 12.2s)
+2026-11-05T05:20:07.0311249Z 🎉 92 tests passed.
+2026-11-05T05:20:10.5412295Z # pass 12
+2026-11-05T05:20:10.5413020Z # fail 0
+2026-11-05T05:30:48.9161141Z   Current WebView package (name, version): (com.android.webview, 124.0.6367.219)
+2026-11-05T05:30:49.6606586Z Native focus before test suite: mCurrentFocus=null
+2026-11-05T05:31:17.6551154Z I/flutter ( 2124): 00:00 +0: real local WebView rotates/unfolds and survives preferences and actor switch
+2026-11-05T05:32:06.1692425Z I/flutter ( 2124): 00:48 +1: missing local asset never creates a ready WebView
+2026-11-05T05:32:06.6488566Z I/flutter ( 2124): 00:49 +2: corrupt local asset never creates a ready WebView
+2026-11-05T05:32:06.9434667Z I/flutter ( 2124): 00:49 +3: guest app opens real offline module, persists preferences/records and keeps reports local
+2026-11-05T05:32:40.7962090Z I/flutter ( 2124): 01:23 +4: (tearDownAll)
+2026-11-05T05:32:40.8187802Z I/flutter ( 2124): 01:23 +5: All tests passed!
+2026-11-05T05:32:40.8229667Z All tests passed.
+2026-11-05T05:33:49.0668311Z {"screenshots": ["01-home-offline.png", "37-settings.png", "module-preview.png"], "device": {"model": "Android SDK built for x86_64", "android": "15", "api": "35", "boot_completed": "1", "device_id": "emulator-5554", "display_size": "Physical size: 1080x1920\nOverride size: 720x1280", "display_density": "Physical density: 420\nOverride density: 320", "airplane_mode": "1"}, "source": "actual ADB screen capture"}

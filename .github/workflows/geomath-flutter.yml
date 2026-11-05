@@ -2,129 +2,85 @@ name: GeoMath Flutter
 
 on:
   push:
-    branches: [app-foundation, app-learning, app-cloud-game, app-integration, app]
+    branches: [app-foundation]
     paths:
-      - 'apps/geomath_flutter/**'
+      - 'apps/geomath_flutter/tools/android/capture_evidence.py'
       - '.github/workflows/geomath-flutter.yml'
-  pull_request:
-    paths:
-      - 'apps/geomath_flutter/**'
-      - '.github/workflows/geomath-flutter.yml'
-  workflow_dispatch:
 
 permissions:
   contents: read
-
-concurrency:
-  group: geomath-flutter-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
-env:
-  FLUTTER_VERSION: '3.47.9'
-  GRADLE_OPTS: '-Dorg.gradle.workers.max=2 -Dorg.gradle.jvmargs=-Xmx2g -Dkotlin.daemon.jvm.options=-Xmx512m'
+  actions: read
 
 jobs:
-  verify:
+  capture-verified-apk:
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    timeout-minutes: 20
     defaults:
       run:
         working-directory: apps/geomath_flutter
     steps:
       - uses: actions/checkout@v7
-      - name: Prepare Android disk space
-        if: runner.environment == 'github-hosted' && runner.os == 'Linux'
-        shell: bash
+        with:
+          fetch-depth: 2
+      - name: Verify unchanged tested application
         run: |
-          set -euo pipefail
-          df -h / /tmp "$RUNNER_TEMP" "$ANDROID_HOME"
-          df -i / /tmp "$RUNNER_TEMP" "$ANDROID_HOME"
-          # Unused runtimes on this disposable hosted runner; retain Java,
-          # Flutter and the Android tools required by this isolated app job.
-          sudo rm -rf -- /usr/share/dotnet /usr/local/.ghcup /usr/share/swift
+          python3 - <<'PY'
+          import hashlib,json,pathlib,subprocess
+          app=pathlib.Path('.')
+          source='f5aeddd58d81e490b1e67b8bf4a21311645d3631'
+          changed=subprocess.check_output(['git','diff','--name-only',source,'HEAD'],text=True).splitlines()
+          allowed=['.github/workflows/geomath-flutter.yml','apps/geomath_flutter/tools/android/capture_evidence.py','apps/geomath_flutter/tools/android/capture_verified_apk.sh']
+          assert all(p in allowed or p.startswith('apps/geomath_flutter/docs/') for p in changed),changed
+          r=json.loads((app/'docs/FOUNDATION_READY.json').read_text())
+          for name,want in r['runtime_files'].items():
+              assert hashlib.sha256((app/name).read_bytes()).hexdigest()==want,name
+          print('All101 frozen runtime files match the application fully verified by CI41973098124.')
+          PY
+      - name: Prepare emulator storage
+        run: |
+          sudo rm -rf -- /usr/share/dotnet /usr/local/.ghcup /usr/share/swift /opt/hostedtoolcache/CodeQL
           sudo docker image prune --all --force
-          if [[ -d /opt/hostedtoolcache/CodeQL ]]; then
-            sudo du -sx --block-size=1 /opt/hostedtoolcache/CodeQL
-            sudo rm -rf -- /opt/hostedtoolcache/CodeQL
-          fi
-          # Flutter 3.47.9 resolves flutter.ndkVersion to 28.2.13676358.
-          # This job builds only GeoMath; image-default NDK 27/30 are unused.
-          if [[ -d "$ANDROID_HOME/ndk" ]]; then
-            find "$ANDROID_HOME/ndk" -mindepth 1 -maxdepth 1 -type d -exec du -sh {} +
-            find "$ANDROID_HOME/ndk" -mindepth 1 -maxdepth 1 -type d \
-              ! -name '28.2.13676358' \
-              -print -exec sudo rm -rf -- {} +
-          fi
-          df -h / /tmp "$RUNNER_TEMP" "$ANDROID_HOME"
+          find "$ANDROID_HOME/ndk" -mindepth 1 -maxdepth 1 -type d -exec sudo rm -rf -- {} +
+          df -h / "$RUNNER_TEMP" "$ANDROID_HOME"
       - uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: '17'
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-          flutter-version: ${{ env.FLUTTER_VERSION }}
-          cache: true
-          pub-cache-key: geomath-${{ runner.os }}-${{ env.FLUTTER_VERSION }}-${{ hashFiles('apps/geomath_flutter/pubspec.lock') }}
-      - name: Toolchain
+      - name: Download and verify the tested normal APK
+        env:
+          GH_ACTIONS_TOKEN: ${{ github.token }}
         run: |
-          flutter --version
-          flutter doctor -v
-          nproc
-          free -h
-      - name: Dependencies
-        run: flutter pub get
-      - name: Format
-        run: dart format --output=none --set-exit-if-changed lib test integration_test test_driver
-      - name: Analyze
-        run: flutter analyze
-      - name: Unit and widget tests
-        run: flutter test
-      - name: Canonical source and adapter checks
-        run: node --test tools/contracts/verify_exports.test.mjs test/foundation/native_adapter_contract.test.mjs
-      - name: Debug APK
-        run: flutter build apk --debug
-      - uses: actions/upload-artifact@v7
-        with:
-          name: geomath-debug-apk
-          path: apps/geomath_flutter/build/app/outputs/flutter-apk/app-debug.apk
-          if-no-files-found: error
-          retention-days: 7
-
-      - name: Preserve the normal application APK
-        run: |
-          mv build/app/outputs/flutter-apk/app-debug.apk "$RUNNER_TEMP/geomath-main-debug.apk"
-          test -s "$RUNNER_TEMP/geomath-main-debug.apk"
-          # The normal APK is uploaded and preserved; integration repackages it.
-          rm -f -- build/app/outputs/apk/debug/app-debug.apk
-          # Release native build daemons before allocating the emulator.
-          (cd android && ./gradlew --stop)
-      - name: Prebuild the Android integration APK
-        run: |
-          flutter build apk --debug --target-platform android-x64 -t integration_test/foundation_smoke_test.dart
-          mv build/app/outputs/flutter-apk/app-debug.apk "$RUNNER_TEMP/geomath-integration-debug.apk"
-          test -s "$RUNNER_TEMP/geomath-integration-debug.apk"
-          rm -f -- build/app/outputs/apk/debug/app-debug.apk
-          (cd android && ./gradlew --stop)
-      - name: Android disk headroom
-        shell: bash
-        run: |
-          df -h / /tmp "$RUNNER_TEMP" "$ANDROID_HOME"
-          df -i / /tmp "$RUNNER_TEMP" "$ANDROID_HOME"
+          set -euo pipefail
+          curl --fail --location --silent --show-error \
+            -H "Authorization: Bearer $GH_ACTIONS_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/artifacts/13390878421/zip" \
+            -o "$RUNNER_TEMP/verified-apk.zip"
           python3 - <<'PY'
-          import os, shutil
-          free = shutil.disk_usage(os.environ['ANDROID_HOME']).free
-          # Project budget for image extraction, AVD and a second native build.
-          minimum = 20 * 1024 ** 3
-          if free < minimum:
-              raise SystemExit(f'Android runner needs {minimum} free bytes; found {free}')
+          import hashlib,json,os,pathlib,shutil,zipfile
+          root=pathlib.Path(os.environ['RUNNER_TEMP'])
+          archive=root/'verified-apk.zip'
+          assert hashlib.file_digest(archive.open('rb'),'sha256').hexdigest()=='754e866ba82c46c49894a3a3815109b019e2ea4286bb0acc953a6b9e9486f7b0'
+          apk=root/'geomath-main-debug.apk'
+          with zipfile.ZipFile(archive) as z:
+              assert z.namelist()==['app-debug.apk']
+              with z.open('app-debug.apk') as src,apk.open('wb') as dst:shutil.copyfileobj(src,dst)
+          assert hashlib.file_digest(apk.open('rb'),'sha256').hexdigest()=='ae533c5f573adee45304a732dd4d9f39840f84da71ace0fc4c2035aea0dd213d'
+          checked=0
+          with zipfile.ZipFile(apk) as z:
+              for p in pathlib.Path('assets').rglob('*'):
+                  if p.is_file() and p.name!='.gitattributes':
+                      assert z.read('assets/flutter_assets/'+p.as_posix())==p.read_bytes(),str(p)
+                      checked+=1
+          assert checked==20
+          print('Exact CI41973098124 normal APK verified;172051208 bytes;20 matching bundled assets.')
           PY
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
-      - name: Android WebView smoke
+      - name: Capture the verified normal APK on Android
         uses: reactivecircus/android-emulator-runner@v2
         env:
           TMPDIR: ${{ runner.temp }}
@@ -140,17 +96,11 @@ jobs:
           working-directory: apps/geomath_flutter
           disable-animations: true
           emulator-options: -no-window -no-snapshot -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          script: bash tools/android/run_smoke.sh
+          script: bash tools/android/capture_verified_apk.sh
       - uses: actions/upload-artifact@v7
         if: always()
         with:
-          name: geomath-android-evidence
-          path: apps/geomath_flutter/docs/handoffs/app-foundation/evidence/android
-          if-no-files-found: ignore
-          retention-days: 7
-      - uses: actions/upload-artifact@v7
-        with:
-          name: geomath-android-smoke-apk
-          path: ${{ runner.temp }}/geomath-main-debug.apk
+          name: geomath-android-capture
+          path: apps/geomath_flutter/docs/handoffs/app-foundation/evidence/android-capture
           if-no-files-found: error
           retention-days: 7
