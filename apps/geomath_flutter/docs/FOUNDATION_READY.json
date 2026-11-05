@@ -195,7 +195,7 @@
       "status": "blocked",
       "command": "flutter test integration_test -d emulator-5554",
       "exit_code": null,
-      "reason": "Local OS boot failed before installation. First CI verify passed, but Android image installation failed ENOSPC before the emulator or app tests. The runner disk/temp fix is awaiting a new CI execution."
+      "reason": "Two hosted verify jobs passed. The first Android job exhausted image-install space; the second built the APK but its20GiB headroom guard found16.4GiB free and stopped before emulator boot. Extra unused CodeQL/NDK cleanup is awaiting execution."
     }
   },
   "android_local": {
@@ -209,7 +209,7 @@
     "screenshots": []
   },
   "blockers": [
-    "Actual Android launch/WebView smoke remain unverified. The first hosted CI passed all verify checks, then sdkmanager failed with No space left on device before device testing. A pinned runner with reclaimed space and disk-backed SDK temp is awaiting execution."
+    "Actual Android launch/WebView smoke remain unverified. CI41951082306 passed verify and built the normal Android-job APK, then stopped at the20GiB resource guard before device testing. Extra unused toolchain cleanup awaits execution."
   ],
   "not_claimed": [
     "physical Android phone",
@@ -228,6 +228,19 @@
       "android_smoke": "blocked_before_device",
       "reason": "sdkmanager could not extract API36 Google APIs image: No space left on device. No integration test or screenshot ran.",
       "evidence": "docs/handoffs/app-foundation/evidence/ci-41864207926.txt"
+    },
+    {
+      "run_id": 41951082306,
+      "url": "https://github.com/unDead41/geodecoder/actions/runs/41951082306",
+      "tested_commit": "185e62f993e06cc8c08fbd6316265529e46743f4",
+      "verify": "passed",
+      "verify_job": 126994913624,
+      "verify_artifact_id": 13381048858,
+      "verify_evidence": "docs/handoffs/app-foundation/evidence/ci-41951082306-verify.txt",
+      "android_smoke": "blocked_before_device",
+      "android_job": 126998573468,
+      "reason": "Normal APK built. Post-build project20GiB headroom guard found17585864704free bytes and exited1 before the emulator.",
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41951082306-resource.txt"
     }
   ]
 }

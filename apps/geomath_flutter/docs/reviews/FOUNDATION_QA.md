@@ -113,3 +113,24 @@ are `integration_test/module_spike_test.dart` and
 neither replaces the WebView platform/controller with a mock. The app-flow test
 uses actual SQLite, preferences and clipboard plugins, isolates its database
 fixture, restores preferences and deletes its database fixture afterward.
+
+## Integrated lead verification, 5 November 2026
+
+The worker-stage results above are historical. Run
+[41951082306](https://github.com/unDead41/geodecoder/actions/runs/41951082306)
+verified source `185e62f993e06cc8c08fbd6316265529e46743f4`: format (75files,
+zero changes), analyze, all92 Flutter tests, all11 Node checks and the debug APK
+passed. This resolves the pending integrated retries above, including
+`report_accessibility_test.dart` (320dp/150%/keyboard/back and failed export),
+`back_policy_contract_test.dart` and `preview_bootstrap_contract_test.dart`.
+See [the retained CI receipt](../handoffs/app-foundation/evidence/ci-41951082306-verify.txt).
+
+All101 frozen runtime-file SHA256 values, the contract/source lock, lockfile and
+runtime aggregate were independently checked after restoring the complete app
+worktree from its Git blob IDs. The downloaded verify-job APK also contains the
+20 expected contract/module asset bytes. It is a separate build from the Android
+smoke-job normal APK; identical installed/downloaded binary bytes are not claimed.
+
+Android integration and actual screenshots remain the final gate. The native
+TXT document-picker/save adapter is implemented; the current device target tests
+clipboard and report editing but does not automate that system picker.

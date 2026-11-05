@@ -1,0 +1,36 @@
+Run41951082306, Android job126998573468 — blocked before emulator.
+Source185e62f993e06cc8c08fbd6316265529e46743f4
+URL:https://github.com/unDead41/geodecoder/actions/runs/41951082306
+Normal APK build passed. The project20GiB resource guard then exited1.
+No emulator, WebView integration or app screenshot ran.
+The cleanup increased free space13GiB ->29GiB; native build left17585864704bytes.
+The failure is the chosen headroom guard, not a second sdkmanager ENOSPC.
+
+Exact measured filesystem excerpts:
+2026-11-05T01:59:59.4701337Z Filesystem      Size  Used Avail Use% Mounted on
+2026-11-05T01:59:59.4711454Z /dev/root        72G   59G   13G  83% /
+2026-11-05T01:59:59.4712641Z /dev/root        72G   59G   13G  83% /
+2026-11-05T01:59:59.4713773Z /dev/root        72G   59G   13G  83% /
+2026-11-05T01:59:59.4717347Z /dev/root        72G   59G   13G  83% /
+2026-11-05T01:59:59.4718634Z Filesystem      Inodes   IUsed   IFree IUse% Mounted on
+2026-11-05T01:59:59.4719448Z /dev/root      9699328 1103908 8595420   12% /
+2026-11-05T01:59:59.4720459Z /dev/root      9699328 1103908 8595420   12% /
+2026-11-05T01:59:59.4721349Z /dev/root      9699328 1103908 8595420   12% /
+2026-11-05T01:59:59.4722342Z /dev/root      9699328 1103908 8595420   12% /
+2026-11-05T02:00:41.3574311Z Total reclaimed space: 2.488GB
+2026-11-05T02:00:41.3574696Z Filesystem      Size  Used Avail Use% Mounted on
+2026-11-05T02:00:41.3575076Z /dev/root        72G   44G   29G  61% /
+2026-11-05T02:00:41.3575459Z /dev/root        72G   44G   29G  61% /
+2026-11-05T02:00:41.3575843Z /dev/root        72G   44G   29G  61% /
+2026-11-05T02:00:41.3576206Z /dev/root        72G   44G   29G  61% /
+2026-11-05T02:09:54.0237222Z Filesystem      Size  Used Avail Use% Mounted on
+2026-11-05T02:09:54.0250759Z /dev/root        72G   56G   17G  78% /
+2026-11-05T02:09:54.0262581Z /dev/root        72G   56G   17G  78% /
+2026-11-05T02:09:54.0263243Z /dev/root        72G   56G   17G  78% /
+2026-11-05T02:09:54.0263820Z /dev/root        72G   56G   17G  78% /
+2026-11-05T02:09:54.0264535Z Filesystem      Inodes   IUsed   IFree IUse% Mounted on
+2026-11-05T02:09:54.0265739Z /dev/root      9699328 1083203 8616125   12% /
+2026-11-05T02:09:54.0269012Z /dev/root      9699328 1083203 8616125   12% /
+2026-11-05T02:09:54.0269641Z /dev/root      9699328 1083203 8616125   12% /
+2026-11-05T02:09:54.0270268Z /dev/root      9699328 1083203 8616125   12% /
+2026-11-05T02:09:54.0686003Z Android runner needs 21474836480 free bytes; found 17585864704

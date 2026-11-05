@@ -134,6 +134,22 @@ Resume audit: `app` and firmware `main` remain at their table SHAs;
 is retained. Prompt3 must audit the newer Auth source when it starts; this CI
 repair does not import web/Auth changes into the frozen foundation.
 
+## Second CI resource measurement
+
+Run [41951082306](https://github.com/unDead41/geodecoder/actions/runs/41951082306)
+passed all verify gates at `185e62f993e06cc8c08fbd6316265529e46743f4`, including
+92 Flutter/11 Node checks and the debug APK. The separate Android job also built
+its normal APK. Root free space rose13GiB ->29GiB during cleanup, then native
+build left17585864704bytes. The chosen20GiB guard stopped that job before an
+emulator or device test ran. See the [verify receipt](evidence/ci-41951082306-verify.txt)
+and [resource receipt](evidence/ci-41951082306-resource.txt).
+
+The runner now additionally measures/removes its unused CodeQL toolcache subtree
+and old NDKs that are neither the app's pinned28.2.13676358 nor environment-active.
+Java/Flutter and SDK platform/build tools remain. The20GiB guard remains; the
+next actual Android run will emit the preserved normal-APK hash and artifact.
+READY is still blocked. No app runtime, test, contract or asset bytes changed.
+
 ## Worker handoffs
 
 Six initial workers ran in separate private worktrees. Only the lead publishes

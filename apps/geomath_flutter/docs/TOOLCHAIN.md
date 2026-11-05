@@ -165,7 +165,7 @@ installed the API36 system image, before emulator boot. The Android job now
 reclaims only unused .NET, Haskell, Swift and Docker image storage on its
 disposable hosted runner, prints filesystem bytes/inodes, and reserves20GiB
 for the image, AVD and second native build. This is a project budget, not an
-Android minimum. Java/Flutter toolcaches and Android SDK components are retained.
+Android minimum. Java/Flutter toolcaches, SDK platform/build tools and the pinned/environment-active NDKs are retained.
 
 The emulator action receives disk-backed `TMPDIR` and Java `java.io.tmpdir`,
 2cores,3072MiB RAM and4096MiB userdata. Ubuntu26.04 can mount `/tmp` as tmpfs;
@@ -176,3 +176,16 @@ pin and temp setting avoid depending on that changing image layout.
 Sources: [runner migration](https://github.com/actions/runner-images/issues/14748),
 [official Swift installer temp handling](https://github.com/actions/runner-images/blob/main/images/ubuntu/scripts/build/install-swift.sh),
 [emulator action inputs](https://github.com/ReactiveCircus/android-emulator-runner/blob/v2/action.yml).
+
+
+Run41951082306 verified the full app and built the Android-job normal APK.
+The cleanup raised root free space from13GiB to29GiB; after native build the
+20GiB guard measured17585864704bytes (16.4GiB) and stopped before emulator
+provisioning. The workflow additionally measures/removes only the unused
+`/opt/hostedtoolcache/CodeQL` subtree and unreferenced old NDK versions. It keeps
+NDK28.2.13676358 plus every environment-active NDK. The20GiB budget remains.
+The next successful Android run will also retain its exact normal-APK hash and
+upload that preserved binary separately from the verify-job APK.
+
+CodeQL path sources: [toolcache root](https://github.com/actions/runner-images/blob/main/images/ubuntu/scripts/build/configure-environment.sh),
+[bundle installer](https://github.com/actions/runner-images/blob/main/images/ubuntu/scripts/build/install-codeql-bundle.sh).
