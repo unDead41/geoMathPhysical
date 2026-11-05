@@ -155,3 +155,24 @@ emulator startup suffered a SIGKILL while the cgroup recorded out-of-memory
 kills. Build success therefore remains separate from Android app/device smoke
 and screenshots. The final handoff records the tested app source and the final
 device outcome.
+
+
+### Hosted Android runner resources
+
+The workflow pins `ubuntu-24.04` instead of the moving `ubuntu-latest` label.
+Run41864207926 selected Ubuntu26.04.1 and exhausted space while SDKmanager
+installed the API36 system image, before emulator boot. The Android job now
+reclaims only unused .NET, Haskell, Swift and Docker image storage on its
+disposable hosted runner, prints filesystem bytes/inodes, and reserves20GiB
+for the image, AVD and second native build. This is a project budget, not an
+Android minimum. Java/Flutter toolcaches and Android SDK components are retained.
+
+The emulator action receives disk-backed `TMPDIR` and Java `java.io.tmpdir`,
+2cores,3072MiB RAM and4096MiB userdata. Ubuntu26.04 can mount `/tmp` as tmpfs;
+bytes and inodes are therefore logged for both root and temporary filesystems.
+The original ENOSPC log did not identify which filesystem filled. The runner
+pin and temp setting avoid depending on that changing image layout.
+
+Sources: [runner migration](https://github.com/actions/runner-images/issues/14748),
+[official Swift installer temp handling](https://github.com/actions/runner-images/blob/main/images/ubuntu/scripts/build/install-swift.sh),
+[emulator action inputs](https://github.com/ReactiveCircus/android-emulator-runner/blob/v2/action.yml).

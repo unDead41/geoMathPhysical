@@ -108,6 +108,32 @@ Prompt 3 owns its Auth/profile/classroom/solo/Duel/sync features and preview.
 Use [FOUNDATION_CONTRACT.md](../../FOUNDATION_CONTRACT.md) and the shared tables;
 new root needs go to `docs/integration_requests/<branch>.json`.
 
+## CI continuation after the first publication
+
+Run [41864207926](https://github.com/unDead41/geodecoder/actions/runs/41864207926)
+verified commit `397cab4702a13a64a66d3145e0842bd22dcfb5ad`: pub get,
+format, analyze, 92 Flutter tests, 11 Node checks and debug APK all passed.
+The Android job also built the normal APK, then failed during API36 image
+installation with `No space left on device`. The emulator and integration tests
+never started; this is not an Android app failure or successful device proof.
+See [the CI receipt](evidence/ci-41864207926.txt).
+
+That run resolved `ubuntu-latest` to Ubuntu26.04.1. The workflow now pins
+Ubuntu24.04, reclaims unused .NET/Haskell/Swift runtimes and Docker images on its
+disposable hosted Android runner, prints byte/inode headroom, and uses a
+disk-backed temp directory for SDK extraction. A20GiB project budget is checked
+before the image/AVD/integration build. Java, Flutter and the Android SDK are
+retained. API36 and the actual app tests remain the same. The AVD is bounded to
+2cores/3072MiB RAM/4096MiB userdata, and the preserved normal APK is launched
+through `flutter run` after integration. These changes await CI verification;
+READY remains blocked until the real Android gate and screenshots succeed.
+
+Resume audit: `app` and firmware `main` remain at their table SHAs;
+`main-digitalized` advanced to `752ce908d16d13acc9cc7510797e8363d182c3f5`
+(Digital2.10.0: Google sign-in and SMS removal). The locked module1.6.2 snapshot
+is retained. Prompt3 must audit the newer Auth source when it starts; this CI
+repair does not import web/Auth changes into the frozen foundation.
+
 ## Worker handoffs
 
 Six initial workers ran in separate private worktrees. Only the lead publishes

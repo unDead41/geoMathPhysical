@@ -195,7 +195,7 @@
       "status": "blocked",
       "command": "flutter test integration_test -d emulator-5554",
       "exit_code": null,
-      "reason": "App could not be installed on the unfinished local software-emulator boot; actual WebView integration tests have not run."
+      "reason": "Local OS boot failed before installation. First CI verify passed, but Android image installation failed ENOSPC before the emulator or app tests. The runner disk/temp fix is awaiting a new CI execution."
     }
   },
   "android_local": {
@@ -209,7 +209,7 @@
     "screenshots": []
   },
   "blockers": [
-    "Actual Android app launch and real WebView smoke remain unverified. The local OS boot/PackageManager failed before app installation; CI with a hardware-accelerated emulator is the next execution route."
+    "Actual Android launch/WebView smoke remain unverified. The first hosted CI passed all verify checks, then sdkmanager failed with No space left on device before device testing. A pinned runner with reclaimed space and disk-backed SDK temp is awaiting execution."
   ],
   "not_claimed": [
     "physical Android phone",
@@ -218,5 +218,16 @@
     "production capacity",
     "all 48 native screens"
   ],
-  "handoff": "docs/handoffs/app-foundation/LATEST.md"
+  "handoff": "docs/handoffs/app-foundation/LATEST.md",
+  "ci_attempts": [
+    {
+      "run_id": 41864207926,
+      "url": "https://github.com/unDead41/geodecoder/actions/runs/41864207926",
+      "tested_commit": "397cab4702a13a64a66d3145e0842bd22dcfb5ad",
+      "verify": "passed",
+      "android_smoke": "blocked_before_device",
+      "reason": "sdkmanager could not extract API36 Google APIs image: No space left on device. No integration test or screenshot ran.",
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41864207926.txt"
+    }
+  ]
 }
