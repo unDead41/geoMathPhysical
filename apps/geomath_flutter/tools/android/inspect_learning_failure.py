@@ -56,7 +56,7 @@ def inspect(device):
             detail = rpc('getObject', isolateId=isolate, objectId=cls['id'])
             if not detail.get('library', {}).get('uri', '').startswith('package:geomath_flutter/features/learning/'):
                 continue
-            instances = rpc('getInstances', isolateId=isolate, classId=cls['id'], limit=2)
+            instances = rpc('getInstances', isolateId=isolate, objectId=cls['id'], limit=2)
             for instance in instances['instances']:
                 obj = rpc('getObject', isolateId=isolate, objectId=instance['id'])
                 values = {field['decl']['name']: fields(field['value'])

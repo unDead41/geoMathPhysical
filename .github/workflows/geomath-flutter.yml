@@ -25,13 +25,13 @@ env:
   # Diagnostic markers never form a publication gate. The targeted follow-up
   # can complete the unchanged-runtime composite policy only with its baseline.
   # All other events run the full suite.
-  GEOMATH_ANDROID_SUITE: ${{ contains(github.event.head_commit.message, '[android-diagnostic:module-spike]') && 'module-spike' || contains(github.event.head_commit.message, '[android-diagnostic:runtime-bootstrap]') && 'runtime-bootstrap' || contains(github.event.head_commit.message, '[android-followup:solo-captures]') && 'solo-followup' || 'full' }}
+  GEOMATH_ANDROID_SUITE: ${{ contains(github.event.head_commit.message, '[android-followup:bootstrap-fix]') && 'bootstrap-fix' || contains(github.event.head_commit.message, '[android-diagnostic:module-spike]') && 'module-spike' || contains(github.event.head_commit.message, '[android-diagnostic:runtime-bootstrap]') && 'runtime-bootstrap' || contains(github.event.head_commit.message, '[android-followup:solo-captures]') && 'solo-followup' || 'full' }}
   GRADLE_OPTS: '-Dorg.gradle.workers.max=2 -Dorg.gradle.jvmargs=-Xmx2g -Dkotlin.daemon.jvm.options=-Xmx512m'
 
 jobs:
   verify:
     if: ${{ !contains(github.event.head_commit.message, '[android-followup:production-captures]') }}
-    name: "${{ contains(github.event.head_commit.message, '[android-followup:solo-captures]') && 'Android follow-up (Solo + production captures)' || contains(github.event.head_commit.message, '[android-diagnostic:') && 'Android diagnostic only' || 'verify' }}"
+    name: "${{ contains(github.event.head_commit.message, '[android-followup:bootstrap-fix]') && 'Bootstrap fix (real WebView + production captures)' || contains(github.event.head_commit.message, '[android-followup:solo-captures]') && 'Android follow-up (Solo + production captures)' || contains(github.event.head_commit.message, '[android-diagnostic:') && 'Android diagnostic only' || 'verify' }}"
     runs-on: ubuntu-24.04
     timeout-minutes: 90
     defaults:
@@ -141,7 +141,7 @@ jobs:
       - name: Canonical source and adapter checks
         run: node --test tools/contracts/verify_exports.test.mjs test/foundation/native_adapter_contract.test.mjs test/features/learning/bundle/*.test.mjs test/features/learning/surface/*.test.mjs test/features/learning/studio/checkpoint_schema_parity.test.mjs
       - name: Debug APK
-        if: env.GEOMATH_ANDROID_SUITE == 'full'
+        if: env.GEOMATH_ANDROID_SUITE == 'full' || env.GEOMATH_ANDROID_SUITE == 'bootstrap-fix'
         id: debug-apk
         run: flutter build apk --debug
       # Preserve verified Maven/wrapper downloads even if the APK step fails.
@@ -158,7 +158,7 @@ jobs:
             !~/.gradle/wrapper/**/*.lck
           key: ${{ steps.gradle-dependencies.outputs.cache-primary-key }}
       - uses: actions/upload-artifact@v7
-        if: env.GEOMATH_ANDROID_SUITE == 'full'
+        if: env.GEOMATH_ANDROID_SUITE == 'full' || env.GEOMATH_ANDROID_SUITE == 'bootstrap-fix'
         with:
           name: geomath-debug-apk
           path: apps/geomath_flutter/build/app/outputs/flutter-apk/app-debug.apk
@@ -177,7 +177,7 @@ jobs:
           retention-days: 7
 
       - name: Preserve the normal application APK
-        if: env.GEOMATH_ANDROID_SUITE == 'full'
+        if: env.GEOMATH_ANDROID_SUITE == 'full' || env.GEOMATH_ANDROID_SUITE == 'bootstrap-fix'
         run: |
           mv build/app/outputs/flutter-apk/app-debug.apk "$RUNNER_TEMP/geomath-main-debug.apk"
           test -s "$RUNNER_TEMP/geomath-main-debug.apk"
@@ -232,6 +232,7 @@ jobs:
           case "$GEOMATH_ANDROID_SUITE" in
             full) integration_target=integration_test/integration_smoke_test.dart ;;
             module-spike) integration_target=integration_test/module_spike_test.dart ;;
+            bootstrap-fix) integration_target=integration_test/module_spike_test.dart ;;
             runtime-bootstrap) integration_target=integration_test/integration_smoke_test.dart ;;
             solo-followup) integration_target=integration_test/solo_reopen_test.dart ;;
             *) echo 'Unsupported diagnostic suite' >&2; exit 2 ;;

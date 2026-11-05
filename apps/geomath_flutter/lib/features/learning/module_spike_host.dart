@@ -21,8 +21,8 @@ enum ModuleLoadPhase { verifying, loading, ready, failed, closed }
 
 enum ModuleStartupStage { idle, document, handshake, ready, closed, expired }
 
-/// The native host owns two bounded foreground stages. Loading and configuring
-/// the trusted local document must not consume the child's secure-ready budget.
+/// The native host owns two bounded foreground stages. Loading the trusted
+/// local document must not consume the child's secure-ready budget.
 /// This scheduler never accepts a document, message, actor or capability itself.
 final class ModuleStartupDeadline {
   ModuleStartupDeadline({
@@ -30,11 +30,14 @@ final class ModuleStartupDeadline {
     this.clock = const SystemClock(),
   });
 
-  static const stageBudget = Duration(seconds: 30);
+  static const documentBudget = Duration(seconds: 30);
+  // Actual Android cold boots completed a healthy opaque child in ~35 seconds.
+  // Its independent, bounded foreground budget includes parsing that child.
+  static const handshakeBudget = Duration(seconds: 60);
   final void Function(ModuleStartupStage stage) onExpired;
   final Clock clock;
   ModuleStartupStage _stage = ModuleStartupStage.idle;
-  Duration _remaining = stageBudget;
+  Duration _remaining = documentBudget;
   Timer? _timer;
   int? _armedAt;
   bool _active = true;
@@ -49,7 +52,10 @@ final class ModuleStartupDeadline {
       return Duration(
         milliseconds: (_remaining.inMilliseconds - elapsed).clamp(
           0,
-          stageBudget.inMilliseconds,
+          (_stage == ModuleStartupStage.handshake
+                  ? handshakeBudget
+                  : documentBudget)
+              .inMilliseconds,
         ),
       );
     }
@@ -59,11 +65,11 @@ final class ModuleStartupDeadline {
   void beginDocument() {
     if (_stage != ModuleStartupStage.idle) return;
     _stage = ModuleStartupStage.document;
-    _remaining = stageBudget;
+    _remaining = documentBudget;
     _arm();
   }
 
-  bool documentConfigured() {
+  bool beginHandshake() {
     if (_stage != ModuleStartupStage.document) return false;
     if (remaining == Duration.zero) {
       _expire();
@@ -71,7 +77,7 @@ final class ModuleStartupDeadline {
     }
     _stop();
     _stage = ModuleStartupStage.handshake;
-    _remaining = stageBudget;
+    _remaining = handshakeBudget;
     _arm();
     return true;
   }
@@ -157,7 +163,7 @@ final class ModuleSpikeController extends ChangeNotifier {
         AppFailure(
           code: FailureCode.unavailable,
           message: stage == ModuleStartupStage.document
-              ? 'The trusted local learning document did not finish loading and configuring.'
+              ? 'The trusted local learning document did not finish loading.'
               : 'The local learning module did not finish its secure handshake.',
         ),
       ),
@@ -321,6 +327,11 @@ final class ModuleSpikeController extends ChangeNotifier {
       return;
     }
     _currentTopLevelUrl = url;
+    // The trusted root document has finished loading. Its configure IPC reply
+    // may wait behind parsing/executing the child, so that work belongs to the
+    // child's budget. This transition grants no readiness or capabilities and
+    // rejects duplicate/late callbacks without restarting the budget.
+    if (!_startup.beginHandshake()) return;
     final data = <String, Object>{
       'instanceId': bridge.identity.instanceId,
       'bridgeSession': bridge.identity.bridgeSession,
@@ -338,14 +349,11 @@ final class ModuleSpikeController extends ChangeNotifier {
       }
       // The platform may reply after cancellation/expiry, or the validated
       // ready envelope may beat this platform Future. Never revive a terminal
-      // instance; only an accepted configuration starts a new handshake budget.
+      // instance. Only the accepted result marks the native wrapper configured.
       if (_disposed ||
           bridge.status == ModuleBridgeStatus.closed ||
           (_phase != ModuleLoadPhase.loading &&
               _phase != ModuleLoadPhase.ready)) {
-        return;
-      }
-      if (_phase == ModuleLoadPhase.loading && !_startup.documentConfigured()) {
         return;
       }
       _configured = true;

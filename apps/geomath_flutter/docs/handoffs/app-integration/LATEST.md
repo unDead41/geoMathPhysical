@@ -1,5 +1,16 @@
 # GeoMath Flutter integration
 
+Current native correction: the direct-install run completed the320dp profile,
+then failed at390dp. Fixed diagnostic breadcrumbs show a valid child taking
+32.911seconds, beyond the old30second budget. The host now starts a bounded
+60second child budget after the trusted root is verified and before configure
+IPC; document loading remains30seconds. Ready/actor/origin/nonce authority is
+unchanged. Ten deadline tests and80 learning/module tests pass, including the
+35second RED-to-GREEN regression. See bootstrap-deadline-regression.json.
+This changes one native runtime file; the previous170-file equivalence receipt
+does not certify this corrected APK. Rebuild, full host checks and affected real
+Android WebView/production captures are required before app can advance.
+
 Latest run: CI42075633834 / source2daa280 passed the corrected real-Android Solo
 case in19seconds, plus teardown. Its workflow remains failed: normal-main module
 startup showed a real unavailable state before any canonical canvas appeared.

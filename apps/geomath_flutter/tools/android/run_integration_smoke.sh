@@ -17,6 +17,11 @@ case "$suite" in
     drive_timeout=28m
     test -s "$normal_apk"
     ;;
+  bootstrap-fix)
+    integration_target=integration_test/module_spike_test.dart
+    drive_timeout=12m
+    test -s "$normal_apk"
+    ;;
   module-spike)
     integration_target=integration_test/module_spike_test.dart
     drive_timeout=12m
@@ -51,6 +56,8 @@ final_state() {
   timeout 10s adb -s "$device" shell dumpsys activity activities > "$evidence_dir/activity-final.txt" || true
   timeout 10s adb -s "$device" shell dumpsys meminfo com.geomath.dev > "$evidence_dir/app-memory-final.txt" || true
   timeout 10s adb -s "$device" logcat -d -b crash > "$evidence_dir/crash-final.txt" || true
+  timeout 12s adb -s "$device" logcat -d -s flutter:I chromium:I AndroidRuntime:E '*:S' 2>/dev/null | \
+    python3 tools/android/sanitize_android_log.py --output "$evidence_dir/production-diagnostics.json" || true
   if [[ "$status" != 0 ]]; then
     for diagnostic in app-pid.txt adb-forwards.txt crash-final.txt; do
       echo "Android diagnostic: $diagnostic"
@@ -122,7 +129,7 @@ if [[ "$integration_status" != 0 ]]; then
     tail -n 60 "$evidence_dir/$diagnostic" || true
   done
 fi
-if [[ "$suite" != full && "$suite" != solo-followup ]]; then
+if [[ "$suite" != full && "$suite" != solo-followup && "$suite" != bootstrap-fix ]]; then
   export GEOMATH_DIAGNOSTIC_SUITE="$suite"
   python3 - "$evidence_dir" <<'DIAGNOSTIC_PY'
 import json,os,pathlib,sys

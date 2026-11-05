@@ -13,7 +13,10 @@ final_state() {
   if [[ "$status" != 0 ]]; then
     timeout 45s python3 tools/android/inspect_learning_failure.py --device "$device" --output "$evidence_dir/learning-failure-fields.json" || true
   fi
-  timeout 12s adb -s "$device" logcat -d -s flutter:I chromium:I AndroidRuntime:E '*:S' > "$evidence_dir/production-debug-internal.txt" || true
+  # Raw logcat can contain private Dart VM/DevTools endpoints. Keep it in a
+  # pipe only; persist fixed bootstrap stages and classified CSP warnings.
+  timeout 12s adb -s "$device" logcat -d -s flutter:I chromium:I AndroidRuntime:E '*:S' 2>/dev/null | \
+    python3 tools/android/sanitize_android_log.py --output "$evidence_dir/production-diagnostics.json" || true
   timeout 12s adb -s "$device" shell dumpsys webviewupdate > "$evidence_dir/webview-final.txt" || true
   timeout 12s adb -s "$device" exec-out screencap -p > "$evidence_dir/last-screen.png" || true
   printf '%s\n' "$status" > "$evidence_dir/run.exit"

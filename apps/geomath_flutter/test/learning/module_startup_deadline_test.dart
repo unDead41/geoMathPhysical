@@ -11,6 +11,31 @@ final class _Clock implements Clock {
 }
 
 void main() {
+  testWidgets(
+    'healthy child completing after 35 foreground seconds is accepted',
+    (tester) async {
+      final clock = _Clock();
+      final failures = <ModuleStartupStage>[];
+      final deadline = ModuleStartupDeadline(
+        clock: clock,
+        onExpired: failures.add,
+      );
+      addTearDown(deadline.close);
+      deadline.beginDocument();
+      expect(deadline.beginHandshake(), isTrue);
+      // Real Android recorded complete child execution at ~35 seconds without a
+      // CSP error/crash. Its validated ready envelope must still be admissible.
+      clock.elapsed = 35000;
+      await tester.pump(const Duration(seconds: 35));
+      expect(failures, isEmpty);
+      expect(deadline.markReady(), isTrue);
+      expect(deadline.stage, ModuleStartupStage.ready);
+      clock.elapsed = 120000;
+      await tester.pump(const Duration(seconds: 85));
+      expect(failures, isEmpty);
+    },
+  );
+
   testWidgets('29 second document load leaves a full secure handshake budget', (
     tester,
   ) async {
@@ -24,7 +49,7 @@ void main() {
     deadline.beginDocument();
     clock.elapsed = 29000;
     await tester.pump(const Duration(seconds: 29));
-    expect(deadline.documentConfigured(), isTrue);
+    expect(deadline.beginHandshake(), isTrue);
     clock.elapsed = 30000;
     await tester.pump(const Duration(seconds: 1));
     expect(
@@ -34,16 +59,16 @@ void main() {
           'Native attachment/document parsing is not secure handshake time.',
     );
     expect(deadline.stage, ModuleStartupStage.handshake);
-    clock.elapsed = 58999;
-    await tester.pump(const Duration(milliseconds: 28999));
+    clock.elapsed = 88999;
+    await tester.pump(const Duration(milliseconds: 58999));
     expect(failures, isEmpty);
-    clock.elapsed = 59000;
+    clock.elapsed = 89000;
     await tester.pump(const Duration(milliseconds: 1));
     expect(failures, [ModuleStartupStage.handshake]);
   });
 
   testWidgets(
-    'missing trusted configuration fails the document stage after 30 active seconds',
+    'missing trusted document completion fails the document stage after 30 active seconds',
     (tester) async {
       final clock = _Clock();
       final failures = <ModuleStartupStage>[];
@@ -56,7 +81,7 @@ void main() {
       await tester.pump(const Duration(seconds: 30));
       expect(failures, [ModuleStartupStage.document]);
       expect(deadline.stage, ModuleStartupStage.expired);
-      expect(deadline.documentConfigured(), isFalse);
+      expect(deadline.beginHandshake(), isFalse);
       expect(deadline.markReady(), isFalse);
       deadline.beginDocument();
       clock.elapsed = 90000;
@@ -70,7 +95,7 @@ void main() {
   );
 
   testWidgets(
-    'configured child that never sends secure ready fails its own 30 second stage',
+    'configured child that never sends secure ready fails its own 60 second stage',
     (tester) async {
       final clock = _Clock();
       final failures = <ModuleStartupStage>[];
@@ -81,11 +106,11 @@ void main() {
       deadline.beginDocument();
       clock.elapsed = 10000;
       await tester.pump(const Duration(seconds: 10));
-      expect(deadline.documentConfigured(), isTrue);
-      clock.elapsed = 39999;
-      await tester.pump(const Duration(milliseconds: 29999));
+      expect(deadline.beginHandshake(), isTrue);
+      clock.elapsed = 69999;
+      await tester.pump(const Duration(milliseconds: 59999));
       expect(failures, isEmpty);
-      clock.elapsed = 40000;
+      clock.elapsed = 70000;
       await tester.pump(const Duration(milliseconds: 1));
       expect(failures, [ModuleStartupStage.handshake]);
       expect(deadline.markReady(), isFalse);
@@ -103,9 +128,9 @@ void main() {
           onExpired: failures.add,
         );
         deadline.beginDocument();
-        if (configured) expect(deadline.documentConfigured(), isTrue);
+        if (configured) expect(deadline.beginHandshake(), isTrue);
         deadline.close();
-        expect(deadline.documentConfigured(), isFalse);
+        expect(deadline.beginHandshake(), isFalse);
         expect(deadline.markReady(), isFalse);
         deadline.beginDocument();
         deadline.setActive(false);
@@ -129,7 +154,7 @@ void main() {
       );
       deadline.beginDocument();
       expect(deadline.markReady(), isTrue);
-      expect(deadline.documentConfigured(), isFalse);
+      expect(deadline.beginHandshake(), isFalse);
       deadline.beginDocument();
       deadline.setActive(false);
       deadline.setActive(true);
@@ -180,18 +205,46 @@ void main() {
         onExpired: failures.add,
       );
       deadline.beginDocument();
-      expect(deadline.documentConfigured(), isTrue);
+      expect(deadline.beginHandshake(), isTrue);
       clock.elapsed = 25000;
       await tester.pump(const Duration(seconds: 25));
       deadline.setActive(false);
       clock.elapsed = 85000;
       await tester.pump(const Duration(minutes: 1));
       expect(failures, isEmpty);
-      expect(deadline.remaining, const Duration(seconds: 5));
+      expect(deadline.remaining, const Duration(seconds: 35));
       deadline.setActive(true);
-      clock.elapsed = 90000;
-      await tester.pump(const Duration(seconds: 5));
+      clock.elapsed = 120000;
+      await tester.pump(const Duration(seconds: 35));
       expect(failures, [ModuleStartupStage.handshake]);
+    },
+  );
+
+  testWidgets(
+    'duplicate trusted document callbacks do not restart the child budget',
+    (tester) async {
+      final clock = _Clock();
+      final failures = <ModuleStartupStage>[];
+      final deadline = ModuleStartupDeadline(
+        clock: clock,
+        onExpired: failures.add,
+      );
+      deadline.beginDocument();
+      clock.elapsed = 10000;
+      await tester.pump(const Duration(seconds: 10));
+      expect(deadline.beginHandshake(), isTrue);
+      clock.elapsed = 40000;
+      await tester.pump(const Duration(seconds: 30));
+      expect(deadline.beginHandshake(), isFalse);
+      expect(deadline.remaining, const Duration(seconds: 30));
+      clock.elapsed = 69999;
+      await tester.pump(const Duration(milliseconds: 29999));
+      expect(failures, isEmpty);
+      clock.elapsed = 70000;
+      await tester.pump(const Duration(milliseconds: 1));
+      expect(failures, [ModuleStartupStage.handshake]);
+      expect(deadline.beginHandshake(), isFalse);
+      expect(deadline.markReady(), isFalse);
     },
   );
 }
