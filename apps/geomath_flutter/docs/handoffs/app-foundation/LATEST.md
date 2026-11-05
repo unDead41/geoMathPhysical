@@ -168,3 +168,29 @@ Lead fixes include native bootstrap/routing/report adapters, cleanup and back
 guards, typed public config, final lint/API integration, source-scope checks and
 the final 92-test run. No backend/provider/SMTP/production migration, Pages,
 store publication or capacity claim is part of this work.
+
+## Third CI: real WebView and fixture correction
+
+Run [41954312460](https://github.com/unDead41/geodecoder/actions/runs/41954312460)
+at `bcaf83b963aebdeb8f3876fe7ecb9aedd49ba457` passed all verify gates. Its
+verify APK is 172050624 bytes, SHA256
+`17d50a4bcf4434a4b58a9fca7307550d5a2b788993e9e635cb1fd9ea398221b4`;
+all 20 bundled assets and the artifact archive digest were checked independently.
+The Android runner passed the disk guard, booted API36 and verified active
+WebView133.0.6943.137 with airplane mode enabled and Wi-Fi/data disabled.
+
+The real first module passed rendering, rotation, unfolding and preference state
+retention. The test then reused an unkeyed ModuleSpikeScreen State when mounting
+a second controller after logout; that State retained its original controller,
+so the second remained uninitialized. The existing missing/corrupt-asset device
+cases passed. A runner shutdown signal during the next Gradle build prevented
+app-flow and screenshot execution; the full Android gate is still blocked.
+See [verify evidence](evidence/ci-41954312460-verify.txt) and
+[Android evidence](evidence/ci-41954312460-android.txt).
+
+The fixture now keys each newly mounted module screen by its instance ID. It
+retains the stale-envelope negative test and the same-controller preference
+checks. CI runs both scenario registrations in one integration application to
+avoid a second Gradle compile while the emulator is live, and stops idle native
+build daemons before emulator startup. No production runtime, contract, asset or
+lockfile bytes change. This correction awaits the actual rerun.

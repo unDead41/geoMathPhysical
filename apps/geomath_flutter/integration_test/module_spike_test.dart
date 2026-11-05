@@ -238,6 +238,8 @@ Future<void> _mount(
   await tester.pumpWidget(
     MaterialApp(
       home: ModuleSpikeScreen(
+        // A fresh module instance owns a fresh screen State and platform view.
+        key: ValueKey(controller.bridge.identity.instanceId),
         sessions: sessions,
         lifecycle: lifecycle,
         preferences: preferences,

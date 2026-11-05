@@ -60,6 +60,13 @@ node --test tools/contracts/verify_exports.test.mjs
 flutter build apk --debug
 flutter devices
 flutter run -d DEVICE_ID
+flutter test integration_test/foundation_smoke_test.dart -d DEVICE_ID
+```
+
+The foundation suite runs both Android scenarios in one test application.
+For focused debugging, either scenario can also run separately:
+
+```text
 flutter test integration_test/module_spike_test.dart -d DEVICE_ID
 flutter test integration_test/app_flow_test.dart -d DEVICE_ID
 ```

@@ -146,19 +146,28 @@
       "command": "flutter pub get --offline",
       "exit_code": 0,
       "evidence": "evidence/pub-get.txt",
-      "note": "Official pub.dev archives preloaded and SHA-256 verified; direct online Dart networking was unreliable in the managed host."
+      "note": "Official pub.dev archives preloaded and SHA-256 verified; direct online Dart networking was unreliable in the managed host.",
+      "tested_commit": "bcaf83b963aebdeb8f3876fe7ecb9aedd49ba457",
+      "ci_run_id": 41954312460,
+      "ci_evidence": "docs/handoffs/app-foundation/evidence/ci-41954312460-verify.txt"
     },
     "format": {
       "status": "passed",
       "command": "dart format --output=none --set-exit-if-changed lib test integration_test",
       "exit_code": 0,
-      "evidence": "evidence/format.txt"
+      "evidence": "evidence/format.txt",
+      "tested_commit": "bcaf83b963aebdeb8f3876fe7ecb9aedd49ba457",
+      "ci_run_id": 41954312460,
+      "ci_evidence": "docs/handoffs/app-foundation/evidence/ci-41954312460-verify.txt"
     },
     "analyze": {
       "status": "passed",
       "command": "flutter analyze --no-pub",
       "exit_code": 0,
-      "evidence": "evidence/analyze.txt"
+      "evidence": "evidence/analyze.txt",
+      "tested_commit": "bcaf83b963aebdeb8f3876fe7ecb9aedd49ba457",
+      "ci_run_id": 41954312460,
+      "ci_evidence": "docs/handoffs/app-foundation/evidence/ci-41954312460-verify.txt"
     },
     "unit_widget_tests": {
       "status": "passed",
@@ -166,7 +175,10 @@
       "exit_code": 0,
       "passed": 92,
       "failed": 0,
-      "evidence": "evidence/flutter-test.txt"
+      "evidence": "evidence/flutter-test.txt",
+      "tested_commit": "bcaf83b963aebdeb8f3876fe7ecb9aedd49ba457",
+      "ci_run_id": 41954312460,
+      "ci_evidence": "docs/handoffs/app-foundation/evidence/ci-41954312460-verify.txt"
     },
     "canonical_adapter_tests": {
       "status": "passed",
@@ -174,15 +186,22 @@
       "exit_code": 0,
       "passed": 11,
       "failed": 0,
-      "evidence": "evidence/source-tests.txt"
+      "evidence": "evidence/source-tests.txt",
+      "tested_commit": "bcaf83b963aebdeb8f3876fe7ecb9aedd49ba457",
+      "ci_run_id": 41954312460,
+      "ci_evidence": "docs/handoffs/app-foundation/evidence/ci-41954312460-verify.txt"
     },
     "debug_apk": {
       "status": "passed",
       "command": "flutter build apk --debug",
       "exit_code": 0,
-      "evidence": "evidence/apk-build.txt",
-      "bytes": 196848676,
-      "sha256": "86fcddbfe50a8736210792bfda3fe0abe17a1cc7c1c85bcfef35c6398c545b06"
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41954312460-verify.txt",
+      "bytes": 172050624,
+      "sha256": "17d50a4bcf4434a4b58a9fca7307550d5a2b788993e9e635cb1fd9ea398221b4",
+      "tested_commit": "bcaf83b963aebdeb8f3876fe7ecb9aedd49ba457",
+      "ci_run_id": 41954312460,
+      "ci_evidence": "docs/handoffs/app-foundation/evidence/ci-41954312460-verify.txt",
+      "artifact_id": 13383036279
     },
     "android_run_local": {
       "status": "blocked",
@@ -193,9 +212,12 @@
     },
     "android_smoke": {
       "status": "blocked",
-      "command": "flutter test integration_test -d emulator-5554",
+      "command": "flutter test integration_test/foundation_smoke_test.dart -d emulator-5554",
       "exit_code": null,
-      "reason": "Two hosted verify jobs passed. The first Android job exhausted image-install space; the second built the APK but its20GiB headroom guard found16.4GiB free and stopped before emulator boot. Extra unused CodeQL/NDK cleanup is awaiting execution."
+      "reason": "API36 emulator booted and the first real module passed rotation/unfold/settings assertions. The second instance was not initialized because the test remounted an unkeyed screen. A keyed fixture and single application suite await CI verification.",
+      "tested_commit": "bcaf83b963aebdeb8f3876fe7ecb9aedd49ba457",
+      "ci_run_id": 41954312460,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41954312460-android.txt"
     }
   },
   "android_local": {
@@ -209,7 +231,7 @@
     "screenshots": []
   },
   "blockers": [
-    "Actual Android launch/WebView smoke remain unverified. CI41951082306 passed verify and built the normal Android-job APK, then stopped at the20GiB resource guard before device testing. Extra unused toolchain cleanup awaits execution."
+    "Full Android integration and actual app screenshots await a rerun after correcting the second-instance test fixture. No runtime/contract/asset bytes changed."
   ],
   "not_claimed": [
     "physical Android phone",
@@ -241,6 +263,30 @@
       "android_job": 126998573468,
       "reason": "Normal APK built. Post-build project20GiB headroom guard found17585864704free bytes and exited1 before the emulator.",
       "evidence": "docs/handoffs/app-foundation/evidence/ci-41951082306-resource.txt"
+    },
+    {
+      "run_id": 41954312460,
+      "url": "https://github.com/unDead41/geodecoder/actions/runs/41954312460",
+      "tested_commit": "bcaf83b963aebdeb8f3876fe7ecb9aedd49ba457",
+      "verify": "passed",
+      "verify_job": 127005424210,
+      "verify_artifact_id": 13383036279,
+      "verify_evidence": "docs/handoffs/app-foundation/evidence/ci-41954312460-verify.txt",
+      "android_smoke": "failed",
+      "android_job": 127008855935,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41954312460-android.txt",
+      "reason": "Booted API36 and verified active WebView. First model/rotation/unfold/settings assertions passed; second-controller mount timed out because the fixture reused StatefulWidget State. Missing/corrupt asset cases passed. Runner shutdown signal prevented app-flow and screenshot execution."
     }
-  ]
+  ],
+  "android_ci": {
+    "device_id": "emulator-5554",
+    "kind": "hardware-accelerated GitHub Actions emulator",
+    "android": "16",
+    "api": 36,
+    "active_webview": "com.google.android.webview 133.0.6943.137",
+    "active_webview_verified": true,
+    "boot_verified": true,
+    "offline_radios_disabled": true,
+    "screenshots": []
+  }
 }

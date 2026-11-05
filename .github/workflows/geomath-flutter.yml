@@ -118,6 +118,8 @@ jobs:
         run: |
           flutter build apk --debug
           cp build/app/outputs/flutter-apk/app-debug.apk "$RUNNER_TEMP/geomath-main-debug.apk"
+          # Release native build daemons before allocating the emulator.
+          (cd android && ./gradlew --stop)
       - name: Android disk headroom
         shell: bash
         run: |
@@ -159,7 +161,7 @@ jobs:
             adb shell svc wifi disable
             adb shell svc data disable
             test "$(adb shell settings get global airplane_mode_on | tr -d '\r')" = '1'
-            flutter test integration_test -d emulator-5554
+            flutter test integration_test/foundation_smoke_test.dart -d emulator-5554
             flutter run --no-pub --no-resident --use-application-binary="$RUNNER_TEMP/geomath-main-debug.apk" -d emulator-5554
             python3 tools/android/capture_evidence.py --device emulator-5554 --output docs/handoffs/app-foundation/evidence/android
             sha256sum "$RUNNER_TEMP/geomath-main-debug.apk" > docs/handoffs/app-foundation/evidence/android/normal-apk.sha256
