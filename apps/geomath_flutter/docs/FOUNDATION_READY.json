@@ -149,37 +149,37 @@
       "status": "passed",
       "command": "flutter pub get",
       "exit_code": 0,
-      "evidence": "docs/handoffs/app-foundation/evidence/ci-41967889411.txt",
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41971048550.txt",
       "note": "Official pub.dev archives preloaded and SHA-256 verified; direct online Dart networking was unreliable in the managed host.",
-      "tested_commit": "d2557caca02604c3ec6b56f2fb8fcec61a9d2c73",
-      "ci_run_id": 41967889411,
+      "tested_commit": "61f21b0adfbc378212c6f302528627896b9381f5",
+      "ci_run_id": 41971048550,
       "ci_evidence": "docs/handoffs/app-foundation/evidence/ci-41954312460-verify.txt"
     },
     "format": {
       "status": "passed",
       "command": "dart format --output=none --set-exit-if-changed lib test integration_test test_driver",
       "exit_code": 0,
-      "tested_commit": "d2557caca02604c3ec6b56f2fb8fcec61a9d2c73",
-      "ci_run_id": 41967889411,
-      "evidence": "docs/handoffs/app-foundation/evidence/ci-41967889411.txt",
+      "tested_commit": "61f21b0adfbc378212c6f302528627896b9381f5",
+      "ci_run_id": 41971048550,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41971048550.txt",
       "reason": "Configured CI77-file formatter passed atd2557ca"
     },
     "analyze": {
       "status": "passed",
       "command": "flutter analyze",
       "exit_code": 0,
-      "tested_commit": "d2557caca02604c3ec6b56f2fb8fcec61a9d2c73",
-      "ci_run_id": 41967889411,
-      "evidence": "docs/handoffs/app-foundation/evidence/ci-41967889411.txt",
+      "tested_commit": "61f21b0adfbc378212c6f302528627896b9381f5",
+      "ci_run_id": 41971048550,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41971048550.txt",
       "reason": "Configured CI analyzer passed atd2557ca"
     },
     "unit_widget_tests": {
       "status": "passed",
       "command": "flutter test",
       "exit_code": 0,
-      "tested_commit": "d2557caca02604c3ec6b56f2fb8fcec61a9d2c73",
-      "ci_run_id": 41967889411,
-      "evidence": "docs/handoffs/app-foundation/evidence/ci-41967889411.txt",
+      "tested_commit": "61f21b0adfbc378212c6f302528627896b9381f5",
+      "ci_run_id": 41971048550,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41971048550.txt",
       "passed": 92,
       "failed": 0
     },
@@ -187,9 +187,9 @@
       "status": "passed",
       "command": "node --test tools/contracts/verify_exports.test.mjs test/foundation/native_adapter_contract.test.mjs",
       "exit_code": 0,
-      "tested_commit": "d2557caca02604c3ec6b56f2fb8fcec61a9d2c73",
-      "ci_run_id": 41967889411,
-      "evidence": "docs/handoffs/app-foundation/evidence/ci-41967889411.txt",
+      "tested_commit": "61f21b0adfbc378212c6f302528627896b9381f5",
+      "ci_run_id": 41971048550,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41971048550.txt",
       "passed": 12,
       "failed": 0
     },
@@ -197,12 +197,12 @@
       "status": "passed",
       "command": "flutter build apk --debug",
       "exit_code": 0,
-      "tested_commit": "d2557caca02604c3ec6b56f2fb8fcec61a9d2c73",
-      "ci_run_id": 41967889411,
-      "evidence": "docs/handoffs/app-foundation/evidence/ci-41967889411.txt",
-      "artifact_id": 13388876308,
+      "tested_commit": "61f21b0adfbc378212c6f302528627896b9381f5",
+      "ci_run_id": 41971048550,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41971048550.txt",
+      "artifact_id": 13390101358,
       "bytes": 172051208,
-      "sha256": "37d2cf0953758d6ad2e09b7d17acf761ae35c44ef7d561055b59850542b99136"
+      "sha256": "f09e2b8e3f9fa8f2aaeb1d5d4ca8b769976c044f9cbabbbce4bfa7c72f4969c0"
     },
     "android_run_local": {
       "status": "blocked",
@@ -212,11 +212,28 @@
       "reason": "Retained API36 software emulator restarted framework services during first-boot ART verification; cmd: Cannot find service: package prevented APK installation."
     },
     "android_smoke": {
-      "status": "pending",
+      "status": "passed",
       "command": "flutter drive --no-pub --driver=test_driver/integration_driver.dart --target=integration_test/foundation_smoke_test.dart --use-application-binary=$RUNNER_TEMP/geomath-integration-debug.apk -d emulator-5554",
-      "exit_code": null,
-      "reason": "API36Googleimage has proven pre-test SystemUI/GMS ANRs and94 native clipboard focus denials. Run unchanged suite on supportedAPI35AOSP; compile/target36 remain unchanged.",
-      "evidence": "docs/handoffs/app-foundation/evidence/ci-41967889411.txt"
+      "exit_code": 0,
+      "reason": "All four unmodified real device scenarios pass. Overall step later fails only while the separate screenshot script searches an off-screen Home button.",
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41971048550.txt",
+      "passed": 4,
+      "failed": 0,
+      "tested_commit": "61f21b0adfbc378212c6f302528627896b9381f5",
+      "ci_run_id": 41971048550
+    },
+    "android_run": {
+      "status": "passed",
+      "exit_code": 0,
+      "command": "flutter run --no-pub --no-resident --use-application-binary=$RUNNER_TEMP/geomath-main-debug.apk -d emulator-5554",
+      "tested_commit": "61f21b0adfbc378212c6f302528627896b9381f5",
+      "ci_run_id": 41971048550,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41971048550.txt"
+    },
+    "android_screenshots": {
+      "status": "blocked",
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41971048550.txt",
+      "reason": "Actual Home/Settings captured; module screenshot awaits bounded real scrolling to its off-screen Home CTA."
     }
   },
   "android_local": {
@@ -230,7 +247,7 @@
     "screenshots": []
   },
   "blockers": [
-    "Complete native clipboard/app-flow, normal APK launch and actual screenshots await API35AOSP device gate. All four assertions/deadlines remain; no complete API36device pass is claimed."
+    "Complete normal-app module screenshot after correcting the capture script to scroll the small real Android viewport. Native integration4/4 and normal APK run already passed."
   ],
   "not_claimed": [
     "physical Android phone",
@@ -334,14 +351,27 @@
       "evidence_artifact_id": 13388707622,
       "evidence": "docs/handoffs/app-foundation/evidence/ci-41967889411.txt",
       "reason": "Native logs prove SystemUI/GMS ANRs before app launch and94 clipboard access denials because the ANR window owns input focus. Same3 module/asset cases pass; actualclipboard read correctly fails."
+    },
+    {
+      "run_id": 41971048550,
+      "url": "https://github.com/unDead41/geodecoder/actions/runs/41971048550",
+      "tested_commit": "61f21b0adfbc378212c6f302528627896b9381f5",
+      "job": 127059138906,
+      "verify": "passed",
+      "android_smoke": "passed_4_of_4",
+      "normal_apk_run": "passed",
+      "screenshots": "failed_offscreen_capture_button",
+      "normal_apk_artifact_id": 13390101358,
+      "evidence_artifact_id": 13389912548,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41971048550.txt"
     }
   ],
   "android_ci": {
     "device_id": "emulator-5554",
     "kind": "hardware-accelerated GitHub Actions emulator",
-    "android": "16",
-    "api": 36,
-    "active_webview": "com.google.android.webview 133.0.6943.137",
+    "android": "15",
+    "api": 35,
+    "active_webview": "com.android.webview 124.0.6367.219",
     "active_webview_verified": true,
     "boot_verified": true,
     "offline_radios_disabled": true,

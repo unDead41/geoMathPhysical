@@ -25,20 +25,29 @@ def main():
         raw = adb('exec-out', 'cat', '/sdcard/geomath-foundation.xml')
         return raw, ET.fromstring(raw)
 
-    def find_button(labels):
+    def find_button(labels, *, scroll=False, evidence_name='control'):
         for _ in range(8):
             try:
                 raw, root = hierarchy()
+                (output/f'{evidence_name}-hierarchy.xml').write_bytes(raw)
                 for node in root.iter('node'):
                     text = node.get('content-desc', '') + ' ' + node.get('text', '')
-                    if any(label in text for label in labels):
+                    if node.get('clickable') == 'true' and any(label in text for label in labels):
                         points = [int(v) for v in re.findall(r'\d+', node.get('bounds', ''))]
                         if len(points) == 4 and points[2] > points[0] and points[3] > points[1]:
                             return raw, ((points[0]+points[2])//2, (points[1]+points[3])//2)
+                if scroll:
+                    # Small phones put the hero CTA below the first viewport.
+                    # Operate the actual scroll view; an off-screen node cannot
+                    # be found or tapped through Android accessibility.
+                    sizes = re.findall(r'(\d+)x(\d+)', adb('shell', 'wm', 'size').decode())
+                    width, height = map(int, sizes[-1])
+                    adb('shell', 'input', 'swipe', str(width//2), str(height*3//4),
+                        str(width//2), str(height//3), '350')
             except (subprocess.SubprocessError, ET.ParseError):
                 pass
             time.sleep(2)
-        raise RuntimeError('Expected GeoMath control was not found in the real Android UI.')
+        raise RuntimeError(f'Expected GeoMath control {labels!r} was not found in the real Android UI.')
 
     def shot(name):
         data = adb('exec-out', 'screencap', '-p')
@@ -49,14 +58,16 @@ def main():
     # Caller installs the main application APK, not an integration-test runner.
     adb('shell', 'am', 'force-stop', 'com.geomath.dev')
     adb('shell', 'am', 'start', '-n', 'com.geomath.dev/.MainActivity')
-    raw, settings = find_button(['Tetapan', 'Settings'])
+    raw, settings = find_button(['Tetapan', 'Settings'], evidence_name='home')
     (output/'home-hierarchy.xml').write_bytes(raw)
     shot('01-home-offline.png')
     adb('shell', 'input', 'tap', str(settings[0]), str(settings[1]))
     time.sleep(3)
     shot('37-settings.png')
     adb('shell', 'input', 'keyevent', '4')
-    _, explore = find_button(['Teroka model 3D', 'Explore the 3D model'])
+    _, explore = find_button(['Teroka model 3D', 'Explore the 3D model'],
+                             scroll=True, evidence_name='home-actions')
+    shot('01-home-actions.png')
     adb('shell', 'input', 'tap', str(explore[0]), str(explore[1]))
     time.sleep(8)
     shot('module-preview.png')

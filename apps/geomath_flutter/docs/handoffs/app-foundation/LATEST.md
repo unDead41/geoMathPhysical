@@ -278,3 +278,7 @@ selects Android15/API35 AOSP with3072MB guest memory and no Google services.
 Compile/target SDK36 remains; tests, four scenarios and all deadlines are unchanged.
 A complete API36 UI pass is not claimed. Actual successful device/provider values
 will be recorded only after the full gate and normal-app screenshots pass.
+
+## API35 native acceptance and capture follow-up
+
+Run41971048550 source`61f21b0adfbc378212c6f302528627896b9381f5` passes all92 Flutter/12 Node checks, all four real Android scenarios and the preserved normal APK launch. AOSP API35/WebView124 has no observed system ANR or clipboard denial. Home/Settings screenshots are real. The screenshot script then cannot find the Home CTA because it is below the first720x1280 viewport; it never scrolled. The bounded real-ADB scroll correction changes only capture tooling. The complete normal-app module screenshot remains the final blocker; runtime/contract/test bytes stay unchanged. See[evidence](evidence/ci-41971048550.txt).
