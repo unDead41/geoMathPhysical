@@ -220,3 +220,15 @@ The Android helper pumps/settles after scroll and requires hit-testable actions.
 CI uses one runner to preserve its already-built normal APK before emulator tests,
 avoiding a repeated normal build. Failed-run logs and a real final screenshot are
 retained through a pipefail/exit trap. Integrated checks await this corrected run.
+
+## Fifth CI: source correction passes, resource guard blocks device
+
+Run [41961837268](https://github.com/unDead41/geodecoder/actions/runs/41961837268)
+passed formatter, analyze,92 Flutter tests,12 Node contracts and debug APK at
+`d8e5a6518ad4f175a3dd0086917907da4b637eed`. Before the emulator, its20GiB
+guard found21445091328 bytes,29745152 bytes (28.37MiB) below the budget.
+The runner retained unused default NDK27.3/30.0 through environment aliases,
+while the app build used Flutter3.47.9 NDK28.2. The scoped job now removes the
+unused defaults and redundant normal APK copies; its20GiB guard remains.
+No runtime, contract, asset or test bytes change in this resource-only correction.
+See [the source/resource receipt](evidence/ci-41961837268.txt).

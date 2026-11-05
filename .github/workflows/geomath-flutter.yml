@@ -40,23 +40,19 @@ jobs:
           df -h / /tmp "$RUNNER_TEMP" "$ANDROID_HOME"
           df -i / /tmp "$RUNNER_TEMP" "$ANDROID_HOME"
           # Unused runtimes on this disposable hosted runner; retain Java,
-          # Flutter, required Android tools and all environment-active NDKs.
+          # Flutter and the Android tools required by this isolated app job.
           sudo rm -rf -- /usr/share/dotnet /usr/local/.ghcup /usr/share/swift
           sudo docker image prune --all --force
           if [[ -d /opt/hostedtoolcache/CodeQL ]]; then
             sudo du -sx --block-size=1 /opt/hostedtoolcache/CodeQL
             sudo rm -rf -- /opt/hostedtoolcache/CodeQL
           fi
-          # Preserve the app's pinned NDK and every environment-active NDK.
-          # Older unreferenced installations are unused by this Flutter job.
+          # Flutter 3.47.9 resolves flutter.ndkVersion to 28.2.13676358.
+          # This job builds only GeoMath; image-default NDK 27/30 are unused.
           if [[ -d "$ANDROID_HOME/ndk" ]]; then
             find "$ANDROID_HOME/ndk" -mindepth 1 -maxdepth 1 -type d -exec du -sh {} +
             find "$ANDROID_HOME/ndk" -mindepth 1 -maxdepth 1 -type d \
               ! -name '28.2.13676358' \
-              ! -path "${ANDROID_NDK:-}" \
-              ! -path "${ANDROID_NDK_HOME:-}" \
-              ! -path "${ANDROID_NDK_ROOT:-}" \
-              ! -path "${ANDROID_NDK_LATEST_HOME:-}" \
               -print -exec sudo rm -rf -- {} +
           fi
           df -h / /tmp "$RUNNER_TEMP" "$ANDROID_HOME"
@@ -95,7 +91,10 @@ jobs:
 
       - name: Preserve the normal application APK
         run: |
-          cp build/app/outputs/flutter-apk/app-debug.apk "$RUNNER_TEMP/geomath-main-debug.apk"
+          mv build/app/outputs/flutter-apk/app-debug.apk "$RUNNER_TEMP/geomath-main-debug.apk"
+          test -s "$RUNNER_TEMP/geomath-main-debug.apk"
+          # The normal APK is uploaded and preserved; integration repackages it.
+          rm -f -- build/app/outputs/apk/debug/app-debug.apk
           # Release native build daemons before allocating the emulator.
           (cd android && ./gradlew --stop)
       - name: Android disk headroom
