@@ -217,3 +217,21 @@ APK and32real ADB captures. Those captures require fresh expected XML labels,
 non-splash header paint and two stable frames; original PNG bytes are preserved.
 The paint guard passed8unit tests and3actual failed-run fixture regressions.
 Temporary empty XML cannot become a loaded model or reuse an old hierarchy.
+
+
+## Targeted Android completion on unchanged runtime
+
+Full245f9ee run42066617435 passed all host/build checks and25actual Android cases.
+Only Solo's immediate post-tap game assertion failed; the fixture now waits for
+actual native SQLite initialization/start/save and enabled controls. It retains
+all R1/R2,selection,attempt,score and reopen assertions. The normal APK rendered
+Home/hub correctly after the paint guard; it also loaded the real cube. Capture
+failed because screen-wide gesture endpoints crossed the shorter WebView's
+bounds, leaving only134px of canvas visible. Fresh XML-derived gutter gestures
+retain the200px minimum and will be tested on the device.
+
+The targeted follow-up reuses the hash-verified normal245APK and rejects any
+change to170runtime files, avoiding unrelated debug/release rebuilds. Its Solo
+case and32captures must pass and be combined with the unchanged baseline's25
+Android cases; it cannot publish app on its own. [Gate policy](GATE_POLICY.md)
+records this condition and keeps the baseline's failed outcome visible.

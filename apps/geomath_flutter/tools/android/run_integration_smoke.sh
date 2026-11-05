@@ -25,6 +25,11 @@ case "$suite" in
     integration_target=integration_test/integration_smoke_test.dart
     drive_timeout=15m
     ;;
+  solo-followup)
+    integration_target=integration_test/solo_reopen_test.dart
+    drive_timeout=8m
+    test -s "$normal_apk"
+    ;;
   *) echo 'Unsupported diagnostic suite' >&2; exit 2 ;;
 esac
 test -s "$test_apk"
@@ -105,6 +110,7 @@ timeout --foreground --signal=TERM --kill-after=15s "$drive_timeout" \
 integration_status=${PIPESTATUS[0]}
 set -e
 export GEOMATH_INTEGRATION_STATUS="$integration_status"
+export GEOMATH_ANDROID_SUITE="$suite"
 if [[ "$integration_status" != 0 ]]; then
   # Preserve the failed test process before normal-APK cleanup can replace it.
   timeout 6s adb -s "$device" shell pidof com.geomath.dev > "$evidence_dir/test-failure-pid.txt" || true
@@ -116,7 +122,7 @@ if [[ "$integration_status" != 0 ]]; then
     tail -n 60 "$evidence_dir/$diagnostic" || true
   done
 fi
-if [[ "$suite" != full ]]; then
+if [[ "$suite" != full && "$suite" != solo-followup ]]; then
   export GEOMATH_DIAGNOSTIC_SUITE="$suite"
   python3 - "$evidence_dir" <<'DIAGNOSTIC_PY'
 import json,os,pathlib,sys
@@ -136,6 +142,11 @@ fi
 # its isolated records, install the preserved normal APK and run that entrypoint.
 adb -s "$device" shell am force-stop com.geomath.dev
 adb -s "$device" shell pm clear com.geomath.dev
+if [[ "$suite" == solo-followup ]]; then
+  # The disposable test APK can have the current runner's debug certificate.
+  # The hash-verified normal APK retains the earlier build's certificate.
+  adb -s "$device" uninstall com.geomath.dev
+fi
 timeout --foreground --signal=TERM --kill-after=15s 3m flutter run --no-dds --host-vmservice-port=8182 --no-pub --no-resident --use-application-binary="$normal_apk" -d "$device" \
   2>&1 | tee "$evidence_dir/run-normal.txt"
 python3 tools/android/capture_integration.py --device "$device" --output "$evidence_dir"
@@ -148,6 +159,8 @@ items=[{'path':p.name,'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_by
 (root/'runtime-result.json').write_text(json.dumps({
     'schema_version':1,'source_commit':(root/'source-commit.txt').read_text().strip(),
     'scope':'integrated normal Android APK and native-plugin integration tests',
+    'suite':os.environ['GEOMATH_ANDROID_SUITE'],
+    'full_publish_gate':os.environ['GEOMATH_ANDROID_SUITE']=='full',
     'integration_exit_code':int(os.environ['GEOMATH_INTEGRATION_STATUS']),
     'offline':True,'hosted_services':'not verified by this offline fixture run',
     'physical_phone':'not tested','manual_talkback_and_visual_review':'pending',

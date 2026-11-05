@@ -23,6 +23,24 @@ Default target is `lib/main.dart`; do not select a `lib/dev/` preview to test th
 installed combined application. Storage failures show a retry screen. Session
 restore and the one sync owner start before Home.
 
+## VS Code PowerShell
+
+For a new checkout, these commands use the production branch and entry point:
+
+```powershell
+git clone --branch app --single-branch https://github.com/unDead41/geodecoder.git
+Set-Location geodecoder/apps/geomath_flutter
+flutter pub get
+flutter devices
+flutter run
+flutter build apk --debug
+```
+
+With one Android emulator/USB device connected, Flutter selects it. With several
+devices, choose the Android device from Flutter's displayed list. For an existing
+clean checkout, run `git switch app` and `git pull --ff-only origin app` from the
+repository root, then enter `apps/geomath_flutter`. No manual Dart edits are needed.
+
 ## Optional public cloud configuration
 
 Guest learning and Solo work without these definitions:
@@ -82,3 +100,29 @@ Record exact source SHA, SDK and device details with failures. Do not attach
 credentials, account tokens, raw auth deep links or unrestricted logcat dumps.
 The CI scripts capture selected Android runtime warnings and UI evidence only.
 Screenshots may contain user-entered information; use guest/test data.
+
+
+## Integrated Android gate
+
+The workflow builds a combined test APK and preserves a separate normal
+`lib/main.dart` APK. It runs all real-plugin/canonical WebView cases with
+`LEARNING_SCREENSHOTS=false`, keeping the normal platform-view surface lifetime.
+SDK image-surface conversion is optional diagnostics, not the capture mechanism
+for this gate. The driver shares the page's production action queue with autosave.
+
+After functional tests, the runner clears test data, installs/launches the normal
+APK offline and uses actual Android UI controls to save presentation preferences.
+ADB captures require current screen labels and stable painted pixels; a splash,
+empty hierarchy or blank model cannot count as a loaded screen. The four profiles
+represent320/390/430/768dp, BM/English, light/dark/high contrast,100/125/150%text and
+reduced motion. They do not exhaust every screen/state/visual combination.
+
+A failed integration exit stays failed even if later normal-app capture succeeds.
+An explicitly named diagnostic workflow never authorizes fast-forwarding `app`.
+
+
+A targeted follow-up can complete a corrected test/capture fixture against an
+unchanged runtime. It checks all170runtime hashes and the exact reused normal
+APK hash before running. Its receipt is combined with the baseline's unaffected
+checks under `handoffs/app-integration/GATE_POLICY.md`; it never turns an earlier
+failed workflow into a successful workflow or publishes the app by itself.

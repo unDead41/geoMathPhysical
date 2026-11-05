@@ -14,6 +14,7 @@ import time
 import xml.etree.ElementTree as ET
 
 from paint_readiness import wait_for_painted_screen
+from module_scroll import module_margin_swipe
 
 PROFILES = (
     (320, 720, 'ms', 'light', 100, False),
@@ -202,24 +203,27 @@ def main():
                 # that absence model readiness; keep the original time bound.
                 time.sleep(1)
                 continue
-            loaded = False
+            loaded_canvas = None
             for node in root.iter('node'):
                 text = label(node).casefold()
                 if ('offline learning module is unavailable' in text or
                         'modul pembelajaran luar talian tidak tersedia' in text):
                     raise RuntimeError('Installed production APK reports offline module unavailable.')
                 description = (node.get('content-desc', '')+' '+node.get('text', '')).casefold()
-                if ('model interaktif kubus' in description or
-                        'interactive cube model' in description or
-                        (('kubus, bongkah 3d' in description or 'cube, 3d solid' in description)
-                         and node.get('class') == 'android.widget.Image')):
-                    loaded = True
+                if (node.get('class') == 'android.widget.Image' and
+                        any(value in description for value in (
+                            'model interaktif kubus', 'interactive cube model',
+                            'kubus, bongkah 3d', 'cube, 3d solid'))):
+                    loaded_canvas = node
                     box = bounds(node)
                     if box and box[2]-box[0] >= 128 and box[3]-box[1] >= 200:
                         time.sleep(1)
                         return
-            if loaded:
-                swipe(side=True)
+            if loaded_canvas is not None:
+                gesture = module_margin_swipe(root, loaded_canvas)
+                adb('shell', 'input', 'swipe', str(gesture.x), str(gesture.start_y),
+                    str(gesture.x), str(gesture.end_y), '350')
+                time.sleep(.5)
             time.sleep(1)
         raise RuntimeError('Actual canonical cube canvas did not become visible in Android.')
 
