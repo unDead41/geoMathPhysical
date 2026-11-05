@@ -21,14 +21,27 @@ final_state() {
     kill "$log_pid" 2>/dev/null || true
     wait "$log_pid" 2>/dev/null || true
   fi
-  adb -s "$device" shell dumpsys webviewupdate > "$evidence_dir/webview-final.txt" || true
-  adb -s "$device" shell dumpsys window > "$evidence_dir/window-final.txt" || true
-  adb -s "$device" exec-out screencap -p > "$evidence_dir/last-screen.png" || true
+  timeout 12s adb -s "$device" shell dumpsys webviewupdate > "$evidence_dir/webview-final.txt" || true
+  timeout 12s adb -s "$device" shell dumpsys window > "$evidence_dir/window-final.txt" || true
+  timeout 12s adb -s "$device" exec-out screencap -p > "$evidence_dir/last-screen.png" || true
   python3 tools/android/emit_png_evidence.py "$evidence_dir" || true
+  timeout 10s adb -s "$device" forward --list > "$evidence_dir/adb-forwards.txt" || true
+  timeout 10s adb -s "$device" shell pidof com.geomath.dev > "$evidence_dir/app-pid.txt" || true
+  timeout 10s adb -s "$device" shell dumpsys activity activities > "$evidence_dir/activity-final.txt" || true
+  timeout 10s adb -s "$device" shell dumpsys meminfo com.geomath.dev > "$evidence_dir/app-memory-final.txt" || true
+  timeout 10s adb -s "$device" logcat -d -b crash > "$evidence_dir/crash-final.txt" || true
+  if [[ "$status" != 0 ]]; then
+    for diagnostic in app-pid.txt adb-forwards.txt crash-final.txt; do
+      echo "Android diagnostic: $diagnostic"
+      tail -n 60 "$evidence_dir/$diagnostic" || true
+    done
+  fi
   printf '%s\n' "$status" > "$evidence_dir/run.exit"
   exit "$status"
 }
 trap final_state EXIT
+trap 'exit 143' TERM
+trap 'exit 130' INT
 
 flutter devices | tee "$evidence_dir/devices.txt"
 flutter --version --machine > "$evidence_dir/flutter-version.json"
@@ -50,20 +63,14 @@ adb -s "$device" shell cmd connectivity airplane-mode enable
 adb -s "$device" shell svc wifi disable
 adb -s "$device" shell svc data disable
 test "$(adb -s "$device" shell settings get global airplane_mode_on | tr -d '\r')" = '1'
-adb -s "$device" shell dumpsys window > "$evidence_dir/window-before-tests.txt"
-python3 - "$evidence_dir/window-before-tests.txt" <<'PY'
-import pathlib,sys
-text=pathlib.Path(sys.argv[1]).read_text()
-focus=next((line.strip() for line in text.splitlines() if 'mCurrentFocus=' in line),'')
-if 'Not Responding' in focus:
-    raise SystemExit('System ANR owns Android input before the test suite: '+focus)
-print('Android focus before tests: '+focus)
-PY
+# Boot-completed alone does not establish a responsive Android window.
+adb -s "$device" shell input keyevent KEYCODE_HOME
+python3 tools/android/verify_device_ready.py --device "$device" --output "$evidence_dir"
 sha256sum "$test_apk" > "$evidence_dir/integration-apk.sha256"
 # Preserve the test exit status while also collecting the independent normal
 # application's actual screenshots. A failed suite still fails the job.
 set +e
-flutter drive --no-pub --driver=test_driver/integration_evidence_driver.dart \
+timeout --foreground --signal=TERM --kill-after=15s 28m flutter drive --no-pub --driver=test_driver/integration_evidence_driver.dart \
   --target=integration_test/integration_smoke_test.dart \
   --use-application-binary="$test_apk" \
   --keep-app-running -d "$device" \
@@ -75,7 +82,7 @@ export GEOMATH_INTEGRATION_STATUS="$integration_status"
 # its isolated records, install the preserved normal APK and run that entrypoint.
 adb -s "$device" shell am force-stop com.geomath.dev
 adb -s "$device" shell pm clear com.geomath.dev
-flutter run --no-pub --no-resident --use-application-binary="$normal_apk" -d "$device" \
+timeout --foreground --signal=TERM --kill-after=15s 3m flutter run --no-pub --no-resident --use-application-binary="$normal_apk" -d "$device" \
   2>&1 | tee "$evidence_dir/run-normal.txt"
 python3 tools/android/capture_integration.py --device "$device" --output "$evidence_dir"
 sha256sum "$normal_apk" > "$evidence_dir/normal-apk.sha256"

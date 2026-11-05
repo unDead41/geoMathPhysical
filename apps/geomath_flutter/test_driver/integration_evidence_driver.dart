@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -12,6 +13,7 @@ Future<void> main() async {
         'docs/handoffs/app-integration/evidence/android',
   );
   await output.create(recursive: true);
+  await _verifyVmService(output);
   final captures = <Map<String, Object?>>[];
   await integrationDriver(
     onScreenshot: (name, bytes, [arguments]) async {
@@ -44,7 +46,7 @@ Future<void> main() async {
       );
     },
     writeResponseOnFailure: true,
-  );
+  ).timeout(const Duration(minutes: 25));
 }
 
 class ListEquality {
@@ -57,4 +59,63 @@ class ListEquality {
     }
     return true;
   }
+}
+
+/// Probe the actual forwarded service before FlutterDriver's unbounded socket
+/// retry loop. No isolate/test is resumed here and no VM auth URI is logged.
+Future<void> _verifyVmService(Directory output) async {
+  final uri = Uri.parse(Platform.environment['VM_SERVICE_URL'] ?? '');
+  if (!['127.0.0.1', 'localhost', '::1'].contains(uri.host)) {
+    throw StateError('Expected a local forwarded VM service URL.');
+  }
+  final webSocketUri = uri.replace(
+    scheme: uri.scheme == 'https' ? 'wss' : 'ws',
+    path: '${uri.path.endsWith('/') ? uri.path : '${uri.path}/'}ws',
+  );
+  final elapsed = Stopwatch()..start();
+  var attempts = 0;
+  String? lastError;
+  while (elapsed.elapsed < const Duration(seconds: 90)) {
+    WebSocket? socket;
+    attempts++;
+    try {
+      socket = await WebSocket.connect(webSocketUri.toString())
+          .timeout(const Duration(seconds: 5));
+      socket.add(
+        jsonEncode({'jsonrpc': '2.0', 'id': 1, 'method': 'getVersion'}),
+      );
+      final response = jsonDecode(
+        await socket.first.timeout(const Duration(seconds: 5)) as String,
+      ) as Map<String, dynamic>;
+      if (response['id'] != 1 || response['result'] is! Map) {
+        throw StateError('VM getVersion did not return an RPC result.');
+      }
+      await File('${output.path}/vm-service-readiness.json').writeAsString(
+        jsonEncode({
+          'status': 'ready',
+          'rpc': 'getVersion',
+          'attempts': attempts,
+          'elapsed_ms': elapsed.elapsedMilliseconds,
+        }),
+      );
+      return;
+    } catch (error) {
+      lastError = error.runtimeType.toString();
+    } finally {
+      if (socket != null) unawaited(socket.close());
+    }
+    await Future<void>.delayed(const Duration(seconds: 1));
+  }
+  await File('${output.path}/vm-service-readiness.json').writeAsString(
+    jsonEncode({
+      'status': 'failed',
+      'rpc': 'getVersion',
+      'attempts': attempts,
+      'elapsed_ms': elapsed.elapsedMilliseconds,
+      'last_error_type': lastError,
+    }),
+  );
+  throw TimeoutException(
+    'Forwarded VM service failed RPC readiness within 90s.',
+  );
 }

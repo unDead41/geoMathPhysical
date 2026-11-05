@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "tested_commit": "e008090c511aabe45ea6aae06396a9d60fae3aa9",
+  "ci_run": 42028366834,
+  "ci_url": "https://github.com/unDead41/geodecoder/actions/runs/42028366834",
+  "format_exit": 0,
+  "analyze_exit": 0,
+  "flutter_host_tests": 480,
+  "flutter_host_exit": 0,
+  "canonical_node_tests": 46,
+  "canonical_node_exit": 0,
+  "sqlite_download_python_tests": 5,
+  "sqlite_download_python_exit": 0,
+  "debug_build_exit": 0,
+  "release_mode_build_exit": 0,
+  "release_signing": "development debug keystore",
+  "android_device_result": "CI cancelled before tests: unreachable Flutter VM service; not PASS",
+  "performance_benchmark": "not measured"
+}

@@ -1,23 +1,24 @@
 {
   "schema_version": 1,
   "app_version": "0.1.0+1",
-  "source_commit": "290ee4ac048fed351f59539e2678a265de194d0b",
-  "source_tree": "101346f326cea9b8723f8ee2d1b24868c30ac06a",
+  "source_commit": "f3555c2e94fdfc8c39111d550de977ec7cf10bc3",
+  "source_tree": "6fe1d31dd87b86c660e563bfc0692b6f0a4fb522",
   "entrypoint": "lib/main.dart",
   "build_mode": "debug",
   "signing": "Android debug keystore; not production/store signing",
   "cloud_defines": false,
   "command": "flutter build apk --debug --no-pub",
   "exit_code": 0,
-  "build_seconds": 120.7,
+  "build_seconds": 30.8,
   "flutter": "3.47.9",
   "dart": "3.13.7",
   "java": "17.0.20",
   "apk": {
     "path": "/workspace/scratch/22e4cc1b235a/deliverables/GeoMath-Integrated-0.1.0-debug.apk",
     "bytes": 174918800,
-    "sha256": "7ef4521a96ed36590685859d688729a6f2f5ab7f2d37fbc9c1e5f98bdf63aaa6",
+    "sha256": "847d20b2ccb66abae51807d281859e3963b3493909e2ee72375c43f7d4c4d1a3",
     "zip_crc": "PASS",
+    "v2_signature": "PASS",
     "engine_abis": [
       "armeabi-v7a",
       "arm64-v8a",
@@ -28,7 +29,8 @@
       "assets/module/.gitattributes"
     ]
   },
-  "runtime_manifest_sha256": "6b0bc9a382c21593745ccb85a16c1e454f7ab5600b2d9c4bd8e975f65a9822b1",
+  "runtime_manifest_definition": "lib, assets, Android runner, pubspec and lockfile; excludes Android evidence tools",
+  "runtime_manifest_sha256": "239222647dac4c574154df603ed5f890a730f623d60f9d5ea235625bc58a9cc1",
   "device_execution": "separate CI gate; no local KVM",
   "runtime_files": [
     {
@@ -230,76 +232,6 @@
       "path": "apps/geomath_flutter/assets/module/native-adapter.js",
       "sha256": "47edd959776f4e2d8056ddcbf06121a01075cd88f4588497112b65a6f8b8b95e",
       "bytes": 797856
-    },
-    {
-      "path": "apps/geomath_flutter/docs/handoffs/app-foundation/evidence/android/01-home-actions.png",
-      "sha256": "ff9f5e82552f6e5f936ae6ae2913fde06bbfd24773271513c6f507f9fdaaf373",
-      "bytes": 71905
-    },
-    {
-      "path": "apps/geomath_flutter/docs/handoffs/app-foundation/evidence/android/01-home-offline.png",
-      "sha256": "c494b1b8dabae5fb7db1fba1856a7b35f0e853d1850322c87f3b2f9a9e4d9ea3",
-      "bytes": 69971
-    },
-    {
-      "path": "apps/geomath_flutter/docs/handoffs/app-foundation/evidence/android/37-settings.png",
-      "sha256": "dace38b54291bc7ef2f0fa23bf398df622982c2a0f28d2701d56f13dfe85d697",
-      "bytes": 69160
-    },
-    {
-      "path": "apps/geomath_flutter/docs/handoffs/app-foundation/evidence/android/PROVENANCE.txt",
-      "sha256": "83d2c9d152942560fd1de0fedd38f66f3bf3158bf707d19e7b02866426e1e0d6",
-      "bytes": 612
-    },
-    {
-      "path": "apps/geomath_flutter/docs/handoffs/app-foundation/evidence/android/device.json",
-      "sha256": "ca2c3e2034e3a6ff77495772981c9aa7ef659ab620ad1a0074b0a04a8bc1b4e0",
-      "bytes": 301
-    },
-    {
-      "path": "apps/geomath_flutter/docs/handoffs/app-foundation/evidence/android/home-actions-hierarchy.xml",
-      "sha256": "9d0c498ff7f8ea7156f465521b38167247de513f4dbaf1a10cac23c9582f2a8a",
-      "bytes": 8802
-    },
-    {
-      "path": "apps/geomath_flutter/docs/handoffs/app-foundation/evidence/android/home-hierarchy.xml",
-      "sha256": "ed79a17030620e53963ea84410fe4e2be0a5bc0b7ad377b7d550293bb0fd97cf",
-      "bytes": 7727
-    },
-    {
-      "path": "apps/geomath_flutter/docs/handoffs/app-foundation/evidence/android/last-screen.png",
-      "sha256": "e3d08ecd358a4e71448cb41512b16bc3fad00e6caf1a25b3bb04f08add481001",
-      "bytes": 67889
-    },
-    {
-      "path": "apps/geomath_flutter/docs/handoffs/app-foundation/evidence/android/module-hierarchy.xml",
-      "sha256": "29ff657edee124f490054252aec4d33e514965beac6bf4be1bcc298d3b0981c5",
-      "bytes": 47540
-    },
-    {
-      "path": "apps/geomath_flutter/docs/handoffs/app-foundation/evidence/android/module-preview.png",
-      "sha256": "e54b7aaa306f68b66f0f3f283a52d4fd794c41a1ec2e8c19b6a73e6f0b16ac63",
-      "bytes": 68891
-    },
-    {
-      "path": "apps/geomath_flutter/docs/handoffs/app-foundation/evidence/android/normal-apk.sha256",
-      "sha256": "8d09fd6f30f010b3d0c968b61187e0c03a042f95eaa1e2cb373c35321743eae7",
-      "bytes": 113
-    },
-    {
-      "path": "apps/geomath_flutter/docs/handoffs/app-foundation/evidence/android/power-final.txt",
-      "sha256": "953c12ec38a2c64a531638340778a84bd25a035a6a4b8e544f2e204b88ddc656",
-      "bytes": 28909
-    },
-    {
-      "path": "apps/geomath_flutter/docs/handoffs/app-foundation/evidence/android/webview.txt",
-      "sha256": "e5a249e2bd68318cd0f76dca611492e2fad05ad5a9ab0e455b296e0870ec153d",
-      "bytes": 574
-    },
-    {
-      "path": "apps/geomath_flutter/docs/handoffs/app-foundation/evidence/android/window-final.txt",
-      "sha256": "c4c4a4f9c857233bd012955fa659855296bc1742aefa7e790820d72d35ca86d0",
-      "bytes": 52024
     },
     {
       "path": "apps/geomath_flutter/lib/app/app.dart",
@@ -658,8 +590,8 @@
     },
     {
       "path": "apps/geomath_flutter/lib/features/classroom/presentation/classroom_screen.dart",
-      "sha256": "de8c5bbcc87acaed7416e4e4e0bad695183ed4d8a014475cd08a3d7fd10037f9",
-      "bytes": 42680
+      "sha256": "6a860e96c5423934da89d8e4074e1d75b5ada6696c1c103c398309640c45fcd0",
+      "bytes": 43830
     },
     {
       "path": "apps/geomath_flutter/lib/features/classroom/presentation/classroom_strings.dart",
@@ -950,31 +882,6 @@
       "path": "apps/geomath_flutter/pubspec.yaml",
       "sha256": "8e0f26a85ae19460898e3ad42b4b71bd61c9557597b32eb8a9af5bf4b64491e6",
       "bytes": 715
-    },
-    {
-      "path": "apps/geomath_flutter/tools/android/capture_evidence.py",
-      "sha256": "e10af7cb75a301370f04d514506848ef0abd3eac99401a568e2c7026fa3217d8",
-      "bytes": 6621
-    },
-    {
-      "path": "apps/geomath_flutter/tools/android/capture_integration.py",
-      "sha256": "3eb6929d49c967756846dc8f275301dca38a659e0569f5941c3c94b016592fb1",
-      "bytes": 10499
-    },
-    {
-      "path": "apps/geomath_flutter/tools/android/capture_verified_apk.sh",
-      "sha256": "4eeaf16565f578491bd29dd7eac4b78da12eed9d51e56f81090a64de239c102b",
-      "bytes": 938
-    },
-    {
-      "path": "apps/geomath_flutter/tools/android/run_integration_smoke.sh",
-      "sha256": "e14f9252f7d26a10daaf907f2c0c6324c038c1da91f76912c164483be0d72833",
-      "bytes": 4433
-    },
-    {
-      "path": "apps/geomath_flutter/tools/android/run_smoke.sh",
-      "sha256": "a77e1146813684b275658e6c90d342158fcf21dfe461072358c2160ca9e41f41",
-      "bytes": 2725
     }
   ]
 }

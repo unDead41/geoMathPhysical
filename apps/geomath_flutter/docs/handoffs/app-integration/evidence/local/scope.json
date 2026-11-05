@@ -1,6 +1,7 @@
 {
-  "tree": "101346f326cea9b8723f8ee2d1b24868c30ac06a",
-  "changed_files": 465,
+  "tested_commit": "e008090c511aabe45ea6aae06396a9d60fae3aa9",
+  "base": "38f061af963256528d5060ff076bae9ee05eafc3",
+  "changed_files": 472,
   "forbidden_changed_paths": [],
-  "scope": "app against integrated staged tree"
+  "scope": "app runtime/docs/workflow only; unchanged Digital/firmware/archive trees preserved"
 }

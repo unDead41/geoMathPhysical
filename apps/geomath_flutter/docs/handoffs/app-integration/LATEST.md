@@ -70,3 +70,39 @@ The runner preserves a failed integration exit code while independently launchin
 and capturing the normal app. No failure is hidden. Dependency-only CI caches
 are saved before device execution; no account/session/config/build outputs are
 cached. Hosted providers and physical-phone/manual acceptance remain separate.
+
+
+## Current verified build and host checks
+
+CI [42028366834](https://github.com/unDead41/geodecoder/actions/runs/42028366834),
+source `e008090c511aabe45ea6aae06396a9d60fae3aa9`, has passed formatter,
+Flutter analyzer, 480 combined host tests, 46 canonical/adapter Node checks,
+normal debug APK and release-mode APK builds. The Android stage was cancelled after eight minutes of an unreachable VM
+service, before any test started; this is not an Android PASS. Earlier host and
+build steps retain their successful results. Runner diagnostics and a bounded
+connection watchdog are being prepared before the next real-device run. Release mode uses development
+signing, not a production keystore. The strict SQLite prefetch helper also has
+five passing local Python regression tests; it verifies unchanged package-pinned
+SHA256 values and never accepts a corrupt download.
+
+The downloadable normal `lib/main.dart` debug APK is built from runtime source
+`f3555c2e94fdfc8c39111d550de977ec7cf10bc3` with no cloud definitions. Later CI-only
+changes do not change the product runtime. Its 170-file runtime manifest, package
+assets, ZIP CRC and v2 signature are recorded in `evidence/local/apk-receipt.json`.
+Bytes:174918800. SHA256:
+`847d20b2ccb66abae51807d281859e3963b3493909e2ee72375c43f7d4c4d1a3`.
+Android package `com.geomath.dev`, version0.1.0+1, minSDK24/targetSDK36,
+ARMv7/ARM64/x86_64. This is a guest/offline development APK. Cloud definitions and
+hosted capability verification are needed before claiming online operation.
+
+
+## Cancelled emulator attempt
+
+Run42028366834 / job127248186633 used API35 x86_64 and WebView124.0.6367.219.
+The test APK installed, but Flutter's VM RPC connection never became usable;
+no suite tests started. The lead cancelled the unbounded connection wait.
+The previous attempt had also logged a null pre-test focus and ColorBuffer
+warnings while successfully connecting, so neither warning alone establishes
+an app defect. No product-runtime change is inferred without further evidence.
+The cancelled run's evidence artifact13415769598 has ZIP SHA256
+`95718510a7cafe8cf49687d24b27c12663746981706f4db4227137074aa6ca75`.
