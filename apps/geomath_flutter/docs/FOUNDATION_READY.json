@@ -389,6 +389,18 @@
       "screenshots": "canvas below canonical mobile sidebar; static label also replaced by live renderer",
       "evidence_artifact_id": 13391457860,
       "evidence": "docs/handoffs/app-foundation/evidence/ci-41975565145.txt"
+    },
+    {
+      "run_id": 41976286905,
+      "run_attempt": 1,
+      "url": "https://github.com/unDead41/geodecoder/actions/runs/41976286905/attempts/1",
+      "tested_commit": "243ffc22a8ac5c9b54e9b39dc51064c8598b1333",
+      "job": 127075790493,
+      "verify": "APK/20assets/101runtimepassed",
+      "android_smoke": "not repeated;fullCI41973098124passed4/4",
+      "screenshots": "blocked by observed Android Quickstep launcher ANR",
+      "evidence_artifact_id": 13392091872,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41976286905-attempt1.txt"
     }
   ],
   "android_ci": {

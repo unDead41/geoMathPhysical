@@ -59,7 +59,7 @@ def main():
         # A screenshot file can exist while the real WebView is still loading.
         # Wait for the canonical canvas's accessibility label, and retain the
         # actual Android hierarchy used to establish its visible bounds.
-        deadline = time.monotonic() + 60
+        deadline = time.monotonic() + 90
         while time.monotonic() < deadline:
             try:
                 raw, root = hierarchy()
