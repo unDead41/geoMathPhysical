@@ -21,10 +21,14 @@ concurrency:
 
 env:
   FLUTTER_VERSION: '3.47.9'
+  # Explicit commit marker is only an infrastructure diagnostic, never a
+  # substitute for the unmarked full publication gate. All other events are full.
+  GEOMATH_ANDROID_SUITE: ${{ contains(github.event.head_commit.message, '[android-diagnostic:module-spike]') && 'module-spike' || 'full' }}
   GRADLE_OPTS: '-Dorg.gradle.workers.max=2 -Dorg.gradle.jvmargs=-Xmx2g -Dkotlin.daemon.jvm.options=-Xmx512m'
 
 jobs:
   verify:
+    name: "${{ contains(github.event.head_commit.message, '[android-diagnostic:module-spike]') && 'Android diagnostic only (module-spike)' || 'verify' }}"
     runs-on: ubuntu-24.04
     timeout-minutes: 90
     defaults:
@@ -128,10 +132,12 @@ jobs:
       - name: Analyze
         run: flutter analyze
       - name: Unit and widget tests
+        if: env.GEOMATH_ANDROID_SUITE == 'full'
         run: flutter test
       - name: Canonical source and adapter checks
         run: node --test tools/contracts/verify_exports.test.mjs test/foundation/native_adapter_contract.test.mjs test/features/learning/bundle/*.test.mjs test/features/learning/surface/*.test.mjs test/features/learning/studio/checkpoint_schema_parity.test.mjs
       - name: Debug APK
+        if: env.GEOMATH_ANDROID_SUITE == 'full'
         id: debug-apk
         run: flutter build apk --debug
       # Preserve verified Maven/wrapper downloads even if the APK step fails.
@@ -148,6 +154,7 @@ jobs:
             !~/.gradle/wrapper/**/*.lck
           key: ${{ steps.gradle-dependencies.outputs.cache-primary-key }}
       - uses: actions/upload-artifact@v7
+        if: env.GEOMATH_ANDROID_SUITE == 'full'
         with:
           name: geomath-debug-apk
           path: apps/geomath_flutter/build/app/outputs/flutter-apk/app-debug.apk
@@ -155,8 +162,10 @@ jobs:
           retention-days: 7
 
       - name: Release mode APK (development signing)
+        if: env.GEOMATH_ANDROID_SUITE == 'full'
         run: flutter build apk --release
       - uses: actions/upload-artifact@v7
+        if: env.GEOMATH_ANDROID_SUITE == 'full'
         with:
           name: geomath-release-mode-apk
           path: apps/geomath_flutter/build/app/outputs/flutter-apk/app-release.apk
@@ -164,6 +173,7 @@ jobs:
           retention-days: 7
 
       - name: Preserve the normal application APK
+        if: env.GEOMATH_ANDROID_SUITE == 'full'
         run: |
           mv build/app/outputs/flutter-apk/app-debug.apk "$RUNNER_TEMP/geomath-main-debug.apk"
           test -s "$RUNNER_TEMP/geomath-main-debug.apk"
@@ -173,7 +183,12 @@ jobs:
           (cd android && ./gradlew --stop)
       - name: Prebuild the Android integration APK
         run: |
-          flutter build apk --debug --target-platform android-x64 -t integration_test/integration_smoke_test.dart --dart-define=LEARNING_SCREENSHOTS=true
+          case "$GEOMATH_ANDROID_SUITE" in
+            full) integration_target=integration_test/integration_smoke_test.dart ;;
+            module-spike) integration_target=integration_test/module_spike_test.dart ;;
+            *) echo 'Unsupported diagnostic suite' >&2; exit 2 ;;
+          esac
+          flutter build apk --debug --target-platform android-x64 -t "$integration_target" --dart-define=LEARNING_SCREENSHOTS=true
           mv build/app/outputs/flutter-apk/app-debug.apk "$RUNNER_TEMP/geomath-integration-debug.apk"
           test -s "$RUNNER_TEMP/geomath-integration-debug.apk"
           rm -f -- build/app/outputs/apk/debug/app-debug.apk
@@ -221,6 +236,7 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
       - uses: actions/upload-artifact@v7
+        if: env.GEOMATH_ANDROID_SUITE == 'full'
         with:
           name: geomath-android-smoke-apk
           path: ${{ runner.temp }}/geomath-main-debug.apk

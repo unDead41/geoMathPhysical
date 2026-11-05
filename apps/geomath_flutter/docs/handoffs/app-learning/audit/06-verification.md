@@ -144,4 +144,3 @@ flutter run -t lib/dev/learning_main.dart -d <device-id>
 The preview must load `learningFeature()` using production repository/controllers and frozen contributions. Record exits, actual SDK/dependency lock, APK hash, source/submanifest hashes, device evidence and unresolved deviations. Run canonical tests/build/check in a fresh pinned scratch snapshot when exporter/domain changes; do not commit generated Digital output. Do not claim formatter/analyze/unit/widget/integration/APK success until those commands actually run.
 
 Worker scope is only this report and its machine-readable receipt. The lead receives the private report commit for integration; this worker does not push. Firmware, shared foundation files, archived app specifications and canonical source remain unchanged.
-

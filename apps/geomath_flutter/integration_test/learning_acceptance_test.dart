@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -708,9 +709,9 @@ Future<Map<String, Object?>> _json(
   WebViewController view,
   String expression,
 ) async {
-  Object? value = await view.runJavaScriptReturningResult(
-    'JSON.stringify($expression)',
-  );
+  Object? value = await view
+      .runJavaScriptReturningResult('JSON.stringify($expression)')
+      .timeout(const Duration(seconds: 3));
   while (value is String) {
     value = jsonDecode(value);
   }
@@ -887,8 +888,12 @@ Future<void> _until(
   Object? lastError;
   while (DateTime.now().isBefore(deadline)) {
     try {
-      if (await condition()) return;
+      if (await condition().timeout(deadline.difference(DateTime.now()))) {
+        return;
+      }
     } on PlatformException catch (error) {
+      lastError = error;
+    } on TimeoutException catch (error) {
       lastError = error;
     }
     await tester.pump(const Duration(milliseconds: 75));

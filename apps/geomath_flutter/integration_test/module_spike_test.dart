@@ -314,7 +314,7 @@ JSON.stringify((() => {
   return {documentReady:document.readyState,adapterAvailable:!!d,
     moduleReady:d?.moduleReady,settingsReady:d?.settingsReady,
     emittedReady:d?.emittedReady,readyAcknowledged:d?.readyAcknowledged,
-    active:d?.active};
+    active:d?.active,bootstrap:d?.bootstrap};
 })())
 ''')
           .timeout(const Duration(seconds: 2));

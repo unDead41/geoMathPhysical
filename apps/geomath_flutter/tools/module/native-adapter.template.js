@@ -10,6 +10,12 @@
   let settings = null, active = true, modelSnapshot = null, audioGranted = false, audioRevision = 0, audioAck = 0;
   let learningReady=false, learningSequence=0, learningEvent=0, learningPending=false, learningCheckpoint=null, learningTransitionCheckpoint=null, learningDiagnostics=null, learningResult={ok:true}, learningExport=null, learningExternalLink=null;
   const progressSeen = new Map();
+  // Read-only startup telemetry. No payload text, URL, identity or capability is
+  // retained. These counters do not participate in readiness or authorization.
+  const bootstrap = {srcdocAssigned:false,sourceCharacters:0,frameLoads:0,messages:0,beforeConfigured:0,rejectedSource:0,rejectedOrigin:0,rejectedShape:0,accepted:0,childStage:'none',childErrors:0,lastErrorCode:'none',lastErrorLine:0};
+  const count = key => bootstrap[key] = Math.min(1000000,bootstrap[key]+1);
+  frame.addEventListener?.('load',()=>count('frameLoads'));
+
   const object = value => value && typeof value === 'object' && !Array.isArray(value);
   const exact = (value, keys) => object(value) && Object.keys(value).length === keys.length && keys.every(key => Object.hasOwn(value,key));
   const validSettings = value => object(value) && ['ms','en'].includes(value.language) && [100,125,150].includes(value.textSize) && typeof value.motionPaused === 'boolean' && ['standard','strong'].includes(value.contrast) && typeof value.audioEnabled === 'boolean';
@@ -30,8 +36,21 @@
     if (!readyAcknowledged && (!emittedReady || retry) && moduleReady && settingsReady) { sync(); emittedReady = send('ready') || emittedReady; }
   }
   window.addEventListener('message', event => {
-    if (!config || event.source !== frame.contentWindow || event.origin !== 'null' || !object(event.data)) return;
+    count('messages');
+    if (!config) {count('beforeConfigured');return;}
+    if (event.source !== frame.contentWindow) {count('rejectedSource');return;}
+    if (event.origin !== 'null') {count('rejectedOrigin');return;}
+    if (!object(event.data)) {count('rejectedShape');return;}
+    count('accepted');
     const message = event.data;
+    if(message.type==='geomath:bootstrap-diagnostic'){
+      if(!exact(message,['type','version','stage','code','line'])||message.version!==1||!['head','dom-ready','loaded','error','rejection'].includes(message.stage)||!['none','Error','TypeError','SyntaxError','ReferenceError','RangeError','URIError','EvalError','AggregateError','unknown'].includes(message.code)||!Number.isSafeInteger(message.line)||message.line<0||message.line>1000000)return;
+      if(message.stage==='error'||message.stage==='rejection'){
+        count('childErrors');bootstrap.lastErrorCode=message.code;bootstrap.lastErrorLine=message.line;
+      }else bootstrap.childStage=message.stage;
+      return;
+    }
+
     if(typeof message.type==='string'&&message.type.startsWith('geomath:learning-')){
       if(message.version!==1||!Number.isSafeInteger(message.eventSequence)||message.eventSequence<=learningEvent)return;
       if(message.type==='geomath:learning-ready'){
@@ -96,6 +115,7 @@
       settings = {...value.settings};
       const runtime = Object.fromEntries(Object.entries(window.GeoMathModule).filter(([key])=>key!=='configure'));
       Object.defineProperty(window,'GeoMathModule',{value:Object.freeze(runtime),writable:false,configurable:false});
+      bootstrap.srcdocAssigned=true;bootstrap.sourceCharacters=source.length;
       frame.srcdoc = source;
       return true;
     },
@@ -127,6 +147,6 @@
     // Read-only test/diagnostic seam. It contains no bridge nonce or actor.
     inspect() {post({type:'geomath:inspect'});return true;},
     activateControl(action,value) {if(!['rotate-right','set-unfold','stop-auto'].includes(action))return false;post({type:'geomath:control',action,value});return true;},
-    diagnostics() {return {moduleReady,settingsReady,emittedReady,readyAcknowledged,active,audioAck,instanceId:config?.instanceId ?? null,settings:settings?{...settings}:null,model:modelSnapshot};}
+    diagnostics() {return {moduleReady,settingsReady,emittedReady,readyAcknowledged,active,audioAck,instanceId:config?.instanceId ?? null,settings:settings?{...settings}:null,model:modelSnapshot,bootstrap:{...bootstrap,configured:config!==null}};}
   }),writable:false,configurable:true});
 })();

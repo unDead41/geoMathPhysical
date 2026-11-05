@@ -28,8 +28,8 @@
     },
     {
       "path": "assets/module/native-adapter.js",
-      "sha256": "47edd959776f4e2d8056ddcbf06121a01075cd88f4588497112b65a6f8b8b95e",
-      "bytes": 797856
+      "sha256": "8a64f616ec58fc2468517a1ce20dcf9d91022e25a9a45e45769e843c0e834d7d",
+      "bytes": 800116
     }
   ]
 }

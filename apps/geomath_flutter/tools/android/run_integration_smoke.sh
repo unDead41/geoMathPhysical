@@ -10,7 +10,19 @@ evidence_dir=$(cd -- "$evidence_dir" && pwd)
 export GEOMATH_ANDROID_EVIDENCE="$evidence_dir"
 normal_apk=${GEOMATH_NORMAL_APK:-${RUNNER_TEMP:?Set RUNNER_TEMP or GEOMATH_NORMAL_APK}/geomath-main-debug.apk}
 test_apk=${GEOMATH_TEST_APK:-${RUNNER_TEMP:?Set RUNNER_TEMP or GEOMATH_TEST_APK}/geomath-integration-debug.apk}
-test -s "$normal_apk"
+suite=${GEOMATH_ANDROID_SUITE:-full}
+case "$suite" in
+  full)
+    integration_target=integration_test/integration_smoke_test.dart
+    drive_timeout=28m
+    test -s "$normal_apk"
+    ;;
+  module-spike)
+    integration_target=integration_test/module_spike_test.dart
+    drive_timeout=12m
+    ;;
+  *) echo 'Unsupported diagnostic suite' >&2; exit 2 ;;
+esac
 test -s "$test_apk"
 log_pid=''
 
@@ -70,14 +82,30 @@ sha256sum "$test_apk" > "$evidence_dir/integration-apk.sha256"
 # Preserve the test exit status while also collecting the independent normal
 # application's actual screenshots. A failed suite still fails the job.
 set +e
-timeout --foreground --signal=TERM --kill-after=15s 28m flutter drive --no-pub --driver=test_driver/integration_evidence_driver.dart \
-  --target=integration_test/integration_smoke_test.dart \
+timeout --foreground --signal=TERM --kill-after=15s "$drive_timeout" flutter drive --no-pub --driver=test_driver/integration_evidence_driver.dart \
+  --target="$integration_target" \
   --use-application-binary="$test_apk" \
   --keep-app-running -d "$device" \
   2>&1 | tee "$evidence_dir/integration.txt"
 integration_status=${PIPESTATUS[0]}
 set -e
 export GEOMATH_INTEGRATION_STATUS="$integration_status"
+if [[ "$suite" != full ]]; then
+  export GEOMATH_DIAGNOSTIC_SUITE="$suite"
+  python3 - "$evidence_dir" <<'DIAGNOSTIC_PY'
+import json,os,pathlib,sys
+root=pathlib.Path(sys.argv[1])
+(root/'diagnostic-result.json').write_text(json.dumps({
+    'schema_version':1,'scope':'diagnostic-only','full_publish_gate':False,
+    'suite':os.environ['GEOMATH_DIAGNOSTIC_SUITE'],
+    'source_commit':(root/'source-commit.txt').read_text().strip(),
+    'integration_exit_code':int(os.environ['GEOMATH_INTEGRATION_STATUS']),
+    'normal_production_apk_tested':False,'complete_app_acceptance':False,
+},indent=2)+'\n')
+DIAGNOSTIC_PY
+  echo "Diagnostic-only $suite finished with exit $integration_status; full app acceptance was not run."
+  exit "$integration_status"
+fi
 # A successful test-runner APK is not proof the production main boots. Remove
 # its isolated records, install the preserved normal APK and run that entrypoint.
 adb -s "$device" shell am force-stop com.geomath.dev

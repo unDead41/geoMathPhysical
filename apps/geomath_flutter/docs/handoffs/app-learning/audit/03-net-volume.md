@@ -112,4 +112,3 @@ Foundation READY evidence, typed writer/reader/actor/checkpoint/lifecycle interf
 Same-document actor reset/checkpoint policy, physical face resolution in edited cube layouts, native SVG/print handoff, Android semantics/gesture/reflow at 48 dp, durable failure EX11, process-death restore and offline asset corruption need implementation and device tests after freeze.
 The selected existing tests and two scratch probes passed; full canonical build/check, browser visual matrix, Flutter analyze/test/APK, emulator and physical-phone execution were not run by this worker.
 Legacy `python tools/check_version.py` could not run because that untouched script is absent from this sparse checkout; no firmware or versioned root files changed.
-

@@ -106,3 +106,19 @@ warnings while successfully connecting, so neither warning alone establishes
 an app defect. No product-runtime change is inferred without further evidence.
 The cancelled run's evidence artifact13415769598 has ZIP SHA256
 `95718510a7cafe8cf49687d24b27c12663746981706f4db4227137074aa6ca75`.
+
+
+## Discriminating Android child-bootstrap run
+
+Run42033540615 at a51147e passed Android window readiness and VM RPC connection.
+It reproduced the second-actor WebView handshake failure at module_spike_test181
+and a12minute learning fixture timeout waiting for a native JS response after
+renderer teardown. Neither result is accepted as PASS. Wrapper diagnostics showed
+a configured top-level document but neither opaque-child ready signal.
+
+The next source adds sanitized, source/origin-validated child parse/load/error
+counters and bounds fixture JS reads. Canonical HTML/math bytes remain unchanged.
+This is instrumentation, not a claim that the handshake defect is fixed.
+An explicit [android-diagnostic:module-spike] commit runs only that Android suite,
+skipping full app builds/host tests/captures. Its receipt has full_publish_gate:false
+and cannot replace the unmarked complete Android publication gate.

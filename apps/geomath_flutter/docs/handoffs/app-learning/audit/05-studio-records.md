@@ -142,4 +142,3 @@ No canonical file edited; no Flutter/widget/WebView/Android/build/physical-devic
 After READY: verify frozen signatures, actor checkpoint isolation, cold reopen, EX11 rollback,
 real WebView primitives/Undo, tolerance boundaries at both scales, locale/large text and system Back.
 Report-only branch: run `git diff --check`, commit only this file, return actual SHA; no push.
-
