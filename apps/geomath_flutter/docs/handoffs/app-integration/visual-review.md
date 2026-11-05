@@ -1,3 +1,6 @@
+Current Android evidence: [the32-capture review](android-visual-review.md).
+The reference/host-only review below retains its historical scope.
+
 # Visual and interaction contract review
 
 Review date: 5 November 2026 (Malaysia). Scope: the twelve archived reference

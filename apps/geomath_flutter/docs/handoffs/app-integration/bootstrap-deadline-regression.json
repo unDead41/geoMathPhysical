@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "native_fix_host_verified_android_revalidation_pending",
+  "status": "corrected_native_runtime_revalidated",
   "failed_capture_source": "d11c06993076c5f9b1f120b4fa6be93376beadf9",
   "failed_capture_run": 42079929595,
   "artifact_id": 13441485475,
@@ -22,6 +22,11 @@
   "regression": "A valid child completing after thirty-five foreground seconds failed before the fix and passes after it.",
   "local_deadline_tests_passed": 10,
   "local_learning_module_tests_passed": 80,
-  "android_result": "pending rebuilt normal APK and focused real-WebView/capture revalidation",
+  "android_result": {
+    "source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+    "run_id": 42082666643,
+    "affected_cases_passed": 3,
+    "production_captures": 32
+  },
   "raw_authentication_uris_included": false
 }

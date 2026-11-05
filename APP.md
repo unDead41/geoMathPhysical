@@ -1,8 +1,10 @@
 # GeoMath / GeoDecoder — Android app
 
-**Integrated implementation; Android verification in progress.** App **0.1.0+1**,
-foundation contract **1.0.0**. Work branch `app-integration`; `app` is advanced
-only after integrated checks pass. This status supersedes the planning-only
+**Offline Android milestone verified; hosted/manual acceptance partial.** App **0.1.0+1**,
+foundation contract **1.0.0**. Integration branch `app-integration`; `app` advances after the documented
+affected-runtime gate. Exact-source host/build checks,three real-WebView cases
+and32 reviewed production captures validate the startup correction; earlier
+functional Android receipts remain separately labelled. This status supersedes the planning-only
 entry; the original `docs/geomath-app/` archive remains unchanged.
 
 Production code is in `apps/geomath_flutter/`. Its default `lib/main.dart`

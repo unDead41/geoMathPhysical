@@ -1,22 +1,26 @@
 {
   "schema_version": 1,
   "app_version": "0.1.0+1",
-  "source_commit": "efc31238624b071e64fe7dbcfc8f097fc7f71e27",
-  "source_tree": "ffd4b86f876590f4b1b295cbeda0bbaef6dfb3d6",
+  "source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+  "source_tree": "8cd153f381eb8e872870beed7c0a4b68ba9c6325",
   "entrypoint": "lib/main.dart",
   "build_mode": "debug",
   "signing": "Android debug keystore; not production/store signing",
   "cloud_defines": false,
   "command": "flutter build apk --debug --no-pub",
   "exit_code": 0,
-  "build_seconds": 30.6,
+  "build_seconds": 35.7,
   "flutter": "3.47.9",
   "dart": "3.13.7",
   "java": "17.0.20",
+  "android_sdk_build_tools": "36.0.0",
+  "compile_sdk": 36,
+  "target_sdk": 36,
+  "min_sdk": 24,
   "apk": {
     "path": "/workspace/scratch/22e4cc1b235a/deliverables/GeoMath-Integrated-0.1.0-debug.apk",
-    "bytes": 174920804,
-    "sha256": "a74b6263caa458e99e95e7cf3e296cfab5aee0fb271ee00fce91ffa6606ea7b4",
+    "bytes": 174925408,
+    "sha256": "177e584378e735b78c576850937c008eb0f261fb532c9b7482857f47f9de8844",
     "zip_crc": "PASS",
     "v2_signature": "PASS",
     "engine_abis": [
@@ -30,8 +34,9 @@
     ]
   },
   "runtime_manifest_definition": "lib, assets, Android runner, pubspec and lockfile; excludes Android evidence tools",
-  "runtime_manifest_sha256": "40549b11bd55dbbec11a63bcbfee245fc7cbcb35b06df721fbcc1fa24b6eda24",
-  "device_execution": "separate CI gate; no local KVM",
+  "runtime_manifest_sha256": "fa3f79360f26172f4bc4a3bace6fbc571ac59dee304f6263c1f9892c7d1c7ebc",
+  "candidate_status": "promoted after exact-source affected Android revalidation and visual review",
+  "device_execution": "CI installed a separately built normal APK from the identical170 source inputs; this exact local binary was not installed",
   "runtime_files": [
     {
       "path": "apps/geomath_flutter/android/.gitignore",
@@ -225,13 +230,13 @@
     },
     {
       "path": "apps/geomath_flutter/assets/module/manifest.json",
-      "sha256": "bfcd23ea114c9de6a7c3e492598b1e46a21c5a7d8271ac5be142fbf4d37107dc",
+      "sha256": "7ab20f8b016082aadbc02b0b2e1ac5472388d8250baeb9befd3db91552e49a57",
       "bytes": 1137
     },
     {
       "path": "apps/geomath_flutter/assets/module/native-adapter.js",
-      "sha256": "8a64f616ec58fc2468517a1ce20dcf9d91022e25a9a45e45769e843c0e834d7d",
-      "bytes": 800116
+      "sha256": "0b994e0855d31a6d50a5997d83065e6187af77a60762e5ca2af9938ec4a82a39",
+      "bytes": 801769
     },
     {
       "path": "apps/geomath_flutter/lib/app/app.dart",
@@ -665,8 +670,8 @@
     },
     {
       "path": "apps/geomath_flutter/lib/features/learning/application/learning_module_controller.dart",
-      "sha256": "ba9f4fa1427b518969d17e20958d859b43b6dc312bc0ec6cb040d17cbfc1a629",
-      "bytes": 20304
+      "sha256": "c981c6d08a4cbe0ad1fc1ba8ef6fbb42ea2e908721aebc287b9fcfde87a45dad",
+      "bytes": 21998
     },
     {
       "path": "apps/geomath_flutter/lib/features/learning/application/learning_services.dart",
@@ -720,8 +725,8 @@
     },
     {
       "path": "apps/geomath_flutter/lib/features/learning/module_spike_host.dart",
-      "sha256": "96b279a580463ddc0d0be7fd0e6ea86acb770bc9ea00031cde478429667c8f6f",
-      "bytes": 22425
+      "sha256": "8ce0ab8e9cf60ff1f5851ebfcf43808ff9dce26ebfb3694550ad287228779b22",
+      "bytes": 23512
     },
     {
       "path": "apps/geomath_flutter/lib/features/learning/persistence/learning_checkpoint_repository.dart",
@@ -750,8 +755,8 @@
     },
     {
       "path": "apps/geomath_flutter/lib/features/learning/presentation/learning_module_page.dart",
-      "sha256": "b6ba5a7fc31ffb6a929fa61fd052e129deada41974dee941ebbcdd897a8cbba3",
-      "bytes": 25642
+      "sha256": "a24d756a80dfa821d710f7270a56a7e14035bcaa3b152418691ad3b4a4b507c5",
+      "bytes": 25801
     },
     {
       "path": "apps/geomath_flutter/lib/features/learning/studio/learning_records_page.dart",
@@ -883,5 +888,13 @@
       "sha256": "8e0f26a85ae19460898e3ad42b4b71bd61c9557597b32eb8a9af5bf4b64491e6",
       "bytes": 715
     }
-  ]
+  ],
+  "verification": {
+    "root_runtime_unchanged_after_build": true,
+    "same_debug_certificate_as_existing_deliverable": true,
+    "zip_entries": 575,
+    "zip_signing_tail_bytes": 4096,
+    "previous_deliverable_preserved_during_candidate_build": true
+  },
+  "gate_receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
 }

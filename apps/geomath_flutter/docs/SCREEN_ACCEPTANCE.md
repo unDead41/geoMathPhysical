@@ -1,6 +1,6 @@
 # GeoMath Flutter screen acceptance
 
-App `0.1.0+1`; 5 November 2026 (Malaysia). **48 screen IDs and 16 supplemental states are mapped to real implementation paths.** This mapping does not claim 64 completed Android or hosted acceptance results.
+App `0.1.0+1`; 2026-11-06 (Malaysia). **48 screen IDs and 16 supplemental states are mapped to real implementation paths.** This mapping does not claim 64 completed Android or hosted acceptance results.
 
 `ready` means the cited integrated evidence demonstrates the stated scope. `partial` means implemented with an outstanding acceptance item. `blocked` means a required implementation or execution prerequisite is unavailable. Feature-branch tests and foundation READY evidence remain inherited evidence; they do not certify the combined production app.
 
@@ -88,11 +88,16 @@ The [JSON matrix](SCREEN_ACCEPTANCE.json) is authoritative for exact implementat
 - Requested integrated visual profiles:320/390/430/768dp;BM/English;light/dark/strong contrast;text100/125/150%;reduced motion. The previous host sweep does not establish complete populated-state, keyboard,TalkBack,gesture or real Android coverage.
 - Offline UI and local Solo/module/records are distinct from configured hosted features. Google/native callbacks require proven platform and hosted capability;SMS is absent. No provider,SMTP,SQL,Edge,Pages or store deployment is part of this acceptance.
 
-## Integration checks still requiring receipts
+## Integrated checks and remaining acceptance
 
 - Production main registers learning and cloud/game contributions once, awaits startup, and resolves one shared actor/database/preferences/audio/writer/sync owner.
-- Destination reset awaits active leave policy; quick learning edits and storage failure Stay/Leave must be verified.
-- Combined analyze/unit/widget/Node tests; normal main APK and real Android feature tests must run on the same reviewed source.
+- PASS within cited host/inherited Android scope: destination reset/Back, draft persistence and storage-failure Stay/Leave.
+- PASS: corrected-source494host tests,50canonical checks,26tool checks,debug/release builds,3 affected real-WebView cases and32 normal-main captures. Baseline functional and corrected Solo Android receipts are inherited separately.
 - Provider/callback capability remains disabled until platform and hosted allowlist/cold/warm/replayed/recovery acceptance is established.
 
 Exact per-item source/test/capability mapping is stored in JSON so an integration device receipt can promote only the states it actually demonstrates. Full readiness must not be inferred from source presence or preview compilation.
+
+
+## Verified offline milestone
+
+[Native correction and production capture CI](https://github.com/unDead41/geodecoder/actions/runs/42082666643) passed on `377a444b7ff6956de8f40b617a40dcbcb9a4a837`. Its three real-WebView cases revalidate the sole changed native runtime file;169 other runtime files match the functional baseline. The earlier full workflow remains failed and is not relabelled green. Thirty accepted originals combine with two corrected390/430cube originals of the identical APK; the rejected original32-set remains blocked. Four profiles cover320/390/430/768dp,BM/English,light/dark/high contrast,100/125/150% text and reduced motion.32 original PNGs do not mean32 boots or all64 states. Guest screenshots do not establish populated classrooms, Google consent,live permissions or two-client Duel. Exact scopes/hashes and per-item limits are in JSON.

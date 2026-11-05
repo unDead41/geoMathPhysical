@@ -126,3 +126,18 @@ unchanged runtime. It checks all170runtime hashes and the exact reused normal
 APK hash before running. Its receipt is combined with the baseline's unaffected
 checks under `handoffs/app-integration/GATE_POLICY.md`; it never turns an earlier
 failed workflow into a successful workflow or publishes the app by itself.
+
+
+## Corrected native bootstrap validation
+
+Source377a444 keeps trusted-document loading at30 foreground seconds and gives
+the child60 seconds after verified-root arrival, before configure IPC. Background
+or covered routes pause the remaining budget; they do not reset it. A valid
+35-second child is regression-tested. This avoids the observed false unavailable
+state on slow emulator parsing while retaining terminal/bridge/actor guards.
+The current gate uses full494host tests,builds,three affected real-WebView cases
+and32 accepted normal-main originals (30 retained +2 strict capture-only replacements).
+Older functional/Solo Android receipts remain
+separately labelled; see the current GATE_POLICY, not the historical unchanged-
+runtime follow-up notes above. Complete TalkBack,physical phone and performance
+measurements remain unverified.

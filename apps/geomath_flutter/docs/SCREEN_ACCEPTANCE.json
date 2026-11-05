@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "date": "2026-11-05",
+  "date": "2026-11-06",
   "timezone": "Asia/Kuala_Lumpur",
   "app_version": "0.1.0+1",
   "status": "partial",
@@ -10,10 +10,15 @@
     "blocked": "A required implementation or executable prerequisite is unavailable."
   },
   "source_refs": {
-    "app": "38f061af963256528d5060ff076bae9ee05eafc3",
     "foundation": "9a1f49a7c92d13bb70b7fd1420c34629a7785f9e",
     "learning": "8a5527438ee828a306afba36a337a3ca3bbedb83",
-    "cloud_game": "33e6734a27db789f04a9a048bf7f69ebd046e016"
+    "cloud_game": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+    "initial_app_base": "38f061af963256528d5060ff076bae9ee05eafc3",
+    "baseline_integrated_runtime": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+    "corrected_solo_case": "2daa2802ffea0ac0ddbde65ac2d9c7b0d261a939",
+    "revalidated_runtime": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+    "capture_completion_tools": "f5e02d0c9b94b7a74f44a4c47b17b00f149883b1",
+    "delivered_apk_runtime": "377a444b7ff6956de8f40b617a40dcbcb9a4a837"
   },
   "catalog": "docs/geomath-app/screen_catalog.json",
   "coverage": {
@@ -22,7 +27,7 @@
     "mapped": 64,
     "placeholder_screen_count_claimed_ready": 0
   },
-  "evidence_policy": "Pointers to tests are not claims they ran in this integration. Feature-branch host and foundation device receipts are labelled separately. Empty screenshot_evidence means no integrated Android capture has been attached. Proposed archival URLs are replaced here with actual registered routes; variants share routes.",
+  "evidence_policy": "Exact-source494host/50canonical/26tool checks,fresh builds and3 affected real-WebView cases validate the native correction. Thirty reviewed originals combine with two corrected390/430cube originals from the same APK;33capture-tool checks pass. Baseline functional and corrected Solo cases remain inherited evidence; no single full combined green workflow is claimed.",
   "visual_profiles": {
     "required_width_dp": [
       320,
@@ -46,7 +51,7 @@
     ],
     "reduced_motion": true,
     "historical_cloud_host_sweep": "19 guest/unconfigured routes x 16 profiles: widths320/390/430/768,ms/en,light/dark,text150. Does not cover all populated states,contrast125,keyboard,TalkBack or real Android.",
-    "integrated_device_screenshots": "pending",
+    "integrated_device_screenshots": "32 original normal-main ADB PNGs in four profiles:30 retained plus2 corrected captures, with per-image run/source provenance; not32 boots",
     "complete_talkback_gesture_keyboard_audit": "unverified"
   },
   "items": [
@@ -64,12 +69,53 @@
           "scope": "foundation READY evidence; not a combined-feature Android receipt",
           "source_ref": "9a1f49a7c92d13bb70b7fd1420c34629a7785f9e",
           "receipt": "docs/handoffs/app-foundation/LATEST.md"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
         }
       ],
-      "screenshot_evidence": [],
+      "screenshot_evidence": [
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "320dp-ms-light-100-contrast0-01-home-offline.png",
+          "sha256": "094741ed5bbafa7624e85a6e32df936deaef4c38c47e65f9a1ad6be1ee2b123d",
+          "scope": "normal main cold reopen, persisted preferences, airplane mode",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "390dp-en-dark-125-contrast0-01-home-offline.png",
+          "sha256": "b46b44e8f55490f74cf356ff9f0bcdd37d32c65612c6f7b2dc6632f9145e273a",
+          "scope": "normal main cold reopen, persisted preferences, airplane mode",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "430dp-ms-dark-150-contrast1-01-home-offline.png",
+          "sha256": "d75d400c57be295fa45faf9dcac2d3c200b66c507478e0b36f0120c928bfd0d6",
+          "scope": "normal main cold reopen, persisted preferences, airplane mode",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "768dp-en-light-150-contrast1-01-home-offline.png",
+          "sha256": "2e9f626d84756f0be17abd82a08d50d3502bd9fb0986d7f12df09122b2a15d0f",
+          "scope": "normal main cold reopen, persisted preferences, airplane mode",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        }
+      ],
       "acceptance_limits": [
-        "Existing foundation evidence is inherited; changed production composition and navigation require the integration run.",
-        "New integrated screenshots and complete TalkBack/gesture/keyboard acceptance are not supplied by the feature-branch host tests."
+        "Integrated evidence is cited; complete manual TalkBack/gestures and all visual combinations remain unverified."
       ],
       "owner": "app-foundation / app-integration",
       "route": {
@@ -101,9 +147,51 @@
           "scope": "feature branch host tests; not integrated Android",
           "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
           "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
         }
       ],
-      "screenshot_evidence": [],
+      "screenshot_evidence": [
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "320dp-ms-light-100-contrast0-02-solo-setup.png",
+          "sha256": "fffed8b13984228feb9ca68ae95b2b65bcce5ff4965dc1ee3f9ec154a2c5dced",
+          "scope": "production offline guest Solo setup",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "390dp-en-dark-125-contrast0-02-solo-setup.png",
+          "sha256": "0bad981f767c3e02d9f452ada5783d4019fe0c1dd0e7b31ac6828045bc75fe44",
+          "scope": "production offline guest Solo setup",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "430dp-ms-dark-150-contrast1-02-solo-setup.png",
+          "sha256": "7e15e684b4b441939391df41a837d20b49eeabea5188ab99be73b2e79ea4d37e",
+          "scope": "production offline guest Solo setup",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "768dp-en-light-150-contrast1-02-solo-setup.png",
+          "sha256": "7b9cb8b2fd12bc6a8bef4e18694e29b83dba597e32abb6429b191829deb06e52",
+          "scope": "production offline guest Solo setup",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        }
+      ],
       "acceptance_limits": [
         "Entry layout checked; no complete 16-profile keyboard/form validation audit.",
         "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
@@ -138,6 +226,11 @@
           "scope": "feature branch host tests; not integrated Android",
           "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
           "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        },
+        {
+          "scope": "Corrected Solo R1/R2 selection, durable save and database reopen; one real-Android case, no claim for every game stage.",
+          "source_ref": "2daa2802ffea0ac0ddbde65ac2d9c7b0d261a939",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
         }
       ],
       "screenshot_evidence": [],
@@ -214,6 +307,11 @@
           "scope": "feature branch host tests; not integrated Android",
           "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
           "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        },
+        {
+          "scope": "Corrected Solo R1/R2 selection, durable save and database reopen; one real-Android case, no claim for every game stage.",
+          "source_ref": "2daa2802ffea0ac0ddbde65ac2d9c7b0d261a939",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
         }
       ],
       "screenshot_evidence": [],
@@ -401,7 +499,44 @@
           "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
         }
       ],
-      "screenshot_evidence": [],
+      "screenshot_evidence": [
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "320dp-ms-light-100-contrast0-10-duel-unconfigured.png",
+          "sha256": "49896167af2c885c2644dd880ac11325a76a18e5f4c167e9b1f58007cdb51f67",
+          "scope": "production Duel capability/online-required state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "390dp-en-dark-125-contrast0-10-duel-unconfigured.png",
+          "sha256": "9fc7b804d7d966e4509a4c7a49e3b2dd4f2d7a2966e710ee3e8301d82cf56346",
+          "scope": "production Duel capability/online-required state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "430dp-ms-dark-150-contrast1-10-duel-unconfigured.png",
+          "sha256": "e47042f23660b7e5eed62b26dab0ed8d6104e1d1adb45225f11f2f956f2afab9",
+          "scope": "production Duel capability/online-required state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "768dp-en-light-150-contrast1-10-duel-unconfigured.png",
+          "sha256": "d00a0e37ac6f4fb3f1186373d41bc63361cf4f7395b857830fc35918228a80c9",
+          "scope": "production Duel capability/online-required state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        }
+      ],
       "acceptance_limits": [
         "No-config entry checked in full matrix; configured entry uses scripted transport; hosted creation/join not verified.",
         "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
@@ -656,6 +791,11 @@
           "scope": "feature branch host tests; not integrated Android",
           "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
           "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
         }
       ],
       "screenshot_evidence": [],
@@ -768,6 +908,11 @@
           "scope": "feature branch host tests; not integrated Android",
           "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
           "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
         }
       ],
       "screenshot_evidence": [],
@@ -843,6 +988,11 @@
           "scope": "feature branch host tests; not integrated Android",
           "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
           "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
         }
       ],
       "screenshot_evidence": [],
@@ -882,7 +1032,44 @@
           "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
         }
       ],
-      "screenshot_evidence": [],
+      "screenshot_evidence": [
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "320dp-ms-light-100-contrast0-profile-guest.png",
+          "sha256": "827e1f9503573054097480919406ad53907ee3cf77704586263742f3434302db",
+          "scope": "production profile guest sign-in state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "390dp-en-dark-125-contrast0-profile-guest.png",
+          "sha256": "3450182491afab80e349c041cd565ac14caaafb7da1dcaab89221c74e2c5e9d1",
+          "scope": "production profile guest sign-in state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "430dp-ms-dark-150-contrast1-profile-guest.png",
+          "sha256": "d4070741212d92723028155f9f32f5eb9ecaf6996267b15bd2452412cb8e0ae8",
+          "scope": "production profile guest sign-in state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "768dp-en-light-150-contrast1-profile-guest.png",
+          "sha256": "845437854f62e96c650f687ed8b57b442ac097903de4c690ace6f21abf51ded4",
+          "scope": "production profile guest sign-in state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        }
+      ],
       "acceptance_limits": [
         "Guest entry checked in full matrix; signed-in draft fixture at320dp BM/English dark150; hosted save/profile completion unverified.",
         "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
@@ -956,12 +1143,58 @@
           "scope": "feature branch host Dart/JS tests; not integrated Android",
           "source_ref": "8a5527438ee828a306afba36a337a3ca3bbedb83",
           "receipt": "docs/handoffs/app-learning/evidence/resume-20261105/result.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        },
+        {
+          "scope": "Corrected native host on Android: real bundled WebView,11-model count,rotate/fold,preferences,actor change; missing/corrupt asset rejection in separate cases.",
+          "source_ref": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
         }
       ],
-      "screenshot_evidence": [],
+      "screenshot_evidence": [
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "320dp-ms-light-100-contrast0-25-explore-cube.png",
+          "sha256": "b5217d404bbcba0ab3d5e9c2c65d83c6f81dfcec63868b49d9409cfe0d141ac2",
+          "scope": "real offline Android WebView canonical cube canvas",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42089442055/artifacts/13445750722",
+          "path": "390dp-en-dark-125-contrast0-25-explore-cube.png",
+          "sha256": "bbbe344082a6b5edc0911a0c3f44fe6a67618a9898e7fd11553634a5b7329ba7",
+          "scope": "real offline Android WebView canonical cube canvas",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "f5e02d0c9b94b7a74f44a4c47b17b00f149883b1",
+          "capture_run_id": 42089442055
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42089442055/artifacts/13445750722",
+          "path": "430dp-ms-dark-150-contrast1-25-explore-cube.png",
+          "sha256": "0cba761eab0f7e3869914d070f99d3bb39f8774a0c083c9ec20f5db3f68f1caa",
+          "scope": "real offline Android WebView canonical cube canvas",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "f5e02d0c9b94b7a74f44a4c47b17b00f149883b1",
+          "capture_run_id": 42089442055
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "768dp-en-light-150-contrast1-25-explore-cube.png",
+          "sha256": "6ec2e37ee6031dce5c5f35d6de1e9d54a3c862c191a26335a26959a52e6f69b3",
+          "scope": "real offline Android WebView canonical cube canvas",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        }
+      ],
       "acceptance_limits": [
-        "Canonical offline WebView feature is implemented; actual Android renderer, input, rotation and lifecycle are pending integrated device verification.",
-        "Shared destination guard and signed-in shared-writer composition must be tested from production main."
+        "Baseline functional scope and current native-host revalidation are cited separately. Complete visual-state, manual accessibility and hosted acceptance remain unverified."
       ],
       "owner": "app-learning",
       "route": {
@@ -994,12 +1227,16 @@
           "scope": "feature branch host Dart/JS tests; not integrated Android",
           "source_ref": "8a5527438ee828a306afba36a337a3ca3bbedb83",
           "receipt": "docs/handoffs/app-learning/evidence/resume-20261105/result.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
         }
       ],
       "screenshot_evidence": [],
       "acceptance_limits": [
-        "Canonical offline WebView feature is implemented; actual Android renderer, input, rotation and lifecycle are pending integrated device verification.",
-        "Shared destination guard and signed-in shared-writer composition must be tested from production main."
+        "Baseline functional scope and current native-host revalidation are cited separately. Complete visual-state, manual accessibility and hosted acceptance remain unverified."
       ],
       "owner": "app-learning",
       "route": {
@@ -1031,12 +1268,16 @@
           "scope": "feature branch host Dart/JS tests; not integrated Android",
           "source_ref": "8a5527438ee828a306afba36a337a3ca3bbedb83",
           "receipt": "docs/handoffs/app-learning/evidence/resume-20261105/result.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
         }
       ],
       "screenshot_evidence": [],
       "acceptance_limits": [
-        "Canonical offline WebView feature is implemented; actual Android renderer, input, rotation and lifecycle are pending integrated device verification.",
-        "Shared destination guard and signed-in shared-writer composition must be tested from production main."
+        "Baseline functional scope and current native-host revalidation are cited separately. Complete visual-state, manual accessibility and hosted acceptance remain unverified."
       ],
       "owner": "app-learning",
       "route": {
@@ -1067,12 +1308,16 @@
           "scope": "feature branch host Dart/JS tests; not integrated Android",
           "source_ref": "8a5527438ee828a306afba36a337a3ca3bbedb83",
           "receipt": "docs/handoffs/app-learning/evidence/resume-20261105/result.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
         }
       ],
       "screenshot_evidence": [],
       "acceptance_limits": [
-        "Canonical offline WebView feature is implemented; actual Android renderer, input, rotation and lifecycle are pending integrated device verification.",
-        "Shared destination guard and signed-in shared-writer composition must be tested from production main."
+        "Baseline functional scope and current native-host revalidation are cited separately. Complete visual-state, manual accessibility and hosted acceptance remain unverified."
       ],
       "owner": "app-learning",
       "route": {
@@ -1105,12 +1350,16 @@
           "scope": "feature branch host Dart/JS tests; not integrated Android",
           "source_ref": "8a5527438ee828a306afba36a337a3ca3bbedb83",
           "receipt": "docs/handoffs/app-learning/evidence/resume-20261105/result.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
         }
       ],
       "screenshot_evidence": [],
       "acceptance_limits": [
-        "Canonical offline WebView feature is implemented; actual Android renderer, input, rotation and lifecycle are pending integrated device verification.",
-        "Shared destination guard and signed-in shared-writer composition must be tested from production main."
+        "Baseline functional scope and current native-host revalidation are cited separately. Complete visual-state, manual accessibility and hosted acceptance remain unverified."
       ],
       "owner": "app-learning",
       "route": {
@@ -1143,12 +1392,16 @@
           "scope": "feature branch host Dart/JS tests; not integrated Android",
           "source_ref": "8a5527438ee828a306afba36a337a3ca3bbedb83",
           "receipt": "docs/handoffs/app-learning/evidence/resume-20261105/result.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
         }
       ],
       "screenshot_evidence": [],
       "acceptance_limits": [
-        "Canonical offline WebView feature is implemented; actual Android renderer, input, rotation and lifecycle are pending integrated device verification.",
-        "Shared destination guard and signed-in shared-writer composition must be tested from production main."
+        "Baseline functional scope and current native-host revalidation are cited separately. Complete visual-state, manual accessibility and hosted acceptance remain unverified."
       ],
       "owner": "app-learning",
       "route": {
@@ -1181,12 +1434,16 @@
           "scope": "feature branch host Dart/JS tests; not integrated Android",
           "source_ref": "8a5527438ee828a306afba36a337a3ca3bbedb83",
           "receipt": "docs/handoffs/app-learning/evidence/resume-20261105/result.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
         }
       ],
       "screenshot_evidence": [],
       "acceptance_limits": [
-        "Canonical offline WebView feature is implemented; actual Android renderer, input, rotation and lifecycle are pending integrated device verification.",
-        "Shared destination guard and signed-in shared-writer composition must be tested from production main."
+        "Baseline functional scope and current native-host revalidation are cited separately. Complete visual-state, manual accessibility and hosted acceptance remain unverified."
       ],
       "owner": "app-learning",
       "route": {
@@ -1219,12 +1476,16 @@
           "scope": "feature branch host Dart/JS tests; not integrated Android",
           "source_ref": "8a5527438ee828a306afba36a337a3ca3bbedb83",
           "receipt": "docs/handoffs/app-learning/evidence/resume-20261105/result.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
         }
       ],
       "screenshot_evidence": [],
       "acceptance_limits": [
-        "Canonical offline WebView feature is implemented; actual Android renderer, input, rotation and lifecycle are pending integrated device verification.",
-        "Shared destination guard and signed-in shared-writer composition must be tested from production main."
+        "Baseline functional scope and current native-host revalidation are cited separately. Complete visual-state, manual accessibility and hosted acceptance remain unverified."
       ],
       "owner": "app-learning",
       "route": {
@@ -1256,12 +1517,16 @@
           "scope": "feature branch host Dart/JS tests; not integrated Android",
           "source_ref": "8a5527438ee828a306afba36a337a3ca3bbedb83",
           "receipt": "docs/handoffs/app-learning/evidence/resume-20261105/result.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
         }
       ],
       "screenshot_evidence": [],
       "acceptance_limits": [
-        "Canonical offline WebView feature is implemented; actual Android renderer, input, rotation and lifecycle are pending integrated device verification.",
-        "Shared destination guard and signed-in shared-writer composition must be tested from production main."
+        "Baseline functional scope and current native-host revalidation are cited separately. Complete visual-state, manual accessibility and hosted acceptance remain unverified."
       ],
       "owner": "app-learning",
       "route": {
@@ -1292,12 +1557,16 @@
           "scope": "feature branch host Dart/JS tests; not integrated Android",
           "source_ref": "8a5527438ee828a306afba36a337a3ca3bbedb83",
           "receipt": "docs/handoffs/app-learning/evidence/resume-20261105/result.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
         }
       ],
       "screenshot_evidence": [],
       "acceptance_limits": [
-        "Canonical offline WebView feature is implemented; actual Android renderer, input, rotation and lifecycle are pending integrated device verification.",
-        "Shared destination guard and signed-in shared-writer composition must be tested from production main."
+        "Baseline functional scope and current native-host revalidation are cited separately. Complete visual-state, manual accessibility and hosted acceptance remain unverified."
       ],
       "owner": "app-learning",
       "route": {
@@ -1329,12 +1598,16 @@
           "scope": "feature branch host Dart/JS tests; not integrated Android",
           "source_ref": "8a5527438ee828a306afba36a337a3ca3bbedb83",
           "receipt": "docs/handoffs/app-learning/evidence/resume-20261105/result.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
         }
       ],
       "screenshot_evidence": [],
       "acceptance_limits": [
-        "Canonical offline WebView feature is implemented; actual Android renderer, input, rotation and lifecycle are pending integrated device verification.",
-        "Shared destination guard and signed-in shared-writer composition must be tested from production main."
+        "Baseline functional scope and current native-host revalidation are cited separately. Complete visual-state, manual accessibility and hosted acceptance remain unverified."
       ],
       "owner": "app-learning",
       "route": {
@@ -1367,12 +1640,16 @@
           "scope": "feature branch host Dart/JS tests; not integrated Android",
           "source_ref": "8a5527438ee828a306afba36a337a3ca3bbedb83",
           "receipt": "docs/handoffs/app-learning/evidence/resume-20261105/result.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
         }
       ],
       "screenshot_evidence": [],
       "acceptance_limits": [
-        "Canonical offline WebView feature is implemented; actual Android renderer, input, rotation and lifecycle are pending integrated device verification.",
-        "Shared destination guard and signed-in shared-writer composition must be tested from production main."
+        "Baseline functional scope and current native-host revalidation are cited separately. Complete visual-state, manual accessibility and hosted acceptance remain unverified."
       ],
       "owner": "app-learning",
       "route": {
@@ -1404,12 +1681,58 @@
           "scope": "foundation READY evidence; not a combined-feature Android receipt",
           "source_ref": "9a1f49a7c92d13bb70b7fd1420c34629a7785f9e",
           "receipt": "docs/handoffs/app-foundation/LATEST.md"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        },
+        {
+          "scope": "Corrected native host on Android: real bundled WebView,11-model count,rotate/fold,preferences,actor change; missing/corrupt asset rejection in separate cases.",
+          "source_ref": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
         }
       ],
-      "screenshot_evidence": [],
+      "screenshot_evidence": [
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "320dp-ms-light-100-contrast0-37-settings.png",
+          "sha256": "a187218dba75c178c8a755dda4adcd6ea5d73f6a55d23dc5bc7ca887202cc3af",
+          "scope": "production preferences saved through Android UI",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "390dp-en-dark-125-contrast0-37-settings.png",
+          "sha256": "1e52bb478c308784d36eea289fe212c967238991fa3617263ee74cab145fdded",
+          "scope": "production preferences saved through Android UI",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "430dp-ms-dark-150-contrast1-37-settings.png",
+          "sha256": "ce4d1cccea6163926c542d0c9f3849e935d5e4647574d9dc36720ba3f3c50940",
+          "scope": "production preferences saved through Android UI",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "768dp-en-light-150-contrast1-37-settings.png",
+          "sha256": "47adbac75c4d82a4b386ac7bc187d4f3972725a8db144a2379a9e239a73bc680",
+          "scope": "production preferences saved through Android UI",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        }
+      ],
       "acceptance_limits": [
-        "Existing foundation evidence is inherited; changed production composition and navigation require the integration run.",
-        "New integrated screenshots and complete TalkBack/gesture/keyboard acceptance are not supplied by the feature-branch host tests."
+        "Integrated evidence is cited; complete manual TalkBack/gestures and all visual combinations remain unverified."
       ],
       "owner": "app-foundation / app-integration",
       "route": {
@@ -1442,10 +1765,28 @@
           "receipt": "docs/handoffs/app-foundation/LATEST.md"
         }
       ],
-      "screenshot_evidence": [],
+      "screenshot_evidence": [
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "390dp-en-dark-125-contrast0-01-home-offline.png",
+          "sha256": "b46b44e8f55490f74cf356ff9f0bcdd37d32c65612c6f7b2dc6632f9145e273a",
+          "scope": "normal main cold reopen, persisted preferences, airplane mode",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "430dp-ms-dark-150-contrast1-01-home-offline.png",
+          "sha256": "d75d400c57be295fa45faf9dcac2d3c200b66c507478e0b36f0120c928bfd0d6",
+          "scope": "normal main cold reopen, persisted preferences, airplane mode",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        }
+      ],
       "acceptance_limits": [
-        "Existing foundation evidence is inherited; changed production composition and navigation require the integration run.",
-        "New integrated screenshots and complete TalkBack/gesture/keyboard acceptance are not supplied by the feature-branch host tests."
+        "Integrated evidence is cited; complete manual TalkBack/gestures and all visual combinations remain unverified."
       ],
       "owner": "app-foundation / app-integration",
       "route": {
@@ -1477,12 +1818,16 @@
           "scope": "foundation READY evidence; not a combined-feature Android receipt",
           "source_ref": "9a1f49a7c92d13bb70b7fd1420c34629a7785f9e",
           "receipt": "docs/handoffs/app-foundation/LATEST.md"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
         }
       ],
       "screenshot_evidence": [],
       "acceptance_limits": [
-        "Existing foundation evidence is inherited; changed production composition and navigation require the integration run.",
-        "New integrated screenshots and complete TalkBack/gesture/keyboard acceptance are not supplied by the feature-branch host tests."
+        "Integrated evidence is cited; complete manual TalkBack/gestures and all visual combinations remain unverified."
       ],
       "owner": "app-foundation / app-integration",
       "route": {
@@ -1513,12 +1858,16 @@
           "scope": "foundation READY evidence; not a combined-feature Android receipt",
           "source_ref": "9a1f49a7c92d13bb70b7fd1420c34629a7785f9e",
           "receipt": "docs/handoffs/app-foundation/LATEST.md"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
         }
       ],
       "screenshot_evidence": [],
       "acceptance_limits": [
-        "Existing foundation evidence is inherited; changed production composition and navigation require the integration run.",
-        "New integrated screenshots and complete TalkBack/gesture/keyboard acceptance are not supplied by the feature-branch host tests."
+        "Integrated evidence is cited; complete manual TalkBack/gestures and all visual combinations remain unverified."
       ],
       "owner": "app-foundation / app-integration",
       "route": {
@@ -1550,12 +1899,53 @@
           "scope": "feature branch host Dart/JS tests; not integrated Android",
           "source_ref": "8a5527438ee828a306afba36a337a3ca3bbedb83",
           "receipt": "docs/handoffs/app-learning/evidence/resume-20261105/result.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
         }
       ],
-      "screenshot_evidence": [],
+      "screenshot_evidence": [
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "320dp-ms-light-100-contrast0-41-learning-hub.png",
+          "sha256": "a29496a7fda5b2d48912a7db9417577b7f3fd0d59efb856409db14befe0444bb",
+          "scope": "production learning hub",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "390dp-en-dark-125-contrast0-41-learning-hub.png",
+          "sha256": "a34aaf98d990dca4081ee13304720847c706cc853441056f53d68e61208084a4",
+          "scope": "production learning hub",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "430dp-ms-dark-150-contrast1-41-learning-hub.png",
+          "sha256": "4c162ce0c48423bb2348bc34b9a3f04e453de67a073d7de1738c3c205f2b374b",
+          "scope": "production learning hub",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "768dp-en-light-150-contrast1-41-learning-hub.png",
+          "sha256": "038ddaf21825cc252a0ae7672f80e1a8e2b0e40b2a6b33deaf36462c6fb54eec",
+          "scope": "production learning hub",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        }
+      ],
       "acceptance_limits": [
-        "Canonical offline WebView feature is implemented; actual Android renderer, input, rotation and lifecycle are pending integrated device verification.",
-        "Shared destination guard and signed-in shared-writer composition must be tested from production main."
+        "Baseline functional scope and current native-host revalidation are cited separately. Complete visual-state, manual accessibility and hosted acceptance remain unverified."
       ],
       "owner": "app-learning",
       "route": {
@@ -1587,6 +1977,11 @@
           "scope": "feature branch host tests; not integrated Android",
           "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
           "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
         }
       ],
       "screenshot_evidence": [],
@@ -1845,6 +2240,11 @@
           "scope": "feature branch host tests; not integrated Android",
           "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
           "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
         }
       ],
       "screenshot_evidence": [],
@@ -2098,6 +2498,11 @@
           "scope": "feature branch host tests; not integrated Android",
           "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
           "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
         }
       ],
       "screenshot_evidence": [],
@@ -2135,6 +2540,11 @@
           "scope": "feature branch host tests; not integrated Android",
           "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
           "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
         }
       ],
       "screenshot_evidence": [],
@@ -2207,6 +2617,11 @@
           "scope": "feature branch host tests; not integrated Android",
           "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
           "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
         }
       ],
       "screenshot_evidence": [],
@@ -2356,6 +2771,11 @@
           "scope": "feature branch host tests; not integrated Android",
           "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
           "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
         }
       ],
       "screenshot_evidence": [],
@@ -2393,9 +2813,123 @@
           "scope": "feature branch host tests; not integrated Android",
           "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
           "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
         }
       ],
-      "screenshot_evidence": [],
+      "screenshot_evidence": [
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "320dp-ms-light-100-contrast0-10-duel-unconfigured.png",
+          "sha256": "49896167af2c885c2644dd880ac11325a76a18e5f4c167e9b1f58007cdb51f67",
+          "scope": "production Duel capability/online-required state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "320dp-ms-light-100-contrast0-classes-guest.png",
+          "sha256": "9eb843394aa41b506c914d612bd03549769eb040a3d04ba8df5c679797af183c",
+          "scope": "production classroom guest/capability state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "320dp-ms-light-100-contrast0-profile-guest.png",
+          "sha256": "827e1f9503573054097480919406ad53907ee3cf77704586263742f3434302db",
+          "scope": "production profile guest sign-in state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "390dp-en-dark-125-contrast0-10-duel-unconfigured.png",
+          "sha256": "9fc7b804d7d966e4509a4c7a49e3b2dd4f2d7a2966e710ee3e8301d82cf56346",
+          "scope": "production Duel capability/online-required state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "390dp-en-dark-125-contrast0-classes-guest.png",
+          "sha256": "80b4bb0b6e9aad0eb19d59f178578fb28dc638d1fdbc779636c8503e73b49098",
+          "scope": "production classroom guest/capability state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "390dp-en-dark-125-contrast0-profile-guest.png",
+          "sha256": "3450182491afab80e349c041cd565ac14caaafb7da1dcaab89221c74e2c5e9d1",
+          "scope": "production profile guest sign-in state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "430dp-ms-dark-150-contrast1-10-duel-unconfigured.png",
+          "sha256": "e47042f23660b7e5eed62b26dab0ed8d6104e1d1adb45225f11f2f956f2afab9",
+          "scope": "production Duel capability/online-required state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "430dp-ms-dark-150-contrast1-classes-guest.png",
+          "sha256": "65576532100ca3d87ebe1e17be2316d6e323899cd7bd918a0e52d34e9adcce5b",
+          "scope": "production classroom guest/capability state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "430dp-ms-dark-150-contrast1-profile-guest.png",
+          "sha256": "d4070741212d92723028155f9f32f5eb9ecaf6996267b15bd2452412cb8e0ae8",
+          "scope": "production profile guest sign-in state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "768dp-en-light-150-contrast1-10-duel-unconfigured.png",
+          "sha256": "d00a0e37ac6f4fb3f1186373d41bc63361cf4f7395b857830fc35918228a80c9",
+          "scope": "production Duel capability/online-required state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "768dp-en-light-150-contrast1-classes-guest.png",
+          "sha256": "1f2c7393b9c5399feb209d1b1c2992584f12ada5655762f897d3db6cff8a8481",
+          "scope": "production classroom guest/capability state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "768dp-en-light-150-contrast1-profile-guest.png",
+          "sha256": "845437854f62e96c650f687ed8b57b442ac097903de4c690ace6f21abf51ded4",
+          "scope": "production profile guest sign-in state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        }
+      ],
       "acceptance_limits": [
         "No-config guest entries checked in full matrix; actual hosted capability deployment unverified.",
         "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
@@ -2429,5 +2963,21 @@
     "No Auth/SMTP/provider/backend deployment is implied by this matrix.",
     "Live authorized Auth/profile/CRUD/sync acknowledgements and two-client protocol2 Duel remain unverified unless separate real staging evidence is cited.",
     "Physical phone, iOS and capacity/performance acceptance are separate."
-  ]
+  ],
+  "offline_milestone_status": "ready",
+  "integration_receipts": {
+    "host": "docs/handoffs/app-integration/evidence/local/host-result.json",
+    "android": "docs/handoffs/app-integration/evidence/local/android-result.json",
+    "visual": "docs/handoffs/app-integration/android-visual-review.json"
+  },
+  "gate_results": {
+    "host_tests": "494 passed on corrected runtime",
+    "canonical_checks": "50 passed",
+    "tools": "26 native-run checks plus33 capture-follow-up checks",
+    "real_android_revalidation": "3 affected WebView cases passed; baseline and Solo receipts retained separately",
+    "normal_main_32_captures": "pass:30 retained plus2 recaptured originals",
+    "gate_status": "passed_affected_revalidation",
+    "native_provider_callback_enabled": false,
+    "hosted_and_manual_acceptance": "unverified"
+  }
 }
