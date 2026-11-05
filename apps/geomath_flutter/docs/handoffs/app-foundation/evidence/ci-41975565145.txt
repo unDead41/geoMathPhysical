@@ -1,0 +1,8 @@
+Targeted Android capture receipt
+Run:https://github.com/unDead41/geodecoder/actions/runs/41975565145
+Source:6fe2ceb2d8fd49b1c454acbd18349fa4ff036d21
+Job:127073472937
+The exact tested APK checksum,20asset bytes and101 runtime hashes all pass. Actual canonical module loads in the normal APK, but the screenshot waiter cannot see its canvas: the mobile sidebar/shape controls precede it, and the canonical renderer replaces its static HTML label with the live accessibility label.
+Actual Android hierarchy: class=android.widget.Image; text=Kubus, Bongkah 3D. Gunakan anak panah untuk putar dan tambah atau tolak untuk zum.; bounds=[0,0][0,0].
+Final actual screen shows the loaded canonical module navigation, not the model canvas. This is not accepted as rendered-model proof. Correction uses that observed live image label and bounded real document scrolling along the side margin, outside canvas drag handling. The native30second deadline, application and tests remain unchanged.
+Artifact13391457860;archiveSHA256ae27994be9a33fc8ea7cf408fd971c0814c0da6acc43f8846c0f38477f25ab3e.

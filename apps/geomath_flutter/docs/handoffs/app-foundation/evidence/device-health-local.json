@@ -1,0 +1,27 @@
+{
+  "time": "2026-11-04T15:35:04.752334+00:00",
+  "guest_uptime": {
+    "exit": 0,
+    "output": "326.03 52.91"
+  },
+  "guest_memory": {
+    "exit": 0,
+    "output": "MemTotal:        2532300 kB\nMemFree:         1569652 kB\nMemAvailable:    2063128 kB\nBuffers:            6316 kB\nCached:           606608 kB\nSwapCached:            0 kB\nActive:           554236 kB\nInactive:         233896 kB\nActive(anon):     183348 kB\nInactive(anon):        0 kB\nActive(file):     370888 kB\nInactive(file):   233896 kB\nUnevictable:        4360 kB\nMlocked:            4360 kB\nSwapTotal:             0 kB\nSwapFree:              0 kB\nDirty:                40 kB\nWriteback:             0 kB\nAnonPages:        179672 kB\nMapped:           271572 kB\nShmem:              4760 kB\nKReclaimable:      25960 kB\nSlab:              90136 kB\nSReclaimable:      25960 kB\nSUnreclaim:        64176 kB\nKernelStack:        7344 kB\nPageTables:        17888 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:     1266148 kB\nCommitted_AS:    5825524 kB\nVmallocTotal:   34359738367 kB\nVmallocUsed:       24196 kB\nVmallocChunk:          0 kB\nPercpu:             2688 kB\nAnonHugePages:         0 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nCmaTotal:              0 kB\nCmaFree:               0 kB\nDirectMap4k:       46936 kB\nDirectMap2M:     2574336 kB"
+  },
+  "zygote_state": {
+    "exit": 0,
+    "output": "running"
+  },
+  "system_server_pid": {
+    "exit": 0,
+    "output": "743"
+  },
+  "boot_completed": {
+    "exit": 0,
+    "output": ""
+  },
+  "guest_logcat": {
+    "exit": 0,
+    "bytes": 66522
+  }
+}

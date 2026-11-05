@@ -1,0 +1,5 @@
+{
+  "GEOMATH_SUPABASE_URL": "",
+  "GEOMATH_SUPABASE_PUBLISHABLE_KEY": "",
+  "GEOMATH_AUTH_REDIRECT_URI": "com.geomath.dev://auth/callback"
+}

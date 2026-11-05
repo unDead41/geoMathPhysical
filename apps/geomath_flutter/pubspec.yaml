@@ -1,0 +1,32 @@
+name: geomath_flutter
+description: GeoMath Android foundation with native shell and offline canonical geometry.
+publish_to: none
+version: 0.1.0+1
+environment:
+  sdk: ^3.13.7
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  webview_flutter: 4.14.1
+  supabase_flutter: 2.18.3
+  sqflite: 2.4.5
+  sqflite_common: 2.5.15
+  flutter_secure_storage: 11.2.0
+  shared_preferences: 2.5.6
+  crypto: 3.0.8
+  path_provider: 2.1.6
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+  flutter_lints: 6.0.0
+  sqflite_common_ffi: 2.4.5
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/contracts/
+    - assets/contracts/cards/
+    - assets/module/

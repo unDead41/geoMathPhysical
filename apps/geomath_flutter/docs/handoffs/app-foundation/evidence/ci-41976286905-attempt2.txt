@@ -1,0 +1,8 @@
+Targeted Android capture, attempt2
+Run:https://github.com/unDead41/geodecoder/actions/runs/41976286905/attempts/2
+Source:243ffc22a8ac5c9b54e9b39dc51064c8598b1333
+Job:127077524226
+APK/archive/20asset/101runtime checks pass. Home/Settings captured. The live canonical canvas label is found and actual document margin scrolling works.
+Last retained hierarchy before the final swipe: android.widget.Image; Kubus, Bongkah 3D. Gunakan anak panah untuk putar dan tambah atau tolak untuk zum.;bounds=[60,1074][640,1184].
+The60second capture-only budget expires immediately after that swipe. The EXIT-trap ADB last-screen.png genuinely shows the full rendered coloured cube, its controls and native app header. Visual model proof is now present, but the waiter fails before writing its final metadata. Extend only this accessibility/scroll capture budget to90seconds; application handshake30seconds and all4test assertions are unchanged.
+Artifact13391874203;archiveSHA256af3b5ddf6d9b144265ad556af5b5f99b73434e960c0d54c87bdb97f139d32876.

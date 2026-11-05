@@ -1,0 +1,17 @@
+GitHub Actions run41864207926
+URL: https://github.com/unDead41/geodecoder/actions/runs/41864207926
+Tested commit:397cab4702a13a64a66d3145e0842bd22dcfb5ad
+verify job126694056035: PASS all steps (format/analyze/92 Flutter tests/11 Node checks/debug APK).
+android-smoke job126699793098: normal APK built; KVM setup passed; emulator image installation failed.
+Observed runner: Ubuntu26.04.1 image20261025.179.1 (ubuntu-latest).
+
+Exact failing SDK log excerpt:
+2026-11-04T16:26:55.7222663Z Installing system images.
+2026-11-04T16:26:55.7233997Z sdkmanager --install 'system-images;android-36;google_apis;x86_64' --channel=0
+2026-11-04T16:27:13.5347794Z Warning: An error occurred while preparing SDK package Google APIs Intel x86_64 Atom System Image: No space left on device.
+2026-11-04T16:27:15.6380440Z adb -s emulator-5554 emu kill
+2026-11-04T16:27:15.8170419Z error: could not connect to TCP port5554: Connection refused
+2026-11-04T16:27:15.8256052Z The process '/usr/bin/sh' failed with exit code1
+
+No actual Android integration test, app launch or screenshot completed in this run.
+The failing filesystem was not measured; this receipt does not assert root vs/tmp.

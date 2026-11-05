@@ -1,0 +1,500 @@
+{
+  "schema_version": 1,
+  "source_commit": "37bc2cd262cc0a54e8ee31339ea37471c1ecfda5",
+  "module_version": "1.6.2",
+  "mesh_entry_point": "learning-mesh.mjs/studySolidMesh",
+  "models": [
+    {
+      "id": "cube",
+      "name": "Kubus",
+      "tag": "Enam muka, semuanya sama.",
+      "flat": 6,
+      "curved": 0,
+      "edges": 12,
+      "vertices": 8,
+      "intro": "Kubus mempunyai 6 muka segi empat sama. Semua muka sama bentuk dan sama saiz. Kesemua 12 rusuknya sama panjang.",
+      "net": "Enam segi empat sama bercantum pada rusuk. Jejaki muka berwarna yang sama semasa bentangan dibuka dan dicantum semula.",
+      "observe": "Cari dua muka yang berhadapan. Muka itu tidak berkongsi rusuk.",
+      "labels": [
+        "Depan",
+        "Kanan",
+        "Belakang",
+        "Kiri",
+        "Atas",
+        "Bawah"
+      ],
+      "views": [
+        "Segi empat sama",
+        "Segi empat sama",
+        "Segi empat sama",
+        "Segi empat sama",
+        "Segi empat sama",
+        "Segi empat sama"
+      ],
+      "question": "Adakah pandangan atas menunjukkan semua 6 muka kubus?",
+      "options": [
+        "Tidak, hanya rupa dari atas.",
+        "Ya, semua muka dibuka."
+      ],
+      "answer": 0,
+      "feedback": "Pandangan atas hanya melihat bongkah dari satu arah. Bentangan membuka kesemua 6 muka pada satu satah.",
+      "dimensions": {
+        "a": 4
+      },
+      "physical_surface_ids": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "id": "cuboid",
+      "name": "Kuboid",
+      "tag": "Tiga pasang muka yang sepadan.",
+      "flat": 6,
+      "curved": 0,
+      "edges": 12,
+      "vertices": 8,
+      "intro": "Kuboid mempunyai 6 muka segi empat tepat. Muka berhadapan sama bentuk dan sama saiz. Contoh ini mewakili kotak 6 cm × 4 cm × 3 cm dalam bank GeoDecoder.",
+      "net": "Bentangan ini mempunyai tiga pasang segi empat tepat: 6 × 4, 6 × 3 dan 4 × 3. Sisi yang dicantum mesti sama panjang.",
+      "observe": "Bandingkan muka atas, depan dan kanan. Ukuran yang berbeza menghasilkan rupa yang berbeza.",
+      "labels": [
+        "Depan",
+        "Kanan",
+        "Belakang",
+        "Kiri",
+        "Atas",
+        "Bawah"
+      ],
+      "views": [
+        "Segi empat tepat · 6 × 4",
+        "Segi empat tepat · 6 × 4",
+        "Segi empat tepat · 6 × 3",
+        "Segi empat tepat · 6 × 3",
+        "Segi empat tepat · 4 × 3",
+        "Segi empat tepat · 4 × 3"
+      ],
+      "question": "Adakah semua 6 muka kuboid contoh ini sama saiz?",
+      "options": [
+        "Ya, semua sama saiz.",
+        "Tidak, ada 3 pasang saiz."
+      ],
+      "answer": 1,
+      "feedback": "Panjang, lebar dan tinggi contoh ini berbeza. Ada 3 pasang muka berhadapan yang sama saiz, bukan 6 muka yang semuanya sama saiz.",
+      "dimensions": {
+        "p": 6,
+        "l": 4,
+        "t": 3
+      },
+      "physical_surface_ids": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "id": "pyramid",
+      "name": "Piramid",
+      "tag": "Tapak segi empat sama, satu puncak.",
+      "flat": 5,
+      "curved": 0,
+      "edges": 8,
+      "vertices": 5,
+      "intro": "Piramid dalam GeoDecoder ialah piramid tegak bertapak segi empat sama. Empat muka segi tiga bertemu pada satu puncak. Puncak ialah salah satu daripada 5 bucu.",
+      "net": "Satu segi empat sama menjadi tapak. Empat segi tiga kekal bersambung pada sisi tapak dan bertemu semula pada puncak apabila dilipat.",
+      "observe": "Dari atas, tapak kelihatan segi empat sama dengan garisan rusuk menuju ke puncak. Dari depan, rupanya segi tiga.",
+      "labels": [
+        "Tapak",
+        "Sisi depan",
+        "Sisi kanan",
+        "Sisi belakang",
+        "Sisi kiri"
+      ],
+      "views": [
+        "Segi empat sama + rusuk",
+        "Segi empat sama",
+        "Segi tiga",
+        "Segi tiga",
+        "Segi tiga",
+        "Segi tiga"
+      ],
+      "question": "Apakah bentuk tapak piramid yang digunakan dalam GeoDecoder?",
+      "options": [
+        "Segi tiga.",
+        "Segi empat sama."
+      ],
+      "answer": 1,
+      "feedback": "Tapaknya segi empat sama. Empat muka sisinya berbentuk segi tiga. Piramid lain boleh mempunyai bentuk tapak yang berbeza.",
+      "dimensions": {
+        "a": 6,
+        "t": 4
+      },
+      "physical_surface_ids": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "id": "cylinder",
+      "name": "Silinder",
+      "tag": "Dua tapak bulatan, satu permukaan melengkung.",
+      "flat": 2,
+      "curved": 1,
+      "edges": 2,
+      "vertices": 0,
+      "intro": "Silinder tegak mempunyai 2 permukaan rata berbentuk bulatan yang sama saiz dan 1 permukaan melengkung. Ada 2 rusuk melengkung dan tiada bucu.",
+      "net": "Dua bulatan menjadi tapak. Permukaan melengkung dibuka menjadi segi empat tepat: panjangnya 2πj dan lebarnya t. j ialah jejari; t ialah tinggi silinder.",
+      "observe": "Dari atas atau bawah, rupanya bulatan. Dari sisi, rupanya segi empat tepat. Permukaan dibuka secara melengkung, bukan dilipat seperti panel rata.",
+      "labels": [
+        "Permukaan melengkung",
+        "Tapak atas",
+        "Tapak bawah"
+      ],
+      "views": [
+        "Bulatan",
+        "Bulatan",
+        "Segi empat tepat",
+        "Segi empat tepat",
+        "Segi empat tepat",
+        "Segi empat tepat"
+      ],
+      "question": "Apakah bentuk permukaan melengkung silinder apabila dibuka rata?",
+      "options": [
+        "Segi empat tepat.",
+        "Bulatan."
+      ],
+      "answer": 0,
+      "feedback": "Permukaan melengkung menjadi segi empat tepat. Dua bulatan berasingan ialah tapak atas dan tapak bawah.",
+      "curvedEdges": true,
+      "dimensions": {
+        "j": 7,
+        "t": 10
+      },
+      "physical_surface_ids": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "id": "cone",
+      "name": "Kon",
+      "tag": "Satu tapak bulatan, satu puncak.",
+      "flat": 1,
+      "curved": 1,
+      "edges": 1,
+      "vertices": 1,
+      "intro": "Kon tegak mempunyai 1 permukaan rata berbentuk bulatan dan 1 permukaan melengkung. Ada 1 rusuk melengkung dan 1 bucu pada puncak.",
+      "net": "Permukaan melengkung dibuka menjadi sektor bulatan. Jejari sektor ialah tinggi sendeng s. Panjang lengkoknya sama dengan lilitan tapak, 2πj.",
+      "observe": "Sektor bulatan bukan segi tiga. Lengkoknya melengkung dan panjangnya sepadan dengan lilitan tapak. θ = 360° × j/s.",
+      "labels": [
+        "Permukaan melengkung",
+        "Tapak bulatan"
+      ],
+      "views": [
+        "Bulatan + titik puncak",
+        "Bulatan",
+        "Segi tiga",
+        "Segi tiga",
+        "Segi tiga",
+        "Segi tiga"
+      ],
+      "question": "Apakah bentuk permukaan melengkung kon apabila dibuka rata?",
+      "options": [
+        "Segi tiga.",
+        "Sektor bulatan."
+      ],
+      "answer": 1,
+      "feedback": "Permukaan itu menjadi sektor bulatan, bukan segi tiga. Lengkok sektor menutup tepat sekeliling tapak bulatan apabila dicantum.",
+      "curvedEdges": true,
+      "dimensions": {
+        "j": 3,
+        "t": 4
+      },
+      "physical_surface_ids": [
+        0,
+        1
+      ]
+    },
+    {
+      "id": "triangular-prism",
+      "name": "Prisma segi tiga",
+      "tag": "Dua tapak segi tiga sekata yang sepadan.",
+      "enrichment": true,
+      "flat": 5,
+      "curved": 0,
+      "edges": 9,
+      "vertices": 6,
+      "intro": "Prisma tegak ini mempunyai dua tapak segi tiga sekata yang kongruen dan selari. 3 muka sisinya berbentuk segi empat tepat. Keratan yang selari dengan tapak mempunyai bentuk dan saiz yang sama.",
+      "net": "Dua tapak segi tiga dan 3 segi empat tepat membentuk bentangan. Muka sisi boleh dibuka sebagai satu jalur; kedua-dua tapak menutup hujung prisma apabila dilipat.",
+      "observe": "Bandingkan pandangan atas dengan pandangan sisi. Dari atas, bentuk tapak kelihatan. Dari sisi, tinggi prisma kelihatan.",
+      "labels": [
+        "Muka sisi 1",
+        "Muka sisi 2",
+        "Muka sisi 3",
+        "Tapak atas",
+        "Tapak bawah"
+      ],
+      "views": [
+        "Segi tiga",
+        "Segi tiga",
+        "Segi empat tepat + rusuk",
+        "Segi empat tepat + rusuk",
+        "Segi empat tepat + rusuk",
+        "Segi empat tepat + rusuk"
+      ],
+      "question": "Apakah yang sama pada kedua-dua tapak prisma ini?",
+      "options": [
+        "Bentuk dan saiznya sama.",
+        "Hanya warnanya mesti sama."
+      ],
+      "answer": 0,
+      "feedback": "Kedua-dua tapak prisma kongruen dan selari. Kongruen bermaksud sama bentuk dan sama saiz; warna tidak menentukan sifat prisma.",
+      "dimensions": {
+        "a": 4,
+        "t": 6
+      },
+      "physical_surface_ids": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "id": "tetrahedron",
+      "name": "Piramid bertapak segi tiga",
+      "tag": "Satu tapak segi tiga, tiga muka sisi.",
+      "enrichment": true,
+      "flat": 4,
+      "curved": 0,
+      "edges": 6,
+      "vertices": 4,
+      "intro": "Piramid tegak ini mempunyai tapak segi tiga sama sisi. Tiga muka sisi segi tiga bertemu pada satu puncak. Jumlahnya empat muka, enam rusuk dan empat bucu. Pepejal bermuka empat segi tiga ini juga dipanggil tetrahedron.",
+      "net": "Satu segi tiga ialah tapak dan tiga segi tiga lagi ialah muka sisi. Ketiga-tiga muka sisi dilipat pada rusuk tapak sehingga bertemu pada puncak.",
+      "observe": "Tinggi tegak diukur dari pusat tapak ke puncak. Tinggi sendeng muka sisi diukur dari titik tengah sisi tapak ke puncak.",
+      "labels": [
+        "Tapak segi tiga",
+        "Muka sisi 1",
+        "Muka sisi 2",
+        "Muka sisi 3"
+      ],
+      "views": [
+        "Segi tiga + rusuk",
+        "Segi tiga",
+        "Segi tiga + rusuk",
+        "Segi tiga + rusuk",
+        "Segi tiga + rusuk",
+        "Segi tiga + rusuk"
+      ],
+      "question": "Piramid bertapak segi tiga ini mempunyai berapa muka semuanya?",
+      "options": [
+        "Tiga muka.",
+        "Empat muka."
+      ],
+      "answer": 1,
+      "feedback": "Satu muka ialah tapak segi tiga dan tiga lagi ialah muka sisi. Jadi, jumlahnya empat muka segi tiga.",
+      "dimensions": {
+        "a": 6,
+        "t": 4
+      },
+      "physical_surface_ids": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "pentagonal-prism",
+      "name": "Prisma segi lima",
+      "tag": "Dua tapak segi lima sekata yang sepadan.",
+      "enrichment": true,
+      "flat": 7,
+      "curved": 0,
+      "edges": 15,
+      "vertices": 10,
+      "intro": "Prisma tegak ini mempunyai dua tapak segi lima sekata yang kongruen dan selari. 5 muka sisinya berbentuk segi empat tepat. Keratan yang selari dengan tapak mempunyai bentuk dan saiz yang sama.",
+      "net": "Dua tapak segi lima dan 5 segi empat tepat membentuk bentangan. Muka sisi boleh dibuka sebagai satu jalur; kedua-dua tapak menutup hujung prisma apabila dilipat.",
+      "observe": "Bandingkan pandangan atas dengan pandangan sisi. Dari atas, bentuk tapak kelihatan. Dari sisi, tinggi prisma kelihatan.",
+      "labels": [
+        "Muka sisi 1",
+        "Muka sisi 2",
+        "Muka sisi 3",
+        "Muka sisi 4",
+        "Muka sisi 5",
+        "Tapak atas",
+        "Tapak bawah"
+      ],
+      "views": [
+        "Segi lima",
+        "Segi lima",
+        "Segi empat tepat + rusuk",
+        "Segi empat tepat + rusuk",
+        "Segi empat tepat + rusuk",
+        "Segi empat tepat + rusuk"
+      ],
+      "question": "Apakah yang sama pada kedua-dua tapak prisma ini?",
+      "options": [
+        "Bentuk dan saiznya sama.",
+        "Hanya warnanya mesti sama."
+      ],
+      "answer": 0,
+      "feedback": "Kedua-dua tapak prisma kongruen dan selari. Kongruen bermaksud sama bentuk dan sama saiz; warna tidak menentukan sifat prisma.",
+      "dimensions": {
+        "a": 4,
+        "t": 6
+      },
+      "physical_surface_ids": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "id": "hexagonal-prism",
+      "name": "Prisma segi enam",
+      "tag": "Dua tapak segi enam sekata yang sepadan.",
+      "enrichment": true,
+      "flat": 8,
+      "curved": 0,
+      "edges": 18,
+      "vertices": 12,
+      "intro": "Prisma tegak ini mempunyai dua tapak segi enam sekata yang kongruen dan selari. 6 muka sisinya berbentuk segi empat tepat. Keratan yang selari dengan tapak mempunyai bentuk dan saiz yang sama.",
+      "net": "Dua tapak segi enam dan 6 segi empat tepat membentuk bentangan. Muka sisi boleh dibuka sebagai satu jalur; kedua-dua tapak menutup hujung prisma apabila dilipat.",
+      "observe": "Bandingkan pandangan atas dengan pandangan sisi. Dari atas, bentuk tapak kelihatan. Dari sisi, tinggi prisma kelihatan.",
+      "labels": [
+        "Muka sisi 1",
+        "Muka sisi 2",
+        "Muka sisi 3",
+        "Muka sisi 4",
+        "Muka sisi 5",
+        "Muka sisi 6",
+        "Tapak atas",
+        "Tapak bawah"
+      ],
+      "views": [
+        "Segi enam",
+        "Segi enam",
+        "Segi empat tepat + rusuk",
+        "Segi empat tepat + rusuk",
+        "Segi empat tepat + rusuk",
+        "Segi empat tepat + rusuk"
+      ],
+      "question": "Apakah yang sama pada kedua-dua tapak prisma ini?",
+      "options": [
+        "Bentuk dan saiznya sama.",
+        "Hanya warnanya mesti sama."
+      ],
+      "answer": 0,
+      "feedback": "Kedua-dua tapak prisma kongruen dan selari. Kongruen bermaksud sama bentuk dan sama saiz; warna tidak menentukan sifat prisma.",
+      "dimensions": {
+        "a": 4,
+        "t": 6
+      },
+      "physical_surface_ids": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "id": "sphere",
+      "name": "Sfera",
+      "tag": "Satu permukaan melengkung, tanpa bucu.",
+      "enrichment": true,
+      "noNet": true,
+      "flat": 0,
+      "curved": 1,
+      "edges": 0,
+      "vertices": 0,
+      "intro": "Sfera mempunyai satu permukaan melengkung dan tiada permukaan rata. Semua titik pada permukaannya berada pada jarak yang sama dari pusat. Jarak itu ialah jejari. Sfera tiada rusuk dan tiada bucu.",
+      "net": "Sfera tidak mempunyai bentangan rata yang tepat. Permukaan melengkungnya tidak boleh diratakan tanpa regangan atau penghampiran. Garisan pada ilustrasi sfera membantu menunjukkan bentuk, bukan rusuk.",
+      "observe": "Pandangan ortografik sfera dari mana-mana arah ialah bulatan. Bulatan itu ialah pandangan, bukannya bentangan sfera.",
+      "labels": [
+        "Permukaan melengkung"
+      ],
+      "views": [
+        "Bulatan",
+        "Bulatan",
+        "Bulatan",
+        "Bulatan",
+        "Bulatan",
+        "Bulatan"
+      ],
+      "question": "Adakah bulatan pandangan atas ialah bentangan seluruh sfera?",
+      "options": [
+        "Ya, seluruh permukaan telah dibuka.",
+        "Tidak, itu hanya pandangan dari satu arah."
+      ],
+      "answer": 1,
+      "feedback": "Bulatan itu ialah unjuran sfera dari satu arah. Seluruh permukaan sfera tidak mempunyai bentangan rata yang tepat.",
+      "dimensions": {
+        "j": 4
+      },
+      "physical_surface_ids": [
+        0
+      ]
+    },
+    {
+      "id": "hemisphere",
+      "name": "Hemisfera",
+      "tag": "Separuh sfera dengan satu tapak bulatan.",
+      "enrichment": true,
+      "noNet": true,
+      "flat": 1,
+      "curved": 1,
+      "edges": 1,
+      "vertices": 0,
+      "curvedEdges": true,
+      "intro": "Hemisfera ialah separuh sfera. Model tertutup ini mempunyai satu permukaan melengkung dan satu tapak bulatan rata. Ada satu rusuk melengkung pada sempadan tapak dan tiada bucu.",
+      "net": "Tapak hemisfera boleh dilukis sebagai bulatan rata. Bahagian melengkungnya tidak mempunyai bentangan rata yang tepat tanpa regangan atau penghampiran.",
+      "observe": "Dari atas atau bawah, pandangannya bulatan. Dari depan dan sisi, bentuk luarnya separuh bulatan. Tentukan sama ada tapak diambil kira apabila menghitung luas permukaan.",
+      "labels": [
+        "Permukaan melengkung",
+        "Tapak bulatan"
+      ],
+      "views": [
+        "Bulatan",
+        "Bulatan",
+        "Separuh bulatan",
+        "Separuh bulatan",
+        "Separuh bulatan",
+        "Separuh bulatan"
+      ],
+      "question": "Luas seluruh permukaan hemisfera tertutup perlu mengira bahagian mana?",
+      "options": [
+        "Permukaan melengkung dan tapak bulatan.",
+        "Permukaan melengkung sahaja."
+      ],
+      "answer": 0,
+      "feedback": "Hemisfera tertutup mempunyai permukaan melengkung dan satu tapak rata. Jumlah luasnya ialah 2πj² + πj² = 3πj².",
+      "dimensions": {
+        "j": 3
+      },
+      "physical_surface_ids": [
+        0,
+        1
+      ]
+    }
+  ]
+}

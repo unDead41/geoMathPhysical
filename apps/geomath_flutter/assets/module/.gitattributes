@@ -1,0 +1,2 @@
+# Preserve the byte-identical canonical build, including its original whitespace.
+canonical-module.html -whitespace

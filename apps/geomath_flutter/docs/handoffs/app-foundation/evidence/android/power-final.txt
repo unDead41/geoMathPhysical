@@ -1,0 +1,552 @@
+POWER MANAGER (dumpsys power)
+
+Power Manager State:
+  Settings power_manager_constants:
+    no_cached_wake_locks=true
+  mDirty=0x0
+  mWakefulness=Awake
+  mWakefulnessChanging=false
+  mIsPowered=true
+  mPlugType=1
+  mBatteryLevel=100
+  mDreamsBatteryLevelDrain=0
+  mDockState=0
+  mStayOn=true
+  mProximityPositive=false
+  mBootCompleted=true
+  mSystemReady=true
+  mEnhancedDischargeTimeElapsed=0
+  mLastEnhancedDischargeTimeUpdatedElapsed=0
+  mEnhancedDischargePredictionIsPersonalized=false
+  mUseAutoSuspend=true
+  mHalAutoSuspendModeEnabled=false
+  mHalInteractiveModeEnabled=true
+  mWakeLockSummary=0x0
+  mNotifyLongScheduled=(none)
+  mNotifyLongDispatched=-14s877ms
+  mNotifyLongNextCheck=(none)
+  mRequestWaitForNegativeProximity=false
+  mInterceptedPowerKeyForProximity=false
+  mSandmanScheduled=false
+  mBatteryLevelLow=false
+  mLightDeviceIdleMode=false
+  mDeviceIdleMode=false
+  mDeviceIdleWhitelist=[2000, 10070, 10071, 10079, 10119, 10129, 10142]
+  mDeviceIdleTempWhitelist=[]
+  mLowPowerStandbyActive=false
+  mLastWakeTime=0 (118552 ms ago)
+  mLastSleepTime=0 (118552 ms ago)
+  mLastSleepReason=application
+  mLastGlobalWakeTimeRealtime=0 (118552 ms ago)
+  mLastGlobalSleepTimeRealtime=0 (118552 ms ago)
+  mLastInteractivePowerHintTime=102892 (15660 ms ago)
+  mLastScreenBrightnessBoostTime=0 (118552 ms ago)
+  mScreenBrightnessBoostInProgress=false
+  mHoldingWakeLockSuspendBlocker=false
+  mHoldingDisplaySuspendBlocker=true
+  mLastFlipTime=0
+  mIsFaceDown=false
+
+Settings and Configuration:
+  mDecoupleHalAutoSuspendModeFromDisplayConfig=false
+  mDecoupleHalInteractiveModeFromDisplayConfig=false
+  mWakeUpWhenPluggedOrUnpluggedConfig=false
+  mWakeUpWhenPluggedOrUnpluggedInTheaterModeConfig=false
+  mTheaterModeEnabled=false
+  mKeepDreamingWhenUnplugging=false
+  mSuspendWhenScreenOffDueToProximityConfig=false
+  mDreamsSupportedConfig=true
+  mDreamsEnabledByDefaultConfig=true
+  mDreamsActivatedOnSleepByDefaultConfig=false
+  mDreamsActivatedOnDockByDefaultConfig=true
+  mDreamsEnabledOnBatteryConfig=false
+  mDreamsBatteryLevelMinimumWhenPoweredConfig=-1
+  mDreamsBatteryLevelMinimumWhenNotPoweredConfig=15
+  mDreamsBatteryLevelDrainCutoffConfig=5
+  mDreamsEnabledSetting=true
+  mDreamsActivateOnSleepSetting=false
+  mDreamsActivateOnDockSetting=true
+  mDozeAfterScreenOff=true
+  mBrightWhenDozingConfig=false
+  mMinimumScreenOffTimeoutConfig=10000
+  mMaximumScreenDimDurationConfig=7000
+  mMaximumScreenDimRatioConfig=0.20000005
+  mAttentiveTimeoutConfig=-1
+  mAttentiveTimeoutSetting=-1
+  mAttentiveWarningDurationConfig=30000
+  mScreenOffTimeoutSetting=1800000
+  mSleepTimeoutSetting=-1
+  mMaximumScreenOffTimeoutFromDeviceAdmin=9223372036854775807 (enforced=false)
+  mStayOnWhilePluggedInSetting=15
+  mScreenBrightnessOverrideFromWindowManager=NaN
+  mUserActivityTimeoutOverrideFromWindowManager=-1
+  mUserInactiveOverrideFromWindowManager=false
+  mDozeScreenStateOverrideFromDreamManager=0
+  mDrawWakeLockOverrideFromSidekick=false
+  mDozeScreenBrightnessOverrideFromDreamManager=-1
+  mScreenBrightnessMinimum=0.035433073
+  mScreenBrightnessMaximum=1.0
+  mScreenBrightnessDefault=0.39763778
+  mDoubleTapWakeEnabled=false
+  mForegroundProfile=0
+  mUserId=0
+
+Attentive timeout: -1 ms
+Sleep timeout: -1 ms
+Screen off timeout: 1800000 ms
+Screen dim duration: 7000 ms
+
+UID states (changing=false changed=false):
+  UID 1000:   ACTIVE  count=0 state=0
+  UID 1001:   ACTIVE  count=0 state=0
+  UID 1068:   ACTIVE  count=0 state=0
+  UID 1073:   ACTIVE  count=0 state=0
+  UID 2000:   ACTIVE  count=0 state=19
+  UID u0a62: INACTIVE  count=0 state=19
+  UID u0a63:   ACTIVE  count=0 state=19
+  UID u0a65: INACTIVE  count=0 state=19
+  UID u0a66: INACTIVE  count=0 state=15
+  UID u0a68: INACTIVE  count=0 state=19
+  UID u0a70: INACTIVE  count=0 state=19
+  UID u0a71: INACTIVE  count=0 state=15
+  UID u0a77:   ACTIVE  count=0 state=19
+  UID u0a79: INACTIVE  count=0 state=19
+  UID u0a83: INACTIVE  count=0 state=19
+  UID u0a97: INACTIVE  count=0 state=19
+  UID u0a99:   ACTIVE  count=0 state=19
+  UID u0a101: INACTIVE  count=0 state=15
+  UID u0a104:   ACTIVE  count=0 state=7
+  UID u0a105: INACTIVE  count=0 state=19
+  UID u0a106: INACTIVE  count=0 state=19
+  UID u0a107:   ACTIVE  count=0 state=19
+  UID u0a110:   ACTIVE  count=0 state=19
+  UID u0a112:   ACTIVE  count=0 state=19
+  UID u0a114:   ACTIVE  count=0 state=19
+  UID u0a115: INACTIVE  count=0 state=19
+  UID u0a120:   ACTIVE  count=0 state=5
+  UID u0a122:   ACTIVE  count=0 state=0
+  UID u0a127:   ACTIVE  count=0 state=19
+  UID u0a135:   ACTIVE  count=0 state=0
+  UID u0a136:   ACTIVE  count=0 state=19
+  UID u0a137:   ACTIVE  count=0 state=19
+  UID u0a142: INACTIVE  count=0 state=19
+  UID u0a143:   ACTIVE  count=0 state=19
+  UID u0a146:   ACTIVE  count=0 state=5
+  UID u0a148:   ACTIVE  count=0 state=2
+  UID u0ai9000:   ACTIVE  count=0 state=3
+
+Looper state:
+  Looper (PowerManagerService, tid 50) {880649b}
+    Message 0: { when=+29m37s340ms what=1 target=android.os.Handler }
+    (Total messages: 1, polling=true, quitting=false)
+
+Wake Locks: size=0
+
+Suspend Blockers: size=5
+  PowerManagerService.Booting: ref count=0 []
+  PowerManagerService.WakeLocks: ref count=0 []
+  PowerManagerService.Display: ref count=1 [holding display: (11-05 06:03:45.143)]
+  PowerManagerService.Broadcasts: ref count=0 []
+  PowerManagerService.WirelessChargerDetector: ref count=0 []
+
+Display Power: com.android.server.power.PowerManagerService$1@8344038
+
+Battery saving stats:
+  Battery Saver is currently: OFF
+    Times full enabled: 0
+    Times adaptive enabled: 0
+
+  Drain stats:
+                     Battery saver OFF                          ON
+  NonDoze NonIntr:      0m      0mAh(  0%)      0.0mAh/h          0m      0mAh(  0%)      0.0mAh/h
+             Intr:      0m      0mAh(  0%)      0.0mAh/h          0m      0mAh(  0%)      0.0mAh/h
+  Deep    NonIntr:      0m      0mAh(  0%)      0.0mAh/h          0m      0mAh(  0%)      0.0mAh/h
+             Intr:      0m      0mAh(  0%)      0.0mAh/h          0m      0mAh(  0%)      0.0mAh/h
+  Light   NonIntr:      0m      0mAh(  0%)      0.0mAh/h          0m      0mAh(  0%)      0.0mAh/h
+             Intr:      0m      0mAh(  0%)      0.0mAh/h          0m      0mAh(  0%)      0.0mAh/h
+
+Battery saver policy (*NOTE* they only apply when battery saver is ON):
+  Settings: battery_saver_constants
+    value:
+  Settings: (overlay)
+    value:
+  DeviceConfig: battery_saver
+    N/A
+  mAccessibilityEnabled=false
+  mAutomotiveProjectionActive=false
+  mPolicyLevel=0
+
+  Policy 'default full'
+    advertise_is_enabled=true
+    disable_vibration=false
+    disable_animation=false
+    defer_full_backup=true
+    defer_keyvalue_backup=true
+    enable_firewall=true
+    enable_datasaver=false
+    disable_launch_boost=true
+    enable_brightness_adjustment=false
+    adjust_brightness_factor=0.5
+    location_mode=3
+    force_all_apps_standby=true
+    force_background_check=true
+    disable_optional_sensors=true
+    disable_aod=true
+    soundtrigger_mode=1
+    enable_quick_doze=true
+    enable_night_mode=true
+
+  Policy 'current full'
+    advertise_is_enabled=true
+    disable_vibration=false
+    disable_animation=false
+    defer_full_backup=true
+    defer_keyvalue_backup=true
+    enable_firewall=true
+    enable_datasaver=false
+    disable_launch_boost=true
+    enable_brightness_adjustment=false
+    adjust_brightness_factor=0.5
+    location_mode=3
+    force_all_apps_standby=true
+    force_background_check=true
+    disable_optional_sensors=true
+    disable_aod=true
+    soundtrigger_mode=1
+    enable_quick_doze=true
+    enable_night_mode=true
+
+  Policy 'default adaptive'
+    advertise_is_enabled=false
+    disable_vibration=false
+    disable_animation=false
+    defer_full_backup=false
+    defer_keyvalue_backup=false
+    enable_firewall=false
+    enable_datasaver=false
+    disable_launch_boost=false
+    enable_brightness_adjustment=false
+    adjust_brightness_factor=1.0
+    location_mode=0
+    force_all_apps_standby=false
+    force_background_check=false
+    disable_optional_sensors=false
+    disable_aod=false
+    soundtrigger_mode=0
+    enable_quick_doze=false
+    enable_night_mode=false
+
+  Policy 'current adaptive'
+    advertise_is_enabled=false
+    disable_vibration=false
+    disable_animation=false
+    defer_full_backup=false
+    defer_keyvalue_backup=false
+    enable_firewall=false
+    enable_datasaver=false
+    disable_launch_boost=false
+    enable_brightness_adjustment=false
+    adjust_brightness_factor=1.0
+    location_mode=0
+    force_all_apps_standby=false
+    force_background_check=false
+    disable_optional_sensors=false
+    disable_aod=false
+    soundtrigger_mode=0
+    enable_quick_doze=false
+    enable_night_mode=false
+
+  Policy 'effective'
+    advertise_is_enabled=false
+    disable_vibration=false
+    disable_animation=false
+    defer_full_backup=false
+    defer_keyvalue_backup=false
+    enable_firewall=false
+    enable_datasaver=false
+    disable_launch_boost=false
+    enable_brightness_adjustment=false
+    adjust_brightness_factor=1.0
+    location_mode=0
+    force_all_apps_standby=false
+    force_background_check=false
+    disable_optional_sensors=false
+    disable_aod=false
+    soundtrigger_mode=0
+    enable_quick_doze=false
+    enable_night_mode=false
+
+Battery saver state machine:
+  Enabled=false
+    full=false
+    adaptive=false
+  mState=1
+  mLastChangedIntReason=0
+  mLastChangedStrReason=null
+  mBootCompleted=true
+  mSettingsLoaded=true
+  mBatteryStatusSet=true
+  mIsPowered=true
+  mBatteryLevel=100
+  mIsBatteryLevelLow=false
+  mSettingAutomaticBatterySaver=0
+  mSettingBatterySaverEnabled=false
+  mSettingBatterySaverEnabledSticky=false
+  mSettingBatterySaverStickyAutoDisableEnabled=true
+  mSettingBatterySaverStickyAutoDisableThreshold=90
+  mSettingBatterySaverTriggerThreshold=0
+  mBatterySaverStickyBehaviourDisabled=false
+  mBatterySaverTurnedOffNotificationEnabled=true
+  mDynamicPowerSavingsDefaultDisableThreshold=80
+  mDynamicPowerSavingsDisableThreshold=80
+  mDynamicPowerSavingsEnableBatterySaver=false
+  mLastAdaptiveBatterySaverChangedExternallyElapsed=0
+AttentionDetector:
+ mIsSettingEnabled=false
+ mMaxExtensionMillis=900000
+ mPreDimCheckDurationMillis=2000
+ mEffectivePostDimTimeout=0
+ mLastUserActivityTime(excludingAttention)=102892
+ mAttentionServiceSupported=false
+ mRequested=false
+
+Profile power states: size=0
+Display Group User Activity:
+  displayGroupId=0
+  userActivitySummary=0x1
+  lastUserActivityTime=102892 (15662 ms ago)
+  lastUserActivityTimeNoChangeLights=0 (118554 ms ago)
+  mWakeLockSummary=0x0
+
+Wireless Charger Detector State:
+  mGravitySensor={Sensor name="Gravity Sensor", vendor="AOSP", version=3, type=9, maxRange=19.6133, resolution=2.480159E-4, power=12.7, minDelay=10000}
+  mPoweredWirelessly=false
+  mAtRest=false
+  mRestX=0.0, mRestY=0.0, mRestZ=0.0
+  mDetectionInProgress=false
+  mDetectionStartTime=0 (never)
+  mMustUpdateRestPosition=false
+  mTotalSamples=0
+  mMovingSamples=0
+  mFirstSampleX=0.0, mFirstSampleY=0.0, mFirstSampleZ=0.0
+  mLastSampleX=0.0, mLastSampleY=0.0, mLastSampleZ=0.0
+Wake Lock Log
+  11-05 06:03:54.339 - 1000 (com.android.localtransport,...) - ACQ NetworkStats (partial)
+  11-05 06:03:54.403 - 1000 (com.android.localtransport,...) - REL NetworkStats
+  11-05 06:03:54.417 - 1000 (com.android.localtransport,...) - ACQ NetworkStats (partial)
+  11-05 06:03:54.465 - 1000 (com.android.localtransport,...) - REL NetworkStats
+  11-05 06:03:54.534 - 1000 (com.android.localtransport,...) - ACQ GnssVisibilityControl (partial)
+  11-05 06:03:54.578 - 1000 (com.android.localtransport,...) - REL GnssVisibilityControl
+  11-05 06:03:54.700 - 1000 (com.android.localtransport,...) - ACQ NetworkStats (partial)
+  11-05 06:03:54.704 - 1000 (com.android.localtransport,...) - ACQ WiredAccessoryManager (partial)
+  11-05 06:03:54.733 - 1000 (com.android.localtransport,...) - ACQ NotificationManagerService:post:android (partial)
+  11-05 06:03:54.767 - 1000 (com.android.localtransport,...) - REL NetworkStats
+  11-05 06:03:54.820 - 1000 (com.android.localtransport,...) - ACQ NetworkStats (partial)
+  11-05 06:03:54.892 - 1000 (com.android.localtransport,...) - REL NetworkStats
+  11-05 06:03:55.126 - 1000 (com.android.localtransport,...) - ACQ NetworkStats (partial)
+  11-05 06:03:55.819 - 1000 (com.android.localtransport,...) - REL WiredAccessoryManager
+  11-05 06:03:55.847 - 1000 (com.android.localtransport,...) - REL NetworkStats
+  11-05 06:03:56.168 - 1000 (com.android.localtransport,...) - ACQ NetworkStats (partial)
+  11-05 06:03:56.317 - 1000 (com.android.localtransport,...) - REL NetworkStats
+  11-05 06:03:56.325 - 1000 (com.android.localtransport,...) - ACQ NetworkStats (partial)
+  11-05 06:03:56.374 - 1000 (com.android.localtransport,...) - REL NetworkStats
+  11-05 06:03:56.381 - 1000 (com.android.localtransport,...) - ACQ NetworkStats (partial)
+  11-05 06:03:56.469 - 1000 (com.android.localtransport,...) - REL NetworkStats
+  11-05 06:03:56.579 - 1000 (com.android.localtransport,...) - REL NotificationManagerService:post:android
+  11-05 06:03:56.739 - 1000 (com.android.localtransport,...) - ACQ NetworkStats (partial)
+  11-05 06:03:56.772 - 1000 (com.android.localtransport,...) - REL NetworkStats
+  11-05 06:03:57.047 - 1002 (com.android.bluetooth) - ACQ bluetooth_timer (partial)
+  11-05 06:03:57.070 - 1002 (com.android.bluetooth) - REL bluetooth_timer
+  11-05 06:03:57.076 - 1001 (com.android.phone,...) - ACQ *telephony-radio* (partial)
+  11-05 06:03:57.081 - 1001 (com.android.phone,...) - REL *telephony-radio*
+  11-05 06:03:57.081 - 1001 (com.android.phone,...) - ACQ *telephony-radio* (partial)
+  11-05 06:03:57.391 - 1001 (com.android.phone,...) - ACQ RILJ_ACK_WL (partial)
+  11-05 06:03:57.654 - 1001 (com.android.phone,...) - ACQ GsmInboundSmsHandler (partial)
+  11-05 06:03:57.659 - 1001 (com.android.phone,...) - ACQ CdmaInboundSmsHandler (partial)
+  11-05 06:03:57.671 - 1073 (com.android.networkstack,...) - ACQ GsmCellBroadcastHandler (partial)
+  11-05 06:03:57.676 - 1073 (com.android.networkstack,...) - ACQ CellBroadcastHandler (partial)
+  11-05 06:03:57.680 - 1073 (com.android.networkstack,...) - ACQ CdmaServiceCategoryProgramHandler (partial)
+  11-05 06:03:58.234 - 1001 (com.android.phone,...) - REL RILJ_ACK_WL
+  11-05 06:03:58.325 - 1001 (com.android.phone,...) - REL GsmInboundSmsHandler
+  11-05 06:03:58.325 - 1001 (com.android.phone,...) - REL CdmaInboundSmsHandler
+  11-05 06:04:00.002 - 1000 (com.android.localtransport,...) - ACQ *alarm* (partial)
+  11-05 06:04:00.002 - 1000 (com.android.localtransport,...) - REL *alarm*
+  11-05 06:04:00.684 - 1073 (com.android.networkstack,...) - REL CdmaServiceCategoryProgramHandler
+  11-05 06:04:00.686 - 1073 (com.android.networkstack,...) - REL CellBroadcastHandler
+  11-05 06:04:00.691 - 1073 (com.android.networkstack,...) - REL GsmCellBroadcastHandler
+  11-05 06:04:03.331 - 1000 (com.android.localtransport,...) - ACQ NotificationManagerService:post:android (partial)
+  11-05 06:04:03.348 - 1000 (com.android.localtransport,...) - REL NotificationManagerService:post:android
+  11-05 06:04:04.270 - 1000 (com.android.localtransport,...) - ACQ NotificationManagerService:post:android (partial)
+  11-05 06:04:04.298 - 1000 (com.android.localtransport,...) - ACQ *launch* (partial)
+  11-05 06:04:04.521 - 1000 (com.android.localtransport,...) - ACQ SyncLoopWakeLock (partial)
+  11-05 06:04:04.532 - 1000 (com.android.localtransport,...) - REL SyncLoopWakeLock
+  11-05 06:04:04.753 - 1000 (com.android.localtransport,...) - ACQ *job*/@.a.p.s/.WriteFallbackSettingsFilesJobService (partial)
+  11-05 06:04:04.754 - 1000 (com.android.localtransport,...) - ACQ *job*/@.a.p.s/.WriteFallbackSettingsFilesJobService (partial)
+  11-05 06:04:04.773 - 1000 (com.android.localtransport,...) - REL *job*/@.a.p.s/.WriteFallbackSettingsFilesJobService
+  11-05 06:04:04.856 - 1000 (com.android.localtransport,...) - REL NotificationManagerService:post:android
+  11-05 06:04:04.883 - 1000 (com.android.localtransport,...) - REL *job*/@.a.p.s/.WriteFallbackSettingsFilesJobService
+  11-05 06:04:04.903 - 1000 (com.android.localtransport,...) - ACQ *job*/a/c.a.s.n.NotificationHistoryJobService (partial)
+  11-05 06:04:04.903 - 1000 (com.android.localtransport,...) - ACQ *job*/a/c.a.s.n.NotificationHistoryJobService (partial)
+  11-05 06:04:04.913 - 1000 (com.android.localtransport,...) - REL *job*/a/c.a.s.n.NotificationHistoryJobService
+  11-05 06:04:04.937 - 1000 (com.android.localtransport,...) - REL *job*/a/c.a.s.n.NotificationHistoryJobService
+  11-05 06:04:05.558 - 1000 (com.android.localtransport,...) - ACQ NotificationManagerService:post:android (partial)
+  11-05 06:04:05.955 - 1000 (com.android.localtransport,...) - ACQ NotificationManagerService:post:android (partial)
+  11-05 06:04:06.019 - 1000 (com.android.localtransport,...) - REL NotificationManagerService:post:android
+  11-05 06:04:06.050 - 10122 (com.android.systemui) - ACQ SysUI:BroadcastSender (partial)
+  11-05 06:04:06.050 - 10122 (com.android.systemui) - REL SysUI:BroadcastSender
+  11-05 06:04:06.278 - 1000 (com.android.localtransport,...) - REL NotificationManagerService:post:android
+  11-05 06:04:06.305 - 1000 (com.android.localtransport,...) - ACQ NotificationManagerService:post:android (partial)
+  11-05 06:04:06.568 - 1000 (com.android.localtransport,...) - REL NotificationManagerService:post:android
+  11-05 06:04:06.984 - 1000 (com.android.localtransport,...) - ACQ *job*/c.a.p.m.m/c.a.p.m.MediaService (partial)
+  11-05 06:04:06.984 - 1000 (com.android.localtransport,...) - ACQ *job*/c.a.p.m.m/c.a.p.m.MediaService (partial)
+  11-05 06:04:06.985 - 1000 (com.android.localtransport,...) - REL *job*/c.a.p.m.m/c.a.p.m.MediaService
+  11-05 06:04:07.325 - 1000 (com.android.localtransport,...) - ACQ NotificationManagerService:post:android (partial)
+  11-05 06:04:07.344 - 1000 (com.android.localtransport,...) - ACQ NotificationManagerService:post:android (partial)
+  11-05 06:04:07.386 - 1000 (com.android.localtransport,...) - ACQ NotificationManagerService:post:android (partial)
+  11-05 06:04:07.554 - 1000 (com.android.localtransport,...) - REL NotificationManagerService:post:android
+  11-05 06:04:07.554 - 1000 (com.android.localtransport,...) - REL NotificationManagerService:post:android
+  11-05 06:04:07.615 - 1000 (com.android.localtransport,...) - REL NotificationManagerService:post:android
+  11-05 06:04:08.696 - 1000 (com.android.localtransport,...) - ACQ *job*/c.a.p/.h.HibernationJobService (partial)
+  11-05 06:04:08.696 - 1000 (com.android.localtransport,...) - ACQ *job*/c.a.p/.h.HibernationJobService (partial)
+  11-05 06:04:08.703 - 1000 (com.android.localtransport,...) - REL *job*/c.a.p/.h.HibernationJobService
+  11-05 06:04:08.707 - 10079 (com.android.providers.calendar) - ACQ CalendarReceiver_Provider (partial)
+  11-05 06:04:08.720 - 1000 (com.android.localtransport,...) - REL *job*/c.a.p/.h.HibernationJobService
+  11-05 06:04:08.763 - 10079 (com.android.providers.calendar) - REL CalendarReceiver_Provider
+  11-05 06:04:08.918 - 1000 (com.android.localtransport,...) - ACQ *job*/c.a.p/.p.s.PermissionEventCleanupJobService (partial)
+  11-05 06:04:08.918 - 1000 (com.android.localtransport,...) - ACQ *job*/c.a.p/.p.s.PermissionEventCleanupJobService (partial)
+  11-05 06:04:08.922 - 1000 (com.android.localtransport,...) - REL *job*/c.a.p/.p.s.PermissionEventCleanupJobService
+  11-05 06:04:08.962 - 1000 (com.android.localtransport,...) - REL *job*/c.a.p/.p.s.PermissionEventCleanupJobService
+  11-05 06:04:11.086 - 1000 (com.android.localtransport,...) - ACQ NetworkStats (partial)
+  11-05 06:04:11.191 - 1000 (com.android.localtransport,...) - REL NetworkStats
+  11-05 06:04:11.958 - 1000 (com.android.localtransport,...) - ACQ NetworkStats (partial)
+  11-05 06:04:12.037 - 1000 (com.android.localtransport,...) - REL NetworkStats
+  11-05 06:04:12.065 - 1000 (com.android.localtransport,...) - ACQ NetworkStats (partial)
+  11-05 06:04:12.126 - 1000 (com.android.localtransport,...) - REL NetworkStats
+  11-05 06:04:12.163 - 1000 (com.android.localtransport,...) - ACQ NetworkTimeUpdateService (partial)
+  11-05 06:04:12.225 - 1000 (com.android.localtransport,...) - ACQ *job*/@.w.s.a.d/a.w.i.b.s.SystemJobService (partial)
+  11-05 06:04:12.225 - 1000 (com.android.localtransport,...) - ACQ *job*/@.w.s.a.d/a.w.i.b.s.SystemJobService (partial)
+  11-05 06:04:12.241 - 1000 (com.android.localtransport,...) - REL *job*/@.w.s.a.d/a.w.i.b.s.SystemJobService
+  11-05 06:04:12.321 - 1000 (com.android.localtransport,...) - ACQ time_detector (partial)
+  11-05 06:04:12.321 - 1000 (com.android.localtransport,...) - REL time_detector
+  11-05 06:04:12.329 - 1000 (com.android.localtransport,...) - REL NetworkTimeUpdateService
+  11-05 06:04:12.400 - 1000 (com.android.localtransport,...) - REL *job*/@.w.s.a.d/a.w.i.b.s.SystemJobService
+  11-05 06:04:12.799 - 1000 (com.android.localtransport,...) - ACQ *job*/c.a.m/.d.a.ActionServiceImpl (partial)
+  11-05 06:04:12.799 - 1000 (com.android.localtransport,...) - ACQ *job*/c.a.m/.d.a.ActionServiceImpl (partial)
+  11-05 06:04:12.803 - 1000 (com.android.localtransport,...) - REL *job*/c.a.m/.d.a.ActionServiceImpl
+  11-05 06:04:12.873 - 1000 (com.android.localtransport,...) - ACQ *job*/c.a.m/.d.a.BackgroundWorkerService (partial)
+  11-05 06:04:12.874 - 1000 (com.android.localtransport,...) - ACQ *job*/c.a.m/.d.a.BackgroundWorkerService (partial)
+  11-05 06:04:12.877 - 1000 (com.android.localtransport,...) - REL *job*/c.a.m/.d.a.BackgroundWorkerService
+  11-05 06:04:12.925 - 1000 (com.android.localtransport,...) - ACQ *location*:GnssLocationProvider (partial)
+  11-05 06:04:12.950 - 1000 (com.android.localtransport,...) - ACQ *job*/@.w.s.a.s/a.w.i.b.s.SystemJobService (partial)
+  11-05 06:04:12.968 - 1000 (com.android.localtransport,...) - ACQ *job*/@.w.s.a.s/a.w.i.b.s.SystemJobService (partial)
+  11-05 06:04:12.975 - 1000 (com.android.localtransport,...) - ACQ *location*:PsdsDownload (partial)
+  11-05 06:04:12.975 - 1000 (com.android.localtransport,...) - REL *location*:GnssLocationProvider
+  11-05 06:04:12.986 - 1000 (com.android.localtransport,...) - REL *job*/@.w.s.a.s/a.w.i.b.s.SystemJobService
+  11-05 06:04:12.986 - 1000 (com.android.localtransport,...) - ACQ *job*/@.w.s.a.s/a.w.i.b.s.SystemJobService (partial)
+  11-05 06:04:12.986 - 1000 (com.android.localtransport,...) - ACQ *job*/@.w.s.a.s/a.w.i.b.s.SystemJobService (partial)
+  11-05 06:04:12.986 - 1000 (com.android.localtransport,...) - REL *job*/@.w.s.a.s/a.w.i.b.s.SystemJobService
+  11-05 06:04:12.986 - 1000 (com.android.localtransport,...) - ACQ *job*/c.a.i/.f.FcmRegistrationService (partial)
+  11-05 06:04:12.986 - 1000 (com.android.localtransport,...) - ACQ *job*/c.a.i/.f.FcmRegistrationService (partial)
+  11-05 06:04:12.987 - 1000 (com.android.localtransport,...) - REL *location*:PsdsDownload
+  11-05 06:04:12.990 - 1000 (com.android.localtransport,...) - REL *job*/c.a.i/.f.FcmRegistrationService
+  11-05 06:04:13.050 - 1000 (com.android.localtransport,...) - REL *job*/c.a.m/.d.a.ActionServiceImpl
+  11-05 06:04:13.121 - 1000 (com.android.localtransport,...) - REL *job*/c.a.i/.f.FcmRegistrationService
+  11-05 06:04:13.206 - 1000 (com.android.localtransport,...) - REL *launch*
+  11-05 06:04:13.279 - 1000 (com.android.localtransport,...) - REL *job*/@.w.s.a.s/a.w.i.b.s.SystemJobService
+  11-05 06:04:13.780 - 1000 (com.android.localtransport,...) - ACQ *alarm* (partial)
+  11-05 06:04:13.849 - 1000 (com.android.localtransport,...) - ACQ *job*/c.a.p.c/.CalendarProviderJobService (partial)
+  11-05 06:04:13.849 - 1000 (com.android.localtransport,...) - ACQ *job*/c.a.p.c/.CalendarProviderJobService (partial)
+  11-05 06:04:13.865 - 1000 (com.android.localtransport,...) - REL *job*/c.a.p.c/.CalendarProviderJobService
+  11-05 06:04:13.875 - 1000 (com.android.localtransport,...) - REL *alarm*
+  11-05 06:04:13.914 - 1000 (com.android.localtransport,...) - REL *job*/c.a.p.c/.CalendarProviderJobService
+  11-05 06:04:13.928 - 1000 (com.android.localtransport,...) - ACQ NetworkStats (partial)
+  11-05 06:04:13.975 - 1000 (com.android.localtransport,...) - REL *job*/@.w.s.a.s/a.w.i.b.s.SystemJobService
+  11-05 06:04:13.977 - 1000 (com.android.localtransport,...) - ACQ *job*/@.w.s.a.s/a.w.i.b.s.SystemJobService (partial)
+  11-05 06:04:13.977 - 1000 (com.android.localtransport,...) - ACQ *job*/@.w.s.a.s/a.w.i.b.s.SystemJobService (partial)
+  11-05 06:04:13.978 - 1000 (com.android.localtransport,...) - REL NetworkStats
+  11-05 06:04:13.980 - 1000 (com.android.localtransport,...) - REL *job*/@.w.s.a.s/a.w.i.b.s.SystemJobService
+  11-05 06:04:13.989 - 1000 (com.android.localtransport,...) - ACQ ConnectivityService (partial)
+  11-05 06:04:14.010 - 1000 (com.android.localtransport,...) - REL *job*/@.w.s.a.s/a.w.i.b.s.SystemJobService
+  11-05 06:04:14.080 - 1002 (com.android.bluetooth) - ACQ bluetooth_timer (partial)
+  11-05 06:04:14.312 - 1002 (com.android.bluetooth) - REL bluetooth_timer
+  11-05 06:04:14.373 - 1000 (com.android.localtransport,...) - ACQ *job*/c.a.m/.d.a.ActionServiceImpl (partial)
+  11-05 06:04:14.373 - 1000 (com.android.localtransport,...) - ACQ *job*/c.a.m/.d.a.ActionServiceImpl (partial)
+  11-05 06:04:14.374 - 1000 (com.android.localtransport,...) - REL *job*/c.a.m/.d.a.ActionServiceImpl
+  11-05 06:04:14.389 - 1000 (com.android.localtransport,...) - REL *job*/c.a.m/.d.a.BackgroundWorkerService
+  11-05 06:04:14.532 - 1000 (com.android.localtransport,...) - REL *job*/c.a.m/.d.a.ActionServiceImpl
+  11-05 06:04:16.568 - 1000 (com.android.localtransport,...) - ACQ *launch* (partial)
+  11-05 06:04:18.748 - 1000 (com.android.localtransport,...) - REL *job*/c.a.p.m.m/c.a.p.m.MediaService
+  11-05 06:04:20.811 - 1000 (com.android.localtransport,...) - REL *launch*
+  11-05 06:04:22.302 - 1000 (com.android.localtransport,...) - ACQ *alarm* (partial)
+  11-05 06:04:22.303 - 1000 (com.android.localtransport,...) - ACQ NetworkStats (partial)
+  11-05 06:04:22.328 - 1000 (com.android.localtransport,...) - REL NetworkStats
+  11-05 06:04:22.328 - 1000 (com.android.localtransport,...) - REL *alarm*
+  11-05 06:04:23.806 - 1041 (com.android.localtransport,...) - ACQ AudioMix (partial)
+  11-05 06:04:23.806 - 1041 (com.android.localtransport,...) - ACQ AudioMix (partial)
+  11-05 06:04:23.819 - 1041 (com.android.localtransport,...) - REL AudioMix
+  11-05 06:04:23.819 - 1041 (com.android.localtransport,...) - ACQ AudioMix (partial)
+  11-05 06:04:24.059 - 1041 (com.android.localtransport,...) - REL AudioMix
+  11-05 06:04:24.060 - 1041 (com.android.localtransport,...) - ACQ AudioMix (partial)
+  11-05 06:04:26.815 - 1041 (com.android.localtransport,...) - REL AudioMix
+  11-05 06:04:26.915 - 1041 (com.android.localtransport,...) - REL AudioMix
+  11-05 06:04:33.651 - 1041 (com.android.localtransport,...) - ACQ AudioMix (partial)
+  11-05 06:04:33.651 - 1041 (com.android.localtransport,...) - REL AudioMix
+  11-05 06:04:33.651 - 1041 (com.android.localtransport,...) - ACQ AudioMix (partial)
+  11-05 06:04:33.814 - 1041 (com.android.localtransport,...) - REL AudioMix
+  11-05 06:04:33.814 - 1041 (com.android.localtransport,...) - ACQ AudioMix (partial)
+  11-05 06:04:36.702 - 1041 (com.android.localtransport,...) - REL AudioMix
+  11-05 06:04:47.007 - 1000 (com.android.localtransport,...) - ACQ *alarm* (partial)
+  11-05 06:04:47.009 - 1000 (com.android.localtransport,...) - REL *alarm*
+  11-05 06:05:00.000 - 1000 (com.android.localtransport,...) - ACQ *alarm* (partial)
+  11-05 06:05:00.000 - 1000 (com.android.localtransport,...) - REL *alarm*
+  11-05 06:05:13.623 - 1001 (com.android.phone,...) - REL *telephony-radio*
+  11-05 06:05:13.992 - 1000 (com.android.localtransport,...) - REL ConnectivityService
+  -
+  Events: 170, Time-Resets: 32
+  Buffer, Bytes used: 713
+
+Wakefulness Session Observer:
+default timeout: 1800000
+override timeout: -1
+  Wakefulness Session Power Group powerGroupId: 0
+    current wakefulness: 0
+    current user activity event: 2
+    current user activity duration: 59800
+    previous user activity event: 1
+    previous user activity duration: 61978
+    is in override timeout: false
+
+FaceDownDetector:
+  mFaceDown=false
+  mActive=true
+  mLastFlipTime=0
+  mSensorMaxLatencyMicros=2000000
+  mUserInteractionBackoffMillis=60000
+  mPreviousResultTime=0
+  mPreviousResultType=1
+  mMillisSaved=0
+  mZAccelerationThreshold=-9.5
+  mAccelerationThreshold=0.2
+  mTimeThreshold=PT1S
+  mEnabledOverride=true
+AmbientDisplaySuppressionController:
+ ambientDisplaySuppressed=false
+ mSuppressionTokens={}
+
+Low Power Standby Controller:
+  mIsActive=false
+  mIsEnabled=false
+  mSupportedConfig=false
+  mEnabledByDefaultConfig=false
+  mStandbyTimeoutConfig=0
+  mEnableCustomPolicy=false
+  Allowed UIDs=[]
+
+  UID allowed reasons:
+
+ScreenTimeoutOverridePolicy:
+  mScreenTimeoutOverrideConfig=-1
+  mLastAutoReleaseReason=-1
+PowerManagerFlags:
+ enable_early_screen_timeout_detector:                 true (def:true)
+ improve_wakelock_latency:                             false (def:false)

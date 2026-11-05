@@ -1,0 +1,18 @@
+Successful targeted Android screenshot receipt
+Run:https://github.com/unDead41/geodecoder/actions/runs/41977674183
+Source/tooling:2f2719ef57ac7c53251bd85772dd505b412baada
+Job:127080229442
+All steps:SUCCESS. This is a capture-only run, not a repetition of the source/device suites.
+Exact normal APK from full successfulCI41973098124, sourcef5aeddd58d81e490b1e67b8bf4a21311645d3631.
+APK172051208bytes;SHA256ae533c5f573adee45304a732dd4d9f39840f84da71ace0fc4c2035aea0dd213d;artifact13390878421. ArchiveSHA256754e866ba82c46c49894a3a3815109b019e2ea4286bb0acc953a6b9e9486f7b0. All20bundled assets and101frozen runtime files match source.
+Capture artifact13391749447;archiveSHA25676c67c2927f0de0049fc3e1eceb1a0adaf495935b9f76a76e53714ea6ea2357d.
+Actual ADB Home, Settings and module-preview PNGs visually inspected. The canonical coloured cube, model/view controls and native app header are visible; no spinner/blank screen is accepted. Device JSON and activeWebView dump are retained with these images. Offline Android15/API35 AOSP,720x1280@320dpi.
+The60→90second adjustment applies solely to accessibility/scrolling for screenshot evidence. The native30second handshake and all four integration assertions are unchanged. Required source/build/normalAPK/device tests passed inCI41973098124; both identified runs together satisfy the final proof.
+
+Actual selected CI lines:
+2026-11-05T06:01:44.8239306Z All101 frozen runtime files match the application fully verified by CI41973098124.
+2026-11-05T06:02:36.0163558Z Exact CI41973098124 normal APK verified;172051208 bytes;20 matching bundled assets.
+2026-11-05T06:04:05.2662570Z Emulator booted.
+2026-11-05T06:04:16.5842185Z Performing Streamed Install
+2026-11-05T06:04:16.5853317Z Success
+2026-11-05T06:05:28.6831644Z {"screenshots": ["01-home-offline.png", "37-settings.png", "module-preview.png"], "device": {"model": "Android SDK built for x86_64", "android": "15", "api": "35", "boot_completed": "1", "device_id": "emulator-5554", "display_size": "Physical size: 1080x1920\nOverride size: 720x1280", "display_density": "Physical density: 420\nOverride density: 320", "airplane_mode": "1"}, "source": "actual ADB screen capture"}

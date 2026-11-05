@@ -1,0 +1,322 @@
+{
+  "schema_version": 1,
+  "repository": "unDead41/geodecoder",
+  "app_base_commit": "38f061af963256528d5060ff076bae9ee05eafc3",
+  "canonical_branch": "main-digitalized",
+  "firmware_main_reference": {
+    "commit": "25836eb1a6f24459aace8a3980ae880a13e3b488",
+    "version": "2.0.2",
+    "modified": false
+  },
+  "canonical_commit": "37bc2cd262cc0a54e8ee31339ea37471c1ecfda5",
+  "canonical_tree": "ce89242bbf9409c6ccad5129631dfe8ac3a52db8",
+  "digital_version": "2.9.1",
+  "module_version": "1.6.2",
+  "bank_version": "bank15-sha256:6ea4e9057d1f04e4f485aeefd89ec3cb681deb07b2dad7e76862e78e22159065",
+  "ruleset": "single-attempt-v1",
+  "schemas": {
+    "module_progress": 1,
+    "module_settings": 1,
+    "native_envelope": 1,
+    "solo_snapshot": 1,
+    "formative_record": 1,
+    "asset_manifest": 1
+  },
+  "source_inputs": [
+    {
+      "path": "digital/design-system/tokens.mjs",
+      "git_blob": "94a77935bf3b9c67cf6c5cd5766bc677858b58b4",
+      "sha256": "9b07725e80a595fcd2cb76cf05ca4043f9d6c5891d9f0a92699993df4412513a",
+      "bytes": 7186
+    },
+    {
+      "path": "digital/dist/core.mjs",
+      "git_blob": "f132ee6a360e452a5ec62a1fab522b6a0e04a479",
+      "sha256": "a174f5461cd86392c4f9f12f72ac02b0f7329a69c10b8c6bd04b891665b91bd2",
+      "bytes": 11447
+    },
+    {
+      "path": "digital/dist/duel-state.mjs",
+      "git_blob": "bd7d821064d99b0565c9f11d57e1c72d6b8140d9",
+      "sha256": "370065ace3ee7534640f0a42ad130da47778f0652778fcb2096535215ac2e01c",
+      "bytes": 4430
+    },
+    {
+      "path": "digital/dist/module-copy.mjs",
+      "git_blob": "001dd5f9be0bd783d73564d001de6be382196ca0",
+      "sha256": "55b6f5b373b193a3fd649fc6123742707b5485ad42fe68681f0e54b9bd900eb0",
+      "bytes": 107425
+    },
+    {
+      "path": "digital/dist/module-foundation.css",
+      "git_blob": "4aa735035d300a8a90f952621c4a3e2813c4cc0d",
+      "sha256": "087093fb4d74af106cc6f901f3bac20ea921153eb556d202f720e1906a6d551f",
+      "bytes": 1373
+    },
+    {
+      "path": "digital/dist/module-frame.mjs",
+      "git_blob": "cf1fabd31fae02d8f99599ee55f1e5b2a5b9c6f9",
+      "sha256": "d3f75e7839d749465fb2050035e27056cc71771ef400887e33208135fb65c230",
+      "bytes": 7592
+    },
+    {
+      "path": "digital/dist/module-language.mjs",
+      "git_blob": "b5f9f289d8d2ed23074659103a65829e9f4ad054",
+      "sha256": "16b37e316ee23c15b340d7574cd934b7c8cff609015541fa86585a80297edd03",
+      "bytes": 5001
+    },
+    {
+      "path": "digital/dist/module-progress.mjs",
+      "git_blob": "d8bfbaf2c6a65cbbf6ab1f8fc46808ac7360c85e",
+      "sha256": "4d465f217eb1fe26ddb85faa7d7b1f18fd6c394351d7671194df3caf5a071f5f",
+      "bytes": 8751
+    },
+    {
+      "path": "digital/dist/module-settings.mjs",
+      "git_blob": "ed7424a4be420beb34216b6ce8c6f11c386021b8",
+      "sha256": "ba43ab7df4429a53a3551d8aaac1068941963ae449d982808cac973a72975036",
+      "bytes": 2035
+    },
+    {
+      "path": "digital/dist/questions.mjs",
+      "git_blob": "f1368f40149231d359de74d3bdef53f7ad9b27be",
+      "sha256": "b95d955187adc96d02e6689f0f94ed4c93c3d77490b120aaf908d3077ea0b715",
+      "bytes": 4485
+    },
+    {
+      "path": "digital/dist/solo-save.mjs",
+      "git_blob": "681b577f920e290cd7bf737899d2622203b0dde5",
+      "sha256": "ed9fcf5bb3d9391cdae216c219169fa75275ab69b4c6f154e40cae19d8f883cc",
+      "bytes": 5985
+    },
+    {
+      "path": "digital/dist/visuals.mjs",
+      "git_blob": "8427f5cf93e785735d340e7e825a723cc572f797",
+      "sha256": "9db952dd665f1b8783c08b39694c39d164098783d88000f99ca203369f39d532",
+      "bytes": 1341
+    },
+    {
+      "path": "digital/module/package.json",
+      "git_blob": "92bc4f833583b45277c32d0ea50c92546c80c58d",
+      "sha256": "c3e4a0769ac6f63db755daf85630332ce939a24379ec0f93958fd67f3953fa14",
+      "bytes": 222
+    },
+    {
+      "path": "digital/module/src/accessibility.mjs",
+      "git_blob": "eac9692ce0d9e9167d1f859ebba8eff2cde8cf9b",
+      "sha256": "c164483945ccd9ddb7e23d83763849210a95cc6f41c05eed47eb4a5809e67588",
+      "bytes": 10994
+    },
+    {
+      "path": "digital/module/src/app.mjs",
+      "git_blob": "54d79dac1d3a53300b8b36d4b86f7cad56de201c",
+      "sha256": "656bd39a54f381b0e1a7fa0cc089c8640e489637e3decf4de4ea6f529abbe1a3",
+      "bytes": 33064
+    },
+    {
+      "path": "digital/module/src/calculation-steps.mjs",
+      "git_blob": "87013cc606ac3758661d0037fbf95cd5654ff706",
+      "sha256": "bb816783f981a6289d3442f89af6c1f0d1b7237b9a3ace82f6e9f05448e4bce0",
+      "bytes": 27620
+    },
+    {
+      "path": "digital/module/src/calculation-workshop.css",
+      "git_blob": "8ca181edfecafbfcfe0e43e2fc68c765c6ce73d3",
+      "sha256": "ca2248654131f36048635f8cf6fc750759791a1cab75728d459683c5a769e4b3",
+      "bytes": 9293
+    },
+    {
+      "path": "digital/module/src/calculation-workshop.mjs",
+      "git_blob": "ff6f6f373b67bb6a2aeebc962366c6ba857a5cdb",
+      "sha256": "10012bee570d428e80049ed04d78ed3b91c8f8782e5139a22a1d0ff48770eab4",
+      "bytes": 33109
+    },
+    {
+      "path": "digital/module/src/central-tokens.mjs",
+      "git_blob": "b5b43ee24d9acc71dd6f4a8298bbbfbbcad7f5c9",
+      "sha256": "bf1bc990ecc7b891f767d26db35555e4fbfa40cc304ae4c8d7bfd4e50135d669",
+      "bytes": 12319
+    },
+    {
+      "path": "digital/module/src/content.mjs",
+      "git_blob": "8e757a7a777929d0e256d4dd570464e0a4217224",
+      "sha256": "74930a38486ce156625af42efee63b5e638eba5d8ea221a7766498c1245b2ae3",
+      "bytes": 10067
+    },
+    {
+      "path": "digital/module/src/design-system.mjs",
+      "git_blob": "8e8e08aa9c6f649399bbec3cfdcf686e573ab84f",
+      "sha256": "2ed613b42e2103689e556e17e91c4d8aa29aa40a165cf221f0eb3e36d969931c",
+      "bytes": 1817
+    },
+    {
+      "path": "digital/module/src/design-tokens.css",
+      "git_blob": "907c91e72610ce78985ad842db1b2d3817a999a9",
+      "sha256": "351f63ca2c83abfc5133abf1418cdd9af09902063492b45e7a58415866bd2ea3",
+      "bytes": 5621
+    },
+    {
+      "path": "digital/module/src/geometry.mjs",
+      "git_blob": "f399dbbdeaaea8874ac54f2c74305e3b690fa628",
+      "sha256": "07c832055b11b4c7968085e6121f6581b28edc349304a4881dcc8acf177387ba",
+      "bytes": 6446
+    },
+    {
+      "path": "digital/module/src/guided.mjs",
+      "git_blob": "2e1ffe9a104c6f71cc0d3caf5df1d3654da0c3b4",
+      "sha256": "8ea0b2b20d5343613a42f8af56dcca05ac8e2e0e9921b27c1491a11c160e0744",
+      "bytes": 3881
+    },
+    {
+      "path": "digital/module/src/index.html",
+      "git_blob": "950b0591cf49e1b57ecdeee907ea57c859e4758d",
+      "sha256": "c8a1d5494a050f743ff82ea0dd52226301d14435961fb5540af1e7b5b790b18a",
+      "bytes": 55000
+    },
+    {
+      "path": "digital/module/src/lab-geometry.mjs",
+      "git_blob": "37aa7bb48a3d401b7bcd2a7e8d46ca17e2f4b765",
+      "sha256": "16d2c2736b236465866d8e94bc78e4d2d0460c0f7376760880047a3178ef1a98",
+      "bytes": 9421
+    },
+    {
+      "path": "digital/module/src/labs.mjs",
+      "git_blob": "c75a6e0c75bb36329b4cd6779376d218c74c8cff",
+      "sha256": "023873e7ac6dc0b97de4b9a9ba4fdc3591f77b6e64c915981d7d2c92bca72e7f",
+      "bytes": 67928
+    },
+    {
+      "path": "digital/module/src/learning-mesh.mjs",
+      "git_blob": "02d8621fe45a33b1c908f702ad60f8f0827cd364",
+      "sha256": "5dc74f31077e12d35852cbfb984ee2cf77244bfd0543298a66316371f9df2787",
+      "bytes": 3787
+    },
+    {
+      "path": "digital/module/src/lessons.mjs",
+      "git_blob": "56fab529e0393b94baf3377c6012ada8b744733f",
+      "sha256": "ef93b8ef46eb3ce6566b3bb95435d516c7dd7a574630bffb73cbf125a3bf71be",
+      "bytes": 19959
+    },
+    {
+      "path": "digital/module/src/net-print.mjs",
+      "git_blob": "f44b4c0074c9c8f12db75ed853faea4e39c1db67",
+      "sha256": "558d61f8ab691b7aff0625a965848ae9b9bd47ffc147a79760744557ca419d60",
+      "bytes": 11526
+    },
+    {
+      "path": "digital/module/src/net-studio-geometry.mjs",
+      "git_blob": "f1c9058beda091372fe92e9da45e67110924c385",
+      "sha256": "95c6cc517712d29f441b90b770c641dfff6867f8926fdf5f0603273ea73cc619",
+      "bytes": 8869
+    },
+    {
+      "path": "digital/module/src/net-studio.mjs",
+      "git_blob": "bc4daa83499e789d52cd77ac05f566f3fe241273",
+      "sha256": "280299fa484ddbeda5df7a743dd3ed98da94da696e5f56ae26af92fd7e82a77f",
+      "bytes": 7537
+    },
+    {
+      "path": "digital/module/src/net-tools.css",
+      "git_blob": "915654486a354f422ed8004326748a3835627390",
+      "sha256": "ee0fc010258f27f486d5c2d875e5b6861cd9d51eeaa8f8636ee09ad15d93d05d",
+      "bytes": 2755
+    },
+    {
+      "path": "digital/module/src/notes.mjs",
+      "git_blob": "23a2f10f39d2968ebe5ca3ef0240f9d5db02d104",
+      "sha256": "3f0226a0a38c790efd3e2c821a5d15fc7fb4310ca72c0d35f4a7dff0cade488e",
+      "bytes": 13692
+    },
+    {
+      "path": "digital/module/src/preset-nets.mjs",
+      "git_blob": "b8156072fd12a9e9c4d98d4d06c38dddd3f969ad",
+      "sha256": "4c53cd7c9a991ed4fe89f20883dc6c008f31485d9bc92b05f673cbf84adcd5b7",
+      "bytes": 3739
+    },
+    {
+      "path": "digital/module/src/projection-geometry.mjs",
+      "git_blob": "65d1be264ba6fad1b152d29981e928cfc6a73d4d",
+      "sha256": "ac348b0d72a73b190d58aa993f66d0d566bd9740a5c660389bec994ded224369",
+      "bytes": 15474
+    },
+    {
+      "path": "digital/module/src/projection-studio.css",
+      "git_blob": "02c1e551b8123c52df967004508fba0a4d518fec",
+      "sha256": "cad5286e99610694dc4fae7c8d6acd4abc04c6e31d41738cc6e9ca0530d9bae6",
+      "bytes": 12527
+    },
+    {
+      "path": "digital/module/src/projection-studio.mjs",
+      "git_blob": "5d464de665bfb41b8415ef6738d10e7a15769516",
+      "sha256": "4c3bc2c4dd5d8f51f5c11d7c986d55131efe59c915554aeca824e048195e7e80",
+      "bytes": 52750
+    },
+    {
+      "path": "digital/module/src/renderer.mjs",
+      "git_blob": "821c6cc6ac0964ef94485a388647fa67ddfc55e9",
+      "sha256": "a38bc6ca1815efc0d3846bcd1dad37b6b572363dae839eb4335b8a6bb84033de",
+      "bytes": 6612
+    },
+    {
+      "path": "digital/module/src/style.css",
+      "git_blob": "f21ffb4473be4dd4e4d7f1c3c24870e36fae7236",
+      "sha256": "315dc2781c9798278dd3c3c61fabf16d70c065a7b1081e6a706378f893d0a506",
+      "bytes": 113511
+    },
+    {
+      "path": "digital/module/src/surface-workshop.mjs",
+      "git_blob": "b025dc359614f365df32edd88522a8718220e091",
+      "sha256": "ca53b894f9201966b41310d256b2f47d10991006c665df235455aa8690c6b7a4",
+      "bytes": 8637
+    },
+    {
+      "path": "digital/module/src/ui.mjs",
+      "git_blob": "d2fb5fd895fb16825e6d526b3ff30f226684455b",
+      "sha256": "42be6ca95a2b4bf3522e7e82ce33928bb23d3eb58e179c10cfc72a543f9dc36c",
+      "bytes": 1379
+    },
+    {
+      "path": "digital/module/src/volume-lab.mjs",
+      "git_blob": "49f880e36cc0797a093f1bdc99d38a35de644c64",
+      "sha256": "4e2177fc9a295f3aedf04dd10c6fa06505a54194b307e663b0541dbb5f06549d",
+      "bytes": 2842
+    },
+    {
+      "path": "digital/module/src/volume-transfer.mjs",
+      "git_blob": "e4d4729b36ae64bb86762ac8764a52a19ef9ecbe",
+      "sha256": "231a4751e8abb0af6583e0c4686aaa1050a8b40b8a6b8f301f889177fb365f60",
+      "bytes": 1649
+    },
+    {
+      "path": "digital/module/tools/build.mjs",
+      "git_blob": "80cb7aecd4b5306914fa3026d0c8711ad293489a",
+      "sha256": "48b50689b128d35a26afe565b24893a3f26f55791912cdcce05b65edb7b9c118",
+      "bytes": 2143
+    },
+    {
+      "path": "digital/package.json",
+      "git_blob": "aa9d75bfa052ca8f875685e5bd90294a5de89ca2",
+      "sha256": "44ba91a5282f3c81395b553274ad20c11b77f24c2c1c0e60807395f26969da59",
+      "bytes": 1356
+    },
+    {
+      "path": "digital/tools/design-tokens.mjs",
+      "git_blob": "eeb97abd0d850cbb39901de344b4cbce2b677b4f",
+      "sha256": "b8adec395be670bc74570e9940dcd043f4420880269d2bb60fbe92bed8dd5984",
+      "bytes": 3011
+    }
+  ],
+  "feature_manifests": [
+    "assets/contracts/manifest.json",
+    "assets/module/manifest.json"
+  ],
+  "module_build": {
+    "command": "node tools/module/build_module.mjs <canonical-root> <recursive-tree.json>",
+    "source_built": true,
+    "canonical_html_sha256": "7ddd5d60a25fbdf73c20f9f8e8fc0db4253e582fb50d17c944307b8f682066c4",
+    "adapter_version": 2
+  },
+  "limitations": [
+    "Android device smoke must be recorded separately; source/build checks are not Android WebView evidence."
+  ]
+}

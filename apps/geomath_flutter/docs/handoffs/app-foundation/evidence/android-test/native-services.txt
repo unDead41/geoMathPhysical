@@ -1,0 +1,264 @@
+--------- beginning of system
+11-05 05:30:30.746   547   547 W ActivityManager: Too early to start/bind service in system_server: Phase=550 ComponentInfo{com.android.server.telecom/com.android.server.telecom.components.TelecomService}
+11-05 05:30:30.746   547   547 W ActivityManager: Too early to start/bind service in system_server: Phase=550 ComponentInfo{com.android.server.telecom/com.android.server.telecom.components.TelecomService}
+11-05 05:30:31.003   547   587 W ActivityManager: com.android.systemui inode == 0 (b/152760674)
+11-05 05:30:31.046   547   587 W ActivityManager: com.android.permissioncontroller inode == 0 (b/152760674)
+11-05 05:30:31.610   547   587 W ActivityManager: com.android.keychain inode == 0 (b/152760674)
+11-05 05:30:31.648   547   587 W ActivityManager: Slow operation: 62ms so far, now at startProcess: returned from zygote!
+11-05 05:30:31.649   547   587 W ActivityManager: Slow operation: 63ms so far, now at startProcess: done updating battery stats
+11-05 05:30:31.649   547   587 W ActivityManager: Slow operation: 63ms so far, now at startProcess: building log message
+11-05 05:30:31.649   547   587 W ActivityManager: Slow operation: 63ms so far, now at startProcess: starting to update pids map
+11-05 05:30:31.649   547   587 W ActivityManager: Slow operation: 63ms so far, now at startProcess: done updating pids map
+11-05 05:30:32.363   547   587 W ActivityManager: com.android.cellbroadcastservice inode == 0 (b/152760674)
+11-05 05:30:32.438   547   587 W ActivityManager: Slow operation: 81ms so far, now at startProcess: starting to update pids map
+11-05 05:30:32.438   547   587 W ActivityManager: Slow operation: 81ms so far, now at startProcess: done updating pids map
+11-05 05:30:33.658   547   587 W ActivityManager: com.android.bluetooth inode == 0 (b/152760674)
+11-05 05:30:33.697   547   547 W ActivityTaskManager: callingPackage for (uid=-1, pid=0) has no WPC
+11-05 05:30:33.704   547   587 W ActivityManager: Slow operation: 59ms so far, now at startProcess: returned from zygote!
+11-05 05:30:33.748   547   587 W ActivityManager: Slow operation: 103ms so far, now at startProcess: done updating battery stats
+11-05 05:30:33.748   547   587 W ActivityManager: Slow operation: 103ms so far, now at startProcess: building log message
+11-05 05:30:33.748   547   587 W ActivityManager: Slow operation: 103ms so far, now at startProcess: starting to update pids map
+11-05 05:30:33.748   547   587 W ActivityManager: Slow operation: 103ms so far, now at startProcess: done updating pids map
+11-05 05:30:33.748   547   587 W ActivityManager: Slow operation: 60ms so far, now at startProcess: asking zygote to start proc
+11-05 05:30:33.748   547   587 W ActivityManager: com.android.se inode == 0 (b/152760674)
+11-05 05:30:33.762   547   587 W ActivityManager: Slow operation: 74ms so far, now at startProcess: returned from zygote!
+11-05 05:30:33.763   547   587 W ActivityManager: Slow operation: 75ms so far, now at startProcess: done updating battery stats
+11-05 05:30:33.763   547   587 W ActivityManager: Slow operation: 75ms so far, now at startProcess: building log message
+11-05 05:30:33.763   547   587 W ActivityManager: Slow operation: 75ms so far, now at startProcess: starting to update pids map
+11-05 05:30:33.763   547   587 W ActivityManager: Slow operation: 75ms so far, now at startProcess: done updating pids map
+11-05 05:30:33.764   547   587 W ActivityManager: Slow operation: 75ms so far, now at startProcess: asking zygote to start proc
+11-05 05:30:33.764   547   587 W ActivityManager: com.android.phone inode == 0 (b/152760674)
+11-05 05:30:33.778   547   587 W ActivityManager: Slow operation: 89ms so far, now at startProcess: returned from zygote!
+11-05 05:30:33.780   547   587 W ActivityManager: Slow operation: 91ms so far, now at startProcess: done updating battery stats
+11-05 05:30:33.799   547   587 W ActivityManager: Slow operation: 110ms so far, now at startProcess: building log message
+11-05 05:30:33.799   547   587 W ActivityManager: Slow operation: 110ms so far, now at startProcess: starting to update pids map
+11-05 05:30:33.801   547   587 W ActivityManager: Slow operation: 112ms so far, now at startProcess: done updating pids map
+11-05 05:30:33.814   547   587 W ActivityManager: Slow operation: 67ms so far, now at startProcess: asking zygote to start proc
+11-05 05:30:33.814   547   587 W ActivityManager: com.android.keychain inode == 0 (b/152760674)
+11-05 05:30:33.848   547   587 W ActivityManager: Slow operation: 101ms so far, now at startProcess: returned from zygote!
+11-05 05:30:33.852   547   587 W ActivityManager: Slow operation: 105ms so far, now at startProcess: done updating battery stats
+11-05 05:30:33.855   547   587 W ActivityManager: Slow operation: 108ms so far, now at startProcess: building log message
+11-05 05:30:33.863   547   587 W ActivityManager: Slow operation: 116ms so far, now at startProcess: starting to update pids map
+11-05 05:30:33.866   547   587 W ActivityManager: Slow operation: 119ms so far, now at startProcess: done updating pids map
+11-05 05:30:33.935   547  1012 W ActivityManager: Slow operation: 56ms so far, now at attachApplicationLocked: immediately after bindApplication
+11-05 05:30:33.935   547  1012 W ActivityManager: Slow operation: 56ms so far, now at attachApplicationLocked: after updateLruProcessLocked
+11-05 05:30:33.987   547  1012 W ActivityManager: Slow operation: 97ms so far, now at attachApplicationLocked: after updateOomAdjLocked
+11-05 05:30:34.059   547  1007 W ActivityManager: Slow operation: 51ms so far, now at attachApplicationLocked: immediately after bindApplication
+11-05 05:30:34.059   547  1007 W ActivityManager: Slow operation: 57ms so far, now at attachApplicationLocked: after updateLruProcessLocked
+11-05 05:30:34.061   547  1007 W ActivityManager: Slow operation: 59ms so far, now at attachApplicationLocked: after updateOomAdjLocked
+11-05 05:30:39.243   547   587 W ActivityManager: com.android.cellbroadcastreceiver.module inode == 0 (b/152760674)
+11-05 05:30:39.306   547   587 W ActivityManager: Slow operation: 79ms so far, now at startProcess: returned from zygote!
+11-05 05:30:39.306   547   587 W ActivityManager: Slow operation: 79ms so far, now at startProcess: done updating battery stats
+11-05 05:30:39.306   547   587 W ActivityManager: Slow operation: 79ms so far, now at startProcess: building log message
+11-05 05:30:39.306   547   587 W ActivityManager: Slow operation: 79ms so far, now at startProcess: starting to update pids map
+11-05 05:30:39.306   547   587 W ActivityManager: Slow operation: 79ms so far, now at startProcess: done updating pids map
+11-05 05:30:39.661   547   587 W ActivityManager: com.android.cellbroadcastreceiver inode == 0 (b/152760674)
+11-05 05:30:40.766   547   630 W ActivityManager: pid 1034 com.android.phone sent binder code 54 with flags 2 to frozen apps and got error -74
+11-05 05:30:41.434   547   587 W ActivityManager: com.android.carrierconfig inode == 0 (b/152760674)
+11-05 05:30:42.328   547   572 W ActivityManager: Slow operation: 774ms so far, now at attachApplicationLocked: immediately before bindApplication
+11-05 05:30:42.332   547   572 W ActivityManager: Slow operation: 778ms so far, now at attachApplicationLocked: immediately after bindApplication
+11-05 05:30:42.332   547   572 W ActivityManager: Slow operation: 778ms so far, now at attachApplicationLocked: after updateLruProcessLocked
+11-05 05:30:42.342   547   572 W ActivityManager: Slow operation: 788ms so far, now at attachApplicationLocked: after updateOomAdjLocked
+11-05 05:30:42.998   547   587 W ActivityManager: com.android.inputmethod.latin inode == 0 (b/152760674)
+11-05 05:30:43.109   547   587 W ActivityManager: Slow operation: 141ms so far, now at startProcess: returned from zygote!
+11-05 05:30:43.120   547   587 W ActivityManager: Slow operation: 145ms so far, now at startProcess: done updating battery stats
+11-05 05:30:43.120   547   587 W ActivityManager: Slow operation: 153ms so far, now at startProcess: building log message
+11-05 05:30:43.121   547   587 W ActivityManager: Slow operation: 154ms so far, now at startProcess: starting to update pids map
+11-05 05:30:43.122   547   587 W ActivityManager: Slow operation: 155ms so far, now at startProcess: done updating pids map
+11-05 05:30:43.122   547   587 W ActivityManager: Slow operation: 123ms so far, now at startProcess: asking zygote to start proc
+11-05 05:30:43.122   547   587 W ActivityManager: com.android.launcher3 inode == 0 (b/152760674)
+11-05 05:30:43.145   547   587 W ActivityManager: Slow operation: 146ms so far, now at startProcess: returned from zygote!
+11-05 05:30:43.145   547   587 W ActivityManager: Slow operation: 146ms so far, now at startProcess: done updating battery stats
+11-05 05:30:43.145   547   587 W ActivityManager: Slow operation: 146ms so far, now at startProcess: building log message
+11-05 05:30:43.145   547   587 W ActivityManager: Slow operation: 146ms so far, now at startProcess: starting to update pids map
+11-05 05:30:43.145   547   587 W ActivityManager: Slow operation: 146ms so far, now at startProcess: done updating pids map
+11-05 05:30:43.255   547   587 W ActivityManager: android.ext.services inode == 0 (b/152760674)
+11-05 05:30:43.880   547  1184 W ActivityManager: Slow operation: 94ms so far, now at finishAttachApplicationInner: after mServices.attachApplicationLocked
+11-05 05:30:43.880   547  1184 W ActivityManager: Slow operation: 94ms so far, now at finishAttachApplicationInner: after dispatching broadcasts
+11-05 05:30:44.590   547   587 W ActivityManager: Slow operation: 88ms so far, now at startProcess: returned from zygote!
+11-05 05:30:44.737   547   587 W ActivityManager: Slow operation: 166ms so far, now at startProcess: done updating battery stats
+11-05 05:30:44.737   547   587 W ActivityManager: Slow operation: 235ms so far, now at startProcess: building log message
+11-05 05:30:44.738   547   587 W ActivityManager: Slow operation: 235ms so far, now at startProcess: starting to update pids map
+11-05 05:30:44.738   547   587 W ActivityManager: Slow operation: 236ms so far, now at startProcess: done updating pids map
+11-05 05:30:44.738   547   587 W ActivityManager: Slow operation: 104ms so far, now at startProcess: asking zygote to start proc
+11-05 05:30:44.751   547   587 W ActivityManager: Slow operation: 117ms so far, now at startProcess: returned from zygote!
+11-05 05:30:44.751   547   587 W ActivityManager: Slow operation: 117ms so far, now at startProcess: done updating battery stats
+11-05 05:30:44.751   547   587 W ActivityManager: Slow operation: 117ms so far, now at startProcess: building log message
+11-05 05:30:44.751   547   587 W ActivityManager: Slow operation: 117ms so far, now at startProcess: starting to update pids map
+11-05 05:30:44.751   547   587 W ActivityManager: Slow operation: 117ms so far, now at startProcess: done updating pids map
+11-05 05:30:45.069   547  1007 W ActivityManager: Slow operation: 88ms so far, now at attachApplicationLocked: immediately before bindApplication
+11-05 05:30:45.131   547  1007 W ActivityManager: Slow operation: 267ms so far, now at attachApplicationLocked: immediately after bindApplication
+11-05 05:30:45.131   547  1007 W ActivityManager: Slow operation: 311ms so far, now at attachApplicationLocked: after updateLruProcessLocked
+11-05 05:30:45.212   547  1007 W ActivityManager: Slow operation: 392ms so far, now at attachApplicationLocked: after updateOomAdjLocked
+11-05 05:30:45.335   547  1072 W ActivityManager: Slow operation: 123ms so far, now at attachApplicationLocked: immediately before bindApplication
+11-05 05:30:45.336   547  1072 W ActivityManager: Slow operation: 124ms so far, now at attachApplicationLocked: immediately after bindApplication
+11-05 05:30:45.336   547  1072 W ActivityManager: Slow operation: 124ms so far, now at attachApplicationLocked: after updateLruProcessLocked
+11-05 05:30:45.341   547  1072 W ActivityManager: Slow operation: 129ms so far, now at attachApplicationLocked: after updateOomAdjLocked
+11-05 05:30:45.396   547   587 W ActivityManager: Slow operation: 595ms so far, now at startProcess: done updating battery stats
+11-05 05:30:45.396   547   587 W ActivityManager: Slow operation: 595ms so far, now at startProcess: building log message
+11-05 05:30:45.396   547   587 W ActivityManager: Slow operation: 595ms so far, now at startProcess: starting to update pids map
+11-05 05:30:45.396   547   587 W ActivityManager: Slow operation: 595ms so far, now at startProcess: done updating pids map
+11-05 05:30:45.629   547  1007 W ActivityTaskManager: callingPackage for (uid=-1, pid=0) has no WPC
+11-05 05:30:45.784   547   586 W ActivityManager: Slow operation: 241ms so far, now at startProcess: done creating new process record
+11-05 05:30:45.784   547   586 W ActivityManager: Slow operation: 241ms so far, now at startProcess: stepping in to startProcess
+11-05 05:30:45.785   547   586 W ActivityManager: Slow operation: 242ms so far, now at startProcess: done starting proc!
+11-05 05:30:45.913   547   630 W ActivityManager: Slow operation: 187ms so far, now at finishAttachApplicationInner: after mServices.attachApplicationLocked
+11-05 05:30:45.913   547   630 W ActivityManager: Slow operation: 187ms so far, now at finishAttachApplicationInner: after dispatching broadcasts
+11-05 05:30:45.913   547   630 W ActivityManager: Slow operation: 187ms so far, now at finishAttachApplicationInner: after updateOomAdjLocked
+11-05 05:30:45.915   547   571 W ActivityManager: Slow operation: 449ms so far, now at startProcess: done updating battery stats
+11-05 05:30:45.915   547   571 W ActivityManager: Slow operation: 450ms so far, now at startProcess: building log message
+11-05 05:30:45.915   547   571 W ActivityManager: Slow operation: 450ms so far, now at startProcess: starting to update pids map
+11-05 05:30:45.918   547   571 W ActivityManager: Slow operation: 453ms so far, now at startProcess: done updating pids map
+11-05 05:30:46.161   547   571 W ActivityManager: Slow operation: 247ms so far, now at attachApplicationLocked: immediately before bindApplication
+11-05 05:30:46.161   547   571 W ActivityManager: Slow operation: 247ms so far, now at attachApplicationLocked: immediately after bindApplication
+11-05 05:30:46.161   547   571 W ActivityManager: Slow operation: 247ms so far, now at attachApplicationLocked: after updateLruProcessLocked
+11-05 05:30:46.167   547   571 W ActivityManager: Slow operation: 253ms so far, now at attachApplicationLocked: after updateOomAdjLocked
+11-05 05:30:46.171   547   587 W ActivityManager: Slow operation: 387ms so far, now at startProcess: asking zygote to start proc
+11-05 05:30:46.211   547   587 W ActivityManager: Slow operation: 427ms so far, now at startProcess: returned from zygote!
+11-05 05:30:46.211   547   587 W ActivityManager: Slow operation: 427ms so far, now at startProcess: done updating battery stats
+11-05 05:30:46.211   547   587 W ActivityManager: Slow operation: 427ms so far, now at startProcess: building log message
+11-05 05:30:46.211   547   587 W ActivityManager: Slow operation: 427ms so far, now at startProcess: starting to update pids map
+11-05 05:30:46.219   547   587 W ActivityManager: Slow operation: 435ms so far, now at startProcess: done updating pids map
+11-05 05:30:46.219   547   587 W ActivityManager: Slow operation: 331ms so far, now at startProcess: asking zygote to start proc
+11-05 05:30:46.255   547   587 W ActivityManager: Slow operation: 364ms so far, now at startProcess: returned from zygote!
+11-05 05:30:46.256   547   587 W ActivityManager: Slow operation: 368ms so far, now at startProcess: done updating battery stats
+11-05 05:30:46.258   547   587 W ActivityManager: Slow operation: 370ms so far, now at startProcess: building log message
+11-05 05:30:46.258   547   587 W ActivityManager: Slow operation: 370ms so far, now at startProcess: starting to update pids map
+11-05 05:30:46.272   547   587 W ActivityManager: Slow operation: 384ms so far, now at startProcess: done updating pids map
+11-05 05:30:46.273   547   587 W ActivityManager: Slow operation: 361ms so far, now at startProcess: asking zygote to start proc
+11-05 05:30:46.322   547   587 W ActivityManager: Slow operation: 410ms so far, now at startProcess: returned from zygote!
+11-05 05:30:46.358   547   587 W ActivityManager: Slow operation: 446ms so far, now at startProcess: done updating battery stats
+11-05 05:30:46.358   547   587 W ActivityManager: Slow operation: 446ms so far, now at startProcess: building log message
+11-05 05:30:46.358   547   587 W ActivityManager: Slow operation: 446ms so far, now at startProcess: starting to update pids map
+11-05 05:30:46.359   547   587 W ActivityManager: Slow operation: 447ms so far, now at startProcess: done updating pids map
+11-05 05:30:47.141   547   587 W ActivityManager: Slow operation: 68ms so far, now at startProcess: returned from zygote!
+11-05 05:30:47.162   547   587 W ActivityManager: Slow operation: 89ms so far, now at startProcess: done updating battery stats
+11-05 05:30:47.166   547   587 W ActivityManager: Slow operation: 93ms so far, now at startProcess: building log message
+11-05 05:30:47.166   547   587 W ActivityManager: Slow operation: 93ms so far, now at startProcess: starting to update pids map
+11-05 05:30:47.166   547   587 W ActivityManager: Slow operation: 93ms so far, now at startProcess: done updating pids map
+11-05 05:30:47.170   547   587 W ActivityManager: Slow operation: 70ms so far, now at startProcess: asking zygote to start proc
+11-05 05:30:47.205   547   587 W ActivityManager: Slow operation: 105ms so far, now at startProcess: returned from zygote!
+11-05 05:30:47.205   547   587 W ActivityManager: Slow operation: 105ms so far, now at startProcess: done updating battery stats
+11-05 05:30:47.205   547   587 W ActivityManager: Slow operation: 105ms so far, now at startProcess: building log message
+11-05 05:30:47.206   547   587 W ActivityManager: Slow operation: 106ms so far, now at startProcess: starting to update pids map
+11-05 05:30:47.206   547   587 W ActivityManager: Slow operation: 106ms so far, now at startProcess: done updating pids map
+11-05 05:30:48.529   547   586 W ActivityManager: Slow operation: 106ms so far, now at startProcess: done starting proc!
+11-05 05:30:48.532   547   587 W ActivityManager: Slow operation: 73ms so far, now at startProcess: asking zygote to start proc
+11-05 05:30:48.580   547   587 W ActivityManager: Slow operation: 121ms so far, now at startProcess: returned from zygote!
+11-05 05:30:48.582   547   587 W ActivityManager: Slow operation: 123ms so far, now at startProcess: done updating battery stats
+11-05 05:30:48.582   547   587 W ActivityManager: Slow operation: 123ms so far, now at startProcess: building log message
+11-05 05:30:48.584   547   587 W ActivityManager: Slow operation: 125ms so far, now at startProcess: starting to update pids map
+11-05 05:30:48.584   547   587 W ActivityManager: Slow operation: 125ms so far, now at startProcess: done updating pids map
+11-05 05:30:48.852   547  1295 W ActivityTaskManager: callingPackage for (uid=-1, pid=0) has no WPC
+11-05 05:30:48.972   547  1669 W ActivityManager: Slow operation: 65ms so far, now at attachApplicationLocked: after updateOomAdjLocked
+11-05 05:30:49.041   547   587 W ActivityManager: Slow operation: 56ms so far, now at startProcess: starting to update pids map
+11-05 05:30:49.041   547   587 W ActivityManager: Slow operation: 56ms so far, now at startProcess: done updating pids map
+11-05 05:30:49.439   547  1466 W ActivityManager: Slow operation: 90ms so far, now at attachApplicationLocked: immediately before bindApplication
+11-05 05:30:49.439   547  1466 W ActivityManager: Slow operation: 90ms so far, now at attachApplicationLocked: immediately after bindApplication
+11-05 05:30:49.439   547  1466 W ActivityManager: Slow operation: 90ms so far, now at attachApplicationLocked: after updateLruProcessLocked
+11-05 05:30:49.439   547  1466 W ActivityManager: Slow operation: 90ms so far, now at attachApplicationLocked: after updateOomAdjLocked
+11-05 05:30:49.645   547   587 W ActivityManager: Slow operation: 52ms so far, now at startProcess: returned from zygote!
+11-05 05:30:49.660   547   587 W ActivityManager: Slow operation: 82ms so far, now at startProcess: done updating battery stats
+11-05 05:30:49.660   547   587 W ActivityManager: Slow operation: 82ms so far, now at startProcess: building log message
+11-05 05:30:49.660   547   587 W ActivityManager: Slow operation: 82ms so far, now at startProcess: starting to update pids map
+11-05 05:30:49.660   547   587 W ActivityManager: Slow operation: 82ms so far, now at startProcess: done updating pids map
+11-05 05:30:51.342   547  1295 W ActivityManager: Invalid packageName: com.geomath.dev
+11-05 05:30:52.206   547   587 W ActivityManager: Slow operation: 56ms so far, now at startProcess: building log message
+11-05 05:30:52.212   547   587 W ActivityManager: Slow operation: 62ms so far, now at startProcess: starting to update pids map
+11-05 05:30:52.212   547   587 W ActivityManager: Slow operation: 62ms so far, now at startProcess: done updating pids map
+11-05 05:30:53.054   547   587 W ActivityManager: Slow operation: 121ms so far, now at startProcess: returned from zygote!
+11-05 05:30:53.054   547   587 W ActivityManager: Slow operation: 121ms so far, now at startProcess: done updating battery stats
+11-05 05:30:53.054   547   587 W ActivityManager: Slow operation: 121ms so far, now at startProcess: building log message
+11-05 05:30:53.054   547   587 W ActivityManager: Slow operation: 121ms so far, now at startProcess: starting to update pids map
+11-05 05:30:53.054   547   587 W ActivityManager: Slow operation: 121ms so far, now at startProcess: done updating pids map
+11-05 05:30:53.391   547  1012 W ActivityManager: Slow operation: 141ms so far, now at attachApplicationLocked: after updateOomAdjLocked
+11-05 05:30:53.662   547  1467 W ActivityManager: Slow operation: 122ms so far, now at finishAttachApplicationInner: after dispatching broadcasts
+11-05 05:30:54.087   547   609 W ActivityTaskManager: Duplicate finish request for r=ActivityRecord{96ef5e6 u0 com.android.sdksetup/.DefaultActivity t6 f}}
+11-05 05:30:54.691   547   609 W ActivityManager: Scheduling restart of crashed service android.ext.services/.notification.Assistant in 1000ms for connection
+11-05 05:30:55.295   547   587 W ActivityManager: Slow operation: 529ms so far, now at startProcess: returned from zygote!
+11-05 05:30:55.330   547   587 W ActivityManager: Slow operation: 564ms so far, now at startProcess: done updating battery stats
+11-05 05:30:55.332   547   587 W ActivityManager: Slow operation: 566ms so far, now at startProcess: building log message
+11-05 05:30:55.332   547   587 W ActivityManager: Slow operation: 566ms so far, now at startProcess: starting to update pids map
+11-05 05:30:55.332   547   587 W ActivityManager: Slow operation: 566ms so far, now at startProcess: done updating pids map
+11-05 05:30:55.534   547   993 W ActivityManager: Slow operation: 90ms so far, now at attachApplicationLocked: after updateOomAdjLocked
+11-05 05:30:55.688   547   587 W ActivityManager: Slow operation: 71ms so far, now at startProcess: returned from zygote!
+11-05 05:30:55.688   547   587 W ActivityManager: Slow operation: 71ms so far, now at startProcess: done updating battery stats
+11-05 05:30:55.688   547   587 W ActivityManager: Slow operation: 71ms so far, now at startProcess: building log message
+11-05 05:30:55.690   547   587 W ActivityManager: Slow operation: 73ms so far, now at startProcess: starting to update pids map
+11-05 05:30:55.690   547   587 W ActivityManager: Slow operation: 73ms so far, now at startProcess: done updating pids map
+11-05 05:30:56.508   547   587 W ActivityManager: Slow operation: 85ms so far, now at startProcess: returned from zygote!
+11-05 05:30:56.515   547   587 W ActivityManager: Slow operation: 92ms so far, now at startProcess: done updating battery stats
+11-05 05:30:56.528   547   587 W ActivityManager: Slow operation: 105ms so far, now at startProcess: building log message
+11-05 05:30:56.528   547   587 W ActivityManager: Slow operation: 105ms so far, now at startProcess: starting to update pids map
+11-05 05:30:56.535   547   587 W ActivityManager: Slow operation: 112ms so far, now at startProcess: done updating pids map
+11-05 05:30:57.237   547   587 W ActivityManager: Slow operation: 77ms so far, now at startProcess: returned from zygote!
+11-05 05:30:57.237   547   587 W ActivityManager: Slow operation: 85ms so far, now at startProcess: done updating battery stats
+11-05 05:30:57.237   547   587 W ActivityManager: Slow operation: 85ms so far, now at startProcess: building log message
+11-05 05:30:57.241   547   587 W ActivityManager: Slow operation: 89ms so far, now at startProcess: starting to update pids map
+11-05 05:30:57.241   547   587 W ActivityManager: Slow operation: 89ms so far, now at startProcess: done updating pids map
+11-05 05:30:57.455   547   587 W ActivityManager: Slow operation: 189ms so far, now at startProcess: returned from zygote!
+11-05 05:30:57.455   547   587 W ActivityManager: Slow operation: 189ms so far, now at startProcess: done updating battery stats
+11-05 05:30:57.455   547   587 W ActivityManager: Slow operation: 189ms so far, now at startProcess: building log message
+11-05 05:30:57.455   547   587 W ActivityManager: Slow operation: 189ms so far, now at startProcess: starting to update pids map
+11-05 05:30:57.462   547   587 W ActivityManager: Slow operation: 196ms so far, now at startProcess: done updating pids map
+11-05 05:30:58.402   547   587 W ActivityManager: Slow operation: 123ms so far, now at startProcess: returned from zygote!
+11-05 05:30:58.467   547   587 W ActivityManager: Slow operation: 188ms so far, now at startProcess: done updating battery stats
+11-05 05:30:58.472   547   587 W ActivityManager: Slow operation: 193ms so far, now at startProcess: building log message
+11-05 05:30:58.472   547   587 W ActivityManager: Slow operation: 193ms so far, now at startProcess: starting to update pids map
+11-05 05:30:58.473   547   587 W ActivityManager: Slow operation: 194ms so far, now at startProcess: done updating pids map
+11-05 05:30:58.599   547   993 W ActivityTaskManager: callingPackage for (uid=2000, pid=2113) has no WPC
+11-05 05:30:58.831   547   587 W ActivityManager: Slow operation: 61ms so far, now at startProcess: returned from zygote!
+11-05 05:30:58.834   547   587 W ActivityManager: Slow operation: 64ms so far, now at startProcess: done updating battery stats
+11-05 05:30:58.834   547   587 W ActivityManager: Slow operation: 64ms so far, now at startProcess: building log message
+11-05 05:30:58.834   547   587 W ActivityManager: Slow operation: 64ms so far, now at startProcess: starting to update pids map
+11-05 05:30:58.857   547   587 W ActivityManager: Slow operation: 87ms so far, now at startProcess: done updating pids map
+11-05 05:30:59.013   547   587 W ActivityManager: Slow operation: 132ms so far, now at startProcess: returned from zygote!
+11-05 05:30:59.069   547   629 W ActivityManager: finishReceiver: no app for android.os.BinderProxy@1be3f7d
+11-05 05:30:59.074   547   587 W ActivityManager: Slow operation: 193ms so far, now at startProcess: done updating battery stats
+11-05 05:30:59.075   547   587 W ActivityManager: Slow operation: 194ms so far, now at startProcess: building log message
+11-05 05:30:59.075   547   587 W ActivityManager: Slow operation: 194ms so far, now at startProcess: starting to update pids map
+11-05 05:30:59.075   547   587 W ActivityManager: Slow operation: 194ms so far, now at startProcess: done updating pids map
+11-05 05:31:01.450   547  1669 W ActivityManager: Slow operation: 102ms so far, now at attachApplicationLocked: after updateOomAdjLocked
+11-05 05:31:01.680   547   587 W ActivityManager: Slow operation: 57ms so far, now at startProcess: returned from zygote!
+11-05 05:31:01.683   547   587 W ActivityManager: Slow operation: 57ms so far, now at startProcess: done updating battery stats
+11-05 05:31:01.683   547   587 W ActivityManager: Slow operation: 60ms so far, now at startProcess: building log message
+11-05 05:31:01.683   547   587 W ActivityManager: Slow operation: 60ms so far, now at startProcess: starting to update pids map
+11-05 05:31:01.699   547   587 W ActivityManager: Slow operation: 76ms so far, now at startProcess: done updating pids map
+11-05 05:31:02.650   547   575 W ActivityTaskManager: Current config: {1.0 310mcc260mnc [en_US] ldltr sw360dp w360dp h592dp 320dpi nrml long port finger qwerty/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 720, 1280) mAppBounds=Rect(0, 0 - 720, 1184) mMaxBounds=Rect(0, 0 - 720, 1280) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.2 s.57 fontWeightAdjustment=0} unchanged for IME proc com.android.inputmethod.latin
+11-05 05:31:02.966   547   587 W ActivityManager: Slow operation: 209ms so far, now at startProcess: done updating battery stats
+11-05 05:31:02.967   547   587 W ActivityManager: Slow operation: 210ms so far, now at startProcess: building log message
+11-05 05:31:02.972   547   587 W ActivityManager: Slow operation: 215ms so far, now at startProcess: starting to update pids map
+11-05 05:31:02.972   547   587 W ActivityManager: Slow operation: 215ms so far, now at startProcess: done updating pids map
+11-05 05:31:08.763   547   578 W ActivityTaskManager: Launch timeout has expired, giving up wake lock!
+11-05 05:32:08.565   547   993 W ActivityManager: Slow operation: 76ms so far, now at startProcess: done updating battery stats
+11-05 05:32:08.565   547   993 W ActivityManager: Slow operation: 76ms so far, now at startProcess: building log message
+11-05 05:32:08.565   547   993 W ActivityManager: Slow operation: 76ms so far, now at startProcess: starting to update pids map
+11-05 05:32:08.565   547   993 W ActivityManager: Slow operation: 76ms so far, now at startProcess: done updating pids map
+11-05 05:32:08.578   547   587 W ActivityManager: Slow operation: 89ms so far, now at startProcess: returned from zygote!
+11-05 05:32:40.844   547   629 W ActivityTaskManager: Force removing ActivityRecord{cb9d58b u0 com.geomath.dev/.MainActivity t8 f}}: app died, no saved state
+11-05 05:32:41.127   547   578 W ActivityManager: setHasOverlayUi called on unknown pid: 2124
+11-05 05:32:41.468   547   579 W ActivityTaskManager: Unable to send transaction to client proc com.geomath.dev: no app thread
+11-05 05:32:43.174   547   579 W ActivityTaskManager: Unable to send transaction to client proc com.geomath.dev: no app thread
+11-05 05:32:44.124   547  1184 W ActivityManager: pid 547 system sent binder code 7 with flags 1 to frozen apps and got error -32
+11-05 05:32:50.622   547   930 W ActivityTaskManager: callingPackage for (uid=2000, pid=2510) has no WPC
+11-05 05:32:51.029   547   587 W ActivityManager: Slow operation: 266ms so far, now at startProcess: returned from zygote!
+11-05 05:32:51.052   547   587 W ActivityManager: Slow operation: 289ms so far, now at startProcess: done updating battery stats
+11-05 05:32:51.053   547   587 W ActivityManager: Slow operation: 290ms so far, now at startProcess: building log message
+11-05 05:32:51.053   547   587 W ActivityManager: Slow operation: 290ms so far, now at startProcess: starting to update pids map
+11-05 05:32:51.053   547   587 W ActivityManager: Slow operation: 290ms so far, now at startProcess: done updating pids map
+11-05 05:33:00.705   547   578 W ActivityTaskManager: Launch timeout has expired, giving up wake lock!
+11-05 05:33:17.664   547  1001 W ActivityTaskManager: Force removing ActivityRecord{b24eb4f u0 com.geomath.dev/.MainActivity t9 f}}: app died, no saved state
+11-05 05:33:17.717   547   579 W ActivityTaskManager: Unable to send transaction to client proc com.geomath.dev: no app thread
+11-05 05:33:17.913   547   571 W ActivityTaskManager: callingPackage for (uid=2000, pid=2571) has no WPC
+11-05 05:33:17.941   547   578 W ActivityManager: setHasOverlayUi called on unknown pid: 2513
+11-05 05:33:18.037   547   587 W ActivityManager: Slow operation: 91ms so far, now at startProcess: returned from zygote!
+11-05 05:33:18.037   547   587 W ActivityManager: Slow operation: 91ms so far, now at startProcess: done updating battery stats
+11-05 05:33:18.037   547   587 W ActivityManager: Slow operation: 91ms so far, now at startProcess: building log message
+11-05 05:33:18.037   547   587 W ActivityManager: Slow operation: 91ms so far, now at startProcess: starting to update pids map
+11-05 05:33:18.037   547   587 W ActivityManager: Slow operation: 91ms so far, now at startProcess: done updating pids map
+11-05 05:33:18.549   547   579 W ActivityTaskManager: Unable to send transaction to client proc com.geomath.dev: no app thread
+11-05 05:33:18.650   547   930 W ActivityManager: pid 547 system sent binder code 7 with flags 1 to frozen apps and got error -32
+11-05 05:33:19.352   547  2570 W ActivityManager: Slow operation: 92ms so far, now at attachApplicationLocked: immediately before bindApplication
+11-05 05:33:19.353   547  2570 W ActivityManager: Slow operation: 93ms so far, now at attachApplicationLocked: immediately after bindApplication
+11-05 05:33:19.353   547  2570 W ActivityManager: Slow operation: 93ms so far, now at attachApplicationLocked: after updateLruProcessLocked
+11-05 05:33:19.358   547  2570 W ActivityManager: Slow operation: 98ms so far, now at attachApplicationLocked: after updateOomAdjLocked

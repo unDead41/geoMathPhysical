@@ -1,0 +1,9 @@
+Command: node --test --test-name-pattern='unacknowledged ready' test/foundation/native_adapter_contract.test.mjs
+Before wrapper correction: exit1, expected ['ready','ready'], actual ['ready'].
+The unchanged test simulates missing native acceptance, retries foreground,
+then requires explicit native acknowledgement and no further deliveries.
+
+Command: node --test tools/contracts/verify_exports.test.mjs test/foundation/native_adapter_contract.test.mjs
+After correction: exit0,12 tests passed,0 failed,0 skipped.
+The canonical prepared child source was preserved byte for byte.
+These Node harness results are not Android device evidence.

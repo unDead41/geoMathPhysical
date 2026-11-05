@@ -1,0 +1,2 @@
+# Preserve byte-exact canonical generated source; its SHA is part of source lock.
+assets/module/canonical-module.html -whitespace

@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "feature": "learning",
+  "source_commit": "37bc2cd262cc0a54e8ee31339ea37471c1ecfda5",
+  "digital_version": "2.9.1",
+  "module_version": "1.6.2",
+  "entry_point": "assets/module/index.html",
+  "canonical_build": "digital/module/tools/build.mjs",
+  "canonical_html_sha256": "7ddd5d60a25fbdf73c20f9f8e8fc0db4253e582fb50d17c944307b8f682066c4",
+  "offline": true,
+  "module_progress_protocol": 1,
+  "module_settings_version": 1,
+  "native_bridge_version": 1,
+  "adapter_version": 2,
+  "files": [
+    {
+      "path": "assets/module/canonical-module.html",
+      "sha256": "7ddd5d60a25fbdf73c20f9f8e8fc0db4253e582fb50d17c944307b8f682066c4",
+      "bytes": 572718
+    },
+    {
+      "path": "assets/module/index.html",
+      "sha256": "e8db2197527c325fa2c879a56b3aac8a0dc8fe65c449c154b405d4c9d00c8331",
+      "bytes": 696
+    },
+    {
+      "path": "assets/module/native-adapter.js",
+      "sha256": "0910fe197787e08e7105f6a0bdb5703ffd1702a2dc0779c231d65cec70c3e322",
+      "bytes": 726804
+    }
+  ]
+}

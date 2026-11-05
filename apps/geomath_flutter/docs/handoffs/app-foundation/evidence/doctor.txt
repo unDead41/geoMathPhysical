@@ -1,0 +1,64 @@
+   Woah! You appear to be trying to run flutter as root.
+   We strongly recommend running the flutter tool without superuser privileges.
+  /
+📎
+[✓] Flutter (Channel stable, 3.47.9, on Ubuntu 24.04.3 LTS 6.18.57, locale C.UTF-8) [116ms]
+    • Flutter version 3.47.9 on channel stable at /workspace/scratch/dda77b0786fb/runtime-setup/flutter
+    • Upstream repository https://github.com/flutter/flutter.git
+    • Framework revision c197ca5199 (6 days ago), 2026-10-29 10:10:20 -0400
+    • Engine revision 89c39edfdf
+    • Dart version 3.13.7
+    • DevTools version 2.60.0
+    • Feature flags: enable-web, enable-linux-desktop, enable-macos-desktop, enable-windows-desktop, enable-android, enable-ios, cli-animations, enable-native-assets, enable-record-use, enable-swift-package-manager, omit-legacy-version-file, enable-lldb-debugging, enable-uiscene-migration
+
+[✓] Android toolchain - develop for Android devices (Android SDK version 36.0.0) [15.0s]
+    • Android SDK at /workspace/scratch/5c9edfba3bf4/runtime/android-sdk
+    • Emulator version 37.2.13.0 (build_id 16740729) (CL:N/A)
+    • Platform android-36, build-tools 36.0.0
+    • ANDROID_HOME = /workspace/scratch/5c9edfba3bf4/runtime/android-sdk
+    • Java binary at: /workspace/scratch/5c9edfba3bf4/runtime/jdk17/bin/java
+      This JDK is specified in your Flutter configuration.
+      To change the current JDK, run: `flutter config --jdk-dir="path/to/jdk"`.
+    • Java version OpenJDK Runtime Environment Temurin-17.0.21+9 (build 17.0.21+9)
+    • All Android licenses accepted.
+
+[✗] Chrome - develop for the web (Cannot find Chrome executable at google-chrome) [17ms]
+    ! Cannot find Chrome. Try setting CHROME_EXECUTABLE to a Chrome executable.
+
+[✗] Linux toolchain - develop for Linux desktop [56ms]
+    ✗ clang++ is required for Linux development.
+      It is likely available from your distribution (e.g.: apt install clang), or can be downloaded from https://releases.llvm.org/
+    ✗ CMake is required for Linux development.
+      It is likely available from your distribution (e.g.: apt install cmake), or can be downloaded from https://cmake.org/download/
+    ✗ ninja is required for Linux development.
+      It is likely available from your distribution (e.g.: apt install ninja-build), or can be downloaded from https://github.com/ninja-build/ninja/releases
+    ✗ pkg-config is required for Linux development.
+      It is likely available from your distribution (e.g.: apt install pkg-config), or can be downloaded from https://www.freedesktop.org/wiki/Software/pkg-config/
+
+[☠] Proxy Configuration (the doctor check crashed)
+    ✗ Due to an error, the doctor check did not complete. If the error message below is not helpful, please let us know about this issue at https://github.com/flutter/flutter/issues.
+    ✗ SocketException: Failed listing interfaces (OS Error: Bad value for ai_flags)
+    • #0      _NativeSocket.listInterfaces.<anonymous closure> (dart:io-patch/socket_patch.dart:656:9)
+      #1      _rootRunUnary (dart:async/zone_root.dart:48:47)
+      #2      _CustomZone.runUnary (dart:async/zone.dart:816:35)
+      <asynchronous suspension>
+      #3      listNetworkInterfaces (package:flutter_tools/src/base/io.dart:450:48)
+      <asynchronous suspension>
+      #4      ProxyValidator._getLoopbackAddresses (package:flutter_tools/src/proxy_validator.dart:59:54)
+      <asynchronous suspension>
+      #5      ProxyValidator.validateImpl (package:flutter_tools/src/proxy_validator.dart:44:46)
+      <asynchronous suspension>
+      #6      DoctorValidator.validate (package:flutter_tools/src/doctor_validator.dart:58:37)
+      <asynchronous suspension>
+      #7      Future.any.onValue (dart:async/future.dart:658:5)
+      <asynchronous suspension>
+
+
+[✓] Connected device (1 available) [116ms]
+    • Linux (desktop) • linux • linux-x64 • Ubuntu 24.04.3 LTS 6.18.57
+    ! Device emulator-5554 is offline.
+
+[✓] Network resources [11.9s]
+    • All expected network resources are available.
+
+! Doctor found issues in 3 categories.

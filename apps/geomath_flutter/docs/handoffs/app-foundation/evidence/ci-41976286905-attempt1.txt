@@ -1,0 +1,8 @@
+Targeted Android capture, attempt1
+Run:https://github.com/unDead41/geodecoder/actions/runs/41976286905
+Source:243ffc22a8ac5c9b54e9b39dc51064c8598b1333
+Job:127075790493
+APK/archive/20asset/101runtime checks pass. Capture never reaches module: an Android launcher ANR dialog owns focus at Home.
+Actual native focus: mCurrentFocus=Window{eeefe57 u0 Application Not Responding: com.android.launcher3}; mFocusedApp=GeoMath MainActivity.
+Actual ADB screenshot and hierarchy show Quickstep isn't responding, with Close app/Wait. The Home is rendered underneath. No application success is inferred from this failed capture. Rerun only this job on the same source/APK.
+Artifact13392091872;archiveSHA256f9d627d7426995f43f20630e8d29afc0e015d489ad874f8a4f71fb4d1a989712.

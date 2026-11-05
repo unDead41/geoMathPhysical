@@ -1,0 +1,33 @@
+GitHub Actions receipt
+Run:https://github.com/unDead41/geodecoder/actions/runs/41971048550
+Source:61f21b0adfbc378212c6f302528627896b9381f5
+Job:127059138906
+Source gates:PASS;77 formatted files;92 Flutter tests;12 Node contracts;normal and prebuilt integration APK builds.
+Real Android integration:PASS4/4. AOSP API35, active WebView com.android.webview124.0.6367.219; radios disabled. Native clipboard succeeds, with no system ANR or clipboard-focus denial in the retained native log.
+Normal APK:installed and launched successfully after the integration suite via flutter run --use-application-binary. Actual ADB Home and Settings screenshots exist.
+Overall workflow:FAIL only in capture_evidence.py while searching the off-screen Home explore CTA at720x1280@320dpi. The script did not scroll its real Android view. Last screenshot is the focused, responsive GeoMath Home; no screenshot of a rendered normal-app module exists yet. This remains a readiness blocker.
+Correction:bounded real ADB scroll before searching the button, clickable-node matching and retained action hierarchy. No app/runtime/contract/lock/adapter bytes or assertions/deadlines change.
+
+Normal APK artifact13390101358;archiveSHA25631c5549cae765233e1bdfcbf5a238505a69df56c8881ae9ab75ec1d7d440e990.
+APK172051208bytes;SHA256f09e2b8e3f9fa8f2aaeb1d5d4ca8b769976c044f9cbabbbce4bfa7c72f4969c0;all20bundled assets match source.
+Evidence artifact13389912548;archiveSHA2568e184d7c5404dd110111cac86f2a1e3a1d786079ba048658bf858e6b76771d7d.
+
+Selected actual CI lines (ephemeral local VM-service URLs omitted):
+2026-11-05T05:00:04.3666407Z Formatted 77 files (0 changed) in 0.25 seconds.
+2026-11-05T05:00:14.9213147Z No issues found! (ran in 9.7s)
+2026-11-05T05:00:50.6034560Z 🎉 92 tests passed.
+2026-11-05T05:00:51.1486619Z # pass 12
+2026-11-05T05:00:51.1486956Z # fail 0
+2026-11-05T05:10:09.4539254Z   Current WebView package (name, version): (com.android.webview, 124.0.6367.219)
+2026-11-05T05:10:09.8808251Z Native focus before test suite: mCurrentFocus=Window{bf92af0 u0 com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher}
+2026-11-05T05:10:23.4607102Z I/flutter ( 2271): 00:00 +0: real local WebView rotates/unfolds and survives preferences and actor switch
+2026-11-05T05:11:07.8993363Z I/flutter ( 2271): 00:44 +1: missing local asset never creates a ready WebView
+2026-11-05T05:11:08.2819972Z I/flutter ( 2271): 00:44 +2: corrupt local asset never creates a ready WebView
+2026-11-05T05:11:08.5347602Z I/flutter ( 2271): 00:45 +3: guest app opens real offline module, persists preferences/records and keeps reports local
+2026-11-05T05:11:40.5825532Z I/flutter ( 2271): 01:17 +4: (tearDownAll)
+2026-11-05T05:11:40.6363576Z All tests passed.
+2026-11-05T05:11:40.7093151Z I/flutter ( 2271): 01:17 +5: All tests passed!
+
+Actual final native focus:
+mCurrentFocus=Window{81320c6 u0 com.geomath.dev/com.geomath.dev.MainActivity}
+mFocusedApp=ActivityRecord{a1e0b18 u0 com.geomath.dev/.MainActivity t10}
