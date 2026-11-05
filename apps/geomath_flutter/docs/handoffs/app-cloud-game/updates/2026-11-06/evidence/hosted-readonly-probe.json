@@ -1,0 +1,44 @@
+{
+  "date_utc": "2026-11-05T20:07:26.959344+00:00",
+  "project": "GeoDecoder Digital",
+  "read_only": true,
+  "duel_deployed_version": 2,
+  "duel_verify_jwt": true,
+  "requests": [
+    {
+      "case": "modern_public_apikey_only",
+      "status": 400,
+      "duel_protocol": "2",
+      "error": "invalid_request"
+    },
+    {
+      "case": "legacy_public_apikey_only",
+      "status": 401,
+      "duel_protocol": null,
+      "error": "Missing authorization header"
+    },
+    {
+      "case": "legacy_public_with_gateway_authorization",
+      "status": 400,
+      "duel_protocol": "2",
+      "error": "invalid_request"
+    },
+    {
+      "case": "public_auth_settings",
+      "status": 200,
+      "duel_protocol": null,
+      "enabled_providers": {
+        "email": true,
+        "google": true,
+        "phone": false
+      }
+    }
+  ],
+  "not_tested": [
+    "real signup/email delivery",
+    "authenticated class/profile operations",
+    "two player match",
+    "Google native callback"
+  ],
+  "side_effects": "No data mutation, room, account, OTP/email or hosted configuration action."
+}

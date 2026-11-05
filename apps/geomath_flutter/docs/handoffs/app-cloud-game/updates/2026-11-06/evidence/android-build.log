@@ -1,0 +1,14 @@
+{"command": ["/workspace/scratch/7395917c0f68/toolchains/flutter/bin/flutter", "build", "apk", "--debug", "--no-pub", "--dart-define-from-file=config/public.local.json"], "managed_proxy": true, "ssl_verification": true}
+   Woah! You appear to be trying to run flutter as root.
+   We strongly recommend running the flutter tool without superuser privileges.
+  /
+📎
+Running Gradle task 'assembleDebug'...
+Picked up JAVA_TOOL_OPTIONS: -Dhttp.proxyHost=127.0.0.1 -Dhttp.proxyPort=38679 -Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=38679 -Dhttp.nonProxyHosts=localhost|127.*|[::1] -Djavax.net.ssl.trustStore=/workspace/scratch/7395917c0f68/toolchains/java-cacerts -Djavax.net.ssl.trustStoreType=JKS
+Warning: SDK processing. This version only understands SDK XML versions up to 3 but an SDK XML file of version 4 was encountered. This can happen if you use versions of Android Studio and the command-line tools that were released at different times.
+   Woah! You appear to be trying to run flutter as root.
+   We strongly recommend running the flutter tool without superuser privileges.
+  /
+📎
+Running Gradle task 'assembleDebug'...                            118.1s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk

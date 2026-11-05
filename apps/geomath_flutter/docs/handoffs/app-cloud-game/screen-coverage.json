@@ -752,5 +752,17 @@
     "remote_source_commit": "6cc470e32f790c1c49e14f0fa0173f0818e3fbfb",
     "log": "evidence/native/final-tests.log",
     "android": "blocked"
+  },
+  "followup_2026_11_06": {
+    "source_commit": "c3f115bc06a985f6de0b2fc901d4788fd327b451",
+    "verification": "VERIFICATION.json",
+    "changes": [
+      "Duel/Solo/classroom left-right browsing",
+      "mathematical prompt presenter and localized variable legends",
+      "profile snapshot/draft/uncertain-save guards",
+      "room-owner UI authorization"
+    ],
+    "host_capture_count": 7,
+    "hosted_authenticated_acceptance": "pending"
   }
 }

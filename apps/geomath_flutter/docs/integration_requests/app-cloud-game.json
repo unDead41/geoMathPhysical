@@ -20,8 +20,8 @@
     "sms": "removed from current source and this native feature"
   },
   "composition": {
-    "entry_point": "lib/dev/cloud_game_main.dart",
-    "contribution_factory": "cloudGameFeatures() in lib/dev/cloud_game_features.dart",
+    "entry_point": "lib/main.dart",
+    "contribution_factory": "cloudGameFeatures() in lib/app/cloud_game_features.dart (dev path is a re-export)",
     "contributions": [
       "cloud_game_preview",
       "auth",
@@ -32,7 +32,7 @@
       "sync"
     ],
     "initial_preview_route": "cloud-game-play",
-    "normal_root_action": "Register these contributions once alongside learning. After bootstrap await CloudGamePreviewServices.startup.ready once before normal Home; route gates already do so in the preview.",
+    "normal_root_action": "Already integrated by pinned baseline through productionFeatures()/initializeProduction(); register exactly once.",
     "shared_gateway": "AuthServices.gateway is the exact verified NativeAuthRepository also resolved by profile/classroom/sync.",
     "shared_writer": "FoundationServices.recordsWriter resolves SyncFormativeRecordWriter over shared LocalFormativeRecords and SQLite. Learning and Solo must borrow this same port.",
     "sync_owner": "Resolve one SyncServices.controller per dependency lifetime; foreground/reopen wakes coalesce. No background force-stop delivery guarantee.",
@@ -172,12 +172,13 @@
     {
       "owner": "app-integration",
       "kind": "shared_navigation_guard",
-      "request": "Route destination select/reset through active feature back policies with save/discard/stay or room confirmation before replacing the route. Frozen root select currently bypasses them.",
+      "request": "No additional shared-navigation change requested by this follow-up; retain existing guarded behavior.",
       "current_fallback": "Profile drafts and uncertain saves survive tab reentry in actor-bound memory. Classroom retains the same controller/attempt and pending request. Duel hides destination navigation and confirms back/forfeit.",
       "files": [
         "lib/app/app_router.dart",
         "lib/core/navigation/app_navigation.dart"
-      ]
+      ],
+      "current": "Integrated in baseline 20eed848cc015d6253accd6cf72fcf127bf72827"
     }
   ],
   "capability_and_configuration_needs": [
@@ -194,8 +195,18 @@
     "integration_test/sync_storage_test.dart",
     "integration_test/classroom_contract_test.dart"
   ],
-  "ci_request": "The inherited shared workflow runs foundation lib/main.dart/foundation smoke. Integrator must run the cloud-game preview target and cloud_game_smoke_test.dart explicitly; default workflow success is not a cloud-game device receipt.",
+  "ci_request": "Use the inherited integration checks and distinguish the current APK from baseline Android receipts. This follow-up adds no workflow changes.",
   "screen_matrix": "docs/handoffs/app-cloud-game/screen-coverage.json",
   "handoff": "docs/handoffs/app-cloud-game/LATEST.md",
-  "hosted_deployments_performed": []
+  "hosted_deployments_performed": [],
+  "followup_2026_11_06": {
+    "source_commit": "c3f115bc06a985f6de0b2fc901d4788fd327b451",
+    "integration_baseline": "20eed848cc015d6253accd6cf72fcf127bf72827",
+    "shared_runtime_changes": 0,
+    "handoff": "docs/handoffs/app-cloud-game/LATEST.md",
+    "apk_target": "lib/main.dart",
+    "new_dependencies": [],
+    "new_schema": [],
+    "new_backend_deployments": []
+  }
 }

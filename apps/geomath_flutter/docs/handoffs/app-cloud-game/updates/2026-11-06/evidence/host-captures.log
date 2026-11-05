@@ -1,0 +1,7 @@
+   Woah! You appear to be trying to run flutter as root.
+   We strongly recommend running the flutter tool without superuser privileges.
+  /
+📎
+00:00 +0: loading /workspace/scratch/7395917c0f68/duel-refresh/lead/apps/geomath_flutter/host_capture/capture_duel_refresh.dart
+00:00 +0: opt-in host widget captures, transport fixtures explicitly labelled
+00:04 +1: All tests passed!

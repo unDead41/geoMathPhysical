@@ -1,0 +1,9 @@
+{
+  "GEOMATH_SUPABASE_URL": true,
+  "GEOMATH_SUPABASE_PUBLISHABLE_KEY": true,
+  "GEOMATH_AUTH_REDIRECT_URI": true,
+  "typed_math": true,
+  "card_carousel": true,
+  "production_features": true,
+  "learning_included": true
+}
