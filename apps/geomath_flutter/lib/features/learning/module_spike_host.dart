@@ -224,6 +224,16 @@ final class ModuleSpikeController extends ChangeNotifier {
       ),
     );
     if (result case Success<ModuleCommand>(:final value)) {
+      if (value.kind == ModuleCommandKind.ready) {
+        // JS enqueue is not native acceptance. Acknowledge only this validated
+        // document/actor; configuration's platform reply may still be pending.
+        unawaited(
+          controller
+              .runJavaScript('window.GeoMathModule.acknowledgeReady()')
+              .catchError((Object _) {}),
+        );
+        if (_phase == ModuleLoadPhase.ready) return;
+      }
       _lastValidatedCommand = value;
       _acceptedCommandCount++;
       if (value.kind == ModuleCommandKind.ready) {

@@ -159,6 +159,8 @@ void main() {
         final back = tester.binding.handlePopRoute();
         await tester.pumpAndSettle();
         await tester.ensureVisible(find.text('Keep editing'));
+        await tester.pumpAndSettle();
+        expect(find.text('Keep editing').hitTestable(), findsOneWidget);
         await tester.tap(find.text('Keep editing'));
         await tester.pumpAndSettle();
         await back;
@@ -235,6 +237,8 @@ Future<void> _tap(WidgetTester tester, String key) async {
   } else {
     await tester.ensureVisible(target);
   }
+  await tester.pumpAndSettle();
+  expect(target.hitTestable(), findsOneWidget, reason: '$key is not reachable');
   await tester.tap(target);
   await tester.pumpAndSettle();
 }

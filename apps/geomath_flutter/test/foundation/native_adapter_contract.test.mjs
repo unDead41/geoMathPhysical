@@ -92,6 +92,7 @@ test('readiness while backgrounded is delivered once after foreground', () => {
   assert.equal(h.api.setActive(true), true);
   assert.deepEqual(h.native.map(message => message.command), ['ready']);
   assert.equal(h.api.diagnostics().emittedReady, true);
+  assert.equal(h.api.acknowledgeReady(), true);
   h.api.setActive(true);
   h.ready();
   assert.equal(h.native.length, 1);
@@ -117,6 +118,28 @@ test('native session stays outside child context and protocols stay separate', (
     assert.equal(message.instanceId, settingsInstance);
     assert.equal(Object.hasOwn(message, 'session'), false);
   }
+});
+
+test('an unacknowledged ready retries on foreground and stops after native acceptance', () => {
+  const h = harness();
+  assert.equal(h.api.acknowledgeReady(), false);
+  h.ready();
+  assert.deepEqual(h.native.map(message => message.command), ['ready']);
+
+  // Posting can race native lifecycle validation. The native owner has not
+  // accepted this first envelope, even though JavaScript queued it.
+  h.api.setActive(true);
+  assert.deepEqual(h.native.map(message => message.command), ['ready', 'ready']);
+  assert.equal(h.api.acknowledgeReady(), true);
+  h.api.setActive(false);
+  h.api.setActive(true);
+  h.ready();
+  assert.equal(h.native.length, 2);
+
+  h.api.dispose();
+  assert.equal(h.api.acknowledgeReady(), false);
+  h.api.setActive(true);
+  assert.equal(h.native.length, 2);
 });
 
 test('progress requires the current progress session and exact record keys', () => {

@@ -12,13 +12,14 @@
   },
   "hashes": {
     "contract_sha256": "0a31f7aef121a151ee91a4ae92250fd893ad62108f27a9389b5fa5ed9a918356",
-    "source_lock_sha256": "cc32855d6a9488a7cfe09dab895ea8e24ca3f17a1eb0eae41d2c7bef95660421",
+    "source_lock_sha256": "cf7d5e6a54c6da65d70f97caae26cff059de558f3fd56db97245252358220452",
     "pubspec_lock_sha256": "9ba313c3af1f80193c6c0a61c2e38fcee51f1b5aabb8404ebdccfd04210f542c",
-    "runtime_sha256": "f91479b57721018b7ec7a0e31842bec6efcbcad76c29e969fe729475f0fb82bd",
+    "runtime_sha256": "91debf417d1ceb7e6b133b5b3ae557f8207d8cec9958d4c61c4c88334369a0d3",
     "asset_manifests_foundation_snapshot": {
       "assets/contracts/manifest.json": "dfed97ebc0be73ef93e467307d84f75f4187fd1009935d643da3ba3fe769c557",
-      "assets/module/manifest.json": "554c80cfafdeb87ebe7bae39ecfa2a5da4270f207e976863c3e8c6a950b9b895"
-    }
+      "assets/module/manifest.json": "f8ad2e0816246b9f4338afb1d30577a7286e176c227dba4af891a0a0450b2baa"
+    },
+    "runtime_sha256_format": "SHA256 of UTF-8 JSON runtime_files with sorted keys and compact separators"
   },
   "runtime_files": {
     "android/.gitignore": "a87983166f2ae1b7b155092a5607083c692148e689c767adab542bea730bd66b",
@@ -59,8 +60,8 @@
     "assets/module/.gitattributes": "91661751e073b861f225a5be091c9134419796db9210c6093275ac1a272e9eb8",
     "assets/module/canonical-module.html": "7ddd5d60a25fbdf73c20f9f8e8fc0db4253e582fb50d17c944307b8f682066c4",
     "assets/module/index.html": "e8db2197527c325fa2c879a56b3aac8a0dc8fe65c449c154b405d4c9d00c8331",
-    "assets/module/manifest.json": "554c80cfafdeb87ebe7bae39ecfa2a5da4270f207e976863c3e8c6a950b9b895",
-    "assets/module/native-adapter.js": "1149a8a42e2d65505ca2fe578de94ba91de52da2bbc5eef7860351b313fd1fab",
+    "assets/module/manifest.json": "f8ad2e0816246b9f4338afb1d30577a7286e176c227dba4af891a0a0450b2baa",
+    "assets/module/native-adapter.js": "0910fe197787e08e7105f6a0bdb5703ffd1702a2dc0779c231d65cec70c3e322",
     "config/public.example.json": "75c53c12d0c34dd2ef363d0344bdd36d3efdf647c8afd588688d282e07e78f6e",
     "lib/app/app.dart": "344e79e952cf6689f756e24f9a6ff45fac0a9c50d24f707e5e011dbeeff0f0ae",
     "lib/app/app_dependencies.dart": "f6a41c49d199044ee6f8a9b915e2e164658d3d27564eaa4b75eaa69e810cfa0e",
@@ -117,7 +118,7 @@
     "lib/features/home/home_screen.dart": "bf407dbfdc62484daaf8130d0cc0597bb93817a7aea58b84b22d738aeb919d62",
     "lib/features/home/module_preview_page.dart": "8ad9cf1e0335147bbe499bb7af5e65369e576b558ecb8b81498266b92d7e6662",
     "lib/features/learning/module_asset_repository.dart": "c1519dd4063cd7a9bc5fdda853b1dd753f812779fe9e4626c2e7581ce6ffe6f0",
-    "lib/features/learning/module_spike_host.dart": "af17f2d1ab4011a615e6d2769ffb033dd25a6d8aee3597a6af88eeab2ff3e8e3",
+    "lib/features/learning/module_spike_host.dart": "6c7e030105b80a71f2a81aa485da7151d81b29a5d5de8a06165decc4ec15eb26",
     "lib/features/preferences/preferences_screen.dart": "2639d9ff377b4547f6de325277f82ed979ad15ec468b0fde890aac398bbdc4d6",
     "lib/main.dart": "b3a8e0b7f270bcf363211480a306344e14a47a8743fd2e7aa1bcf06189d4b6a7",
     "pubspec.lock": "9ba313c3af1f80193c6c0a61c2e38fcee51f1b5aabb8404ebdccfd04210f542c",
@@ -152,56 +153,78 @@
       "ci_evidence": "docs/handoffs/app-foundation/evidence/ci-41954312460-verify.txt"
     },
     "format": {
-      "status": "passed",
+      "status": "pending",
       "command": "dart format --output=none --set-exit-if-changed lib test integration_test",
-      "exit_code": 0,
-      "evidence": "evidence/format.txt",
-      "tested_commit": "bcaf83b963aebdeb8f3876fe7ecb9aedd49ba457",
-      "ci_run_id": 41954312460,
-      "ci_evidence": "docs/handoffs/app-foundation/evidence/ci-41954312460-verify.txt"
+      "exit_code": null,
+      "reason": "Private wrapper revision2 and native acknowledgement require a new integrated CI run.",
+      "previous_verified_check": {
+        "status": "passed",
+        "command": "dart format --output=none --set-exit-if-changed lib test integration_test",
+        "exit_code": 0,
+        "evidence": "evidence/format.txt",
+        "tested_commit": "bcaf83b963aebdeb8f3876fe7ecb9aedd49ba457",
+        "ci_run_id": 41954312460,
+        "ci_evidence": "docs/handoffs/app-foundation/evidence/ci-41954312460-verify.txt"
+      }
     },
     "analyze": {
-      "status": "passed",
+      "status": "pending",
       "command": "flutter analyze --no-pub",
-      "exit_code": 0,
-      "evidence": "evidence/analyze.txt",
-      "tested_commit": "bcaf83b963aebdeb8f3876fe7ecb9aedd49ba457",
-      "ci_run_id": 41954312460,
-      "ci_evidence": "docs/handoffs/app-foundation/evidence/ci-41954312460-verify.txt"
+      "exit_code": null,
+      "reason": "Private wrapper revision2 and native acknowledgement require a new integrated CI run.",
+      "previous_verified_check": {
+        "status": "passed",
+        "command": "flutter analyze --no-pub",
+        "exit_code": 0,
+        "evidence": "evidence/analyze.txt",
+        "tested_commit": "bcaf83b963aebdeb8f3876fe7ecb9aedd49ba457",
+        "ci_run_id": 41954312460,
+        "ci_evidence": "docs/handoffs/app-foundation/evidence/ci-41954312460-verify.txt"
+      }
     },
     "unit_widget_tests": {
-      "status": "passed",
+      "status": "pending",
       "command": "flutter test --no-pub --concurrency=1",
-      "exit_code": 0,
-      "passed": 92,
-      "failed": 0,
-      "evidence": "evidence/flutter-test.txt",
-      "tested_commit": "bcaf83b963aebdeb8f3876fe7ecb9aedd49ba457",
-      "ci_run_id": 41954312460,
-      "ci_evidence": "docs/handoffs/app-foundation/evidence/ci-41954312460-verify.txt"
+      "exit_code": null,
+      "reason": "Private wrapper revision2 and native acknowledgement require a new integrated CI run.",
+      "previous_verified_check": {
+        "status": "passed",
+        "command": "flutter test --no-pub --concurrency=1",
+        "exit_code": 0,
+        "passed": 92,
+        "failed": 0,
+        "evidence": "evidence/flutter-test.txt",
+        "tested_commit": "bcaf83b963aebdeb8f3876fe7ecb9aedd49ba457",
+        "ci_run_id": 41954312460,
+        "ci_evidence": "docs/handoffs/app-foundation/evidence/ci-41954312460-verify.txt"
+      }
     },
     "canonical_adapter_tests": {
       "status": "passed",
       "command": "node --test tools/contracts/verify_exports.test.mjs test/foundation/native_adapter_contract.test.mjs",
       "exit_code": 0,
-      "passed": 11,
+      "passed": 12,
       "failed": 0,
-      "evidence": "evidence/source-tests.txt",
-      "tested_commit": "bcaf83b963aebdeb8f3876fe7ecb9aedd49ba457",
-      "ci_run_id": 41954312460,
-      "ci_evidence": "docs/handoffs/app-foundation/evidence/ci-41954312460-verify.txt"
+      "evidence": "docs/handoffs/app-foundation/evidence/ready-ack-regression.txt",
+      "tested_working_tree_after": "27cb9d570bc254c47dbd5838672a5fc78797e413"
     },
     "debug_apk": {
-      "status": "passed",
+      "status": "pending",
       "command": "flutter build apk --debug",
-      "exit_code": 0,
-      "evidence": "docs/handoffs/app-foundation/evidence/ci-41954312460-verify.txt",
-      "bytes": 172050624,
-      "sha256": "17d50a4bcf4434a4b58a9fca7307550d5a2b788993e9e635cb1fd9ea398221b4",
-      "tested_commit": "bcaf83b963aebdeb8f3876fe7ecb9aedd49ba457",
-      "ci_run_id": 41954312460,
-      "ci_evidence": "docs/handoffs/app-foundation/evidence/ci-41954312460-verify.txt",
-      "artifact_id": 13383036279
+      "exit_code": null,
+      "reason": "Private wrapper revision2 and native acknowledgement require a new integrated CI run.",
+      "previous_verified_check": {
+        "status": "passed",
+        "command": "flutter build apk --debug",
+        "exit_code": 0,
+        "evidence": "docs/handoffs/app-foundation/evidence/ci-41954312460-verify.txt",
+        "bytes": 172050624,
+        "sha256": "17d50a4bcf4434a4b58a9fca7307550d5a2b788993e9e635cb1fd9ea398221b4",
+        "tested_commit": "bcaf83b963aebdeb8f3876fe7ecb9aedd49ba457",
+        "ci_run_id": 41954312460,
+        "ci_evidence": "docs/handoffs/app-foundation/evidence/ci-41954312460-verify.txt",
+        "artifact_id": 13383036279
+      }
     },
     "android_run_local": {
       "status": "blocked",
@@ -211,13 +234,19 @@
       "reason": "Retained API36 software emulator restarted framework services during first-boot ART verification; cmd: Cannot find service: package prevented APK installation."
     },
     "android_smoke": {
-      "status": "blocked",
+      "status": "pending",
       "command": "flutter test integration_test/foundation_smoke_test.dart -d emulator-5554",
       "exit_code": null,
-      "reason": "API36 emulator booted and the first real module passed rotation/unfold/settings assertions. The second instance was not initialized because the test remounted an unkeyed screen. A keyed fixture and single application suite await CI verification.",
-      "tested_commit": "bcaf83b963aebdeb8f3876fe7ecb9aedd49ba457",
-      "ci_run_id": 41954312460,
-      "evidence": "docs/handoffs/app-foundation/evidence/ci-41954312460-android.txt"
+      "reason": "Private wrapper revision2 and native acknowledgement require a new integrated CI run.",
+      "previous_verified_check": {
+        "status": "blocked",
+        "command": "flutter test integration_test/foundation_smoke_test.dart -d emulator-5554",
+        "exit_code": null,
+        "reason": "API36 emulator booted and the first real module passed rotation/unfold/settings assertions. The second instance was not initialized because the test remounted an unkeyed screen. A keyed fixture and single application suite await CI verification.",
+        "tested_commit": "bcaf83b963aebdeb8f3876fe7ecb9aedd49ba457",
+        "ci_run_id": 41954312460,
+        "evidence": "docs/handoffs/app-foundation/evidence/ci-41954312460-android.txt"
+      }
     }
   },
   "android_local": {
@@ -231,7 +260,7 @@
     "screenshots": []
   },
   "blockers": [
-    "Full Android integration and actual app screenshots await a rerun after correcting the second-instance test fixture. No runtime/contract/asset bytes changed."
+    "Integrated analyze/unit/build/device gates await CI after the private readiness acknowledgement and scroll-helper correction. The native30s handshake limit remains unchanged."
   ],
   "not_claimed": [
     "physical Android phone",
@@ -276,6 +305,19 @@
       "android_job": 127008855935,
       "evidence": "docs/handoffs/app-foundation/evidence/ci-41954312460-android.txt",
       "reason": "Booted API36 and verified active WebView. First model/rotation/unfold/settings assertions passed; second-controller mount timed out because the fixture reused StatefulWidget State. Missing/corrupt asset cases passed. Runner shutdown signal prevented app-flow and screenshot execution."
+    },
+    {
+      "run_id": 41957473390,
+      "url": "https://github.com/unDead41/geodecoder/actions/runs/41957473390",
+      "tested_commit": "27cb9d570bc254c47dbd5838672a5fc78797e413",
+      "verify": "passed",
+      "verify_job": 127015726945,
+      "verify_artifact_id": 13384386607,
+      "verify_evidence": "docs/handoffs/app-foundation/evidence/ci-41957473390-verify.txt",
+      "android_smoke": "failed_2_of_4",
+      "android_job": 127018909544,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41957473390-android.txt",
+      "reason": "First cold module hit30s handshake timeout; missing/corrupt assets passed. App flow loaded WebView and retained preferences, but copy-button tap used pre-layout off-screen geometry; clipboard assertion failed. Actual race path is not proved by this CI log."
     }
   ],
   "android_ci": {
@@ -288,5 +330,6 @@
     "boot_verified": true,
     "offline_radios_disabled": true,
     "screenshots": []
-  }
+  },
+  "private_module_adapter_version": 2
 }

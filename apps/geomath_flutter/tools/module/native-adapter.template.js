@@ -5,7 +5,7 @@
   const settingsInstanceId = 'geomath-settings-v1';
   const channel = 'geodecoder.module.preferences';
   const frame = document.getElementById('module');
-  let config = null, moduleReady = false, settingsReady = false, emittedReady = false;
+  let config = null, moduleReady = false, settingsReady = false, emittedReady = false, readyAcknowledged = false;
   let settings = null, active = true, modelSnapshot = null, audioGranted = false, audioRevision = 0, audioAck = 0;
   const object = value => value && typeof value === 'object' && !Array.isArray(value);
   const exact = (value, keys) => object(value) && Object.keys(value).length === keys.length && keys.every(key => Object.hasOwn(value,key));
@@ -21,8 +21,8 @@
     post({channel,version:1,instanceId:settingsInstanceId,type:'settings',settings:{...settings,motionPaused:settings.motionPaused || !active,audioEnabled:settings.audioEnabled && audioGranted}});
     if (moduleReady) post({type:'geodecoder:module-context',protocol:1,session:config.progressSession,theme:config.theme,progress:config.progress});
   }
-  function ready() {
-    if (!emittedReady && moduleReady && settingsReady) { sync(); emittedReady = send('ready'); }
+  function ready(retry = false) {
+    if (!readyAcknowledged && (!emittedReady || retry) && moduleReady && settingsReady) { sync(); emittedReady = send('ready') || emittedReady; }
   }
   window.addEventListener('message', event => {
     if (!config || event.source !== frame.contentWindow || event.origin !== 'null' || !object(event.data)) return;
@@ -66,8 +66,9 @@
     },
     setActive(value) {
       if (typeof value !== 'boolean' || !config) return false;
-      active = value;sync();post({type:'geomath:native-lifecycle',active});if(active)ready();return true;
+      active = value;sync();post({type:'geomath:native-lifecycle',active});if(active)ready(true);return true;
     },
+    acknowledgeReady() {if(!config || !emittedReady)return false;readyAcknowledged=true;return true;},
     setAudioAllowed(value) {
       if(!config || typeof value!=='boolean')return -1;
       audioGranted=value;audioRevision++;if(!value)window.speechSynthesis?.cancel();sync();post({type:'geomath:audio',allowed:value,revision:audioRevision});return audioRevision;
@@ -77,6 +78,6 @@
     // Read-only test/diagnostic seam. It contains no bridge nonce or actor.
     inspect() {post({type:'geomath:inspect'});return true;},
     activateControl(action,value) {if(!['rotate-right','set-unfold','stop-auto'].includes(action))return false;post({type:'geomath:control',action,value});return true;},
-    diagnostics() {return {moduleReady,settingsReady,emittedReady,active,audioAck,instanceId:config?.instanceId ?? null,settings:settings?{...settings}:null,model:modelSnapshot};}
+    diagnostics() {return {moduleReady,settingsReady,emittedReady,readyAcknowledged,active,audioAck,instanceId:config?.instanceId ?? null,settings:settings?{...settings}:null,model:modelSnapshot};}
   }),writable:false,configurable:true});
 })();

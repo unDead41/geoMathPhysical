@@ -314,7 +314,7 @@
     "command": "node tools/module/build_module.mjs <canonical-root> <recursive-tree.json>",
     "source_built": true,
     "canonical_html_sha256": "7ddd5d60a25fbdf73c20f9f8e8fc0db4253e582fb50d17c944307b8f682066c4",
-    "adapter_version": 1
+    "adapter_version": 2
   },
   "limitations": [
     "Android device smoke must be recorded separately; source/build checks are not Android WebView evidence."

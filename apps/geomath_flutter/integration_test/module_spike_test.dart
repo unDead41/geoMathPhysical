@@ -75,6 +75,18 @@ void main() {
       expect(first.lastValidatedCommand?.kind, ModuleCommandKind.ready);
       expect(first.lastValidatedCommand?.binding, sessions.current);
       final initial = await _diagnostics(tester, first);
+      expect(initial['readyAcknowledged'], isTrue);
+      final readyCount = first.acceptedCommandCount;
+      final duplicateReady = jsonEncode({
+        ...first.bridge.identity.toJson(),
+        'command': 'ready',
+        'payload': <String, Object?>{},
+      });
+      await first.webViewController!.runJavaScript(
+        'window.GeoMathNative.postMessage(${jsonEncode(duplicateReady)})',
+      );
+      await tester.pump(const Duration(milliseconds: 200));
+      expect(first.acceptedCommandCount, readyCount);
       final initialModel = initial['model'] as Map<String, Object?>;
       expect(initialModel['modelCount'], 11);
       expect(initialModel['shape'], 'cube');
@@ -235,6 +247,7 @@ Future<void> _mount(
   PreferencesRepository preferences,
   AudioCoordinator audio,
 ) async {
+  var nextDiagnostic = DateTime.now().add(const Duration(seconds: 10));
   await tester.pumpWidget(
     MaterialApp(
       home: ModuleSpikeScreen(
@@ -255,6 +268,11 @@ Future<void> _mount(
         controller.phase == ModuleLoadPhase.failed ||
         controller.phase == ModuleLoadPhase.closed,
     timeout: const Duration(seconds: 50),
+    action: () async {
+      if (DateTime.now().isBefore(nextDiagnostic)) return;
+      nextDiagnostic = DateTime.now().add(const Duration(seconds: 10));
+      await _logStartupState(controller, lifecycle);
+    },
   );
   expect(
     controller.phase,
@@ -262,6 +280,44 @@ Future<void> _mount(
     reason: controller.failure?.message,
   );
   expect(await controller.ready, isA<Success<ModuleCommand>>());
+}
+
+Future<void> _logStartupState(
+  ModuleSpikeController controller,
+  AppLifecycleController lifecycle,
+) async {
+  final safe = <String, Object?>{
+    'phase': controller.phase.name,
+    'lifecycle': lifecycle.phase.name,
+    'bridge': controller.bridge.status.name,
+    'accepted': controller.acceptedCommandCount,
+  };
+  final view = controller.webViewController;
+  if (view != null) {
+    try {
+      safe['trustedUrl'] =
+          await view.currentUrl().timeout(const Duration(seconds: 2)) ==
+          ModuleSpikeController.trustedAssetUrl;
+      Object? decoded = await view
+          .runJavaScriptReturningResult('''
+JSON.stringify((() => {
+  const d = window.GeoMathModule?.diagnostics();
+  return {documentReady:document.readyState,adapterAvailable:!!d,
+    moduleReady:d?.moduleReady,settingsReady:d?.settingsReady,
+    emittedReady:d?.emittedReady,readyAcknowledged:d?.readyAcknowledged,
+    active:d?.active};
+})())
+''')
+          .timeout(const Duration(seconds: 2));
+      while (decoded is String) {
+        decoded = jsonDecode(decoded);
+      }
+      if (decoded is Map) safe['wrapper'] = decoded;
+    } catch (_) {
+      safe['diagnosticsAvailable'] = false;
+    }
+  }
+  debugPrint('GEOMATH_STARTUP ${jsonEncode(safe)}');
 }
 
 Future<Map<String, Object?>> _diagnostics(

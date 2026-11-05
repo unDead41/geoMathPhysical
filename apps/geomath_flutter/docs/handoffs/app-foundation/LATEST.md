@@ -194,3 +194,29 @@ checks. CI runs both scenario registrations in one integration application to
 avoid a second Gradle compile while the emulator is live, and stops idle native
 build daemons before emulator startup. No production runtime, contract, asset or
 lockfile bytes change. This correction awaits the actual rerun.
+
+## Fourth CI and native readiness acknowledgement
+
+Run [41957473390](https://github.com/unDead41/geodecoder/actions/runs/41957473390)
+passed all92 Flutter tests,11 Node checks, formatter, analysis and normal APK
+build at `27cb9d570bc254c47dbd5838672a5fc78797e413`. Android ran all four
+scenarios: missing/corrupt assets passed, the first WebView timed out at its30s
+handshake deadline, and app flow later opened the WebView and retained settings
+but missed an off-screen copy button after scrolling without a layout pump.
+See the [verify receipt](evidence/ci-41957473390-verify.txt) and
+[Android receipt](evidence/ci-41957473390-android.txt). No screenshot pass is inferred.
+
+Source review independently reproduced a real race between JS ready enqueue and
+native lifecycle validation. The wrapper now waits for native acknowledgement
+and retries unacknowledged readiness on foreground. Native acknowledges only
+validated messages and deduplicates logical readiness. The child and native
+envelope/progress/settings protocols are unchanged; private adapter revision2
+and source/manifest hashes record the correction. The observed CI timeout lacks
+sufficient startup detail to prove it took this race path. Tests now log bounded
+whitelisted startup flags, and the native30s deadline stays unchanged.
+
+The regression failed before correction and all12 Node contracts pass afterward.
+The Android helper pumps/settles after scroll and requires hit-testable actions.
+CI uses one runner to preserve its already-built normal APK before emulator tests,
+avoiding a repeated normal build. Failed-run logs and a real final screenshot are
+retained through a pipefail/exit trap. Integrated checks await this corrected run.

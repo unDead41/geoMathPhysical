@@ -11,7 +11,7 @@
   "module_progress_protocol": 1,
   "module_settings_version": 1,
   "native_bridge_version": 1,
-  "adapter_version": 1,
+  "adapter_version": 2,
   "files": [
     {
       "path": "assets/module/canonical-module.html",
@@ -25,8 +25,8 @@
     },
     {
       "path": "assets/module/native-adapter.js",
-      "sha256": "1149a8a42e2d65505ca2fe578de94ba91de52da2bbc5eef7860351b313fd1fab",
-      "bytes": 726590
+      "sha256": "0910fe197787e08e7105f6a0bdb5703ffd1702a2dc0779c231d65cec70c3e322",
+      "bytes": 726804
     }
   ]
 }
