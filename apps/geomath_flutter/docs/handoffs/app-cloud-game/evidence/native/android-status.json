@@ -1,0 +1,49 @@
+{
+  "status": "blocked",
+  "environment": "Android API35 AOSP x86_64 emulator, software TCG, no /dev/kvm",
+  "boot_completed": true,
+  "boot_seconds": 814,
+  "device_detected": true,
+  "device_identity": "Android_SDK_built_for_x86_64 / sdk_phone64_x86_64 / emu64x",
+  "normal_apk_install": "unknown outcome after 240-second timeout; not claimed installed",
+  "normal_apk_start": "120-second timeout; not claimed running",
+  "integration_apk_build": "passed, distinct integration target verified in APK kernel",
+  "integration_tests": "blocked before execution by native device transport/command stalls",
+  "screenshots": [],
+  "attempts": [
+    {
+      "action": "first emulator boot",
+      "result": "booted after 566seconds, then old helper wm setup timed out; terminated"
+    },
+    {
+      "action": "restart",
+      "result": "stale snapshot-lock failure, no run"
+    },
+    {
+      "action": "clean own stale locks and restart",
+      "result": "booted after814seconds; adb reported device"
+    },
+    {
+      "action": "shell getprop after boot",
+      "result": "90second and45second timeouts"
+    },
+    {
+      "action": "adb install -r -t normal preview APK",
+      "result": "240second timeout; outcome unknown"
+    },
+    {
+      "action": "start normal app Activity",
+      "result": "120second timeout"
+    },
+    {
+      "action": "screencap",
+      "result": "30second timeout; no image"
+    },
+    {
+      "action": "adb reconnect then reconcile installed package",
+      "result": "reconnect accepted, then device not found; final discovery receipt retained"
+    }
+  ],
+  "claim": "APK build, host tests and host-rendered widget previews are distinct from Android execution. No actual app screenshot, device integration, physical-phone or hosted PASS is claimed.",
+  "final_device_state": "offline after reconnect; wait-for-device20second timeout"
+}

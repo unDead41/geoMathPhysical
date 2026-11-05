@@ -1,0 +1,59 @@
+{
+  "base": "41b5774694c83b9d2464df4bbc3bc55046a79dd8",
+  "integrated": [
+    {
+      "worker": 1,
+      "private_head": "e2bb4474d6502549a78fdbe61b7b2c4928886aa3",
+      "integrated_commit": "792032720fe7b59f5d3bc3b8ba9ae1b335ee5107",
+      "files": 24
+    },
+    {
+      "worker": 2,
+      "private_head": "7d01da97df93d3eb2e34c7877671a9d954568161",
+      "integrated_commit": "40743b23a683541ecfb7a3ab96089743905e6be9",
+      "files": 13
+    },
+    {
+      "worker": 3,
+      "private_head": "655697ffddc13f6ce5691067370eb770865ce514",
+      "integrated_commit": "d24b965db8a6f1c39402ad0db0fb257ff15b3445",
+      "files": 11
+    },
+    {
+      "worker": 4,
+      "private_head": "ac16896b0886aa1ad8340185e3ba0e24cd519992",
+      "integrated_commit": "d4d3bd44b6e0f1f244ddd63510ffb4592c10166e",
+      "files": 16
+    },
+    {
+      "worker": 5,
+      "private_head": "a5be14f43d3b08621d8e4332c882b99b164bc442",
+      "integrated_commit": "f25b116780668e7b58829b3b754ae75ddcda5a76",
+      "files": 9
+    },
+    {
+      "worker": 6,
+      "private_head": "c52314146779c90b7cd77b0f26ad7863b09eb668",
+      "integrated_commit": "a2a3926e130c46ff3b3085c1b954ad329d230248",
+      "files": 9
+    },
+    {
+      "worker": 1,
+      "private_head": "848307d3e56b1bdb62cb8c076420fb21c38499e4",
+      "integrated_commit": "cc7d9b116709114a5a09884aa4ea71911e2dada9",
+      "files": 24
+    },
+    {
+      "worker": 5,
+      "private_head": "39933d80f4897601dbbf354f9411d5f862f46e50",
+      "integrated_commit": "6565766ca5787b0a12b767bd89926cff1b52d18f",
+      "files": 9
+    },
+    {
+      "worker": 6,
+      "private_head": "4b50767b1281cd1224c0d89a750905b5bdb41f5f",
+      "integrated_commit": "344bea6a0323dae3d63a571e43945469bdeec6f6",
+      "files": 9
+    }
+  ]
+}

@@ -1,121 +1,67 @@
-# GeoMath Flutter — app-cloud-game
+# GeoMath Flutter — Akaun, Kelas, Permainan dan Sync
 
-**Status: BLOCKED_FOUNDATION — audit sumber sahaja; feature Flutter belum dibina.**
+**Native implementation and local verification complete; Android: blocked.**
+App **0.1.0+1**, foundation contract **1.0.0**, 5 November 2026 (Malaysia).
+Code source commit: `6cc470e32f790c1c49e14f0fa0173f0818e3fbfb`. Publication head is confirmed after push; this file does not embed its own commit SHA.
 
-Arahan pelaksanaan: `docs/geomath-app-prompts/03-flutter-cloud-game.md` dan
-`COMMON_RULES.md` pada `app` commit
-`38f061af963256528d5060ff076bae9ee05eafc3`. Kedua-duanya menghendaki
-`app-foundation` READY sebelum implementasi; jika belum READY, audit bebas
-dibenarkan tanpa membina scaffold pendua.
+Foundation READY: `9a1f49a7c92d13bb70b7fd1420c34629a7785f9e`, the same SHA used by Belajar.
+All **101** frozen runtime hashes, shared contracts and lockfile remain unchanged.
+Game bank/geometry are pinned to Digital `37bc2cd262cc0a54e8ee31339ea37471c1ecfda5`; current auth/backend audit uses `752ce908d16d13acc9cc7510797e8363d182c3f5` (Digital2.10.0). SMS was removed from current source and is absent here.
 
-## Gate dan provenance
+## Implemented
 
-| Ref | SHA yang disahkan melalui GitHub |
-|---|---|
-| `app` | `38f061af963256528d5060ff076bae9ee05eafc3` |
-| `main` | `25836eb1a6f24459aace8a3980ae880a13e3b488` · firmware v2.0.2 |
-| `main-digitalized` | `37bc2cd262cc0a54e8ee31339ea37471c1ecfda5` · Digital 2.9.1 |
-| `digitalized-utility-auth-providers` | `28ba888ccaae12f842dd4abae618a51cb60cd1f2` |
-| `app-foundation` | HTTP 404 pada ref dan canonical READY lookup terakhir |
-| `app-learning` | `5ab7102193e070d853c1622f2ae038b2b37a833d` · audit sahaja, `WAITING_FOUNDATION_READY` |
+- Native email/username access, signup/confirmation, recovery including the canonical legacy flow, profile completion/drafts/security/recorded sessions, protected restore and guarded callbacks. Server verification owns role and identity; old asynchronous responses cannot adopt or clear a newer account.
+- Teacher/student classes, room PINs, memberships/invitations, monitor/results, same-attempt room play, revision-aware CRUD, archived/closed retention and uncertain-outcome reconciliation. Invitation cancel/decline payloads contain `invite_id` only.
+- Native Solo with real JavaScript golden/RNG parity, five game shapes including cone, R1→R2 single attempt, timing/review/pause, durable resume, analysis and local best50 quiz scores. Finalization remains idempotent across retention, account switch and reopen.
+- Protocol2 Duel using real transport/server projection and protected guest capability tokens. Unknown commands replay the same sequence/payload; polling, retry cooldown, lifecycle, final review and forfeit preserve server authority. Active Duel does not import Solo answers or locally assign marks.
+- One shared SQLite record writer/outbox transaction, account partitions, immutable receipts/events, batch20/cap2000, partial/missing/invalid acknowledgments, bounded retry/Retry-After, needs-auth/unavailable and foreground wake. Guest records remain local.
+- Real `lib/dev/cloud_game_main.dart` preview, 19 route entries, shared components and BM/English strings. Play opens Solo, Duel and sync; native features borrow the original preferences/session/database/geometry/audio owners.
 
-Foundation SHA, contract version/hash dan asset hashes belum tersedia.
-SHA foundation yang sama dengan Belajar **belum boleh dipilih atau disahkan**.
-Branch Belajar muncul semasa audit ini berjalan; handoff dan integration request
-terkininya dibaca pada SHA di atas, kedua-duanya masih mempunyai foundation SHA
-null dan implementationStarted=false. Rujukan worker kepada dua ref yang tiada
-ialah semakan awal; readback akhir ini menggantikannya untuk status semasa.
-Lokasi marker yang diperlukan ialah
-`apps/geomath_flutter/docs/FOUNDATION_READY.json`, bersama
-`docs/FOUNDATION_CONTRACT.md` dan handoff foundation pada commit yang sama.
-`SOURCE_AUDIT.json` menyimpan bukti gate dan perbandingan blob canonical.
+## Verification
 
-Worktree lead: `/workspace/scratch/7395917c0f68/worktrees/app-cloud-game`;
-enam worker menggunakan worktree dan branch private berasingan, serentak.
-Tree asas Git dipulihkan melalui API dan hash commit/tree disahkan tepat;
-397 daripada 1130 blob dimaterialisasikan dalam sparse checkout. Mockup PNG
-tidak dimuatkan dan tiada semakan visual atau screenshot app didakwa.
-Perubahan audit hanya dalam subfolder handoff dan integration request branch ini.
+| Check | Actual result |
+| --- | --- |
+| Format / analyzer | PASS;157 Dart files unchanged, no analyzer issues |
+| Final full Flutter suite | **420/420 PASS** |
+| Canonical export/adapter Node suite | **12/12 PASS** |
+| Native route layout sweep | 19 guest/unconfigured entries ×16 profiles =304 combinations;320/390/430/768dp, BM/English, light/dark,150%text |
+| Normal debug preview APK | PASS;174735340 bytes;SHA256 `74a8a688617abea4639c8d0737690703ac0919df85a699e2caa54d9029a5b6ad` |
+| Separate Android integration APK | Build PASS; actual execution status below |
+| Independent cross-feature review | PASS after three meaningful integration fixes |
 
-## Hasil audit
+The local software emulator booted, but Android commands stalled/timed out. Device integration and actual app screenshots remain blocked; no device PASS is claimed.
 
-| Pemilik | Hasil |
-|---|---|
-| Auth/profil/sesi | [Kontrak auth dan provider](audit/01-auth.md), sempadan actor, recovery/callback dan penggunaan protected session |
-| Kelas/CRUD | [Payload dan authorization](audit/02-classroom.md), PIN, revision, UUID jemputan, attempt dan sejarah |
-| Solo | [Enjin dan persistence](audit/03-solo.md), [trace JS sebenar](audit/03-solo-trace.json) dengan draw RNG dan jam eksplisit |
-| Duel | [Protocol 2](audit/04-duel.md), projection, pending sequence, review, lifecycle dan deadline pelayan |
-| Sync | [Rekod dan outbox](audit/05-sync.md), transaksi, pengasingan owner, ack dan polisi retry |
-| UI/penerimaan | [Pelan penerimaan](audit/06-acceptance.md), [29 paparan + 16 EX states](audit/06-screen-matrix.json) |
+Host-rendered Flutter widget previews, when listed in `VERIFICATION.json`, are actual native widget code rendered by the host test engine. They are labelled separately and do not replace Android screenshots or device acceptance.
 
-Semua paparan native ditanda `BLOCKED_FOUNDATION`, `implemented: false`.
-EX11 dipaparkan oleh learning apabila port writer gagal; cloud-game memiliki
-kontrak kegagalan persistence. Tiada class/widget placeholder dikira siap.
+The layout sweep is not full populated-state, TalkBack, keyboard, hosted or device acceptance. The [29-screen/16-state matrix](screen-coverage.json) records exact implementations, fixture coverage and gaps. [VERIFICATION.json](VERIFICATION.json) and [native receipts](evidence/native/) preserve results and earlier failures. The earlier audit-only BLOCKED_FOUNDATION state is superseded by this implementation.
 
-Perbandingan app dengan Digital terkini mendapati bank, solo-save, gateway
-kelas, Duel dan modul offline yang diaudit mempunyai blob yang sama.
-`core.mjs` berubah pada literal versi 2.9.0→2.9.1 sahaja; active-sessions
-mempunyai perubahan persembahan. Pin foundation tetap mesti disahkan semula.
+## Run and integrate
 
-Perkara yang mesti ditangani semasa adaptasi native:
+From `apps/geomath_flutter`, use the frozen Flutter3.47.9/Dart3.13.7, Java17 JDK and Android SDK:
 
-- Login lama yang lambat tidak boleh mengambil alih akaun baharu; mutation
-  perlu diserialkan dan response terikat epoch/identiti operasi. Audit auth
-  mereproduksi risiko adoption pada source yang dipin.
-- Gateway signup sekarang menetapkan URL confirmation web. Native memerlukan
-  kontrak redirect yang dibenarkan atau handoff web-ke-app yang disahkan;
-  perubahan manifest sahaja tidak menukar pautan email.
-- RPC kelas ialah `geo_action(action,payload)`. Revision hanya pada mutasi
-  management yang disenaraikan; batal/tolak jemputan menerima `invite_id`
-  sahaja. Unknown outcome memerlukan refresh/reconcile sebelum retry.
-- RPC sync ialah `geo_offline_sync(action,payload)`: `push` dengan `{events}`,
-  `history` dengan `{}`. Rekod tempatan dan event pending mesti ditulis dalam
-  satu transaksi database; listener selepas save tidak memenuhi syarat ini.
-- Native retry perlu mempunyai had, menghormati `Retry-After`, mengekalkan
-  permanent failure sebagai berhenti, dan membatalkan hasil lifecycle lama.
-  Probe source menunjukkan jurang yang disenaraikan dalam audit sync.
-- Token capability Duel serta pending payload/seq perlu protected dan durable;
-  fallback memori web tidak membuktikan simpanan native yang dilindungi.
-- Trace Solo ialah `PROVISIONAL_AUDIT_ONLY`; ia bukan eksport foundation atau
-  bukti parity Dart. Semua draw/clock dan identity bank perlu dipadankan semula.
+```text
+flutter pub get
+flutter run -d DEVICE_ID -t lib/dev/cloud_game_main.dart
+flutter build apk --debug -t lib/dev/cloud_game_main.dart
+flutter test integration_test/cloud_game_smoke_test.dart -d DEVICE_ID
+```
 
-## Pengesahan sebenar
+For the prebuilt x64 test route:
 
-Ujian yang dijalankan ialah suite sumber JavaScript/SQL setempat. Perincian
-command, exit status dan skop berada dalam setiap audit; suite bertindih tidak
-dijumlahkan sebagai bilangan ujian unik. Ringkasan dan hash evidence direkodkan
-dalam `VERIFICATION.json` selepas semakan lead.
+```text
+flutter build apk --debug --target-platform android-x64 -t integration_test/cloud_game_smoke_test.dart
+flutter drive --no-pub --driver=test_driver/integration_driver.dart --target=integration_test/cloud_game_smoke_test.dart --use-application-binary=build/app/outputs/flutter-apk/app-debug.apk -d DEVICE_ID --timeout=900
+```
 
-Root `python tools/check_version.py` lulus untuk label firmware **v1.1.3 yang
-diwarisi oleh branch app**. Ia tidak mengubah atau menerbitkan firmware main
-v2.0.2. `git diff --check` dan semakan skop digunakan sebelum penerbitan audit.
+The integration target contains explicitly labelled server fixtures and real Android plugins; it does not establish hosted Auth, permissions or two-client Duel. Rebuild the normal dev target after integration packaging. The delivered APK is the normal preview, built without cloud defines; guest Solo is available and online features explain unavailable configuration.
 
-Flutter/Dart/adb tidak ditemui pada PATH lead semasa audit. `flutter analyze`,
-formatter Dart, unit/widget/database native, Android integration, preview
-`lib/dev/cloud_game_main.dart`, APK dan screenshot **belum dijalankan/dibina**.
-Tiada dakwaan Google consent, SMS delivery, hosted migration, Auth/Realtime,
-Duel dua klien staging atau kapasiti 5,000 pengguna daripada suite sumber.
+[Integration request](../../integration_requests/app-cloud-game.json) lists registrations, migrations (`solo:1`, `sync:1`), platform/config/capability needs and exact limits. Install `cloudGameFeatures()` once beside learning. Await its startup once when normal Home is initial, keep one sync controller, and pass `FoundationServices.recordsWriter` to learning. No dependency, core schema, router, platform runner or global workflow was modified.
 
-## Sambung selepas READY
+## Remaining integration gates
 
-1. Baca marker, kontrak serta handoff foundation yang sebenar. Sahkan hashes
-   dan bukti analyze/test/debug-build/device smoke; nama READY sahaja tidak cukup.
-2. Tetapkan **SHA penuh foundation yang sama dengan app-learning** dan catat
-   dalam kedua-dua handoff. Jangan memilih moving HEAD secara berasingan.
-3. Gabungkan commit foundation itu ke branch audit ini melalui merge biasa
-   tanpa force, kemudian sediakan worktree feature daripada SHA yang dipersetujui.
-   Branch ini sekarang berasaskan ref arahan untuk audit sahaja, bukan asas
-   implementasi native yang telah diluluskan.
-4. Gunakan DTO, ports, dependency lock dan contribution APIs yang dibekukan;
-   bina auth/profile/classroom/solo/duel/sync serta preview native. Lengkapkan
-   [integration request](../../integration_requests/app-cloud-game.json) dengan
-   registration/migration/l10n/platform sebenar.
-5. Jalankan ujian wajib Prompt 3 dan
-   `flutter build apk --debug -t lib/dev/cloud_game_main.dart`, ambil screenshot
-   Android BM/English/light/dark/150% dan asingkan blocker hosted.
-6. Kemas kini matriks kepada status yang dibuktikan, push hanya `app-cloud-game`
-   tanpa force dan baca semula head remote. Jangan menerbitkan branch/app lain.
+- Keep `nativeCallbackReady:false` until Android VIEW/BROWSABLE/DEFAULT handling for `com.geomath.dev://auth/callback` and the matching hosted redirect allowlist are verified on cold/warm/replayed/expired flows. Google consent and native recovery callback are not claimed working from local fixtures. Email signup uses the canonical web confirmation followed by native login.
+- Frozen destination `select()` bypasses feature back confirmations. Integrator must add the shared tab-exit guard. Profile drafts/uncertain saves survive tab reentry in actor-bound memory; classroom retains its controller/attempt; Duel hides destination navigation and guards back/forfeit.
+- Verify hosted Auth/profile/session RPCs, `classroom_crud:1`, `geo_offline_sync` and protocol2 Duel using real authorized staging actors. Pending rows remain when unavailable. No provider/SMTP/secret/migration/Edge deployment was performed.
+- The inherited CI runs the default foundation target. Integrator must explicitly run this preview and its Android smoke; a default foundation CI success is not evidence for these features. Physical phone, iOS and capacity tests remain separate.
 
-Tiada command run app tersedia pada handoff ini kerana pakej Flutter foundation
-belum wujud. Langkah seterusnya ialah memperoleh hasil READY foundation yang
-dikehendaki oleh arahan asal; ia bukan permintaan kelulusan pengguna baharu.
+Six initial workers used private worktrees; scoped commits were combined by the lead and an independent reviewer checked cross-feature behavior. Only `app-cloud-game` is authorized for publication. Firmware, `main`, `main-digitalized`, Pages, backend and store remain outside this publication.

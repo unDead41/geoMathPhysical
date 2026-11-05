@@ -46,7 +46,8 @@
       "state": "SoloPlayPage / quiz or practice setup",
       "test_pointers": [
         "test/features/solo/solo_engine_test.dart:132",
-        "test/features/solo/solo_pages_test.dart:89"
+        "test/features/solo/solo_pages_test.dart:89",
+        "test/features/cloud_game/cloud_game_startup_test.dart::saved account HTTP 502/429/503 leaves guest Solo reachable"
       ],
       "verification_limit": "Entry layout checked; no complete 16-profile keyboard/form validation audit."
     },
@@ -70,7 +71,8 @@
       "state": "SoloGamePage / SoloMode.quiz",
       "test_pointers": [
         "test/features/solo/solo_engine_test.dart:132",
-        "test/features/solo/solo_pages_test.dart:89"
+        "test/features/solo/solo_pages_test.dart:89",
+        "test/features/cloud_game/cloud_game_startup_test.dart::saved account HTTP 502/429/503 leaves guest Solo reachable"
       ],
       "verification_limit": "Active quiz uses feature fixture tests; guest direct-entry matrix has no active attempt."
     },
@@ -592,7 +594,8 @@
         "test/features/cloud_game/cloud_game_widgets_test.dart",
         "test/features/classroom/classroom_controller_test.dart:232",
         "test/features/duel/duel_controller_test.dart:473",
-        "test/features/sync/native_outbox_test.dart:808"
+        "test/features/sync/native_outbox_test.dart:808",
+        "test/features/cloud_game/cloud_game_startup_test.dart::saved account HTTP 502/429/503 leaves guest Solo reachable"
       ],
       "verification_limit": "No-config guest entries checked in full matrix; actual hosted capability deployment unverified."
     }
@@ -608,7 +611,7 @@
     "TalkBack, contrast/text125, keyboard/safe-area combinations, low-end-device performance and capacity have no complete worker6 acceptance evidence.",
     "Normal root starting on Home must resolve and await CloudGamePreviewServices.startup.ready once after bootstrap; the dev entry already awaits it on every contributed feature route."
   ],
-  "qa_commit": "c52314146779c90b7cd77b0f26ad7863b09eb668",
+  "qa_commit": "4b50767b1281cd1224c0d89a750905b5bdb41f5f",
   "qa_receipts": [
     {
       "command": "dart format --output=none --set-exit-if-changed test/features/cloud_game/cloud_game_bootstrap_test.dart test/features/cloud_game/cloud_game_widgets_test.dart",
@@ -631,6 +634,24 @@
     {
       "command": "git diff --check",
       "exit_code": 0
+    },
+    {
+      "command": "flutter test --no-pub test/features/cloud_game/cloud_game_startup_test.dart --reporter expanded",
+      "exit_code": 0,
+      "passed": 9,
+      "failed": 0,
+      "evidence": "worker6-offline-startup-verified.log"
+    },
+    {
+      "command": "flutter analyze --no-pub lib/dev/cloud_game_features.dart test/features/cloud_game/cloud_game_startup_test.dart",
+      "exit_code": 0,
+      "result": "No issues found",
+      "evidence": "worker6-offline-startup-analyze-final.log"
+    },
+    {
+      "command": "dart format --output=none --set-exit-if-changed lib/dev/cloud_game_features.dart test/features/cloud_game/cloud_game_startup_test.dart",
+      "exit_code": 0,
+      "evidence": "worker6-offline-startup-format.log"
     }
   ],
   "reviewed_feature_commits": {
@@ -640,7 +661,9 @@
     "duel": "ac16896b0886aa1ad8340185e3ba0e24cd519992",
     "sync": "a5be14f43d3b08621d8e4332c882b99b164bc442"
   },
-  "test_dependency_snapshot": {
+  "test_dependency_limit": "Scoped tests used the initial combined feature copy plus final auth/profile e2bb447 and final solo navigation files. Later classroom/solo data/Duel/sync fixes are reviewed by pointers; lead owns one final integrated test run.",
+  "route_qa_commit": "c52314146779c90b7cd77b0f26ad7863b09eb668",
+  "matrix_test_dependency_snapshot": {
     "auth": {
       "file_count": 11,
       "file_tree_sha256": "46f7cc55e616bab3522e6c637a09df24accaea6edbebd61a7760525bb48ea4ce",
@@ -685,11 +708,49 @@
       ]
     }
   },
-  "test_dependency_limit": "Scoped tests used the initial combined feature copy plus final auth/profile e2bb447 and final solo navigation files. Later classroom/solo data/Duel/sync fixes are reviewed by pointers; lead owns one final integrated test run.",
+  "startup_change": {
+    "safe_guest_failure_codes": [
+      "network",
+      "retryAfter",
+      "unavailable"
+    ],
+    "storage_failure": "remains retry-gated",
+    "credential_handling": "retained by actual Auth owner; no startup write/clear or actor adoption",
+    "notice": "localized guest notice; actor-bound retry; no immediate action on rate limit",
+    "test_scope": "9 targeted startup tests only; no full matrix rerun after startup change",
+    "source_limit": "Refreshed final lead feature copies immediately before subsequent Auth transport848307d and sync regression39933d changes; final lead verification is separate."
+  },
+  "startup_dependency_snapshot": {
+    "auth": {
+      "file_count": 11,
+      "file_tree_sha256": "46f7cc55e616bab3522e6c637a09df24accaea6edbebd61a7760525bb48ea4ce"
+    },
+    "profile": {
+      "file_count": 6,
+      "file_tree_sha256": "b865d657c89b6929420856f43dc1378c40e84391f46a220324efeb27f11805c5"
+    },
+    "classroom": {
+      "file_count": 8,
+      "file_tree_sha256": "1e1b439f51d9c8b0a7caaf790473417d47599d7e8e001a872c5da952e91e92c4"
+    },
+    "solo": {
+      "file_count": 7,
+      "file_tree_sha256": "9c75109faa161417be37aca121e4ecf2eaae01c5b9f23983250e00ceb60dc076"
+    },
+    "duel": {
+      "file_count": 7,
+      "file_tree_sha256": "33c7d9417884acf8bb0bb39f030c83a580ad976934738b1cb39a3f009bc28a2a"
+    },
+    "sync": {
+      "file_count": 6,
+      "file_tree_sha256": "85506d8d48bc1014b97a1dd69bc7c606364d3e801d7ffeacbed20ff83a0522db"
+    }
+  },
   "lead_combined_verification": {
-    "tests": 392,
+    "tests": 420,
     "result": "passed",
-    "source": "a2a3926e130c46ff3b3085c1b954ad329d230248",
-    "later_final_review_fixes": "see VERIFICATION.json for focused follow-up and final APK/device evidence"
+    "remote_source_commit": "6cc470e32f790c1c49e14f0fa0173f0818e3fbfb",
+    "log": "evidence/native/final-tests.log",
+    "android": "blocked"
   }
 }
