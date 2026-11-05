@@ -121,3 +121,4 @@ An additional fixture probe passed all four phases for each original five area s
 Additional read-only Node probe passed both composite kinds × five join frames × five groups: IDs/groups/colours fixed and per-group mesh areas within 0.1% of analytic values; also reproduced the session-checkpoint finding above.
 These are native Node/VM fixture checks with a minimal DOM, **not Android WebView, browser visual, TalkBack, physical-device, APK or durable-storage evidence**.
 No Flutter completion is claimed. Resume only after a verified shared READY SHA, frozen APIs/hashes and source lock; then test real WebView/actor isolation, requested palette, advanced modes and complete reflections.
+

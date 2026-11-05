@@ -1,0 +1,57 @@
+Android CI receipt
+Run: https://github.com/unDead41/geodecoder/actions/runs/41954312460
+Job:127008855935
+Tested commit:bcaf83b963aebdeb8f3876fe7ecb9aedd49ba457
+Conclusion:failure, not READY
+
+The emulator booted on API36. The first real WebView passed rotation, unfolding, settings and instance-preservation assertions before line160 remounted the second controller. The test fixture reused the unkeyed StatefulWidget, whose State retained the first controller; the second stayed uninitialized. Missing/corrupt asset negative cases passed. The runner then received an external shutdown signal during the next Gradle build. App flow and screenshot collection did not run. These are not full-suite/device PASS claims.
+
+Original selected log lines:
+2026-11-05T02:27:57.3371708Z Filesystem      Size  Used Avail Use% Mounted on
+2026-11-05T02:27:57.3372080Z /dev/root        72G   59G   13G  82% /
+2026-11-05T02:27:57.3372303Z /dev/root        72G   59G   13G  82% /
+2026-11-05T02:27:57.3372555Z /dev/root        72G   59G   13G  82% /
+2026-11-05T02:27:57.3372777Z /dev/root        72G   59G   13G  82% /
+2026-11-05T02:27:57.3384708Z Filesystem      Inodes   IUsed   IFree IUse% Mounted on
+2026-11-05T02:27:57.3386484Z /dev/root      9699328 1103430 8595898   12% /
+2026-11-05T02:27:57.3388808Z /dev/root      9699328 1103430 8595898   12% /
+2026-11-05T02:27:57.3389225Z /dev/root      9699328 1103430 8595898   12% /
+2026-11-05T02:27:57.3389726Z /dev/root      9699328 1103430 8595898   12% /
+2026-11-05T02:28:48.6446974Z Filesystem      Size  Used Avail Use% Mounted on
+2026-11-05T02:28:48.6447684Z /dev/root        72G   40G   32G  56% /
+2026-11-05T02:28:48.6447926Z /dev/root        72G   40G   32G  56% /
+2026-11-05T02:28:48.6448172Z /dev/root        72G   40G   32G  56% /
+2026-11-05T02:28:48.6448398Z /dev/root        72G   40G   32G  56% /
+2026-11-05T02:35:45.8926150Z ✓ Built build/app/outputs/flutter-apk/app-debug.apk
+2026-11-05T02:35:46.4957151Z Filesystem      Size  Used Avail Use% Mounted on
+2026-11-05T02:35:46.4957509Z /dev/root        72G   52G   21G  72% /
+2026-11-05T02:35:46.4959907Z /dev/root        72G   52G   21G  72% /
+2026-11-05T02:35:46.4961008Z /dev/root        72G   52G   21G  72% /
+2026-11-05T02:35:46.4961312Z /dev/root        72G   52G   21G  72% /
+2026-11-05T02:35:46.4967177Z Filesystem      Inodes   IUsed   IFree IUse% Mounted on
+2026-11-05T02:35:46.4967552Z /dev/root      9699328 1031961 8667367   11% /
+2026-11-05T02:35:46.4967871Z /dev/root      9699328 1031961 8667367   11% /
+2026-11-05T02:35:46.4968182Z /dev/root      9699328 1031961 8667367   11% /
+2026-11-05T02:35:46.4968492Z /dev/root      9699328 1031961 8667367   11% /
+adb shell cmd connectivity airplane-mode enable
+adb shell svc wifi disable
+adb shell svc data disable
+flutter test integration_test -d emulator-5554
+2026-11-05T02:35:47.5807964Z adb shell cmd connectivity airplane-mode enable
+2026-11-05T02:35:47.5808398Z adb shell svc wifi disable
+2026-11-05T02:35:47.5808760Z adb shell svc data disable
+2026-11-05T02:35:47.5809737Z flutter test integration_test -d emulator-5554
+2026-11-05T02:38:54.2186348Z Emulator booted.
+2026-11-05T02:38:58.2366463Z Found 3 connected devices:
+2026-11-05T02:38:59.0368032Z   sdk gphone64 x86 64 (mobile) • emulator-5554 • android-x64    • Android 16 (API 36) (emulator)
+2026-11-05T02:38:59.6446861Z   Current WebView package (name, version): (com.google.android.webview, 133.0.6943.137)
+2026-11-05T02:38:59.7496600Z [command]/usr/bin/sh -c adb shell cmd connectivity airplane-mode enable
+2026-11-05T02:39:01.8207194Z [command]/usr/bin/sh -c adb shell svc wifi disable
+2026-11-05T02:39:02.3508675Z [command]/usr/bin/sh -c adb shell svc data disable
+2026-11-05T02:39:03.2007278Z [command]/usr/bin/sh -c flutter test integration_test -d emulator-5554
+2026-11-05T02:41:19.8663263Z ✓ Built build/app/outputs/flutter-apk/app-debug.apk
+2026-11-05T02:42:48.9729051Z Android module condition did not complete within 0:00:50.000000.
+2026-11-05T02:42:48.9771236Z #3      main.<anonymous closure> (file:///home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/integration_test/module_spike_test.dart:160:7)
+2026-11-05T02:42:49.4282078Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/integration_test/module_spike_test.dart: missing local asset never creates a ready WebView
+2026-11-05T02:42:50.2416164Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/integration_test/module_spike_test.dart: corrupt local asset never creates a ready WebView
+2026-11-05T02:43:02.4859572Z ##[error]The runner has received a shutdown signal. This can happen when the runner service is stopped, or a manually started runner is canceled.

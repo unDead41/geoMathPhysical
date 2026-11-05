@@ -1,0 +1,11 @@
+Final foundation publication checks
+python3 tools/check_version.py:exit0;GeoDecoder historical v1.1.3=README=CHANGELOG.
+git diff --check:exit0 after normalizing final handoff EOF.
+All101 frozen runtime SHA256 values:PASS.
+Contract/source lock/pubspec lock hashes and runtime aggregate:PASS in the finalizer.
+Full standard Flutter workflow is byte-identical to source f5aeddd58d81e490b1e67b8bf4a21311645d3631;SHA256e37fd4da116f6355e4bf3d1c995c108f2296a791c55a53ba07a4a28d2d9b42b1.
+lib/android/assets/unit tests/integration tests/driver/pubspec/contract/source-lock byte diff against that tested source:empty.
+SourceCI41973098124:77format/analyze/92Flutter/12Node/4realAndroid/build/normalAPKrun passed.
+CaptureCI41977674183:exact same APK/20assets/101runtime hashes and actual visible canvas capture passed.
+All3 required actualPNG images visually inspected; original PNG bytes retained.
+Only app-foundation is published. Final publication adds docs/receipts/images and restores the full previously verified workflow.

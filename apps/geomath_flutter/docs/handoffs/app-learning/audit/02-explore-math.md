@@ -110,3 +110,4 @@ Later exporter must pin input SHA/file hashes and palette schema, produce determ
 Apply only declared, hash-checked transformations at mesh colors, legends and diagrams; fail when expected source anchors/hash differ rather than applying a loose global color replacement.
 `tools/build.mjs` writes generated web tokens and bundled HTML; any future build runs in a writable pinned scratch copy, not this read-only source or committed `digital/**`.
 Await verified foundation contracts before implementing contribution/preview, bridge, preference/lifecycle/checkpoint or actor integration. This audit adds only this report; no Flutter/Android/WebView/device/build acceptance is claimed.
+

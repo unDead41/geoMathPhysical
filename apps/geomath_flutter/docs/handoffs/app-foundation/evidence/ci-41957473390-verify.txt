@@ -1,0 +1,128 @@
+GitHub Actions verification receipt
+Run: https://github.com/unDead41/geodecoder/actions/runs/41957473390
+Job:127015726945 (verify)
+Tested commit:27cb9d570bc254c47dbd5838672a5fc78797e413
+Branch:app-foundation
+Conclusion:success
+
+Steps (GitHub readback):
+1. Set up job: success
+2. Run actions/checkout@v7: success
+3. Run actions/setup-java@v6: success
+4. Run subosito/flutter-action@v2: success
+5. Toolchain: success
+6. Dependencies: success
+7. Format: success
+8. Analyze: success
+9. Unit and widget tests: success
+10. Canonical source and adapter checks: success
+11. Debug APK: success
+12. Run actions/upload-artifact@v7: success
+22. Post Run subosito/flutter-action@v2: success
+23. Post Run actions/setup-java@v6: success
+24. Post Run actions/checkout@v7: success
+25. Complete job: success
+
+Selected original log lines:
+2026-11-05T02:48:05.7874105Z Flutter 3.47.9 • channel stable • https://github.com/flutter/flutter.git
+2026-11-05T02:48:05.7877677Z Tools • Dart 3.13.7 • DevTools 2.60.0
+2026-11-05T02:48:13.3901515Z Formatted 76 files (0 changed) in 0.32 seconds.
+2026-11-05T02:48:25.6968268Z No issues found! (ran in 11.3s)
+2026-11-05T02:48:38.5850074Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/app/public_backend_configuration_test.dart: missing public configuration is unavailable without a bootstrap crash
+2026-11-05T02:48:38.5893474Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/app/public_backend_configuration_test.dart: only HTTPS public configuration and exact development callback accepted
+2026-11-05T02:48:38.5928124Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/app/public_backend_configuration_test.dart: service-role and secret credentials cannot be used as public configuration
+2026-11-05T02:48:39.2768709Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/core/formative_record_test.dart: reflection validation preserves canonical stages, limits and trimming
+2026-11-05T02:48:39.2796640Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/core/formative_record_test.dart: merging cannot regress stage or completed explanation
+2026-11-05T02:48:39.2847443Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/core/formative_record_test.dart: completed solo validates canonical mode, integer accounting and duration
+2026-11-05T02:48:39.2909751Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/core/formative_record_test.dart: outbox event only permits canonical formative fields
+2026-11-05T02:48:39.8354711Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/core/session_network_test.dart: guest partition survives reopen; same auth refresh preserves epoch
+2026-11-05T02:48:39.8383606Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/core/session_network_test.dart: failed identity persistence does not claim a stable guest partition
+2026-11-05T02:48:39.8466221Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/core/session_network_test.dart: protected adapter persists only through secure storage and clears
+2026-11-05T02:48:39.8513264Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/core/session_network_test.dart: late responses and callbacks after logout cannot affect another actor
+2026-11-05T02:48:39.8579844Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/core/session_network_test.dart: bounded retry respects Retry-After and halts terminal failures
+2026-11-05T02:48:40.6081536Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/learning/module_asset_repository_test.dart: complete offline source-built assets are verified before ready is possible
+2026-11-05T02:48:40.6130891Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/learning/module_asset_repository_test.dart: missing manifest.json fails closed
+2026-11-05T02:48:40.6159720Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/learning/module_asset_repository_test.dart: corrupt manifest.json fails integrity verification
+2026-11-05T02:48:40.6392030Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/learning/module_asset_repository_test.dart: missing index.html fails closed
+2026-11-05T02:48:40.6497082Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/learning/module_asset_repository_test.dart: corrupt index.html fails integrity verification
+2026-11-05T02:48:40.6623061Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/learning/module_asset_repository_test.dart: missing native-adapter.js fails closed
+2026-11-05T02:48:40.6954927Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/learning/module_asset_repository_test.dart: corrupt native-adapter.js fails integrity verification
+2026-11-05T02:48:40.7014314Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/learning/module_asset_repository_test.dart: missing canonical-module.html fails closed
+2026-11-05T02:48:40.7119189Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/learning/module_asset_repository_test.dart: corrupt canonical-module.html fails integrity verification
+2026-11-05T02:48:41.2826796Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/learning/module_host_failure_test.dart: an absent offline bundle cannot construct WebView or emit ready
+2026-11-05T02:48:42.0393752Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/contracts/geometry_card_provider_test.dart: all five game shapes have canonical neutral solid and net cards
+2026-11-05T02:48:42.0574639Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/contracts/geometry_card_provider_test.dart: damaged card source does not produce a successful geometry DTO
+2026-11-05T02:48:42.5215283Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/foundation/back_policy_contract_test.dart: synchronous reentrant back shares one confirmation and one pop
+2026-11-05T02:48:42.5259453Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/foundation/back_policy_contract_test.dart: confirmation for an old route cannot pop its replacement
+2026-11-05T02:48:42.5289365Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/foundation/back_policy_contract_test.dart: stay preserves a draft and allows a later deliberate back
+2026-11-05T02:48:47.1547325Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/foundation/report_accessibility_test.dart: 320 dp / 150% report keeps keyboard and back actions reachable
+2026-11-05T02:48:47.6787463Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/foundation/report_accessibility_test.dart: failed TXT export retains draft and never claims saved
+2026-11-05T02:48:49.3471374Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/foundation/preview_bootstrap_contract_test.dart: learning preview receives route, translation, service and migrated database
+2026-11-05T02:48:49.5140751Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/foundation/preview_bootstrap_contract_test.dart: cloud_game preview receives route, translation, service and migrated database
+2026-11-05T02:48:49.5243647Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/foundation/preview_bootstrap_contract_test.dart: feature cannot replace the foundation database owner
+2026-11-05T02:48:49.9985381Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/module/module_host_bridge_test.dart: ready handshake and progress retain authoritative native actor
+2026-11-05T02:48:50.0023878Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/module/module_host_bridge_test.dart: native envelope version is distinct from progress and settings versions
+2026-11-05T02:48:50.0066588Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/module/module_host_bridge_test.dart: old epoch messages close the bridge after logout or actor/scope switch
+2026-11-05T02:48:50.0107349Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/module/module_host_bridge_test.dart: logout invalidates a signed-in bridge even when the guest partition exists
+2026-11-05T02:48:50.0134320Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/module/module_host_bridge_test.dart: same session token refresh preserves the bridge; changed scope closes it
+2026-11-05T02:48:50.0175597Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/module/module_host_bridge_test.dart: background blocks input and foreground resumes the same ready instance
+2026-11-05T02:48:50.0218041Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/module/module_host_bridge_test.dart: forged identity, document generation, actor and credentials are rejected
+2026-11-05T02:48:50.0449872Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/module/module_host_bridge_test.dart: malformed/unknown/oversize messages cannot make an instance ready
+2026-11-05T02:48:50.0522419Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/module/module_host_bridge_test.dart: progress validation enforces canonical stages, fields and inclusive limits
+2026-11-05T02:48:50.0554483Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/module/module_host_bridge_test.dart: navigation uses an explicit native allowlist and cannot invoke RPC
+2026-11-05T02:48:52.6399676Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/preferences/preferences_screen_test.dart: every native preference changes through the UI and reopens
+2026-11-05T02:48:52.8839210Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/preferences/preferences_screen_test.dart: failed save keeps old control value and retry saves the same intent
+2026-11-05T02:48:53.0301214Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/preferences/preferences_screen_test.dart: settings reachable at 320.0 dp, ms, dark/contrast/150%
+2026-11-05T02:48:53.2213642Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/preferences/preferences_screen_test.dart: settings reachable at 320.0 dp, en, dark/contrast/150%
+2026-11-05T02:48:53.3829674Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/preferences/preferences_screen_test.dart: settings reachable at 390.0 dp, ms, dark/contrast/150%
+2026-11-05T02:48:53.5164749Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/preferences/preferences_screen_test.dart: settings reachable at 390.0 dp, en, dark/contrast/150%
+2026-11-05T02:48:53.6457076Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/preferences/preferences_screen_test.dart: settings reachable at 430.0 dp, ms, dark/contrast/150%
+2026-11-05T02:48:53.7829489Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/preferences/preferences_screen_test.dart: settings reachable at 430.0 dp, en, dark/contrast/150%
+2026-11-05T02:48:53.8964396Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/preferences/preferences_screen_test.dart: settings reachable at 768.0 dp, ms, dark/contrast/150%
+2026-11-05T02:48:54.0110720Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/preferences/preferences_screen_test.dart: settings reachable at 768.0 dp, en, dark/contrast/150%
+2026-11-05T02:48:54.5173841Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/preferences/preferences_repository_test.dart: all preferences survive a repository close and a fresh disk read
+2026-11-05T02:48:54.5258346Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/preferences/preferences_repository_test.dart: pending or failed persistence never publishes a saved snapshot
+2026-11-05T02:48:54.5293496Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/preferences/preferences_repository_test.dart: serialized saves cannot complete out of order or poison later writes
+2026-11-05T02:48:54.5354904Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/preferences/preferences_repository_test.dart: failed replacement preserves the last durable preferences on reopen
+2026-11-05T02:48:54.5465618Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/preferences/preferences_repository_test.dart: corrupt and future JSON are rejected without overwriting storage
+2026-11-05T02:48:54.5527029Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/preferences/preferences_repository_test.dart: JSON validates each field instead of accepting truthy or unknown values
+2026-11-05T02:48:55.5310703Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/features/feature_composition_test.dart: learning preview registers all contributions through the same root
+2026-11-05T02:48:55.5568662Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/features/feature_composition_test.dart: cloud_game preview registers all contributions through the same root
+2026-11-05T02:48:55.5699798Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/features/feature_composition_test.dart: a service is lazy, typed, shared and disposed after its dependent
+2026-11-05T02:48:55.5738480Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/features/feature_composition_test.dart: cycles and name collisions fail before creating an ambiguous service
+2026-11-05T02:48:55.5770024Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/features/feature_composition_test.dart: composition rejects collisions in every contribution before factories
+2026-11-05T02:48:55.5799467Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/features/feature_composition_test.dart: localisations are immutable, namespaced and use the app fallback order
+2026-11-05T02:48:55.5831745Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/features/feature_composition_test.dart: feature strings cannot replace shared native string namespaces
+2026-11-05T02:48:55.5866437Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/features/feature_composition_test.dart: parameter routes resolve and equivalent parameter paths collide
+2026-11-05T02:48:56.3922699Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/design/design_contract_test.dart: native semantic colours resolve canonical light/dark/strong tokens
+2026-11-05T02:48:56.3965265Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/design/design_contract_test.dart: cube and cuboid palette binds physical IDs and rejects fictitious faces
+2026-11-05T02:48:56.4029811Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/design/design_contract_test.dart: feature strings share one language owner with deterministic fallback
+2026-11-05T02:48:56.4231427Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/design/design_contract_test.dart: body text and status foregrounds remain readable in all four themes
+2026-11-05T02:48:57.8019651Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/design/shared_widgets_test.dart: confirmation actions remain reachable with keyboard at 320 dp/150%
+2026-11-05T02:48:57.9801844Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/design/shared_widgets_test.dart: busy action is single flight and labeled field keeps its accessible name
+2026-11-05T02:48:58.1139613Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/design/shared_widgets_test.dart: shape/model/face controls wrap at 320 dp and have tap alternatives
+2026-11-05T02:48:58.7873150Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/storage/sqlite_formative_records_test.dart: real SQLite saves guest records, reopens, and never enqueues guest upload
+2026-11-05T02:48:58.8084863Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/storage/sqlite_formative_records_test.dart: record and outbox commit atomically and survive reopen
+2026-11-05T02:48:58.8315989Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/storage/sqlite_formative_records_test.dart: queue failure after insertion rolls back record and event, without a receipt
+2026-11-05T02:48:58.8456293Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/storage/sqlite_formative_records_test.dart: actor switch during transaction rolls back the stale write and queue
+2026-11-05T02:48:58.8592443Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/storage/sqlite_formative_records_test.dart: missing signed-in queue cannot claim a durable or synced save
+2026-11-05T02:48:58.8796572Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/storage/sqlite_formative_records_test.dart: guest and A/B remain isolated, including stale reads and writes
+2026-11-05T02:48:58.8922501Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/storage/sqlite_formative_records_test.dart: watcher invalidates on scope change without leaking another owner
+2026-11-05T02:48:58.9095433Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/storage/sqlite_formative_records_test.dart: durable receipt waits for actual SQLite commit acknowledgment
+2026-11-05T02:48:58.9195434Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/storage/sqlite_formative_records_test.dart: closed SQLite write fails without a durable receipt
+2026-11-05T02:48:58.9434586Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/storage/sqlite_formative_records_test.dart: completed attempt is immutable; reflection stage never regresses
+2026-11-05T02:48:59.1244101Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/storage/sqlite_formative_records_test.dart: quiz history is bounded at fifty without pruning practice records
+2026-11-05T02:48:59.1558446Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/storage/sqlite_formative_records_test.dart: migration contributions are unique, durable, ordered and rollback failures
+2026-11-05T02:48:59.1669340Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/storage/sqlite_formative_records_test.dart: transaction handle expires when callback completes
+2026-11-05T02:48:59.8684073Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/lifecycle/navigation_lifecycle_audio_test.dart: system and app-bar back share a single confirmation and preserve entry
+2026-11-05T02:48:59.8731110Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/lifecycle/navigation_lifecycle_audio_test.dart: a late confirmation cannot pop a new activity
+2026-11-05T02:48:59.8759511Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/lifecycle/navigation_lifecycle_audio_test.dart: synchronous policy reentry uses the published pending request
+2026-11-05T02:48:59.8808417Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/lifecycle/navigation_lifecycle_audio_test.dart: lifecycle maps native phases once and ignores duplicate transitions
+2026-11-05T02:48:59.8900478Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/lifecycle/navigation_lifecycle_audio_test.dart: audio revokes the old owner before granting the new one
+2026-11-05T02:48:59.8972480Z ✅ /home/runner/work/geodecoder/geodecoder/apps/geomath_flutter/test/lifecycle/navigation_lifecycle_audio_test.dart: failed audio pause prevents a second owner from starting
+2026-11-05T02:49:00.5518973Z # tests 11
+2026-11-05T02:49:00.5519766Z # pass 11
+2026-11-05T02:49:00.5520130Z # fail 0
+2026-11-05T02:56:54.5764271Z ✓ Built build/app/outputs/flutter-apk/app-debug.apk
+
+92 unit/widget tests passed. Actual Android integration is a separate job and receipt.

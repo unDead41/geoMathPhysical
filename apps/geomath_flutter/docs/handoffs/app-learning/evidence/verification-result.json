@@ -1,0 +1,164 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUtc": "2026-11-05T07:27:14.534567+00:00",
+  "scope": "learning-feature-acceptance-authored-no-native-execution",
+  "workerBaseCommit": "9a1f49a7c92d13bb70b7fd1420c34629a7785f9e",
+  "foundationReadyCommit": "9a1f49a7c92d13bb70b7fd1420c34629a7785f9e",
+  "canonicalSourceCommit": "37bc2cd262cc0a54e8ee31339ea37471c1ecfda5",
+  "moduleVersion": "1.6.2",
+  "actualChecks": [
+    {
+      "name": "dart-version",
+      "command": [
+        "/workspace/scratch/5c9edfba3bf4/audit/dart-3.13.7/dart-sdk/bin/dart",
+        "--version"
+      ],
+      "cwd": "apps/geomath_flutter",
+      "status": "PASS",
+      "exitCode": 0,
+      "log": "local-checks/dart-version.log",
+      "logSha256": "945e6a359e53647f8fd753347245ed78bc06c2808919b2d7749817181d010ff4"
+    },
+    {
+      "name": "dart-format-check",
+      "command": [
+        "/workspace/scratch/5c9edfba3bf4/audit/dart-3.13.7/dart-sdk/bin/dart",
+        "format",
+        "--output=none",
+        "--set-exit-if-changed",
+        "test/features/learning/acceptance",
+        "integration_test/learning_acceptance_test.dart",
+        "docs/handoffs/app-learning/evidence/learning_driver.dart"
+      ],
+      "cwd": "apps/geomath_flutter",
+      "status": "PASS",
+      "exitCode": 0,
+      "log": "local-checks/dart-format-check.log",
+      "logSha256": "ef3e2966f12a7457101a20056f35a51c3d8a9ad4c86d20ee0ca6810f3b4dde6e"
+    },
+    {
+      "name": "bash-syntax",
+      "command": [
+        "bash",
+        "-n",
+        "docs/handoffs/app-learning/evidence/run_learning_android.sh"
+      ],
+      "cwd": "apps/geomath_flutter",
+      "status": "PASS",
+      "exitCode": 0,
+      "log": "local-checks/bash-syntax.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "git-diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "apps/geomath_flutter",
+      "status": "PASS",
+      "exitCode": 0,
+      "log": "local-checks/git-diff-check.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "staged-diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "cwd": ".",
+      "status": "PASS",
+      "exitCode": 0,
+      "log": "local-checks/staged-diff-check.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "authoredTests": {
+    "hostTestCases": 5,
+    "androidIntegrationTestCases": 3,
+    "status": "NOT_RUN"
+  },
+  "notExecuted": [
+    {
+      "command": [
+        "flutter",
+        "analyze"
+      ],
+      "status": "NOT_RUN",
+      "reason": "Pinned Flutter SDK absent; correct official archive HTTP404."
+    },
+    {
+      "command": [
+        "flutter",
+        "test",
+        "test/features/learning"
+      ],
+      "status": "NOT_RUN",
+      "reason": "Pinned Flutter SDK absent; feature worker contributions are integrated by lead."
+    },
+    {
+      "command": [
+        "flutter",
+        "build",
+        "apk",
+        "--debug",
+        "-t",
+        "lib/dev/learning_main.dart"
+      ],
+      "status": "NOT_RUN",
+      "reason": "Pinned Flutter SDK absent; no Android SDK configured."
+    },
+    {
+      "command": [
+        "bash",
+        "docs/handoffs/app-learning/evidence/run_learning_android.sh",
+        "<android-device-id>"
+      ],
+      "status": "NOT_RUN",
+      "reason": "No pinned Flutter SDK, adb, Android SDK, device or /dev/kvm in this workspace."
+    }
+  ],
+  "runtimeProbes": "runtime-probes/download-probe-results.json",
+  "testSourceFiles": [
+    {
+      "path": "docs/handoffs/app-learning/evidence/learning_driver.dart",
+      "bytes": 1654,
+      "sha256": "cad4c5a138e3e8fe5abc4fd605c8c211cf529f32b8d7cd257c45cc7e4f4a80f3"
+    },
+    {
+      "path": "docs/handoffs/app-learning/evidence/run_learning_android.sh",
+      "bytes": 5017,
+      "sha256": "a4e0dda718d63f8d77eb34b2b14921b9395c411ab35304cf07d97afa3e3115bb"
+    },
+    {
+      "path": "integration_test/learning_acceptance_test.dart",
+      "bytes": 24375,
+      "sha256": "7cc53e674fe0bb179d23b20753bfa280704787db4e75bc0bc3da278863396c7d"
+    },
+    {
+      "path": "test/features/learning/acceptance/bundled_assets_acceptance_test.dart",
+      "bytes": 2743,
+      "sha256": "8f1f5899418a69dbb74253afc6b5d66434a74212019ce18ee1308a7ce624fb59"
+    },
+    {
+      "path": "test/features/learning/acceptance/feature_acceptance_test.dart",
+      "bytes": 12082,
+      "sha256": "dd0412065a9280caf65955c9b966bf1cf2696ec5232016ac984655e42c6ea06c"
+    }
+  ],
+  "deviceEvidence": {
+    "status": "PENDING",
+    "previewApk": null,
+    "screenshots": [],
+    "talkBack": "NOT_RUN",
+    "physicalGestures": "NOT_RUN",
+    "phoneTabletVisualReview": "NOT_RUN"
+  },
+  "foundationCiIsNotLearningEvidence": true,
+  "formatWarning": "flutter_lints include cannot resolve without Flutter dependency environment; parser/format check is not type analysis.",
+  "runtimeProbeRawLogs": "runtime-probes/probe-logs.json (base64 preserves original HTTP CRLF and exact log hash)"
+}

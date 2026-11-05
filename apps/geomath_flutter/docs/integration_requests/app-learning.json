@@ -1,158 +1,136 @@
 {
-  "schema": "geomath-learning-preimplementation-request/1",
+  "schema_version": 1,
   "branch": "app-learning",
-  "status": "WAITING_FOUNDATION_READY",
-  "requestType": "dependency_gate",
-  "implementationStarted": false,
-  "foundationSha": null,
-  "foundationContractVersion": null,
-  "foundationContractHashes": {},
-  "sameFoundationAs": "app-cloud-game",
-  "sameFoundationVerified": false,
-  "contributionEntry": null,
-  "routes": [],
-  "localisationDelegates": [],
-  "migrations": [],
-  "assets": [],
-  "dependencies": [],
-  "platformNeeds": [],
-  "sharedApiChanges": [],
-  "registrationNote": "All registration arrays are empty because no feature implementation exists yet. Planned routes below are catalogue proposals, not frozen or registered routes. Await foundation pins and extension points; do not add duplicate core services.",
-  "plannedScreens": [
+  "status": "IMPLEMENTED_PENDING_FLUTTER_CI_AND_ANDROID_PREVIEW",
+  "foundation": {
+    "sha": "9a1f49a7c92d13bb70b7fd1420c34629a7785f9e",
+    "contract_version": "1.0.0",
+    "contract_sha256": "0a31f7aef121a151ee91a4ae92250fd893ad62108f27a9389b5fa5ed9a918356",
+    "source_lock_sha256": "cf7d5e6a54c6da65d70f97caae26cff059de558f3fd56db97245252358220452",
+    "pubspec_lock_sha256": "9ba313c3af1f80193c6c0a61c2e38fcee51f1b5aabb8404ebdccfd04210f542c",
+    "required_same_sha_for": "app-cloud-game",
+    "cloud_game_adoption_verified": false
+  },
+  "contribution_entry": "lib/features/learning/learning_feature.dart#learningFeature",
+  "preview_entry": "lib/dev/learning_main.dart",
+  "preview_initial_route": "learning",
+  "routes": [
     {
-      "id": "25",
-      "title": "Teroka 3D",
-      "proposedRoute": "/learn/explore",
-      "requirements": [
-        "L01",
-        "L02",
-        "U02"
-      ],
-      "status": "BLOCKED_FOUNDATION"
+      "name": "learning",
+      "path": "/learn"
     },
     {
-      "id": "26",
-      "title": "Pandangan 2D",
-      "proposedRoute": "/learn/views",
-      "requirements": [
-        "L03",
-        "U02"
-      ],
-      "status": "BLOCKED_FOUNDATION"
+      "name": "learning-explore",
+      "path": "/learn/explore"
     },
     {
-      "id": "27",
-      "title": "Nota pembelajaran",
-      "proposedRoute": "/learn/notes/:shapeId",
-      "requirements": [
-        "L04"
-      ],
-      "status": "BLOCKED_FOUNDATION"
+      "name": "learning-views",
+      "path": "/learn/views"
     },
     {
-      "id": "28",
-      "title": "Kalkulator ukuran",
-      "proposedRoute": "/learn/calculator/:shapeId",
-      "requirements": [
-        "L04"
-      ],
-      "status": "BLOCKED_FOUNDATION"
+      "name": "learning-notes",
+      "path": "/learn/notes/:shapeId"
     },
     {
-      "id": "29",
-      "title": "Bina bentangan",
-      "proposedRoute": "/learn/labs/net",
-      "requirements": [
-        "L05",
-        "L08"
-      ],
-      "status": "BLOCKED_FOUNDATION"
+      "name": "learning-calculator",
+      "path": "/learn/calculator/:shapeId"
     },
     {
-      "id": "30",
-      "title": "Makmal isi padu",
-      "proposedRoute": "/learn/labs/volume",
-      "requirements": [
-        "L05",
-        "L08"
-      ],
-      "status": "BLOCKED_FOUNDATION"
+      "name": "learning-labs",
+      "path": "/learn/labs"
     },
     {
-      "id": "31",
-      "title": "Luas permukaan dan rumus",
-      "proposedRoute": "/learn/labs/area",
-      "requirements": [
-        "L05",
-        "L08"
-      ],
-      "status": "BLOCKED_FOUNDATION"
+      "name": "learning-net",
+      "path": "/learn/labs/net"
     },
     {
-      "id": "32",
-      "title": "Bongkah gabungan",
-      "proposedRoute": "/learn/labs/composite",
-      "requirements": [
-        "L05",
-        "L08"
-      ],
-      "status": "BLOCKED_FOUNDATION"
+      "name": "learning-volume",
+      "path": "/learn/labs/volume"
     },
     {
-      "id": "33",
-      "title": "Hab makmal",
-      "proposedRoute": "/learn/labs",
-      "requirements": [
-        "L05"
-      ],
-      "status": "BLOCKED_FOUNDATION"
+      "name": "learning-area",
+      "path": "/learn/labs/area"
     },
     {
-      "id": "34",
-      "title": "Pelan dan Dongakan",
-      "proposedRoute": "/learn/projection",
-      "requirements": [
-        "L06"
-      ],
-      "status": "BLOCKED_FOUNDATION"
+      "name": "learning-composite",
+      "path": "/learn/labs/composite"
     },
     {
-      "id": "35",
-      "title": "Semakan langkah pengiraan",
-      "proposedRoute": "/learn/calculation",
-      "requirements": [
-        "L07"
-      ],
-      "status": "BLOCKED_FOUNDATION"
+      "name": "learning-projection",
+      "path": "/learn/projection"
     },
     {
-      "id": "36",
-      "title": "Rekod latihan kendiri",
-      "proposedRoute": "/learn/records",
-      "requirements": [
-        "L08",
-        "O03"
-      ],
-      "status": "BLOCKED_FOUNDATION"
+      "name": "learning-calculation",
+      "path": "/learn/calculation"
     },
     {
-      "id": "41",
-      "title": "Hab Belajar",
-      "proposedRoute": "/learn",
-      "requirements": [
-        "L01",
-        "U01"
-      ],
-      "status": "BLOCKED_FOUNDATION"
+      "name": "learning-records",
+      "path": "/learn/records"
     }
   ],
-  "requiredBeforeImplementation": [
-    "Publish origin/app-foundation with verifiable READY marker, FOUNDATION_CONTRACT.md and handoff.",
-    "Verify contract hashes, source lock, asset extension point, SDK pins and analyze/test/debug-build/device-smoke evidence.",
-    "Record the identical READY commit used by app-cloud-game before starting learning implementation.",
-    "Use the actual frozen contribution/preview, module bridge/lifecycle/back/audio, preferences, actor and formative writer/reader/database contracts without replacement."
+  "localisation_delegates": [
+    {
+      "namespace": "learning",
+      "path": "lib/features/learning/learning_strings.dart",
+      "export": "learningStrings"
+    },
+    {
+      "namespace": "learning_labs",
+      "path": "lib/features/learning/labs/lab_strings.dart",
+      "export": "learningLabStrings"
+    },
+    {
+      "namespace": "learning_surface",
+      "path": "lib/features/learning/labs/surface_strings.dart",
+      "export": "learningSurfaceStrings"
+    },
+    {
+      "namespace": "learning_studio",
+      "path": "lib/features/learning/studio/studio_strings.dart",
+      "export": "learningStudioStrings"
+    }
   ],
-  "observedSourceAuditSha": "37bc2cd262cc0a54e8ee31339ea37471c1ecfda5",
-  "observedSourceIsFoundationPin": false,
+  "migrations": [
+    {
+      "namespace": "learning_checkpoints",
+      "version": 1,
+      "entry": "LearningCheckpointRepository.migration",
+      "path": "lib/features/learning/persistence/learning_checkpoint_repository.dart",
+      "table": "learning_checkpoints",
+      "purpose": "Separate bounded actor/scope/slot checkpoint only; shared reflection/outbox schema is unchanged."
+    }
+  ],
+  "assets": [
+    {
+      "manifest": "assets/module/manifest.json",
+      "sha256": "6c2579a4cb3c994b0511ebe023f59b52bcc4f4da256a83efb5bbd0930af53ffc",
+      "registry_action": "Already reserved by foundation. Resolve current submanifest; do not copy the foundation snapshot file hashes into the global registry.",
+      "source_commit": "37bc2cd262cc0a54e8ee31339ea37471c1ecfda5",
+      "module_version": "1.6.2",
+      "adapter_version": 3
+    }
+  ],
+  "dependencies": [],
+  "shared_api_changes": [],
+  "platform_needs": [
+    {
+      "required": true,
+      "action": "Build and run learning preview target on a real Android WebView",
+      "commands": [
+        "flutter analyze",
+        "flutter test test/features/learning",
+        "flutter build apk --debug -t lib/dev/learning_main.dart",
+        "bash docs/handoffs/app-learning/evidence/run_learning_android.sh"
+      ],
+      "reason": "Pinned local Flutter3.47.9 archive returnedHTTP404; existing hosted workflow targets foundation main/smoke. Integrator owns workflow changes and must run this contribution-specific entry and integration target.",
+      "integration_test": "integration_test/learning_acceptance_test.dart"
+    },
+    {
+      "required": false,
+      "action": "Native SVG file picker/printing and OS external URL opener",
+      "current_behavior": "Explicit native SVG preview/select/copy and allowlisted URL select/copy work through existing SDK. No file saved/printing/browser opening is claimed.",
+      "reason": "Frozen Android file channel hardcodes reportTXT; no unsupported platform method or new plugin was added."
+    }
+  ],
   "handoff": "docs/handoffs/app-learning/LATEST.md"
 }

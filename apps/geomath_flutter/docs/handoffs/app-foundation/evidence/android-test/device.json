@@ -1,0 +1,10 @@
+{
+  "model": "Android SDK built for x86_64",
+  "android": "15",
+  "api": "35",
+  "boot_completed": "1",
+  "device_id": "emulator-5554",
+  "display_size": "Physical size: 1080x1920\nOverride size: 720x1280",
+  "display_density": "Physical density: 420\nOverride density: 320",
+  "airplane_mode": "1"
+}

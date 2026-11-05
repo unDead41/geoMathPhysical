@@ -1,0 +1,11 @@
+   Woah! You appear to be trying to run flutter as root.
+   We strongly recommend running the flutter tool without superuser privileges.
+  /
+📎
+Launching lib/main.dart on sdk gphone64 x86 64 in debug mode...
+Installing ../../../runtime/GeoMath-0.1.0-debug.apk...              3.2s
+Error: ADB exited with exit code 1
+Performing Streamed Install
+
+adb: failed to install /workspace/scratch/5c9edfba3bf4/runtime/GeoMath-0.1.0-debug.apk: cmd: Can't find service: package
+Error launching application on sdk gphone64 x86 64.

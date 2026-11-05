@@ -1,0 +1,38 @@
+[
+  {
+    "name": "flutter_archive",
+    "command": [
+      "curl",
+      "--fail",
+      "--location",
+      "--head",
+      "--max-time",
+      "30",
+      "--connect-timeout",
+      "15",
+      "https://storage.googleapis.com/flutter_infra_release/flutter/releases/stable/linux/flutter_linux_3.47.9-stable.tar.xz"
+    ],
+    "exit_code": 22,
+    "log_sha256": "8bb2151a6f9ab7fad75a37ff7194046edef741a6615affb89e897658dd95d58e",
+    "output": "  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:--  0:00:02 --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:--  0:00:03 --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:--  0:00:04 --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:--  0:00:05 --:--:--     0\n  0   248    0     0    0     0      0      0 --:--:--  0:00:05 --:--:--     0\ncurl: (22) The requested URL returned error: 404\nHTTP/1.1 200 OK\ndate: Thu, 05 Nov 2026 06:58:08 GMT\n\nHTTP/2 404 \ncontent-type: application/xml; charset=UTF-8\nx-guploader-uploadid: AFy3sg2uhPUhfww7C6EX5VX-PV2WqKPs0PDuhW4bjOUkdx-5GCJh2QplszLHczvOsQny48fT6PgtcHdd5-Sktg\ncontent-length: 248\naccess-control-allow-origin: *\naccess-control-expose-headers: Content-Type\ndate: Thu, 05 Nov 2026 06:58:09 GMT\nexpires: Thu, 05 Nov 2026 06:58:09 GMT\ncache-control: private, max-age=0\nserver: envoy\nalt-svc: h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000\nx-envoy-upstream-service-time: 46\n\n",
+    "at_utc": "2026-11-05T06:58:09.028650+00:00"
+  },
+  {
+    "name": "android_commandline",
+    "command": [
+      "curl",
+      "--fail",
+      "--location",
+      "--head",
+      "--max-time",
+      "30",
+      "--connect-timeout",
+      "15",
+      "https://dl.google.com/android/repository/commandlinetools-linux-13114758_latest.zip"
+    ],
+    "exit_code": 0,
+    "log_sha256": "4af77e5c9bc22a19b1663f4ad5e626395432f2f12339d0458d5fecde24ce0985",
+    "output": "  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:--  0:00:02 --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:--  0:00:03 --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:--  0:00:04 --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:--  0:00:05 --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:--  0:00:06 --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:--  0:00:07 --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:--  0:00:07 --:--:--     0\n  0  157M    0     0    0     0      0      0 --:--:--  0:00:07 --:--:--     0\nHTTP/1.1 200 OK\ndate: Thu, 05 Nov 2026 06:58:16 GMT\n\nHTTP/2 200 \naccept-ranges: bytes\ncontent-disposition: attachment\ncontent-security-policy: default-src 'none'\nserver: envoy\nx-content-type-options: nosniff\nx-frame-options: SAMEORIGIN\nx-identity-content-length: 164760899\nx-xss-protection: 0\ndate: Thu, 05 Nov 2026 06:58:16 GMT\ncache-control: no-transform,public,max-age=86400\nlast-modified: Wed, 12 Mar 2025 23:43:17 GMT\netag: \"4022a8c\"\ncontent-type: application/zip\nvary: Accept-Encoding\ncontent-length: 164760899\nage: 0\nalt-svc: h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000\nx-envoy-upstream-service-time: 51\n\n",
+    "at_utc": "2026-11-05T06:58:16.421356+00:00"
+  }
+]

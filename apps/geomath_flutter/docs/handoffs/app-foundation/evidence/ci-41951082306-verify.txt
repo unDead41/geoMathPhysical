@@ -1,0 +1,36 @@
+GitHub Actions run41951082306 — verify job126994913624
+URL: https://github.com/unDead41/geodecoder/actions/runs/41951082306
+Tested source:185e62f993e06cc8c08fbd6316265529e46743f4
+Job conclusion:success (read via GitHub Actions job API)
+
+Commands, each successful under the job's failure-on-error shell:
+flutter --version
+flutter doctor -v
+flutter pub get
+dart format --output=none --set-exit-if-changed lib test integration_test
+flutter analyze
+flutter test
+node --test tools/contracts/verify_exports.test.mjs test/foundation/native_adapter_contract.test.mjs
+flutter build apk --debug
+
+Exact output excerpts:
+2026-11-05T01:49:57.6203863Z Flutter 3.47.9 • channel stable • https://github.com/flutter/flutter.git
+2026-11-05T01:49:58.0140116Z     • Dart version 3.13.7
+2026-11-05T01:50:03.2885324Z [!] Android toolchain - develop for Android devices (Android SDK version 37.0.0) [5.4s]
+2026-11-05T01:50:03.2886893Z     • Android SDK at /usr/local/lib/android/sdk
+2026-11-05T01:50:03.2897945Z     • Java version OpenJDK Runtime Environment Temurin-17.0.21+9 (build 17.0.21+9)
+2026-11-05T01:50:04.4658813Z Formatted 75 files (0 changed) in 0.34 seconds.
+2026-11-05T01:50:15.8573257Z No issues found! (ran in 10.1s)
+2026-11-05T01:50:51.9033016Z 🎉 92 tests passed.
+2026-11-05T01:50:52.5921936Z # tests 11
+2026-11-05T01:50:52.5953474Z # pass 11
+2026-11-05T01:50:52.5954339Z # fail 0
+2026-11-05T01:59:34.4105793Z Running Gradle task 'assembleDebug'...                            520.8s
+2026-11-05T01:59:36.2438871Z ✓ Built build/app/outputs/flutter-apk/app-debug.apk
+
+Verify artifact:13381048858 (geomath-debug-apk); downloaded archive SHA256:
+1e084e75101af47776db40dfd508fc56051f8b9dbeb9a22ce23b0efc7f8ab7a3
+Uncompressed APK:172050624bytes; SHA256:
+202ffca5e876b7e1f06e21aa0f2bc226d4940345c23599bb0fb24f3e61ad7a64
+This is the verify-job APK. The Android job builds its own normal APK from the
+same source; this receipt does not claim identical APK bytes/signing keys.

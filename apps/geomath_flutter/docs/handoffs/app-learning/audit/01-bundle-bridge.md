@@ -120,3 +120,4 @@ Audit date: 2026-11-04. No Flutter, shared contracts, or canonical source change
   **19/19**, no failures/skips, exit 0. Inline replay/size assertions also exit 0.
 - Settings/jsdom/native WebView/device, Flutter analyze/test/APK, external-link,
   voice and print behavior were not run by this worker. Source PASS is not app PASS.
+

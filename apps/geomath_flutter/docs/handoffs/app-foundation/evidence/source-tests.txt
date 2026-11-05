@@ -1,0 +1,19 @@
+✔ ready waits for both canonical channels and rejects unrelated sources (28.683794ms)
+✔ readiness while backgrounded is delivered once after foreground (2.411837ms)
+✔ native session stays outside child context and protocols stay separate (2.143628ms)
+✔ progress requires the current progress session and exact record keys (6.717219ms)
+✔ disposed wrapper cannot emit a later teaching message (1.554444ms)
+✔ every module and neutral contract asset is byte verified by its feature manifest (27.148007ms)
+✔ bank15 and five game shapes are canonical; the eleventh learning model is retained (13.426827ms)
+✔ explicit RNG/clock action corpus replays against byte-identical canonical JS (30.008832ms)
+✔ the actual adapted teaching runtime preserves mesh coordinates and physical surface colors (409.075371ms)
+✔ opaque child source and settings IDs are enforced; settings update keeps one document (4.309422ms)
+✔ background readiness is retried on foreground and stale progress nonce is dropped (2.970236ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 804.880794
