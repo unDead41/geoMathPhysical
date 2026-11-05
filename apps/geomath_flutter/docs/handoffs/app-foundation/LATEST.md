@@ -252,3 +252,13 @@ deadlines. Report copy waits for its visible native-write receipt, then polls th
 real clipboard for exact equality. No clipboard mock or production workaround is
 installed. Native service logs and pre-cleanup driver screenshots diagnose future
 focus failures. See [the resource ADR](../../adr/android-emulator-resource-budget.md).
+
+## Prebuilt-route format gate
+
+Run [41967215715](https://github.com/unDead41/geodecoder/actions/runs/41967215715)
+stopped before build/device at one formatter difference in the new clipboard
+future chain. The verified official Dart3.13.7 formatter corrected that wrapping;
+all77 files then required zero changes. The standalone SDK lacks Flutter package
+resolution, so this local result is not an analysis/device receipt. The next CI
+run retains the full formatter/analyze/test/build/actual-device gates. See
+[the receipt](evidence/ci-41967215715-format.txt).

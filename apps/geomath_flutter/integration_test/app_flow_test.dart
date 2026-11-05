@@ -165,9 +165,8 @@ void main() {
           tester,
           () => copied?.text == preview.data,
           action: () async {
-            copied = await Clipboard.getData(
-              Clipboard.kTextPlain,
-            ).timeout(const Duration(seconds: 2));
+            copied = await Clipboard.getData(Clipboard.kTextPlain)
+                .timeout(const Duration(seconds: 2));
           },
         );
         expect(copied?.text, preview.data);

@@ -308,6 +308,16 @@
       "normal_apk_artifact_id": 13386951282,
       "evidence": "docs/handoffs/app-foundation/evidence/ci-41963202642.txt",
       "reason": "Real WebView/ACK/preferences/actor switch and two asset negative tests passed. App-flow clipboard returnednull after a hit-testable copy; post-test screenshot shows System UI ANR."
+    },
+    {
+      "run_id": 41967215715,
+      "url": "https://github.com/unDead41/geodecoder/actions/runs/41967215715",
+      "tested_commit": "5f912535cd602b2ee14f52992369cf01a597aae7",
+      "job": 127046881364,
+      "verify": "blocked_by_format",
+      "android_smoke": "not_run",
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41967215715-format.txt",
+      "reason": "One new test chain required SDK formatter wrapping. Exact Dart3.13.7 formatter applied; no behavioral code change."
     }
   ],
   "android_ci": {

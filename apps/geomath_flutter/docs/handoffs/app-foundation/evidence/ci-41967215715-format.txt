@@ -1,0 +1,17 @@
+Run:https://github.com/unDead41/geodecoder/actions/runs/41967215715
+Source:5f912535cd602b2ee14f52992369cf01a597aae7
+Job:127046881364
+Result:formatter stopped the run before analysis/build/device tests.
+
+Original formatter result:
+Changed integration_test/app_flow_test.dart
+Formatted77 files (1 changed) in0.38 seconds.
+Process completed with exit code1.
+
+The official stable Dart3.13.7 Linux SDK archive was downloaded and its published
+SHA256 checked:eb99aed266efbcb615c6ae21c12f52cfe935b9f208bccc5fea7f64c21e867229.
+Dart reports3.13.7 stable on linux_x64. The formatter changed only the new
+Clipboard.getData(...).timeout(...) chain wrapping. A subsequent check reports
+77 files,0 changed, exit0. This standalone SDK lacks the Flutter package cache,
+so include-resolution warnings are recorded as a local limitation; it is not a
+Flutter analyze or device receipt. The configured CI formatter remains the gate.
