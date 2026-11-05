@@ -1,85 +1,122 @@
-# Learning verification, 2026-11-05
+# Learning verification evidence
 
-This checkpoint adds executable acceptance tests and an Android evidence runner. **It does not contain a learning APK, a completed Flutter test run, or device screenshots.** See `verification-result.json` for commands actually executed and their log hashes.
+Flutter 3.47.9 / Dart 3.13.7 host checks and the universal learning preview APK
+build have passed. Device execution, screenshots and manual accessibility review remain
+pending. See [verification-result.json](verification-result.json) and the complete
+[build input receipt](learning-preview-build.json) for the precise scope and hashes.
 
-The foundation gate is READY at `9a1f49a7c92d13bb70b7fd1420c34629a7785f9e`. Its successful CI run `41973098124` proves the foundation smoke suite and default app. It does not prove the Prompt 2 contribution or `lib/dev/learning_main.dart`. The canonical content remains source `37bc2cd262cc0a54e8ee31339ea37471c1ecfda5`, Digital 2.9.1, module 1.6.2.
+| Check | Actual result |
+|---|---|
+| Formatter | All109 Dart files unchanged |
+| Flutter analyzer | PASS; no issues |
+| All Flutter unit/widget tests |139/139 PASS |
+| Learning feature unit/widget tests |47/47 PASS |
+| Canonical source suite/build/check |341/341 PASS; canonical HTML unchanged |
+| Node source/bridge/geometry/surface checks |45/45 PASS |
+| Dart–JavaScript checkpoint corpus |25/25 cases PASS |
+| `lib/dev/learning_main.dart` universal debug APK | PASS; ARM64/ARMv7/x86_64; ZIP CRC and v2 signature |
+| Separate x86_64 preview build | PASS;120 runtime inputs verified |
+| Learning integration tests on Android | NOT RUN |
+| Phone/tablet screenshots, TalkBack, physical gestures | NOT RUN |
 
-## What is authored
+The separate x86_64 build receipt verifies120 runtime input files against the source
+snapshot and lists the single controller overlay above its published base.
+`runtimeInputSha256` identifies the exact compiled inputs independently of later
+documentation commits. The ZIP contains the same module submanifest as the source.
+Both APKs use the learning contribution through its actual preview entry. The
+[universal APK receipt](resume-20261105/apk.json) records all three Flutter engine
+ABIs, full ZIP CRC, current packaged assets and the v2 signature. The ordinary
+foundation-main APK is a separate build. ARM runtime execution remains unverified.
 
-| Target | Meaningful checks | Execution here |
-|---|---|---|
-| `test/features/learning/acceptance/feature_acceptance_test.dart` | All 13 contributed routes; bilingual namespace completeness; actual shared SQLite record DTO; guest/account isolation; EX11 delayed persistence failure with no saved notice before acknowledgement; retry saves the same draft through the real shared writer | NOT RUN |
-| `test/features/learning/acceptance/bundled_assets_acceptance_test.dart` | Actual installed manifest/source pin; cold verification by a fresh repository; every listed runtime file missing and corrupt independently; later healthy verification | NOT RUN |
-| `integration_test/learning_acceptance_test.dart` | Production `learningFeature()` plus real Android WebView; 13 routes; 11 models in explorer/notes/calculator; six views; all 12 lab modes; unavailable hemisphere net; cube/cuboid stable palette after rotation/folding; seven projection projects, 1:2 restore and Undo; BM/EN/light/dark/contrast/150% preserve native instance and pose; lifecycle adapter; system Back checkpoint acknowledgement and reopening; malformed/wrong-nonce/owner-bearing/oversized native messages; shared SQLite reopen and actor partitioning | NOT RUN |
+## Corrections verified during resume
 
-The record tests use the frozen `FormativeRecordReader`/`FormativeRecordWriter`, not a second reflection table. The EX11 seam faults one writer acknowledgement; its retry delegates to actual shared SQLite. The Android test does not replace a WebView, controller, native bridge, lifecycle owner, or asset verifier. It calls the production wrapper's bounded private action API; it cannot choose an owner or supply a bridge capability.
+- Source navigation captures the freshest origin synchronously, including typing
+  after the last native poll. Native saves/restores that origin before pushing a
+  destination seed; failed persistence retains the live draft for another save.
+- Foreground initialization waits while covered/backgrounded; actual initialization
+  failures expose Reopen. Actor and route checks still guard callbacks.
+- Manifest metadata and each runtime byte source fail closed on damage. Canonical
+  HTML digest metadata must agree with its file entry; capability/version fields
+  must match native support.
+- Widget fixtures create their future-owning ports inside the widget test zone;
+  semantics handles dispose before Flutter's end-of-test invariant. Labels are
+  asserted against the actual shared localization and merged card semantics.
 
-Worker 1 owns the exact source/origin/capability/replay/sequence tests and canonical math parity tests. Those checks are complementary. An unchanged checkpoint after a rejected injected message alone is not proof of every bridge invariant. Worker 5 owns the checkpoint repository's SQL/schema/failure tests. Do not add historical source test counts to new native test counts or infer a native pass from JavaScript source tests.
+The shared reader/writer and SQLite repository are exercised directly, including
+EX11 acknowledgement failure and retry. No successful platform plugin or WebView
+is substituted by these host tests. Four Android integration cases are authored
+in `integration_test/learning_acceptance_test.dart`; they are still unexecuted.
 
-## Runtime blocker and actual local checks
+## Required shared navigation correction
 
-The retained Dart 3.13.7 binary can parse and format the test sources. No Flutter or adb executable is on PATH, Android SDK variables are unset, and `/dev/kvm` is absent. The previously installed Flutter directory is no longer present.
+`GeoMathRouter.select` resets the route without awaiting the contributed leave
+guard. The integrator must apply BackPolicy before bottom-destination reset,
+including storage-failure Stay/Leave. This shared router is outside feature
+ownership; the exact request is recorded in the [integration request](../../../integration_requests/app-learning.json).
+An immediate bottom navigation after editing can otherwise skip the last save.
 
-On 2026-11-05, the correct official pinned SDK archive URL returned HTTP 404 (`curl` exit 22):
+## Android runtime gate
 
-`https://storage.googleapis.com/flutter_infra_release/flutter/releases/stable/linux/flutter_linux_3.47.9-stable.tar.xz`
+A real API35 x86_64 emulator was attempted. Its userdata allocation requires
+7372.80MB free space; the last attempt had3173.76MB available. `/dev/kvm` is absent.
+A separate software-rendered emulator attempt also stopped before boot with a
+segmentation fault. [Blocker details](resume-20261105/android-blocker.txt) record
+that attempt; no app screenshot,
+boot or device PASS is claimed. Earlier Gradle lock/JRE failures were resolved
+using an isolated source/build snapshot, a complete JDK17 and a dedicated cache.
 
-The official Linux release manifest also returned HTTP 404 during the initial lookup. By contrast, a HEAD request to Google's Android command-line tools archive returned HTTP 200 (exit 0). These are endpoint observations from this workspace; they do not establish global SDK unavailability. No substitute Flutter version was installed, and Android tools alone would not run the pinned feature tests. Exact commands, time, response and hashes for the two retained probes are in `runtime-probes/`.
+The existing hosted workflow runs host checks, builds default main and runs
+`foundation_smoke_test.dart`. It does not execute the learning integration target
+or the preview. The integrator owns shared workflow updates; this feature does
+not add hidden build/device side effects to unit tests.
 
-Dart format and Bash syntax checks are recorded separately from Flutter analysis or tests. The formatter warns that `package:flutter_lints/flutter.yaml` cannot resolve without the Flutter dependency environment. Formatting is not type analysis.
-
-## Run the feature preview and native suite
-
-After all worker contributions are integrated, use Flutter 3.47.9 / Dart 3.13.7 and an Android emulator/device. The normal project checks remain:
+On an offline Android emulator/device with sufficient capacity:
 
 ```sh
-dart format --output=none --set-exit-if-changed lib test integration_test test_driver
+cd apps/geomath_flutter
+flutter pub get
 flutter analyze
 flutter test test/features/learning
 flutter build apk --debug -t lib/dev/learning_main.dart
-flutter run -t lib/dev/learning_main.dart -d <android-device-id>
+flutter run -t lib/dev/learning_main.dart -d <device-id>
+bash docs/handoffs/app-learning/evidence/run_learning_android.sh <device-id>
 ```
 
-For reproducible native evidence, prepare an isolated offline Android emulator: airplane mode on, Wi-Fi off. The helper checks these states and does not change device preferences. From the app directory:
+The runner checks the exact SDK, records device/WebView/source status, builds the
+preview and integration targets, executes the real WebView suite, and captures
+actual app output under ignored `build/learning-evidence/`. Turn airplane mode on
+and Wi-Fi off before running. Set `LEARNING_VISUAL_MATRIX=true` for all13 routes
+in BM/EN × light/dark × standard100%/strongcontrast150%; repeat on a tablet.
+Its screenshot driver is `learning_driver.dart`. Inspect every command exit/log;
+partial output does not count as a successful runtime receipt.
 
-```sh
-bash docs/handoffs/app-learning/evidence/run_learning_android.sh emulator-5554
-LEARNING_VISUAL_MATRIX=true bash docs/handoffs/app-learning/evidence/run_learning_android.sh emulator-5556
-```
-
-The helper validates the SDK pin, records the source revision/dirty state, Android version/model/ABI/size/density/WebView, builds the **learning preview entry point**, builds the separate learning integration APK, runs the real WebView suite through the host screenshot driver, then launches the actual learning preview APK and captures its screen. Commands, exit codes, APK hashes, logs and screenshots are written under the ignored app `build/learning-evidence/` directory by default. A successful helper receipt still leaves manual visual/accessibility review pending. If a command fails, inspect its `.exit` and `.log`; do not treat partially written output as a successful receipt.
-
-Screenshots use Flutter's documented Android surface conversion and extended integration driver. A reviewer must inspect whether platform view pixels are present. A PNG's existence does not establish correct WebView composition or visual parity. The final `adb` capture independently records the preview's actual Android window.
-
-The existing `.github/workflows/geomath-flutter.yml` automatically runs host format/analyze/test on `app-learning`, but its emulator target is `foundation_smoke_test.dart` and its ordinary build is the default main entry point. P4 must explicitly run the learning target/preview to supply learning evidence. This worker does not edit the shared workflow or execute builds as side effects of unit tests.
-
-## Screen and manual acceptance receipt
-
-| Screen | Route | Automated native target | Visual/device result |
+| Screen ID | Route | Code | Device evidence |
 |---|---|---|---|
-| 25 | `/learn/explore` | Authored | PENDING |
-| 26 | `/learn/views` | Authored | PENDING |
-| 27 | `/learn/notes/:shapeId` | Authored | PENDING |
-| 28 | `/learn/calculator/:shapeId` | Authored | PENDING |
-| 29 | `/learn/labs/net` | Authored | PENDING |
-| 30 | `/learn/labs/volume` | Authored | PENDING |
-| 31 | `/learn/labs/area` | Authored | PENDING |
-| 32 | `/learn/labs/composite` | Authored | PENDING |
-| 33 | `/learn/labs` | Authored | PENDING |
-| 34 | `/learn/projection` | Authored | PENDING |
-| 35 | `/learn/calculation` | Authored | PENDING |
-| 36 | `/learn/records` | Authored | PENDING |
-| 41 | `/learn` | Authored | PENDING |
+|25|`/learn/explore`|Implemented|PENDING|
+|26|`/learn/views`|Implemented|PENDING|
+|27|`/learn/notes/:shapeId`|Implemented|PENDING|
+|28|`/learn/calculator/:shapeId`|Implemented|PENDING|
+|29|`/learn/labs/net`|Implemented|PENDING|
+|30|`/learn/labs/volume`|Implemented|PENDING|
+|31|`/learn/labs/area`|Implemented|PENDING|
+|32|`/learn/labs/composite`|Implemented|PENDING|
+|33|`/learn/labs`|Implemented|PENDING|
+|34|`/learn/projection`|Implemented|PENDING|
+|35|`/learn/calculation`|Implemented|PENDING|
+|36|`/learn/records`|Implemented|PENDING|
+|41|`/learn`|Implemented|PENDING|
 
-For SOR L01–L08/U02, keep the native acceptance gate open until the exact feature source SHA has an actual run receipt. Historical canonical tests and foundation CI are supporting evidence only. The optional visual matrix captures all 13 routes for BM/EN × light/dark × standard100%/strongcontrast150%; run it independently on a phone and tablet. Confirm no clipping, keyboard obstruction, horizontal overflow, lost focus or unreadable model labels. Also check 125% text through the shared preference UI.
+Keep the native SOR L01–L08/U02 gate open until actual learning device receipts:
+check all11 models; stable face colors through rotate/fold/six views; curved
+surfaces and unavailable sphere nets; cube a=4cm gives96cm²/64cm³; all units/π;
+all lab stages/modes and valid/invalid reflections; projection both scales and
+inclusive0.06cm tolerance; parser malicious/oversized inputs; stale module/actor
+switch; storage failure/retry; asset corruption; checkpoint reopen/system Back.
 
-The following require actual interaction and must retain separate pass/fail receipts with device/OS/WebView, source SHA and evidence paths:
+Manual review must also cover keyboard reachability, tap alternatives, drag/
+draw/rotate/scroll arbitration, TalkBack focus/labels, reduced motion, background
+silence and125% text. Source parity alone does not verify these device gestures.
 
-- Cold install and relaunch without network; every screen works without CDN, service-worker cache or a previous WebView session. Corrupted/missing assets show recovery and never a ready/saved receipt.
-- Real TalkBack focus order, labels, headings, selected state and live save/error announcements. Activate controls using TalkBack and the available tap alternatives. A semantics tree or screenshot alone cannot pass this item.
-- Touch rotate, pinch/zoom, unfold, page scrolling and projection draw/line/circle/Undo; verify native controls do not steal the canvas gesture, with equivalent tap controls available.
-- App-bar and physical/system Back from activities and modal sheets; checkpoint failure offers Stay/Leave; Stay keeps the draft and Leave does not claim persistence. OS background stops audio/motion and foreground/reopen restores allowed state. The deterministic lifecycle adapter test does not pass physical OS backgrounding.
-- Complete Ramalkan→Cuba→Semak→Terangkan in all four labs; invalid reflections never complete. Force EX11 from a learning save and retry; display saved only after a durable receipt. Guest/account/epoch changes must not expose the previous actor's drafts or accept an old instance.
-- Verify cube a=4 cm gives 96 cm²/64 cm³; π modes, units and all shape formulas match canonical outputs. Check projection 1:1/1:2 and the inclusive 0.06 cm tolerance boundary; run canonical parser malicious/oversized limits. Source-level parity does not establish the native input gesture itself.
-
-No device, screenshot, TalkBack, gesture, learning APK, Flutter analyze or Flutter test result is marked passed in this checkpoint.
+The historical [authoring receipt](authoring-verification-result.json) and
+`runtime-probes/` retain the earlier SDK-absent observations. Those are historical
+workspace observations; the current host/build results above supersede them.
