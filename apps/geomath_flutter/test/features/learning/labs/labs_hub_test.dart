@@ -25,59 +25,61 @@ void main() {
           addTearDown(tester.view.resetDevicePixelRatio);
           final launches = <(String, Map<String, Object?>)>[];
           final semantics = tester.ensureSemantics();
-          addTearDown(semantics.dispose);
-
-          await tester.pumpWidget(
-            _hub(
-              language: language,
-              dark: language == AppLanguage.en,
-              textScale: textScale,
-              onOpen: (route, arguments) => launches.add((route, arguments)),
-            ),
-          );
-          await tester.pumpAndSettle();
-
-          for (final id in ['net', 'volume', 'area', 'composite']) {
-            expect(find.byKey(ValueKey('lab-card-$id')), findsOneWidget);
-          }
-          final netPosition = tester.getTopLeft(
-            find.byKey(const ValueKey('lab-card-net')),
-          );
-          final volumePosition = tester.getTopLeft(
-            find.byKey(const ValueKey('lab-card-volume')),
-          );
-          if (width == 768 && textScale == 1) {
-            expect(volumePosition.dx, greaterThan(netPosition.dx));
-            expect(volumePosition.dy, closeTo(netPosition.dy, .1));
-          } else {
-            expect(volumePosition.dy, greaterThan(netPosition.dy));
-          }
-          for (final (activity, mode) in _modeLaunches) {
-            final button = find.byKey(ValueKey('lab-launch-$activity-$mode'));
-            await tester.ensureVisible(button);
+          try {
+            await tester.pumpWidget(
+              _hub(
+                language: language,
+                dark: language == AppLanguage.en,
+                textScale: textScale,
+                onOpen: (route, arguments) => launches.add((route, arguments)),
+              ),
+            );
             await tester.pumpAndSettle();
-            final label = _strings(language).text('learning_labs.$mode');
-            expect(find.bySemanticsLabel(label), findsOneWidget);
-            expect(tester.getSize(button).height, greaterThanOrEqualTo(48));
-            await tester.tap(button);
-            await tester.pumpAndSettle();
-            expect(launches.last.$1, 'learning-$activity');
-            expect(launches.last.$2, {'mode': mode});
+
+            for (final id in ['net', 'volume', 'area', 'composite']) {
+              expect(find.byKey(ValueKey('lab-card-$id')), findsOneWidget);
+            }
+            final netPosition = tester.getTopLeft(
+              find.byKey(const ValueKey('lab-card-net')),
+            );
+            final volumePosition = tester.getTopLeft(
+              find.byKey(const ValueKey('lab-card-volume')),
+            );
+            if (width == 768 && textScale == 1) {
+              expect(volumePosition.dx, greaterThan(netPosition.dx));
+              expect(volumePosition.dy, closeTo(netPosition.dy, .1));
+            } else {
+              expect(volumePosition.dy, greaterThan(netPosition.dy));
+            }
+            for (final (activity, mode) in _modeLaunches) {
+              final button = find.byKey(ValueKey('lab-launch-$activity-$mode'));
+              await tester.ensureVisible(button);
+              await tester.pumpAndSettle();
+              final label = _strings(language).text('learning_labs.$mode');
+              expect(find.bySemanticsLabel(label), findsOneWidget);
+              expect(tester.getSize(button).height, greaterThanOrEqualTo(48));
+              await tester.tap(button);
+              await tester.pumpAndSettle();
+              expect(launches.last.$1, 'learning-$activity');
+              expect(launches.last.$2, {'mode': mode});
+              expect(tester.takeException(), isNull);
+            }
+            expect(launches.length, _modeLaunches.length);
+
+            for (final id in ['projection', 'calculation', 'records']) {
+              final button = find.byKey(ValueKey('lab-shortcut-$id'));
+              await tester.ensureVisible(button);
+              await tester.pumpAndSettle();
+              await tester.tap(button);
+              await tester.pumpAndSettle();
+              expect(launches.last.$1, 'learning-$id');
+              expect(launches.last.$2, isEmpty);
+            }
+            expect(launches.length, _modeLaunches.length + 3);
             expect(tester.takeException(), isNull);
+          } finally {
+            semantics.dispose();
           }
-          expect(launches.length, _modeLaunches.length);
-
-          for (final id in ['projection', 'calculation', 'records']) {
-            final button = find.byKey(ValueKey('lab-shortcut-$id'));
-            await tester.ensureVisible(button);
-            await tester.pumpAndSettle();
-            await tester.tap(button);
-            await tester.pumpAndSettle();
-            expect(launches.last.$1, 'learning-$id');
-            expect(launches.last.$2, isEmpty);
-          }
-          expect(launches.length, _modeLaunches.length + 3);
-          expect(tester.takeException(), isNull);
         },
       );
     }
@@ -91,32 +93,37 @@ void main() {
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);
       final semantics = tester.ensureSemantics();
-      addTearDown(semantics.dispose);
-      await tester.pumpWidget(_hub(onOpen: (_, _) {}));
-      await tester.pumpAndSettle();
-      for (final key in [
-        'netTitle',
-        'volumeTitle',
-        'areaTitle',
-        'compositeTitle',
-      ]) {
-        final heading = find.text(
-          _strings(AppLanguage.ms).text('learning.$key'),
-        );
-        await tester.ensureVisible(heading);
+      try {
+        await tester.pumpWidget(_hub(onOpen: (_, _) {}));
         await tester.pumpAndSettle();
-        expect(
-          find.bySemanticsLabel(_strings(AppLanguage.ms).text('learning.$key')),
-          findsOneWidget,
+        for (final key in [
+          'netTitle',
+          'volumeTitle',
+          'areaTitle',
+          'compositeTitle',
+        ]) {
+          final heading = find.text(
+            _strings(AppLanguage.ms).text('learning.$key'),
+          );
+          await tester.ensureVisible(heading);
+          await tester.pumpAndSettle();
+          final node = tester.getSemantics(heading);
+          expect(node.flagsCollection.isHeader, isTrue);
+          expect(
+            node.getSemanticsData().label,
+            contains(_strings(AppLanguage.ms).text('learning.$key')),
+          );
+        }
+        await tester.ensureVisible(
+          find.byKey(const ValueKey('lab-launch-net-gallery')),
         );
+        await tester.pumpAndSettle();
+        await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+        await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
+        expect(tester.takeException(), isNull);
+      } finally {
+        semantics.dispose();
       }
-      await tester.ensureVisible(
-        find.byKey(const ValueKey('lab-launch-net-gallery')),
-      );
-      await tester.pumpAndSettle();
-      await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
-      await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
-      expect(tester.takeException(), isNull);
     },
   );
 

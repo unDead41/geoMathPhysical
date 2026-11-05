@@ -50,7 +50,7 @@ final learningStrings = FeatureLocalizations(
       'projectionDescription':
           'Lukis dan semak pandangan bentuk dari arah tertentu.',
       'calculationDescription':
-          'Susun penyelesaian anda dan simpan refleksi pembelajaran.',
+          'Susun penyelesaian dan semak setiap langkah pengiraan.',
       'recordsDescription':
           'Buka semula hasil kerja dan refleksi yang telah disimpan.',
       'openSection': 'Buka {section}',
@@ -125,7 +125,7 @@ final learningStrings = FeatureLocalizations(
       'projectionDescription':
           'Draw and check a shape’s view from a chosen direction.',
       'calculationDescription':
-          'Build your solution and save a learning reflection.',
+          'Build your solution and check each calculation step.',
       'recordsDescription': 'Revisit work and reflections you have saved.',
       'openSection': 'Open {section}',
       'loadingCatalogue': 'Preparing your learning shapes…',

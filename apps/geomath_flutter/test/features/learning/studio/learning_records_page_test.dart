@@ -19,7 +19,8 @@ void main() {
   late SessionController sessions;
   late _Ports ports;
   late LearningReflectionController controller;
-  setUp(() {
+  // Create future-owning ports inside each widget test's fake async zone.
+  void configure() {
     sessions = SessionController.guest(guestId: 'guest', sessionId: 'one');
     ports = _Ports();
     controller = LearningReflectionController(
@@ -27,7 +28,8 @@ void main() {
       writer: ports,
       sessions: sessions,
     );
-  });
+  }
+
   tearDown(() async {
     controller.dispose();
     await sessions.dispose();
@@ -37,6 +39,7 @@ void main() {
   testWidgets(
     'EX11 keeps unsaved reflection, exposes Retry and waits for the durable receipt',
     (tester) async {
+      configure();
       final first = Completer<Result<DurableRecordReceipt>>();
       final retry = Completer<Result<DurableRecordReceipt>>();
       ports.save = (_, _) => ports.attempts == 1 ? first.future : retry.future;
@@ -96,6 +99,7 @@ void main() {
   testWidgets(
     'four real records stay literal through locale/text changes and disappear on actor switch',
     (tester) async {
+      configure();
       tester.view.physicalSize = const Size(320, 1100);
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
@@ -139,6 +143,7 @@ void main() {
   testWidgets(
     'a shared reader failure offers retry without changing earned records',
     (tester) async {
+      configure();
       await tester.pumpWidget(_app(controller));
       await tester.pumpAndSettle();
       ports.emit(sessions.current, Success([_reflection()]));

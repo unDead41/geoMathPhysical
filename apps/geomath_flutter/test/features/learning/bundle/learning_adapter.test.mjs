@@ -59,6 +59,31 @@ test('canonical lab Undo, unfinished drafts and quarter speed survive a checkpoi
   assert.equal(r.action({action:'undo'}).checkpoint.labs.snapshots.volume.volume.units,1);
 });
 
+test('unsent lab inputs survive activity switches and restore without completing reflections',()=>{
+  const r=teachingRuntime();r.action({action:'launch',section:'volume',mode:'unit'});
+  for(const [id,value] of [['guided-prediction','Unsent volume prediction'],['guided-explanation','Unsent volume explanation'],['guided-answer','18']]){
+    r.nodes[id].value=value;r.nodes[id].dispatchEvent(new Event('input',{bubbles:true}));
+  }
+  const switchLab=kind=>{r.nodes['lab-switch'].value=kind;r.nodes['lab-switch'].dispatchEvent(new Event('change',{bubbles:true}));};
+  switchLab('net');
+  const checkpoint=r.action({action:'checkpoint'}).checkpoint;
+  assert.deepEqual(checkpoint.labs.drafts.volume,{prediction:'Unsent volume prediction',result:'',explanation:'Unsent volume explanation',answer:'18'});
+  switchLab('volume');
+  assert.equal(r.nodes['guided-prediction'].value,'Unsent volume prediction');
+  assert.equal(r.nodes['guided-answer'].value,'18');
+  assert.equal(r.nodes['guided-complete'].disabled,true,'raw inputs do not complete a reflection');
+  assert.equal(r.messages.some(m=>m.type==='geomath:learning-progress'),false,'raw typing never emits accepted progress');
+  r.nodes['guided-prediction'].value='';r.nodes['guided-explanation'].value='';r.nodes['guided-answer'].value='';
+  switchLab('net');switchLab('volume');
+  assert.equal(r.nodes['guided-prediction'].value,'','intentional input clearing is retained');
+  assert.equal(r.action({action:'restore',checkpoint}).result.ok,true);
+  switchLab('volume');
+  assert.equal(r.nodes['guided-prediction'].value,'Unsent volume prediction');
+  assert.equal(r.nodes['guided-explanation'].value,'Unsent volume explanation');
+  assert.equal(r.nodes['guided-answer'].value,'18');
+  assert.equal(r.nodes['guided-complete'].disabled,true,'restored typing cannot restore checked/completed gates');
+});
+
 test('pause and validated restore resume original net, unit, pour and transfer timelines once',()=>{
   for(const [section,mode,button] of [['net','gallery','net-fold'],['volume','unit','unit-fill'],['volume','cone','pour-one'],['volume','compare','compare-transfer-ab']]){
     const r=teachingRuntime();r.action({action:'launch',section,mode});
@@ -120,6 +145,50 @@ test('native workflow uses the source notes context and recomputes calculation s
   const restored=r.action({action:'restore',checkpoint});assert.equal(restored.result.ok,true);assert.equal(restored.checkpoint.calculation.activeStep,2,'recomputed source answers unlock their saved tab');
   r.action({action:'launch',section:'calculator',shape:'sphere'});assert.equal(r.action({action:'workflow',target:'projection'}).result.error,'workflow-unavailable');
   r.nodes['measure-j'].value='invalid';assert.equal(r.action({action:'workflow',target:'calculation'}).result.error,'workflow-unavailable');
+});
+
+test('source notes-to-net preserves edits made after the last native poll and its exact unfolding semantics',()=>{
+  const r=teachingRuntime();const oldPoll=r.action({action:'launch',section:'notes',shape:'cube'});
+  assert.equal(oldPoll.transitionCheckpoint,null,'bootstrap launch belongs to its requested native page');
+  assert.equal(oldPoll.checkpoint.notes.dimensions.a,'4');
+  r.nodes['measure-a'].value='7.5';r.nodes['measure-a'].dispatchEvent(new Event('input',{bubbles:true}));
+  r.nodes['note-explore-net'].click();
+  const destination=r.action({action:'checkpoint'});
+  assert.equal(destination.result.ok,true);assert.equal(destination.checkpoint.section,'explore');
+  assert.equal(destination.transitionCheckpoint.section,'notes');assert.equal(destination.transitionCheckpoint.notes.dimensions.a,'7.5');
+  assert.equal(destination.diagnostics.playing,true,'the real source net action starts its target animation');
+  assert.deepEqual(destination.checkpoint.explore.pausedAnimation,{direction:1,kind:'target',hold:0});
+  assert.equal(learningSchema.checkpoint(destination.transitionCheckpoint),true);
+  // The native owner saves and restores this origin, then seeds a new route
+  // with the destination. Back therefore returns to the actual latest edit.
+  const returned=r.action({action:'restore',checkpoint:destination.transitionCheckpoint});
+  assert.equal(returned.checkpoint.notes.dimensions.a,'7.5');assert.equal(returned.transitionCheckpoint,null);
+  const next=teachingRuntime();next.action({action:'launch',section:'explore',shape:'cube'});
+  const seeded=next.action({action:'restore',checkpoint:destination.checkpoint});assert.deepEqual(seeded.checkpoint.explore.pausedAnimation,destination.checkpoint.explore.pausedAnimation);assert.equal(seeded.transitionCheckpoint,null);
+  next.action({action:'resume'});next.tick(100);next.tick(1000);assert.ok(next.action({action:'checkpoint'}).checkpoint.explore.progress>0,'the same canonical target resumes after transfer');
+});
+
+test('source activity changes preserve the first origin across multiple hops until native restore',()=>{
+  const r=teachingRuntime();r.action({action:'launch',section:'volume',mode:'unit'});
+  r.nodes['unit-one'].click();r.nodes['guided-prediction'].value='Typed after polling';r.nodes['guided-answer'].value='18';
+  r.nodes['lab-switch'].value='area';r.nodes['lab-switch'].dispatchEvent(new Event('change',{bubbles:true}));
+  let destination=r.action({action:'checkpoint'});assert.equal(destination.checkpoint.section,'area');assert.equal(destination.transitionCheckpoint.section,'volume');
+  assert.equal(destination.transitionCheckpoint.labs.snapshots.volume.volume.units,1);assert.equal(destination.transitionCheckpoint.labs.drafts.volume.prediction,'Typed after polling');
+  r.nodes['labs-projection'].click();destination=r.action({action:'checkpoint'});
+  assert.equal(destination.checkpoint.section,'projection');assert.equal(destination.transitionCheckpoint.section,'volume','intermediate sections cannot replace the native route origin');
+  const returned=r.action({action:'restore',checkpoint:destination.transitionCheckpoint});assert.equal(returned.checkpoint.section,'volume');assert.equal(r.nodes['guided-answer'].value,'18');assert.equal(returned.transitionCheckpoint,null);
+});
+
+test('returning to the pending origin clears it and later source transitions capture fresh state',()=>{
+  const r=teachingRuntime();r.action({action:'launch',section:'explore',shape:'cube'});r.action({action:'fold',value:.45});
+  r.nodes['mode-views'].click();let view=r.action({action:'checkpoint'});assert.equal(view.transitionCheckpoint.section,'explore');assert.equal(view.transitionCheckpoint.explore.progress,.45);
+  r.nodes['mode-model'].click();assert.equal(r.action({action:'checkpoint'}).transitionCheckpoint,null);
+  const rotated=r.action({action:'rotate',yaw:.3,pitch:.1}).checkpoint;
+  r.nodes['mode-views'].click();view=r.action({action:'checkpoint'});assert.equal(view.transitionCheckpoint.explore.yaw,rotated.explore.yaw);
+  r.action({action:'restore',checkpoint:view.transitionCheckpoint});
+  r.action({action:'launch',section:'calculator',shape:'cylinder'});r.action({action:'restore',checkpoint:r.action({action:'checkpoint'}).checkpoint});
+  r.nodes['measure-j'].value='6';r.nodes['measure-j'].dispatchEvent(new Event('input',{bubbles:true}));r.nodes['pi-decimal'].click();
+  const workflow=r.action({action:'workflow',target:'calculation'});assert.equal(workflow.transitionCheckpoint.section,'calculator');assert.equal(workflow.transitionCheckpoint.notes.dimensions.j,'6');assert.equal(workflow.checkpoint.calculation.draft.piMode,'3.142');
 });
 
 test('source net export contains the actual safe SVG and mobile shell retains advanced controls',()=>{

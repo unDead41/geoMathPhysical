@@ -64,6 +64,7 @@ final class LearningModuleController extends ChangeNotifier {
   AppFailure? failure;
   AppFailure? checkpointFailure;
   bool recoveryRequired = false;
+  bool initializationFailed = false;
   Map<String, Object?>? snapshot;
   bool _disposed = false;
   bool _visible = true;
@@ -101,8 +102,10 @@ final class LearningModuleController extends ChangeNotifier {
     await host.initialize();
     final result = await host.ready;
     if (!isCurrent || result is Failed<ModuleCommand>) return;
+    if (!await _waitUntilActive()) return;
     final privateReady = await _awaitPrivateReady();
     if (!privateReady || !isCurrent) {
+      initializationFailed = true;
       failure = const AppFailure(
         code: FailureCode.unavailable,
         message: 'The learning controls could not finish loading. Reopen the module.',
@@ -116,7 +119,11 @@ final class LearningModuleController extends ChangeNotifier {
       'shape': initialShape,
       if (mode != null) 'mode': mode,
     });
-    if (!launched.isSuccess) return;
+    if (!launched.isSuccess) {
+      initializationFailed = true;
+      if (isCurrent) notifyListeners();
+      return;
+    }
     if (!isCurrent) return;
     await _syncReflections();
     final stored = initialCheckpoint != null
@@ -150,9 +157,23 @@ final class LearningModuleController extends ChangeNotifier {
   void updateBrightness(Brightness brightness) =>
       host.updateBrightness(brightness);
 
+  bool get _active => _visible && lifecycle.isForeground;
+
+  Future<bool> _waitUntilActive() async {
+    while (isCurrent && !_active) {
+      await Future<void>.delayed(const Duration(milliseconds: 60));
+    }
+    return isCurrent;
+  }
+
   Future<bool> _awaitPrivateReady() async {
-    final deadline = DateTime.now().add(const Duration(seconds: 8));
-    while (isCurrent && DateTime.now().isBefore(deadline)) {
+    var deadline = DateTime.now().add(const Duration(seconds: 8));
+    while (isCurrent) {
+      if (!_active) {
+        if (!await _waitUntilActive()) return false;
+        deadline = DateTime.now().add(const Duration(seconds: 8));
+      }
+      if (!DateTime.now().isBefore(deadline)) break;
       try {
         final view = host.webViewController;
         if (view == null) return false;
@@ -250,15 +271,22 @@ final class LearningModuleController extends ChangeNotifier {
     }
     try {
       Map<String, Object?>? accepted;
-      final admissionDeadline = DateTime.now().add(const Duration(seconds: 8));
+      var admissionDeadline = DateTime.now().add(const Duration(seconds: 8));
       do {
         if (!isCurrent) return _stale();
+        if (_initializing && !_active) {
+          if (!await _waitUntilActive()) return _stale();
+          admissionDeadline = DateTime.now().add(const Duration(seconds: 8));
+        }
         accepted = _decode(
           await view.runJavaScriptReturningResult(
             'JSON.stringify(window.GeoMathModule.learningAction(${jsonEncode(payload)}))',
           ),
         );
-        if (accepted?['error'] != 'learning-busy') break;
+        if (accepted?['error'] != 'learning-busy' &&
+            !(_initializing && accepted?['error'] == 'learning-not-ready')) {
+          break;
+        }
         await Future<void>.delayed(const Duration(milliseconds: 60));
       } while (DateTime.now().isBefore(admissionDeadline));
       if (!isCurrent) return _stale();
@@ -303,8 +331,14 @@ final class LearningModuleController extends ChangeNotifier {
               _visible &&
               lifecycle.isForeground) {
             final seed = snapshot!;
+            final rawOrigin = response?['transitionCheckpoint'];
+            final origin = rawOrigin is Map
+                ? Map<String, Object?>.from(rawOrigin)
+                : null;
             _transferring = true;
-            unawaited(Future<void>(() => _transferWorkflow(seed)));
+            unawaited(
+              Future<void>(() => _transferWorkflow(seed, origin: origin)),
+            );
           }
         }
         final exported = response?['export'];
@@ -384,7 +418,10 @@ final class LearningModuleController extends ChangeNotifier {
     return saved;
   }
 
-  Future<void> _transferWorkflow(Map<String, Object?> checkpoint) async {
+  Future<void> _transferWorkflow(
+    Map<String, Object?> checkpoint, {
+    Map<String, Object?>? origin,
+  }) async {
     if (!isCurrent) return;
     const sections = {
       'explore',
@@ -398,18 +435,35 @@ final class LearningModuleController extends ChangeNotifier {
       'projection',
       'calculation',
     };
-    final target = checkpoint['section'];
-    if (target is! String || !sections.contains(target) || target == section) {
-      return;
-    }
     try {
-      final previous = _lastStableSnapshot;
+      final target = checkpoint['section'];
+      if (target is! String ||
+          !sections.contains(target) ||
+          target == section) {
+        return;
+      }
+      // A canonical DOM button can change sections between native polls. Its
+      // synchronously captured origin includes typing since the last poll.
+      final previous = origin?['section'] == section
+          ? origin
+          : _lastStableSnapshot;
       if (previous != null) {
+        final encoded = jsonEncode(previous);
+        final saved = _lastCheckpoint == encoded
+            ? const Success<void>(null)
+            : await checkpoints.save(actor, slot, previous);
+        if (!isCurrent) return;
         final restored = await action({
           'action': 'restore',
           'checkpoint': previous,
         });
-        if (!restored.isSuccess) return;
+        if (!isCurrent) return;
+        if (!saved.isSuccess || !restored.isSuccess) {
+          checkpointFailure = saved.failureOrNull ?? restored.failureOrNull;
+          recoveryRequired = true;
+          return;
+        }
+        _lastCheckpoint = encoded;
       }
       if (isCurrent && _visible && lifecycle.isForeground) {
         onWorkflow?.call(target, checkpoint);

@@ -140,9 +140,13 @@ void main() {
     expect(find.text('Shapes could not be loaded'), findsOneWidget);
     expect(find.text('Start exploring'), findsNothing);
     bundle.fail = false;
-    await tester.tap(find.text('Retry'));
+    await tester.tap(
+      find.text(const AppStrings(AppLanguage.en).text('common.retry')),
+    );
     await tester.pumpAndSettle();
-    expect(find.text('11 shapes to explore'), findsOneWidget);
+    expect(bundle.catalogueLoads, 2);
+    expect(find.text('Shapes could not be loaded'), findsNothing);
+    expect(find.textContaining('11 shapes to explore'), findsOneWidget);
     expect(find.text('Start exploring'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });

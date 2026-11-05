@@ -660,7 +660,8 @@ class _LearningModulePageState extends State<LearningModulePage> {
   );
 
   Widget _module(LearningModuleController c) {
-    if (c.host.phase == ModuleLoadPhase.failed ||
+    if (c.initializationFailed ||
+        c.host.phase == ModuleLoadPhase.failed ||
         c.host.phase == ModuleLoadPhase.closed) {
       return Center(
         child: Padding(
@@ -690,14 +691,17 @@ class _LearningModulePageState extends State<LearningModulePage> {
     if (view == null) return const Center(child: CircularProgressIndicator());
     return Stack(
       children: [
-        WebViewWidget(
-          key: const ValueKey('learning-webview'),
-          controller: view,
-          gestureRecognizers: {
-            Factory<OneSequenceGestureRecognizer>(
-              () => EagerGestureRecognizer(),
-            ),
-          },
+        AbsorbPointer(
+          absorbing: !c.isReady,
+          child: WebViewWidget(
+            key: const ValueKey('learning-webview'),
+            controller: view,
+            gestureRecognizers: {
+              Factory<OneSequenceGestureRecognizer>(
+                () => EagerGestureRecognizer(),
+              ),
+            },
+          ),
         ),
         if (!c.isReady)
           const Align(

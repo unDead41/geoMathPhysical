@@ -4,7 +4,7 @@ import {nativeWrapper,teachingRuntime} from './runtime_fixture.mjs';
 import {learningSchema} from '../../../../tools/module/learning_schema.mjs';
 
 const capture=()=>teachingRuntime().latest();
-function state(value,eventSequence=2,requestSequence=0){return {type:'geomath:learning-state',version:1,eventSequence,requestSequence,result:value.result,checkpoint:value.checkpoint,diagnostics:value.diagnostics};}
+function state(value,eventSequence=2,requestSequence=0){return {type:'geomath:learning-state',version:1,eventSequence,requestSequence,result:value.result,checkpoint:value.checkpoint,transitionCheckpoint:value.transitionCheckpoint??null,diagnostics:value.diagnostics};}
 const progress=h=>({type:'geodecoder:module-progress',protocol:1,session:h.config.progressSession,activity:'net',stage:'prediction',prediction:'Six real faces stay connected.',result:'',explanation:'',completed:false});
 
 test('private learning actions require both canonical readiness channels, the opaque source, and exact bounded values',()=>{
@@ -31,6 +31,21 @@ test('stale private state, malformed geometry, owner keys and oversized checkpoi
   const huge=structuredClone(c);huge.checkpoint.notes={shape:'cube',piMode:'full',dimensions:{a:'a'.repeat(2097153)}};
   assert.equal(learningSchema.checkpoint(huge.checkpoint),false);assert.equal(h.api.learningAction({action:'restore',checkpoint:huge.checkpoint}).accepted,false);
   const snapshot=h.api.learningSnapshot();snapshot.checkpoint.explore.yaw=99;assert.equal(JSON.stringify(h.api.learningSnapshot().checkpoint),original);
+});
+
+test('transition checkpoints cross only the validated opaque private state path and clear on restore/dispose',()=>{
+  const h=nativeWrapper();h.ready();const origin=capture(),destination=structuredClone(origin);
+  destination.checkpoint.section='notes';destination.checkpoint.notes={shape:'cube',piMode:'full',dimensions:{a:'7.5'}};destination.transitionCheckpoint=origin.checkpoint;
+  h.receive(state(destination,2),{source:{}});assert.equal(h.api.learningSnapshot().transitionCheckpoint,null);
+  h.receive(state(destination,2),{origin:'https://untrusted.example'});assert.equal(h.api.learningSnapshot().transitionCheckpoint,null);
+  for(const mutate of [c=>c.transitionCheckpoint.owner='forged',c=>c.transitionCheckpoint.sourceCommit='wrong',c=>c.transitionCheckpoint.explore.zoom=99]){
+    const invalid=structuredClone(destination);mutate(invalid);h.receive(state(invalid,2));assert.equal(h.api.learningSnapshot().transitionCheckpoint,null);
+  }
+  h.receive(state(destination,2));assert.deepEqual(structuredClone(h.api.learningSnapshot().transitionCheckpoint),origin.checkpoint);
+  const copy=h.api.learningSnapshot();copy.transitionCheckpoint.explore.yaw=99;assert.equal(h.api.learningSnapshot().transitionCheckpoint.explore.yaw,origin.checkpoint.explore.yaw);
+  h.receive(state(origin,3));assert.equal(h.api.learningSnapshot().transitionCheckpoint,null);
+  h.receive(state(destination,4));h.api.dispose();assert.equal(h.api.learningSnapshot().transitionCheckpoint,null);
+  assert.deepEqual(h.native.map(x=>x.command),['ready'],'origin data never changes the frozen native envelope');
 });
 
 test('private monotonic events suppress progress replays while preserving the exact frozen protocol-1 inner envelope',()=>{

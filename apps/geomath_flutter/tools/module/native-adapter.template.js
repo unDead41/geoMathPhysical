@@ -8,7 +8,7 @@
   const learningSchema = __GEOMATH_LEARNING_SCHEMA__;
   let config = null, moduleReady = false, settingsReady = false, emittedReady = false, readyAcknowledged = false;
   let settings = null, active = true, modelSnapshot = null, audioGranted = false, audioRevision = 0, audioAck = 0;
-  let learningReady=false, learningSequence=0, learningEvent=0, learningPending=false, learningCheckpoint=null, learningDiagnostics=null, learningResult={ok:true}, learningExport=null, learningExternalLink=null;
+  let learningReady=false, learningSequence=0, learningEvent=0, learningPending=false, learningCheckpoint=null, learningTransitionCheckpoint=null, learningDiagnostics=null, learningResult={ok:true}, learningExport=null, learningExternalLink=null;
   const progressSeen = new Map();
   const object = value => value && typeof value === 'object' && !Array.isArray(value);
   const exact = (value, keys) => object(value) && Object.keys(value).length === keys.length && keys.every(key => Object.hasOwn(value,key));
@@ -53,10 +53,11 @@
         if(forwardProgress(message.progress))learningEvent=message.eventSequence;return;
       }
       if(message.type==='geomath:learning-state'){
-        if(!exact(message,['type','version','eventSequence','requestSequence','result','checkpoint','diagnostics'])||!Number.isSafeInteger(message.requestSequence)||message.requestSequence!==learningSequence||!object(message.result)||typeof message.result.ok!=='boolean'||!(message.result.ok?exact(message.result,['ok']):exact(message.result,['ok','error'])&&typeof message.result.error==='string'&&/^[a-z-]{1,80}$/.test(message.result.error))||!object(message.diagnostics)||!learningSchema.safe(message.diagnostics))return;
+        if(!exact(message,['type','version','eventSequence','requestSequence','result','checkpoint','transitionCheckpoint','diagnostics'])||!Number.isSafeInteger(message.requestSequence)||message.requestSequence!==learningSequence||!object(message.result)||typeof message.result.ok!=='boolean'||!(message.result.ok?exact(message.result,['ok']):exact(message.result,['ok','error'])&&typeof message.result.error==='string'&&/^[a-z-]{1,80}$/.test(message.result.error))||!object(message.diagnostics)||!learningSchema.safe(message.diagnostics))return;
         if(message.checkpoint!==null&&!learningSchema.checkpoint(message.checkpoint))return;
+        if(message.transitionCheckpoint!==null&&!learningSchema.checkpoint(message.transitionCheckpoint))return;
         learningEvent=message.eventSequence;learningPending=false;learningResult={ok:message.result.ok,...(typeof message.result.error==='string'?{error:message.result.error.slice(0,80)}:{})};
-        if(message.checkpoint!==null)learningCheckpoint=JSON.parse(JSON.stringify(message.checkpoint));learningDiagnostics={...message.diagnostics};return;
+        if(message.checkpoint!==null)learningCheckpoint=JSON.parse(JSON.stringify(message.checkpoint));learningTransitionCheckpoint=message.transitionCheckpoint===null?null:JSON.parse(JSON.stringify(message.transitionCheckpoint));learningDiagnostics={...message.diagnostics};return;
       }
       return;
     }
@@ -120,9 +121,9 @@
       post({type:'geomath:learning-action',version:1,sequence:learningSequence,value:JSON.parse(JSON.stringify(value))});
       return {accepted:true,sequence:learningSequence};
     },
-    learningSnapshot() {return JSON.parse(JSON.stringify({schemaVersion:1,sequence:learningSequence,pending:learningPending,ready:learningReady,result:learningResult,checkpoint:learningCheckpoint,diagnostics:learningDiagnostics,export:learningExport,externalLink:learningExternalLink}));},
+    learningSnapshot() {return JSON.parse(JSON.stringify({schemaVersion:1,sequence:learningSequence,pending:learningPending,ready:learningReady,result:learningResult,checkpoint:learningCheckpoint,transitionCheckpoint:learningTransitionCheckpoint,diagnostics:learningDiagnostics,export:learningExport,externalLink:learningExternalLink}));},
     clearNativeEvents() {if(!config)return false;learningExport=null;learningExternalLink=null;return true;},
-    dispose() {active=false;audioGranted=false;learningReady=false;learningPending=false;learningCheckpoint=null;learningDiagnostics=null;learningExport=null;learningExternalLink=null;progressSeen.clear();window.speechSynthesis?.cancel();config=null;settings=null;frame.removeAttribute('srcdoc');},
+    dispose() {active=false;audioGranted=false;learningReady=false;learningPending=false;learningCheckpoint=null;learningTransitionCheckpoint=null;learningDiagnostics=null;learningExport=null;learningExternalLink=null;progressSeen.clear();window.speechSynthesis?.cancel();config=null;settings=null;frame.removeAttribute('srcdoc');},
     // Read-only test/diagnostic seam. It contains no bridge nonce or actor.
     inspect() {post({type:'geomath:inspect'});return true;},
     activateControl(action,value) {if(!['rotate-right','set-unfold','stop-auto'].includes(action))return false;post({type:'geomath:control',action,value});return true;},

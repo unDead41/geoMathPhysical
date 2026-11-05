@@ -68,8 +68,37 @@ export function installLearningAdapter(env,schema) {
   const {state,labs,notes,projection,calculation,el}=env;
   const clone=value=>JSON.parse(JSON.stringify(value));
   let requestSequence=0,eventSequence=0,restoring=false,queued=false;
+  let transitionCheckpoint=null,transitionDepth=0,hasLaunched=false;
+  let labInputs={};
+  const readLabInputs=()=>Object.fromEntries(['prediction','explanation','answer'].map(key=>[key,el('guided-'+key)?.value??'']));
+  // The canonical chooser restores accepted reflection milestones. Keep raw
+  // editing inputs separately so switching activities never discards typing or
+  // promotes it into an observed, checked or completed reflection.
+  const chooseLab=labs.choose;
+  labs.choose=function(kind){
+    const previous=this.kind;
+    if(this.ready&&!restoring&&kind!==previous&&Object.hasOwn(this.guided,kind))labInputs[previous]=readLabInputs();
+    const result=chooseLab.call(this,kind);
+    if(this.ready&&!restoring&&this.kind!==previous&&labInputs[this.kind])for(const [key,value] of Object.entries(labInputs[this.kind]))el('guided-'+key).value=value;
+    return result;
+  };
   const section=()=>state.learningView==='explore'?(state.mode==='views'?'views':'explore'):state.learningView==='notes'?(state.studyMode==='calculator'?'calculator':'notes'):state.learningView==='labs'?labs.kind:state.learningView;
   function post(type,value={}){window.parent.postMessage({type,version:1,eventSequence:++eventSequence,...value},'*');}
+  function transition(operation,suppress=false){
+    const outer=transitionDepth++===0;
+    let previous=null;
+    if(outer&&!restoring&&!suppress){try{previous=capture();}catch{/* The normal state response reports invalid drafts. */}}
+    try{return operation();}
+    finally{
+      transitionDepth--;
+      if(previous&&section()!==previous.section){
+        // Keep the original route's freshest state if the learner crosses more
+        // than one source boundary before native polling catches up.
+        if(transitionCheckpoint&&section()===transitionCheckpoint.section)transitionCheckpoint=null;
+        else if(!transitionCheckpoint)transitionCheckpoint=previous;
+      }
+    }
+  }
   function pause(){
     const saved=state.playing?{direction:state.direction,kind:state.kind,hold:state.hold}:state.pausedAnimation;
     env.stopAnimation();state.pausedAnimation=saved;state.auto=false;state.camera=null;
@@ -105,10 +134,9 @@ export function installLearningAdapter(env,schema) {
     const kind=labs.kind,snapshots={},motion=captureMotion(kind,labs.anim||labs.paused),suspended=Object.fromEntries([...labs.suspended].map(([key,a])=>[key,captureMotion(key,a)]));
     for(const key of ['net','volume','area','composite']){labs.kind=key;snapshots[key]=labs.snapshot();}
     labs.kind=kind;
-    const drafts=Object.fromEntries(Object.entries(labs.guided).map(([key,a])=>[key,{prediction:a.draft.prediction,result:a.draft.result,explanation:a.draft.explanation,answer:key===kind?(el('guided-answer')?.value||''):(labs.__geomathAnswers?.[key]||'')}]));
+    const drafts=Object.fromEntries(Object.entries(labs.guided).map(([key,a])=>[key,{prediction:labInputs[key]?.prediction??a.draft.prediction,result:a.draft.result,explanation:labInputs[key]?.explanation??a.draft.explanation,answer:labInputs[key]?.answer??''}]));
     // Include unsent learner typing, as well as accepted teaching milestones.
-    drafts[kind].prediction=el('guided-prediction')?.value||drafts[kind].prediction;
-    drafts[kind].explanation=el('guided-explanation')?.value||drafts[kind].explanation;
+    Object.assign(drafts[kind],readLabInputs());
     return {kind,showHub:labs.showHub,camera:{...labs.camera},speed:labs.speed,snapshots,histories:Object.fromEntries(Object.entries(labs.histories).map(([key,h])=>[key,clone(h.items)])),drafts,surface:env.surfaceSnapshot(),motion,suspended};
   }
   function capture(){
@@ -125,8 +153,8 @@ export function installLearningAdapter(env,schema) {
     return {section:section(),shape:state.shape,modelCount:env.models.length,yaw:state.yaw,pitch:state.pitch,zoom:state.zoom,progress:state.progress,mode:state.mode,selected:state.selected,playing:state.playing,auto:state.auto,labKind:labs.ready?labs.kind:null,labMode:labs.ready?(labs.kind==='net'?labs.net.mode:labs.kind==='volume'?labs.volume.kind:labs.kind==='area'?labs.area.mode:labs.comp.kind):null,projectionShape:projection.state.shape,projectionScale:projection.state.scale,calculationShape:calculation.draft?.shape||null,faceColors:env.faceColors(state.shape),meshSource:'learning-mesh.mjs/studySolidMesh'};
   }
   function emit(result={ok:true},sequence=requestSequence){
-    try{post('geomath:learning-state',{requestSequence:sequence,result,checkpoint:capture(),diagnostics:diagnostics()});}
-    catch(error){post('geomath:learning-state',{requestSequence:sequence,result:{ok:false,error:error.message==='checkpoint-invalid'?'checkpoint-invalid':'checkpoint-unavailable'},checkpoint:null,diagnostics:diagnostics()});}
+    try{post('geomath:learning-state',{requestSequence:sequence,result,checkpoint:capture(),transitionCheckpoint,diagnostics:diagnostics()});}
+    catch(error){post('geomath:learning-state',{requestSequence:sequence,result:{ok:false,error:error.message==='checkpoint-invalid'?'checkpoint-invalid':'checkpoint-unavailable'},checkpoint:null,transitionCheckpoint,diagnostics:diagnostics()});}
   }
   function launch(value){
     const {section:target,shape,mode}=value;
@@ -175,19 +203,19 @@ export function installLearningAdapter(env,schema) {
         // The surface presentation helper uses the visible area mode instead.
         if(a.workshop)labs.workshop.mode=a.workshop.mode;
         Object.assign(labs,{kind:l.kind,showHub:l.showHub,camera:l.camera,speed:l.speed});
-        labs.__geomathAnswers={};
+        labInputs={};
         for(const key of ['net','volume','area','composite']){
           labs.histories[key].items=clone(l.histories[key]);const d=l.drafts[key],activity=labs.guided[key];activity.retry();
           Object.assign(activity.draft,{prediction:d.prediction,result:d.result,explanation:d.explanation});
           // A checkpoint restores editing state, never a live checked/completed gate.
-          activity.draft.stage='prediction';activity.draft.completed=false;labs.__geomathAnswers[key]=d.answer;
+          activity.draft.stage='prediction';activity.draft.completed=false;labInputs[key]={prediction:d.prediction,explanation:d.explanation,answer:d.answer};
         }
         labs.paused=restoreMotion(l.motion);for(const [key,m] of Object.entries(l.suspended))if(m)labs.suspended.set(key,restoreMotion(m));
         el('guided-prediction').value=l.drafts[l.kind].prediction;el('guided-explanation').value=l.drafts[l.kind].explanation;el('guided-answer').value=l.drafts[l.kind].answer;labs.render();
       }
       if(v.projection){projection.open(v.projection.state.shape);projection.state={...clone(v.projection.state),results:{front:null,side:null,plan:null}};projection.camera={...v.projection.camera};projection.measurementDraft={...v.projection.measurementDraft};projection.rebuildGeometry();projection.render();for(const [key,raw] of Object.entries(v.projection.coordinateDraft))el('projection-'+key).value=raw;projection.visible=v.section==='projection';projection.root.hidden=!projection.visible;}
       if(v.calculation){calculation.init();calculation.draft={...clone(v.calculation.draft),hints:new Set(v.calculation.draft.hints),checks:{}};calculation.problemIndex=v.calculation.problemIndex;calculation.statusKey='';calculation.update(true);env.revalidateCalculation(calculation,v.calculation.activeStep);calculation.active=v.section==='calculation';calculation.root.hidden=!calculation.active;}
-      Object.assign(state,v.explore,{playing:false,auto:false,camera:null});env.refresh();env.redraw();
+      Object.assign(state,v.explore,{playing:false,auto:false,camera:null});env.refresh();env.redraw();transitionCheckpoint=null;
     }finally{restoring=false;}
   }
   function control(value){
@@ -250,15 +278,18 @@ export function installLearningAdapter(env,schema) {
     if(event.source!==window.parent||!m||m.type!=='geomath:learning-action'||m.version!==1||!Number.isSafeInteger(m.sequence)||m.sequence<=requestSequence)return;
     requestSequence=m.sequence;
     if(!schema.action(m.value)){emit({ok:false,error:'action-invalid'});return;}
-    try{control(m.value);emit();}catch(error){emit({ok:false,error:['checkpoint-invalid','surface-checkpoint-invalid','face-unavailable','undo-unavailable','net-unavailable','net-export-unavailable','net-export-invalid','workflow-unavailable'].includes(error.message)?error.message:'action-failed'});}
+    const initialLaunch=m.value.action==='launch'&&!hasLaunched;
+    if(initialLaunch)hasLaunched=true;
+    try{transition(()=>control(m.value),initialLaunch||m.value.action==='restore');emit();}catch(error){emit({ok:false,error:['checkpoint-invalid','surface-checkpoint-invalid','face-unavailable','undo-unavailable','net-unavailable','net-export-unavailable','net-export-invalid','workflow-unavailable'].includes(error.message)?error.message:'action-failed'});}
   });
   const schedule=()=>{if(restoring||queued)return;queued=true;Promise.resolve().then(()=>{queued=false;if(!restoring)emit();});};
   for(const name of ['input','change','click','pointerup'])document.addEventListener(name,schedule);
   document.addEventListener('visibilitychange',()=>{if(document.hidden){pause();emit();}});
+  env.installTransitions(transition);
   post('geomath:learning-ready');emit();
   return {progress(payload){post('geomath:learning-progress',{progress:payload});}};
 }
 
 export function learningAdapterSource(){
-  return `\nconst geomathValidateLearningGeometry=(${validateLearningGeometry.toString()});\nconst geomathLearningSchema=(${createLearningSchema.toString()})();\nconst geomathLearningTransport=(${installLearningAdapter.toString()})({state,labs:learningLabs,notes:learningNotes,projection:projectionStudio,calculation:calculationWorkshop,access:moduleAccess,LabMotion,ease,transferFrame,el,models:MODEL_ORDER,fields:MEASURE_FIELDS,studioShapes:STUDIO_SHAPES.map(s=>s.key),noNet:shape=>Boolean(MODEL_DATA[shape].noNet),surfaceCount:shape=>MODEL_DATA[shape].labels.length,faceColors:shape=>MODEL_DATA[shape].labels.map((_,id)=>geomathFaceColor(shape,id)),surfaceLaunch:geomathSurfaceLaunch,surfaceSnapshot:geomathSurfaceSnapshot,surfaceRestore:geomathSurfaceRestore,surfaceValidate:geomathSurfaceValidate,selectShape,switchView:switchLearningView,switchMode,selectView,selectFace,stopAnimation,resetCamera,zoomBy,refresh:refreshControls,redraw:redrawSmallModels,revalidateCalculation:(c,step)=>{if(c.problem.valid)for(let i=0;i<step;i++){const key=calcSteps[i],value=key==='unit'?{value:c.draft.answers.unitValue,unit:c.draft.answers.unit}:c.draft.answers[key],result=calculationCheckStep(c.problem,key,value);c.draft.checks[key]=result;if(!result.correct)break;}c.activeStep=step;c.updateSteps();},validateGeometry:v=>geomathValidateLearningGeometry(v,{modelData:MODEL_DATA,fields:MEASURE_FIELDS,studioFields,learningMesh,netStudioState,volumeInfo,transferPlan,transferFrame,ease,surfaceValidate:geomathSurfaceValidate,projectionModel,calculationContextOptions,calculationUnitOptions,calculationFields})},geomathLearningSchema);\n`;
+  return `\nconst geomathValidateLearningGeometry=(${validateLearningGeometry.toString()});\nconst geomathLearningSchema=(${createLearningSchema.toString()})();\nconst geomathLearningTransport=(${installLearningAdapter.toString()})({state,labs:learningLabs,notes:learningNotes,projection:projectionStudio,calculation:calculationWorkshop,access:moduleAccess,LabMotion,ease,transferFrame,el,models:MODEL_ORDER,fields:MEASURE_FIELDS,studioShapes:STUDIO_SHAPES.map(s=>s.key),noNet:shape=>Boolean(MODEL_DATA[shape].noNet),surfaceCount:shape=>MODEL_DATA[shape].labels.length,faceColors:shape=>MODEL_DATA[shape].labels.map((_,id)=>geomathFaceColor(shape,id)),surfaceLaunch:geomathSurfaceLaunch,surfaceSnapshot:geomathSurfaceSnapshot,surfaceRestore:geomathSurfaceRestore,surfaceValidate:geomathSurfaceValidate,selectShape,switchView:switchLearningView,switchMode,selectView,selectFace,stopAnimation,resetCamera,zoomBy,refresh:refreshControls,redraw:redrawSmallModels,installTransitions:wrap=>{const view=switchLearningView;switchLearningView=function(...args){return wrap(()=>view(...args));};const mode=switchMode;switchMode=function(...args){return wrap(()=>mode(...args));};const study=setStudyMode;setStudyMode=function(...args){return wrap(()=>study(...args));};const choose=learningLabs.choose;learningLabs.choose=function(...args){return wrap(()=>choose.apply(this,args));};},revalidateCalculation:(c,step)=>{if(c.problem.valid)for(let i=0;i<step;i++){const key=calcSteps[i],value=key==='unit'?{value:c.draft.answers.unitValue,unit:c.draft.answers.unit}:c.draft.answers[key],result=calculationCheckStep(c.problem,key,value);c.draft.checks[key]=result;if(!result.correct)break;}c.activeStep=step;c.updateSteps();},validateGeometry:v=>geomathValidateLearningGeometry(v,{modelData:MODEL_DATA,fields:MEASURE_FIELDS,studioFields,learningMesh,netStudioState,volumeInfo,transferPlan,transferFrame,ease,surfaceValidate:geomathSurfaceValidate,projectionModel,calculationContextOptions,calculationUnitOptions,calculationFields})},geomathLearningSchema);\n`;
 }

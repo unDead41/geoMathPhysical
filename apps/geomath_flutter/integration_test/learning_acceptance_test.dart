@@ -40,6 +40,32 @@ void main() {
     await binding.takeScreenshot(name);
   }
 
+  Future<void> capturePresentationMatrix(
+    WidgetTester tester,
+    AppDependencies app,
+    String prefix,
+  ) async {
+    if (!visualMatrix) return;
+    for (final language in AppLanguage.values) {
+      for (final theme in [AppTheme.light, AppTheme.dark]) {
+        for (final contrast in [false, true]) {
+          await _savePreferences(
+            tester,
+            app,
+            language: language,
+            theme: theme,
+            contrast: contrast,
+          );
+          await capture(
+            tester,
+            '$prefix-${language.name}-${theme.name}-${contrast ? 'contrast-150' : '100'}',
+          );
+        }
+      }
+    }
+    await _savePreferences(tester, app);
+  }
+
   testWidgets(
     '13 learning screens render the pinned offline module and all models/modes',
     (tester) async {
@@ -47,7 +73,8 @@ void main() {
       final app = await _openApp(tester);
       addTearDown(app.dispose);
       final router = _router(tester);
-      await capture(tester, '25-learning-hub-ms-light-100');
+      await capture(tester, '41-learning-hub-ms-light-100');
+      await capturePresentationMatrix(tester, app, '41-learning-hub');
       const routes = <String, String?>{
         '/learn/explore': 'explore',
         '/learn/views': 'views',
@@ -62,7 +89,7 @@ void main() {
         '/learn/calculation': 'calculation',
         '/learn/records': null,
       };
-      var number = 26;
+      var number = 25;
       for (final entry in routes.entries) {
         _openPath(app, router, entry.key);
         await tester.pump();
@@ -149,30 +176,10 @@ void main() {
           await tester.pump(const Duration(milliseconds: 250));
           expect(find.byType(GeoMathScaffold), findsWidgets);
         }
-        final screen = entry.key == '/learn/records' ? 41 : number++;
-        final name =
-            '$screen-${entry.key.substring(1).replaceAll('/', '-')}-ms-light-100';
-        await capture(tester, name);
-        if (visualMatrix) {
-          for (final language in AppLanguage.values) {
-            for (final theme in [AppTheme.light, AppTheme.dark]) {
-              for (final contrast in [false, true]) {
-                await _savePreferences(
-                  tester,
-                  app,
-                  language: language,
-                  theme: theme,
-                  contrast: contrast,
-                );
-                await capture(
-                  tester,
-                  '$screen-${entry.key.substring(1).replaceAll('/', '-')}-${language.name}-${theme.name}-${contrast ? 'contrast-150' : '100'}',
-                );
-              }
-            }
-          }
-          await _savePreferences(tester, app);
-        }
+        final screen = number++;
+        final prefix = '$screen-${entry.key.substring(1).replaceAll('/', '-')}';
+        await capture(tester, '$prefix-ms-light-100');
+        await capturePresentationMatrix(tester, app, prefix);
         expect(tester.takeException(), isNull, reason: entry.key);
         expect(await router.popRoute(), isTrue);
         await tester.pump(const Duration(milliseconds: 250));
@@ -255,7 +262,7 @@ void main() {
           expect((state['diagnostics'] as Map)['faceColors'], palette);
           await capture(
             tester,
-            '26-explore-${language.name}-${theme.name}-contrast-150',
+            '25-explore-${language.name}-${theme.name}-contrast-150',
           );
         }
       }

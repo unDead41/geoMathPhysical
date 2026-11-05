@@ -27,6 +27,11 @@ void main() {
     learningCheckpointFixture(),
     true,
   );
+  add(
+    'canonical area workshop after returning from container to closed',
+    learningClosedAreaCheckpointFixture(),
+    true,
+  );
   final fullUndo = learningCheckpointFixture();
   final state = (fullUndo['projection'] as Map)['state'] as Map;
   for (final view in ['front', 'side', 'plan']) {
