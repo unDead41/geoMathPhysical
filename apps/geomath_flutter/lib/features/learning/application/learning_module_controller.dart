@@ -15,6 +15,31 @@ import '../module_spike_host.dart';
 import '../persistence/learning_checkpoint_repository.dart';
 import '../persistence/learning_reflection_controller.dart';
 
+/// The narrow native-JavaScript seam. Production delegates to the existing
+/// verified WebView host; injected ports test missing platform replies only.
+abstract interface class LearningJavaScriptPort {
+  bool get isReady;
+  Future<Object> evaluate(String script);
+  Future<void> run(String script);
+}
+
+final class _WebViewLearningJavaScript implements LearningJavaScriptPort {
+  _WebViewLearningJavaScript(this.host);
+  final ModuleSpikeController host;
+
+  @override
+  bool get isReady =>
+      host.phase == ModuleLoadPhase.ready && host.webViewController != null;
+
+  @override
+  Future<Object> evaluate(String script) =>
+      host.webViewController!.runJavaScriptReturningResult(script);
+
+  @override
+  Future<void> run(String script) =>
+      host.webViewController!.runJavaScript(script);
+}
+
 /// Feature actions use the verified wrapper's bounded private API. Identity,
 /// lifecycle, audio and the canonical progress envelope stay foundation-owned.
 final class LearningModuleController extends ChangeNotifier {
@@ -33,6 +58,7 @@ final class LearningModuleController extends ChangeNotifier {
     this.onExternalLink,
     this.onWorkflow,
     this.initialCheckpoint,
+    LearningJavaScriptPort? javascript,
   }) : actor = sessions.current {
     host = ModuleSpikeController(
       sessions: sessions,
@@ -41,6 +67,7 @@ final class LearningModuleController extends ChangeNotifier {
       audio: audio,
       onCommand: _onCommand,
     );
+    _javascript = javascript ?? _WebViewLearningJavaScript(host);
     host.addListener(_hostChanged);
     lifecycle.addListener(_lifecycleChanged);
     reflections.addListener(_recordsChanged);
@@ -61,6 +88,8 @@ final class LearningModuleController extends ChangeNotifier {
   onWorkflow;
   final Map<String, Object?>? initialCheckpoint;
   late final ModuleSpikeController host;
+  late final LearningJavaScriptPort _javascript;
+  static const _javaScriptBudget = Duration(seconds: 8);
   AppFailure? failure;
   AppFailure? checkpointFailure;
   bool recoveryRequired = false;
@@ -167,19 +196,19 @@ final class LearningModuleController extends ChangeNotifier {
   }
 
   Future<bool> _awaitPrivateReady() async {
-    var deadline = DateTime.now().add(const Duration(seconds: 8));
+    var deadline = DateTime.now().add(_javaScriptBudget);
     while (isCurrent) {
       if (!_active) {
         if (!await _waitUntilActive()) return false;
-        deadline = DateTime.now().add(const Duration(seconds: 8));
+        deadline = DateTime.now().add(_javaScriptBudget);
       }
       if (!DateTime.now().isBefore(deadline)) break;
       try {
-        final view = host.webViewController;
-        if (view == null) return false;
+        if (!_javascript.isReady) return false;
         final value = _decode(
-          await view.runJavaScriptReturningResult(
+          await _evaluate(
             'JSON.stringify(window.GeoMathModule.learningSnapshot())',
+            deadline: deadline,
           ),
         );
         if (value?['ready'] == true) return true;
@@ -200,8 +229,9 @@ final class LearningModuleController extends ChangeNotifier {
 
   Future<Result<void>> launchMode(String? next) async {
     if (mode == next) return const Success<void>(null);
-    await captureCheckpoint();
+    final captured = await captureCheckpoint();
     if (!isCurrent) return _stale();
+    if (!captured.isSuccess) return captured;
     mode = next;
     _lastCheckpoint = null;
     return action({'action': 'launch', 'section': section, 'mode': ?next});
@@ -243,8 +273,7 @@ final class LearningModuleController extends ChangeNotifier {
             payload['action'] == 'launch' && payload['section'] != section)) {
       return Failed<void>(checkpointFailure!);
     }
-    final view = host.webViewController;
-    if (view == null || host.phase != ModuleLoadPhase.ready || !isCurrent) {
+    if (!_javascript.isReady || !isCurrent) {
       return const Failed<void>(
         AppFailure(
           code: FailureCode.unavailable,
@@ -271,16 +300,17 @@ final class LearningModuleController extends ChangeNotifier {
     }
     try {
       Map<String, Object?>? accepted;
-      var admissionDeadline = DateTime.now().add(const Duration(seconds: 8));
+      var admissionDeadline = DateTime.now().add(_javaScriptBudget);
       do {
         if (!isCurrent) return _stale();
         if (_initializing && !_active) {
           if (!await _waitUntilActive()) return _stale();
-          admissionDeadline = DateTime.now().add(const Duration(seconds: 8));
+          admissionDeadline = DateTime.now().add(_javaScriptBudget);
         }
         accepted = _decode(
-          await view.runJavaScriptReturningResult(
+          await _evaluate(
             'JSON.stringify(window.GeoMathModule.learningAction(${jsonEncode(payload)}))',
+            deadline: admissionDeadline,
           ),
         );
         if (accepted?['error'] != 'learning-busy' &&
@@ -299,13 +329,14 @@ final class LearningModuleController extends ChangeNotifier {
         );
       }
       final sequence = accepted!['sequence'] as int;
-      final deadline = DateTime.now().add(const Duration(seconds: 8));
+      final deadline = DateTime.now().add(_javaScriptBudget);
       while (DateTime.now().isBefore(deadline)) {
         await Future<void>.delayed(const Duration(milliseconds: 60));
         if (!isCurrent) return _stale();
         final response = _decode(
-          await view.runJavaScriptReturningResult(
+          await _evaluate(
             'JSON.stringify(window.GeoMathModule.learningSnapshot())',
+            deadline: deadline,
           ),
         );
         if (!isCurrent) return _stale();
@@ -346,7 +377,9 @@ final class LearningModuleController extends ChangeNotifier {
         if (_visible &&
             lifecycle.isForeground &&
             (exported is Map || external is Map)) {
-          await view.runJavaScript('window.GeoMathModule.clearNativeEvents()');
+          await _javascript
+              .run('window.GeoMathModule.clearNativeEvents()')
+              .timeout(_javaScriptBudget);
           if (!isCurrent) return _stale();
           final svg = exported is Map ? exported['svg'] : null;
           if (svg is String &&
@@ -377,6 +410,7 @@ final class LearningModuleController extends ChangeNotifier {
         ),
       );
     } catch (_) {
+      if (!isCurrent) return _stale();
       return const Failed<void>(
         AppFailure(
           code: FailureCode.unavailable,
@@ -386,12 +420,25 @@ final class LearningModuleController extends ChangeNotifier {
     }
   }
 
+  Future<Object> _evaluate(String script, {required DateTime deadline}) {
+    final remaining = deadline.difference(DateTime.now());
+    if (remaining <= Duration.zero) {
+      return Future<Object>.error(
+        TimeoutException('Learning native call expired.'),
+      );
+    }
+    // Timing out a platform Future does not cancel Android evaluation. Only
+    // this bounded result is consumed; a late value cannot update the snapshot
+    // or claim that a checkpoint was saved. A subsequent queued action can retry.
+    return _javascript.evaluate(script).timeout(remaining);
+  }
+
   Future<Result<void>> captureCheckpoint() {
     final pending = _pendingCheckpoint;
     if (pending != null) return pending;
     if (recoveryRequired) return Future.value(Failed<void>(checkpointFailure!));
     if (_transferring) return Future.value(const Success<void>(null));
-    if (!isCurrent || host.phase != ModuleLoadPhase.ready) {
+    if (!isCurrent || !_javascript.isReady) {
       return Future.value(const Success<void>(null));
     }
     final operation = _captureCheckpoint();
@@ -403,7 +450,8 @@ final class LearningModuleController extends ChangeNotifier {
 
   Future<Result<void>> _captureCheckpoint() async {
     final captured = await action({'action': 'checkpoint'});
-    if (captured is Failed<void> || !isCurrent) return captured;
+    if (!isCurrent) return _stale();
+    if (captured is Failed<void>) return captured;
     final value = snapshot;
     if (value == null || value['section'] != section) {
       return const Success<void>(null);
@@ -524,10 +572,14 @@ final class LearningModuleController extends ChangeNotifier {
     );
     if (value == _lastProgress) return;
     _lastProgress = value;
-    final view = host.webViewController;
-    if (view == null) return;
+    if (!_javascript.isReady) {
+      _lastProgress = null;
+      return;
+    }
     try {
-      await view.runJavaScript('window.GeoMathModule.updateProgress($value)');
+      await _javascript
+          .run('window.GeoMathModule.updateProgress($value)')
+          .timeout(_javaScriptBudget);
     } catch (_) {
       if (isCurrent) _lastProgress = null;
     }

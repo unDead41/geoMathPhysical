@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "fixture_source_commit": "deceaaf3ce942d3af37aab6d79cc133e1f7821fa",
+  "fixture_ci_run": 42053609842,
+  "scope": "Recorded actual PNG/XML regression; same recorded loaded PNG is replayed for two stable samples. This does not prove live-device paint stability or fix the failed source.",
+  "command": "python3 tools/android/tests/regression_paint_from_evidence.py --evidence <extracted-deceaaf-artifact> --receipt docs/handoffs/app-integration/paint-guard-regression.json",
+  "exit_code": 0,
+  "passed": 3,
+  "failed": 0,
+  "cases": [
+    {
+      "case": "splash_despite_home_xml",
+      "png": "320dp-ms-light-100-contrast0-01-home-offline.png",
+      "png_sha256": "d4ec6f398d123fe20ec91dd7a00fc5c7c6962ba7b36efe3c93af6a926b52154d",
+      "xml": "320dp-ms-light-100-contrast0-014-hierarchy.xml",
+      "xml_sha256": "b94064fe0d07fdc7a6005aef4bef291057bd252991a627bd877b58ec61cd38df",
+      "xml_ready": true,
+      "header_ink_fraction": 0.0,
+      "expected_accepted": false,
+      "accepted": false,
+      "original_bytes_returned": null,
+      "result": "passed"
+    },
+    {
+      "case": "actual_settings",
+      "png": "320dp-ms-light-100-contrast0-37-settings.png",
+      "png_sha256": "c0e6c6bfe0ad529f03d3a9a3fc2f7ffd26e50c7ea87c5377a30d42fdfa0f0ced",
+      "xml": "320dp-ms-light-100-contrast0-012-hierarchy.xml",
+      "xml_sha256": "755044083a9232803d4ff378a3b65f9be98f928887605754db99fe137dbfc2c7",
+      "xml_ready": true,
+      "header_ink_fraction": 0.023003472222222224,
+      "expected_accepted": true,
+      "accepted": true,
+      "original_bytes_returned": true,
+      "result": "passed"
+    },
+    {
+      "case": "actual_learning_hub",
+      "png": "320dp-ms-light-100-contrast0-41-learning-hub.png",
+      "png_sha256": "08485aea388fb42de00f475c0e333be8da31645fb1ae61d708c2fd34ce5ea8a7",
+      "xml": "320dp-ms-light-100-contrast0-017-hierarchy.xml",
+      "xml_sha256": "0f6992b9caf4a493f08ad509169c06b99ce91e61d10d337f9e3cfbd30ce177c8",
+      "xml_ready": true,
+      "header_ink_fraction": 0.012586805555555556,
+      "expected_accepted": true,
+      "accepted": true,
+      "original_bytes_returned": true,
+      "result": "passed"
+    }
+  ],
+  "image_mutations": 0,
+  "new_deliverable_images": 0
+}

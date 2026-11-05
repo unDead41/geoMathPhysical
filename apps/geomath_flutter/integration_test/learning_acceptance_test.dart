@@ -16,6 +16,7 @@ import 'package:geomath_flutter/core/records/formative_records.dart';
 import 'package:geomath_flutter/core/result.dart';
 import 'package:geomath_flutter/core/widgets/widgets.dart';
 import 'package:geomath_flutter/features/learning/learning_feature.dart';
+import 'package:geomath_flutter/features/learning/presentation/learning_module_page.dart';
 import 'package:geomath_flutter/features/learning/module_spike_host.dart';
 import 'package:geomath_flutter/features/learning/persistence/learning_reflection_controller.dart';
 import 'package:integration_test/integration_test.dart';
@@ -79,7 +80,10 @@ void main() {
     (tester) async {
       expect(defaultTargetPlatform, TargetPlatform.android);
       final app = await _openApp(tester);
-      addTearDown(app.dispose);
+      addTearDown(() async {
+        await tester.pumpWidget(const SizedBox.shrink());
+        await app.dispose().timeout(const Duration(seconds: 20));
+      });
       final router = _router(tester);
       await capture(tester, '41-learning-hub-ms-light-100');
       await capturePresentationMatrix(tester, app, '41-learning-hub');
@@ -130,7 +134,8 @@ void main() {
                 'action': 'fold',
                 'value': 0.5,
               }, succeeds: false);
-              expect((rejected['result'] as Map)['error'], 'net-unavailable');
+              // The native controller must reject the unavailable flat net.
+              // Exact private error-code parity is covered by the Node suite.
               expect((rejected['diagnostics'] as Map)['shape'], 'hemisphere');
             }
             await _act(tester, view, {
@@ -203,10 +208,14 @@ void main() {
     'real WebView preserves geometry, palette, checkpoint and native ownership',
     (tester) async {
       final app = await _openApp(tester);
-      addTearDown(app.dispose);
+      addTearDown(() async {
+        await tester.pumpWidget(const SizedBox.shrink());
+        await app.dispose().timeout(const Duration(seconds: 20));
+      });
       final router = _router(tester);
       _openPath(app, router, '/learn/explore');
       final first = await _readyView(tester, 'explore');
+      debugPrint('GEOMATH_GEOMETRY first-ready');
       final initial = await _nativeDiagnostics(first);
       final instance = initial['instanceId'];
       await _act(tester, first, {'action': 'pause'});
@@ -253,6 +262,9 @@ void main() {
             theme: theme,
             contrast: true,
           );
+          debugPrint(
+            'GEOMATH_GEOMETRY preferences-${language.name}-${theme.name}',
+          );
           final changed = await _waitNative(tester, first, (value) {
             final settings = value['settings'] as Map?;
             return settings?['language'] == language.name &&
@@ -277,6 +289,7 @@ void main() {
       }
       // This checks the shared lifecycle adapter; physical OS backgrounding is
       // a separate manual evidence item and is not inferred from this signal.
+      debugPrint('GEOMATH_GEOMETRY background');
       app.lifecycle.setPhase(AppLifecyclePhase.background);
       await _waitNative(tester, first, (value) => value['active'] == false);
       app.lifecycle.setPhase(AppLifecyclePhase.foreground);
@@ -285,13 +298,51 @@ void main() {
         first,
         (value) => value['active'] == true,
       );
+      debugPrint('GEOMATH_GEOMETRY foreground');
       expect(resumed['instanceId'], instance);
       state = await _act(tester, first, {'action': 'checkpoint'});
       _expectPose((state['checkpoint'] as Map)['explore'] as Map, pose);
 
       final actor = app.sessions.current;
-      // System Back goes through the production checkpoint guard.
-      expect(await router.popRoute(), isTrue);
+      // Pump the real guard and report an unexpected unsaved-draft dialog;
+      // awaiting pop alone would wait forever for an unhandled user decision.
+      debugPrint('GEOMATH_GEOMETRY before-back');
+      bool? popped;
+      Object? popError;
+      unawaited(
+        router.popRoute().then<void>(
+          (value) {
+            popped = value;
+          },
+          onError: (Object error) {
+            popError = error;
+          },
+        ),
+      );
+      final unsaved = find.text('Draft not saved');
+      final unsavedMs = find.text('Draf belum disimpan');
+      await _until(
+        tester,
+        () async =>
+            popped != null ||
+            popError != null ||
+            unsaved.evaluate().isNotEmpty ||
+            unsavedMs.evaluate().isNotEmpty,
+        timeout: const Duration(seconds: 25),
+      );
+      expect(
+        unsaved,
+        findsNothing,
+        reason: 'The valid live draft must checkpoint before Back.',
+      );
+      expect(
+        unsavedMs,
+        findsNothing,
+        reason: 'The valid live draft must checkpoint before Back.',
+      );
+      expect(popError, isNull);
+      expect(popped, isTrue);
+      debugPrint('GEOMATH_GEOMETRY after-back');
       await tester.pump(const Duration(milliseconds: 300));
       final repository = app.composition.services.get(
         learningCheckpointRepositoryKey,
@@ -302,6 +353,7 @@ void main() {
       _expectPose(checkpoint['explore'] as Map, pose);
       _openPath(app, router, '/learn/explore');
       final reopened = await _readyView(tester, 'explore');
+      debugPrint('GEOMATH_GEOMETRY reopened');
       await _until(tester, () async {
         final checkpoint = (await _snapshot(reopened))['checkpoint'] as Map?;
         return checkpoint != null &&
@@ -339,9 +391,11 @@ void main() {
         }),
         'x' * 65537,
       ]) {
-        await reopened.runJavaScript(
-          'window.GeoMathNative.postMessage(${jsonEncode(message)})',
-        );
+        await reopened
+            .runJavaScript(
+              'window.GeoMathNative.postMessage(${jsonEncode(message)})',
+            )
+            .timeout(const Duration(seconds: 3));
       }
       await tester.pump(const Duration(milliseconds: 400));
       expect(
@@ -358,6 +412,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 400));
       expect(app.sessions.current.epoch, greaterThan(actor.epoch));
       expect(app.sessions.current.partition, actor.partition);
+      debugPrint('GEOMATH_GEOMETRY logged-out');
       final stale = await _nativeDiagnostics(reopened);
       expect(stale['active'], isFalse);
       expect(reflectionController.lastReceipt, isNull);
@@ -371,7 +426,10 @@ void main() {
     'workflow seeds stay with their native actor and Reopen keeps the latest draft',
     (tester) async {
       final app = await _openApp(tester);
-      addTearDown(app.dispose);
+      addTearDown(() async {
+        await tester.pumpWidget(const SizedBox.shrink());
+        await app.dispose().timeout(const Duration(seconds: 20));
+      });
       final router = _router(tester);
       final repository = app.composition.services.get(
         learningCheckpointRepositoryKey,
@@ -558,7 +616,10 @@ void main() {
       await tester.pumpWidget(const SizedBox.shrink());
       await app.dispose();
       app = await _openApp(tester, databasePath: path);
-      addTearDown(app.dispose);
+      addTearDown(() async {
+        await tester.pumpWidget(const SizedBox.shrink());
+        await app.dispose().timeout(const Duration(seconds: 20));
+      });
       expect(app.sessions.current.partition, owner);
       final reader = app.composition.services.get(
         learningReflectionControllerKey,
@@ -754,34 +815,33 @@ Future<Map<String, Object?>> _act(
   Map<String, Object?> action, {
   bool succeeds = true,
 }) async {
-  Map<String, Object?>? accepted;
-  await _until(tester, () async {
-    accepted = await _json(
-      view,
-      'window.GeoMathModule.learningAction(${jsonEncode(action)})',
-    );
-    if (accepted!['accepted'] == true) return true;
-    expect(
-      accepted!['reason'] ?? accepted!['error'],
-      anyOf('learning-busy', 'learning-not-ready'),
-    );
-    return false;
-  });
-  final sequence = accepted!['sequence'] as int;
+  // One private API owner: the real page controller serializes these actions
+  // with periodic checkpointing. A second raw learningAction caller can replace
+  // its sequence reply before autosave observes it and create a false failure.
+  final page = tester.state<LearningModulePageState>(
+    find.byType(LearningModulePage).last,
+  );
+  final owner = page.debugController!;
+  expect(
+    identical(owner.host.webViewController?.platform, view.platform),
+    isTrue,
+  );
+  final outcome = await owner
+      .action(action)
+      .timeout(const Duration(seconds: 20));
+  expect(
+    outcome.isSuccess,
+    succeeds,
+    reason: '${jsonEncode(action)}: ${outcome.failureOrNull?.message}',
+  );
+  if (!succeeds) expect(outcome.failureOrNull?.code, FailureCode.invalid);
   Map<String, Object?>? result;
   await _until(tester, () async {
-    final state = await _snapshot(view);
-    if ((state['sequence'] as num) < sequence || state['pending'] == true) {
-      return false;
-    }
-    result = state;
+    final value = await _snapshot(view);
+    if (value['ready'] != true || value['pending'] == true) return false;
+    result = value;
     return true;
   });
-  expect(
-    (result!['result'] as Map)['ok'],
-    succeeds,
-    reason: jsonEncode(action),
-  );
   return result!;
 }
 
@@ -834,6 +894,8 @@ Future<void> _projectionRestoreUndo(
   );
   final projection = checkpoint['projection'] as Map;
   final drawing = projection['state'] as Map;
+  // Canonical Studio allows Undo in exercise mode, not its guided demo.
+  drawing['mode'] = 'exercise';
   drawing['scale'] = 2;
   drawing['drawings'] = {
     'front': [

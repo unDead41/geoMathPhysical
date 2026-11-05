@@ -220,3 +220,19 @@ test('unknown actions, stale private sequences, malformed checkpoints and fake a
   const invalid=structuredClone(before);invalid.explore.yaw=Infinity;assert.equal(learningSchema.checkpoint(invalid),false);
   assert.equal(learningSchema.action({action:'restore',checkpoint:{...before,owner:'other'}}),false);
 });
+
+test('projection Undo changes an exercise drawing and preserves a guided demonstration',()=>{
+  const r=teachingRuntime();r.action({action:'launch',section:'projection',shape:'cube'});
+  const checkpoint=r.action({action:'checkpoint'}).checkpoint;
+  const p=checkpoint.projection.state;
+  p.drawings={front:[{kind:'line',a:[10,10],b:[60,10],type:'visible'}],side:[],plan:[]};
+  p.history={front:[[]],side:[],plan:[]};p.activeView='front';
+  assert.equal(p.mode,'guide');
+  assert.equal(r.action({action:'restore',checkpoint}).result.ok,true);
+  assert.equal(r.action({action:'undo'}).checkpoint.projection.state.drawings.front.length,1);
+  p.mode='exercise';
+  assert.equal(r.action({action:'restore',checkpoint}).result.ok,true);
+  const undone=r.action({action:'undo'}).checkpoint.projection.state;
+  assert.deepEqual(undone.drawings,{front:[],side:[],plan:[]});
+  assert.deepEqual(undone.history,{front:[],side:[],plan:[]});
+});

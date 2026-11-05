@@ -119,6 +119,7 @@ jobs:
       - name: Verify and prefetch pinned SQLite binaries
         run: |
           python3 -m unittest discover -s tools/android -p 'test_*.py'
+          python3 -m unittest discover -s tools/android/tests -p 'test_*.py'
           python3 tools/android/prefetch_sqlite_assets.py --receipt docs/handoffs/app-integration/evidence/android/sqlite-native-assets.json
       - name: Save verified native SQLite downloads
         if: steps.sqlite-native.outputs.cache-hit != 'true'
@@ -189,9 +190,9 @@ jobs:
             runtime-bootstrap) integration_target=integration_test/integration_smoke_test.dart ;;
             *) echo 'Unsupported diagnostic suite' >&2; exit 2 ;;
           esac
-          learning_screenshots=true
-          if [[ "$GEOMATH_ANDROID_SUITE" == runtime-bootstrap ]]; then learning_screenshots=false; fi
-          flutter build apk --debug --target-platform android-x64 -t "$integration_target" --dart-define=LEARNING_SCREENSHOTS="$learning_screenshots"
+          # Functional WebView tests keep the normal Flutter surface lifetime.
+          # Actual pictures come from the separate normal-main ADB capture gate.
+          flutter build apk --debug --target-platform android-x64 -t "$integration_target" --dart-define=LEARNING_SCREENSHOTS=false
           mv build/app/outputs/flutter-apk/app-debug.apk "$RUNNER_TEMP/geomath-integration-debug.apk"
           test -s "$RUNNER_TEMP/geomath-integration-debug.apk"
           rm -f -- build/app/outputs/apk/debug/app-debug.apk

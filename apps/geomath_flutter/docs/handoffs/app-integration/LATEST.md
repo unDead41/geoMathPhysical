@@ -186,3 +186,34 @@ learning action stall. The optional runtime-bootstrap diagnostic runs the same
 combined device cases with SDK image conversion disabled; native production ADB
 captures remain a separate mandatory full-gate step. Diagnostic receipts always
 have full_publish_gate:false and cannot authorize app publication.
+
+
+## Reproducible test-owner race and bounded recovery
+
+Diagnostic42061373320 atbbc568 completed25 progress passes (including teardown)
+and2 failures. It is not a publication gate. The13-route/model/mode test reached
+Studio in3minutes; Undo correctly remained disabled in its guided demonstration.
+The fixture now explicitly restores exercise mode before expecting Undo.
+
+The remaining geometry timeout was traced to a second private learningAction
+caller in the test, competing with production autosave. The exact generated
+wrapper reproduces sequence1being replaced bysequence2 before the production
+controller reads its reply. Production sequence/actor guards remain strict.
+Android drivers now use the page's existing serialized controller; expected
+rejection still requires an invalid result and unchanged model. Back pumps its
+real guard and reports an unexpected unsaved-draft dialog, and teardown unmounts
+widgets before disposing their dependencies. Independent review found no
+blocking issue or weakened authorization/math contract.
+
+Native platform Futures now consume the existing8-second private API phase
+budget. A missing response returns unavailable, releases the action queue, never
+saves a late callback and keeps the current mode when its checkpoint failed.
+Four meaningful controller/SQLite regressions were added; the combined492host
+suite passed. The projection guide/exercise contract adds one Node check (50total).
+
+Functional Android tests no longer convert the Flutter surface into a screenshot
+image. Full verification still requires the independently installed default-main
+APK and32real ADB captures. Those captures require fresh expected XML labels,
+non-splash header paint and two stable frames; original PNG bytes are preserved.
+The paint guard passed8unit tests and3actual failed-run fixture regressions.
+Temporary empty XML cannot become a loaded model or reuse an old hierarchy.

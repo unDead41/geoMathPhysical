@@ -33,11 +33,15 @@ class LearningModulePage extends StatefulWidget {
   final String? mode;
   final Widget? header;
   @override
-  State<LearningModulePage> createState() => _LearningModulePageState();
+  State<LearningModulePage> createState() => LearningModulePageState();
 }
 
-class _LearningModulePageState extends State<LearningModulePage> {
+class LearningModulePageState extends State<LearningModulePage> {
   LearningModuleController? _controller;
+
+  /// Integration drivers use the page's existing serialized action owner.
+  @visibleForTesting
+  LearningModuleController? get debugController => _controller;
   late LearningReflectionController _reflections;
   LearningBackCoordinator? _back;
   int? _routeInstance;

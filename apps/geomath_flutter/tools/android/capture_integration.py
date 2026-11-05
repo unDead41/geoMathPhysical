@@ -13,6 +13,8 @@ import subprocess
 import time
 import xml.etree.ElementTree as ET
 
+from paint_readiness import wait_for_painted_screen
+
 PROFILES = (
     (320, 720, 'ms', 'light', 100, False),
     (390, 844, 'en', 'dark', 125, False),
@@ -42,14 +44,14 @@ def main():
     def adb(*parts, timeout=45):
         return subprocess.check_output([*prefix, *parts], timeout=timeout)
 
-    def hierarchy():
+    def hierarchy(*, timeout=45):
         nonlocal action_sequence
         action_sequence += 1
         remote = f'/sdcard/geomath-integration-{action_sequence}.xml'
-        dumped = adb('shell', 'uiautomator', 'dump', remote)
+        dumped = adb('shell', 'uiautomator', 'dump', remote, timeout=timeout)
         (output / f'{current_profile}-{action_sequence:03d}-dump.txt').write_bytes(dumped)
         try:
-            raw = adb('exec-out', 'cat', remote)
+            raw = adb('exec-out', 'cat', remote, timeout=timeout)
         finally:
             try:
                 adb('shell', 'rm', '-f', remote, timeout=8)
@@ -138,7 +140,27 @@ def main():
         find(['Tetapan', 'Settings'])
 
     def shot(name, scope):
-        data = adb('exec-out', 'screencap', '-p')
+        expected = {
+            '37-settings': (('Tetapan', 'Settings'),),
+            '01-home-offline': (('GeoMath',), ('Hai, peneroka!', 'Hello, explorer!')),
+            '41-learning-hub': (('Mula teroka', 'Start exploring'),),
+            '25-explore-cube': (('Teroka 3D', 'Explore 3D'),),
+            '02-solo-setup': (('Mula bermain', 'Start playing'),),
+            '10-duel-unconfigured': (('Duel tidak tersedia', 'Duel is unavailable'),),
+            'classes-guest': ((
+                'Sambungan kelas belum dikonfigurasi dalam binaan ini. Pembelajaran dan permainan solo masih tersedia sebagai tetamu.',
+                'Class connection is not configured in this build. Learning and solo play are available as a guest.',
+            ),),
+            'profile-guest': (('Profil tetamu', 'Guest profile'),),
+        }[name]
+        observations = []
+        data = wait_for_painted_screen(
+            lambda: adb('exec-out', 'screencap', '-p', timeout=4),
+            lambda: hierarchy(timeout=4), expected, timeout_seconds=30,
+            on_observation=observations.append,
+        )
+        (output / f'{current_profile}-{name}-paint.json').write_text(
+            json.dumps({'expected_labels': expected, 'observations': observations}, indent=2)+'\n')
         if not data.startswith(b'\x89PNG\r\n\x1a\n'):
             raise RuntimeError('ADB screencap did not return a PNG image.')
         width, height = struct.unpack('>II', data[16:24])
@@ -147,6 +169,7 @@ def main():
         captures.append({'path': filename, 'scope': scope,
                          'width_px': width, 'height_px': height,
                          'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()})
+        print(json.dumps({'production_capture': filename, 'count': len(captures)}), flush=True)
 
     def choice(row_labels, option_labels):
         # Scroll back to top for language/theme/text controls on small phones.
@@ -171,7 +194,14 @@ def main():
     def wait_for_model():
         deadline = time.monotonic()+90
         while time.monotonic() < deadline:
-            root = hierarchy()
+            try:
+                root = hierarchy(timeout=8)
+            except (subprocess.SubprocessError, ET.ParseError):
+                # A WebView/window transition can temporarily expose no Android
+                # accessibility root. Never reuse an older XML tree or call
+                # that absence model readiness; keep the original time bound.
+                time.sleep(1)
+                continue
             loaded = False
             for node in root.iter('node'):
                 text = label(node).casefold()
@@ -208,6 +238,8 @@ def main():
             choice(['Saiz teks', 'Text size'], [f'{scale}%'])
             switch(['Kontras tinggi', 'High contrast'], contrast)
             switch(['Kurangkan gerakan', 'Reduce motion'], True)
+            for _ in range(3):
+                swipe('down')
             shot('37-settings', 'production preferences saved through Android UI')
             adb('shell', 'input', 'keyevent', '4')
             time.sleep(1)
