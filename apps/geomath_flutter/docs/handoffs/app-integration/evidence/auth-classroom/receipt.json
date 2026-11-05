@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "scope": "host fixture verification, not hosted or Android acceptance",
+  "source_commit": "bfd46a3023d68a631a39c5486a1769c0375e7a39",
+  "foundation": "9a1f49a7c92d13bb70b7fd1420c34629a7785f9e",
+  "runtime_sha256": {
+    "lib/features/auth/data/native_auth_repository.dart": "10e8de48938de375ac34be45c4fd93ba8cb62cb5bf4fa6cc5d87f0fb61699529",
+    "lib/features/auth/data/native_auth_links.dart": "740f5fb574b2000435a9c4b8466e7a9ab4469e927a27fb8d3290e6caa7338faf",
+    "lib/features/classroom/data/classroom_repository.dart": "43833643df05db88bf19acf69214aed96631b3d33f74159e002b6a5b9ee90dc8",
+    "lib/features/classroom/application/classroom_controller.dart": "1ed411f200a6cc14d174324b4fca6d1471d1299a05513be285d8a994d607dacb",
+    "test/integration/auth_classroom_links_test.dart": "ed6c93d239bc5cb0742fa5a56149fd995cb766b398bf2cc79efaefb04c605a9e"
+  },
+  "checks": [
+    {
+      "command": "flutter test --no-pub test/features/auth test/features/classroom",
+      "invocation": "dart $FLUTTER_ROOT/bin/cache/flutter_tools.snapshot test --no-pub test/features/auth test/features/classroom",
+      "exit_code": 0,
+      "pass": 117,
+      "log": "host-tests.log"
+    },
+    {
+      "command": "flutter test --no-pub test/integration/auth_classroom_links_test.dart",
+      "invocation": "dart $FLUTTER_ROOT/bin/cache/flutter_tools.snapshot test --no-pub test/integration/auth_classroom_links_test.dart",
+      "exit_code": 0,
+      "pass": 2,
+      "log": "plugin-links-test.log"
+    },
+    {
+      "command": "flutter analyze --no-pub test/integration/auth_classroom_links_test.dart",
+      "invocation": "dart $FLUTTER_ROOT/bin/cache/flutter_tools.snapshot analyze --no-pub test/integration/auth_classroom_links_test.dart",
+      "exit_code": 0,
+      "issues": 0,
+      "log": "plugin-links-analyze.log"
+    }
+  ],
+  "environment": {
+    "flutter": "3.47.9",
+    "dart": "3.13.7",
+    "flutter_root": "/workspace/scratch/7395917c0f68/toolchains/flutter",
+    "tmpdir": "/dev/shm/geomath-integration-nov05/worker4-tmp",
+    "note": "Full disk initially blocked Flutter wrapper update_engine_version. Used existing pinned flutter_tools snapshot, cached package config and writable tmpfs test working tree; no SDK bytes changed."
+  },
+  "hosted": {
+    "executed": false,
+    "auth": false,
+    "classroom_crud": false,
+    "redirect_allowlist": false
+  },
+  "android_intents": {
+    "executed": false,
+    "note": "Parent integration owns manifest and device execution."
+  },
+  "logs_sha256": {
+    "plugin-links-analyze.log": "6972efc2fd8ee976878a9a89c5e01464eae3e605237115d79bab249f5c0b9e2b",
+    "plugin-links-test.log": "2007b1a543227c98a4d716346d633bf9992dce2eaa654e98cb25d659a77431dc",
+    "host-tests.log": "2d346498c05f7cb740656499b87b1164107b1029c997b35094a4c9567189849a"
+  },
+  "log_normalization": "Trailing terminal padding removed from analyzer log at integration; runtime result unchanged."
+}

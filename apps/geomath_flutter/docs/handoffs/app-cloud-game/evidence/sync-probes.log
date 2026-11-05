@@ -1,0 +1,10 @@
+{
+  "source_sha": "38f061af963256528d5060ff076bae9ee05eafc3",
+  "ack_probes": "partial, missing, duplicate, unknown and partial-rejection verified",
+  "retryAfter_requested_ms": 600000,
+  "observed_first_retry_ms": 2000,
+  "transient_attempts_without_terminal_stop": 13,
+  "new_enqueue_reopens_blocked": true,
+  "stop_during_send_still_acknowledges": true,
+  "post_stop_ui_updates": true
+}

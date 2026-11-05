@@ -26,7 +26,7 @@ env:
 jobs:
   verify:
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    timeout-minutes: 90
     defaults:
       run:
         working-directory: apps/geomath_flutter
@@ -81,13 +81,22 @@ jobs:
       - name: Unit and widget tests
         run: flutter test
       - name: Canonical source and adapter checks
-        run: node --test tools/contracts/verify_exports.test.mjs test/foundation/native_adapter_contract.test.mjs
+        run: node --test tools/contracts/verify_exports.test.mjs test/foundation/native_adapter_contract.test.mjs test/features/learning/bundle/*.test.mjs test/features/learning/surface/*.test.mjs test/features/learning/studio/checkpoint_schema_parity.test.mjs
       - name: Debug APK
         run: flutter build apk --debug
       - uses: actions/upload-artifact@v7
         with:
           name: geomath-debug-apk
           path: apps/geomath_flutter/build/app/outputs/flutter-apk/app-debug.apk
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Release mode APK (development signing)
+        run: flutter build apk --release
+      - uses: actions/upload-artifact@v7
+        with:
+          name: geomath-release-mode-apk
+          path: apps/geomath_flutter/build/app/outputs/flutter-apk/app-release.apk
           if-no-files-found: error
           retention-days: 7
 
@@ -101,7 +110,7 @@ jobs:
           (cd android && ./gradlew --stop)
       - name: Prebuild the Android integration APK
         run: |
-          flutter build apk --debug --target-platform android-x64 -t integration_test/foundation_smoke_test.dart
+          flutter build apk --debug --target-platform android-x64 -t integration_test/integration_smoke_test.dart --dart-define=LEARNING_SCREENSHOTS=true
           mv build/app/outputs/flutter-apk/app-debug.apk "$RUNNER_TEMP/geomath-integration-debug.apk"
           test -s "$RUNNER_TEMP/geomath-integration-debug.apk"
           rm -f -- build/app/outputs/apk/debug/app-debug.apk
@@ -140,12 +149,12 @@ jobs:
           working-directory: apps/geomath_flutter
           disable-animations: true
           emulator-options: -no-window -no-snapshot -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          script: bash tools/android/run_smoke.sh
+          script: bash tools/android/run_integration_smoke.sh
       - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: geomath-android-evidence
-          path: apps/geomath_flutter/docs/handoffs/app-foundation/evidence/android
+          path: apps/geomath_flutter/docs/handoffs/app-integration/evidence/android
           if-no-files-found: ignore
           retention-days: 7
       - uses: actions/upload-artifact@v7

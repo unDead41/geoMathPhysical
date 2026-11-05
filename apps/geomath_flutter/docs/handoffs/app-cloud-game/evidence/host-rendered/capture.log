@@ -1,0 +1,7 @@
+   Woah! You appear to be trying to run flutter as root.
+   We strongly recommend running the flutter tool without superuser privileges.
+  /
+📎
+00:00 +0: loading /workspace/scratch/7395917c0f68/evidence/host-previews/capture_host_previews.dart
+00:00 +0: capture actual GeoMath widgets with the host Flutter renderer
+00:04 +1: All tests passed!

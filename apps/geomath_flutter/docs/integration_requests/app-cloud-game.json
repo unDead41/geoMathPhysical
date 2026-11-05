@@ -1,0 +1,201 @@
+{
+  "schema_version": 1,
+  "branch": "app-cloud-game",
+  "app_version": "0.1.0+1",
+  "status": "implemented; integration and hosted acceptance gates explicitly bounded in handoff",
+  "foundation": {
+    "sha": "9a1f49a7c92d13bb70b7fd1420c34629a7785f9e",
+    "contract_version": "1.0.0",
+    "contract_sha256": "0a31f7aef121a151ee91a4ae92250fd893ad62108f27a9389b5fa5ed9a918356",
+    "source_lock_sha256": "cf7d5e6a54c6da65d70f97caae26cff059de558f3fd56db97245252358220452",
+    "pubspec_lock_sha256": "9ba313c3af1f80193c6c0a61c2e38fcee51f1b5aabb8404ebdccfd04210f542c",
+    "runtime_files_verified_unchanged": 101,
+    "same_foundation_as_learning": true
+  },
+  "canonical_sources": {
+    "bank_geometry_engine": "37bc2cd262cc0a54e8ee31339ea37471c1ecfda5",
+    "current_auth_and_backend_audit": "752ce908d16d13acc9cc7510797e8363d182c3f5",
+    "ruleset": "single-attempt-v1",
+    "duel_protocol": 2,
+    "sms": "removed from current source and this native feature"
+  },
+  "composition": {
+    "entry_point": "lib/dev/cloud_game_main.dart",
+    "contribution_factory": "cloudGameFeatures() in lib/dev/cloud_game_features.dart",
+    "contributions": [
+      "cloud_game_preview",
+      "auth",
+      "profile",
+      "classroom",
+      "solo",
+      "duel",
+      "sync"
+    ],
+    "initial_preview_route": "cloud-game-play",
+    "normal_root_action": "Register these contributions once alongside learning. After bootstrap await CloudGamePreviewServices.startup.ready once before normal Home; route gates already do so in the preview.",
+    "shared_gateway": "AuthServices.gateway is the exact verified NativeAuthRepository also resolved by profile/classroom/sync.",
+    "shared_writer": "FoundationServices.recordsWriter resolves SyncFormativeRecordWriter over shared LocalFormativeRecords and SQLite. Learning and Solo must borrow this same port.",
+    "sync_owner": "Resolve one SyncServices.controller per dependency lifetime; foreground/reopen wakes coalesce. No background force-stop delivery guarantee.",
+    "lifecycle": "Use existing foundation lifecycle/back/audio owners; Solo pauses and checkpoints, Duel/room clock stays server-authoritative."
+  },
+  "routes": [
+    {
+      "name": "cloud-game-play",
+      "path": "/play"
+    },
+    {
+      "name": "solo-resume",
+      "path": "/play/resume"
+    },
+    {
+      "name": "solo-game",
+      "path": "/play/solo"
+    },
+    {
+      "name": "solo-scores",
+      "path": "/play/scores"
+    },
+    {
+      "name": "cloud-game-duel",
+      "path": "/duel"
+    },
+    {
+      "name": "cloud-game-duel-lobby",
+      "path": "/duel/lobby"
+    },
+    {
+      "name": "cloud-game-duel-match",
+      "path": "/duel/match"
+    },
+    {
+      "name": "cloud-game-duel-result",
+      "path": "/duel/result"
+    },
+    {
+      "name": "cloud-game-login",
+      "path": "/auth/login"
+    },
+    {
+      "name": "cloud-game-signup",
+      "path": "/auth/signup"
+    },
+    {
+      "name": "cloud-game-recover",
+      "path": "/auth/recover"
+    },
+    {
+      "name": "cloud-game-legacy-recovery",
+      "path": "/auth/legacy-recovery"
+    },
+    {
+      "name": "cloud-game-confirmation",
+      "path": "/auth/verify"
+    },
+    {
+      "name": "cloud-game-reset",
+      "path": "/auth/reset"
+    },
+    {
+      "name": "cloud-game-security",
+      "path": "/account/security"
+    },
+    {
+      "name": "cloud-game-sessions",
+      "path": "/account/sessions"
+    },
+    {
+      "name": "cloud-game-profile",
+      "path": "/profile"
+    },
+    {
+      "name": "cloud-game-classes",
+      "path": "/classes"
+    },
+    {
+      "name": "sync.pending",
+      "path": "/sync"
+    }
+  ],
+  "localizations": [
+    "cloud_game_preview",
+    "auth",
+    "profile",
+    "classroom",
+    "solo",
+    "duel",
+    "sync"
+  ],
+  "migrations": [
+    {
+      "namespace": "solo",
+      "version": 1,
+      "tables": [
+        "solo_checkpoints",
+        "solo_analysis"
+      ],
+      "source": "lib/features/solo/data/solo_repository.dart"
+    },
+    {
+      "namespace": "sync",
+      "version": 1,
+      "tables": [
+        "sync_solo_receipts"
+      ],
+      "source": "lib/features/sync/data/sync_receipt_schema.dart"
+    }
+  ],
+  "schema_policy": "Foundation owns module_reflections/completed_solo_records/formative_outbox. No parallel learning reflection schema or web/hosted migration edit.",
+  "dependencies": {
+    "new_pubspec_entries": [],
+    "lockfile_changed": false,
+    "native_link_adapter": "Narrow inspected app_links 7.2.2 platform channels via locked supabase_flutter dependency; revalidate on SDK upgrade."
+  },
+  "assets": {
+    "new_registration": [],
+    "uses": [
+      "assets/contracts/bank15.json",
+      "assets/contracts/engine_golden.json",
+      "assets/contracts/geometry_cards.json"
+    ],
+    "learning_dependency": false
+  },
+  "platform_requests": [
+    {
+      "owner": "app-integration",
+      "kind": "native_auth_callback",
+      "current": "authFeature(nativeCallbackReady:false)",
+      "request": "Add Android VIEW intent filter with DEFAULT and BROWSABLE categories for scheme com.geomath.dev, host auth, path /callback. Keep one app_links dispatcher. Add identical redirect URI to hosted Auth allowlist in separately authorized setup, verify cold/warm/expired/replayed Google/recovery flows, then enable nativeCallbackReady.",
+      "uri": "com.geomath.dev://auth/callback",
+      "new_permissions": [],
+      "note": "INTERNET already exists. No OAuth secret, hosted setting or manifest was changed here. Signup confirms through canonical web link then returns to native login."
+    },
+    {
+      "owner": "app-integration",
+      "kind": "shared_navigation_guard",
+      "request": "Route destination select/reset through active feature back policies with save/discard/stay or room confirmation before replacing the route. Frozen root select currently bypasses them.",
+      "current_fallback": "Profile drafts and uncertain saves survive tab reentry in actor-bound memory. Classroom retains the same controller/attempt and pending request. Duel hides destination navigation and confirms back/forfeit.",
+      "files": [
+        "lib/app/app_router.dart",
+        "lib/core/navigation/app_navigation.dart"
+      ]
+    }
+  ],
+  "capability_and_configuration_needs": [
+    "Supply only valid GEOMATH_SUPABASE_URL and GEOMATH_SUPABASE_PUBLISHABLE_KEY via the frozen public configuration mechanism.",
+    "Verify deployed geodecoder-auth Edge and canonical server-verified role/profile/session RPCs. Google requires current Auth settings and completed native callback gate.",
+    "Verify classroom_crud:1 and canonical geo_action dispatch. Invitation cancel/decline take invite_id only; revision applies to class/room/member mutations.",
+    "Verify protocol2 Duel Edge/backend on two independent staging clients, guest capability tokens and exact sequence replay.",
+    "Verify geo_offline_sync installed and accepted-ID replies. Missing capability keeps pending rows. No SQL/provider/SMTP/Edge deployment is part of this branch."
+  ],
+  "integration_tests": [
+    "integration_test/cloud_game_smoke_test.dart",
+    "integration_test/cloud_game_preview_test.dart",
+    "integration_test/solo_reopen_test.dart",
+    "integration_test/sync_storage_test.dart",
+    "integration_test/classroom_contract_test.dart"
+  ],
+  "ci_request": "The inherited shared workflow runs foundation lib/main.dart/foundation smoke. Integrator must run the cloud-game preview target and cloud_game_smoke_test.dart explicitly; default workflow success is not a cloud-game device receipt.",
+  "screen_matrix": "docs/handoffs/app-cloud-game/screen-coverage.json",
+  "handoff": "docs/handoffs/app-cloud-game/LATEST.md",
+  "hosted_deployments_performed": []
+}

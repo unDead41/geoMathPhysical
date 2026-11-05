@@ -1,0 +1,48 @@
+✔ archived hosted history replays in order and passes all five SQL contracts (7892.117938ms)
+✔ classroom CRUD is owner-only, validates exact fields and detects stale revisions (7685.276446ms)
+✔ removing a learner revokes room access and preserves authoritative attempts and scores (4433.396184ms)
+✔ archive and restore retain results, revoke PINs, block activity and protect nonempty deletions (3635.108883ms)
+✔ teachers can cancel own pending invitations and students can decline only their own (3486.380564ms)
+✔ stale invitation confirmations cannot consume a newly issued invitation (2774.805924ms)
+✔ heartbeat respects its selected room and never rewrites game projection fields (3813.880853ms)
+✔ teacher edit uses a modal, validates, preserves failed draft and submits the captured revision once (804.898251ms)
+✔ archive has named confirmation and a discoverable restore path; Cancel restores focus (432.820988ms)
+✔ member removal and invitation cancellation require confirmation and preserve server error recovery (848.448573ms)
+✔ English controls escape names and hide management from students and older backends (298.407453ms)
+✔ a late save cannot apply after account switching or leave a management dialog open (235.704111ms)
+✔ an explicit conflict refresh keeps the draft and captures the latest revision (385.34663ms)
+✔ explicit room revocation clears cached results and returns to the class dashboard (92.160088ms)
+✔ opening an archived class from Profile selects that class and its archive filter (188.867949ms)
+✔ failed conflict refresh reports inside the modal, focuses the error and preserves the draft (127.839071ms)
+✔ confirmation refresh returns keyboard focus to its Cancel control (109.538688ms)
+✔ a stale cloud cache cannot synchronize account A practice through account B SDK storage (21.066789ms)
+✔ the explicit progress actor prevents writes when the cloud cache has already changed accounts (3.18814ms)
+✔ profile mutations reject a stale account cache before sending any classroom payload (3.170541ms)
+✔ an SDK account switch after validation cannot attach the new account JWT to an old payload (9.340928ms)
+✔ a legitimate token refresh keeps the same account session usable for module RPCs (4.742727ms)
+✔ the installed SDK can refresh a JWT within the same session without bypassing snapshot cache identity checks (4.049016ms)
+✔ a recovery password update cannot operate through another account in shared SDK storage (3.266169ms)
+✔ recovery resets stay on the verified session when another SDK account appears after validation (9.357839ms)
+✔ an old profile form cannot mutate the newly cached account before its UI callback arrives (508.237679ms)
+✔ reopening profile after SDK identity changes drops the previous account fields (142.061315ms)
+▶ archived history + scaling → crud → offline
+  ✔ reviewed fingerprints, wrapper ACLs and input guards survive composition (31.457617ms)
+  ✔ public snapshots take no row lock and heartbeat writes coalesce with room scoping (77.966407ms)
+  ✔ owner, revision, archive and removed-membership guards retain authoritative history (1115.792683ms)
+  ✔ offline replay and history remain owner-bound, session-bound and separate from live scores (302.970745ms)
+✔ archived history + scaling → crud → offline (10079.459927ms)
+▶ archived history + crud → offline → scaling
+  ✔ reviewed fingerprints, wrapper ACLs and input guards survive composition (44.784797ms)
+  ✔ public snapshots take no row lock and heartbeat writes coalesce with room scoping (93.978831ms)
+  ✔ owner, revision, archive and removed-membership guards retain authoritative history (169.022112ms)
+  ✔ offline replay and history remain owner-bound, session-bound and separate from live scores (92.118642ms)
+✔ archived history + crud → offline → scaling (8584.442859ms)
+✔ CRUD presence contract remains standalone before scaling or offline SQL is installed (3614.620556ms)
+ℹ tests 38
+ℹ suites 0
+ℹ pass 38
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 64586.7962

@@ -1,0 +1,158 @@
+00:00 +0: loading /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_persistence_test.dart
+00:00 +0: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_persistence_test.dart: real SQLite retains selected R1/R2 and never overwrites a slot without confirmation
+00:00 +1: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_persistence_test.dart: owner/guest isolation, corrupt/schema/bank mismatch and stale writes have distinct failures
+00:00 +2: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_persistence_test.dart: duplicate completed finalization creates one shared record/event and preserves original analysis
+00:00 +3: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_persistence_test.dart: shared writer failure rolls back aggregate and outbox; analysis remains unfinalized until retry
+00:00 +4: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_persistence_test.dart: leaderboard keeps best50; finalizing a pruned result never creates another record/event
+00:00 +5: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_persistence_test.dart: a pending finalization from the previous actor cannot suppress the new actor result
+00:00 +6: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_persistence_test.dart: controller lifecycle pauses, resume is explicit, and failure blocks leaving
+00:00 +7: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_persistence_test.dart: actor switch during active game clears selected state and never adopts old attempt
+00:00 +8: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_persistence_test.dart: initialize coalesces one actor load and is idempotent for a live R2 engine
+00:01 +9: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:01 +10: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:01 +11: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:01 +12: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:01 +13: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:01 +14: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:01 +15: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:01 +16: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:01 +17: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:01 +18: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:01 +19: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:01 +20: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:01 +21: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:01 +22: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:01 +23: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:01 +24: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:01 +25: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +26: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +27: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +28: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +29: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +30: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +31: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +32: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +33: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +34: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +35: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +36: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +37: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +38: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +39: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +40: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +41: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +42: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +43: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +44: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +45: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +46: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +47: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +48: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +49: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +50: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +51: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +52: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +53: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +54: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +55: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +56: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +57: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +58: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +59: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +60: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +61: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +62: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +63: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +64: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +65: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +66: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +67: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +68: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +69: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +70: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +71: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:05 +72: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:05 +73: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:05 +74: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:05 +75: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:05 +76: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/sync/native_outbox_test.dart: 2000-owner capacity preserves existing rows and rejects the entire new record transaction
+00:05 +77: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:05 +78: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:05 +79: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:05 +80: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:05 +81: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:05 +82: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:05 +83: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:05 +84: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:05 +85: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:05 +86: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:05 +87: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:05 +88: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:05 +89: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:05 +90: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:05 +91: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:05 +92: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:05 +93: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +94: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +95: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +96: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +97: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +98: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +99: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +100: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +101: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +102: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +103: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +104: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +105: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +106: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +107: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +108: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +109: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +110: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +111: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +112: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +113: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +114: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +115: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +116: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +117: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +118: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +119: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +120: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +121: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +122: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +123: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +124: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +125: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +126: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +127: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +128: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +129: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +130: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +131: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +132: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +133: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +134: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +135: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +136: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +137: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +138: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +139: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +140: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +141: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +142: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +143: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +144: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +145: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:06 +146: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: wrong review and final analysis preserve the original when practising missed IDs
+00:07 +147: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms dark entry/match/review/result
+00:07 +148: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: root Play to same Play reentry is frame safe and preserves a live R2 attempt
+00:07 +149: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: root Play to same Play reentry is frame safe and preserves a live R2 attempt
+00:07 +150: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: root Play to same Play reentry is frame safe and preserves a live R2 attempt
+00:07 +151: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: root Play to same Play reentry is frame safe and preserves a live R2 attempt
+00:07 +152: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: native create, wrong scan, gated Continue use actual controller payloads
+00:08 +153: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: all back origins use forfeit confirmation, pause audio and preserve live clock
+00:09 +154: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: old confirmation cannot forfeit a new capability under the same actor
+00:09 +155: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: confirmation opened by old actor cannot forfeit the next actor room
+00:09 +156: All tests passed!

@@ -1,0 +1,119 @@
+00:00 +0: loading /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart
+00:00 +0: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: no config preserves usable guest without store or network
+00:00 +1: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: login uses gateway normalization and preserves password verbatim
+00:00 +2: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: server identity mismatch never adopts or persists
+00:00 +3: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: protected write failure never claims login
+00:00 +4: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: newer login supersedes an older network response before adoption
+00:00 +5: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: logout intent prevents an outstanding login resurrecting a session
+00:00 +6: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: signup exact wire acknowledges confirmation without adopting returned tokens
+00:00 +7: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: full binding scope change discards pending RPC response
+00:00 +8: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: RPC captures old credential and drops reply after an account switch
+00:00 +9: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: RPC application denial is Success and error is code only
+00:00 +10: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: RPC HTTP429 is retry-after Failed and is not replayed
+00:00 +11: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: RPC HTTP500 is transient with no automatic mutation replay
+00:00 +12: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: RPC HTTP502 is transient with no automatic mutation replay
+00:00 +13: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: RPC HTTP503 is transient with no automatic mutation replay
+00:00 +14: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: RPC HTTP504 is transient with no automatic mutation replay
+00:00 +15: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: RPC HTTP507 is transient with no automatic mutation replay
+00:00 +16: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: RPC HTTP599 is transient with no automatic mutation replay
+00:00 +17: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: missing RPC HTTP404 remains unavailable
+00:00 +18: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: missing RPC HTTP405 remains unavailable
+00:00 +19: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: missing RPC HTTP501 remains unavailable
+00:00 +20: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: profile save HTTP503 preserves network unknown outcome
+00:00 +21: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: network outcome stays Failed with no automatic mutation replay
+00:00 +22: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: token refresh preserves actor epoch for unchanged user and session
+00:00 +23: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: restore refreshes and server verifies before binding, memoizes success
+00:00 +24: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: restore storage failure is retryable without changing guest
+00:00 +25: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: logout401 keeps actor and protected data, never claims revocation
+00:00 +26: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: other-session logout leaves current actor intact
+00:00 +27: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: plain reset route cannot authorize password reset
+00:00 +28: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: callback disabled makes no provider request or browser launch
+00:00 +29: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: Google server capability is required
+00:00 +30: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: warm PKCE callback verifies, consumes once, never exposes verifier
+00:00 +31: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: foreign or fragment callback never exchanges
+00:00 +32: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: scope change invalidates pending callback even with same account ID
+00:00 +33: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: recovery requires a verified same-process PKCE callback
+00:00 +34: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: session list rejects identifiers and requires one current record
+00:00 +35: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: CloudReply strips nested secrets and malformed error messages
+00:00 +36: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: validators preserve canonical bounds and reject name control characters
+00:00 +37: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: cold start maps a protected guest PKCE intent only to the same installation
+00:00 +38: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: cold start rejects another installation and expired intent
+00:00 +39: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: failed intervening login durably cancels previous provider intent
+00:00 +40: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: cold signed-in callback requires matching refreshed verified session
+00:00 +41: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: legacy recovery sends exact 32-hex code and never adopts a session
+00:00 +42: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: legacy recovery rejects an email and six-digit OTP before network
+00:00 +43: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: new login during protected write cannot leave stale credentials on disk
+00:00 +44: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: password change verifies current user and exact temporary password before update
+00:00 +45: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: password reauthentication for a foreign user never updates current account
+00:00 +46: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: Google-only account receives provider security guidance without password update
+00:00 +47: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: verified recovery resets password and requires actual global logout success
+00:00 +48: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: password-updated logout denial cannot offer recovery reset again
+00:00 +49: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_repository_test.dart: synthetic legacy email and UTF16-overlong signup name fail before network
+00:00 +50: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_driver_test.dart: pinned SDK creates S256 verifier and exchanges PKCE against local HTTP fixture
+00:00 +51: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_driver_test.dart: pinned SDK creates S256 verifier and exchanges PKCE against local HTTP fixture
+00:00 +52: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_driver_test.dart: pinned SDK creates S256 verifier and exchanges PKCE against local HTTP fixture
+00:00 +53: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_driver_test.dart: pinned SDK creates S256 verifier and exchanges PKCE against local HTTP fixture
+00:00 +54: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_driver_test.dart: pinned SDK creates S256 verifier and exchanges PKCE against local HTTP fixture
+00:00 +55: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_driver_test.dart: pinned SDK creates S256 verifier and exchanges PKCE against local HTTP fixture
+00:00 +56: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_driver_test.dart: pinned SDK creates S256 verifier and exchanges PKCE against local HTTP fixture
+00:00 +57: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_driver_test.dart: pinned SDK creates S256 verifier and exchanges PKCE against local HTTP fixture
+00:00 +58: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_driver_test.dart: pinned SDK creates S256 verifier and exchanges PKCE against local HTTP fixture
+00:00 +59: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_driver_test.dart: pinned SDK creates S256 verifier and exchanges PKCE against local HTTP fixture
+00:00 +60: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_driver_test.dart: pinned SDK creates S256 verifier and exchanges PKCE against local HTTP fixture
+00:00 +61: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_driver_test.dart: pinned SDK creates S256 verifier and exchanges PKCE against local HTTP fixture
+00:00 +62: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/native_auth_driver_test.dart: pinned SDK creates S256 verifier and exchanges PKCE against local HTTP fixture
+00:00 +63: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_transport_test.dart: loopback non-JSON HTTP429 preserves status and Retry-After
+00:00 +64: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_transport_test.dart: loopback non-JSON HTTP500 preserves status and Retry-After
+00:00 +65: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_transport_test.dart: loopback non-JSON HTTP502 preserves status and Retry-After
+00:00 +66: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_transport_test.dart: loopback non-JSON HTTP503 preserves status and Retry-After
+00:00 +67: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_transport_test.dart: loopback non-JSON HTTP504 preserves status and Retry-After
+00:00 +68: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_transport_test.dart: loopback non-JSON HTTP404 preserves status and Retry-After
+00:00 +69: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_transport_test.dart: loopback non-JSON HTTP405 preserves status and Retry-After
+00:00 +70: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_transport_test.dart: loopback non-JSON HTTP501 preserves status and Retry-After
+00:00 +71: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_transport_test.dart: loopback HTTP200 still rejects a non-JSON success body
+00:00 +72: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_transport_test.dart: whole-attempt deadline aborts a body that keeps trickling bytes
+00:03 +73: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: logout confirmation cannot revoke a newer actor after account switch
+00:04 +74: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: logout confirmation cannot revoke a newer actor after account switch
+00:04 +75: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: logout confirmation cannot revoke a newer actor after account switch
+00:04 +76: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: logout confirmation cannot revoke a newer actor after account switch
+00:04 +77: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: logout confirmation cannot revoke a newer actor after account switch
+00:04 +78: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: logout confirmation cannot revoke a newer actor after account switch
+00:04 +79: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: logout confirmation cannot revoke a newer actor after account switch
+00:04 +80: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: logout confirmation cannot revoke a newer actor after account switch
+00:04 +81: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: logout confirmation cannot revoke a newer actor after account switch
+00:04 +82: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: logout confirmation cannot revoke a newer actor after account switch
+00:04 +83: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: logout confirmation cannot revoke a newer actor after account switch
+00:04 +84: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: logout confirmation cannot revoke a newer actor after account switch
+00:04 +85: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: logout confirmation cannot revoke a newer actor after account switch
+00:04 +86: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: logout confirmation cannot revoke a newer actor after account switch
+00:04 +87: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: logout confirmation cannot revoke a newer actor after account switch
+00:04 +88: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: logout confirmation cannot revoke a newer actor after account switch
+00:04 +89: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: logout confirmation cannot revoke a newer actor after account switch
+00:04 +90: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: logout confirmation cannot revoke a newer actor after account switch
+00:04 +91: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: logout confirmation cannot revoke a newer actor after account switch
+00:04 +92: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: logout confirmation cannot revoke a newer actor after account switch
+00:04 +93: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: logout confirmation cannot revoke a newer actor after account switch
+00:04 +94: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: logout confirmation cannot revoke a newer actor after account switch
+00:04 +95: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: logout confirmation cannot revoke a newer actor after account switch
+00:04 +96: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: logout confirmation cannot revoke a newer actor after account switch
+00:04 +97: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: logout confirmation cannot revoke a newer actor after account switch
+00:04 +98: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: logout confirmation cannot revoke a newer actor after account switch
+00:04 +99: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: logout confirmation cannot revoke a newer actor after account switch
+00:04 +100: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: logout confirmation cannot revoke a newer actor after account switch
+00:04 +101: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: logout confirmation cannot revoke a newer actor after account switch
+00:05 +102: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: logout confirmation cannot revoke a newer actor after account switch
+00:05 +103: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: logout confirmation cannot revoke a newer actor after account switch
+00:05 +104: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: logout confirmation cannot revoke a newer actor after account switch
+00:05 +105: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/classroom/classroom_widgets_test.dart: create failure retains input and account switch clears its draft
+00:05 +106: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: late auth response never touches disposed controllers
+00:06 +107: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/classroom/classroom_widgets_test.dart: unconfigured and guest classroom are honest and make no cloud request
+00:06 +108: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: late auth response preserves new actor password input
+00:06 +109: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/auth/auth_screen_test.dart: late auth response preserves new actor password input
+00:06 +110: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/classroom/classroom_widgets_test.dart: teacher class UI keeps actions reachable at 320dp dark 150 percent in BM and English
+00:07 +111: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/classroom/classroom_widgets_test.dart: waiting board excludes final zero score and server denial clears room UI
+00:07 +112: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/classroom/classroom_widgets_test.dart: card selection is local UI; explicit R1 sends while premature R2 stays disabled
+00:08 +113: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/classroom/classroom_widgets_test.dart: rename conflict retains modal and typed text; fresh server revision is explicit
+00:08 +114: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/classroom/classroom_widgets_test.dart: old leave sheet cannot clear a new room attempt or its pending action
+00:09 +115: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/classroom/classroom_widgets_test.dart: unknown rename outcome keeps draft and disables repeat mutation until review
+00:09 +116: /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/features/classroom/classroom_widgets_test.dart: contributed back policy confirms live attempt then returns through room to classes
+00:10 +117: All tests passed!

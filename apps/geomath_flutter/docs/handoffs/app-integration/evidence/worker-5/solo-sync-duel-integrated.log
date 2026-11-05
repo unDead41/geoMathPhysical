@@ -1,0 +1,161 @@
+00:00 +0: loading /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/integration/solo_sync_learning_test.dart
+00:00 +0: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/integration/solo_sync_learning_test.dart: learning and Solo borrow one transaction writer and one sync owner
+00:00 +1: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_persistence_test.dart: real SQLite retains selected R1/R2 and never overwrites a slot without confirmation
+00:00 +2: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/integration/solo_sync_learning_test.dart: learning reflection and finalized Solo share rollback, retry and durable outbox
+00:00 +3: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/integration/solo_sync_learning_test.dart: learning reflection and finalized Solo share rollback, retry and durable outbox
+00:00 +4: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:00 +5: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:00 +6: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:00 +7: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:00 +8: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:00 +9: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:00 +10: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:00 +11: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:00 +12: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:00 +13: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:00 +14: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:00 +15: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:00 +16: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:00 +17: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:00 +18: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:00 +19: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:00 +20: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:00 +21: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:00 +22: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:00 +23: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:00 +24: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:00 +25: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:01 +26: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:01 +27: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:01 +28: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:01 +29: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:01 +30: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:01 +31: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:01 +32: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:01 +33: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:01 +34: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:01 +35: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:01 +36: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:01 +37: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:01 +38: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:01 +39: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:01 +40: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +41: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +42: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +43: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +44: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +45: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +46: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +47: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +48: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +49: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +50: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +51: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +52: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +53: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +54: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +55: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +56: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +57: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +58: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +59: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +60: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +61: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +62: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +63: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +64: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +65: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +66: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +67: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +68: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +69: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +70: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +71: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +72: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +73: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:02 +74: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +75: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +76: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +77: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +78: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +79: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +80: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +81: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +82: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +83: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +84: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +85: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +86: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +87: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +88: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +89: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +90: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +91: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +92: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +93: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +94: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +95: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +96: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +97: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +98: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +99: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +100: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +101: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +102: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:03 +103: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +104: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +105: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +106: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +107: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +108: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +109: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +110: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +111: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +112: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +113: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +114: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +115: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +116: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +117: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +118: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +119: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +120: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +121: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +122: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +123: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +124: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +125: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +126: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +127: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +128: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +129: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +130: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +131: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +132: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +133: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +134: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +135: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +136: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +137: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +138: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +139: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +140: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:04 +141: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:04 +142: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:04 +143: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:04 +144: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:04 +145: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:04 +146: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:04 +147: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms light entry/match/review/result
+00:04 +148: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: corrupt checkpoint has recovery and discard needs confirmation
+00:04 +149: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% ms dark entry/match/review/result
+00:05 +150: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: wrong review and final analysis preserve the original when practising missed IDs
+00:05 +151: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: wrong review and final analysis preserve the original when practising missed IDs
+00:05 +152: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: 320 dp 150% en dark entry/match/review/result
+00:05 +153: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: root Play to same Play reentry is frame safe and preserves a live R2 attempt
+00:05 +154: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: root Play to same Play reentry is frame safe and preserves a live R2 attempt
+00:06 +155: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: root Play to same Play reentry is frame safe and preserves a live R2 attempt
+00:06 +156: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: all back origins use forfeit confirmation, pause audio and preserve live clock
+00:07 +157: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: old confirmation cannot forfeit a new capability under the same actor
+00:07 +158: /dev/shm/geomath-integration-nov05/worker-5/apps/geomath_flutter/test/features/duel/duel_screen_test.dart: confirmation opened by old actor cannot forfeit the next actor room
+00:08 +159: All tests passed!

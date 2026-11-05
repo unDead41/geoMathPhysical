@@ -1,100 +1,29 @@
-# GeoMath / GeoDecoder — cadangan app Flutter
+# GeoMath / GeoDecoder — Android app
 
-**Status: future improvement · perancangan sahaja.**
-Branch simpanan: **`app`**. Versi pakej dokumen: **1.0.0**.
-Tarikh penerbitan dokumentasi: **4 November 2026, Asia/Kuala_Lumpur**.
+**Integrated implementation; Android verification in progress.** App **0.1.0+1**,
+foundation contract **1.0.0**. Work branch `app-integration`; `app` is advanced
+only after integrated checks pass. This status supersedes the planning-only
+entry; the original `docs/geomath-app/` archive remains unchanged.
 
-Ijamm meminta pakej SOR, Markdown dan mockup disimpan dalam branch `app`
-untuk pembangunan kemudian. Penerbitan ini menambah dokumentasi dan aset;
-projek Flutter serta APK belum dibina.
+Production code is in `apps/geomath_flutter/`. Its default `lib/main.dart`
+registers learning, native Auth/profile/classroom/Solo/Duel and one sync owner.
+The offline canonical module retains11models, stable face colors, labs and studio;
+Solo retains5game shapes including cone and single-attempt R1/R2 rules.
 
-## Bahan untuk menyambung nanti
+Start with [the app README](apps/geomath_flutter/README.md) and
+[Android commands](apps/geomath_flutter/docs/RUN_ANDROID.md).
+[Acceptance64items](apps/geomath_flutter/docs/SCREEN_ACCEPTANCE.md) and
+[integration handoff](apps/geomath_flutter/docs/handoffs/app-integration/LATEST.md)
+separate local/device evidence from hosted and manual acceptance.
 
-| Bahan | Rujukan |
-|---|---|
-| Indeks penuh dan 12 papan mockup / 48 paparan | [README pakej](docs/geomath-app/README.md) |
-| SOR dan syarat penerimaan | [SOR.md](docs/geomath-app/SOR.md) |
-| Cadangan Flutter dan pemilikan data | [ARCHITECTURE.md](docs/geomath-app/ARCHITECTURE.md) |
-| Aliran UI/UX serta keadaan ralat | [UX_CONTRACT.md](docs/geomath-app/UX_CONTRACT.md) |
-| Warna muka bongkah dan komponen | [DESIGN_SYSTEM.md](docs/geomath-app/DESIGN_SYSTEM.md) |
-| Pemetaan semua paparan | [SCREEN_CATALOG.md](docs/geomath-app/SCREEN_CATALOG.md) |
-| Pelan pembangunan berperingkat | [Pelan Flutter](docs/geomath-app/docs/superpowers/plans/2026-11-04-geomath-flutter.md) |
-| Prompt mula semula | [RESUME_PROMPT.md](docs/geomath-app/RESUME_PROMPT.md) |
-| Pengesahan dan ujian yang diperlukan | [TEST_PLAN.md](docs/geomath-app/TEST_PLAN.md) |
-| Empat prompt untuk membina dan menjalankan Flutter | [Prompt pelaksanaan](docs/geomath-app-prompts/README.md) |
+The source branches use the same foundation READY commit
+`9a1f49a7c92d13bb70b7fd1420c34629a7785f9e`. Frozen source locks and dependency
+lockfile are preserved. Native callback handling is reserved in the Android
+manifest, but Google/recovery capability remains disabled until its hosted and
+actual callback gate passes. SMS is absent. Missing cloud capabilities remain
+visible; an offline fixture result does not prove hosted Auth or two-client Duel.
 
-## Empat chat pelaksanaan Flutter
-
-Prompt baharu disediakan untuk mula membina app apabila diminta:
-
-1. **Foundation** — Flutter runnable, komponen bersama dan kontrak freeze.
-2. **Belajar** — 11 model, warna muka, makmal, studio dan rekod offline.
-3. **Akaun, kelas dan permainan** — auth, CRUD, solo, Duel serta sync native.
-4. **Integrasi Android** — sambung feature, uji hasil gabungan, screenshot dan APK.
-
-Jalankan Prompt 1 dahulu; Prompt 2 dan 3 boleh serentak selepas foundation READY;
-Prompt 4 selepas kedua-duanya dipush. Setiap prompt mengarahkan 6 subagen awal
-dengan agen tambahan mengikut keperluan dan kapasiti runtime. Branch kerja
-menggunakan nama `app-foundation`, `app-learning`, `app-cloud-game` dan
-`app-integration`; hasil gabungan hanya dimajukan ke `app` selepas verification.
-
-[Buka empat prompt](docs/geomath-app-prompts/README.md).
-Penyediaan arahan ini tidak mengubah status app kepada telah dibina.
-
-## Asas branch dan snapshot dokumen
-
-Branch `app` diterbitkan daripada `main-digitalized` pada commit
-`ef697c86a5bfdf5a5658c3df92bce1d7f3f88652`.
-Tree sumber: `56501d7b07124e65b24e9dd9b9929b35e40e681b`.
-Semak [rekod integrasi Digital](digital/docs/integration-sync/README.md)
-dan [resit branch](digital/docs/integration-sync/REMOTE_RECEIPT.json)
-apabila memilih asas pembangunan sebenar.
-
-Pakej dalam `docs/geomath-app/` dikekalkan sama seperti arkib v1.0.0 yang telah
-disediakan. `SOURCES_AND_STATUS.md` dan `source_baseline.json` di dalamnya ialah
-**snapshot lebih awal**, termasuk `main-digitalized` pada
-`391df985eea4fee15d9859e678068b1a3f613cba`. Status candidate/ahead/behind di sana
-terikat kepada SHA tersebut. Semak remote dan kontrak terkini sebelum kickoff;
-jangan memilih kod lama atau mengulang merge hanya kerana snapshot lama.
-Ayat bahawa tiada push dilaksanakan dalam pakej asal merujuk penyediaan arkib;
-nota ini merekodkan penerbitan dokumentasinya ke branch `app`.
-
-SHA-256 arkib asal `GeoMath_App_Development_Pack_v1.zip`:
-`ac32bbc4993a91e8ab636a004e421961178263202d9fb949dfbdee68e85bce2b`.
-Fail ZIP tidak diduplikasi dalam Git kerana kandungannya sudah diekstrak.
-
-## Keputusan dan batas skop
-
-- Flutter ialah pilihan pengguna. Android dahulu dan pendekatan hibrid masih
-  cadangan untuk dinilai pada permulaan pembangunan.
-- Warna muka bongkah mengikuti ID muka fizikal yang stabil apabila diputar atau
-  dibentangkan, dengan label arah untuk perbandingan kiri/kanan/atas/bawah.
-- Formula, mesh, parser, bank soalan dan protokol mesti mengikut source canonical.
-  Lima bongkah permainan termasuk **Kon**; pembetulan mockup direkodkan dalam
-  [SOURCES_AND_STATUS.md](docs/geomath-app/SOURCES_AND_STATUS.md).
-- Tiada perubahan runtime, firmware, backend hosted, Auth, mirror atau penerbitan
-  store dalam commit dokumentasi ini. Tiada dakwaan app, APK atau ujian telefon siap.
-- `main` firmware dibaca pada `25836eb1a6f24459aace8a3980ae880a13e3b488`, v2.0.2.
-  Salinan firmware yang diwarisi daripada asas Digital masih berlabel v1.1.3;
-  branch perancangan app ini tidak menaikkan atau menyelaraskan keluaran firmware.
-
-## Semakan dan langkah seterusnya
-
-Semak pakej dengan:
-
-```text
-python docs/geomath-app/tools/validate_docs.py
-python tools/check_version.py
-git diff --check
-```
-
-Validator pakej menyemak hash, pautan dalaman, 48 ID paparan, 16 keadaan tambahan,
-37 keperluan SOR serta palet muka. Checker versi hanya menyemak konsistensi
-firmware/README/CHANGELOG yang diwarisi pada branch ini.
-Ujian Flutter, emulator, telefon, firmware dan backend tidak dijalankan untuk
-penerbitan dokumen ini.
-
-Apabila pembangunan diminta kemudian, baca SOR, semak branch/SHA semasa dan
-gunakan worktree sendiri. Mulakan dengan spike modul geometri offline pada
-telefon, kemudian ikut pelan pelaksanaan. Arahan push dokumentasi sekarang
-tidak memulakan pembangunan atau deployment app.
+Firmware, Digital sources, backend/Auth/SMTP settings, Pages and store deployment
+are unchanged. App version is independent of the inherited firmware version.
+The12mockup boards and48screen/16state planning catalogue remain available in
+[the original development package](docs/geomath-app/README.md).

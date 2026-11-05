@@ -113,6 +113,50 @@ final class AppNavigationController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Destination changes discard the whole stack, so covered activities must
+  /// save or confirm too. A stale completion never clears a newer route.
+  Future<BackOutcome> requestReset(String routeName) {
+    _ensureActive();
+    routes[routeName];
+    if (_pendingBack case final pending?) return pending;
+    final snapshot = List<AppRouteEntry>.of(_entries);
+    final completer = Completer<BackOutcome>();
+    _pendingBack = completer.future;
+    bool unchanged() =>
+        !_disposed &&
+        _entries.length == snapshot.length &&
+        List.generate(
+          snapshot.length,
+          (index) => _entries[index].instance == snapshot[index].instance,
+        ).every((same) => same);
+    Future<void>(() async {
+      try {
+        for (final route in snapshot.reversed) {
+          final decision =
+              await route.route.backPolicy?.call(
+                BackRequest(origin: BackOrigin.programmatic, route: route),
+              ) ??
+              BackDecision.allow;
+          if (!unchanged()) {
+            completer.complete(BackOutcome.superseded);
+            return;
+          }
+          if (decision == BackDecision.stay) {
+            completer.complete(BackOutcome.blocked);
+            return;
+          }
+        }
+        reset(routeName);
+        completer.complete(BackOutcome.popped);
+      } catch (error, stack) {
+        completer.completeError(error, stack);
+      } finally {
+        if (identical(_pendingBack, completer.future)) _pendingBack = null;
+      }
+    });
+    return completer.future;
+  }
+
   Future<BackOutcome> requestBack(BackOrigin origin) {
     _ensureActive();
     if (_pendingBack case final pending?) return pending;

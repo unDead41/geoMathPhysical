@@ -7,6 +7,9 @@ final foundationStrings = FeatureLocalizations(
     'ms': {
       'hello': 'Hai, peneroka!',
       'guest': 'Tetamu · rekod pada peranti ini',
+      'signedIn': 'Akaun aktif · rekod dalam ruang akaun anda',
+      'offlineNote': 'Belajar dan main solo tanpa Internet. Kelas dan Duel memerlukan sambungan.',
+      'appVersion': 'GeoMath · 0.1.0',
       'hero': 'Lihat. Buka.\nFahami.',
       'heroBody': 'Kenali bongkah dan bandingkan permukaannya, satu penerokaan pada satu masa.',
       'explore': 'Teroka model 3D',
@@ -44,7 +47,8 @@ final foundationStrings = FeatureLocalizations(
       'demoStopped': 'Demo selesai. Mainkan semula bila anda mahu.',
       'motionOff':
           'Kurangkan gerakan aktif. Langkah ditunjukkan tanpa animasi.',
-      'guideNote': 'Ini demonstrasi aliran permainan Digital. Permainan Flutter masih dalam pembangunan.',
+      'guideNote':
+          'Ini demonstrasi aliran permainan. Pilih Main untuk memulakan solo.',
       'helpIntro': 'Perlukan panduan? Mulakan di sini.',
       'faqOffline': 'Boleh guna tanpa Internet?',
       'faqOfflineBody': 'Menu asas dan modul yang telah disahkan tersedia secara setempat. Akaun, kelas dan Duel memerlukan sambungan serta fungsi yang telah dipasang.',
@@ -89,6 +93,10 @@ final foundationStrings = FeatureLocalizations(
     'en': {
       'hello': 'Hello, explorer!',
       'guest': 'Guest · records on this device',
+      'signedIn': 'Signed in · records in your account space',
+      'offlineNote':
+          'Learn and play solo offline. Classes and Duel require a connection.',
+      'appVersion': 'GeoMath · 0.1.0',
       'hero': 'See. Unfold.\nLearn.',
       'heroBody': 'Discover solids and compare their surfaces, one exploration at a time.',
       'explore': 'Explore the 3D model',
@@ -128,7 +136,8 @@ final foundationStrings = FeatureLocalizations(
       'demoStopped': 'Demo finished. Replay it whenever you like.',
       'motionOff':
           'Reduced motion is enabled. Steps are shown without animation.',
-      'guideNote': 'This demonstrates the Digital game flow. The Flutter game is still in development.',
+      'guideNote':
+          'This demonstrates the game flow. Choose Play to start solo.',
       'helpIntro': 'Need a hand? Start here.',
       'faqOffline': 'Can I use it offline?',
       'faqOfflineBody': 'The main menu and verified module are available locally. Accounts, classes and Duel require a connection and installed features.',

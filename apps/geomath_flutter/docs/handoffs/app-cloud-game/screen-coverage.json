@@ -1,0 +1,756 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-05",
+  "app_version": "0.1.0+1",
+  "foundation_commit": "9a1f49a7c92d13bb70b7fd1420c34629a7785f9e",
+  "scope": "29 cloud/game screen IDs and 16 supplemental states; IDs may be variants within one native screen.",
+  "evidence_rule": "Source/test pointers document implementation and candidate verification. Only commands in the QA receipt are claimed run here. Fixture RPC/HTTP and local SQLite are not hosted-service/device acceptance.",
+  "preview_matrix": {
+    "width_dp": [
+      320,
+      390,
+      430,
+      768
+    ],
+    "language": [
+      "ms",
+      "en"
+    ],
+    "theme": [
+      "light",
+      "dark"
+    ],
+    "text_scale": 1.5,
+    "route_entry_count": 19,
+    "profile_count": 16,
+    "route_profile_combinations": 304,
+    "states": "Guest/unconfigured or empty direct-route entries; does not imply each populated/authenticated/live state received the full profile sweep.",
+    "checks": [
+      "one shared MaterialApp and page shell",
+      "same actor and shared writer across route changes",
+      "no untranslated feature-key text",
+      "onscreen Android tap-target size",
+      "onscreen labeled tap targets",
+      "no Flutter widget exception"
+    ],
+    "test": "test/features/cloud_game/cloud_game_widgets_test.dart",
+    "status": "passed",
+    "evidence": "worker6-resume-final-cloud-game.log"
+  },
+  "screens": [
+    {
+      "id": "02",
+      "title": "Pilih permainan",
+      "source": "lib/features/solo/presentation/solo_pages.dart",
+      "route": "cloud-game-play",
+      "state": "SoloPlayPage / quiz or practice setup",
+      "test_pointers": [
+        "test/features/solo/solo_engine_test.dart:132",
+        "test/features/solo/solo_pages_test.dart:89",
+        "test/features/cloud_game/cloud_game_startup_test.dart::saved account HTTP 502/429/503 leaves guest Solo reachable"
+      ],
+      "verification_limit": "Entry layout checked; no complete 16-profile keyboard/form validation audit."
+    },
+    {
+      "id": "03",
+      "title": "Sambung permainan",
+      "source": "lib/features/solo/presentation/solo_pages.dart",
+      "route": "solo-resume",
+      "state": "SoloResumePage / saved slot",
+      "test_pointers": [
+        "test/features/solo/solo_persistence_test.dart:186",
+        "test/features/cloud_game/cloud_game_solo_lifecycle_test.dart"
+      ],
+      "verification_limit": "Empty slot entry checked in full matrix; durable restore checked with real SQLite fixtures."
+    },
+    {
+      "id": "05",
+      "title": "Kuiz 10",
+      "source": "lib/features/solo/presentation/solo_pages.dart",
+      "route": "solo-game",
+      "state": "SoloGamePage / SoloMode.quiz",
+      "test_pointers": [
+        "test/features/solo/solo_engine_test.dart:132",
+        "test/features/solo/solo_pages_test.dart:89",
+        "test/features/cloud_game/cloud_game_startup_test.dart::saved account HTTP 502/429/503 leaves guest Solo reachable"
+      ],
+      "verification_limit": "Active quiz uses feature fixture tests; guest direct-entry matrix has no active attempt."
+    },
+    {
+      "id": "06",
+      "title": "Latihan 15",
+      "source": "lib/features/solo/presentation/solo_pages.dart",
+      "route": "solo-game",
+      "state": "SoloGamePage / SoloMode.practice",
+      "test_pointers": [
+        "test/features/solo/solo_engine_test.dart:132",
+        "test/features/solo/solo_pages_test.dart:233"
+      ],
+      "verification_limit": "Practice bank/engine and missed-ID flow have fixture pointers; complete 16-profile active-practice sweep absent."
+    },
+    {
+      "id": "07",
+      "title": "Semakan jawapan",
+      "source": "lib/features/solo/presentation/solo_pages.dart",
+      "route": "solo-game",
+      "state": "SoloGamePage / feedback and review",
+      "test_pointers": [
+        "test/features/solo/solo_engine_test.dart:161",
+        "test/features/solo/solo_pages_test.dart:233"
+      ],
+      "verification_limit": "Wrong/skip review gates are fixture-tested; no all-profile active-review sweep."
+    },
+    {
+      "id": "08",
+      "title": "Keputusan dan analisis",
+      "source": "lib/features/solo/presentation/solo_pages.dart",
+      "route": "solo-game",
+      "state": "SoloGamePage._result / detailed answer analysis",
+      "test_pointers": [
+        "test/features/solo/solo_pages_test.dart:233",
+        "test/features/solo/solo_persistence_test.dart:273"
+      ],
+      "verification_limit": "Fixture pointers cover analysis/review isolation; no all-profile populated-result sweep."
+    },
+    {
+      "id": "09",
+      "title": "Papan skor kuiz setempat",
+      "source": "lib/features/solo/presentation/solo_pages.dart",
+      "route": "solo-scores",
+      "state": "SoloScoresPage / local quiz scores",
+      "test_pointers": [
+        "test/features/solo/solo_persistence_test.dart:353",
+        "test/features/cloud_game/cloud_game_widgets_test.dart"
+      ],
+      "verification_limit": "Empty score layout checked in full matrix; best50 is a database fixture check."
+    },
+    {
+      "id": "10",
+      "title": "Cipta/sertai Duel",
+      "source": "lib/features/duel/duel_screen.dart",
+      "route": "cloud-game-duel",
+      "state": "DuelScreen._entry",
+      "test_pointers": [
+        "test/features/duel/duel_screen_test.dart:72",
+        "test/features/duel/duel_screen_test.dart:159"
+      ],
+      "verification_limit": "No-config entry checked in full matrix; configured entry uses scripted transport; hosted creation/join not verified."
+    },
+    {
+      "id": "11",
+      "title": "Lobi Duel",
+      "source": "lib/features/duel/duel_screen.dart",
+      "route": "cloud-game-duel-lobby",
+      "state": "DuelScreen._lobby / waiting and countdown",
+      "test_pointers": [
+        "test/features/duel/duel_controller_test.dart",
+        "test/features/duel/duel_screen_test.dart"
+      ],
+      "verification_limit": "Unavailable raw route checked in full matrix; live two-client lobby/countdown not verified."
+    },
+    {
+      "id": "12",
+      "title": "Duel berlangsung",
+      "source": "lib/features/duel/duel_screen.dart",
+      "route": "cloud-game-duel-match",
+      "state": "DuelScreen._match / validated server projection",
+      "test_pointers": [
+        "test/features/duel/duel_screen_test.dart:72",
+        "test/features/duel/duel_screen_test.dart:175",
+        "test/features/duel/duel_projection_test.dart"
+      ],
+      "verification_limit": "Scripted active match at 320dp BM/English light/dark150; no hosted two-client run."
+    },
+    {
+      "id": "13",
+      "title": "Keputusan Duel",
+      "source": "lib/features/duel/duel_screen.dart",
+      "route": "cloud-game-duel-result",
+      "state": "DuelScreen._result",
+      "test_pointers": [
+        "test/features/duel/duel_screen_test.dart:72",
+        "test/features/duel/duel_projection_test.dart"
+      ],
+      "verification_limit": "Scripted populated result at 320dp BM/English light/dark150; hosted result unverified."
+    },
+    {
+      "id": "14",
+      "title": "Log masuk",
+      "source": "lib/features/auth/presentation/auth_screen.dart",
+      "route": "cloud-game-login",
+      "state": "AuthScreenMode.login",
+      "test_pointers": [
+        "test/features/auth/auth_screen_test.dart",
+        "test/features/auth/native_auth_repository_test.dart:223"
+      ],
+      "verification_limit": "Unavailable entry checked in full matrix; scripted Auth verification is separate from hosted sign-in."
+    },
+    {
+      "id": "15",
+      "title": "Daftar akaun",
+      "source": "lib/features/auth/presentation/auth_screen.dart",
+      "route": "cloud-game-signup",
+      "state": "AuthScreenMode.signup",
+      "test_pointers": [
+        "test/features/auth/native_auth_repository_test.dart:322",
+        "test/features/auth/auth_screen_test.dart"
+      ],
+      "verification_limit": "Unavailable entry checked in full matrix; hosted signup/confirmation email not verified."
+    },
+    {
+      "id": "16",
+      "title": "Pemulihan akaun",
+      "source": "lib/features/auth/presentation/auth_screen.dart",
+      "route": "cloud-game-recover",
+      "state": "AuthScreenMode.recover / email recovery link",
+      "test_pointers": [
+        "test/features/auth/native_auth_repository_test.dart:630",
+        "test/features/auth/native_auth_repository_test.dart:944"
+      ],
+      "verification_limit": "Unavailable entry checked in full matrix; real delivery and native OS link dispatch unverified."
+    },
+    {
+      "id": "17",
+      "title": "Dashboard guru",
+      "source": "lib/features/classroom/presentation/classroom_screen.dart",
+      "route": "cloud-game-classes",
+      "state": "ClassroomScreen._dashboard / server role teacher",
+      "test_pointers": [
+        "test/features/classroom/classroom_widgets_test.dart:201",
+        "test/features/classroom/classroom_repository_test.dart:67"
+      ],
+      "verification_limit": "Guest/unavailable entry checked in full matrix; teacher fixture at320dp dark150 BM/English; hosted role/RLS unverified."
+    },
+    {
+      "id": "18",
+      "title": "Ahli dan jemputan kelas",
+      "source": "lib/features/classroom/presentation/classroom_screen.dart",
+      "route": "cloud-game-classes",
+      "state": "ClassroomScreen._class / members and invitations",
+      "test_pointers": [
+        "test/features/classroom/classroom_controller_test.dart:123",
+        "test/features/classroom/classroom_controller_test.dart:288",
+        "test/features/classroom/classroom_widgets_test.dart:201"
+      ],
+      "verification_limit": "Source renders members/invites inside selected class; no separate full-profile populated member list sweep."
+    },
+    {
+      "id": "19",
+      "title": "Pantau bilik",
+      "source": "lib/features/classroom/presentation/classroom_screen.dart",
+      "route": "cloud-game-classes",
+      "state": "ClassroomScreen._room / teacher monitor",
+      "test_pointers": [
+        "test/features/classroom/classroom_widgets_test.dart:222",
+        "test/features/classroom/classroom_controller_test.dart:504"
+      ],
+      "verification_limit": "Waiting/score separation and server clock have fixture pointers; live multi-client monitor unverified."
+    },
+    {
+      "id": "20",
+      "title": "Keputusan bilik",
+      "source": "lib/features/classroom/presentation/classroom_screen.dart",
+      "route": "cloud-game-classes",
+      "state": "ClassroomScreen._room / closed-room board",
+      "test_pointers": [
+        "test/features/classroom/classroom_controller_test.dart:336",
+        "test/features/classroom/classroom_controller_test.dart:435",
+        "test/features/classroom/classroom_widgets_test.dart:222"
+      ],
+      "verification_limit": "Closed attempt ID and score display have fixture pointers; no hosted populated-results/device sweep."
+    },
+    {
+      "id": "21",
+      "title": "Dashboard pelajar",
+      "source": "lib/features/classroom/presentation/classroom_screen.dart",
+      "route": "cloud-game-classes",
+      "state": "ClassroomScreen._dashboard / server role student",
+      "test_pointers": [
+        "test/features/classroom/classroom_controller_test.dart:201",
+        "test/features/classroom/classroom_widgets_test.dart:241"
+      ],
+      "verification_limit": "Server-role branch implemented; student fixture coverage is narrower than complete dashboard profile matrix."
+    },
+    {
+      "id": "22",
+      "title": "Bilik pelajar",
+      "source": "lib/features/classroom/presentation/classroom_screen.dart",
+      "route": "cloud-game-classes",
+      "state": "ClassroomScreen._room and _game / same attempt",
+      "test_pointers": [
+        "test/features/classroom/classroom_widgets_test.dart:241",
+        "test/features/classroom/classroom_controller_test.dart:435",
+        "test/features/classroom/classroom_controller_test.dart:449"
+      ],
+      "verification_limit": "Scripted attempt/explicit R1 and identical pending event covered by pointers; hosted attempt resume unverified."
+    },
+    {
+      "id": "23",
+      "title": "Profil saya",
+      "source": "lib/features/profile/presentation/profile_screen.dart",
+      "route": "cloud-game-profile",
+      "state": "ProfileScreen / server profile or completion",
+      "test_pointers": [
+        "test/features/profile/profile_screen_test.dart:124",
+        "test/features/profile/profile_repository_test.dart:82"
+      ],
+      "verification_limit": "Guest entry checked in full matrix; signed-in draft fixture at320dp BM/English dark150; hosted save/profile completion unverified."
+    },
+    {
+      "id": "24",
+      "title": "Kata laluan dan keselamatan",
+      "source": "lib/features/auth/presentation/auth_screen.dart",
+      "route": "cloud-game-security",
+      "state": "AuthScreenMode.security",
+      "test_pointers": [
+        "test/features/auth/native_auth_repository_test.dart:871",
+        "test/features/auth/native_auth_repository_test.dart:914",
+        "test/features/auth/native_auth_repository_test.dart:931"
+      ],
+      "verification_limit": "Raw guest route cannot authorize password update; actual server reauthentication/logout not verified."
+    },
+    {
+      "id": "42",
+      "title": "Cipta kelas",
+      "source": "lib/features/classroom/presentation/classroom_screen.dart",
+      "route": "cloud-game-classes",
+      "state": "ClassroomScreen._createClass / _ClassroomInputDialog",
+      "test_pointers": [
+        "test/features/classroom/classroom_widgets_test.dart:117",
+        "test/features/classroom/classroom_widgets_test.dart:181"
+      ],
+      "verification_limit": "Form fixture preserves input and closes on account switch; hosted create and all-profile keyboard sweep unverified."
+    },
+    {
+      "id": "43",
+      "title": "Cipta bilik",
+      "source": "lib/features/classroom/presentation/classroom_screen.dart",
+      "route": "cloud-game-classes",
+      "state": "ClassroomScreen._createRoom / _ClassroomInputDialog",
+      "test_pointers": [
+        "test/features/classroom/classroom_controller_test.dart:81",
+        "test/features/classroom/classroom_controller_test.dart:201",
+        "test/features/classroom/classroom_widgets_test.dart:201"
+      ],
+      "verification_limit": "Owned teacher action exists; no dedicated successful create-room modal/device end-to-end evidence in worker6."
+    },
+    {
+      "id": "44",
+      "title": "Sertai kelas/bilik melalui PIN",
+      "source": "lib/features/classroom/presentation/classroom_screen.dart",
+      "route": "cloud-game-classes",
+      "state": "ClassroomScreen._joinPin / PIN validation",
+      "test_pointers": [
+        "test/features/classroom/classroom_controller_test.dart:81",
+        "test/features/classroom/classroom_controller_test.dart:596"
+      ],
+      "verification_limit": "Leading-zero PIN and server expiry have fixture pointers; dedicated real join-PIN/device flow unverified."
+    },
+    {
+      "id": "45",
+      "title": "Sahkan e-mel",
+      "source": "lib/features/auth/presentation/auth_screen.dart",
+      "route": "cloud-game-confirmation",
+      "state": "AuthScreenMode.confirmation / email link",
+      "test_pointers": [
+        "test/features/auth/native_auth_repository_test.dart:322",
+        "test/features/auth/native_auth_repository_test.dart:697",
+        "test/features/auth/native_auth_repository_test.dart:721"
+      ],
+      "verification_limit": "Unavailable entry checked in full matrix; no delivered email or native OS callback activation proof."
+    },
+    {
+      "id": "46",
+      "title": "Kata laluan baharu",
+      "source": "lib/features/auth/presentation/auth_screen.dart",
+      "route": "cloud-game-reset",
+      "state": "AuthScreenMode.reset / verified recovery only",
+      "test_pointers": [
+        "test/features/auth/native_auth_repository_test.dart:545",
+        "test/features/auth/native_auth_repository_test.dart:630",
+        "test/features/auth/native_auth_repository_test.dart:944"
+      ],
+      "verification_limit": "Raw route is not recovery permission; scripted verified recovery is separate from live device callback."
+    },
+    {
+      "id": "47",
+      "title": "Sesi aktif",
+      "source": "lib/features/auth/presentation/sessions_screen.dart",
+      "route": "cloud-game-sessions",
+      "state": "SessionsScreen / sanitized active session list",
+      "test_pointers": [
+        "test/features/auth/native_auth_repository_test.dart:1070",
+        "test/features/auth/native_auth_repository_test.dart:1107"
+      ],
+      "verification_limit": "Guest error entry checked in full matrix; list validation has repository pointers; no populated sessions all-profile widget/device sweep."
+    },
+    {
+      "id": "48",
+      "title": "Sambungan Duel terganggu",
+      "source": "lib/features/duel/duel_screen.dart",
+      "route": "cloud-game-duel-match",
+      "state": "DuelScreen._connection / unknown outcome and resync",
+      "test_pointers": [
+        "test/features/duel/duel_controller_test.dart:35",
+        "test/features/duel/duel_controller_test.dart:257",
+        "test/features/duel/duel_controller_test.dart:524"
+      ],
+      "verification_limit": "Pending payload/reconnect/lifecycle have scripted transport coverage; live network-loss device test unverified."
+    }
+  ],
+  "supplemental_states": [
+    {
+      "id": "EX01",
+      "title": "Sunting nama kelas",
+      "source": "lib/features/classroom/presentation/classroom_screen.dart",
+      "route": "cloud-game-classes",
+      "state": "_ManagementDialog / editClass rename_class",
+      "test_pointers": [
+        "test/features/classroom/classroom_controller_test.dart:123",
+        "test/features/classroom/classroom_widgets_test.dart:289"
+      ],
+      "verification_limit": "Rename conflict draft fixture; hosted revisions unverified."
+    },
+    {
+      "id": "EX02",
+      "title": "Sunting nama bilik",
+      "source": "lib/features/classroom/presentation/classroom_screen.dart",
+      "route": "cloud-game-classes",
+      "state": "_ManagementDialog / editRoom rename_room",
+      "test_pointers": [
+        "test/features/classroom/classroom_controller_test.dart:123",
+        "test/features/classroom/classroom_controller_test.dart:260"
+      ],
+      "verification_limit": "Exact revision wire fixture; dedicated room rename modal/device sweep absent."
+    },
+    {
+      "id": "EX03",
+      "title": "Pengesahan arkib",
+      "source": "lib/features/classroom/presentation/classroom_screen.dart",
+      "route": "cloud-game-classes",
+      "state": "_ManagementDialog / archive_class or archive_room",
+      "test_pointers": [
+        "test/features/classroom/classroom_controller_test.dart:336",
+        "test/features/classroom/classroom_controller_test.dart:596"
+      ],
+      "verification_limit": "Source confirmation and lifecycle guards; hosted archive effects unverified."
+    },
+    {
+      "id": "EX04",
+      "title": "Senarai arkib / restore",
+      "source": "lib/features/classroom/presentation/classroom_screen.dart",
+      "route": "cloud-game-classes",
+      "state": "_dashboard archive filter / restore_class or restore_room",
+      "test_pointers": [
+        "test/features/classroom/classroom_controller_test.dart:336",
+        "test/features/classroom/classroom_controller_test.dart:596"
+      ],
+      "verification_limit": "Closed state/expired PIN preserved by fixtures; dedicated restored list device flow absent."
+    },
+    {
+      "id": "EX05",
+      "title": "Pengesahan padam rekod kosong",
+      "source": "lib/features/classroom/presentation/classroom_screen.dart",
+      "route": "cloud-game-classes",
+      "state": "_ManagementDialog / delete_class or delete_room",
+      "test_pointers": [
+        "test/features/classroom/classroom_controller_test.dart:310",
+        "test/features/classroom/classroom_controller_test.dart:610"
+      ],
+      "verification_limit": "Unknown-outcome and not_empty keep draft; hosted delete authorization unverified."
+    },
+    {
+      "id": "EX06",
+      "title": "Keluarkan ahli kelas",
+      "source": "lib/features/classroom/presentation/classroom_screen.dart",
+      "route": "cloud-game-classes",
+      "state": "_class / removeMember and expected_revision",
+      "test_pointers": [
+        "test/features/classroom/classroom_controller_test.dart:123",
+        "test/features/classroom/classroom_controller_test.dart:201",
+        "test/features/classroom/classroom_controller_test.dart:490"
+      ],
+      "verification_limit": "Revision/actor denial and membership removal fixtures; hosted historical preservation unverified."
+    },
+    {
+      "id": "EX07",
+      "title": "Batal/tolak jemputan",
+      "source": "lib/features/classroom/presentation/classroom_screen.dart",
+      "route": "cloud-game-classes",
+      "state": "_invitation / cancel_invite or decline_invite",
+      "test_pointers": [
+        "test/features/classroom/classroom_controller_test.dart:123",
+        "test/features/classroom/classroom_controller_test.dart:288"
+      ],
+      "verification_limit": "UUID-only wire and issuance staleness have fixture pointers; live two-account issuance unverified."
+    },
+    {
+      "id": "EX08",
+      "title": "Conflict revision / refresh",
+      "source": "lib/features/classroom/presentation/classroom_screen.dart",
+      "route": "cloud-game-classes",
+      "state": "_ManagementDialog / refreshManagement explicit revision adoption",
+      "test_pointers": [
+        "test/features/classroom/classroom_widgets_test.dart:289",
+        "test/features/classroom/classroom_widgets_test.dart:381",
+        "test/features/classroom/classroom_controller_test.dart:260"
+      ],
+      "verification_limit": "Conflict/unknown outcome keeps text and blocks replay; hosted concurrency unverified."
+    },
+    {
+      "id": "EX09",
+      "title": "Senarai pending sync",
+      "source": "lib/features/sync/presentation/sync_screen.dart",
+      "route": "sync.pending",
+      "state": "SyncScreen / pending count, events and retry",
+      "test_pointers": [
+        "test/features/sync/native_outbox_test.dart:679",
+        "test/features/sync/sync_bootstrap_widget_test.dart:100"
+      ],
+      "verification_limit": "Guest local page full matrix; queued unavailable state has320dp fixture; hosted ack unverified."
+    },
+    {
+      "id": "EX10",
+      "title": "Login semula untuk sync",
+      "source": "lib/features/sync/presentation/sync_screen.dart",
+      "route": "sync.pending",
+      "state": "SyncScreen / needsAuth and current-owner sign-in",
+      "test_pointers": [
+        "test/features/sync/native_outbox_test.dart:808",
+        "test/features/sync/native_outbox_test.dart:850"
+      ],
+      "verification_limit": "Controller status/owner isolation pointers; no dedicated needsAuth button all-profile/device flow."
+    },
+    {
+      "id": "EX11",
+      "title": "Storan gagal/penuh",
+      "source": "lib/features/sync/presentation/sync_screen.dart",
+      "route": "sync.pending",
+      "state": "SyncScreen.unsaved + solo save failure + shared writer failed receipt",
+      "test_pointers": [
+        "test/features/cloud_game/cloud_game_storage_test.dart",
+        "test/features/solo/solo_pages_test.dart:89",
+        "test/features/sync/native_outbox_test.dart:454"
+      ],
+      "verification_limit": "Cloud/solo failures covered by real SQLite or fixtures; learning UI presentation remains Prompt2/4 integration, not claimed."
+    },
+    {
+      "id": "EX12",
+      "title": "Keluar Duel / forfeit",
+      "source": "lib/features/duel/duel_screen.dart",
+      "route": "cloud-game-duel-match",
+      "state": "DuelScreen._confirmLeave / forfeit",
+      "test_pointers": [
+        "test/features/duel/duel_screen_test.dart:253",
+        "test/features/duel/duel_screen_test.dart:319",
+        "test/features/duel/duel_controller_test.dart:556"
+      ],
+      "verification_limit": "All back-origin fixture pointers preserve server clock/capability; actual server forfeit unverified."
+    },
+    {
+      "id": "EX13",
+      "title": "Draf belum disimpan",
+      "source": "lib/features/profile/presentation/profile_screen.dart",
+      "route": "cloud-game-profile",
+      "state": "ProfileScreenState.requestLeave / save discard stay",
+      "test_pointers": [
+        "test/features/profile/profile_screen_test.dart:328",
+        "test/features/profile/profile_screen_test.dart:359"
+      ],
+      "verification_limit": "Actor switch and tab exit while save pending have fixture pointers; hosted unknown outcome unverified."
+    },
+    {
+      "id": "EX14",
+      "title": "Pemulihan akaun legacy",
+      "source": "lib/features/auth/presentation/auth_screen.dart",
+      "route": "cloud-game-legacy-recovery",
+      "state": "AuthScreenMode.legacyRecovery / recoverLegacy exact 32hex source code",
+      "test_pointers": [
+        "test/features/auth/native_auth_repository_test.dart:810",
+        "test/features/auth/native_auth_repository_test.dart:834"
+      ],
+      "verification_limit": "Native implementation uses source legacy action, not email OTP; real legacy account recovery unverified."
+    },
+    {
+      "id": "EX15",
+      "title": "Cache read-only / akses ditarik",
+      "source": "lib/features/classroom/presentation/classroom_screen.dart",
+      "route": "cloud-game-classes",
+      "state": "ClassroomScreen stale notice / denial purges selected data",
+      "test_pointers": [
+        "test/features/classroom/classroom_controller_test.dart:383",
+        "test/features/classroom/classroom_controller_test.dart:711",
+        "test/features/sync/native_outbox_test.dart:1196"
+      ],
+      "verification_limit": "Cache/stale/denial tested at controller level; hosted revocation/device subscription test unverified."
+    },
+    {
+      "id": "EX16",
+      "title": "Backend capability belum tersedia",
+      "source": "lib/features/auth/presentation/auth_screen.dart",
+      "route": "cloud-game-login",
+      "state": "Auth unavailable; classroom capability absent; Duel protocol stop; sync unavailable pending kept",
+      "test_pointers": [
+        "test/features/cloud_game/cloud_game_widgets_test.dart",
+        "test/features/classroom/classroom_controller_test.dart:232",
+        "test/features/duel/duel_controller_test.dart:473",
+        "test/features/sync/native_outbox_test.dart:808",
+        "test/features/cloud_game/cloud_game_startup_test.dart::saved account HTTP 502/429/503 leaves guest Solo reachable"
+      ],
+      "verification_limit": "No-config guest entries checked in full matrix; actual hosted capability deployment unverified."
+    }
+  ],
+  "remaining_gates": [
+    "Foundation tab destination reset still requires a shared feature back-policy/unsaved draft/forfeit integration guard; feature-owned routes were not allowed to edit the root.",
+    "Android runtime execution/screenshot receipt is owned by lead; this worker did not execute Android tests.",
+    "Full all-profile sweep of populated authenticated/classroom/Duel/solo review/result states is not complete.",
+    "Native callback intent-filter/allowlist/platform integration and Google/email consent/delivery are not verified.",
+    "Live hosted Auth/CRUD/outbox ack and two-client Duel staging tests are not verified.",
+    "Learning EX11 display and shared signed-in FormativeRecordWriter adoption require final Prompt4 integration.",
+    "Phone/SMS OTP flow is not exposed as a working native capability; delivery is not claimed.",
+    "TalkBack, contrast/text125, keyboard/safe-area combinations, low-end-device performance and capacity have no complete worker6 acceptance evidence.",
+    "Normal root starting on Home must resolve and await CloudGamePreviewServices.startup.ready once after bootstrap; the dev entry already awaits it on every contributed feature route."
+  ],
+  "qa_commit": "4b50767b1281cd1224c0d89a750905b5bdb41f5f",
+  "qa_receipts": [
+    {
+      "command": "dart format --output=none --set-exit-if-changed test/features/cloud_game/cloud_game_bootstrap_test.dart test/features/cloud_game/cloud_game_widgets_test.dart",
+      "exit_code": 0,
+      "evidence": "worker6-resume-format.log"
+    },
+    {
+      "command": "flutter analyze --no-pub lib/dev test/features/cloud_game integration_test/cloud_game_preview_test.dart",
+      "exit_code": 0,
+      "result": "No issues found",
+      "evidence": "worker6-resume-analyze.log"
+    },
+    {
+      "command": "flutter test --no-pub test/features/cloud_game --reporter expanded",
+      "exit_code": 0,
+      "passed": 25,
+      "failed": 0,
+      "evidence": "worker6-resume-final-cloud-game.log"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    },
+    {
+      "command": "flutter test --no-pub test/features/cloud_game/cloud_game_startup_test.dart --reporter expanded",
+      "exit_code": 0,
+      "passed": 9,
+      "failed": 0,
+      "evidence": "worker6-offline-startup-verified.log"
+    },
+    {
+      "command": "flutter analyze --no-pub lib/dev/cloud_game_features.dart test/features/cloud_game/cloud_game_startup_test.dart",
+      "exit_code": 0,
+      "result": "No issues found",
+      "evidence": "worker6-offline-startup-analyze-final.log"
+    },
+    {
+      "command": "dart format --output=none --set-exit-if-changed lib/dev/cloud_game_features.dart test/features/cloud_game/cloud_game_startup_test.dart",
+      "exit_code": 0,
+      "evidence": "worker6-offline-startup-format.log"
+    }
+  ],
+  "reviewed_feature_commits": {
+    "auth/profile": "e2bb4474d6502549a78fdbe61b7b2c4928886aa3",
+    "classroom": "7d01da97df93d3eb2e34c7877671a9d954568161",
+    "solo": "655697ffddc13f6ce5691067370eb770865ce514",
+    "duel": "ac16896b0886aa1ad8340185e3ba0e24cd519992",
+    "sync": "a5be14f43d3b08621d8e4332c882b99b164bc442"
+  },
+  "test_dependency_limit": "Scoped tests used the initial combined feature copy plus final auth/profile e2bb447 and final solo navigation files. Later classroom/solo data/Duel/sync fixes are reviewed by pointers; lead owns one final integrated test run.",
+  "route_qa_commit": "c52314146779c90b7cd77b0f26ad7863b09eb668",
+  "matrix_test_dependency_snapshot": {
+    "auth": {
+      "file_count": 11,
+      "file_tree_sha256": "46f7cc55e616bab3522e6c637a09df24accaea6edbebd61a7760525bb48ea4ce",
+      "files_different_from_lead_final_at_receipt": []
+    },
+    "profile": {
+      "file_count": 6,
+      "file_tree_sha256": "b865d657c89b6929420856f43dc1378c40e84391f46a220324efeb27f11805c5",
+      "files_different_from_lead_final_at_receipt": []
+    },
+    "classroom": {
+      "file_count": 8,
+      "file_tree_sha256": "36d9e3f1b14e97b9267e2fe18ccceb8bbb7fe56683df18f13d28f3112eb06625",
+      "files_different_from_lead_final_at_receipt": [
+        "application/classroom_controller.dart",
+        "classroom_feature.dart",
+        "data/classroom_repository.dart",
+        "presentation/classroom_screen.dart"
+      ]
+    },
+    "solo": {
+      "file_count": 7,
+      "file_tree_sha256": "04ce38397909ff962f8b1ab9fd7695d7cb98432d75a38fbf3b15ab6d415a4cc7",
+      "files_different_from_lead_final_at_receipt": [
+        "data/solo_repository.dart",
+        "solo_controller.dart"
+      ]
+    },
+    "duel": {
+      "file_count": 7,
+      "file_tree_sha256": "f7c179b65e65f1731e6e5094c4a58a379dec3543d9bdbaaa1de0969e99e35d48",
+      "files_different_from_lead_final_at_receipt": [
+        "duel_controller.dart"
+      ]
+    },
+    "sync": {
+      "file_count": 6,
+      "file_tree_sha256": "18fb41f24fc565f1dd3d8667b6a9800fac5efe7d629488516c36e7db9df6bf1b",
+      "files_different_from_lead_final_at_receipt": [
+        "application/formative_sync_controller.dart",
+        "data/sync_formative_record_writer.dart"
+      ]
+    }
+  },
+  "startup_change": {
+    "safe_guest_failure_codes": [
+      "network",
+      "retryAfter",
+      "unavailable"
+    ],
+    "storage_failure": "remains retry-gated",
+    "credential_handling": "retained by actual Auth owner; no startup write/clear or actor adoption",
+    "notice": "localized guest notice; actor-bound retry; no immediate action on rate limit",
+    "test_scope": "9 targeted startup tests only; no full matrix rerun after startup change",
+    "source_limit": "Refreshed final lead feature copies immediately before subsequent Auth transport848307d and sync regression39933d changes; final lead verification is separate."
+  },
+  "startup_dependency_snapshot": {
+    "auth": {
+      "file_count": 11,
+      "file_tree_sha256": "46f7cc55e616bab3522e6c637a09df24accaea6edbebd61a7760525bb48ea4ce"
+    },
+    "profile": {
+      "file_count": 6,
+      "file_tree_sha256": "b865d657c89b6929420856f43dc1378c40e84391f46a220324efeb27f11805c5"
+    },
+    "classroom": {
+      "file_count": 8,
+      "file_tree_sha256": "1e1b439f51d9c8b0a7caaf790473417d47599d7e8e001a872c5da952e91e92c4"
+    },
+    "solo": {
+      "file_count": 7,
+      "file_tree_sha256": "9c75109faa161417be37aca121e4ecf2eaae01c5b9f23983250e00ceb60dc076"
+    },
+    "duel": {
+      "file_count": 7,
+      "file_tree_sha256": "33c7d9417884acf8bb0bb39f030c83a580ad976934738b1cb39a3f009bc28a2a"
+    },
+    "sync": {
+      "file_count": 6,
+      "file_tree_sha256": "85506d8d48bc1014b97a1dd69bc7c606364d3e801d7ffeacbed20ff83a0522db"
+    }
+  },
+  "lead_combined_verification": {
+    "tests": 420,
+    "result": "passed",
+    "remote_source_commit": "6cc470e32f790c1c49e14f0fa0173f0818e3fbfb",
+    "log": "evidence/native/final-tests.log",
+    "android": "blocked"
+  }
+}

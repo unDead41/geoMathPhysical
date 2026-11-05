@@ -83,12 +83,14 @@ final class GeoMathRouter extends RouterDelegate<String>
     _pop(BackOrigin.appBar);
   }
 
-  void select(AppDestination destination) {
+  Future<void> select(AppDestination destination) async {
     final paths = ['/', '/learn', '/play', '/classes', '/profile'];
     final installed = dependencies.composition.routes.byPath(
       paths[destination.index],
     );
-    navigation.reset(installed?.name ?? 'foundation-${destination.name}');
+    await navigation.requestReset(
+      installed?.name ?? 'foundation-${destination.name}',
+    );
   }
 
   AppDestination get destination {
@@ -101,7 +103,8 @@ final class GeoMathRouter extends RouterDelegate<String>
         '/classes',
         '/profile',
       ][value.index];
-      if (route.path.startsWith(path) ||
+      if ((value == AppDestination.play && route.path.startsWith('/duel')) ||
+          route.path.startsWith(path) ||
           route.name == 'foundation-${value.name}') {
         return value;
       }

@@ -1,0 +1,36 @@
+{
+  "kind": "host-rendered Flutter widget preview; NOT Android screenshot",
+  "source_commit": "6cc470e32f790c1c49e14f0fa0173f0818e3fbfb",
+  "logical_size": [
+    390,
+    1000
+  ],
+  "pixel_ratio_for_export": 2,
+  "fonts": "SDK Roboto and MaterialIcons loaded; opt-in route Theme/ChipTheme/controls explicitly use Roboto instead of the test engine Ahem fallback. This rendering override is absent from the APK.",
+  "composition": "Actual GeoMathApp + cloudGameFeatures, real shared SQLite and repositories; guest/preference persistence seams only; no fake network transport. Solo question is obtained by actually starting the native controller.",
+  "command": "flutter test --no-pub /absolute/path/capture_host_previews.dart --reporter expanded",
+  "exit": 0,
+  "captures": [
+    {
+      "name": "01-host-play-ms-light-100.png",
+      "sha256": "6d6fe43ea61bec9bbae7548938487fdf9cec112f98b194c54c6a131d98860bbc",
+      "bytes": 138811
+    },
+    {
+      "name": "02-host-play-en-dark-150.png",
+      "sha256": "f0eb4e58b0fd6cf0137a914bb80c21d4391897e47654865e5fa5405d1733ca55",
+      "bytes": 153282
+    },
+    {
+      "name": "03-host-solo-question-en-light-100.png",
+      "sha256": "4e2d8e87ab5e19a508732bed5602cbdb4c40951bc8b714320658eec928b1741d",
+      "bytes": 132870
+    },
+    {
+      "name": "04-host-guest-profile-ms-light-100.png",
+      "sha256": "90ffc4826bda40b545c3c4496508ec8337b91b47290ca1bc55624873159eecac",
+      "bytes": 66408
+    }
+  ],
+  "device_limitation": "Local TCG device booted, but Android commands stalled. These images do not replace device/hosted acceptance."
+}
