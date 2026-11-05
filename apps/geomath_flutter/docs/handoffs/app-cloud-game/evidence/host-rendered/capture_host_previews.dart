@@ -1,7 +1,6 @@
 // Explicit opt-in host render. This is not an Android screenshot/device test.
 // Run this file directly with `flutter test`; it is outside CI test discovery.
 import 'dart:io';
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
