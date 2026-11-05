@@ -24,6 +24,7 @@ final_state() {
   adb -s "$device" shell dumpsys webviewupdate > "$evidence_dir/webview-final.txt" || true
   adb -s "$device" shell dumpsys window > "$evidence_dir/window-final.txt" || true
   adb -s "$device" exec-out screencap -p > "$evidence_dir/last-screen.png" || true
+  python3 tools/android/emit_png_evidence.py "$evidence_dir" || true
   printf '%s\n' "$status" > "$evidence_dir/run.exit"
   exit "$status"
 }
@@ -59,11 +60,17 @@ if 'Not Responding' in focus:
 print('Android focus before tests: '+focus)
 PY
 sha256sum "$test_apk" > "$evidence_dir/integration-apk.sha256"
+# Preserve the test exit status while also collecting the independent normal
+# application's actual screenshots. A failed suite still fails the job.
+set +e
 flutter drive --no-pub --driver=test_driver/integration_evidence_driver.dart \
   --target=integration_test/integration_smoke_test.dart \
   --use-application-binary="$test_apk" \
   --keep-app-running -d "$device" \
   2>&1 | tee "$evidence_dir/integration.txt"
+integration_status=${PIPESTATUS[0]}
+set -e
+export GEOMATH_INTEGRATION_STATUS="$integration_status"
 # A successful test-runner APK is not proof the production main boots. Remove
 # its isolated records, install the preserved normal APK and run that entrypoint.
 adb -s "$device" shell am force-stop com.geomath.dev
@@ -73,14 +80,17 @@ flutter run --no-pub --no-resident --use-application-binary="$normal_apk" -d "$d
 python3 tools/android/capture_integration.py --device "$device" --output "$evidence_dir"
 sha256sum "$normal_apk" > "$evidence_dir/normal-apk.sha256"
 python3 - "$evidence_dir" <<'PY'
-import hashlib,json,pathlib,sys
+import hashlib,json,os,pathlib,sys
 root=pathlib.Path(sys.argv[1])
 items=[{'path':p.name,'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()}
        for p in sorted(root.glob('*')) if p.is_file() and p.name!='runtime-result.json']
 (root/'runtime-result.json').write_text(json.dumps({
     'schema_version':1,'source_commit':(root/'source-commit.txt').read_text().strip(),
     'scope':'integrated normal Android APK and native-plugin integration tests',
+    'integration_exit_code':int(os.environ['GEOMATH_INTEGRATION_STATUS']),
     'offline':True,'hosted_services':'not verified by this offline fixture run',
     'physical_phone':'not tested','manual_talkback_and_visual_review':'pending',
     'files':items},indent=2)+'\n')
 PY
+
+exit "$integration_status"

@@ -544,10 +544,17 @@ void main() {
       _openPath(app, _router(tester), '/learn/records');
       await _until(
         tester,
-        () async => !reader.loading && reader.records.length == 4,
+        () async =>
+            !reader.loading &&
+            reader.records.length == 4 &&
+            find
+                .byKey(const ValueKey('learning-records-count'))
+                .evaluate()
+                .isNotEmpty,
       );
       for (final activity in ModuleActivity.values) {
         final tile = find.byKey(ValueKey('learning-record-${activity.name}'));
+        await _until(tester, () async => tile.evaluate().isNotEmpty);
         await tester.ensureVisible(tile);
         await tester.tap(tile);
         await tester.pump(const Duration(milliseconds: 250));
@@ -666,9 +673,27 @@ Future<WebViewController> _readyView(
   await _until(tester, () async {
     if (find.byType(WebViewWidget).evaluate().isEmpty) return false;
     view = _view(tester);
-    final native = await _nativeDiagnostics(view!);
-    final snapshot = await _snapshot(view!);
+    final inputGate = find.ancestor(
+      of: find.byType(WebViewWidget).last,
+      matching: find.byType(AbsorbPointer),
+    );
+    if (inputGate.evaluate().isEmpty ||
+        tester.widget<AbsorbPointer>(inputGate.first).absorbing) {
+      // The real native controller has not finished launch/SQLite restore yet.
+      return false;
+    }
+    // Before document creation Android can return null for a JS exception.
+    // Poll only the guarded read-only API, rather than casting that null.
+    final native = await _json(
+      view!,
+      'window.GeoMathModule?.diagnostics?.() ?? {}',
+    );
+    final snapshot = await _json(
+      view!,
+      'window.GeoMathModule?.learningSnapshot?.() ?? {}',
+    );
     return native['readyAcknowledged'] == true &&
+        native['active'] == true &&
         snapshot['ready'] == true &&
         snapshot['pending'] != true &&
         (snapshot['checkpoint'] as Map?)?['section'] == section;
@@ -689,7 +714,10 @@ Future<Map<String, Object?>> _json(
   while (value is String) {
     value = jsonDecode(value);
   }
-  return Map<String, Object?>.from(value! as Map);
+  if (value is! Map) {
+    fail('The real WebView returned no object for $expression: $value');
+  }
+  return Map<String, Object?>.from(value);
 }
 
 Future<Map<String, Object?>> _snapshot(WebViewController view) =>
@@ -852,6 +880,9 @@ Future<void> _until(
   Future<bool> Function() condition, {
   Duration timeout = const Duration(seconds: 15),
 }) async {
+  // Route changes schedule Navigator builds. Do not observe the still-mounted
+  // old page and return its soon-to-be-disposed platform controller.
+  await tester.pump();
   final deadline = DateTime.now().add(timeout);
   Object? lastError;
   while (DateTime.now().isBefore(deadline)) {

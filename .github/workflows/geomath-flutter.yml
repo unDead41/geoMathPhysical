@@ -61,11 +61,25 @@ jobs:
           distribution: temurin
           java-version: '17'
       - uses: subosito/flutter-action@v2
+        id: flutter-setup
         with:
           channel: stable
           flutter-version: ${{ env.FLUTTER_VERSION }}
           cache: true
           pub-cache-key: geomath-${{ runner.os }}-${{ env.FLUTTER_VERSION }}-${{ hashFiles('apps/geomath_flutter/pubspec.lock') }}
+      # Cache public dependencies only. Do not persist Gradle properties,
+      # sessions, app databases, APKs, native transforms or source build outputs.
+      - name: Restore Android build dependencies
+        id: gradle-dependencies
+        uses: actions/cache/restore@v5
+        continue-on-error: true
+        with:
+          path: |
+            ~/.gradle/caches/modules-2
+            ~/.gradle/wrapper
+            !~/.gradle/caches/modules-2/modules-2.lock
+            !~/.gradle/wrapper/**/*.lck
+          key: geomath-gradle-v1-${{ runner.os }}-${{ runner.arch }}-jdk17-flutter${{ env.FLUTTER_VERSION }}-${{ hashFiles('apps/geomath_flutter/pubspec.lock', 'apps/geomath_flutter/android/**/*.gradle*', 'apps/geomath_flutter/android/gradle.properties', 'apps/geomath_flutter/android/gradle/wrapper/gradle-wrapper.properties') }}
       - name: Toolchain
         run: |
           flutter --version
@@ -115,6 +129,35 @@ jobs:
           test -s "$RUNNER_TEMP/geomath-integration-debug.apk"
           rm -f -- build/app/outputs/apk/debug/app-debug.apk
           (cd android && ./gradlew --stop)
+      # Save after successful native packaging, before device tests. A failing
+      # Android test must retain its failure and still leave reusable downloads
+      # for the next corrected run. These caches never establish a test PASS.
+      - name: Save Android build dependencies
+        if: steps.gradle-dependencies.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v5
+        continue-on-error: true
+        with:
+          path: |
+            ~/.gradle/caches/modules-2
+            ~/.gradle/wrapper
+            !~/.gradle/caches/modules-2/modules-2.lock
+            !~/.gradle/wrapper/**/*.lck
+          key: ${{ steps.gradle-dependencies.outputs.cache-primary-key }}
+      - name: Save initialized Flutter SDK
+        if: steps.flutter-setup.outputs.CACHE-HIT != 'true'
+        uses: actions/cache/save@v5
+        continue-on-error: true
+        with:
+          path: ${{ steps.flutter-setup.outputs.CACHE-PATH }}
+          key: ${{ steps.flutter-setup.outputs.CACHE-KEY }}
+      - name: Save resolved Dart dependencies
+        if: steps.flutter-setup.outputs.PUB-CACHE-HIT != 'true'
+        uses: actions/cache/save@v5
+        continue-on-error: true
+        with:
+          path: ${{ steps.flutter-setup.outputs.PUB-CACHE-PATH }}
+          # Match flutter-action's internal cache key including its lock hash.
+          key: ${{ steps.flutter-setup.outputs.PUB-CACHE-KEY }}-${{ hashFiles('**/pubspec.lock') }}
       - name: Android disk headroom
         shell: bash
         run: |

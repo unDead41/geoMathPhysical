@@ -150,6 +150,39 @@ void main() {
   );
 
   testWidgets(
+    'create dialog keeps input and actions reachable above a tall keyboard',
+    (tester) async {
+      final h = await mount(tester, narrow: true);
+      await tester.tap(find.byKey(const ValueKey('classroom-create-class')));
+      await tester.pumpAndSettle();
+      final dialog = find.byKey(const ValueKey('classroom-input'));
+      final field = find.descendant(
+        of: dialog,
+        matching: find.byType(TextFormField),
+      );
+      await tester.enterText(field, 'Keyboard draft');
+      tester.view.viewInsets = const FakeViewPadding(bottom: 580);
+      addTearDown(tester.view.resetViewInsets);
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
+      final confirm = find.descendant(
+        of: dialog,
+        matching: find.text('Confirm'),
+      );
+      await tester.ensureVisible(confirm);
+      await tester.pumpAndSettle();
+      expect(confirm.hitTestable(), findsOneWidget);
+      h.gateway.error('invalid_name');
+      await tester.tap(confirm);
+      await tester.pumpAndSettle();
+      expect(find.text('Keyboard draft'), findsOneWidget);
+      expect(h.controller.failure?.code, FailureCode.invalid);
+      expect(tester.takeException(), isNull);
+      await unmount(tester);
+    },
+  );
+
+  testWidgets(
     'unconfigured and guest classroom are honest and make no cloud request',
     (tester) async {
       var h = await mount(tester, configured: false, guest: true, narrow: true);
@@ -227,12 +260,22 @@ void main() {
       expect(find.text('Score: 0/10'), findsNothing);
       expect(find.text('Score: 7/10'), findsOneWidget);
       expect(find.text('Answering time: 01:18'), findsOneWidget);
-      h.gateway.error('forbidden');
-      await tester.runAsync(() => h.controller.refresh());
+      // Revocation also denies the automatic dashboard reconciliation read.
+      // A one-shot denial followed by a permitted dashboard can legitimately
+      // clear c.denied before the real Android event loop reaches this check.
+      h.gateway.respond = (_) => Success(
+        CloudReply(
+          data: {
+            'error': {'code': 'forbidden'},
+          },
+        ),
+      );
+      expect(await tester.runAsync(() => h.controller.refresh()), isFalse);
       await tester.pump();
       expect(find.byKey(const ValueKey('classroom-denied')), findsOneWidget);
       expect(find.text('Score: 7/10'), findsNothing);
       expect(h.controller.snapshot, isNull);
+      expect(h.controller.selectedRoomId, isNull);
       expect(tester.takeException(), isNull);
       await unmount(tester);
     },

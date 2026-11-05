@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geomath_flutter/app/app.dart';
 import 'package:geomath_flutter/app/app_dependencies.dart';
@@ -52,6 +53,10 @@ void main() {
       );
       router.open('learning-calculation', arguments: {'shapeId': 'cube'});
       final reopened = await _ready(tester);
+      await _until(tester, () async {
+        final checkpoint = (await _snapshot(reopened))['checkpoint'];
+        return checkpoint is Map && _dimension(checkpoint) == nextValue;
+      });
       expect(
         _dimension((await _snapshot(reopened))['checkpoint'] as Map),
         nextValue,
@@ -182,9 +187,25 @@ Future<WebViewController> _ready(WidgetTester tester) async {
   await _until(tester, () async {
     if (find.byType(WebViewWidget).evaluate().isEmpty) return false;
     view = _view(tester);
-    final state = await _snapshot(view!);
-    final native = await _json(view!, 'window.GeoMathModule.diagnostics()');
+    final inputGate = find.ancestor(
+      of: find.byType(WebViewWidget).last,
+      matching: find.byType(AbsorbPointer),
+    );
+    if (inputGate.evaluate().isEmpty ||
+        tester.widget<AbsorbPointer>(inputGate.first).absorbing) {
+      // The real native controller has not finished launch/SQLite restore yet.
+      return false;
+    }
+    final state = await _json(
+      view!,
+      'window.GeoMathModule?.learningSnapshot?.() ?? {}',
+    );
+    final native = await _json(
+      view!,
+      'window.GeoMathModule?.diagnostics?.() ?? {}',
+    );
     return native['readyAcknowledged'] == true &&
+        native['active'] == true &&
         state['ready'] == true &&
         state['pending'] != true &&
         (state['checkpoint'] as Map?)?['section'] == 'calculation';
@@ -240,7 +261,10 @@ Future<Map<String, Object?>> _json(
   while (value is String) {
     value = jsonDecode(value);
   }
-  return Map<String, Object?>.from(value! as Map);
+  if (value is! Map) {
+    fail('The real WebView returned no object for $expression: $value');
+  }
+  return Map<String, Object?>.from(value);
 }
 
 Future<void> _until(
@@ -248,14 +272,20 @@ Future<void> _until(
   Future<bool> Function() accept, {
   Duration timeout = const Duration(seconds: 15),
 }) async {
+  // Rebuild Navigator before inspecting a newly pushed same-section route.
+  await tester.pump();
   final deadline = DateTime.now().add(timeout);
+  Object? lastError;
   while (DateTime.now().isBefore(deadline)) {
     try {
       if (await accept()) return;
-    } catch (_) {
-      /* real WebView still initializing */
+    } on PlatformException catch (error) {
+      lastError = error;
     }
     await tester.pump(const Duration(milliseconds: 60));
   }
-  fail('Timed out waiting for the real learning navigation condition.');
+  fail(
+    'Timed out waiting for the real learning navigation condition. '
+    'Last platform error: $lastError',
+  );
 }

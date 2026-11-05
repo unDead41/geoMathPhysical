@@ -1,6 +1,6 @@
 # GeoMath Flutter integration
 
-Status: **integrated; Android gate pending**. App0.1.0+1, contract1.0.0.
+Status: **integrated; Android rerun required after observed failures**. App0.1.0+1, contract1.0.0.
 
 ## Sources
 
@@ -50,3 +50,23 @@ inferred from fixtures. No native Google/recovery success, physical phone,
 TalkBack/manual gestures, iOS,5,000-user capacity or production signing claim.
 No backend/Pages/store deployment or main/main-digitalized/sharing push.
 APK source, mode, bytes and SHA256 are recorded only after a real build.
+
+## First integrated Android run
+
+Source290ee4ac048fed351f59539e2678a265de194d0b, CI42019726071:
+format/analyze,479host tests,46Node checks, normal debug and development-signed
+release builds all passed. Real API35/KVM device run reported18passed/8failed
+(including runner teardown count). Failures are retained, not reported as PASS.
+
+Fixture fixes now await current-route/private-WebView readiness instead of
+casting null or querying a disposed controller. Records await actual rendered
+widgets. The actor-reopen spike drains its old native document before allocating
+a new platform-view lifetime, retaining the stale-envelope rejection assertion.
+Classroom input dialogs now scroll title/form/actions together: a meaningful
+320dp/150%/580dp-keyboard regression reproduced117px overflow and now passes.
+The revoked-access fixture denies both scoped room and scheduled dashboard reads.
+
+The runner preserves a failed integration exit code while independently launching
+and capturing the normal app. No failure is hidden. Dependency-only CI caches
+are saved before device execution; no account/session/config/build outputs are
+cached. Hosted providers and physical-phone/manual acceptance remain separate.

@@ -162,6 +162,15 @@ void main() {
       sessions.logout();
       await _until(tester, () => first.phase == ModuleLoadPhase.closed);
       expect(sessions.current.epoch, greaterThan(oldActor.epoch));
+      // Reopen is a new platform-view lifetime. Drain the old native document
+      // before attaching another renderer, while retaining the stale envelope
+      // above to prove the new instance still rejects its former capability.
+      await first.webViewController!.runJavaScript(
+        'window.GeoMathModule.dispose()',
+      );
+      await tester.pumpWidget(const SizedBox.shrink());
+      first.dispose();
+      await tester.pump();
       final second = ModuleSpikeController(
         sessions: sessions,
         lifecycle: lifecycle,
