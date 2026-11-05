@@ -122,3 +122,29 @@ This is instrumentation, not a claim that the handshake defect is fixed.
 An explicit [android-diagnostic:module-spike] commit runs only that Android suite,
 skipping full app builds/host tests/captures. Its receipt has full_publish_gate:false
 and cannot replace the unmarked complete Android publication gate.
+
+
+## Bounded startup and remaining fixture corrections
+
+Focused Android diagnostic42040751191 on405a0d completed all three module cases
+plus runner teardown successfully. It is explicitly not the complete app gate.
+The previous full run finished22passed/5failed, including runner teardown;
+classroom, Solo, sync and production composition tests all passed. Production
+capture failed to locate the comma-joined Settings label in the real Android tree.
+
+The source now gives trusted document loading/configuration its own bounded30s
+foreground budget, followed by a separate bounded30s secure-ready budget.
+Previously, native document loading consumed the secure handshake budget before
+configuration completed. A29s document-delay regression reproduced that failure
+at the old30s boundary. Missing configuration/ready still fails; terminal actors
+and late callbacks cannot revive a view. Covered/background stages preserve their
+remaining budget. URL, opaque-origin and bridge capability validation are intact.
+Seven focused deadline cases and11preference-screen cases passed together
+(18/18), with clean full analyzer/formatter. The full Android gate must be rerun.
+
+The preference chooser now exposes its actual semantic tap action and disables it
+while saving. Capture selectors recognize the actual comma-separated accessibility
+labels and read fresh uniquely named UI hierarchies, preventing stale XML reuse.
+Learning screenshots reset conversion state with the SDK's per-test teardown;
+the actor-switch fixture expects stale rejection and checks durable partition
+bytes directly in test SQLite. No assertion is replaced with fake success.

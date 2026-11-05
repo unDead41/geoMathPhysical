@@ -12,11 +12,119 @@ import '../../core/navigation/app_navigation.dart';
 import '../../core/preferences/app_preferences.dart';
 import '../../core/preferences/preferences_repository.dart';
 import '../../core/result.dart';
+import '../../core/runtime/clock.dart';
 import '../../core/runtime/random_source.dart';
 import '../../core/session/auth_session.dart';
 import 'module_asset_repository.dart';
 
 enum ModuleLoadPhase { verifying, loading, ready, failed, closed }
+
+enum ModuleStartupStage { idle, document, handshake, ready, closed, expired }
+
+/// The native host owns two bounded foreground stages. Loading and configuring
+/// the trusted local document must not consume the child's secure-ready budget.
+/// This scheduler never accepts a document, message, actor or capability itself.
+final class ModuleStartupDeadline {
+  ModuleStartupDeadline({
+    required this.onExpired,
+    this.clock = const SystemClock(),
+  });
+
+  static const stageBudget = Duration(seconds: 30);
+  final void Function(ModuleStartupStage stage) onExpired;
+  final Clock clock;
+  ModuleStartupStage _stage = ModuleStartupStage.idle;
+  Duration _remaining = stageBudget;
+  Timer? _timer;
+  int? _armedAt;
+  bool _active = true;
+
+  ModuleStartupStage get stage => _stage;
+  bool get _waiting =>
+      _stage == ModuleStartupStage.document ||
+      _stage == ModuleStartupStage.handshake;
+  Duration get remaining {
+    if (_armedAt case final start?) {
+      final elapsed = clock.monotonicMilliseconds() - start;
+      return Duration(
+        milliseconds: (_remaining.inMilliseconds - elapsed).clamp(
+          0,
+          stageBudget.inMilliseconds,
+        ),
+      );
+    }
+    return _remaining;
+  }
+
+  void beginDocument() {
+    if (_stage != ModuleStartupStage.idle) return;
+    _stage = ModuleStartupStage.document;
+    _remaining = stageBudget;
+    _arm();
+  }
+
+  bool documentConfigured() {
+    if (_stage != ModuleStartupStage.document) return false;
+    if (remaining == Duration.zero) {
+      _expire();
+      return false;
+    }
+    _stop();
+    _stage = ModuleStartupStage.handshake;
+    _remaining = stageBudget;
+    _arm();
+    return true;
+  }
+
+  void setActive(bool active) {
+    if (_active == active) return;
+    if (_waiting) _remaining = remaining;
+    _timer?.cancel();
+    _timer = null;
+    _armedAt = null;
+    _active = active;
+    _arm();
+  }
+
+  bool markReady() {
+    if (!_waiting) return false;
+    if (remaining == Duration.zero) {
+      _expire();
+      return false;
+    }
+    _stop();
+    _stage = ModuleStartupStage.ready;
+    return true;
+  }
+
+  void close() {
+    _stop();
+    if (_stage != ModuleStartupStage.expired) {
+      _stage = ModuleStartupStage.closed;
+    }
+  }
+
+  void _arm() {
+    if (!_active || !_waiting || _timer != null) return;
+    _armedAt = clock.monotonicMilliseconds();
+    _timer = Timer(_remaining, _expire);
+  }
+
+  void _expire() {
+    if (!_waiting) return;
+    final expiredStage = _stage;
+    _stop();
+    _remaining = Duration.zero;
+    _stage = ModuleStartupStage.expired;
+    onExpired(expiredStage);
+  }
+
+  void _stop() {
+    _timer?.cancel();
+    _timer = null;
+    _armedAt = null;
+  }
+}
 
 /// The production Android adapter: a real WebView loading only verified local
 /// assets. It has no mock WebView or network fallback.
@@ -43,6 +151,16 @@ final class ModuleSpikeController extends ChangeNotifier {
     _audioLease = audio.register(
       owner: 'module:${bridge.identity.instanceId}',
       endpoint: _ModuleAudioEndpoint(this),
+    );
+    _startup = ModuleStartupDeadline(
+      onExpired: (stage) => _fail(
+        AppFailure(
+          code: FailureCode.unavailable,
+          message: stage == ModuleStartupStage.document
+              ? 'The trusted local learning document did not finish loading and configuring.'
+              : 'The local learning module did not finish its secure handshake.',
+        ),
+      ),
     );
     bridge.addListener(_bridgeChanged);
     preferences.addListener(_preferencesChanged);
@@ -73,10 +191,11 @@ final class ModuleSpikeController extends ChangeNotifier {
   bool _audioAllowed = false;
   Brightness _brightness = Brightness.light;
   String? _currentTopLevelUrl;
-  Timer? _handshakeTimer;
+  late final ModuleStartupDeadline _startup;
 
   WebViewController? get webViewController => _webViewController;
   ModuleLoadPhase get phase => _phase;
+  ModuleStartupStage get startupStage => _startup.stage;
   AppFailure? get failure => _failure;
   ModuleCommand? get lastValidatedCommand => _lastValidatedCommand;
   int get acceptedCommandCount => _acceptedCommandCount;
@@ -147,11 +266,17 @@ final class ModuleSpikeController extends ChangeNotifier {
           },
         ),
       );
-      if (_disposed) return;
+      if (_disposed ||
+          bridge.status == ModuleBridgeStatus.closed ||
+          _phase == ModuleLoadPhase.failed ||
+          _phase == ModuleLoadPhase.closed) {
+        return;
+      }
       bridge.attachDocument(_documentId);
       _phase = ModuleLoadPhase.loading;
       notifyListeners();
-      _startHandshakeTimer();
+      _updateStartupActivity();
+      _startup.beginDocument();
       await controller.loadFlutterAsset(ModuleAssetRepository.entryPoint);
     } catch (_) {
       _fail(
@@ -166,6 +291,8 @@ final class ModuleSpikeController extends ChangeNotifier {
   Future<void> _configure(String url) async {
     if (_disposed ||
         _configured ||
+        (_phase != ModuleLoadPhase.loading &&
+            _phase != ModuleLoadPhase.ready) ||
         url != trustedAssetUrl ||
         bridge.status == ModuleBridgeStatus.closed) {
       return;
@@ -175,7 +302,13 @@ final class ModuleSpikeController extends ChangeNotifier {
         await controller.currentUrl() != trustedAssetUrl) {
       return;
     }
-    if (_disposed || _configured) return;
+    if (_disposed ||
+        _configured ||
+        bridge.status == ModuleBridgeStatus.closed ||
+        (_phase != ModuleLoadPhase.loading &&
+            _phase != ModuleLoadPhase.ready)) {
+      return;
+    }
     _currentTopLevelUrl = url;
     final data = <String, Object>{
       'instanceId': bridge.identity.instanceId,
@@ -191,6 +324,18 @@ final class ModuleSpikeController extends ChangeNotifier {
       );
       if (result != true && result != 'true') {
         throw StateError('Trusted wrapper configuration rejected.');
+      }
+      // The platform may reply after cancellation/expiry, or the validated
+      // ready envelope may beat this platform Future. Never revive a terminal
+      // instance; only an accepted configuration starts a new handshake budget.
+      if (_disposed ||
+          bridge.status == ModuleBridgeStatus.closed ||
+          (_phase != ModuleLoadPhase.loading &&
+              _phase != ModuleLoadPhase.ready)) {
+        return;
+      }
+      if (_phase == ModuleLoadPhase.loading && !_startup.documentConfigured()) {
+        return;
       }
       _configured = true;
       await _syncActive();
@@ -225,6 +370,7 @@ final class ModuleSpikeController extends ChangeNotifier {
     );
     if (result case Success<ModuleCommand>(:final value)) {
       if (value.kind == ModuleCommandKind.ready) {
+        if (_phase != ModuleLoadPhase.ready && !_startup.markReady()) return;
         // JS enqueue is not native acceptance. Acknowledge only this validated
         // document/actor; configuration's platform reply may still be pending.
         unawaited(
@@ -238,7 +384,6 @@ final class ModuleSpikeController extends ChangeNotifier {
       _acceptedCommandCount++;
       if (value.kind == ModuleCommandKind.ready) {
         _phase = ModuleLoadPhase.ready;
-        _handshakeTimer?.cancel();
         if (!_ready.isCompleted) _ready.complete(Success(value));
         if (_routeVisible) {
           unawaited(_audioLease.activate().catchError((Object _) {}));
@@ -285,7 +430,7 @@ final class ModuleSpikeController extends ChangeNotifier {
   void setRouteVisible(bool value) {
     if (_routeVisible == value) return;
     _routeVisible = value;
-    _startHandshakeTimer();
+    _updateStartupActivity();
     unawaited(_syncActive());
     if (_phase == ModuleLoadPhase.ready) {
       unawaited(
@@ -297,29 +442,12 @@ final class ModuleSpikeController extends ChangeNotifier {
   }
 
   void _lifecycleChanged() {
-    _startHandshakeTimer();
+    _updateStartupActivity();
     unawaited(_syncActive());
   }
 
-  void _startHandshakeTimer() {
-    _handshakeTimer?.cancel();
-    _handshakeTimer = null;
-    if (_phase != ModuleLoadPhase.loading ||
-        !lifecycle.isForeground ||
-        !_routeVisible) {
-      return;
-    }
-    _handshakeTimer = Timer(const Duration(seconds: 30), () {
-      if (_phase != ModuleLoadPhase.ready) {
-        _fail(
-          const AppFailure(
-            code: FailureCode.unavailable,
-            message: 'The local learning module did not finish its secure handshake.',
-          ),
-        );
-      }
-    });
-  }
+  void _updateStartupActivity() =>
+      _startup.setActive(lifecycle.isForeground && _routeVisible);
 
   Future<void> _syncActive() => _run(
     'window.GeoMathModule.setActive(${lifecycle.isForeground && _routeVisible})',
@@ -374,7 +502,7 @@ final class ModuleSpikeController extends ChangeNotifier {
   void _bridgeChanged() {
     if (_disposed || bridge.status != ModuleBridgeStatus.closed) return;
     if (_phase != ModuleLoadPhase.failed) _phase = ModuleLoadPhase.closed;
-    _handshakeTimer?.cancel();
+    _startup.close();
     unawaited(_run('window.GeoMathModule.dispose()'));
     unawaited(_audioLease.deactivate().catchError((Object _) {}));
     if (!_ready.isCompleted) {
@@ -401,10 +529,14 @@ final class ModuleSpikeController extends ChangeNotifier {
   }
 
   void _fail(AppFailure failure) {
-    if (_disposed || _phase == ModuleLoadPhase.failed) return;
+    if (_disposed ||
+        _phase == ModuleLoadPhase.failed ||
+        _phase == ModuleLoadPhase.closed) {
+      return;
+    }
     _failure = failure;
     _phase = ModuleLoadPhase.failed;
-    _handshakeTimer?.cancel();
+    _startup.close();
     if (!_ready.isCompleted) _ready.complete(Failed(failure));
     bridge.close();
     notifyListeners();
@@ -420,7 +552,7 @@ final class ModuleSpikeController extends ChangeNotifier {
     unawaited(_run('window.GeoMathModule.dispose()'));
     bridge.dispose();
     _disposed = true;
-    _handshakeTimer?.cancel();
+    _startup.close();
     if (!_ready.isCompleted) {
       _ready.complete(
         const Failed(

@@ -36,6 +36,9 @@ void main() {
     if (!surfaceConverted) {
       await binding.convertFlutterSurfaceToImage();
       surfaceConverted = true;
+      // The pinned SDK registers a per-test teardown that reverts its image
+      // surface. Keep this suite's conversion flag in the same lifetime.
+      addTearDown(() => surfaceConverted = false);
     }
     await tester.pump(const Duration(milliseconds: 250));
     await binding.takeScreenshot(name);
@@ -495,8 +498,21 @@ void main() {
       expect(exposed.containsKey('checkpointActor'), isFalse);
       expect(exposed.containsKey('ownerId'), isFalse);
       expect(app.sessions.current, actorB);
+      // The public checkpoint port must reject A's stale binding while B is
+      // current. Inspect storage through the test's SQLite owner to prove that
+      // B/reopen did not overwrite A, without weakening the actor guard.
       expect(
-        dimension((await repository.read(actorA, slot)).valueOrNull!),
+        (await repository.read(actorA, slot)).failureOrNull?.code,
+        FailureCode.stale,
+      );
+      final storedA = await app.database.query(
+        'SELECT payload FROM learning_checkpoints '
+        'WHERE partition = ? AND scope = ? AND slot = ?',
+        [actorA.partition, actorA.scope, slot],
+      );
+      expect(storedA, hasLength(1));
+      expect(
+        dimension(jsonDecode(storedA.single['payload']! as String) as Map),
         '9.25',
       );
       expect(
@@ -671,6 +687,7 @@ Future<WebViewController> _readyView(
   String section,
 ) async {
   WebViewController? view;
+  // Cover the two bounded 30s startup stages and native checkpoint restore.
   await _until(tester, () async {
     if (find.byType(WebViewWidget).evaluate().isEmpty) return false;
     view = _view(tester);
@@ -698,7 +715,7 @@ Future<WebViewController> _readyView(
         snapshot['ready'] == true &&
         snapshot['pending'] != true &&
         (snapshot['checkpoint'] as Map?)?['section'] == section;
-  }, timeout: const Duration(seconds: 50));
+  }, timeout: const Duration(seconds: 70));
   // Allow the production page's launch/read/restore operation to finish before
   // the first test action competes with its initialization queue.
   await tester.pump(const Duration(milliseconds: 400));

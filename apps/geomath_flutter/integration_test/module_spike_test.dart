@@ -276,7 +276,8 @@ Future<void> _mount(
         controller.phase == ModuleLoadPhase.ready ||
         controller.phase == ModuleLoadPhase.failed ||
         controller.phase == ModuleLoadPhase.closed,
-    timeout: const Duration(seconds: 50),
+    // Native document loading and the signed handshake each have a 30s budget.
+    timeout: const Duration(seconds: 65),
     action: () async {
       if (DateTime.now().isBefore(nextDiagnostic)) return;
       nextDiagnostic = DateTime.now().add(const Duration(seconds: 10));
@@ -297,6 +298,7 @@ Future<void> _logStartupState(
 ) async {
   final safe = <String, Object?>{
     'phase': controller.phase.name,
+    'startupStage': controller.startupStage.name,
     'lifecycle': lifecycle.phase.name,
     'bridge': controller.bridge.status.name,
     'accepted': controller.acceptedCommandCount,

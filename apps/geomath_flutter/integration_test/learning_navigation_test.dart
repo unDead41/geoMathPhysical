@@ -185,6 +185,7 @@ WebViewController _view(WidgetTester tester) => WebViewController.fromPlatform(
 
 Future<WebViewController> _ready(WidgetTester tester) async {
   WebViewController? view;
+  // Cover the two bounded 30s startup stages and native checkpoint restore.
   await _until(tester, () async {
     if (find.byType(WebViewWidget).evaluate().isEmpty) return false;
     view = _view(tester);
@@ -210,7 +211,7 @@ Future<WebViewController> _ready(WidgetTester tester) async {
         state['ready'] == true &&
         state['pending'] != true &&
         (state['checkpoint'] as Map?)?['section'] == 'calculation';
-  }, timeout: const Duration(seconds: 60));
+  }, timeout: const Duration(seconds: 70));
   await tester.pump(const Duration(milliseconds: 400));
   return view!;
 }

@@ -21,6 +21,12 @@ PROFILES = (
 )
 
 
+def label_pattern(value):
+    # Flutter merges the setting title, value and hint with commas in Android's
+    # real accessibility tree; navigation labels use newlines.
+    return re.compile(r'(^|[\n,])\s*' + re.escape(value) + r'(?=\s*($|[\n,]))', re.I)
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--device', required=True)
@@ -39,10 +45,19 @@ def main():
     def hierarchy():
         nonlocal action_sequence
         action_sequence += 1
-        adb('shell', 'uiautomator', 'dump', '/sdcard/geomath-integration.xml')
-        raw = adb('exec-out', 'cat', '/sdcard/geomath-integration.xml')
+        remote = f'/sdcard/geomath-integration-{action_sequence}.xml'
+        dumped = adb('shell', 'uiautomator', 'dump', remote)
+        (output / f'{current_profile}-{action_sequence:03d}-dump.txt').write_bytes(dumped)
+        try:
+            raw = adb('exec-out', 'cat', remote)
+        finally:
+            try:
+                adb('shell', 'rm', '-f', remote, timeout=8)
+            except subprocess.SubprocessError:
+                pass
+        root = ET.fromstring(raw)
         (output / f'{current_profile}-{action_sequence:03d}-hierarchy.xml').write_bytes(raw)
-        return ET.fromstring(raw)
+        return root
 
     def dimensions():
         sizes = re.findall(r'(\d+)x(\d+)', adb('shell', 'wm', 'size').decode())
@@ -68,8 +83,7 @@ def main():
         return None
 
     def find(labels, *, bottom=False, scroll=False, toggle=False, optional=False):
-        patterns = [re.compile(r'(^|\n)' + re.escape(value) + r'(\n|$)', re.I)
-                    for value in labels]
+        patterns = [label_pattern(value) for value in labels]
         for attempt in range(12 if scroll else 8):
             try:
                 root = hierarchy()
