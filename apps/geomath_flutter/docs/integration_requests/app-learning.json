@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "branch": "app-learning",
-  "status": "IMPLEMENTED_PENDING_FLUTTER_CI_AND_ANDROID_PREVIEW",
+  "status": "HOST_VERIFIED_APK_BUILT_ANDROID_SMOKE_BLOCKED",
   "foundation": {
     "sha": "9a1f49a7c92d13bb70b7fd1420c34629a7785f9e",
     "contract_version": "1.0.0",
@@ -103,7 +103,7 @@
   "assets": [
     {
       "manifest": "assets/module/manifest.json",
-      "sha256": "6c2579a4cb3c994b0511ebe023f59b52bcc4f4da256a83efb5bbd0930af53ffc",
+      "sha256": "8ec24f96a930683de87e5311043edba5fe30679e4a30bd2f11d8b4e3dfde1a13",
       "registry_action": "Already reserved by foundation. Resolve current submanifest; do not copy the foundation snapshot file hashes into the global registry.",
       "source_commit": "37bc2cd262cc0a54e8ee31339ea37471c1ecfda5",
       "module_version": "1.6.2",
@@ -111,7 +111,16 @@
     }
   ],
   "dependencies": [],
-  "shared_api_changes": [],
+  "shared_api_changes": [
+    {
+      "required": true,
+      "owner": "app-integration",
+      "path": "lib/app/app_router.dart#GeoMathRouter.select",
+      "change": "Await the active contributed leave/BackPolicy before navigation.reset for bottom destinations. Respect Stay/Leave when checkpoint storage fails.",
+      "reason": "Current select/reset bypasses learning leave guard. An edit followed immediately by selecting Utama can be lost before the two-second autosave. Source-proven integration defect; no shared file changed here.",
+      "verification": "Real Android quick edit -> select another destination -> reopen preserves edits. Inject storage failure: Stay retains the live draft; Leave makes no durable-save claim."
+    }
+  ],
   "platform_needs": [
     {
       "required": true,
@@ -122,7 +131,7 @@
         "flutter build apk --debug -t lib/dev/learning_main.dart",
         "bash docs/handoffs/app-learning/evidence/run_learning_android.sh"
       ],
-      "reason": "Pinned local Flutter3.47.9 archive returnedHTTP404; existing hosted workflow targets foundation main/smoke. Integrator owns workflow changes and must run this contribution-specific entry and integration target.",
+      "reason": "Learning preview APK built with Flutter3.47.9/Dart3.13.7 and JDK17; ZIP CRC, v2 signature and packaged canonical assets verified. Own API35 emulator segfaulted before boot without KVM, so learning-specific real WebView run/screenshots remain required.",
       "integration_test": "integration_test/learning_acceptance_test.dart"
     },
     {
@@ -132,5 +141,24 @@
       "reason": "Frozen Android file channel hardcodes reportTXT; no unsupported platform method or new plugin was added."
     }
   ],
-  "handoff": "docs/handoffs/app-learning/LATEST.md"
+  "handoff": "docs/handoffs/app-learning/LATEST.md",
+  "verification": {
+    "flutter_analyze": "PASS",
+    "flutter_unit_widget_tests": {
+      "pass": 139,
+      "fail": 0
+    },
+    "learning_feature_tests": {
+      "pass": 47,
+      "fail": 0
+    },
+    "node_adapter_checks": {
+      "pass": 45,
+      "fail": 0
+    },
+    "checkpoint_parity_cases": 25,
+    "learning_preview_apk": "PASS_ANDROID_X64",
+    "learning_android_webview": "NOT_RUN",
+    "evidence": "docs/handoffs/app-learning/evidence/verification-result.json"
+  }
 }

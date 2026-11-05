@@ -57,19 +57,19 @@ The existing `.github/workflows/geomath-flutter.yml` automatically runs host for
 
 | Screen | Route | Automated native target | Visual/device result |
 |---|---|---|---|
-| 25 | `/learn` | Authored | PENDING |
-| 26 | `/learn/explore` | Authored | PENDING |
-| 27 | `/learn/views` | Authored | PENDING |
-| 28 | `/learn/notes/:shapeId` | Authored | PENDING |
-| 29 | `/learn/calculator/:shapeId` | Authored | PENDING |
-| 30 | `/learn/labs/net` | Authored | PENDING |
-| 31 | `/learn/labs/volume` | Authored | PENDING |
-| 32 | `/learn/labs/area` | Authored | PENDING |
-| 33 | `/learn/labs/composite` | Authored | PENDING |
-| 34 | `/learn/labs` | Authored | PENDING |
-| 35 | `/learn/projection` | Authored | PENDING |
-| 36 | `/learn/calculation` | Authored | PENDING |
-| 41 | `/learn/records` | Authored | PENDING |
+| 25 | `/learn/explore` | Authored | PENDING |
+| 26 | `/learn/views` | Authored | PENDING |
+| 27 | `/learn/notes/:shapeId` | Authored | PENDING |
+| 28 | `/learn/calculator/:shapeId` | Authored | PENDING |
+| 29 | `/learn/labs/net` | Authored | PENDING |
+| 30 | `/learn/labs/volume` | Authored | PENDING |
+| 31 | `/learn/labs/area` | Authored | PENDING |
+| 32 | `/learn/labs/composite` | Authored | PENDING |
+| 33 | `/learn/labs` | Authored | PENDING |
+| 34 | `/learn/projection` | Authored | PENDING |
+| 35 | `/learn/calculation` | Authored | PENDING |
+| 36 | `/learn/records` | Authored | PENDING |
+| 41 | `/learn` | Authored | PENDING |
 
 For SOR L01–L08/U02, keep the native acceptance gate open until the exact feature source SHA has an actual run receipt. Historical canonical tests and foundation CI are supporting evidence only. The optional visual matrix captures all 13 routes for BM/EN × light/dark × standard100%/strongcontrast150%; run it independently on a phone and tablet. Confirm no clipping, keyboard obstruction, horizontal overflow, lost focus or unreadable model labels. Also check 125% text through the shared preference UI.
 

@@ -458,9 +458,16 @@ final class LearningModuleController extends ChangeNotifier {
           'checkpoint': previous,
         });
         if (!isCurrent) return;
-        if (!saved.isSuccess || !restored.isSuccess) {
-          checkpointFailure = saved.failureOrNull ?? restored.failureOrNull;
+        if (!restored.isSuccess) {
+          checkpointFailure = restored.failureOrNull;
           recoveryRequired = true;
+          return;
+        }
+        if (!saved.isSuccess) {
+          // The freshest origin is already restored in the live document.
+          // Retry saving that draft rather than loading an older stored copy.
+          checkpointFailure = saved.failureOrNull;
+          recoveryRequired = false;
           return;
         }
         _lastCheckpoint = encoded;

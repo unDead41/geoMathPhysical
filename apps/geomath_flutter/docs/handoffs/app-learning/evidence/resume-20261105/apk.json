@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "filename": "GeoMath-Learning-0.1.0-debug.apk",
+  "bytes": 172228092,
+  "sha256": "a9f50b3effe0bc5277e65d58eea0b35264ca44406c5d1f319418a13b517f55dd",
+  "flutterEngines": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86_64"
+  ],
+  "entryPoint": "lib/dev/learning_main.dart",
+  "buildExitCode": 0,
+  "zipCrc": "PASS",
+  "bundledAssetsMatchCurrentSource": {
+    "assets/module/manifest.json": true,
+    "assets/module/native-adapter.js": true,
+    "assets/module/canonical-module.html": true
+  },
+  "actualAndroidWebViewRun": "BLOCKED_BEFORE_BOOT",
+  "testedBaseCommit": "f697a58a28c3d068e0fe18fc571d1cfdb51ef3ee",
+  "sourceControllerSha256": "ba9f4fa1427b518969d17e20958d859b43b6dc312bc0ec6cb040d17cbfc1a629"
+}

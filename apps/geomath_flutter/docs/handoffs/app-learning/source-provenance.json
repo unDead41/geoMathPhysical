@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "status": "IMPLEMENTED_PENDING_FLUTTER_CI_AND_ANDROID_PREVIEW",
+  "status": "HOST_VERIFIED_APK_BUILT_ANDROID_SMOKE_BLOCKED",
   "foundation": {
     "sha": "9a1f49a7c92d13bb70b7fd1420c34629a7785f9e",
     "contract_version": "1.0.0",
@@ -15,7 +15,7 @@
   "module_version": "1.6.2",
   "adapter_version": 3,
   "canonical_html_sha256": "7ddd5d60a25fbdf73c20f9f8e8fc0db4253e582fb50d17c944307b8f682066c4",
-  "module_manifest_sha256": "6c2579a4cb3c994b0511ebe023f59b52bcc4f4da256a83efb5bbd0930af53ffc",
+  "module_manifest_sha256": "8ec24f96a930683de87e5311043edba5fe30679e4a30bd2f11d8b4e3dfde1a13",
   "module_files": [
     {
       "path": "assets/module/canonical-module.html",
@@ -29,8 +29,8 @@
     },
     {
       "path": "assets/module/native-adapter.js",
-      "sha256": "cc00a879fb8ca8b383e5615a4be26b326cff5bbeb9ed16b6b93b05f45cbafe88",
-      "bytes": 795265
+      "sha256": "47edd959776f4e2d8056ddcbf06121a01075cd88f4588497112b65a6f8b8b95e",
+      "bytes": 797856
     }
   ],
   "source_checks": {
@@ -39,22 +39,54 @@
       "fail": 0
     },
     "combined_adapter_geometry_source_tests": {
-      "pass": 40,
+      "pass": 45,
       "fail": 0
     },
     "dart_js_checkpoint_parity": {
       "pass": 1,
-      "cases": 24,
+      "cases": 25,
       "fail": 0
     }
   },
   "native_checks": {
-    "flutter_analyze": "PENDING_HOSTED_CI",
-    "flutter_tests": "PENDING_HOSTED_CI",
-    "learning_preview_apk": "NOT_BUILT",
-    "android_webview": "NOT_RUN",
+    "flutter_analyze": "PASS",
+    "flutter_tests": {
+      "pass": 139,
+      "fail": 0
+    },
+    "formatter": "109 files; 0 changes",
+    "learning_preview_apk": "PASS; universal development/debug",
+    "apk_crc": "PASS",
+    "apk_v2_signature": "PASS",
+    "android_webview": "BLOCKED_BEFORE_BOOT",
     "phone_tablet_screenshots": "NOT_CAPTURED",
     "talkback": "NOT_RUN"
   },
-  "prior_audit": "audit/PREFOUNDATION.md"
+  "prior_audit": "audit/PREFOUNDATION.md",
+  "apk": {
+    "schemaVersion": 1,
+    "filename": "GeoMath-Learning-0.1.0-debug.apk",
+    "bytes": 172228092,
+    "sha256": "a9f50b3effe0bc5277e65d58eea0b35264ca44406c5d1f319418a13b517f55dd",
+    "flutterEngines": [
+      "arm64-v8a",
+      "armeabi-v7a",
+      "x86_64"
+    ],
+    "entryPoint": "lib/dev/learning_main.dart",
+    "buildExitCode": 0,
+    "zipCrc": "PASS",
+    "bundledAssetsMatchCurrentSource": {
+      "assets/module/manifest.json": true,
+      "assets/module/native-adapter.js": true,
+      "assets/module/canonical-module.html": true
+    },
+    "actualAndroidWebViewRun": "BLOCKED_BEFORE_BOOT",
+    "testedBaseCommit": "f697a58a28c3d068e0fe18fc571d1cfdb51ef3ee",
+    "sourceControllerSha256": "ba9f4fa1427b518969d17e20958d859b43b6dc312bc0ec6cb040d17cbfc1a629"
+  },
+  "integration_blockers": [
+    "shared bottom-destination reset must await contributed leave guard",
+    "real Android learning WebView/visual/TalkBack/gesture acceptance"
+  ]
 }
