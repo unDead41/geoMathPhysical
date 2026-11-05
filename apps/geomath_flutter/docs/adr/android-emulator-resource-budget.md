@@ -18,7 +18,16 @@ prebuilt APK, avoiding Flutter test's fresh generated listener compilation while
 the guest is live. Both commands run the same four testWidgets; no assertions,
 plugin behavior, per-test timeouts or 30-second module deadline are weakened.
 
-The API remains 36. The Pixel 2 profile uses two guest cores and 2048 MB RAM;
+The first reduced-load attempt kept API 36 with a 2048 MB guest. Its native
+logs then proved System UI and Google Play services ANRs before app tests, plus
+94 clipboard access denials for lack of native focus. The focus snapshot names
+the System UI ANR window while GeoMath remains the focused application record.
+The same three module/asset scenarios passed, and the real clipboard condition
+correctly failed rather than being mocked or bypassed.
+
+The selected test image is now Android 15/API 35 AOSP, whose x86_64 default image
+is listed in the official Android SDK repository. Compile/target SDK remains 36.
+The Pixel 2 profile uses two guest cores and 3072 MB RAM;
 ADB sets 720x1280 and density 320, producing a 360x640 dp viewport. The guest is
 kept awake and unlocked. This reduces rendering/memory pressure within the
 existing runner rather than changing the repository's visibility or runner tier.
@@ -28,6 +37,10 @@ then polls the unmocked clipboard for the exact preview text within the existing
 15-second condition budget. It neither primes nor repeats the write. Continuous
 ClipboardService/ActivityManager logs, driver screenshots before cleanup and
 native focus/power snapshots retain evidence if the environment still fails.
+
+READY requires the full unchanged suite and normal-app screenshots on this
+identified supported Android runtime. A complete API 36 device pass is not
+inferred from its three passing scenarios or from an APK compiled against 36.
 
 Sources inspected on 5 November 2026:
 

@@ -22,7 +22,7 @@ See [the toolchain decision](adr/toolchain.md).
 3. Run `flutter doctor --android-licenses`, review the licenses, then
    `flutter doctor -v`. If needed, select the actual installed SDK with
    `flutter config --android-sdk="C:\Users\you\AppData\Local\Android\Sdk"`.
-4. In Android Studio Device Manager create an API 36 Google APIs emulator and
+4. In Android Studio Device Manager create an API 35 AOSP emulator and
    start it. Hardware acceleration must be available. Alternatively connect an
    Android API 24+ phone with USB debugging enabled and authorize the computer.
 5. Open `apps/geomath_flutter` as the Flutter project. Android Studio needs the
@@ -61,7 +61,7 @@ On Linux/macOS set `ANDROID_HOME` to the installed SDK directory and add
 installed `sdkmanager` compatibility command can install:
 
 ```text
-sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0" "ndk;28.2.13676358" "emulator" "system-images;android-36;google_apis;x86_64"
+sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0" "ndk;28.2.13676358" "emulator" "system-images;android-35;default;x86_64"
 ```
 
 Command-line Tools 22 also supplies the newer Android CLI. Prefer Android
@@ -102,7 +102,7 @@ durability contract therefore belongs to SQLite, not this plugin.
 
 [The app workflow](../../../.github/workflows/geomath-flutter.yml) uses app path
 filters, a pinned Flutter SDK, Java 17, format/analyze/tests/debug build and an
-API 36 Google APIs emulator job. It does not deploy the app or a backend.
+API 35 AOSP emulator job (compile/target SDK remains 36). It does not deploy the app or a backend.
 
 The initial worker environment is Ubuntu 24.04.3, x86-64, Java 17.0.20. Its
 first `flutter doctor -v` exited 0 but reported no Android SDK and only a Linux
@@ -189,3 +189,13 @@ upload that preserved binary separately from the verify-job APK.
 
 CodeQL path sources: [toolcache root](https://github.com/actions/runner-images/blob/main/images/ubuntu/scripts/build/configure-environment.sh),
 [bundle installer](https://github.com/actions/runner-images/blob/main/images/ubuntu/scripts/build/install-codeql-bundle.sh).
+
+## Current hosted device target
+
+The private runner exposes two CPUs and 8 GB RAM. The API 36 Google image
+produced System UI/GMS ANRs and94 native clipboard read denials for lost focus
+in run41967889411. The next supported device target is Android15/API35 AOSP,
+Pixel2, two cores,3072 MB,720x1280 at320dpi. Both normal/integration APKs are
+compiled before boot; compile/target SDK remains36 and all four device scenarios
+are unchanged. The actual successful runtime/provider must be read from READY,
+not inferred from this selection. Earlier local API36 inventory is historical.

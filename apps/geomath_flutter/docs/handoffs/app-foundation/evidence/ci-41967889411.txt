@@ -1,0 +1,35 @@
+GitHub Actions receipt
+Run:https://github.com/unDead41/geodecoder/actions/runs/41967889411
+Source:d2557caca02604c3ec6b56f2fb8fcec61a9d2c73
+Job:127049032186
+Source gates:PASS,77 formatted files,92 Flutter tests,12 Node contracts, normal and prebuilt integration APKs.
+Android:the same3 module/asset scenarios pass; the app-flow actualclipboard condition fails within15seconds. Not READY.
+
+Native evidence now proves the cause, rather than inferring it from a screenshot:
+11-05 04:41:06.122   655  2050 E ActivityManager: ANR in com.android.systemui
+11-05 04:41:07.106   655  2050 E ActivityManager: ANR in com.google.android.gms.persistent
+11-05 04:41:08.889   655  2188 E ActivityManager: ANR in com.google.android.gms
+11-05 04:42:37.285   655  2168 E ClipboardService: Denying clipboard access to com.geomath.dev, application is not in focus nor is it a system service for user 0
+11-05 04:42:37.774   655  2887 E ClipboardService: Denying clipboard access to com.geomath.dev, application is not in focus nor is it a system service for user 0
+mCurrentFocus=Window{1910792 u0 Application Not Responding: com.android.systemui}
+mFocusedApp=ActivityRecord{247829788 u0 com.geomath.dev/.MainActivity t7}
+ClipboardService recorded 94 focus-denial messages. The SystemUI/GMS ANRs occurred before the test application started. The prebuilt driver correctly exits1 and retains its screenshot before cleanup. No clipboard mock, repeated copy or seeded clipboard is used.
+
+The official Android SDK system-image repository lists system-images;android-35;default;x86_64 (x86_64-35_r02.zip). The next device selection is supportedAndroid15/API35 AOSP, without Google services,3072MB guest. Compile/targetSDK36, four assertions/scenarios and per-test/native deadlines stay unchanged. FullAPI36 UI validation is not claimed.
+
+Evidence artifact13388707622, archive SHA256 f484b5fd7cf661ea12f72b19b6868cbe19a67bab346aae23ff59b902c16c5036.
+NormalAPK artifact13388876308;172051208 bytes;SHA256 37d2cf0953758d6ad2e09b7d17acf761ae35c44ef7d561055b59850542b99136; all20 bundled assets match source.
+
+Selected source log lines (ephemeral VM-service URLs omitted):
+2026-11-05T04:28:44.2236092Z Formatted 77 files (0 changed) in 0.28 seconds.
+2026-11-05T04:28:54.1347083Z No issues found! (ran in 9.0s)
+2026-11-05T04:29:29.8338799Z 🎉 92 tests passed.
+2026-11-05T04:29:31.1634572Z # pass 12
+2026-11-05T04:29:31.1635098Z # fail 0
+2026-11-05T04:36:29.8402862Z ✓ Built build/app/outputs/flutter-apk/app-debug.apk
+2026-11-05T04:38:02.9665057Z ✓ Built build/app/outputs/flutter-apk/app-debug.apk
+2026-11-05T04:42:36.5696510Z I/flutter ( 2381): 01:03 +1: missing local asset never creates a ready WebView
+2026-11-05T04:42:37.3835322Z I/flutter ( 2381): 01:04 +2: corrupt local asset never creates a ready WebView
+2026-11-05T04:43:25.8488534Z I/flutter ( 2381): 01:52 +3: guest app opens real offline module, persists preferences/records and keeps reports local [E]
+2026-11-05T04:43:25.8567885Z I/flutter ( 2381): 01:52 +3 -1: (tearDownAll)
+2026-11-05T04:43:25.8643917Z I/flutter ( 2381): 01:52 +4 -1: Some tests failed.

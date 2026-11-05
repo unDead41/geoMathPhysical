@@ -262,3 +262,19 @@ all77 files then required zero changes. The standalone SDK lacks Flutter package
 resolution, so this local result is not an analysis/device receipt. The next CI
 run retains the full formatter/analyze/test/build/actual-device gates. See
 [the receipt](evidence/ci-41967215715-format.txt).
+
+## Native focus cause proved; supported AOSP device selected
+
+Run [41967889411](https://github.com/unDead41/geodecoder/actions/runs/41967889411)
+passed77-file formatting, analyze,92 Flutter tests,12 Node contracts and both
+APKs at `d2557caca02604c3ec6b56f2fb8fcec61a9d2c73`. Three real module/asset
+cases passed. Native logs prove SystemUI/GMS ANRs before app launch;94 clipboard
+reads were denied for lost focus. The focused window is the SystemUI ANR, while
+the focused application record is GeoMath. The exact clipboard assertion remains
+failed and must pass before READY. See [the receipt](evidence/ci-41967889411.txt).
+
+The official SDK repository lists the supported API35 AOSP x86_64 image. CI now
+selects Android15/API35 AOSP with3072MB guest memory and no Google services.
+Compile/target SDK36 remains; tests, four scenarios and all deadlines are unchanged.
+A complete API36 UI pass is not claimed. Actual successful device/provider values
+will be recorded only after the full gate and normal-app screenshots pass.

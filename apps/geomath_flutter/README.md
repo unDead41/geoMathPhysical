@@ -33,7 +33,7 @@ On Windows:
    `flutter doctor -v`. If necessary, set the actual SDK/JDK paths with
    `flutter config --android-sdk="C:\Users\you\AppData\Local\Android\Sdk"`
    and `flutter config --jdk-dir="C:\path\to\jdk-17"`.
-4. Start an API 36 Google APIs emulator in Android Studio Device Manager, or
+4. Start an API 35 AOSP emulator in Android Studio Device Manager, or
    connect an Android API 24+ phone with USB debugging enabled. Authorize the
    computer and confirm it appears in `flutter devices`.
 5. Open `apps/geomath_flutter` as the Flutter project in Android Studio or VS
@@ -73,7 +73,10 @@ flutter test integration_test/app_flow_test.dart -d DEVICE_ID
 
 CI prebuilds the same integration target and runs it with the supported
 `flutter drive` adaptor. This keeps compilation separate from a small emulator
-on the private repository's runner. To reproduce that route on an x64 emulator:
+on the private repository's runner. Its test device is Android 15/API 35 AOSP;
+the app's compile/target SDK remains 36. The API 36 Google image's System UI/GMS
+ANRs and native clipboard focus denials are retained in the handoff. To reproduce
+the prebuilt route on an x64 emulator:
 
 ```text
 flutter build apk --debug --target-platform android-x64 -t integration_test/foundation_smoke_test.dart

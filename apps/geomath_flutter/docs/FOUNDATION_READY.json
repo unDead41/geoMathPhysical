@@ -133,7 +133,10 @@
     "min_api": 24,
     "emulator": "37.2.13",
     "ndk": "28.2.13676358",
-    "cmake": "3.22.1"
+    "cmake": "3.22.1",
+    "android_compile_api": 36,
+    "android_target_api": 36,
+    "android_api_meaning": "compile/target SDK; actual smoke runtime is recorded separately under android_ci"
   },
   "required_checks": [
     "analyze",
@@ -144,39 +147,39 @@
   "checks": {
     "pub_get": {
       "status": "passed",
-      "command": "flutter pub get --offline",
+      "command": "flutter pub get",
       "exit_code": 0,
-      "evidence": "docs/handoffs/app-foundation/evidence/ci-41963202642.txt",
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41967889411.txt",
       "note": "Official pub.dev archives preloaded and SHA-256 verified; direct online Dart networking was unreliable in the managed host.",
-      "tested_commit": "d72a5bbdb6be49028a3162c2437a707372e3832f",
-      "ci_run_id": 41963202642,
+      "tested_commit": "d2557caca02604c3ec6b56f2fb8fcec61a9d2c73",
+      "ci_run_id": 41967889411,
       "ci_evidence": "docs/handoffs/app-foundation/evidence/ci-41954312460-verify.txt"
     },
     "format": {
-      "status": "pending",
-      "command": "dart format --output=none --set-exit-if-changed lib test integration_test",
+      "status": "passed",
+      "command": "dart format --output=none --set-exit-if-changed lib test integration_test test_driver",
       "exit_code": 0,
-      "tested_commit": "d72a5bbdb6be49028a3162c2437a707372e3832f",
-      "ci_run_id": 41963202642,
-      "evidence": "docs/handoffs/app-foundation/evidence/ci-41963202642.txt",
-      "reason": "A new test_driver entry and test helper await the next configured formatter check."
+      "tested_commit": "d2557caca02604c3ec6b56f2fb8fcec61a9d2c73",
+      "ci_run_id": 41967889411,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41967889411.txt",
+      "reason": "Configured CI77-file formatter passed atd2557ca"
     },
     "analyze": {
-      "status": "pending",
+      "status": "passed",
       "command": "flutter analyze",
       "exit_code": 0,
-      "tested_commit": "d72a5bbdb6be49028a3162c2437a707372e3832f",
-      "ci_run_id": 41963202642,
-      "evidence": "docs/handoffs/app-foundation/evidence/ci-41963202642.txt",
-      "reason": "Prebuilt driver/test helper changes await the next analysis gate."
+      "tested_commit": "d2557caca02604c3ec6b56f2fb8fcec61a9d2c73",
+      "ci_run_id": 41967889411,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41967889411.txt",
+      "reason": "Configured CI analyzer passed atd2557ca"
     },
     "unit_widget_tests": {
       "status": "passed",
       "command": "flutter test",
       "exit_code": 0,
-      "tested_commit": "d72a5bbdb6be49028a3162c2437a707372e3832f",
-      "ci_run_id": 41963202642,
-      "evidence": "docs/handoffs/app-foundation/evidence/ci-41963202642.txt",
+      "tested_commit": "d2557caca02604c3ec6b56f2fb8fcec61a9d2c73",
+      "ci_run_id": 41967889411,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41967889411.txt",
       "passed": 92,
       "failed": 0
     },
@@ -184,9 +187,9 @@
       "status": "passed",
       "command": "node --test tools/contracts/verify_exports.test.mjs test/foundation/native_adapter_contract.test.mjs",
       "exit_code": 0,
-      "tested_commit": "d72a5bbdb6be49028a3162c2437a707372e3832f",
-      "ci_run_id": 41963202642,
-      "evidence": "docs/handoffs/app-foundation/evidence/ci-41963202642.txt",
+      "tested_commit": "d2557caca02604c3ec6b56f2fb8fcec61a9d2c73",
+      "ci_run_id": 41967889411,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41967889411.txt",
       "passed": 12,
       "failed": 0
     },
@@ -194,12 +197,12 @@
       "status": "passed",
       "command": "flutter build apk --debug",
       "exit_code": 0,
-      "tested_commit": "d72a5bbdb6be49028a3162c2437a707372e3832f",
-      "ci_run_id": 41963202642,
-      "evidence": "docs/handoffs/app-foundation/evidence/ci-41963202642.txt",
-      "artifact_id": 13386951282,
+      "tested_commit": "d2557caca02604c3ec6b56f2fb8fcec61a9d2c73",
+      "ci_run_id": 41967889411,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41967889411.txt",
+      "artifact_id": 13388876308,
       "bytes": 172051208,
-      "sha256": "a24233c9e53793d174a7e9b80bb79c63fb1eebd1265dcf8a78e4a9f52499e9e0"
+      "sha256": "37d2cf0953758d6ad2e09b7d17acf761ae35c44ef7d561055b59850542b99136"
     },
     "android_run_local": {
       "status": "blocked",
@@ -212,8 +215,8 @@
       "status": "pending",
       "command": "flutter drive --no-pub --driver=test_driver/integration_driver.dart --target=integration_test/foundation_smoke_test.dart --use-application-binary=$RUNNER_TEMP/geomath-integration-debug.apk -d emulator-5554",
       "exit_code": null,
-      "reason": "Previous source passed3/4 Android tests. App-flow clipboard read returnednull; post-test screenshot shows System UI ANR. Lower-render-load prebuilt-driver run and bounded actual clipboard read await verification.",
-      "evidence": "docs/handoffs/app-foundation/evidence/ci-41963202642.txt"
+      "reason": "API36Googleimage has proven pre-test SystemUI/GMS ANRs and94 native clipboard focus denials. Run unchanged suite on supportedAPI35AOSP; compile/target36 remain unchanged.",
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41967889411.txt"
     }
   },
   "android_local": {
@@ -227,14 +230,15 @@
     "screenshots": []
   },
   "blockers": [
-    "Final app-flow/native clipboard, normal APK run and screenshots await stable-emulator prebuilt-driver verification. Three real module/asset Android scenarios passed atd72a5bb."
+    "Complete native clipboard/app-flow, normal APK launch and actual screenshots await API35AOSP device gate. All four assertions/deadlines remain; no complete API36device pass is claimed."
   ],
   "not_claimed": [
     "physical Android phone",
     "hosted Auth/providers/migrations",
     "iOS",
     "production capacity",
-    "all 48 native screens"
+    "all 48 native screens",
+    "complete API36 hosted-device UI gate"
   ],
   "handoff": "docs/handoffs/app-foundation/LATEST.md",
   "ci_attempts": [
@@ -318,6 +322,18 @@
       "android_smoke": "not_run",
       "evidence": "docs/handoffs/app-foundation/evidence/ci-41967215715-format.txt",
       "reason": "One new test chain required SDK formatter wrapping. Exact Dart3.13.7 formatter applied; no behavioral code change."
+    },
+    {
+      "run_id": 41967889411,
+      "url": "https://github.com/unDead41/geodecoder/actions/runs/41967889411",
+      "tested_commit": "d2557caca02604c3ec6b56f2fb8fcec61a9d2c73",
+      "job": 127049032186,
+      "verify": "passed",
+      "android_smoke": "passed_3_failed_1_environment_focus",
+      "normal_apk_artifact_id": 13388876308,
+      "evidence_artifact_id": 13388707622,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41967889411.txt",
+      "reason": "Native logs prove SystemUI/GMS ANRs before app launch and94 clipboard access denials because the ANR window owns input focus. Same3 module/asset cases pass; actualclipboard read correctly fails."
     }
   ],
   "android_ci": {
@@ -331,5 +347,15 @@
     "offline_radios_disabled": true,
     "screenshots": []
   },
-  "private_module_adapter_version": 2
+  "private_module_adapter_version": 2,
+  "planned_ci_device": {
+    "android": "15",
+    "api": 35,
+    "target": "default/AOSP",
+    "arch": "x86_64",
+    "profile": "pixel_2",
+    "cores": 2,
+    "ram_mb": 3072,
+    "display": "720x1280@320dpi"
+  }
 }

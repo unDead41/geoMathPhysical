@@ -37,6 +37,15 @@ adb shell cmd connectivity airplane-mode enable
 adb shell svc wifi disable
 adb shell svc data disable
 test "$(adb shell settings get global airplane_mode_on | tr -d '\r')" = '1'
+adb shell dumpsys window > "$evidence_dir/window-before-tests.txt"
+python3 - "$evidence_dir/window-before-tests.txt" <<'PY'
+import pathlib, sys
+text = pathlib.Path(sys.argv[1]).read_text()
+focus = next((line.strip() for line in text.splitlines() if 'mCurrentFocus=' in line), '')
+if 'Not Responding' in focus:
+    raise SystemExit('Android system ANR owns input focus before the test suite: ' + focus)
+print('Native focus before test suite: ' + focus)
+PY
 sha256sum "$RUNNER_TEMP/geomath-integration-debug.apk" > "$evidence_dir/integration-apk.sha256"
 flutter drive --no-pub --driver=test_driver/integration_driver.dart \
   --target=integration_test/foundation_smoke_test.dart \
