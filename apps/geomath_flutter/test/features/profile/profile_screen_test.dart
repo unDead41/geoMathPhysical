@@ -289,7 +289,7 @@ void main() {
     },
   );
   testWidgets(
-    'bottom tab return restores exact actor-bound draft; logout clears it',
+    'bottom tab offers stay, discard and save; logout clears the next draft',
     (tester) async {
       final profiles = Profiles();
       final app = await open(tester, profiles);
@@ -298,28 +298,62 @@ void main() {
           GeoMathApp(dependencies: app, initialRoute: 'cloud-game-profile'),
         );
         await tester.pumpAndSettle();
-        await tester.enterText(nameField(), 'Tab-retained Draft');
-        await tester.pump();
         final router = AppScope.of(tester.element(find.byType(ProfileScreen)))
             .router;
+        await tester.enterText(nameField(), 'Tab-retained Draft');
+        await tester.pump();
         router.select(AppDestination.home);
         await tester.pumpAndSettle();
-        router.select(AppDestination.profile);
+        expect(find.byType(AlertDialog), findsOneWidget);
+        await tester.tap(find.text('Terus menyunting'));
         await tester.pumpAndSettle();
+        expect(router.navigation.current.route.name, 'cloud-game-profile');
         expect(
           tester.widget<TextField>(nameField()).controller!.text,
           'Tab-retained Draft',
         );
         router.select(AppDestination.home);
         await tester.pumpAndSettle();
-        app.sessions.logout();
-        app.sessions.bindUser(userId: 'alice', sessionId: 'new-session-alice');
+        await tester.tap(
+          find.descendant(
+            of: find.byType(AlertDialog),
+            matching: find.text('Buang perubahan'),
+          ),
+        );
+        await tester.pumpAndSettle();
+        expect(router.navigation.current.route.name, 'home');
+        expect(profiles.saves, 0);
         router.select(AppDestination.profile);
         await tester.pumpAndSettle();
         expect(
           tester.widget<TextField>(nameField()).controller!.text,
           'Alice Teacher',
         );
+        await tester.enterText(nameField(), 'Saved with tab');
+        await tester.pump();
+        router.select(AppDestination.home);
+        await tester.pumpAndSettle();
+        await tester.tap(
+          find.descendant(
+            of: find.byType(AlertDialog),
+            matching: find.text('Simpan'),
+          ),
+        );
+        await tester.pumpAndSettle();
+        expect(router.navigation.current.route.name, 'home');
+        expect(profiles.saves, 1);
+        router.select(AppDestination.profile);
+        await tester.pumpAndSettle();
+        await tester.enterText(nameField(), 'Draft for previous session');
+        await tester.pump();
+        app.sessions.logout();
+        app.sessions.bindUser(userId: 'alice', sessionId: 'new-session-alice');
+        await tester.pumpAndSettle();
+        expect(
+          tester.widget<TextField>(nameField()).controller!.text,
+          'Saved with tab',
+        );
+        expect(tester.takeException(), isNull);
       } finally {
         await close(tester, app);
       }

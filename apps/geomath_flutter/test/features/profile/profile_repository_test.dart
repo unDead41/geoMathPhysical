@@ -113,11 +113,25 @@ void main() {
     );
     expect(gateway.calls, 0);
   });
-  test('missing profile is explicit completion state', () async {
+  test('explicit null profile is a genuine completion state', () async {
     gateway.response = () => Success(CloudReply(data: const {'profile': null}));
     final result = await repository.load(sessions.current);
     expect(result.isSuccess, isTrue);
     expect(result.valueOrNull, isNull);
+  });
+  test('snapshot requires an explicit profile field in its response', () async {
+    for (final data in <Map<String, Object?>>[
+      {},
+      {'status': 'ok'},
+      {'profile': false},
+      {'profile': <Object?>[]},
+    ]) {
+      gateway.response = () => Success(CloudReply(data: data));
+      final result = await repository.load(sessions.current);
+      expect(result.isSuccess, isFalse);
+      expect(result.failureOrNull?.code, FailureCode.invalid);
+      expect(result.failureOrNull?.message, 'profile.invalidResponse');
+    }
   });
   test('foreign profile identity and invalid server role rejected', () async {
     for (final data in [profile(id: 'bob'), profile(role: 'admin')]) {

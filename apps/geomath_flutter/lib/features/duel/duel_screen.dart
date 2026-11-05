@@ -13,6 +13,8 @@ import '../../core/navigation/app_navigation.dart';
 import '../../core/widgets/widgets.dart';
 import 'duel_controller.dart';
 import 'duel_projection.dart';
+import 'presentation/game_card_carousel.dart';
+import 'presentation/game_question_content.dart';
 
 /// Every entry route projects the same service-owned session and poll owner.
 final class DuelScreen extends StatefulWidget {
@@ -32,7 +34,7 @@ final class DuelScreen extends StatefulWidget {
 final class _DuelScreenState extends State<DuelScreen> {
   final _name = TextEditingController(), _pin = TextEditingController();
   GeometryShape? _selected;
-  String? _selectionStage;
+  Object? _selectionStage;
   int? _instance;
   bool _currentRoute = true, _confirming = false;
   Timer? _ticker;
@@ -141,8 +143,13 @@ final class _DuelScreenState extends State<DuelScreen> {
   @override
   Widget build(BuildContext context) {
     final snapshot = c.snapshot;
-    final stage =
-        '${c.actor.partition}/${snapshot?.room.id}/${snapshot?.seq}/${snapshot?.me.stage.name}';
+    final stage = (
+      c.actor,
+      c.sessionGeneration,
+      snapshot?.room.id,
+      snapshot?.seq,
+      snapshot?.me.stage,
+    );
     if (_selectionStage != stage) {
       _selectionStage = stage;
       _selected = null;
@@ -362,10 +369,39 @@ final class _DuelScreenState extends State<DuelScreen> {
     ],
   );
 
+  /// Uses only the server's public copy and optional variable legend. Active
+  /// question IDs and the local Solo bank never determine question content.
+  Widget _questionContent(DuelQuestion question, {TextStyle? style}) {
+    final language = s.locale.languageCode;
+    final copy = question.localized(language);
+    // The real projector joins its LCD lines into prompt. Preserve any extra
+    // public lines without displaying the same formula and context twice.
+    final text = [
+      copy.prompt,
+      ...copy.lines.where((line) => !copy.prompt.contains(line)),
+    ].join('\n');
+    return GameQuestionContent(
+      text: text,
+      languageCode: language,
+      formulaKey: question.formulaKey[language],
+      style: style,
+    );
+  }
+
   Widget _match(DuelSnapshot snapshot) {
-    final question = snapshot.currentQuestion!,
-        copy = snapshot.currentQuestion!.localized(s.locale.languageCode);
+    final question = snapshot.currentQuestion!;
+    final copy = question.localized(s.locale.languageCode);
+    final actor = c.actor, generation = c.sessionGeneration;
     final left = snapshot.room.deadlineAt! - c.serverMilliseconds;
+    // Recheck at the gesture boundary as well as while building. A callback
+    // from a prior route/session/stage cannot scan the controller's new state.
+    bool canAnswer() =>
+        _currentRoute &&
+        c.actor == actor &&
+        c.sessionGeneration == generation &&
+        identical(c.snapshot, snapshot) &&
+        c.canAnswer &&
+        snapshot.room.deadlineAt! > c.serverMilliseconds;
     return Column(
       key: const ValueKey('duel-question'),
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -383,20 +419,9 @@ final class _DuelScreenState extends State<DuelScreen> {
         _players(snapshot),
         const SizedBox(height: 16),
         GeoMathCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(copy.prompt, style: Theme.of(context).textTheme.titleLarge),
-              for (final line in copy.lines) ...[
-                const SizedBox(height: 8),
-                Text(line),
-              ],
-              if (question.formulaKey[s.locale.languageCode]
-                  case final key?) ...[
-                const SizedBox(height: 12),
-                Text(key),
-              ],
-            ],
+          child: _questionContent(
+            question,
+            style: Theme.of(context).textTheme.titleLarge,
           ),
         ),
         if (copy.hint case final hint?) ...[
@@ -413,51 +438,62 @@ final class _DuelScreenState extends State<DuelScreen> {
           subtitle: t('choose'),
         ),
         const SizedBox(height: 12),
-        LayoutBuilder(
-          builder: (context, constraints) {
-            final count = constraints.maxWidth >= 520 ? 3 : 2;
-            final width = (constraints.maxWidth - (count - 1) * 10) / count;
-            return Wrap(
-              spacing: 10,
-              runSpacing: 10,
-              children: [
-                for (final shape in GeometryShape.values)
-                  SizedBox(
-                    width: width,
-                    child: Semantics(
-                      selected: _selected == shape,
-                      child: GeoMathCard(
-                        key: ValueKey('duel-card-${shape.name}'),
-                        padding: const EdgeInsets.all(10),
-                        onTap: c.canAnswer && left > 0
-                            ? () => setState(() => _selected = shape)
-                            : null,
-                        semanticLabel:
-                            '${_shape(shape)}, ${t(snapshot.me.stage == GeometryCardKind.solid ? 'solidStage' : 'netStage')}',
-                        child: Column(
-                          children: [
-                            GeometryCardView(
-                              shape: shape,
-                              kind: snapshot.me.stage,
-                              provider: widget.geometry,
-                              size: math.min(110, width - 20),
-                              semanticLabel: _shape(shape),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(_shape(shape), textAlign: TextAlign.center),
-                            if (_selected == shape) ...[
-                              const SizedBox(height: 6),
-                              Icon(
-                                Icons.check_circle_rounded,
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
-                            ],
-                          ],
-                        ),
-                      ),
+        GameCardCarousel(
+          scopeKey: (
+            actor,
+            generation,
+            snapshot.room.id,
+            question.index,
+            snapshot.me.stage,
+          ),
+          keyPrefix: 'duel-cards',
+          itemCount: GeometryShape.values.length,
+          previousLabel: t('previousCard'),
+          nextLabel: t('nextCard'),
+          positionLabel: (index, count) =>
+              t('cardPosition', {'index': index, 'count': count}),
+          reducedMotion: MediaQuery.disableAnimationsOf(context),
+          cardBuilder: (context, index, width) {
+            final shape = GeometryShape.values[index];
+            return Semantics(
+              selected: _selected == shape,
+              child: GeoMathCard(
+                key: ValueKey('duel-card-${shape.name}'),
+                padding: const EdgeInsets.all(10),
+                onTap: canAnswer()
+                    ? () {
+                        if (canAnswer()) setState(() => _selected = shape);
+                      }
+                    : null,
+                semanticLabel:
+                    '${_shape(shape)}, ${t(snapshot.me.stage == GeometryCardKind.solid ? 'solidStage' : 'netStage')}',
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    GeometryCardView(
+                      shape: shape,
+                      kind: snapshot.me.stage,
+                      provider: widget.geometry,
+                      size: math.min(110, width - 20),
+                      semanticLabel: _shape(shape),
                     ),
-                  ),
-              ],
+                    const SizedBox(height: 8),
+                    Text(_shape(shape), textAlign: TextAlign.center),
+                    const SizedBox(height: 6),
+                    // Reserve selection space so choosing never shifts the
+                    // scan control or changes the carousel's height.
+                    SizedBox(
+                      height: 24,
+                      child: _selected == shape
+                          ? Icon(
+                              Icons.check_circle_rounded,
+                              color: Theme.of(context).colorScheme.primary,
+                            )
+                          : null,
+                    ),
+                  ],
+                ),
+              ),
             );
           },
         ),
@@ -469,8 +505,13 @@ final class _DuelScreenState extends State<DuelScreen> {
           key: const ValueKey('duel-scan'),
           label: t('check'),
           busy: c.busy,
-          onPressed: c.canAnswer && left > 0 && _selected != null
-              ? () => unawaited(c.scan(_selected!, kind: snapshot.me.stage))
+          onPressed: canAnswer() && _selected != null
+              ? () {
+                  final selected = _selected;
+                  if (canAnswer() && selected != null) {
+                    unawaited(c.scan(selected, kind: snapshot.me.stage));
+                  }
+                }
               : null,
         ),
         const SizedBox(height: 10),
@@ -478,8 +519,10 @@ final class _DuelScreenState extends State<DuelScreen> {
           key: const ValueKey('duel-hint'),
           label: t('hint'),
           kind: ActionButtonKind.secondary,
-          onPressed: c.canAnswer && left > 0 && !snapshot.hintUsed
-              ? () => unawaited(c.hint())
+          onPressed: canAnswer() && !snapshot.hintUsed
+              ? () {
+                  if (canAnswer()) unawaited(c.hint());
+                }
               : null,
         ),
         const SizedBox(height: 10),
@@ -487,7 +530,11 @@ final class _DuelScreenState extends State<DuelScreen> {
           key: const ValueKey('duel-skip'),
           label: t('skip'),
           kind: ActionButtonKind.secondary,
-          onPressed: c.canAnswer && left > 0 ? () => unawaited(c.skip()) : null,
+          onPressed: canAnswer()
+              ? () {
+                  if (canAnswer()) unawaited(c.skip());
+                }
+              : null,
         ),
         const SizedBox(height: 12),
         Text(t('liveNote')),
@@ -497,7 +544,6 @@ final class _DuelScreenState extends State<DuelScreen> {
 
   Widget _review(DuelSnapshot snapshot) {
     final answer = snapshot.review!, shape = answer.question.settledShape!;
-    final copy = answer.question.localized(s.locale.languageCode);
     return Column(
       key: const ValueKey('duel-review'),
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -512,15 +558,9 @@ final class _DuelScreenState extends State<DuelScreen> {
         ),
         const SizedBox(height: 16),
         GeoMathCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(copy.prompt, style: Theme.of(context).textTheme.titleMedium),
-              for (final line in copy.lines) ...[
-                const SizedBox(height: 8),
-                Text(line),
-              ],
-            ],
+          child: _questionContent(
+            answer.question,
+            style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
         const SizedBox(height: 12),
@@ -618,7 +658,7 @@ final class _DuelScreenState extends State<DuelScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(t('question', {'number': answer.question.index + 1})),
-                  Text(answer.question.localized(s.locale.languageCode).prompt),
+                  _questionContent(answer.question),
                   Text(
                     '${t(answer.outcome.name)} · ${_shape(answer.question.settledShape)}',
                   ),

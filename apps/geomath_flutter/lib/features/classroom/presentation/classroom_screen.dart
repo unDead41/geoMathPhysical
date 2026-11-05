@@ -11,6 +11,8 @@ import '../../../core/preferences/preferences.dart';
 import '../../../core/result.dart';
 import '../../../core/session/actor_binding.dart';
 import '../../../core/widgets/widgets.dart';
+import '../../duel/presentation/game_card_carousel.dart';
+import '../../duel/presentation/game_question_content.dart';
 import '../application/classroom_controller.dart';
 import '../data/classroom_bank.dart';
 import '../data/classroom_repository.dart';
@@ -418,7 +420,7 @@ final class _ClassroomScreenState extends State<ClassroomScreen> {
                         ? null
                         : () => _openRoom(room),
                   ),
-                  if (own && c.crud)
+                  if (c.snapshot!.ownsRoom(room.id) && c.crud)
                     _managementActions(
                       'room',
                       room.archivedAt != null,
@@ -549,7 +551,7 @@ final class _ClassroomScreenState extends State<ClassroomScreen> {
         ],
       ),
       const SizedBox(height: 16),
-      if (c.teacher) ...[
+      if (c.snapshot!.ownsRoom(room.id)) ...[
         if (!room.closed)
           _pinPanel(
             room.activePin(c.serverTime),
@@ -601,7 +603,7 @@ final class _ClassroomScreenState extends State<ClassroomScreen> {
             room.archivedAt != null,
             (action) => c.editRoom(room, action),
           ),
-      ] else ...[
+      ] else if (!c.teacher) ...[
         StatusNotice(message: t('attemptInfo')),
         const SizedBox(height: 12),
         if (!room.archived || room.closed && room.myAttempt != null)
@@ -699,7 +701,15 @@ final class _ClassroomScreenState extends State<ClassroomScreen> {
                 ),
               ),
           ] else ...[
-            SectionHeader(title: question.localizedPrompt(language)),
+            Semantics(
+              header: true,
+              child: GameQuestionContent(
+                key: const ValueKey('classroom-question-content'),
+                text: question.localizedPrompt(language),
+                languageCode: strings.locale.languageCode,
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+            ),
             const SizedBox(height: 16),
             if (state.status == 'feedback')
               StatusNotice(message: t('feedback'), tone: StatusTone.success)
@@ -803,61 +813,59 @@ final class _ClassroomScreenState extends State<ClassroomScreen> {
     },
   );
 
-  Widget _choices(GeometryCardKind kind, bool active) => LayoutBuilder(
-    builder: (context, constraints) {
-      final width = constraints.maxWidth < 360
-          ? (constraints.maxWidth - 12) / 2
-          : 142.0;
-      return Wrap(
-        spacing: 12,
-        runSpacing: 12,
-        children: [
-          for (var i = 0; i < GeometryShape.values.length; i++)
-            SizedBox(
-              width: width,
-              child: Semantics(
-                selected:
-                    (kind == GeometryCardKind.solid ? _solid : _net) ==
-                    GeometryShape.values[i],
-                button: true,
-                enabled: active && c.canWrite,
-                child: GeoMathCard(
-                  key: ValueKey(
-                    'classroom-choice-${kind.name}-${GeometryShape.values[i].name}',
+  Widget _choices(GeometryCardKind kind, bool active) {
+    final state = c.attempt!;
+    return GameCardCarousel(
+      scopeKey: (state.id, state.index, state.stage, kind),
+      keyPrefix: 'classroom-${kind.name}-carousel',
+      itemCount: GeometryShape.values.length,
+      previousLabel: t('previousChoice'),
+      nextLabel: t('nextChoice'),
+      positionLabel: (number, count) =>
+          t('choicePosition', {'number': number, 'count': count}),
+      reducedMotion: MediaQuery.disableAnimationsOf(context),
+      cardBuilder: (context, i, width) {
+        final shape = GeometryShape.values[i];
+        final selected =
+            (kind == GeometryCardKind.solid ? _solid : _net) == shape;
+        return SizedBox(
+          width: width,
+          child: Semantics(
+            selected: selected,
+            button: true,
+            enabled: active && c.canWrite,
+            child: GeoMathCard(
+              key: ValueKey('classroom-choice-${kind.name}-${shape.name}'),
+              padding: const EdgeInsets.all(8),
+              onTap: active && c.canWrite
+                  ? () => setState(() {
+                      if (kind == GeometryCardKind.solid) {
+                        _solid = shape;
+                      } else {
+                        _net = shape;
+                      }
+                    })
+                  : null,
+              child: Column(
+                children: [
+                  GeometryCardView(
+                    shape: shape,
+                    kind: kind,
+                    provider: widget.geometry,
+                    size: 110,
+                    semanticLabel:
+                        '${t('choice', {'number': i + 1})} ${kind == GeometryCardKind.solid ? strings.text('shape.${shape.name}') : t('r2')}',
                   ),
-                  padding: const EdgeInsets.all(8),
-                  onTap: active && c.canWrite
-                      ? () => setState(() {
-                          if (kind == GeometryCardKind.solid) {
-                            _solid = GeometryShape.values[i];
-                          } else {
-                            _net = GeometryShape.values[i];
-                          }
-                        })
-                      : null,
-                  child: Column(
-                    children: [
-                      GeometryCardView(
-                        shape: GeometryShape.values[i],
-                        kind: kind,
-                        provider: widget.geometry,
-                        size: 110,
-                        semanticLabel:
-                            '${t('choice', {'number': i + 1})} ${kind == GeometryCardKind.solid ? strings.text('shape.${GeometryShape.values[i].name}') : t('r2')}',
-                      ),
-                      Text(t('choice', {'number': i + 1})),
-                      if ((kind == GeometryCardKind.solid ? _solid : _net) ==
-                          GeometryShape.values[i])
-                        const Icon(Icons.check_circle_rounded),
-                    ],
-                  ),
-                ),
+                  Text(t('choice', {'number': i + 1})),
+                  if (selected) const Icon(Icons.check_circle_rounded),
+                ],
               ),
             ),
-        ],
-      );
-    },
-  );
+          ),
+        );
+      },
+    );
+  }
 
   String _answerOutcome(String? value) => value == 'correct'
       ? t('feedback')

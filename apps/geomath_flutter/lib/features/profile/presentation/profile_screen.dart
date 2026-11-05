@@ -37,6 +37,7 @@ class ProfileScreenState extends State<ProfileScreen> {
   bool _loaded = false;
   bool _saved = false;
   bool _unknownOutcome = false;
+  bool _attemptedSave = false;
   AppFailure? _failure;
   int _generation = 0;
   late ActorBinding _actor;
@@ -65,6 +66,7 @@ class ProfileScreenState extends State<ProfileScreen> {
       _saving = false;
       _failure = null;
       _unknownOutcome = false;
+      _attemptedSave = false;
       if (mounted) setState(() {});
       if (!actor.isGuest) unawaited(_load());
     });
@@ -91,6 +93,7 @@ class ProfileScreenState extends State<ProfileScreen> {
     _role = _profile?.role ?? AccountRole.student;
     _saved = false;
     _failure = null;
+    _attemptedSave = false;
     widget.drafts.save(_actor, null);
   });
   Future<void> _load({bool preserveDraft = false}) async {
@@ -100,6 +103,7 @@ class ProfileScreenState extends State<ProfileScreen> {
     setState(() {
       _busy = true;
       _failure = null;
+      _saved = false;
     });
     final result = await widget.repository.load(actor);
     if (!mounted ||
@@ -126,6 +130,15 @@ class ProfileScreenState extends State<ProfileScreen> {
 
   Future<bool> _save() async {
     if (_busy || !_loaded || _unknownOutcome) return false;
+    if (!AccountValidation.validDisplayName(_name.text) ||
+        _profile == null && !AccountValidation.validUsername(_username.text)) {
+      setState(() {
+        _attemptedSave = true;
+        _failure = null;
+        _saved = false;
+      });
+      return false;
+    }
     final actor = _actor;
     final generation = ++_generation;
     setState(() {
@@ -162,8 +175,12 @@ class ProfileScreenState extends State<ProfileScreen> {
         _avatar = value.avatar;
         _role = value.role;
         _saved = true;
+        _attemptedSave = false;
         widget.drafts.save(_actor, null);
-      } else if (result.failureOrNull?.code == FailureCode.network) {
+      } else if (result.failureOrNull?.code == FailureCode.network ||
+          result.failureOrNull?.message == 'profile.invalidResponse') {
+        // A 2xx write with an unverifiable profile can already have committed.
+        // Require an explicit snapshot before the user can send another write.
         _unknownOutcome = true;
       }
     });
@@ -208,6 +225,15 @@ class ProfileScreenState extends State<ProfileScreen> {
       title: _t('title'),
       showBackButton: true,
       onBack: () => AppScope.of(context).router.back(),
+      actions: [
+        IconButton(
+          key: const Key('profile-settings'),
+          tooltip: _t('settings'),
+          icon: const Icon(Icons.tune_rounded),
+          onPressed: () => AppScope.of(context).router.open('preferences'),
+          constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
+        ),
+      ],
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -221,12 +247,14 @@ class ProfileScreenState extends State<ProfileScreen> {
               ),
             if (widget.repository.configured) ...[
               ActionButton(
+                key: const Key('profile-login'),
                 label: _t('login'),
                 onPressed: () =>
                     AppScope.of(context).router.open('cloud-game-login'),
               ),
               const SizedBox(height: 12),
               ActionButton(
+                key: const Key('profile-signup'),
                 label: _t('signup'),
                 kind: ActionButtonKind.secondary,
                 onPressed: () =>
@@ -234,91 +262,140 @@ class ProfileScreenState extends State<ProfileScreen> {
               ),
             ],
           ] else ...[
-            if (_failure case final failure?)
+            if (_busy && !_saving)
               StatusNotice(
-                tone: StatusTone.error,
-                message: _t(failure.message),
+                key: const Key('profile-loading'),
+                liveRegion: true,
+                message: _t('loading'),
               ),
-            if (_unknownOutcome)
-              StatusNotice(
-                tone: StatusTone.warning,
-                message: _t('unknownOutcome'),
+            if (!_loaded && !_busy && _failure != null)
+              RetryPanel(
+                key: const Key('profile-load-error'),
+                title: _t('loadFailed'),
+                message: _t(_failure!.message),
+                retryLabel: _t('retry'),
+                onRetry: _load,
               ),
-            if (_saved)
-              StatusNotice(tone: StatusTone.success, message: _t('saved')),
-            if (_loaded && _profile == null)
-              SectionHeader(title: _t('complete'), subtitle: _t('roleNote')),
-            if (_loaded && _profile != null)
-              SectionHeader(
-                title: _profile!.username,
-                subtitle: '${_t('role')}: ${_t(_profile!.role.name)}',
-              ),
-            const SizedBox(height: 16),
-            LabeledField(
-              key: const Key('profile-name'),
-              label: _t('name'),
-              controller: _name,
-              enabled: enabled,
-              onChanged: (_) => setState(() => _saved = false),
-            ),
-            if (_loaded && _profile == null) ...[
-              const SizedBox(height: 12),
-              LabeledField(
-                label: _t('username'),
-                controller: _username,
-                enabled: enabled,
-                maxLength: 24,
-                onChanged: (_) => setState(() {}),
-              ),
-              Text(_t('role')),
-              ChoiceChips<AccountRole>(
-                options: [
-                  for (final role in AccountRole.values)
-                    ChoiceChipOption(value: role, label: _t(role.name)),
-                ],
-                selected: _role,
-                onSelected: (value) => setState(() => _role = value),
-                enabled: enabled,
-              ),
-            ],
-            if (_profile != null) ...[
+            if (_loaded) ...[
+              if (_failure case final failure?)
+                StatusNotice(
+                  key: const Key('profile-error'),
+                  tone: StatusTone.error,
+                  liveRegion: true,
+                  message: _t(failure.message),
+                ),
+              if (_unknownOutcome)
+                StatusNotice(
+                  tone: StatusTone.warning,
+                  message: _t('unknownOutcome'),
+                ),
+              if (_saved)
+                StatusNotice(tone: StatusTone.success, message: _t('saved')),
+              if (_profile == null)
+                SectionHeader(title: _t('complete'), subtitle: _t('roleNote')),
+              if (_profile != null)
+                SectionHeader(
+                  title: _profile!.username,
+                  subtitle: '${_t('role')}: ${_t(_profile!.role.name)}',
+                ),
               const SizedBox(height: 16),
-              Text(_t('avatar')),
-              ChoiceChips<String>(
-                options: [
-                  for (final avatar in ProfileRepository.avatars)
-                    ChoiceChipOption(value: avatar, label: _t(avatar)),
-                ],
-                selected: _avatar,
+              LabeledField(
+                key: const Key('profile-name'),
+                label: _t('name'),
+                controller: _name,
                 enabled: enabled,
-                onSelected: (value) => setState(() {
-                  _avatar = value;
+                helperText: _t('nameHint'),
+                errorText:
+                    _attemptedSave &&
+                        !AccountValidation.validDisplayName(_name.text)
+                    ? _t('nameInvalid')
+                    : null,
+                autofillHints: const [AutofillHints.name],
+                textInputAction: _profile == null
+                    ? TextInputAction.next
+                    : TextInputAction.done,
+                onChanged: (_) => setState(() {
                   _saved = false;
+                  _failure = null;
                 }),
               ),
+              if (_profile == null) ...[
+                const SizedBox(height: 12),
+                LabeledField(
+                  key: const Key('profile-username'),
+                  label: _t('username'),
+                  controller: _username,
+                  enabled: enabled,
+                  maxLength: 24,
+                  helperText: _t('usernameHint'),
+                  errorText:
+                      _attemptedSave &&
+                          !AccountValidation.validUsername(_username.text)
+                      ? _t('usernameInvalid')
+                      : null,
+                  autofillHints: const [AutofillHints.newUsername],
+                  textInputAction: TextInputAction.done,
+                  onChanged: (_) => setState(() {
+                    _saved = false;
+                    _failure = null;
+                  }),
+                ),
+                Text(_t('role')),
+                ChoiceChips<AccountRole>(
+                  options: [
+                    for (final role in AccountRole.values)
+                      ChoiceChipOption(value: role, label: _t(role.name)),
+                  ],
+                  selected: _role,
+                  onSelected: (value) => setState(() => _role = value),
+                  enabled: enabled,
+                ),
+              ],
+              if (_profile != null) ...[
+                const SizedBox(height: 16),
+                Text(_t('avatar')),
+                ChoiceChips<String>(
+                  options: [
+                    for (final avatar in ProfileRepository.avatars)
+                      ChoiceChipOption(value: avatar, label: _t(avatar)),
+                  ],
+                  selected: _avatar,
+                  enabled: enabled,
+                  onSelected: (value) => setState(() {
+                    _avatar = value;
+                    _saved = false;
+                  }),
+                ),
+              ],
+              const SizedBox(height: 20),
+              ActionButton(
+                key: const Key('profile-save'),
+                label: _t('save'),
+                busy: _saving,
+                onPressed: enabled && (dirty || _profile == null)
+                    ? _save
+                    : null,
+              ),
+              const SizedBox(height: 12),
+              ActionButton(
+                key: const Key('profile-discard'),
+                label: _t('discard'),
+                kind: ActionButtonKind.secondary,
+                onPressed: !_busy && dirty ? _discard : null,
+              ),
+              const SizedBox(height: 12),
+              ActionButton(
+                key: const Key('profile-refresh'),
+                label: _t('refresh'),
+                busy: _busy && !_saving,
+                busyLabel: _t('loading'),
+                kind: ActionButtonKind.tonal,
+                onPressed: !_busy ? () => _load(preserveDraft: dirty) : null,
+              ),
             ],
             const SizedBox(height: 20),
             ActionButton(
-              key: const Key('profile-save'),
-              label: _t('save'),
-              busy: _busy,
-              onPressed: enabled && (dirty || _profile == null) ? _save : null,
-            ),
-            const SizedBox(height: 12),
-            ActionButton(
-              key: const Key('profile-discard'),
-              label: _t('discard'),
-              kind: ActionButtonKind.secondary,
-              onPressed: !_busy && dirty ? _discard : null,
-            ),
-            const SizedBox(height: 12),
-            ActionButton(
-              label: _t('refresh'),
-              kind: ActionButtonKind.tonal,
-              onPressed: !_busy ? () => _load(preserveDraft: dirty) : null,
-            ),
-            const SizedBox(height: 20),
-            ActionButton(
+              key: const Key('profile-security'),
               label: _t('security'),
               kind: ActionButtonKind.secondary,
               onPressed: !_busy

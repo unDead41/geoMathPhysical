@@ -92,6 +92,17 @@ PublicBackendConnection _connection([String scheme = 'https']) =>
       redirectUri: Uri.parse('com.geomath.dev://auth/callback'),
     );
 
+// Synthetic public-key envelopes only; deliberately not valid signed JWTs.
+String _fixtureKey(Map<String, Object?> claims) =>
+    '${base64Url.encode(utf8.encode('{"alg":"HS256","typ":"JWT"}')).replaceAll('=', '')}.'
+    '${base64Url.encode(utf8.encode(jsonEncode(claims))).replaceAll('=', '')}.fixture-signature';
+
+PublicBackendConnection _withKey(String key) => PublicBackendConnection(
+  url: _connection().url,
+  publishableKey: key,
+  redirectUri: _connection().redirectUri,
+);
+
 void main() {
   test('IO adapter uses HTTPS, public apikey, no auth/cookie and bounded JSON response', () async {
     final client = _Client();
@@ -118,6 +129,52 @@ void main() {
     expect(client.closed, isTrue);
     expect(() => IoDuelTransport(_connection('http')), throwsArgumentError);
   });
+  test(
+    'legacy public anon header reaches verified Edge without a user session',
+    () async {
+      final key = _fixtureKey({'role': 'anon', 'ref': 'example'});
+      final client = _Client();
+      final transport = IoDuelTransport(_withKey(key), client: client);
+      final command = <String, Object?>{
+        'protocol': 2,
+        'action': 'state',
+        'token': 'independent-room-capability',
+      };
+      await transport.post(command);
+      expect(client.request.headers.values['apikey'], key);
+      expect(
+        client.request.headers.values[HttpHeaders.authorizationHeader],
+        'Bearer $key',
+      );
+      expect(jsonDecode(utf8.decode(client.request.bytes)), command);
+      expect(client.request.headers.values.containsKey('cookie'), isFalse);
+      transport.close();
+    },
+  );
+  test(
+    'modern keys and non-anon identities never become guest Authorization',
+    () async {
+      for (final key in [
+        'sb_publishable_fixture_public_key',
+        _fixtureKey({'role': 'authenticated', 'sub': 'another-user'}),
+        _fixtureKey({'role': 'service_role'}),
+        _fixtureKey({'role': 'anon', 'session_id': 'a-user-session'}),
+        _fixtureKey({'role': 'anon', 'sub': 'a-user'}),
+        'broken.jwt.value',
+      ]) {
+        final client = _Client();
+        final transport = IoDuelTransport(_withKey(key), client: client);
+        await transport.post({'protocol': 2, 'action': 'state'});
+        expect(
+          client.request.headers.values.containsKey(
+            HttpHeaders.authorizationHeader,
+          ),
+          isFalse,
+        );
+        transport.close();
+      }
+    },
+  );
   test(
     'cancelling while postUrl is opening aborts before any capability is sent',
     () async {

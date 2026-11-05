@@ -23,6 +23,9 @@ abstract interface class DuelTransport {
 }
 
 /// Direct guest-capability HTTPS adapter. Never borrows a Supabase user JWT.
+/// Existing Edge gateways with JWT verification enabled also require the
+/// configured legacy public anon key in Authorization. That project key is
+/// separate from both the player's capability and any signed-in user session.
 final class IoDuelTransport implements DuelTransport {
   IoDuelTransport(
     PublicBackendConnection connection, {
@@ -64,6 +67,13 @@ final class IoDuelTransport implements DuelTransport {
         request!.followRedirects = false;
         request!.headers.contentType = ContentType.json;
         request!.headers.set('apikey', _publicKey);
+        final gatewayAuthorization = _legacyAnonAuthorization(_publicKey);
+        if (gatewayAuthorization != null) {
+          request!.headers.set(
+            HttpHeaders.authorizationHeader,
+            gatewayAuthorization,
+          );
+        }
         request!.headers.set(HttpHeaders.cacheControlHeader, 'no-store');
         request!.contentLength = encoded.length;
         request!.add(encoded);
@@ -93,6 +103,29 @@ final class IoDuelTransport implements DuelTransport {
     } finally {
       _pending.remove(request);
     }
+  }
+
+  // This only selects the legacy gateway header for a trusted public config;
+  // it does not verify a user identity or authorize gameplay. The server still
+  // validates its project key and the independent room capability/sequence.
+  static String? _legacyAnonAuthorization(String key) {
+    if (key.length > 4096) return null;
+    final parts = key.split('.');
+    if (parts.length != 3) return null;
+    try {
+      final claims = jsonDecode(
+        utf8.decode(base64Url.decode(base64Url.normalize(parts[1]))),
+      );
+      if (claims is Map<String, dynamic> &&
+          claims['role'] == 'anon' &&
+          !claims.containsKey('session_id') &&
+          (claims['sub'] == null || claims['sub'] == '')) {
+        return 'Bearer $key';
+      }
+    } on FormatException {
+      // Publishable keys and malformed values are never sent as user JWTs.
+    }
+    return null;
   }
 
   @override

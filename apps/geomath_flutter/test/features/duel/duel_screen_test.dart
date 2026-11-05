@@ -1,3 +1,7 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geomath_flutter/app/app_dependencies.dart';
@@ -11,6 +15,8 @@ import 'package:geomath_flutter/core/navigation/app_navigation.dart';
 import 'package:geomath_flutter/core/preferences/app_preferences.dart';
 import 'package:geomath_flutter/core/widgets/widgets.dart';
 import 'package:geomath_flutter/features/duel/duel_feature.dart';
+import 'package:geomath_flutter/features/duel/presentation/game_card_carousel.dart';
+import 'package:geomath_flutter/features/duel/presentation/game_question_content.dart';
 
 import 'duel_test_support.dart';
 
@@ -64,6 +70,24 @@ final class _ScreenFixture {
     await audio.close();
     await h.close();
   }
+}
+
+// These are projections from the pinned real protocol-2 Edge projector over
+// labelled synthetic SQL-shaped input, not a hosted-service acceptance claim.
+// Only sequence metadata is adjusted where a test chains projected states.
+Map<String, Object?> _edgeProjection(String name, {int? seq}) {
+  final source = jsonDecode(
+    File('test/features/duel/fixtures/source_projection.json')
+        .readAsStringSync(),
+  ) as Map<String, dynamic>;
+  expect(source['sourceCommit'], '752ce908d16d13acc9cc7510797e8363d182c3f5');
+  expect(
+    (source['sourceBlobs'] as Map)['handler.mjs'],
+    'c8b0e4636b6613d9e3d29af491e7bccb1b3ee23f',
+  );
+  final state = (source['snapshots'] as Map)[name] as Map<String, dynamic>;
+  if (seq != null) (state['me'] as Map)['seq'] = seq;
+  return state;
 }
 
 void main() {
@@ -250,6 +274,408 @@ void main() {
       }
     },
   );
+  testWidgets(
+    'native join, public PIN and ready controls send real protocol-2 controller actions',
+    (tester) async {
+      final ui = _ScreenFixture(DuelHarness());
+      try {
+        await tester.pumpWidget(ui.app());
+        await tester.pumpAndSettle();
+        await tester.enterText(
+          find.descendant(
+            of: find.byKey(const ValueKey('duel-name')),
+            matching: find.byType(TextFormField),
+          ),
+          'Afiq',
+        );
+        await tester.ensureVisible(find.byKey(const ValueKey('duel-pin')));
+        await tester.enterText(
+          find.descendant(
+            of: find.byKey(const ValueKey('duel-pin')),
+            matching: find.byType(TextFormField),
+          ),
+          '123456',
+        );
+        ui.h.transport.steps.add((_) => wire(_edgeProjection('waiting')));
+        await tester.ensureVisible(find.byKey(const ValueKey('duel-join')));
+        await tester.tap(find.byKey(const ValueKey('duel-join')));
+        await tester.pumpAndSettle();
+        expect(ui.h.transport.commands.single, containsPair('protocol', 2));
+        expect(ui.h.transport.commands.single, containsPair('action', 'join'));
+        expect(ui.h.transport.commands.single, containsPair('code', '123456'));
+        expect(ui.h.transport.commands.single, containsPair('name', 'Afiq'));
+        expect(find.byKey(const ValueKey('duel-lobby')), findsOneWidget);
+        expect(
+          tester
+              .widget<SelectableText>(
+                find.byKey(const ValueKey('duel-room-pin')),
+              )
+              .data,
+          '123456',
+        );
+        ui.h.transport.steps.add(
+          (_) => wire(_edgeProjection('countdown', seq: 3)),
+        );
+        await tester.ensureVisible(find.byKey(const ValueKey('duel-ready')));
+        await tester.tap(find.byKey(const ValueKey('duel-ready')));
+        await tester.pumpAndSettle();
+        expect(ui.h.transport.commands.last, containsPair('action', 'ready'));
+        expect(ui.h.transport.commands.last, containsPair('seq', 3));
+        expect(ui.h.transport.commands.last, containsPair('roomId', roomId));
+        expect(find.byKey(const ValueKey('duel-countdown')), findsOneWidget);
+        expect(find.byKey(const ValueKey('duel-cards-scroll')), findsNothing);
+        ui.h.transport.steps.add(
+          (_) => wire(_edgeProjection('active_K1', seq: 4)),
+        );
+        await ui.h.controller.refresh();
+        await tester.pumpAndSettle();
+        expect(find.byKey(const ValueKey('duel-question')), findsOneWidget);
+        expect(find.byType(GameCardCarousel), findsOneWidget);
+        expect(tester.takeException(), isNull);
+      } finally {
+        await ui.close(tester);
+      }
+    },
+  );
+  testWidgets(
+    'real protocol fixture: R1/R2 swipe and arrow browsing never scan; explicit taps then checks do',
+    (tester) async {
+      tester.view.devicePixelRatio = 1;
+      tester.view.physicalSize = const Size(320, 640);
+      addTearDown(tester.view.reset);
+      final ui = _ScreenFixture(DuelHarness());
+      final initial = _edgeProjection('active_K1');
+      await ui.h.enter(initial);
+      ui.h.transport.steps.add((_) => wire(initial));
+      try {
+        await tester.pumpWidget(ui.app());
+        await tester.pumpAndSettle();
+        final before = ui.h.transport.commands.length;
+        final carousel = find.byType(GameCardCarousel);
+        final scan = find.byKey(const ValueKey('duel-scan'));
+        final cube = find.byKey(const ValueKey('duel-card-cube'));
+        final cone = find.byKey(const ValueKey('duel-card-cone'));
+        expect(carousel, findsOneWidget);
+        expect(
+          tester
+              .widgetList<GeometryCardView>(find.byType(GeometryCardView))
+              .map((card) => card.shape),
+          orderedEquals(GeometryShape.values),
+        );
+        await tester.ensureVisible(cube);
+        await tester.drag(cube, const Offset(-210, 0));
+        await tester.pumpAndSettle();
+        await tester.ensureVisible(
+          find.byKey(const ValueKey('duel-cards-next')),
+        );
+        await tester.tap(find.byKey(const ValueKey('duel-cards-next')));
+        await tester.pumpAndSettle();
+        for (final shape in GeometryShape.values) {
+          final card = find.byKey(ValueKey('duel-card-${shape.name}'));
+          await tester.ensureVisible(card);
+          expect(tester.widget<GeoMathCard>(card).onTap, isNotNull);
+        }
+        await tester.pumpAndSettle();
+        expect(ui.h.transport.commands, hasLength(before));
+        expect(tester.widget<ActionButton>(scan).onPressed, isNull);
+        expect(find.textContaining('Selected:'), findsNothing);
+        expect(ui.h.controller.snapshot!.me.score, 0);
+        expect(find.text('Card 5 of 5'), findsOneWidget);
+        await tester.pumpWidget(ui.app(language: AppLanguage.ms, dark: true));
+        await tester.pumpAndSettle();
+        expect(find.text('Kad 5 daripada 5'), findsOneWidget);
+        expect(ui.h.transport.commands, hasLength(before));
+        await tester.pumpWidget(ui.app());
+        await tester.pumpAndSettle();
+        expect(find.text('Card 5 of 5'), findsOneWidget);
+
+        await tester.ensureVisible(cube);
+        await tester.tap(cube);
+        await tester.pump();
+        final oldR1Check = tester.widget<ActionButton>(scan).onPressed!;
+        expect(ui.h.transport.commands, hasLength(before));
+        expect(ui.h.controller.snapshot!.me.score, 0);
+        ui.h.transport.steps.add(
+          (_) => wire(_edgeProjection('net_stage', seq: 3)),
+        );
+        await tester.ensureVisible(scan);
+        await tester.tap(scan);
+        await tester.pumpAndSettle();
+        expect(ui.h.transport.commands, hasLength(before + 1));
+        expect(ui.h.transport.commands.last, containsPair('action', 'scan'));
+        expect(ui.h.transport.commands.last, containsPair('kind', 'solid'));
+        expect(ui.h.transport.commands.last, containsPair('target', 'r1'));
+        expect(ui.h.transport.commands.last, containsPair('shape', 'cube'));
+        expect(ui.h.transport.commands.last, containsPair('questionIndex', 0));
+        expect(ui.h.transport.commands.last, containsPair('seq', 3));
+        expect(ui.h.controller.snapshot!.me.stage, GeometryCardKind.net);
+        expect(ui.h.controller.snapshot!.me.score, 0);
+        expect(tester.widget<ActionButton>(scan).onPressed, isNull);
+        expect(find.text('Card 1 of 5'), findsOneWidget);
+        for (final card in tester.widgetList<GeometryCardView>(
+          find.byType(GeometryCardView),
+        )) {
+          expect(card.kind, GeometryCardKind.net);
+        }
+        await tester.ensureVisible(cube);
+        await tester.drag(cube, const Offset(-210, 0));
+        await tester.pumpAndSettle();
+        await tester.ensureVisible(cone);
+        await tester.tap(cone);
+        await tester.pump();
+        // Even after a fresh R2 selection, the captured R1 callback must be
+        // inert without producing a stale-stage failure on the controller.
+        oldR1Check();
+        await tester.pump();
+        expect(ui.h.controller.errorCode, isNull);
+        expect(ui.h.transport.commands, hasLength(before + 1));
+        expect(ui.h.controller.snapshot!.me.score, 0);
+        ui.h.transport.steps.add(
+          (_) => wire(_edgeProjection('review_wrong_r2', seq: 4)),
+        );
+        await tester.ensureVisible(scan);
+        await tester.tap(scan);
+        await tester.pumpAndSettle();
+        expect(ui.h.transport.commands, hasLength(before + 2));
+        expect(ui.h.transport.commands.last, containsPair('kind', 'net'));
+        expect(ui.h.transport.commands.last, containsPair('target', 'r2'));
+        expect(ui.h.transport.commands.last, containsPair('shape', 'cone'));
+        expect(ui.h.transport.commands.last, containsPair('questionIndex', 0));
+        expect(ui.h.transport.commands.last, containsPair('seq', 4));
+        expect(find.byKey(const ValueKey('duel-review')), findsOneWidget);
+        expect(
+          ui.h.controller.snapshot!.review!.attempts.solid,
+          GeometryShape.cube,
+        );
+        expect(
+          ui.h.controller.snapshot!.review!.attempts.net,
+          GeometryShape.cone,
+        );
+        expect(ui.h.controller.snapshot!.me.score, 0);
+        expect(tester.takeException(), isNull);
+      } finally {
+        await ui.close(tester);
+      }
+    },
+  );
+  testWidgets(
+    'Duel card and scan callbacks recheck deadline and current actor before dispatch',
+    (tester) async {
+      for (final interruption in ['deadline', 'actor']) {
+        final ui = _ScreenFixture(DuelHarness());
+        final state = _edgeProjection('active_K1');
+        await ui.h.enter(state);
+        ui.h.transport.steps.add((_) => wire(state));
+        try {
+          await tester.pumpWidget(ui.app());
+          await tester.pumpAndSettle();
+          final cube = find.byKey(const ValueKey('duel-card-cube'));
+          final scan = find.byKey(const ValueKey('duel-scan'));
+          await tester.ensureVisible(cube);
+          await tester.tap(cube);
+          await tester.pump();
+          final oldCardTap = tester.widget<GeoMathCard>(cube).onTap!;
+          final oldCheck = tester.widget<ActionButton>(scan).onPressed!;
+          final sent = ui.h.transport.commands.length;
+          // Invoke captured callbacks before a frame can disable the controls.
+          if (interruption == 'deadline') {
+            ui.h.clock.elapse(870000);
+          } else {
+            ui.h.sessions.bindUser(
+              userId: 'another-player',
+              sessionId: 'another-session',
+            );
+          }
+          oldCardTap();
+          oldCheck();
+          await tester.pump(const Duration(milliseconds: 250));
+          expect(ui.h.transport.commands, hasLength(sent));
+          if (interruption == 'deadline') {
+            expect(tester.widget<ActionButton>(scan).onPressed, isNull);
+          } else {
+            expect(ui.h.controller.snapshot, isNull);
+            expect(scan, findsNothing);
+          }
+          expect(tester.takeException(), isNull);
+        } finally {
+          await ui.close(tester);
+        }
+      }
+    },
+  );
+  testWidgets(
+    'pending scan disables every card and check until the server confirms its same command',
+    (tester) async {
+      final ui = _ScreenFixture(DuelHarness());
+      final state = _edgeProjection('active_K1');
+      await ui.h.enter(state);
+      ui.h.transport.steps.add((_) => wire(state));
+      final response = Completer<DuelWireResponse>();
+      try {
+        await tester.pumpWidget(ui.app());
+        await tester.pumpAndSettle();
+        final scan = find.byKey(const ValueKey('duel-scan'));
+        final cube = find.byKey(const ValueKey('duel-card-cube'));
+        await tester.ensureVisible(cube);
+        await tester.tap(cube);
+        await tester.pump();
+        ui.h.transport.steps.add((_) => response.future);
+        await tester.ensureVisible(scan);
+        await tester.tap(scan);
+        await tester.pump();
+        final sent = ui.h.transport.commands.length;
+        expect(ui.h.controller.pending, isTrue);
+        expect(tester.widget<ActionButton>(scan).onPressed, isNull);
+        for (final shape in GeometryShape.values) {
+          expect(
+            tester
+                .widget<GeoMathCard>(
+                  find.byKey(ValueKey('duel-card-${shape.name}')),
+                )
+                .onTap,
+            isNull,
+          );
+        }
+        await tester.ensureVisible(
+          find.byKey(const ValueKey('duel-cards-next')),
+        );
+        await tester.tap(find.byKey(const ValueKey('duel-cards-next')));
+        await tester.pump(const Duration(milliseconds: 300));
+        expect(ui.h.transport.commands, hasLength(sent));
+        response.complete(wire(_edgeProjection('net_stage', seq: 3)));
+        await tester.pumpAndSettle();
+        expect(ui.h.controller.pending, isFalse);
+        expect(ui.h.controller.snapshot!.me.stage, GeometryCardKind.net);
+        expect(tester.widget<ActionButton>(scan).onPressed, isNull);
+        expect(tester.takeException(), isNull);
+      } finally {
+        if (!response.isCompleted) {
+          response.complete(wire(_edgeProjection('net_stage', seq: 3)));
+        }
+        await ui.close(tester);
+      }
+    },
+  );
+  for (final language in AppLanguage.values) {
+    testWidgets(
+      'real public formula copy is typeset in ${language.name} active match, review and history',
+      (tester) async {
+        tester.view.devicePixelRatio = 1;
+        tester.view.physicalSize = const Size(320, 640);
+        addTearDown(tester.view.reset);
+        for (final name in [
+          'active_B2',
+          'active_P2',
+          'active_S2',
+          'active_K2',
+          'active_C2',
+          'complete_final_review',
+          'complete_advanced',
+        ]) {
+          final ui = _ScreenFixture(DuelHarness());
+          final state = _edgeProjection(name);
+          await ui.h.enter(state);
+          ui.h.transport.steps.add((_) => wire(state));
+          try {
+            await tester.pumpWidget(ui.app(language: language));
+            await tester.pumpAndSettle();
+            final projection = ui.h.controller.snapshot!;
+            final publicQuestions = [
+              ?projection.currentQuestion,
+              ?projection.review?.question,
+              if (!projection.reviewPending &&
+                  projection.currentQuestion == null)
+                ...projection.answers.map((answer) => answer.question),
+            ];
+            final contents = tester
+                .widgetList<GameQuestionContent>(
+                  find.byType(GameQuestionContent),
+                )
+                .toList();
+            expect(contents, hasLength(publicQuestions.length));
+            for (var index = 0; index < contents.length; index++) {
+              final question = publicQuestions[index];
+              final copy = question.localized(language.name);
+              final content = contents[index];
+              expect(content.text, contains(copy.prompt));
+              for (final line in copy.lines) {
+                expect(content.text, contains(line));
+              }
+              expect(content.formulaKey, question.formulaKey[language.name]);
+              expect(content.languageCode, language.name);
+              if (question.topic == 'formula') {
+                final equation = find.descendant(
+                  of: find.byWidget(content),
+                  matching: find.byKey(
+                    const ValueKey('game-question-equation-0'),
+                  ),
+                );
+                expect(equation, findsOneWidget);
+                expect(
+                  tester.widget<Semantics>(equation).properties.label,
+                  contains(
+                    language == AppLanguage.en ? 'equals' : 'sama dengan',
+                  ),
+                );
+                final legend = find.descendant(
+                  of: find.byWidget(content),
+                  matching: find.byKey(
+                    const ValueKey('game-question-variables'),
+                  ),
+                );
+                expect(legend, findsOneWidget);
+                if (copy.prompt.contains('V=p*l*t')) {
+                  final definitions = tester
+                      .widget<Text>(legend)
+                      .textSpan!
+                      .toPlainText();
+                  for (final definition
+                      in language == AppLanguage.en
+                          ? [
+                              'V = volume',
+                              'p = length',
+                              'l = width',
+                              't = height',
+                            ]
+                          : [
+                              'V = isi padu',
+                              'p = panjang',
+                              'l = lebar',
+                              't = tinggi',
+                            ]) {
+                    expect(definitions, contains(definition));
+                  }
+                }
+              }
+            }
+            if (projection.currentQuestion != null) {
+              expect(projection.currentQuestion!.id, 'duel-0');
+              expect(projection.currentQuestion!.settledShape, isNull);
+              expect(find.textContaining('Correct shape:'), findsNothing);
+            }
+            final formulaContents = find
+                .byType(GameQuestionContent)
+                .evaluate()
+                .where(
+                  (element) => (element.widget as GameQuestionContent).text
+                      .contains('='),
+                );
+            expect(formulaContents, isNotEmpty);
+            // Exercise each real equation at the narrow 150% viewport, including
+            // settled history entries that begin below the screen.
+            for (final element in formulaContents.toList()) {
+              await tester.ensureVisible(find.byWidget(element.widget));
+              await tester.pumpAndSettle();
+              expect(tester.takeException(), isNull);
+            }
+            expect(ui.h.transport.commands, hasLength(2));
+          } finally {
+            await ui.close(tester);
+          }
+        }
+      },
+    );
+  }
   testWidgets(
     'all back origins use forfeit confirmation, pause audio and preserve live clock',
     (tester) async {

@@ -6,11 +6,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:geomath_flutter/app/app.dart';
 import 'package:geomath_flutter/app/app_dependencies.dart';
 import 'package:geomath_flutter/app/app_router.dart';
+import 'package:geomath_flutter/core/geometry/geometry_card_view.dart';
 import 'package:geomath_flutter/core/preferences/preferences.dart';
 import 'package:geomath_flutter/core/result.dart';
 import 'package:geomath_flutter/core/runtime/clock.dart';
 import 'package:geomath_flutter/core/runtime/random_source.dart';
 import 'package:geomath_flutter/core/session/guest_identity_store.dart';
+import 'package:geomath_flutter/features/duel/presentation/game_card_carousel.dart';
+import 'package:geomath_flutter/features/duel/presentation/game_question_content.dart';
 import 'package:geomath_flutter/features/solo/solo_feature.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
@@ -46,11 +49,31 @@ final class PageGuest implements GuestIdentityStore {
   Future<Result<void>> write(String value) async => const Success(null);
 }
 
+final class PageRandom implements RandomSource {
+  final _random = Random(321);
+  int draws = 0;
+  @override
+  double nextDouble() {
+    draws++;
+    return _random.nextDouble();
+  }
+
+  @override
+  int nextInt(int maximum) {
+    draws++;
+    return _random.nextInt(maximum);
+  }
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   sqfliteFfiInit();
 
-  Future<AppDependencies> boot(WidgetTester tester, PageClock clock) async {
+  Future<AppDependencies> boot(
+    WidgetTester tester,
+    PageClock clock, {
+    RandomSource? random,
+  }) async {
     final result = await tester.runAsync(
       () => AppDependencies.bootstrap(
         features: [soloFeature()],
@@ -59,7 +82,7 @@ void main() {
         preferencesStore: PagePreferences(),
         guestStore: PageGuest(),
         clock: clock,
-        random: DefaultRandomSource(Random(321)),
+        random: random ?? DefaultRandomSource(Random(321)),
       ),
     );
     expect(result!.isSuccess, true);
@@ -84,6 +107,238 @@ void main() {
     await tester.pump(const Duration(milliseconds: 350));
     await tester.runAsync(() => tester.tap(finder));
     await tester.pump(const Duration(milliseconds: 350));
+  }
+
+  Finder carouselScroller() => find.descendant(
+    of: find.byType(GameCardCarousel),
+    matching: find.byWidgetPredicate(
+      (widget) => widget is Scrollable && widget.axis == Axis.horizontal,
+    ),
+  );
+
+  double browseOffset(WidgetTester tester) =>
+      tester.state<ScrollableState>(carouselScroller()).position.pixels;
+
+  testWidgets(
+    'all five R1 and R2 cards browse without selection, attempts, score or RNG draws',
+    (tester) async {
+      tester.view.physicalSize = const Size(390, 900);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      final clock = PageClock(), random = PageRandom();
+      final app = await boot(tester, clock, random: random);
+      final c = app.composition.services.get(SoloServices.controller);
+      expect(
+        await tester.runAsync(
+          () => c.start(
+            name: 'Swipe QA',
+            mode: SoloMode.review,
+            questionIds: ['B2', 'K2'],
+          ),
+        ),
+        true,
+      );
+      await tester.pumpWidget(
+        GeoMathApp(dependencies: app, initialRoute: 'solo-game'),
+      );
+      await flush(tester, c);
+      final game = c.game!, attempt = c.attemptId;
+
+      Future<void> browseEveryCard() async {
+        final order = game.stage == GeometryCardKind.solid
+            ? game.solidOrder
+            : game.netOrder;
+        final snapshot = jsonEncode(game.checkpoint(c.now));
+        final draws = random.draws;
+        expect(c.selected, isNull);
+        final cards = tester.widgetList<GeometryCardView>(
+          find.descendant(
+            of: find.byType(GameCardCarousel),
+            matching: find.byType(GeometryCardView),
+          ),
+        );
+        expect(cards.map((card) => card.shape), order);
+        expect(cards.every((card) => card.kind == game.stage), true);
+        for (var i = 0; i < order.length; i++) {
+          final choice = find.byKey(
+            ValueKey('solo-choice-${game.stage.name}-${order[i].name}'),
+          );
+          expect(choice, findsOneWidget);
+          await tester.ensureVisible(choice);
+          await tester.pump(const Duration(milliseconds: 350));
+          expect(choice.hitTestable(), findsOneWidget);
+        }
+        await tapKey(tester, 'solo-cards-previous');
+        final beforeSwipe = browseOffset(tester);
+        await tester.drag(carouselScroller(), const Offset(-240, 0));
+        await tester.pump(const Duration(milliseconds: 350));
+        expect(browseOffset(tester), greaterThan(beforeSwipe));
+        await tapKey(tester, 'solo-cards-next');
+        expect(c.selected, isNull);
+        expect(c.attemptId, attempt);
+        expect(jsonEncode(game.checkpoint(c.now)), snapshot);
+        expect(random.draws, draws);
+      }
+
+      await browseEveryCard();
+      await tapKey(tester, 'solo-choice-solid-${game.question.shape.name}');
+      expect(game.attemptedSolid, isNull);
+      expect(game.score, 0);
+      await tapKey(tester, 'solo-r1');
+      expect(game.stage, GeometryCardKind.net);
+      expect(browseOffset(tester), 0);
+      expect(game.score, 0);
+      await browseEveryCard();
+      final chosen = game.netOrder.last;
+      await tapKey(tester, 'solo-choice-net-${chosen.name}');
+      await tapKey(tester, 'solo-cards-previous');
+      expect(c.selected, chosen);
+      await tapKey(tester, 'solo-cards-next');
+      final offset = browseOffset(tester);
+      expect(offset, greaterThan(0));
+      final snapshot = jsonEncode(game.checkpoint(c.now));
+      final draws = random.draws;
+      await tester.runAsync(
+        () => app.preferences.save(
+          app.preferences.value.copyWith(
+            language: AppLanguage.en,
+            theme: AppTheme.dark,
+            textScale: 1.5,
+          ),
+        ),
+      );
+      await tester.pump(const Duration(milliseconds: 350));
+      expect(browseOffset(tester), closeTo(offset, .01));
+      expect(c.selected, chosen);
+      expect(c.attemptId, attempt);
+      expect(jsonEncode(game.checkpoint(c.now)), snapshot);
+      expect(random.draws, draws);
+      expect(find.byTooltip('Next card'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+
+      // Pausing hides controls while retaining this attempt's browse position.
+      await tapKey(tester, 'solo-pause');
+      await tapKey(tester, 'solo-unpause');
+      expect(browseOffset(tester), closeTo(offset, .01));
+      expect(c.selected, chosen);
+      await tapKey(tester, 'solo-skip');
+      clock.milliseconds = SoloGame.reviewMs;
+      await tester.pump(const Duration(milliseconds: 110));
+      final question = game.question.id;
+      await tapKey(tester, 'solo-continue');
+      expect(game.question.id, isNot(question));
+      expect(game.stage, GeometryCardKind.solid);
+      expect(browseOffset(tester), 0);
+      expect(c.selected, isNull);
+      expect(tester.takeException(), isNull);
+
+      await tapKey(tester, 'solo-cards-next');
+      expect(browseOffset(tester), greaterThan(0));
+      expect(
+        await tester.runAsync(
+          () => c.start(
+            name: 'New attempt QA',
+            mode: SoloMode.review,
+            questionIds: ['B2'],
+            replaceConfirmed: true,
+          ),
+        ),
+        true,
+      );
+      await tester.pump();
+      expect(c.attemptId, isNot(attempt));
+      expect(c.selected, isNull);
+      expect(browseOffset(tester), 0);
+      expect(tester.takeException(), isNull);
+
+      await tester.pumpWidget(const SizedBox.shrink());
+      await tester.runAsync(app.dispose);
+    },
+  );
+
+  for (final (width, language) in [
+    (320.0, AppLanguage.ms),
+    (390.0, AppLanguage.en),
+  ]) {
+    testWidgets(
+      'screenshot B2 formula and variable meanings reflow at $width / 150% in question, review and analysis',
+      (tester) async {
+        tester.view.physicalSize = Size(width, 900);
+        tester.view.devicePixelRatio = 1;
+        addTearDown(tester.view.resetPhysicalSize);
+        addTearDown(tester.view.resetDevicePixelRatio);
+        final clock = PageClock();
+        final app = await boot(tester, clock);
+        final c = app.composition.services.get(SoloServices.controller);
+        await tester.runAsync(
+          () => app.preferences.save(
+            app.preferences.value.copyWith(language: language, textScale: 1.5),
+          ),
+        );
+        await tester.runAsync(
+          () => c.start(
+            name: 'Formula QA',
+            mode: SoloMode.review,
+            questionIds: ['B2'],
+          ),
+        );
+        await tester.pumpWidget(
+          GeoMathApp(dependencies: app, initialRoute: 'solo-game'),
+        );
+        await flush(tester, c);
+        final content = find.byKey(const ValueKey('solo-question-content'));
+        expect(content, findsOneWidget);
+        final question = tester.widget<GameQuestionContent>(content);
+        expect(question.text, contains('V=p*l*t'));
+        expect(question.showVariables, true);
+        expect(question.languageCode, language.name);
+        expect(find.textContaining('V=p*l*t'), findsNothing);
+        final rendered = tester
+            .widgetList<RichText>(find.byType(RichText))
+            .map((widget) => widget.text.toPlainText())
+            .join('\n');
+        expect(rendered, contains('×'));
+        expect(
+          rendered,
+          contains(language == AppLanguage.ms ? 'panjang' : 'length'),
+        );
+        expect(
+          rendered,
+          contains(language == AppLanguage.ms ? 'lebar' : 'width'),
+        );
+        expect(
+          rendered,
+          contains(language == AppLanguage.ms ? 'tinggi' : 'height'),
+        );
+        expect(tester.takeException(), isNull);
+
+        await tapKey(tester, 'solo-skip');
+        expect(c.game!.reviewing, true);
+        expect(content, findsOneWidget);
+        expect(find.textContaining('V=p*l*t'), findsNothing);
+        expect(tester.takeException(), isNull);
+        clock.milliseconds = SoloGame.reviewMs;
+        await tester.pump(const Duration(milliseconds: 110));
+        await tapKey(tester, 'solo-continue');
+        await tester.runAsync(c.finish);
+        await tester.pump();
+        await tapKey(tester, 'solo-analysis-item-B2');
+        final analysis = find.byKey(
+          const ValueKey('solo-analysis-question-B2'),
+        );
+        await tester.ensureVisible(analysis);
+        await tester.pump(const Duration(milliseconds: 350));
+        expect(
+          tester.widget<GameQuestionContent>(analysis).text,
+          question.text,
+        );
+        expect(find.textContaining('V=p*l*t'), findsNothing);
+        expect(tester.takeException(), isNull);
+        await tester.pumpWidget(const SizedBox.shrink());
+        await tester.runAsync(app.dispose);
+      },
+    );
   }
 
   testWidgets(

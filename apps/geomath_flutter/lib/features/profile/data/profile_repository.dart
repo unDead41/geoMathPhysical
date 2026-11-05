@@ -92,6 +92,16 @@ final class GatewayProfileRepository implements ProfileRepository {
     }
     final reply = response.valueOrNull!;
     if (reply.errorCode != null) return Failed(_denial(reply.errorCode!));
+    // Only an explicit null confirms that profile completion is needed. An
+    // omitted field cannot reconcile a write whose outcome is still unknown.
+    if (!reply.data.containsKey('profile')) {
+      return const Failed(
+        AppFailure(
+          code: FailureCode.invalid,
+          message: 'profile.invalidResponse',
+        ),
+      );
+    }
     if (reply.data['profile'] == null) return const Success(null);
     final profile = AccountProfile.parse(reply.data['profile'], actor);
     if (profile == null) {

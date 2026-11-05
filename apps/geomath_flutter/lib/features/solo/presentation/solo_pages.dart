@@ -11,6 +11,8 @@ import '../../../core/records/formative_records.dart';
 import '../../../core/result.dart';
 import '../../../core/session/actor_binding.dart';
 import '../../../core/widgets/widgets.dart';
+import '../../duel/presentation/game_card_carousel.dart';
+import '../../duel/presentation/game_question_content.dart';
 import '../data/solo_repository.dart';
 import '../domain/solo_bank.dart';
 import '../domain/solo_game.dart';
@@ -434,8 +436,10 @@ final class _SoloGamePageState extends State<SoloGamePage> {
                     style: Theme.of(context).textTheme.labelLarge,
                   ),
                   const SizedBox(height: 8),
-                  Text(
-                    prompt(g.question, english),
+                  GameQuestionContent(
+                    key: const ValueKey('solo-question-content'),
+                    text: prompt(g.question, english),
+                    languageCode: english ? 'en' : 'ms',
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ],
@@ -452,55 +456,65 @@ final class _SoloGamePageState extends State<SoloGamePage> {
                 ),
               ),
             ],
-            if (g.interactive) ...[
-              _gap(),
-              SectionHeader(
-                title: _text(
-                  context,
-                  g.stage == GeometryCardKind.solid ? 'stepSolid' : 'stepNet',
-                ),
-                subtitle: _text(context, 'choose'),
+            Visibility(
+              visible: g.interactive,
+              maintainState: true,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _gap(),
+                  SectionHeader(
+                    title: _text(
+                      context,
+                      g.stage == GeometryCardKind.solid
+                          ? 'stepSolid'
+                          : 'stepNet',
+                    ),
+                    subtitle: _text(context, 'choose'),
+                  ),
+                  _gap(),
+                  _choices(context, c, g),
+                  _gap(),
+                  ActionButton(
+                    key: const ValueKey('solo-r1'),
+                    label: _text(context, 'r1'),
+                    icon: Icons.filter_1_outlined,
+                    onPressed:
+                        g.stage == GeometryCardKind.solid && c.selected != null
+                        ? () => c.scan('r1')
+                        : null,
+                  ),
+                  _gap(),
+                  ActionButton(
+                    key: const ValueKey('solo-r2'),
+                    label: _text(context, 'r2'),
+                    icon: Icons.filter_2_outlined,
+                    onPressed:
+                        g.stage == GeometryCardKind.net && c.selected != null
+                        ? () => c.scan('r2')
+                        : null,
+                  ),
+                  _gap(),
+                  ActionButton(
+                    key: const ValueKey('solo-hint'),
+                    label: _text(context, g.hintOpen ? 'hideHint' : 'hint'),
+                    kind: ActionButtonKind.tonal,
+                    onPressed: c.hint,
+                  ),
+                  if (g.hintOpen) ...[
+                    _gap(),
+                    StatusNotice(message: hint(g.question, english)),
+                  ],
+                  _gap(),
+                  ActionButton(
+                    key: const ValueKey('solo-skip'),
+                    label: _text(context, 'skip'),
+                    kind: ActionButtonKind.secondary,
+                    onPressed: c.skip,
+                  ),
+                ],
               ),
-              _gap(),
-              _choices(context, c, g),
-              _gap(),
-              ActionButton(
-                key: const ValueKey('solo-r1'),
-                label: _text(context, 'r1'),
-                icon: Icons.filter_1_outlined,
-                onPressed:
-                    g.stage == GeometryCardKind.solid && c.selected != null
-                    ? () => c.scan('r1')
-                    : null,
-              ),
-              _gap(),
-              ActionButton(
-                key: const ValueKey('solo-r2'),
-                label: _text(context, 'r2'),
-                icon: Icons.filter_2_outlined,
-                onPressed: g.stage == GeometryCardKind.net && c.selected != null
-                    ? () => c.scan('r2')
-                    : null,
-              ),
-              _gap(),
-              ActionButton(
-                key: const ValueKey('solo-hint'),
-                label: _text(context, g.hintOpen ? 'hideHint' : 'hint'),
-                kind: ActionButtonKind.tonal,
-                onPressed: c.hint,
-              ),
-              if (g.hintOpen) ...[
-                _gap(),
-                StatusNotice(message: hint(g.question, english)),
-              ],
-              _gap(),
-              ActionButton(
-                key: const ValueKey('solo-skip'),
-                label: _text(context, 'skip'),
-                kind: ActionButtonKind.secondary,
-                onPressed: c.skip,
-              ),
-            ],
+            ),
             if (g.status == SoloStatus.feedback || g.reviewing) ...[
               _gap(),
               StatusNotice(
@@ -559,63 +573,58 @@ final class _SoloGamePageState extends State<SoloGamePage> {
       );
     },
   );
-  Widget _choices(
-    BuildContext context,
-    SoloController c,
-    SoloGame g,
-  ) => LayoutBuilder(
-    builder: (context, constraints) {
-      final order = g.stage == GeometryCardKind.solid
-          ? g.solidOrder
-          : g.netOrder;
-      final cols = constraints.maxWidth >= 620 ? 3 : 2;
-      final width = (constraints.maxWidth - 12 * (cols - 1)) / cols;
-      return Wrap(
-        spacing: 12,
-        runSpacing: 12,
-        children: [
-          for (var i = 0; i < order.length; i++)
-            SizedBox(
-              width: width,
-              child: Semantics(
-                selected: c.selected == order[i],
-                button: true,
-                label:
-                    '${_text(context, g.stage.name)} ${String.fromCharCode(65 + i)}',
-                child: GeoMathCard(
-                  key: ValueKey('solo-choice-${g.stage.name}-${order[i].name}'),
-                  padding: const EdgeInsets.all(10),
-                  color: c.selected == order[i]
-                      ? Theme.of(context).colorScheme.primaryContainer
-                      : null,
-                  onTap: () => c.choose(order[i]),
-                  child: Column(
-                    children: [
-                      ExcludeSemantics(
-                        child: GeometryCardView(
-                          shape: order[i],
-                          kind: g.stage,
-                          provider: widget.geometry,
-                          semanticLabel: '',
-                          size: 88,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        '${_text(context, g.stage.name)} ${String.fromCharCode(65 + i)}',
-                        textAlign: TextAlign.center,
-                      ),
-                      if (c.selected == order[i])
-                        const Icon(Icons.check_circle_outline_rounded),
-                    ],
-                  ),
+  Widget _choices(BuildContext context, SoloController c, SoloGame g) {
+    final order = g.stage == GeometryCardKind.solid ? g.solidOrder : g.netOrder;
+    return GameCardCarousel(
+      scopeKey: (c.attemptId, g.question.id, g.stage),
+      keyPrefix: 'solo-cards',
+      itemCount: order.length,
+      previousLabel: _text(context, 'previousCard'),
+      nextLabel: _text(context, 'nextCard'),
+      positionLabel: (number, total) =>
+          _text(context, 'cardPosition', {'number': number, 'total': total}),
+      reducedMotion: MediaQuery.disableAnimationsOf(context),
+      cardBuilder: (context, i, cardWidth) => Semantics(
+        selected: c.selected == order[i],
+        button: true,
+        label: '${_text(context, g.stage.name)} ${String.fromCharCode(65 + i)}',
+        child: GeoMathCard(
+          key: ValueKey('solo-choice-${g.stage.name}-${order[i].name}'),
+          padding: const EdgeInsets.all(10),
+          color: c.selected == order[i]
+              ? Theme.of(context).colorScheme.primaryContainer
+              : null,
+          onTap: () => c.choose(order[i]),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ExcludeSemantics(
+                child: GeometryCardView(
+                  shape: order[i],
+                  kind: g.stage,
+                  provider: widget.geometry,
+                  semanticLabel: '',
+                  size: (cardWidth - 32).clamp(88.0, 128.0).toDouble(),
                 ),
               ),
-            ),
-        ],
-      );
-    },
-  );
+              const SizedBox(height: 8),
+              Text(
+                '${_text(context, g.stage.name)} ${String.fromCharCode(65 + i)}',
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: 24,
+                child: c.selected == order[i]
+                    ? const Icon(Icons.check_circle_outline_rounded)
+                    : null,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _saveStatus(BuildContext context, SoloController c) =>
       c.failure != null
       ? _failure(context, c, () => unawaited(c.checkpoint()))
@@ -719,6 +728,7 @@ final class _SoloGamePageState extends State<SoloGamePage> {
           SectionHeader(title: _text(context, 'questionReview')),
           for (final a in g.answers)
             ExpansionTile(
+              key: ValueKey('solo-analysis-item-${a.id}'),
               title: Text('${a.id} · ${_text(context, a.outcome)}'),
               children: [
                 Padding(
@@ -726,7 +736,11 @@ final class _SoloGamePageState extends State<SoloGamePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Text(prompt(g.bank.question(a.id), english)),
+                      GameQuestionContent(
+                        key: ValueKey('solo-analysis-question-${a.id}'),
+                        text: prompt(g.bank.question(a.id), english),
+                        languageCode: english ? 'en' : 'ms',
+                      ),
                       _gap(),
                       Text(
                         _text(context, 'answer', {
