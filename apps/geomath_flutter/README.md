@@ -56,7 +56,7 @@ flutter pub get
 dart format --output=none --set-exit-if-changed lib test integration_test test_driver
 flutter analyze
 flutter test
-node --test tools/contracts/verify_exports.test.mjs
+node --test tools/contracts/verify_exports.test.mjs test/foundation/native_adapter_contract.test.mjs
 flutter build apk --debug
 flutter devices
 flutter run -d DEVICE_ID
@@ -168,7 +168,7 @@ node tools/contracts/export_contracts.mjs "CANONICAL_ROOT" "RECURSIVE_TREE_JSON"
 node tools/module/build_module.mjs "CANONICAL_ROOT" "RECURSIVE_TREE_JSON"
 node tools/design/export_tokens.mjs "CANONICAL_ROOT/digital/design-system/tokens.mjs" 37bc2cd262cc0a54e8ee31339ea37471c1ecfda5
 dart format lib/core/design/design_tokens.g.dart
-node --test tools/contracts/verify_exports.test.mjs
+node --test tools/contracts/verify_exports.test.mjs test/foundation/native_adapter_contract.test.mjs
 ```
 
 The module builder uses an isolated scratch snapshot for generated Digital

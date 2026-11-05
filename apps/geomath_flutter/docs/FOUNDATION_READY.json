@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "status": "blocked",
-  "ready": false,
+  "status": "ready",
+  "ready": true,
   "contract_version": "1.0.0",
   "app_version": "0.1.0+1",
   "application_id": "com.geomath.dev",
@@ -149,37 +149,37 @@
       "status": "passed",
       "command": "flutter pub get",
       "exit_code": 0,
-      "evidence": "docs/handoffs/app-foundation/evidence/ci-41971048550.txt",
-      "note": "Official pub.dev archives preloaded and SHA-256 verified; direct online Dart networking was unreliable in the managed host.",
-      "tested_commit": "61f21b0adfbc378212c6f302528627896b9381f5",
-      "ci_run_id": 41971048550,
-      "ci_evidence": "docs/handoffs/app-foundation/evidence/ci-41954312460-verify.txt"
+      "tested_commit": "f5aeddd58d81e490b1e67b8bf4a21311645d3631",
+      "ci_run_id": 41973098124,
+      "job_id": 127065623084,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41973098124.txt"
     },
     "format": {
       "status": "passed",
       "command": "dart format --output=none --set-exit-if-changed lib test integration_test test_driver",
       "exit_code": 0,
-      "tested_commit": "61f21b0adfbc378212c6f302528627896b9381f5",
-      "ci_run_id": 41971048550,
-      "evidence": "docs/handoffs/app-foundation/evidence/ci-41971048550.txt",
-      "reason": "Configured CI77-file formatter passed atd2557ca"
+      "tested_commit": "f5aeddd58d81e490b1e67b8bf4a21311645d3631",
+      "ci_run_id": 41973098124,
+      "job_id": 127065623084,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41973098124.txt"
     },
     "analyze": {
       "status": "passed",
       "command": "flutter analyze",
       "exit_code": 0,
-      "tested_commit": "61f21b0adfbc378212c6f302528627896b9381f5",
-      "ci_run_id": 41971048550,
-      "evidence": "docs/handoffs/app-foundation/evidence/ci-41971048550.txt",
-      "reason": "Configured CI analyzer passed atd2557ca"
+      "tested_commit": "f5aeddd58d81e490b1e67b8bf4a21311645d3631",
+      "ci_run_id": 41973098124,
+      "job_id": 127065623084,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41973098124.txt"
     },
     "unit_widget_tests": {
       "status": "passed",
       "command": "flutter test",
       "exit_code": 0,
-      "tested_commit": "61f21b0adfbc378212c6f302528627896b9381f5",
-      "ci_run_id": 41971048550,
-      "evidence": "docs/handoffs/app-foundation/evidence/ci-41971048550.txt",
+      "tested_commit": "f5aeddd58d81e490b1e67b8bf4a21311645d3631",
+      "ci_run_id": 41973098124,
+      "job_id": 127065623084,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41973098124.txt",
       "passed": 92,
       "failed": 0
     },
@@ -187,9 +187,10 @@
       "status": "passed",
       "command": "node --test tools/contracts/verify_exports.test.mjs test/foundation/native_adapter_contract.test.mjs",
       "exit_code": 0,
-      "tested_commit": "61f21b0adfbc378212c6f302528627896b9381f5",
-      "ci_run_id": 41971048550,
-      "evidence": "docs/handoffs/app-foundation/evidence/ci-41971048550.txt",
+      "tested_commit": "f5aeddd58d81e490b1e67b8bf4a21311645d3631",
+      "ci_run_id": 41973098124,
+      "job_id": 127065623084,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41973098124.txt",
       "passed": 12,
       "failed": 0
     },
@@ -197,43 +198,53 @@
       "status": "passed",
       "command": "flutter build apk --debug",
       "exit_code": 0,
-      "tested_commit": "61f21b0adfbc378212c6f302528627896b9381f5",
-      "ci_run_id": 41971048550,
-      "evidence": "docs/handoffs/app-foundation/evidence/ci-41971048550.txt",
-      "artifact_id": 13390101358,
+      "tested_commit": "f5aeddd58d81e490b1e67b8bf4a21311645d3631",
+      "ci_run_id": 41973098124,
+      "job_id": 127065623084,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41973098124.txt",
       "bytes": 172051208,
-      "sha256": "f09e2b8e3f9fa8f2aaeb1d5d4ca8b769976c044f9cbabbbce4bfa7c72f4969c0"
+      "sha256": "ae533c5f573adee45304a732dd4d9f39840f84da71ace0fc4c2035aea0dd213d",
+      "artifact_id": 13390878421,
+      "kind": "normal application APK launched after integration"
     },
     "android_run_local": {
       "status": "blocked",
       "command": "flutter run --no-pub --no-resident --use-application-binary=GeoMath-0.1.0-debug.apk -d emulator-5554",
       "exit_code": 1,
-      "evidence": "evidence/android-run-local.txt",
-      "reason": "Retained API36 software emulator restarted framework services during first-boot ART verification; cmd: Cannot find service: package prevented APK installation."
+      "evidence": "docs/handoffs/app-foundation/evidence/android-run-local.txt",
+      "reason": "Retained API36 software emulator restarted framework services during first-boot ART verification; cmd: Cannot find service: package prevented APK installation.",
+      "historical": true
     },
     "android_smoke": {
       "status": "passed",
-      "command": "flutter drive --no-pub --driver=test_driver/integration_driver.dart --target=integration_test/foundation_smoke_test.dart --use-application-binary=$RUNNER_TEMP/geomath-integration-debug.apk -d emulator-5554",
+      "command": "flutter drive --no-pub --driver=test_driver/integration_driver.dart --target=integration_test/foundation_smoke_test.dart --use-application-binary=$RUNNER_TEMP/geomath-integration-debug.apk --screenshot=docs/handoffs/app-foundation/evidence/android/drive --keep-app-running -d emulator-5554",
       "exit_code": 0,
-      "reason": "All four unmodified real device scenarios pass. Overall step later fails only while the separate screenshot script searches an off-screen Home button.",
-      "evidence": "docs/handoffs/app-foundation/evidence/ci-41971048550.txt",
+      "tested_commit": "f5aeddd58d81e490b1e67b8bf4a21311645d3631",
+      "ci_run_id": 41973098124,
+      "job_id": 127065623084,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41973098124.txt",
       "passed": 4,
       "failed": 0,
-      "tested_commit": "61f21b0adfbc378212c6f302528627896b9381f5",
-      "ci_run_id": 41971048550
+      "device_evidence": "docs/handoffs/app-foundation/evidence/android-test/integration.txt"
     },
     "android_run": {
       "status": "passed",
-      "exit_code": 0,
       "command": "flutter run --no-pub --no-resident --use-application-binary=$RUNNER_TEMP/geomath-main-debug.apk -d emulator-5554",
-      "tested_commit": "61f21b0adfbc378212c6f302528627896b9381f5",
-      "ci_run_id": 41971048550,
-      "evidence": "docs/handoffs/app-foundation/evidence/ci-41971048550.txt"
+      "exit_code": 0,
+      "tested_commit": "f5aeddd58d81e490b1e67b8bf4a21311645d3631",
+      "ci_run_id": 41973098124,
+      "job_id": 127065623084,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41973098124.txt",
+      "device_evidence": "docs/handoffs/app-foundation/evidence/android-test/run.txt"
     },
     "android_screenshots": {
-      "status": "blocked",
-      "evidence": "docs/handoffs/app-foundation/evidence/ci-41973098124.txt",
-      "reason": "Full source/build/device checks pass at f5aeddd; the normal-app module screenshot still shows loading at8seconds. Await targeted capture of the same verified APK after the canonical canvas becomes visible."
+      "status": "passed",
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41977674183.txt",
+      "capture_tool_commit": "2f2719ef57ac7c53251bd85772dd505b412baada",
+      "ci_run_id": 41977674183,
+      "apk_tested_source": "f5aeddd58d81e490b1e67b8bf4a21311645d3631",
+      "apk_sha256": "ae533c5f573adee45304a732dd4d9f39840f84da71ace0fc4c2035aea0dd213d",
+      "note": "Actual ADB captures visually inspected; exact same APK as the full successful source/device run"
     }
   },
   "android_local": {
@@ -246,9 +257,7 @@
     "active_webview_verified": false,
     "screenshots": []
   },
-  "blockers": [
-    "Full source/build/device checks pass at f5aeddd; the normal-app module screenshot still shows loading at8seconds. Await targeted capture of the same verified APK after the canonical canvas becomes visible."
-  ],
+  "blockers": [],
   "not_claimed": [
     "physical Android phone",
     "hosted Auth/providers/migrations",
@@ -401,28 +410,101 @@
       "screenshots": "blocked by observed Android Quickstep launcher ANR",
       "evidence_artifact_id": 13392091872,
       "evidence": "docs/handoffs/app-foundation/evidence/ci-41976286905-attempt1.txt"
+    },
+    {
+      "run_id": 41977674183,
+      "url": "https://github.com/unDead41/geodecoder/actions/runs/41977674183",
+      "tested_commit": "2f2719ef57ac7c53251bd85772dd505b412baada",
+      "job": 127080229442,
+      "verify": "exact previously verified APK and101 unchanged runtime files",
+      "android_smoke": "not repeated; full4/4 passed in41973098124",
+      "screenshots": "passed actual canonical canvas",
+      "evidence_artifact_id": 13391749447,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41977674183.txt"
     }
   ],
   "android_ci": {
-    "device_id": "emulator-5554",
-    "kind": "hardware-accelerated GitHub Actions emulator",
+    "model": "Android SDK built for x86_64",
     "android": "15",
-    "api": 35,
-    "active_webview": "com.android.webview 124.0.6367.219",
+    "api": "35",
+    "boot_completed": "1",
+    "device_id": "emulator-5554",
+    "display_size": "Physical size: 1080x1920\nOverride size: 720x1280",
+    "display_density": "Physical density: 420\nOverride density: 320",
+    "airplane_mode": "1",
+    "kind": "GitHub-hosted Android emulator",
+    "active_webview_package": "com.android.webview",
+    "active_webview_version": "124.0.6367.219",
     "active_webview_verified": true,
-    "boot_verified": true,
-    "offline_radios_disabled": true,
-    "screenshots": []
+    "offline_cold_start_verified": true,
+    "evidence_artifact_id": 13390733823
   },
   "private_module_adapter_version": 2,
-  "planned_ci_device": {
+  "verified_source": {
+    "commit": "f5aeddd58d81e490b1e67b8bf4a21311645d3631",
+    "run_id": 41973098124,
+    "url": "https://github.com/unDead41/geodecoder/actions/runs/41973098124",
+    "publication_scope": "The exact full verified workflow is restored; app/runtime/unit/integration-test bytes remain the tested source. Screenshot tooling is verified separately against the exact same APK; publication adds readiness/handoff/review/README/evidence."
+  },
+  "android_capture_ci": {
+    "model": "Android SDK built for x86_64",
     "android": "15",
-    "api": 35,
-    "target": "default/AOSP",
-    "arch": "x86_64",
-    "profile": "pixel_2",
-    "cores": 2,
-    "ram_mb": 3072,
-    "display": "720x1280@320dpi"
+    "api": "35",
+    "boot_completed": "1",
+    "device_id": "emulator-5554",
+    "display_size": "Physical size: 1080x1920\nOverride size: 720x1280",
+    "display_density": "Physical density: 420\nOverride density: 320",
+    "airplane_mode": "1",
+    "kind": "GitHub-hosted Android emulator",
+    "active_webview_package": "com.android.webview",
+    "active_webview_version": "124.0.6367.219",
+    "run_id": 41977674183,
+    "tooling_commit": "2f2719ef57ac7c53251bd85772dd505b412baada",
+    "verified_apk_source": "f5aeddd58d81e490b1e67b8bf4a21311645d3631",
+    "apk_sha256": "ae533c5f573adee45304a732dd4d9f39840f84da71ace0fc4c2035aea0dd213d",
+    "evidence_artifact_id": 13391749447,
+    "screenshots": [
+      "docs/handoffs/app-foundation/evidence/android/01-home-offline.png",
+      "docs/handoffs/app-foundation/evidence/android/37-settings.png",
+      "docs/handoffs/app-foundation/evidence/android/module-preview.png"
+    ]
+  },
+  "device_evidence_sha256": {
+    "android-test/01-home-actions.png": "4b6cca2db11713c4423832994813683a1989b523244f72b3b3cf3e659b84319f",
+    "android-test/01-home-offline.png": "4f5f4e53b0b8058e6ca14142ab56772eb0b262e13efa643945e280f00a35e1f2",
+    "android-test/37-settings.png": "b9b7922f9f96f76168a07e37abd3e50bdc38d6b6042ce7fe242dbb04963a9229",
+    "android-test/PROVENANCE.txt": "434b126c47485c759c1f29e5b9f32f832d3e58cb1054e921094a7130d61e301b",
+    "android-test/device.json": "ca2c3e2034e3a6ff77495772981c9aa7ef659ab620ad1a0074b0a04a8bc1b4e0",
+    "android-test/devices.txt": "aa55b70cc59744e215b52324c9307e9c2e11f4172adbe0a315b512464057277b",
+    "android-test/display.txt": "45a73088286be4192458ad33519c40d3ed081fe6a882c087b5e18854c801a7fe",
+    "android-test/home-actions-hierarchy.xml": "8d0d8dea933577bcc1ae5b96a15bdebf9d4a6ad2cfeeb5f13167307e585be57c",
+    "android-test/home-hierarchy.xml": "ed79a17030620e53963ea84410fe4e2be0a5bc0b7ad377b7d550293bb0fd97cf",
+    "android-test/integration-apk.sha256": "2c37e4315fd00f158b3c3155a8a6453e9135db5a3d94f04798a401a081f723f9",
+    "android-test/integration.txt": "e6f4025f07773f3b7f4413eec903b3edfe5963b428f970778ad99ba7efcc4af5",
+    "android-test/last-screen.png": "3890b3c35d21cf41dd473c5903d56c7285685a30aad3499d1b2bb46a6629b1fd",
+    "android-test/module-preview.png": "7b70a94f9af469a583363842e37b2c91c764cfbeeb4c6a6fb4ea9dd9e686ddf1",
+    "android-test/native-services.txt": "2ea1f13c173eb32664b0e0319e48882cc5d93cf7b0ccf831512146cf11e70d36",
+    "android-test/normal-apk.sha256": "8d09fd6f30f010b3d0c968b61187e0c03a042f95eaa1e2cb373c35321743eae7",
+    "android-test/power-final.txt": "27f98d3b80b12bebc867b32fedc55d1ce4cf49f01a44067d584b4f051d5862b3",
+    "android-test/run.txt": "7a987e593d7e35b7baaa1dacc1c409cb449fedc162970e3ef9093431b5492a7f",
+    "android-test/webview-final.txt": "e5a249e2bd68318cd0f76dca611492e2fad05ad5a9ab0e455b296e0870ec153d",
+    "android-test/webview-initial.txt": "e5a249e2bd68318cd0f76dca611492e2fad05ad5a9ab0e455b296e0870ec153d",
+    "android-test/webview.txt": "e5a249e2bd68318cd0f76dca611492e2fad05ad5a9ab0e455b296e0870ec153d",
+    "android-test/window-before-tests.txt": "ff3e0e63f413cd3a69464e6760b9b390ae5281d057364cc15e4378a234517934",
+    "android-test/window-final.txt": "dde52b5733c0c74d0efec22dd13b2b16cd375559bfd81d10784033697bf90b17",
+    "android/01-home-actions.png": "ff9f5e82552f6e5f936ae6ae2913fde06bbfd24773271513c6f507f9fdaaf373",
+    "android/01-home-offline.png": "c494b1b8dabae5fb7db1fba1856a7b35f0e853d1850322c87f3b2f9a9e4d9ea3",
+    "android/37-settings.png": "dace38b54291bc7ef2f0fa23bf398df622982c2a0f28d2701d56f13dfe85d697",
+    "android/PROVENANCE.txt": "83d2c9d152942560fd1de0fedd38f66f3bf3158bf707d19e7b02866426e1e0d6",
+    "android/device.json": "ca2c3e2034e3a6ff77495772981c9aa7ef659ab620ad1a0074b0a04a8bc1b4e0",
+    "android/home-actions-hierarchy.xml": "9d0c498ff7f8ea7156f465521b38167247de513f4dbaf1a10cac23c9582f2a8a",
+    "android/home-hierarchy.xml": "ed79a17030620e53963ea84410fe4e2be0a5bc0b7ad377b7d550293bb0fd97cf",
+    "android/last-screen.png": "e3d08ecd358a4e71448cb41512b16bc3fad00e6caf1a25b3bb04f08add481001",
+    "android/module-hierarchy.xml": "29ff657edee124f490054252aec4d33e514965beac6bf4be1bcc298d3b0981c5",
+    "android/module-preview.png": "e54b7aaa306f68b66f0f3f283a52d4fd794c41a1ec2e8c19b6a73e6f0b16ac63",
+    "android/normal-apk.sha256": "8d09fd6f30f010b3d0c968b61187e0c03a042f95eaa1e2cb373c35321743eae7",
+    "android/power-final.txt": "953c12ec38a2c64a531638340778a84bd25a035a6a4b8e544f2e204b88ddc656",
+    "android/webview.txt": "e5a249e2bd68318cd0f76dca611492e2fad05ad5a9ab0e455b296e0870ec153d",
+    "android/window-final.txt": "c4c4a4f9c857233bd012955fa659855296bc1742aefa7e790820d72d35ca86d0"
   }
 }

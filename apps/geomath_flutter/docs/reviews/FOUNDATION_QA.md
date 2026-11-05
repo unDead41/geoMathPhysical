@@ -134,3 +134,27 @@ smoke-job normal APK; identical installed/downloaded binary bytes are not claime
 Android integration and actual screenshots remain the final gate. The native
 TXT document-picker/save adapter is implemented; the current device target tests
 clipboard and report editing but does not automate that system picker.
+
+
+## Final integrated device acceptance, 5 November 2026
+
+The earlier pending-device statements describe their historical worker/source
+snapshots. [Run 41973098124](https://github.com/unDead41/geodecoder/actions/runs/41973098124) on source
+`f5aeddd58d81e490b1e67b8bf4a21311645d3631` completed all required checks: 92
+Flutter tests, 12 Node contracts and all four real Android tests.
+The normal application APK was preserved separately, launched offline after
+integration and matched the downloaded artifact SHA256 `ae533c5f573adee45304a732dd4d9f39840f84da71ace0fc4c2035aea0dd213d`.
+
+The exact same normal APK was reused in capture run41977674183,
+with unchanged101runtime files and20 matching bundled assets. The actual ADB
+Home, Settings and canonical-module screenshots were inspected
+before final publication. Device API35 and active WebView
+`com.android.webview 124.0.6367.219` are recorded in
+[the current handoff](../handoffs/app-foundation/LATEST.md) and
+[FOUNDATION_READY.json](../FOUNDATION_READY.json). All101 frozen runtime hashes
+and the contract/source/lockfile hashes remain verified. The final root-version
+and scoped-diff command receipts are retained beside the CI receipt.
+
+The native TXT picker/save flow, physical phone, iOS, API36 full UI gate and
+hosted services remain outside this verified device receipt. This acceptance
+does not reinterpret prior failed runs as passes.

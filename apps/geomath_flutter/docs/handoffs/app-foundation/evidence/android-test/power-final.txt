@@ -1,0 +1,626 @@
+POWER MANAGER (dumpsys power)
+
+Power Manager State:
+  Settings power_manager_constants:
+    no_cached_wake_locks=true
+  mDirty=0x0
+  mWakefulness=Awake
+  mWakefulnessChanging=false
+  mIsPowered=true
+  mPlugType=1
+  mBatteryLevel=100
+  mDreamsBatteryLevelDrain=0
+  mDockState=0
+  mStayOn=true
+  mProximityPositive=false
+  mBootCompleted=true
+  mSystemReady=true
+  mEnhancedDischargeTimeElapsed=0
+  mLastEnhancedDischargeTimeUpdatedElapsed=0
+  mEnhancedDischargePredictionIsPersonalized=false
+  mUseAutoSuspend=true
+  mHalAutoSuspendModeEnabled=false
+  mHalInteractiveModeEnabled=true
+  mWakeLockSummary=0x0
+  mNotifyLongScheduled=+496ms
+  mNotifyLongDispatched=-50s374ms
+  mNotifyLongNextCheck=+496ms
+  mRequestWaitForNegativeProximity=false
+  mInterceptedPowerKeyForProximity=false
+  mSandmanScheduled=false
+  mBatteryLevelLow=false
+  mLightDeviceIdleMode=false
+  mDeviceIdleMode=false
+  mDeviceIdleWhitelist=[2000, 10071, 10072, 10079, 10119, 10144, 10146]
+  mDeviceIdleTempWhitelist=[]
+  mLowPowerStandbyActive=false
+  mLastWakeTime=0 (237431 ms ago)
+  mLastSleepTime=0 (237431 ms ago)
+  mLastSleepReason=application
+  mLastGlobalWakeTimeRealtime=0 (237431 ms ago)
+  mLastGlobalSleepTimeRealtime=0 (237431 ms ago)
+  mLastInteractivePowerHintTime=225412 (12019 ms ago)
+  mLastScreenBrightnessBoostTime=0 (237431 ms ago)
+  mScreenBrightnessBoostInProgress=false
+  mHoldingWakeLockSuspendBlocker=false
+  mHoldingDisplaySuspendBlocker=true
+  mLastFlipTime=0
+  mIsFaceDown=false
+
+Settings and Configuration:
+  mDecoupleHalAutoSuspendModeFromDisplayConfig=false
+  mDecoupleHalInteractiveModeFromDisplayConfig=false
+  mWakeUpWhenPluggedOrUnpluggedConfig=false
+  mWakeUpWhenPluggedOrUnpluggedInTheaterModeConfig=false
+  mTheaterModeEnabled=false
+  mKeepDreamingWhenUnplugging=false
+  mSuspendWhenScreenOffDueToProximityConfig=false
+  mDreamsSupportedConfig=true
+  mDreamsEnabledByDefaultConfig=true
+  mDreamsActivatedOnSleepByDefaultConfig=false
+  mDreamsActivatedOnDockByDefaultConfig=true
+  mDreamsEnabledOnBatteryConfig=false
+  mDreamsBatteryLevelMinimumWhenPoweredConfig=-1
+  mDreamsBatteryLevelMinimumWhenNotPoweredConfig=15
+  mDreamsBatteryLevelDrainCutoffConfig=5
+  mDreamsEnabledSetting=true
+  mDreamsActivateOnSleepSetting=false
+  mDreamsActivateOnDockSetting=true
+  mDozeAfterScreenOff=true
+  mBrightWhenDozingConfig=false
+  mMinimumScreenOffTimeoutConfig=10000
+  mMaximumScreenDimDurationConfig=7000
+  mMaximumScreenDimRatioConfig=0.20000005
+  mAttentiveTimeoutConfig=-1
+  mAttentiveTimeoutSetting=-1
+  mAttentiveWarningDurationConfig=30000
+  mScreenOffTimeoutSetting=2147483647
+  mSleepTimeoutSetting=-1
+  mMaximumScreenOffTimeoutFromDeviceAdmin=9223372036854775807 (enforced=false)
+  mStayOnWhilePluggedInSetting=1
+  mScreenBrightnessOverrideFromWindowManager=NaN
+  mUserActivityTimeoutOverrideFromWindowManager=-1
+  mUserInactiveOverrideFromWindowManager=false
+  mDozeScreenStateOverrideFromDreamManager=0
+  mDrawWakeLockOverrideFromSidekick=false
+  mDozeScreenBrightnessOverrideFromDreamManager=-1
+  mScreenBrightnessMinimum=0.035433073
+  mScreenBrightnessMaximum=1.0
+  mScreenBrightnessDefault=0.39763778
+  mDoubleTapWakeEnabled=false
+  mForegroundProfile=0
+  mUserId=0
+
+Attentive timeout: -1 ms
+Sleep timeout: -1 ms
+Screen off timeout: 2147483647 ms
+Screen dim duration: 7000 ms
+
+UID states (changing=false changed=false):
+  UID 1000:   ACTIVE  count=0 state=0
+  UID 1001:   ACTIVE  count=0 state=0
+  UID 1068:   ACTIVE  count=0 state=0
+  UID 1073:   ACTIVE  count=0 state=0
+  UID 2000: INACTIVE  count=0 state=19
+  UID u0a62: INACTIVE  count=0 state=19
+  UID u0a63: INACTIVE  count=0 state=19
+  UID u0a64: INACTIVE  count=0 state=19
+  UID u0a66: INACTIVE  count=0 state=19
+  UID u0a68: INACTIVE  count=0 state=19
+  UID u0a71: INACTIVE  count=0 state=19
+  UID u0a72: INACTIVE  count=0 state=19
+  UID u0a78: INACTIVE  count=0 state=19
+  UID u0a79: INACTIVE  count=0 state=19
+  UID u0a83: INACTIVE  count=0 state=19
+  UID u0a87: INACTIVE  count=0 state=19
+  UID u0a97: INACTIVE  count=0 state=19
+  UID u0a99: INACTIVE  count=0 state=19
+  UID u0a101: INACTIVE  count=0 state=19
+  UID u0a103: INACTIVE  count=0 state=19
+  UID u0a105: INACTIVE  count=0 state=19
+  UID u0a107: INACTIVE  count=0 state=19
+  UID u0a109:   ACTIVE  count=0 state=7
+  UID u0a111:   ACTIVE  count=0 state=19
+  UID u0a113: INACTIVE  count=0 state=19
+  UID u0a114: INACTIVE  count=0 state=19
+  UID u0a115: INACTIVE  count=0 state=19
+  UID u0a118: INACTIVE  count=0 state=19
+  UID u0a120:   ACTIVE  count=0 state=5
+  UID u0a122:   ACTIVE  count=0 state=0
+  UID u0a126: INACTIVE  count=0 state=19
+  UID u0a127: INACTIVE  count=0 state=19
+  UID u0a128: INACTIVE  count=0 state=19
+  UID u0a135:   ACTIVE  count=0 state=19
+  UID u0a142:   ACTIVE  count=0 state=0
+  UID u0a144: INACTIVE  count=0 state=19
+  UID u0a146: INACTIVE  count=0 state=19
+  UID u0a147:   ACTIVE  count=0 state=5
+  UID u0a148:   ACTIVE  count=0 state=2
+  UID u0i2:   ACTIVE  count=0 state=3
+
+Looper state:
+  Looper (PowerManagerService, tid 51) {b3c11d0}
+    Message 0: { when=+489ms what=4 target=android.os.Handler }
+    Message 1: { when=+24d20h31m4s622ms what=1 target=android.os.Handler }
+    (Total messages: 2, polling=true, quitting=false)
+
+Wake Locks: size=0
+
+Suspend Blockers: size=5
+  PowerManagerService.Booting: ref count=0 []
+  PowerManagerService.WakeLocks: ref count=0 []
+  PowerManagerService.Display: ref count=1 [holding display: (11-05 05:30:14.170)]
+  PowerManagerService.Broadcasts: ref count=0 []
+  PowerManagerService.WirelessChargerDetector: ref count=0 []
+
+Display Power: com.android.server.power.PowerManagerService$1@ce125c9
+
+Battery saving stats:
+  Battery Saver is currently: OFF
+    Times full enabled: 0
+    Times adaptive enabled: 0
+
+  Drain stats:
+                     Battery saver OFF                          ON
+  NonDoze NonIntr:      0m      0mAh(  0%)      0.0mAh/h          0m      0mAh(  0%)      0.0mAh/h
+             Intr:      0m      0mAh(  0%)      0.0mAh/h          0m      0mAh(  0%)      0.0mAh/h
+  Deep    NonIntr:      0m      0mAh(  0%)      0.0mAh/h          0m      0mAh(  0%)      0.0mAh/h
+             Intr:      0m      0mAh(  0%)      0.0mAh/h          0m      0mAh(  0%)      0.0mAh/h
+  Light   NonIntr:      0m      0mAh(  0%)      0.0mAh/h          0m      0mAh(  0%)      0.0mAh/h
+             Intr:      0m      0mAh(  0%)      0.0mAh/h          0m      0mAh(  0%)      0.0mAh/h
+
+Battery saver policy (*NOTE* they only apply when battery saver is ON):
+  Settings: battery_saver_constants
+    value:
+  Settings: (overlay)
+    value:
+  DeviceConfig: battery_saver
+    N/A
+  mAccessibilityEnabled=false
+  mAutomotiveProjectionActive=false
+  mPolicyLevel=0
+
+  Policy 'default full'
+    advertise_is_enabled=true
+    disable_vibration=false
+    disable_animation=false
+    defer_full_backup=true
+    defer_keyvalue_backup=true
+    enable_firewall=true
+    enable_datasaver=false
+    disable_launch_boost=true
+    enable_brightness_adjustment=false
+    adjust_brightness_factor=0.5
+    location_mode=3
+    force_all_apps_standby=true
+    force_background_check=true
+    disable_optional_sensors=true
+    disable_aod=true
+    soundtrigger_mode=1
+    enable_quick_doze=true
+    enable_night_mode=true
+
+  Policy 'current full'
+    advertise_is_enabled=true
+    disable_vibration=false
+    disable_animation=false
+    defer_full_backup=true
+    defer_keyvalue_backup=true
+    enable_firewall=true
+    enable_datasaver=false
+    disable_launch_boost=true
+    enable_brightness_adjustment=false
+    adjust_brightness_factor=0.5
+    location_mode=3
+    force_all_apps_standby=true
+    force_background_check=true
+    disable_optional_sensors=true
+    disable_aod=true
+    soundtrigger_mode=1
+    enable_quick_doze=true
+    enable_night_mode=true
+
+  Policy 'default adaptive'
+    advertise_is_enabled=false
+    disable_vibration=false
+    disable_animation=false
+    defer_full_backup=false
+    defer_keyvalue_backup=false
+    enable_firewall=false
+    enable_datasaver=false
+    disable_launch_boost=false
+    enable_brightness_adjustment=false
+    adjust_brightness_factor=1.0
+    location_mode=0
+    force_all_apps_standby=false
+    force_background_check=false
+    disable_optional_sensors=false
+    disable_aod=false
+    soundtrigger_mode=0
+    enable_quick_doze=false
+    enable_night_mode=false
+
+  Policy 'current adaptive'
+    advertise_is_enabled=false
+    disable_vibration=false
+    disable_animation=false
+    defer_full_backup=false
+    defer_keyvalue_backup=false
+    enable_firewall=false
+    enable_datasaver=false
+    disable_launch_boost=false
+    enable_brightness_adjustment=false
+    adjust_brightness_factor=1.0
+    location_mode=0
+    force_all_apps_standby=false
+    force_background_check=false
+    disable_optional_sensors=false
+    disable_aod=false
+    soundtrigger_mode=0
+    enable_quick_doze=false
+    enable_night_mode=false
+
+  Policy 'effective'
+    advertise_is_enabled=false
+    disable_vibration=false
+    disable_animation=false
+    defer_full_backup=false
+    defer_keyvalue_backup=false
+    enable_firewall=false
+    enable_datasaver=false
+    disable_launch_boost=false
+    enable_brightness_adjustment=false
+    adjust_brightness_factor=1.0
+    location_mode=0
+    force_all_apps_standby=false
+    force_background_check=false
+    disable_optional_sensors=false
+    disable_aod=false
+    soundtrigger_mode=0
+    enable_quick_doze=false
+    enable_night_mode=false
+
+Battery saver state machine:
+  Enabled=false
+    full=false
+    adaptive=false
+  mState=1
+  mLastChangedIntReason=0
+  mLastChangedStrReason=null
+  mBootCompleted=true
+  mSettingsLoaded=true
+  mBatteryStatusSet=true
+  mIsPowered=true
+  mBatteryLevel=100
+  mIsBatteryLevelLow=false
+  mSettingAutomaticBatterySaver=0
+  mSettingBatterySaverEnabled=false
+  mSettingBatterySaverEnabledSticky=false
+  mSettingBatterySaverStickyAutoDisableEnabled=true
+  mSettingBatterySaverStickyAutoDisableThreshold=90
+  mSettingBatterySaverTriggerThreshold=0
+  mBatterySaverStickyBehaviourDisabled=false
+  mBatterySaverTurnedOffNotificationEnabled=true
+  mDynamicPowerSavingsDefaultDisableThreshold=80
+  mDynamicPowerSavingsDisableThreshold=80
+  mDynamicPowerSavingsEnableBatterySaver=false
+  mLastAdaptiveBatterySaverChangedExternallyElapsed=0
+AttentionDetector:
+ mIsSettingEnabled=false
+ mMaxExtensionMillis=900000
+ mPreDimCheckDurationMillis=2000
+ mEffectivePostDimTimeout=0
+ mLastUserActivityTime(excludingAttention)=225412
+ mAttentionServiceSupported=false
+ mRequested=false
+
+Profile power states: size=0
+Display Group User Activity:
+  displayGroupId=0
+  userActivitySummary=0x1
+  lastUserActivityTime=225412 (12030 ms ago)
+  lastUserActivityTimeNoChangeLights=0 (237442 ms ago)
+  mWakeLockSummary=0x0
+
+Wireless Charger Detector State:
+  mGravitySensor={Sensor name="Gravity Sensor", vendor="AOSP", version=3, type=9, maxRange=19.6133, resolution=2.480159E-4, power=12.7, minDelay=10000}
+  mPoweredWirelessly=false
+  mAtRest=false
+  mRestX=0.0, mRestY=0.0, mRestZ=0.0
+  mDetectionInProgress=false
+  mDetectionStartTime=0 (never)
+  mMustUpdateRestPosition=false
+  mTotalSamples=0
+  mMovingSamples=0
+  mFirstSampleX=0.0, mFirstSampleY=0.0, mFirstSampleZ=0.0
+  mLastSampleX=0.0, mLastSampleY=0.0, mLastSampleZ=0.0
+Wake Lock Log
+  11-05 05:30:31.790 - 1000 (com.android.providers.settings,...) - ACQ NetworkStats (partial)
+  11-05 05:30:31.857 - 1000 (com.android.providers.settings,...) - REL NetworkStats
+  11-05 05:30:31.864 - 1000 (com.android.providers.settings,...) - ACQ NetworkStats (partial)
+  11-05 05:30:31.898 - 1000 (com.android.providers.settings,...) - REL NetworkStats
+  11-05 05:30:32.134 - 1000 (com.android.providers.settings,...) - ACQ GnssVisibilityControl (partial)
+  11-05 05:30:32.249 - 1000 (com.android.providers.settings,...) - REL GnssVisibilityControl
+  11-05 05:30:32.516 - 1000 (com.android.providers.settings,...) - ACQ WiredAccessoryManager (partial)
+  11-05 05:30:32.570 - 1000 (com.android.providers.settings,...) - ACQ NotificationManagerService:post:android (partial)
+  11-05 05:30:32.879 - 1000 (com.android.providers.settings,...) - ACQ NetworkStats (partial)
+  11-05 05:30:32.989 - 1000 (com.android.providers.settings,...) - REL NetworkStats
+  11-05 05:30:32.993 - 1000 (com.android.providers.settings,...) - ACQ NetworkStats (partial)
+  11-05 05:30:33.029 - 1000 (com.android.providers.settings,...) - REL NetworkStats
+  11-05 05:30:33.047 - 1000 (com.android.providers.settings,...) - ACQ NetworkStats (partial)
+  11-05 05:30:33.388 - 1000 (com.android.providers.settings,...) - REL NetworkStats
+  11-05 05:30:33.543 - 1000 (com.android.providers.settings,...) - ACQ NetworkStats (partial)
+  11-05 05:30:33.817 - 1000 (com.android.providers.settings,...) - REL NetworkStats
+  11-05 05:30:33.907 - 1000 (com.android.providers.settings,...) - ACQ NetworkStats (partial)
+  11-05 05:30:34.231 - 1000 (com.android.providers.settings,...) - REL NetworkStats
+  11-05 05:30:34.247 - 1000 (com.android.providers.settings,...) - ACQ NetworkStats (partial)
+  11-05 05:30:34.910 - 1000 (com.android.providers.settings,...) - REL NetworkStats
+  11-05 05:30:36.407 - 1000 (com.android.providers.settings,...) - REL WiredAccessoryManager
+  11-05 05:30:37.172 - 1000 (com.android.providers.settings,...) - ACQ NetworkStats (partial)
+  11-05 05:30:37.364 - 1000 (com.android.providers.settings,...) - REL NetworkStats
+  11-05 05:30:37.805 - 1000 (com.android.providers.settings,...) - REL NotificationManagerService:post:android
+  11-05 05:30:38.076 - 1002 (com.android.bluetooth) - ACQ bluetooth_timer (partial)
+  11-05 05:30:38.094 - 1002 (com.android.bluetooth) - REL bluetooth_timer
+  11-05 05:30:39.043 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  11-05 05:30:39.044 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  11-05 05:30:39.044 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  11-05 05:30:39.271 - 1001 (com.android.ons,...) - ACQ RILJ_ACK_WL (partial)
+  11-05 05:30:39.412 - 1001 (com.android.ons,...) - ACQ GsmInboundSmsHandler (partial)
+  11-05 05:30:39.421 - 1001 (com.android.ons,...) - ACQ CdmaInboundSmsHandler (partial)
+  11-05 05:30:39.437 - 1073 (com.android.cellbroadcastservice,...) - ACQ GsmCellBroadcastHandler (partial)
+  11-05 05:30:39.460 - 1073 (com.android.cellbroadcastservice,...) - ACQ CellBroadcastHandler (partial)
+  11-05 05:30:39.462 - 1073 (com.android.cellbroadcastservice,...) - ACQ CdmaServiceCategoryProgramHandler (partial)
+  11-05 05:30:40.104 - 1001 (com.android.ons,...) - REL RILJ_ACK_WL
+  11-05 05:30:40.104 - 1001 (com.android.ons,...) - ACQ RILJ_ACK_WL (partial)
+  11-05 05:30:40.450 - 1001 (com.android.ons,...) - REL GsmInboundSmsHandler
+  11-05 05:30:40.450 - 1001 (com.android.ons,...) - REL CdmaInboundSmsHandler
+  11-05 05:30:40.527 - 1001 (com.android.ons,...) - ACQ NitzSignalInputFilterPredicateFactory (partial)
+  11-05 05:30:40.532 - 1001 (com.android.ons,...) - REL NitzSignalInputFilterPredicateFactory
+  11-05 05:30:40.559 - 1000 (com.android.providers.settings,...) - ACQ time_detector (partial)
+  11-05 05:30:40.560 - 1000 (com.android.providers.settings,...) - REL time_detector
+  11-05 05:30:40.898 - 1001 (com.android.ons,...) - REL RILJ_ACK_WL
+  11-05 05:30:41.082 - 1001 (com.android.ons,...) - ACQ RILJ_ACK_WL (partial)
+  11-05 05:30:41.293 - 1001 (com.android.ons,...) - ACQ NitzSignalInputFilterPredicateFactory (partial)
+  11-05 05:30:41.297 - 1001 (com.android.ons,...) - REL NitzSignalInputFilterPredicateFactory
+  11-05 05:30:42.283 - 1001 (com.android.ons,...) - REL RILJ_ACK_WL
+  11-05 05:30:42.575 - 1073 (com.android.cellbroadcastservice,...) - REL CdmaServiceCategoryProgramHandler
+  11-05 05:30:42.581 - 1073 (com.android.cellbroadcastservice,...) - REL CellBroadcastHandler
+  11-05 05:30:42.592 - 1000 (com.android.providers.settings,...) - ACQ *job*/@.a.p.s/.WriteFallbackSettingsFilesJobService (partial)
+  11-05 05:30:42.593 - 1000 (com.android.providers.settings,...) - ACQ *job*/@.a.p.s/.WriteFallbackSettingsFilesJobService (partial)
+  11-05 05:30:42.600 - 1073 (com.android.cellbroadcastservice,...) - REL GsmCellBroadcastHandler
+  11-05 05:30:42.642 - 1000 (com.android.providers.settings,...) - REL *job*/@.a.p.s/.WriteFallbackSettingsFilesJobService
+  11-05 05:30:42.684 - 1000 (com.android.providers.settings,...) - REL *job*/@.a.p.s/.WriteFallbackSettingsFilesJobService
+  11-05 05:30:42.691 - 1000 (com.android.providers.settings,...) - ACQ *job*/a/c.a.s.n.NotificationHistoryJobService (partial)
+  11-05 05:30:42.691 - 1000 (com.android.providers.settings,...) - ACQ *job*/a/c.a.s.n.NotificationHistoryJobService (partial)
+  11-05 05:30:42.700 - 1000 (com.android.providers.settings,...) - REL *job*/a/c.a.s.n.NotificationHistoryJobService
+  11-05 05:30:42.709 - 1000 (com.android.providers.settings,...) - REL *job*/a/c.a.s.n.NotificationHistoryJobService
+  11-05 05:30:43.287 - 1000 (com.android.providers.settings,...) - ACQ NotificationManagerService:post:android (partial)
+  11-05 05:30:43.304 - 1000 (com.android.providers.settings,...) - REL NotificationManagerService:post:android
+  11-05 05:30:44.615 - 1041 (com.android.providers.settings,...) - ACQ AudioMix (partial)
+  11-05 05:30:44.647 - 1041 (com.android.providers.settings,...) - ACQ AudioMix (partial)
+  11-05 05:30:44.681 - 1041 (com.android.providers.settings,...) - REL AudioMix
+  11-05 05:30:44.681 - 1041 (com.android.providers.settings,...) - ACQ AudioMix (partial)
+  11-05 05:30:44.783 - 1000 (com.android.providers.settings,...) - ACQ NotificationManagerService:post:android (partial)
+  11-05 05:30:44.906 - 1041 (com.android.providers.settings,...) - REL AudioMix
+  11-05 05:30:44.906 - 1041 (com.android.providers.settings,...) - ACQ AudioMix (partial)
+  11-05 05:30:45.622 - 1000 (com.android.providers.settings,...) - ACQ *launch* (partial)
+  11-05 05:30:46.101 - 1000 (com.android.providers.settings,...) - ACQ SyncLoopWakeLock (partial)
+  11-05 05:30:46.128 - 1000 (com.android.providers.settings,...) - REL SyncLoopWakeLock
+  11-05 05:30:46.446 - 1000 (com.android.providers.settings,...) - REL NotificationManagerService:post:android
+  11-05 05:30:47.052 - 1000 (com.android.providers.settings,...) - ACQ NotificationManagerService:post:android (partial)
+  11-05 05:30:47.370 - 1000 (com.android.providers.settings,...) - REL NotificationManagerService:post:android
+  11-05 05:30:47.565 - 10122 (com.android.systemui) - ACQ SysUI:BroadcastSender (partial)
+  11-05 05:30:47.640 - 10122 (com.android.systemui) - REL SysUI:BroadcastSender
+  11-05 05:30:47.662 - 1041 (com.android.systemui) - REL AudioMix
+  11-05 05:30:47.753 - 1041 (com.android.systemui) - REL AudioMix
+  11-05 05:30:48.441 - 1000 (com.android.providers.settings,...) - ACQ GnssVisibilityControl (partial)
+  11-05 05:30:48.475 - 1000 (com.android.providers.settings,...) - REL GnssVisibilityControl
+  11-05 05:30:48.636 - 1000 (com.android.providers.settings,...) - ACQ NotificationManagerService:post:android (partial)
+  11-05 05:30:48.975 - 1000 (com.android.providers.settings,...) - REL NotificationManagerService:post:android
+  11-05 05:30:49.747 - 1001 (com.android.ons,...) - ACQ RILJ_ACK_WL (partial)
+  11-05 05:30:49.936 - 1000 (com.android.providers.settings,...) - ACQ *job*/c.a.p.m.m/c.a.p.m.MediaService (partial)
+  11-05 05:30:49.936 - 1000 (com.android.providers.settings,...) - ACQ *job*/c.a.p.m.m/c.a.p.m.MediaService (partial)
+  11-05 05:30:50.027 - 1000 (com.android.providers.settings,...) - REL *job*/c.a.p.m.m/c.a.p.m.MediaService
+  11-05 05:30:50.177 - 1001 (com.android.ons,...) - REL RILJ_ACK_WL
+  11-05 05:30:51.156 - 1000 (com.android.providers.settings,...) - ACQ *alarm* (partial)
+  11-05 05:30:51.192 - 1000 (com.android.providers.settings,...) - ACQ NetworkStats (partial)
+  11-05 05:30:51.300 - 1000 (com.android.providers.settings,...) - REL NetworkStats
+  11-05 05:30:51.343 - 1000 (com.android.providers.settings,...) - REL *alarm*
+  11-05 05:30:51.548 - 1000 (com.android.providers.settings,...) - ACQ NotificationManagerService:post:android (partial)
+  11-05 05:30:51.806 - 1000 (com.android.providers.settings,...) - ACQ NotificationManagerService:post:android (partial)
+  11-05 05:30:51.813 - 1000 (com.android.providers.settings,...) - REL NotificationManagerService:post:android
+  11-05 05:30:51.837 - 1000 (com.android.providers.settings,...) - ACQ NotificationManagerService:post:android (partial)
+  11-05 05:30:52.035 - 1000 (com.android.providers.settings,...) - ACQ NotificationManagerService:post:android (partial)
+  11-05 05:30:52.066 - 1000 (com.android.providers.settings,...) - REL NotificationManagerService:post:android
+  11-05 05:30:52.068 - 1000 (com.android.providers.settings,...) - REL NotificationManagerService:post:android
+  11-05 05:30:52.250 - 1000 (com.android.providers.settings,...) - REL NotificationManagerService:post:android
+  11-05 05:30:55.048 - 1000 (com.android.providers.settings,...) - REL *launch*
+  11-05 05:30:55.116 - 1000 (com.android.providers.settings,...) - ACQ *job*/c.a.p/.h.HibernationJobService (partial)
+  11-05 05:30:55.117 - 1000 (com.android.providers.settings,...) - ACQ *job*/c.a.p/.h.HibernationJobService (partial)
+  11-05 05:30:55.121 - 10079 (com.android.providers.calendar) - ACQ CalendarReceiver_Provider (partial)
+  11-05 05:30:55.127 - 1000 (com.android.providers.settings,...) - REL *job*/c.a.p/.h.HibernationJobService
+  11-05 05:30:55.134 - 1000 (com.android.providers.settings,...) - REL *job*/c.a.p/.h.HibernationJobService
+  11-05 05:30:55.178 - 10079 (com.android.providers.calendar) - REL CalendarReceiver_Provider
+  11-05 05:30:55.402 - 1000 (com.android.providers.settings,...) - ACQ *job*/c.a.p/.p.s.PermissionEventCleanupJobService (partial)
+  11-05 05:30:55.402 - 1000 (com.android.providers.settings,...) - ACQ *job*/c.a.p/.p.s.PermissionEventCleanupJobService (partial)
+  11-05 05:30:55.424 - 1000 (com.android.providers.settings,...) - REL *job*/c.a.p/.p.s.PermissionEventCleanupJobService
+  11-05 05:30:55.589 - 1000 (com.android.providers.settings,...) - REL *job*/c.a.p/.p.s.PermissionEventCleanupJobService
+  11-05 05:30:56.318 - 1000 (com.android.providers.settings,...) - ACQ GnssVisibilityControl (partial)
+  11-05 05:30:56.318 - 1000 (com.android.providers.settings,...) - REL GnssVisibilityControl
+  11-05 05:30:57.994 - 1000 (com.android.providers.settings,...) - ACQ GnssVisibilityControl (partial)
+  11-05 05:30:57.994 - 1000 (com.android.providers.settings,...) - REL GnssVisibilityControl
+  11-05 05:30:58.755 - 1000 (com.android.providers.settings,...) - ACQ *launch* (partial)
+  11-05 05:31:00.023 - 1000 (com.android.providers.settings,...) - ACQ *alarm* (partial)
+  11-05 05:31:00.122 - 1000 (com.android.providers.settings,...) - REL *alarm*
+  11-05 05:31:00.317 - 1000 (com.android.providers.settings,...) - ACQ *alarm* (partial)
+  11-05 05:31:00.387 - 1000 (com.android.providers.settings,...) - ACQ *job*/c.a.p.c/.CalendarProviderJobService (partial)
+  11-05 05:31:00.396 - 1000 (com.android.providers.settings,...) - ACQ *job*/c.a.p.c/.CalendarProviderJobService (partial)
+  11-05 05:31:00.423 - 1000 (com.android.providers.settings,...) - REL *job*/c.a.p.c/.CalendarProviderJobService
+  11-05 05:31:00.428 - 1000 (com.android.providers.settings,...) - REL *alarm*
+  11-05 05:31:00.804 - 1000 (com.android.providers.settings,...) - REL *job*/c.a.p.c/.CalendarProviderJobService
+  11-05 05:31:00.839 - 1000 (com.android.providers.settings,...) - ACQ *job*/c.a.m/.d.a.ActionServiceImpl (partial)
+  11-05 05:31:00.839 - 1000 (com.android.providers.settings,...) - ACQ *job*/c.a.m/.d.a.ActionServiceImpl (partial)
+  11-05 05:31:00.878 - 1000 (com.android.providers.settings,...) - REL *job*/c.a.m/.d.a.ActionServiceImpl
+  11-05 05:31:01.550 - 1000 (com.android.providers.settings,...) - ACQ *job*/c.a.m/.d.a.BackgroundWorkerService (partial)
+  11-05 05:31:01.554 - 1000 (com.android.providers.settings,...) - ACQ *job*/c.a.m/.d.a.BackgroundWorkerService (partial)
+  11-05 05:31:01.555 - 1000 (com.android.providers.settings,...) - REL *job*/c.a.m/.d.a.BackgroundWorkerService
+  11-05 05:31:01.559 - 1000 (com.android.providers.settings,...) - REL *job*/c.a.m/.d.a.ActionServiceImpl
+  11-05 05:31:03.339 - 1002 (com.android.bluetooth) - ACQ bluetooth_timer (partial)
+  11-05 05:31:03.529 - 1002 (com.android.bluetooth) - REL bluetooth_timer
+  11-05 05:31:04.060 - 1000 (com.android.providers.settings,...) - ACQ *job*/c.a.m/.d.a.ActionServiceImpl (partial)
+  11-05 05:31:04.061 - 1000 (com.android.providers.settings,...) - ACQ *job*/c.a.m/.d.a.ActionServiceImpl (partial)
+  11-05 05:31:04.070 - 1000 (com.android.providers.settings,...) - REL *job*/c.a.m/.d.a.ActionServiceImpl
+  11-05 05:31:04.087 - 1000 (com.android.providers.settings,...) - REL *job*/c.a.m/.d.a.BackgroundWorkerService
+  11-05 05:31:04.184 - 1000 (com.android.providers.settings,...) - REL *job*/c.a.m/.d.a.ActionServiceImpl
+  11-05 05:31:04.945 - 1000 (com.android.providers.settings,...) - ACQ *alarm* (partial)
+  11-05 05:31:04.986 - 1000 (com.android.providers.settings,...) - REL *alarm*
+  11-05 05:31:08.780 - 1000 (com.android.providers.settings,...) - REL *launch*
+  11-05 05:31:13.615 - 1000 (com.android.providers.settings,...) - REL *job*/c.a.p.m.m/c.a.p.m.MediaService
+  11-05 05:31:26.959 - 1000 (com.android.providers.settings,...) - ACQ *alarm* (partial)
+  11-05 05:31:26.961 - 1000 (com.android.providers.settings,...) - REL *alarm*
+  11-05 05:31:59.821 - 1000 (com.android.providers.settings,...) - ACQ NetworkStats (partial)
+  11-05 05:31:59.865 - 1000 (com.android.providers.settings,...) - REL NetworkStats
+  11-05 05:32:00.009 - 1000 (com.android.providers.settings,...) - ACQ *alarm* (partial)
+  11-05 05:32:00.009 - 1000 (com.android.providers.settings,...) - REL *alarm*
+  11-05 05:32:03.088 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  11-05 05:32:08.186 - 1041 (com.android.ons,...) - ACQ AudioMix (partial)
+  11-05 05:32:08.186 - 1041 (com.android.ons,...) - REL AudioMix
+  11-05 05:32:08.186 - 1041 (com.android.ons,...) - ACQ AudioMix (partial)
+  11-05 05:32:08.352 - 1041 (com.android.ons,...) - REL AudioMix
+  11-05 05:32:08.352 - 1041 (com.android.ons,...) - ACQ AudioMix (partial)
+  11-05 05:32:11.233 - 1041 (com.android.ons,...) - REL AudioMix
+  11-05 05:32:22.498 - 1041 (com.android.ons,...) - ACQ AudioMix (partial)
+  11-05 05:32:22.498 - 1041 (com.android.ons,...) - REL AudioMix
+  11-05 05:32:22.498 - 1041 (com.android.ons,...) - ACQ AudioMix (partial)
+  11-05 05:32:22.658 - 1041 (com.android.ons,...) - REL AudioMix
+  11-05 05:32:22.659 - 1041 (com.android.ons,...) - ACQ AudioMix (partial)
+  11-05 05:32:22.973 - 1041 (com.android.ons,...) - REL AudioMix
+  11-05 05:32:22.973 - 1041 (com.android.ons,...) - ACQ AudioMix (partial)
+  11-05 05:32:23.202 - 1041 (com.android.ons,...) - REL AudioMix
+  11-05 05:32:23.202 - 1041 (com.android.ons,...) - ACQ AudioMix (partial)
+  11-05 05:32:23.799 - 1041 (com.android.ons,...) - REL AudioMix
+  11-05 05:32:23.799 - 1041 (com.android.ons,...) - ACQ AudioMix (partial)
+  11-05 05:32:24.037 - 1041 (com.android.ons,...) - REL AudioMix
+  11-05 05:32:24.037 - 1041 (com.android.ons,...) - ACQ AudioMix (partial)
+  11-05 05:32:24.340 - 1041 (com.android.ons,...) - REL AudioMix
+  11-05 05:32:24.340 - 1041 (com.android.ons,...) - ACQ AudioMix (partial)
+  11-05 05:32:24.570 - 1041 (com.android.ons,...) - REL AudioMix
+  11-05 05:32:24.570 - 1041 (com.android.ons,...) - ACQ AudioMix (partial)
+  11-05 05:32:25.110 - 1041 (com.android.ons,...) - REL AudioMix
+  11-05 05:32:25.110 - 1041 (com.android.ons,...) - ACQ AudioMix (partial)
+  11-05 05:32:25.335 - 1041 (com.android.ons,...) - REL AudioMix
+  11-05 05:32:25.338 - 1041 (com.android.ons,...) - ACQ AudioMix (partial)
+  11-05 05:32:25.659 - 1041 (com.android.ons,...) - REL AudioMix
+  11-05 05:32:25.659 - 1041 (com.android.ons,...) - ACQ AudioMix (partial)
+  11-05 05:32:25.877 - 1041 (com.android.ons,...) - REL AudioMix
+  11-05 05:32:25.878 - 1041 (com.android.ons,...) - ACQ AudioMix (partial)
+  11-05 05:32:28.748 - 1041 (com.android.ons,...) - REL AudioMix
+  11-05 05:32:28.864 - 1041 (com.android.ons,...) - ACQ AudioMix (partial)
+  11-05 05:32:28.864 - 1041 (com.android.ons,...) - REL AudioMix
+  11-05 05:32:28.864 - 1041 (com.android.ons,...) - ACQ AudioMix (partial)
+  11-05 05:32:29.024 - 1041 (com.android.ons,...) - REL AudioMix
+  11-05 05:32:29.024 - 1041 (com.android.ons,...) - ACQ AudioMix (partial)
+  11-05 05:32:29.383 - 1041 (com.android.ons,...) - REL AudioMix
+  11-05 05:32:29.383 - 1041 (com.android.ons,...) - ACQ AudioMix (partial)
+  11-05 05:32:29.589 - 1041 (com.android.ons,...) - REL AudioMix
+  11-05 05:32:29.589 - 1041 (com.android.ons,...) - ACQ AudioMix (partial)
+  11-05 05:32:29.852 - 1041 (com.android.ons,...) - REL AudioMix
+  11-05 05:32:29.852 - 1041 (com.android.ons,...) - ACQ AudioMix (partial)
+  11-05 05:32:30.057 - 1041 (com.android.ons,...) - REL AudioMix
+  11-05 05:32:30.057 - 1041 (com.android.ons,...) - ACQ AudioMix (partial)
+  11-05 05:32:30.303 - 1041 (com.android.ons,...) - REL AudioMix
+  11-05 05:32:30.303 - 1041 (com.android.ons,...) - ACQ AudioMix (partial)
+  11-05 05:32:30.519 - 1041 (com.android.ons,...) - REL AudioMix
+  11-05 05:32:30.528 - 1041 (com.android.ons,...) - ACQ AudioMix (partial)
+  11-05 05:32:30.750 - 1041 (com.android.ons,...) - REL AudioMix
+  11-05 05:32:30.750 - 1041 (com.android.ons,...) - ACQ AudioMix (partial)
+  11-05 05:32:30.977 - 1041 (com.android.ons,...) - REL AudioMix
+  11-05 05:32:30.978 - 1041 (com.android.ons,...) - ACQ AudioMix (partial)
+  11-05 05:32:31.266 - 1041 (com.android.ons,...) - REL AudioMix
+  11-05 05:32:31.266 - 1041 (com.android.ons,...) - ACQ AudioMix (partial)
+  11-05 05:32:31.493 - 1041 (com.android.ons,...) - REL AudioMix
+  11-05 05:32:31.494 - 1041 (com.android.ons,...) - ACQ AudioMix (partial)
+  11-05 05:32:33.480 - 1041 (com.android.ons,...) - REL AudioMix
+  11-05 05:32:33.481 - 1041 (com.android.ons,...) - ACQ AudioMix (partial)
+  11-05 05:32:33.669 - 1041 (com.android.ons,...) - REL AudioMix
+  11-05 05:32:33.670 - 1041 (com.android.ons,...) - ACQ AudioMix (partial)
+  11-05 05:32:35.892 - 1041 (com.android.ons,...) - REL AudioMix
+  11-05 05:32:35.892 - 1041 (com.android.ons,...) - ACQ AudioMix (partial)
+  11-05 05:32:36.115 - 10122 (com.android.systemui) - ACQ SysUI:BroadcastSender (partial)
+  11-05 05:32:36.130 - 10122 (com.android.systemui) - REL SysUI:BroadcastSender
+  11-05 05:32:36.154 - 1041 (com.android.systemui) - REL AudioMix
+  11-05 05:32:36.154 - 1041 (com.android.systemui) - ACQ AudioMix (partial)
+  11-05 05:32:38.948 - 1041 (com.android.systemui) - REL AudioMix
+  11-05 05:32:39.531 - 1041 (com.android.systemui) - ACQ AudioMix (partial)
+  11-05 05:32:39.534 - 1041 (com.android.systemui) - REL AudioMix
+  11-05 05:32:39.535 - 1041 (com.android.systemui) - ACQ AudioMix (partial)
+  11-05 05:32:39.696 - 1041 (com.android.systemui) - REL AudioMix
+  11-05 05:32:39.696 - 1041 (com.android.systemui) - ACQ AudioMix (partial)
+  11-05 05:32:42.711 - 1041 (com.android.systemui) - REL AudioMix
+  11-05 05:32:50.704 - 1000 (com.android.providers.settings,...) - ACQ *launch* (partial)
+  11-05 05:33:00.018 - 1000 (com.android.providers.settings,...) - ACQ *alarm* (partial)
+  11-05 05:33:00.030 - 1000 (com.android.providers.settings,...) - REL *alarm*
+  11-05 05:33:00.705 - 1000 (com.android.providers.settings,...) - REL *launch*
+  11-05 05:33:17.928 - 1000 (com.android.providers.settings,...) - ACQ *launch* (partial)
+  11-05 05:33:25.993 - 1000 (com.android.providers.settings,...) - REL *launch*
+  11-05 05:33:27.764 - 1041 (com.android.providers.settings,...) - ACQ AudioMix (partial)
+  11-05 05:33:27.765 - 1041 (com.android.providers.settings,...) - REL AudioMix
+  11-05 05:33:27.765 - 1041 (com.android.providers.settings,...) - ACQ AudioMix (partial)
+  11-05 05:33:27.919 - 1041 (com.android.providers.settings,...) - REL AudioMix
+  11-05 05:33:27.919 - 1041 (com.android.providers.settings,...) - ACQ AudioMix (partial)
+  11-05 05:33:30.819 - 1041 (com.android.providers.settings,...) - REL AudioMix
+  11-05 05:33:38.268 - 1041 (com.android.providers.settings,...) - ACQ AudioMix (partial)
+  11-05 05:33:38.272 - 1041 (com.android.providers.settings,...) - REL AudioMix
+  11-05 05:33:38.272 - 1041 (com.android.providers.settings,...) - ACQ AudioMix (partial)
+  11-05 05:33:38.436 - 1041 (com.android.providers.settings,...) - REL AudioMix
+  11-05 05:33:38.436 - 1041 (com.android.providers.settings,...) - ACQ AudioMix (partial)
+  11-05 05:33:41.307 - 1041 (com.android.providers.settings,...) - REL AudioMix
+  -
+  Events: 240, Time-Resets: 69
+  Buffer, Bytes used: 1221
+
+Wakefulness Session Observer:
+default timeout: 2147483647
+override timeout: -1
+  Wakefulness Session Power Group powerGroupId: 0
+    current wakefulness: 0
+    current user activity event: 2
+    current user activity duration: 16725
+    previous user activity event: 1
+    previous user activity duration: 19299
+    is in override timeout: false
+
+FaceDownDetector:
+  mFaceDown=false
+  mActive=true
+  mLastFlipTime=0
+  mSensorMaxLatencyMicros=2000000
+  mUserInteractionBackoffMillis=60000
+  mPreviousResultTime=0
+  mPreviousResultType=1
+  mMillisSaved=0
+  mZAccelerationThreshold=-9.5
+  mAccelerationThreshold=0.2
+  mTimeThreshold=PT1S
+  mEnabledOverride=true
+AmbientDisplaySuppressionController:
+ ambientDisplaySuppressed=false
+ mSuppressionTokens={}
+
+Low Power Standby Controller:
+  mIsActive=false
+  mIsEnabled=false
+  mSupportedConfig=false
+  mEnabledByDefaultConfig=false
+  mStandbyTimeoutConfig=0
+  mEnableCustomPolicy=false
+  Allowed UIDs=[]
+
+  UID allowed reasons:
+
+ScreenTimeoutOverridePolicy:
+  mScreenTimeoutOverrideConfig=-1
+  mLastAutoReleaseReason=-1
+PowerManagerFlags:
+ enable_early_screen_timeout_detector:                 true (def:true)
+ improve_wakelock_latency:                             false (def:false)

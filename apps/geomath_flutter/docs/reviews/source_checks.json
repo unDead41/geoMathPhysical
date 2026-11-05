@@ -40,7 +40,28 @@
       "dart": "3.13.7"
     }
   ],
-  "android_device_smoke": "not yet run",
+  "android_device_smoke": "passed; see final_integrated_verification",
   "physical_phone": "not run",
-  "hosted_backend": "not run"
+  "hosted_backend": "not run",
+  "worker_snapshot_android_device_smoke": "not yet run",
+  "final_integrated_verification": {
+    "tested_source": "f5aeddd58d81e490b1e67b8bf4a21311645d3631",
+    "run_id": 41973098124,
+    "url": "https://github.com/unDead41/geodecoder/actions/runs/41973098124",
+    "flutter_tests": 92,
+    "node_tests": 12,
+    "android_tests": 4,
+    "api": "35",
+    "normal_apk_sha256": "ae533c5f573adee45304a732dd4d9f39840f84da71ace0fc4c2035aea0dd213d",
+    "screenshots": [
+      "docs/handoffs/app-foundation/evidence/android/01-home-offline.png",
+      "docs/handoffs/app-foundation/evidence/android/37-settings.png",
+      "docs/handoffs/app-foundation/evidence/android/module-preview.png"
+    ],
+    "capture_run_id": 41977674183,
+    "capture_tool_commit": "2f2719ef57ac7c53251bd85772dd505b412baada",
+    "readiness": "../FOUNDATION_READY.json",
+    "handoff": "../handoffs/app-foundation/LATEST.md",
+    "evidence_class": "integrated CI and real Android emulator; historical worker receipts above remain scoped"
+  }
 }
