@@ -148,3 +148,23 @@ labels and read fresh uniquely named UI hierarchies, preventing stale XML reuse.
 Learning screenshots reset conversion state with the SDK's per-test teardown;
 the actor-switch fixture expects stale rejection and checks durable partition
 bytes directly in test SQLite. No assertion is replaced with fake success.
+
+
+## Direct VM transport and pre-driver watchdog
+
+The efc312 full run passed host/canonical checks and both APK builds, then the
+Flutter tool retried refused VM connections before invoking the external driver.
+That interval was outside the driver's90s RPC probe. This attempt is not accepted
+as Android PASS. The runner now bypasses optional DDS with --no-dds, uses fixed
+direct host VM ports8181/8182 and bounds pre-driver startup to180s. A fresh actual
+getVersion receipt is required; CLI success without it is rejected. Original
+failure exits are preserved, owned process groups are stopped on timeout, and
+failed-process PID/forward/crash evidence is retained before app cleanup. No
+functional test is retried or waived. Product runtime remains exact efc312.
+
+Independent process-group review also reproduced an orphaned driver after its
+leader exited on TERM. The watchdog now waits on the owned group and removes
+remaining descendants before normal APK cleanup. The committed regression fails
+against the former leader-only cleanup and passes against the corrected helper;
+original statuses0/7/125/124 remain unchanged. Both Python runner regression
+modules execute in CI before Android builds.

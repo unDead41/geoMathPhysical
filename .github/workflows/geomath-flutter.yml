@@ -118,7 +118,7 @@ jobs:
           key: geomath-sqlite-native-v1-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('apps/geomath_flutter/pubspec.lock', 'apps/geomath_flutter/tools/android/prefetch_sqlite_assets.py') }}
       - name: Verify and prefetch pinned SQLite binaries
         run: |
-          python3 -m unittest discover -s tools/android -p 'test_prefetch_sqlite_assets.py'
+          python3 -m unittest discover -s tools/android -p 'test_*.py'
           python3 tools/android/prefetch_sqlite_assets.py --receipt docs/handoffs/app-integration/evidence/android/sqlite-native-assets.json
       - name: Save verified native SQLite downloads
         if: steps.sqlite-native.outputs.cache-hit != 'true'

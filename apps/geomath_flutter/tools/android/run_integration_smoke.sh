@@ -81,8 +81,19 @@ python3 tools/android/verify_device_ready.py --device "$device" --output "$evide
 sha256sum "$test_apk" > "$evidence_dir/integration-apk.sha256"
 # Preserve the test exit status while also collecting the independent normal
 # application's actual screenshots. A failed suite still fails the job.
+# DDS otherwise redirects a requested host port to DDS while forwarding the
+# device VM on another random port. Use the actual direct VM endpoint in CI.
+adb -s "$device" forward --remove tcp:8181 2>/dev/null || true
+python3 - <<'PORT_PY'
+import socket
+with socket.socket() as probe:
+    probe.bind(('127.0.0.1', 8181))
+PORT_PY
 set +e
-timeout --foreground --signal=TERM --kill-after=15s "$drive_timeout" flutter drive --no-pub --driver=test_driver/integration_evidence_driver.dart \
+timeout --foreground --signal=TERM --kill-after=15s "$drive_timeout" \
+  python3 tools/android/run_drive_bounded.py \
+  --readiness "$evidence_dir/vm-service-readiness.json" --startup-seconds 180 -- \
+  flutter drive --no-dds --host-vmservice-port=8181 --no-pub --driver=test_driver/integration_evidence_driver.dart \
   --target="$integration_target" \
   --use-application-binary="$test_apk" \
   --keep-app-running -d "$device" \
@@ -90,6 +101,17 @@ timeout --foreground --signal=TERM --kill-after=15s "$drive_timeout" flutter dri
 integration_status=${PIPESTATUS[0]}
 set -e
 export GEOMATH_INTEGRATION_STATUS="$integration_status"
+if [[ "$integration_status" != 0 ]]; then
+  # Preserve the failed test process before normal-APK cleanup can replace it.
+  timeout 6s adb -s "$device" shell pidof com.geomath.dev > "$evidence_dir/test-failure-pid.txt" || true
+  timeout 6s adb -s "$device" forward --list > "$evidence_dir/test-failure-forwards.txt" || true
+  timeout 6s adb -s "$device" logcat -d -b crash > "$evidence_dir/test-failure-crash.txt" || true
+  timeout 6s adb -s "$device" shell dumpsys meminfo com.geomath.dev > "$evidence_dir/test-failure-memory.txt" || true
+  for diagnostic in test-failure-pid.txt test-failure-forwards.txt test-failure-crash.txt; do
+    echo "Failed-test diagnostic: $diagnostic"
+    tail -n 60 "$evidence_dir/$diagnostic" || true
+  done
+fi
 if [[ "$suite" != full ]]; then
   export GEOMATH_DIAGNOSTIC_SUITE="$suite"
   python3 - "$evidence_dir" <<'DIAGNOSTIC_PY'
@@ -110,7 +132,7 @@ fi
 # its isolated records, install the preserved normal APK and run that entrypoint.
 adb -s "$device" shell am force-stop com.geomath.dev
 adb -s "$device" shell pm clear com.geomath.dev
-timeout --foreground --signal=TERM --kill-after=15s 3m flutter run --no-pub --no-resident --use-application-binary="$normal_apk" -d "$device" \
+timeout --foreground --signal=TERM --kill-after=15s 3m flutter run --no-dds --host-vmservice-port=8182 --no-pub --no-resident --use-application-binary="$normal_apk" -d "$device" \
   2>&1 | tee "$evidence_dir/run-normal.txt"
 python3 tools/android/capture_integration.py --device "$device" --output "$evidence_dir"
 sha256sum "$normal_apk" > "$evidence_dir/normal-apk.sha256"

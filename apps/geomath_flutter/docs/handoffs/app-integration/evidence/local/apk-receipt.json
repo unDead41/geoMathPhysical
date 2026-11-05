@@ -1,22 +1,22 @@
 {
   "schema_version": 1,
   "app_version": "0.1.0+1",
-  "source_commit": "f3555c2e94fdfc8c39111d550de977ec7cf10bc3",
-  "source_tree": "6fe1d31dd87b86c660e563bfc0692b6f0a4fb522",
+  "source_commit": "efc31238624b071e64fe7dbcfc8f097fc7f71e27",
+  "source_tree": "ffd4b86f876590f4b1b295cbeda0bbaef6dfb3d6",
   "entrypoint": "lib/main.dart",
   "build_mode": "debug",
   "signing": "Android debug keystore; not production/store signing",
   "cloud_defines": false,
   "command": "flutter build apk --debug --no-pub",
   "exit_code": 0,
-  "build_seconds": 30.8,
+  "build_seconds": 30.6,
   "flutter": "3.47.9",
   "dart": "3.13.7",
   "java": "17.0.20",
   "apk": {
     "path": "/workspace/scratch/22e4cc1b235a/deliverables/GeoMath-Integrated-0.1.0-debug.apk",
-    "bytes": 174918800,
-    "sha256": "847d20b2ccb66abae51807d281859e3963b3493909e2ee72375c43f7d4c4d1a3",
+    "bytes": 174920804,
+    "sha256": "a74b6263caa458e99e95e7cf3e296cfab5aee0fb271ee00fce91ffa6606ea7b4",
     "zip_crc": "PASS",
     "v2_signature": "PASS",
     "engine_abis": [
@@ -30,7 +30,7 @@
     ]
   },
   "runtime_manifest_definition": "lib, assets, Android runner, pubspec and lockfile; excludes Android evidence tools",
-  "runtime_manifest_sha256": "239222647dac4c574154df603ed5f890a730f623d60f9d5ea235625bc58a9cc1",
+  "runtime_manifest_sha256": "40549b11bd55dbbec11a63bcbfee245fc7cbcb35b06df721fbcc1fa24b6eda24",
   "device_execution": "separate CI gate; no local KVM",
   "runtime_files": [
     {
@@ -225,13 +225,13 @@
     },
     {
       "path": "apps/geomath_flutter/assets/module/manifest.json",
-      "sha256": "8ec24f96a930683de87e5311043edba5fe30679e4a30bd2f11d8b4e3dfde1a13",
+      "sha256": "bfcd23ea114c9de6a7c3e492598b1e46a21c5a7d8271ac5be142fbf4d37107dc",
       "bytes": 1137
     },
     {
       "path": "apps/geomath_flutter/assets/module/native-adapter.js",
-      "sha256": "47edd959776f4e2d8056ddcbf06121a01075cd88f4588497112b65a6f8b8b95e",
-      "bytes": 797856
+      "sha256": "8a64f616ec58fc2468517a1ce20dcf9d91022e25a9a45e45769e843c0e834d7d",
+      "bytes": 800116
     },
     {
       "path": "apps/geomath_flutter/lib/app/app.dart",
@@ -720,8 +720,8 @@
     },
     {
       "path": "apps/geomath_flutter/lib/features/learning/module_spike_host.dart",
-      "sha256": "6c7e030105b80a71f2a81aa485da7151d81b29a5d5de8a06165decc4ec15eb26",
-      "bytes": 18587
+      "sha256": "96b279a580463ddc0d0be7fd0e6ea86acb770bc9ea00031cde478429667c8f6f",
+      "bytes": 22425
     },
     {
       "path": "apps/geomath_flutter/lib/features/learning/persistence/learning_checkpoint_repository.dart",
@@ -770,8 +770,8 @@
     },
     {
       "path": "apps/geomath_flutter/lib/features/preferences/preferences_screen.dart",
-      "sha256": "2639d9ff377b4547f6de325277f82ed979ad15ec468b0fde890aac398bbdc4d6",
-      "bytes": 15828
+      "sha256": "4cc6aee64462a6f6c9f06095ccfe0a542a668f508a04fb52044773ec536ac607",
+      "bytes": 15867
     },
     {
       "path": "apps/geomath_flutter/lib/features/profile/data/profile_drafts.dart",
