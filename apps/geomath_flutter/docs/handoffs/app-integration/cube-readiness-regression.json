@@ -1,0 +1,124 @@
+{
+  "source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+  "result": "7 actual XML readiness regressions passed",
+  "limits": "XML only; swipe execution and actual visible raster require fresh Android evidence.",
+  "fixtures": [
+    {
+      "path": "/dev/shm/geomath-integration-nov05/377-evidence/320dp-ms-light-100-contrast0-033-hierarchy.xml",
+      "sha256": "0e03ad4cecd181f7e029b298d7ffec55e1789d83caabe00f4e32b80b278428c0",
+      "expected_ready": true,
+      "actual_ready": true,
+      "native_picker_state": "ready",
+      "full_canvas": true,
+      "reason": "ready XML preconditions"
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/377-evidence/390dp-en-dark-125-contrast0-080-hierarchy.xml",
+      "sha256": "4adba0684b82e912600f6e4471b31c6b01d8ddec1df1b962644a63ac399d5e22",
+      "expected_ready": false,
+      "actual_ready": false,
+      "native_picker_state": "not_ready",
+      "full_canvas": false,
+      "reason": "final canonical cube description absent"
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/377-evidence/390dp-en-dark-125-contrast0-083-hierarchy.xml",
+      "sha256": "7a561ddd62db5b5cfa1bade9b44a8ac147d6548fb460cde908ee1f7fbea0489c",
+      "expected_ready": false,
+      "actual_ready": false,
+      "native_picker_state": "not_ready",
+      "full_canvas": false,
+      "reason": "native picker not_ready; full canvas False",
+      "adaptive_swipe": {
+        "x": 22,
+        "start_y": 1420,
+        "end_y": 952,
+        "duration_ms": 1000,
+        "webview_bounds": [
+          0,
+          665,
+          780,
+          1432
+        ],
+        "canvas_bounds": [
+          44,
+          1149,
+          716,
+          1433
+        ]
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/377-evidence/430dp-ms-dark-150-contrast1-129-hierarchy.xml",
+      "sha256": "8f6a66656f9b8bafaff1817e35920a873a9a93191695b58c8761a75c7ee0edcf",
+      "expected_ready": false,
+      "actual_ready": false,
+      "native_picker_state": "ready",
+      "full_canvas": false,
+      "reason": "native picker ready; full canvas False",
+      "adaptive_swipe": {
+        "x": 22,
+        "start_y": 1596,
+        "end_y": 1042,
+        "duration_ms": 1000,
+        "webview_bounds": [
+          0,
+          732,
+          860,
+          1608
+        ],
+        "canvas_bounds": [
+          44,
+          1302,
+          796,
+          1608
+        ]
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/377-evidence/430dp-ms-dark-150-contrast1-131-hierarchy.xml",
+      "sha256": "8f6a66656f9b8bafaff1817e35920a873a9a93191695b58c8761a75c7ee0edcf",
+      "expected_ready": false,
+      "actual_ready": false,
+      "native_picker_state": "ready",
+      "full_canvas": false,
+      "reason": "native picker ready; full canvas False",
+      "adaptive_swipe": {
+        "x": 22,
+        "start_y": 1596,
+        "end_y": 1042,
+        "duration_ms": 1000,
+        "webview_bounds": [
+          0,
+          732,
+          860,
+          1608
+        ],
+        "canvas_bounds": [
+          44,
+          1302,
+          796,
+          1608
+        ]
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/377-evidence/768dp-en-light-150-contrast1-178-hierarchy.xml",
+      "sha256": "92c307298b28a8ce97b4f8f9cb3ef616a8252967a892fddb9be90ec154cb4453",
+      "expected_ready": false,
+      "actual_ready": false,
+      "native_picker_state": "not_ready",
+      "full_canvas": true,
+      "reason": "native picker not_ready; full canvas True"
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/377-evidence/768dp-en-light-150-contrast1-180-hierarchy.xml",
+      "sha256": "fa36bfa5e6dad0161fb1420ada40acdba723bd5ab53a0aec6e80ae3a3ccea8f5",
+      "expected_ready": true,
+      "actual_ready": true,
+      "native_picker_state": "ready",
+      "full_canvas": true,
+      "reason": "ready XML preconditions"
+    }
+  ]
+}

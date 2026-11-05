@@ -1,5 +1,18 @@
 # GeoMath Flutter integration
 
+Current source377a444 passed494host tests,50canonical checks,26tool checks,
+debug/release builds and3affected real-Android WebView cases. CI42082666643
+completed32normal-main captures, but independent visual review rejected two:
+390dp captured before the native controller was ready and430dp cropped the cube.
+All28non-cube originals and320/768cube originals are visually clear. This is not
+a visual gate PASS and app remains unchanged.
+
+The capture-only correction reuses exact normal APK d2a7ab8253b3e85dca5455f556338431e350206b85f327211338928c3c5bda09
+from source377, requires the native picker enabled ANDclickable, final canonical
+Image semantics, two fresh ready hierarchies and the entire canvas within the
+WebView. Only390/430cube PNGs are recaptured; thirty valid originals are retained
+with per-image provenance. No product runtime changes or failed-app retry.
+
 Current native correction: the direct-install run completed the320dp profile,
 then failed at390dp. Fixed diagnostic breadcrumbs show a valid child taking
 32.911seconds, beyond the old30second budget. The host now starts a bounded

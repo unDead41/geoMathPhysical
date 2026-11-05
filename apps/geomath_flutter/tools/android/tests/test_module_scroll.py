@@ -60,4 +60,59 @@ class ModuleScrollTest(unittest.TestCase):
             scroll.module_margin_swipe(root,stale_canvas)
 
 
+
+class CubeReadinessTest(unittest.TestCase):
+    def tree(self, *, canvas='[44,575][576,1121]', picker='true', enabled='true',
+             description='Kubus, Bongkah 3D, muka berwarna'):
+        root=fixture(canvas=canvas)
+        button=ET.SubElement(root,'node',{'class':'android.widget.Button',
+             'content-desc':'Bongkah\nKubus','clickable':picker,'enabled':enabled,
+             'bounds':'[24,488][616,569]'})
+        list(root.iter('node'))[-2].set('content-desc',description)
+        return root
+
+    def test_full_canvas_and_native_picker_are_both_required(self):
+        self.assertTrue(scroll.inspect_cube(self.tree()).ready)
+        for clickable, enabled in [('false','true'),('true','false'),('','true')]:
+            state=scroll.inspect_cube(self.tree(picker=clickable,enabled=enabled))
+            self.assertFalse(state.ready)
+            self.assertEqual(state.picker_state,'not_ready')
+        root=fixture(canvas='[44,575][576,1121]')
+        self.assertEqual(scroll.inspect_cube(root).picker_state,'missing')
+
+    def test_webview_button_cannot_impersonate_native_picker(self):
+        root=self.tree()
+        button=list(root)[-1]
+        root.remove(button)
+        list(root)[1].append(button)
+        self.assertEqual(scroll.inspect_cube(root).picker_state,'missing')
+
+    def test_placeholder_never_counts_as_loaded(self):
+        state=scroll.inspect_cube(self.tree(description='Interactive cube model'))
+        self.assertFalse(state.ready)
+        self.assertIsNone(state.canvas)
+
+    def test_visible_height_alone_does_not_accept_clipped_canvas(self):
+        for bounds in ('[44,1051][576,1185]', '[44,571][576,1117]'):
+            self.assertFalse(scroll.inspect_cube(self.tree(canvas=bounds)).ready)
+
+    def test_adaptive_up_drag_aligns_top_without_full_viewport_fling(self):
+        root=fixture(canvas='[44,1149][716,1433]',outer='[0,665][780,1432]',inner='[0,665][780,1433]')
+        gesture=scroll.module_margin_swipe(root,list(root.iter('node'))[-1])
+        self.assertEqual(gesture.start_y-gesture.end_y,468)
+        self.assertEqual(gesture.duration_ms,1000)
+        self.assertLess(gesture.x,44)
+
+    def test_top_clipped_canvas_uses_downward_drag(self):
+        root=fixture(canvas='[44,571][576,1000]')
+        gesture=scroll.module_margin_swipe(root,list(root.iter('node'))[-1])
+        self.assertGreater(gesture.end_y,gesture.start_y)
+        self.assertEqual(gesture.end_y-gesture.start_y,168)
+
+    def test_both_clipped_edges_fail_explicitly(self):
+        root=fixture(canvas='[44,571][576,1185]')
+        with self.assertRaisesRegex(RuntimeError,'both viewport edges'):
+            scroll.module_margin_swipe(root,list(root.iter('node'))[-1])
+
+
 if __name__=='__main__':unittest.main()

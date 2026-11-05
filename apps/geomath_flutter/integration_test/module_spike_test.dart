@@ -276,8 +276,8 @@ Future<void> _mount(
         controller.phase == ModuleLoadPhase.ready ||
         controller.phase == ModuleLoadPhase.failed ||
         controller.phase == ModuleLoadPhase.closed,
-    // Native document loading and the signed handshake each have a 30s budget.
-    timeout: const Duration(seconds: 65),
+    // Match the bounded 30s document + 60s child stages, plus reporting grace.
+    timeout: const Duration(seconds: 95),
     action: () async {
       if (DateTime.now().isBefore(nextDiagnostic)) return;
       nextDiagnostic = DateTime.now().add(const Duration(seconds: 10));

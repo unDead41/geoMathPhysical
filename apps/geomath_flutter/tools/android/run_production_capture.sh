@@ -34,15 +34,20 @@ test "$(adb -s "$device" shell settings get global airplane_mode_on | tr -d '\r'
 adb -s "$device" shell input keyevent KEYCODE_HOME
 python3 tools/android/verify_device_ready.py --device "$device" --output "$evidence_dir"
 adb -s "$device" install -r "$normal_apk"
-python3 tools/android/capture_integration.py --device "$device" --output "$evidence_dir"
+if [[ "${GEOMATH_CAPTURE_CUBE_ONLY:-0}" == 1 ]]; then
+  python3 tools/android/capture_integration.py --device "$device" --output "$evidence_dir" --cube-only --widths 390 430
+else
+  python3 tools/android/capture_integration.py --device "$device" --output "$evidence_dir"
+fi
 python3 - "$evidence_dir" <<'PY'
 import json,pathlib,sys
 p=pathlib.Path(sys.argv[1]);c=json.loads((p/'production-captures.json').read_text())
-assert len(c['captures'])==32
+expected=2 if c.get('capture_scope')=='cube-only' else 32
+assert len(c['captures'])==expected
 (p/'production-only-result.json').write_text(json.dumps({
  'schema_version':1,'source_commit':(p/'source-commit.txt').read_text().strip(),
  'scope':'Normal production APK installed and launched through ADB; no rebuild or app/test retry',
  'full_publish_gate':False,'functional_tests_run_here':False,'production_capture_exit_code':0,
- 'captures':32,'offline':True,'normal_apk_sha256':(p/'normal-apk.sha256').read_text().split()[0]
+ 'captures':expected,'requires_combination_with_prior_valid_captures':expected!=32,'offline':True,'normal_apk_sha256':(p/'normal-apk.sha256').read_text().split()[0]
 },indent=2)+'\n')
 PY

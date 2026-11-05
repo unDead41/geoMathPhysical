@@ -30,7 +30,7 @@ env:
 
 jobs:
   verify:
-    if: ${{ !contains(github.event.head_commit.message, '[android-followup:production-captures]') }}
+    if: ${{ !contains(github.event.head_commit.message, '[android-followup:production-captures]') && !contains(github.event.head_commit.message, '[android-followup:corrected-captures]') }}
     name: "${{ contains(github.event.head_commit.message, '[android-followup:bootstrap-fix]') && 'Bootstrap fix (real WebView + production captures)' || contains(github.event.head_commit.message, '[android-followup:solo-captures]') && 'Android follow-up (Solo + production captures)' || contains(github.event.head_commit.message, '[android-diagnostic:') && 'Android diagnostic only' || 'verify' }}"
     runs-on: ubuntu-24.04
     timeout-minutes: 90
@@ -296,7 +296,9 @@ jobs:
 
   production_capture:
     name: Production APK capture follow-up (unchanged runtime)
-    if: contains(github.event.head_commit.message, '[android-followup:production-captures]')
+    if: contains(github.event.head_commit.message, '[android-followup:production-captures]') || contains(github.event.head_commit.message, '[android-followup:corrected-captures]')
+    env:
+      GEOMATH_CAPTURE_CUBE_ONLY: ${{ contains(github.event.head_commit.message, '[android-followup:corrected-captures]') && '1' || '0' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     defaults:
@@ -317,8 +319,8 @@ jobs:
       - name: Download exact baseline normal APK
         uses: actions/download-artifact@v8.0.2
         with:
-          artifact-ids: 13435485632
-          run-id: 42066617435
+          artifact-ids: ${{ contains(github.event.head_commit.message, '[android-followup:corrected-captures]') && '13442263909' || '13435485632' }}
+          run-id: ${{ contains(github.event.head_commit.message, '[android-followup:corrected-captures]') && '42082666643' || '42066617435' }}
           github-token: ${{ github.token }}
           repository: ${{ github.repository }}
           path: ${{ runner.temp }}/geomath-followup-main
@@ -327,7 +329,8 @@ jobs:
           python3 - <<'PY_REUSE'
           import hashlib,json,os,pathlib,shutil,subprocess
           root=pathlib.Path('../..').resolve()
-          baseline=json.loads(pathlib.Path('docs/handoffs/app-integration/evidence/local/runtime-reuse-baseline.json').read_text())
+          name='runtime-reuse-corrected-baseline.json' if os.environ.get('GEOMATH_CAPTURE_CUBE_ONLY')=='1' else 'runtime-reuse-baseline.json'
+          baseline=json.loads((pathlib.Path('docs/handoffs/app-integration/evidence/local')/name).read_text())
           def sha(path):
               with path.open('rb') as stream:
                   return hashlib.file_digest(stream,'sha256').hexdigest()
