@@ -88,6 +88,41 @@ jobs:
           free -h
       - name: Dependencies
         run: flutter pub get
+      - name: Save resolved Dart dependencies
+        if: steps.flutter-setup.outputs.PUB-CACHE-HIT != 'true'
+        uses: actions/cache/save@v5
+        continue-on-error: true
+        with:
+          path: ${{ steps.flutter-setup.outputs.PUB-CACHE-PATH }}
+          # Match flutter-action's internal cache key including its lock hash.
+          key: ${{ steps.flutter-setup.outputs.PUB-CACHE-KEY }}-${{ hashFiles('**/pubspec.lock') }}
+      - name: Initialize Android engine cache
+        run: flutter precache --android
+      - name: Save initialized Flutter SDK
+        if: steps.flutter-setup.outputs.CACHE-HIT != 'true'
+        uses: actions/cache/save@v5
+        continue-on-error: true
+        with:
+          path: ${{ steps.flutter-setup.outputs.CACHE-PATH }}
+          key: ${{ steps.flutter-setup.outputs.CACHE-KEY }}
+      - name: Restore verified native SQLite downloads
+        id: sqlite-native
+        uses: actions/cache/restore@v5
+        continue-on-error: true
+        with:
+          path: apps/geomath_flutter/.dart_tool/hooks_runner/shared/sqlite3/build/download-*/libsqlite3.so
+          key: geomath-sqlite-native-v1-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('apps/geomath_flutter/pubspec.lock', 'apps/geomath_flutter/tools/android/prefetch_sqlite_assets.py') }}
+      - name: Verify and prefetch pinned SQLite binaries
+        run: |
+          python3 -m unittest discover -s tools/android -p 'test_prefetch_sqlite_assets.py'
+          python3 tools/android/prefetch_sqlite_assets.py --receipt docs/handoffs/app-integration/evidence/android/sqlite-native-assets.json
+      - name: Save verified native SQLite downloads
+        if: steps.sqlite-native.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v5
+        continue-on-error: true
+        with:
+          path: apps/geomath_flutter/.dart_tool/hooks_runner/shared/sqlite3/build/download-*/libsqlite3.so
+          key: ${{ steps.sqlite-native.outputs.cache-primary-key }}
       - name: Format
         run: dart format --output=none --set-exit-if-changed lib test integration_test test_driver
       - name: Analyze
@@ -97,7 +132,21 @@ jobs:
       - name: Canonical source and adapter checks
         run: node --test tools/contracts/verify_exports.test.mjs test/foundation/native_adapter_contract.test.mjs test/features/learning/bundle/*.test.mjs test/features/learning/surface/*.test.mjs test/features/learning/studio/checkpoint_schema_parity.test.mjs
       - name: Debug APK
+        id: debug-apk
         run: flutter build apk --debug
+      # Preserve verified Maven/wrapper downloads even if the APK step fails.
+      # The failed build outcome remains failed; this is only a download cache.
+      - name: Save Android build dependencies
+        if: ${{ !cancelled() && steps.gradle-dependencies.outputs.cache-hit != 'true' && steps.debug-apk.outcome != 'skipped' }}
+        uses: actions/cache/save@v5
+        continue-on-error: true
+        with:
+          path: |
+            ~/.gradle/caches/modules-2
+            ~/.gradle/wrapper
+            !~/.gradle/caches/modules-2/modules-2.lock
+            !~/.gradle/wrapper/**/*.lck
+          key: ${{ steps.gradle-dependencies.outputs.cache-primary-key }}
       - uses: actions/upload-artifact@v7
         with:
           name: geomath-debug-apk
@@ -129,35 +178,6 @@ jobs:
           test -s "$RUNNER_TEMP/geomath-integration-debug.apk"
           rm -f -- build/app/outputs/apk/debug/app-debug.apk
           (cd android && ./gradlew --stop)
-      # Save after successful native packaging, before device tests. A failing
-      # Android test must retain its failure and still leave reusable downloads
-      # for the next corrected run. These caches never establish a test PASS.
-      - name: Save Android build dependencies
-        if: steps.gradle-dependencies.outputs.cache-hit != 'true'
-        uses: actions/cache/save@v5
-        continue-on-error: true
-        with:
-          path: |
-            ~/.gradle/caches/modules-2
-            ~/.gradle/wrapper
-            !~/.gradle/caches/modules-2/modules-2.lock
-            !~/.gradle/wrapper/**/*.lck
-          key: ${{ steps.gradle-dependencies.outputs.cache-primary-key }}
-      - name: Save initialized Flutter SDK
-        if: steps.flutter-setup.outputs.CACHE-HIT != 'true'
-        uses: actions/cache/save@v5
-        continue-on-error: true
-        with:
-          path: ${{ steps.flutter-setup.outputs.CACHE-PATH }}
-          key: ${{ steps.flutter-setup.outputs.CACHE-KEY }}
-      - name: Save resolved Dart dependencies
-        if: steps.flutter-setup.outputs.PUB-CACHE-HIT != 'true'
-        uses: actions/cache/save@v5
-        continue-on-error: true
-        with:
-          path: ${{ steps.flutter-setup.outputs.PUB-CACHE-PATH }}
-          # Match flutter-action's internal cache key including its lock hash.
-          key: ${{ steps.flutter-setup.outputs.PUB-CACHE-KEY }}-${{ hashFiles('**/pubspec.lock') }}
       - name: Android disk headroom
         shell: bash
         run: |
