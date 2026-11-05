@@ -30,6 +30,7 @@ env:
 
 jobs:
   verify:
+    if: ${{ !contains(github.event.head_commit.message, '[android-followup:production-captures]') }}
     name: "${{ contains(github.event.head_commit.message, '[android-followup:solo-captures]') && 'Android follow-up (Solo + production captures)' || contains(github.event.head_commit.message, '[android-diagnostic:') && 'Android diagnostic only' || 'verify' }}"
     runs-on: ubuntu-24.04
     timeout-minutes: 90
@@ -289,5 +290,96 @@ jobs:
         with:
           name: geomath-android-smoke-apk
           path: ${{ runner.temp }}/geomath-main-debug.apk
+          if-no-files-found: error
+          retention-days: 7
+
+  production_capture:
+    name: Production APK capture follow-up (unchanged runtime)
+    if: contains(github.event.head_commit.message, '[android-followup:production-captures]')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: apps/geomath_flutter
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Capture tooling checks
+        run: |
+          bash -n tools/android/run_production_capture.sh
+          python3 -m py_compile tools/android/inspect_learning_failure.py tools/android/capture_integration.py
+          python3 -m unittest discover -s tools/android -p 'test_*.py'
+          python3 -m unittest discover -s tools/android/tests -p 'test_*.py'
+      - name: Download exact baseline normal APK
+        uses: actions/download-artifact@v8.0.2
+        with:
+          artifact-ids: 13435485632
+          run-id: 42066617435
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          path: ${{ runner.temp }}/geomath-followup-main
+      - name: Verify all runtime paths and binary SHA
+        run: |
+          python3 - <<'PY_REUSE'
+          import hashlib,json,os,pathlib,shutil,subprocess
+          root=pathlib.Path('../..').resolve()
+          baseline=json.loads(pathlib.Path('docs/handoffs/app-integration/evidence/local/runtime-reuse-baseline.json').read_text())
+          def sha(path):
+              with path.open('rb') as stream:
+                  return hashlib.file_digest(stream,'sha256').hexdigest()
+          tracked=subprocess.check_output(['git','ls-files','-z'],cwd=root).decode().split('\0')
+          prefixes=('apps/geomath_flutter/lib/','apps/geomath_flutter/assets/','apps/geomath_flutter/android/')
+          runtime={p for p in tracked if p.startswith(prefixes) or p in ('apps/geomath_flutter/pubspec.yaml','apps/geomath_flutter/pubspec.lock')}
+          expected={x['path'] for x in baseline['runtime_files']}
+          assert runtime==expected, 'Runtime file inventory differs from verified baseline.'
+          assert len(runtime)==170
+          for item in baseline['runtime_files']:
+              assert sha(root/item['path'])==item['sha256'], item['path']
+          apk=pathlib.Path(os.environ['RUNNER_TEMP'])/'geomath-followup-main/app-debug.apk'
+          assert sha(apk)==baseline['normal_ci_apk_sha256'], 'Reused APK hash mismatch.'
+          shutil.copyfile(apk,pathlib.Path(os.environ['RUNNER_TEMP'])/'geomath-main-debug.apk')
+          evidence=pathlib.Path('docs/handoffs/app-integration/evidence/android');evidence.mkdir(parents=True,exist_ok=True)
+          (evidence/'verified-runtime-reuse.json').write_text(json.dumps({
+              'schema_version':1,'baseline_run_id':baseline['baseline_run_id'],
+              'baseline_source':baseline['baseline_source'],
+              'current_source':subprocess.check_output(['git','rev-parse','HEAD']).decode().strip(),
+              'runtime_files_verified':170,'runtime_equivalent':True,
+              'normal_apk_sha256':baseline['normal_ci_apk_sha256'],
+              'full_publish_gate':False,
+              'scope':'Production capture only; combine with baseline functional cases and separately passed corrected Solo case.',
+          },indent=2)+'\n')
+          print('Verified 170 unchanged runtime files and exact baseline normal APK hash.')
+          PY_REUSE
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Capture the installed normal APK offline
+        uses: reactivecircus/android-emulator-runner@v2
+        env:
+          TMPDIR: ${{ runner.temp }}
+          JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=${{ runner.temp }}
+          GEOMATH_NORMAL_APK: ${{ runner.temp }}/geomath-main-debug.apk
+        with:
+          api-level: 35
+          target: default
+          arch: x86_64
+          profile: pixel_2
+          cores: 2
+          ram-size: 3072M
+          disk-size: 4096M
+          working-directory: apps/geomath_flutter
+          disable-animations: true
+          emulator-options: -no-window -no-snapshot -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          script: bash tools/android/run_production_capture.sh
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: geomath-production-capture-evidence
+          path: apps/geomath_flutter/docs/handoffs/app-integration/evidence/android
           if-no-files-found: error
           retention-days: 7

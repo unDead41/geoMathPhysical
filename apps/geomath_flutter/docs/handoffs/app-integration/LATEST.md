@@ -1,5 +1,18 @@
 # GeoMath Flutter integration
 
+Latest run: CI42075633834 / source2daa280 passed the corrected real-Android Solo
+case in19seconds, plus teardown. Its workflow remains failed: normal-main module
+startup showed a real unavailable state before any canonical canvas appeared.
+The three genuine Settings/Home/Hub captures are retained; they do not satisfy
+the32capture gate. No app fast-forward is authorized by this result.
+
+The next diagnostic uses the same hash-verified normal APK installed/launched
+directly through ADB, without rebuilding or rerunning passed functional tests.
+It records restricted Flutter/Chromium output and read-only whitelisted host
+failure fields, without evaluating expressions or exposing a VM authentication
+URI. The current unavailable copy now fails capture immediately. Product runtime
+files remain identical to245f9ee; the exact bootstrap cause is still unproven.
+
 Status: **integrated; Android rerun required after observed failures**. App0.1.0+1, contract1.0.0.
 
 ## Sources

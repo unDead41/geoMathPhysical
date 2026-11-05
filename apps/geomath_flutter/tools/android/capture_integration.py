@@ -207,7 +207,9 @@ def main():
             for node in root.iter('node'):
                 text = label(node).casefold()
                 if ('offline learning module is unavailable' in text or
-                        'modul pembelajaran luar talian tidak tersedia' in text):
+                        'modul pembelajaran luar talian tidak tersedia' in text or
+                        'modul luar talian tidak tersedia' in text or
+                        'offline module unavailable' in text):
                     raise RuntimeError('Installed production APK reports offline module unavailable.')
                 description = (node.get('content-desc', '')+' '+node.get('text', '')).casefold()
                 if (node.get('class') == 'android.widget.Image' and
