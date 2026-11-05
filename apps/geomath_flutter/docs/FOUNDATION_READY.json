@@ -378,6 +378,17 @@
       "normal_apk_artifact_id": 13390878421,
       "evidence_artifact_id": 13390733823,
       "evidence": "docs/handoffs/app-foundation/evidence/ci-41973098124.txt"
+    },
+    {
+      "run_id": 41975565145,
+      "url": "https://github.com/unDead41/geodecoder/actions/runs/41975565145",
+      "tested_commit": "6fe2ceb2d8fd49b1c454acbd18349fa4ff036d21",
+      "job": 127073472937,
+      "verify": "exact verified APK and101 runtime hashes passed",
+      "android_smoke": "not repeated;sourceCI41973098124passed4/4",
+      "screenshots": "canvas below canonical mobile sidebar; static label also replaced by live renderer",
+      "evidence_artifact_id": 13391457860,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41975565145.txt"
     }
   ],
   "android_ci": {

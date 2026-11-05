@@ -64,15 +64,28 @@ def main():
             try:
                 raw, root = hierarchy()
                 (output/'module-hierarchy.xml').write_bytes(raw)
+                canvas_loaded = False
                 for node in root.iter('node'):
                     label = (node.get('content-desc', '') + ' ' + node.get('text', '')).casefold()
                     if 'modul pembelajaran luar talian tidak tersedia' in label or 'offline learning module is unavailable' in label:
                         raise RuntimeError('The normal app reports a failed offline module load.')
-                    if 'model interaktif kubus' in label:
+                    # The canonical renderer replaces the static HTML label
+                    # with this live description after selecting its model.
+                    if ('model interaktif kubus' in label or
+                            ('kubus, bongkah 3d' in label and node.get('class') == 'android.widget.Image')):
+                        canvas_loaded = True
                         bounds = [int(v) for v in re.findall(r'\d+', node.get('bounds', ''))]
-                        if len(bounds) == 4 and bounds[2]-bounds[0] >= 64 and bounds[3]-bounds[1] >= 64:
+                        if len(bounds) == 4 and bounds[2]-bounds[0] >= 128 and bounds[3]-bounds[1] >= 384:
                             time.sleep(2)
                             return
+                if canvas_loaded:
+                    # The canonical sidebar and shape controls precede its
+                    # canvas on a phone. Scroll the real document's side
+                    # margin, outside the canvas's drag-to-rotate region.
+                    sizes = re.findall(r'(\d+)x(\d+)', adb('shell', 'wm', 'size').decode())
+                    width, height = map(int, sizes[-1])
+                    adb('shell', 'input', 'swipe', str(width*97//100), str(height*3//4),
+                        str(width*97//100), str(height//3), '350')
             except (subprocess.SubprocessError, ET.ParseError):
                 pass
             time.sleep(2)

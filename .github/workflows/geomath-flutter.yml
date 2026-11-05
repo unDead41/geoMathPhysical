@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          fetch-depth: 2
+          fetch-depth: 3
       - name: Verify unchanged tested application
         run: |
           python3 - <<'PY'
