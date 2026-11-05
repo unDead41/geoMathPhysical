@@ -1055,7 +1055,7 @@ final class _ClassroomInputDialogState extends State<_ClassroomInputDialog> {
     String t(String key) => s.text('classroom.${key.replaceAll('_', '.')}');
     return PopScope(
       canPop: !c.mutating,
-      child: AlertDialog(
+      child: _ClassroomFormDialog(
         key: const ValueKey('classroom-input'),
         title: Text(widget.title),
         content: SingleChildScrollView(
@@ -1202,7 +1202,7 @@ final class _ManagementDialogState extends State<_ManagementDialog> {
         : 'confirmDelete';
     return PopScope(
       canPop: !c.mutating,
-      child: AlertDialog(
+      child: _ClassroomFormDialog(
         key: const ValueKey('classroom-management'),
         title: Text(t(d.action)),
         content: SingleChildScrollView(
@@ -1282,4 +1282,45 @@ final class _ManagementDialogState extends State<_ManagementDialog> {
       ),
     );
   }
+}
+
+/// A keyboard can leave less height than the form title and three stacked
+/// actions. Keep the entire form, including its actions, in one scroll region.
+final class _ClassroomFormDialog extends StatelessWidget {
+  const _ClassroomFormDialog({
+    required this.title,
+    required this.content,
+    required this.actions,
+    super.key,
+  });
+  final Widget title, content;
+  final List<Widget> actions;
+
+  @override
+  Widget build(BuildContext context) => AlertDialog(
+    scrollable: true,
+    contentPadding: const EdgeInsets.all(24),
+    content: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Semantics(
+          header: true,
+          child: DefaultTextStyle(
+            style: Theme.of(context).textTheme.headlineSmall!,
+            child: title,
+          ),
+        ),
+        const SizedBox(height: 20),
+        content,
+        const SizedBox(height: 24),
+        OverflowBar(
+          alignment: MainAxisAlignment.end,
+          spacing: 8,
+          overflowSpacing: 8,
+          children: actions,
+        ),
+      ],
+    ),
+  );
 }

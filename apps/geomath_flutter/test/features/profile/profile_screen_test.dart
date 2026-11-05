@@ -356,48 +356,50 @@ void main() {
       await close(tester, app);
     }
   });
-  testWidgets('tab exit during save retains draft with unknown outcome', (
-    tester,
-  ) async {
-    final pending = Completer<Result<AccountProfile>>();
-    final profiles = Profiles()..pendingUpdate = pending.future;
-    final app = await open(tester, profiles);
-    try {
-      await tester.pumpWidget(
-        GeoMathApp(dependencies: app, initialRoute: 'cloud-game-profile'),
-      );
-      await tester.pumpAndSettle();
-      await tester.enterText(nameField(), 'Unacknowledged Draft');
-      await tester.pump();
-      final save = find.byKey(const Key('profile-save'));
-      await tester.ensureVisible(save);
-      await tester.tap(save);
-      await tester.pump();
-      expect(profiles.saves, 1);
-      final router = AppScope.of(tester.element(find.byType(ProfileScreen)))
-          .router;
-      router.select(AppDestination.home);
-      await tester.pumpAndSettle();
-      router.select(AppDestination.profile);
-      await tester.pumpAndSettle();
-      expect(
-        tester.widget<TextField>(nameField()).controller!.text,
-        'Unacknowledged Draft',
-      );
-      expect(tester.widget<ActionButton>(save).onPressed, isNull);
-      expect(profiles.saves, 1);
-      pending.complete(
-        const Failed(
-          AppFailure(code: FailureCode.network, message: 'auth.network'),
-        ),
-      );
-      await tester.pumpAndSettle();
-      expect(tester.widget<ActionButton>(save).onPressed, isNull);
-      expect(tester.takeException(), isNull);
-    } finally {
-      await close(tester, app);
-    }
-  });
+  testWidgets(
+    'tab exit during save stays and retains draft with unknown outcome',
+    (tester) async {
+      final pending = Completer<Result<AccountProfile>>();
+      final profiles = Profiles()..pendingUpdate = pending.future;
+      final app = await open(tester, profiles);
+      try {
+        await tester.pumpWidget(
+          GeoMathApp(dependencies: app, initialRoute: 'cloud-game-profile'),
+        );
+        await tester.pumpAndSettle();
+        await tester.enterText(nameField(), 'Unacknowledged Draft');
+        await tester.pump();
+        final save = find.byKey(const Key('profile-save'));
+        await tester.ensureVisible(save);
+        await tester.tap(save);
+        await tester.pump();
+        expect(profiles.saves, 1);
+        final router = AppScope.of(tester.element(find.byType(ProfileScreen)))
+            .router;
+        final instance = router.navigation.current.instance;
+        await tester.runAsync(() => router.select(AppDestination.home));
+        await tester.pump(const Duration(milliseconds: 300));
+        expect(router.navigation.current.instance, instance);
+        expect(router.navigation.current.route.name, 'cloud-game-profile');
+        expect(
+          tester.widget<TextField>(nameField()).controller!.text,
+          'Unacknowledged Draft',
+        );
+        expect(tester.widget<ActionButton>(save).onPressed, isNull);
+        expect(profiles.saves, 1);
+        pending.complete(
+          const Failed(
+            AppFailure(code: FailureCode.network, message: 'auth.network'),
+          ),
+        );
+        await tester.pumpAndSettle();
+        expect(tester.widget<ActionButton>(save).onPressed, isNull);
+        expect(tester.takeException(), isNull);
+      } finally {
+        await close(tester, app);
+      }
+    },
+  );
   testWidgets(
     'back Save waits for acknowledgement and back Discard removes retained draft',
     (tester) async {

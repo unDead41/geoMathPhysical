@@ -13,6 +13,9 @@ class HomeScreen extends StatelessWidget {
     final s = AppStrings.of(context);
     final scope = AppScope.of(context);
     final colors = GeoMathColors.of(context);
+    final installed = scope.dependencies.composition.routes.contains(
+      'learning-explore',
+    );
     return GeoMathScaffold(
       title: 'GeoMath',
       actions: [
@@ -31,10 +34,15 @@ class HomeScreen extends StatelessWidget {
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           const SizedBox(height: 4),
-          Text(
-            s.text('foundation.guest'),
-            style: Theme.of(context).textTheme.bodyMedium
-                ?.copyWith(color: colors.muted),
+          StreamBuilder(
+            stream: scope.dependencies.sessions.bindings,
+            builder: (context, _) => Text(
+              scope.dependencies.sessions.current.isGuest
+                  ? s.text('foundation.guest')
+                  : s.text('foundation.signedIn'),
+              style: Theme.of(context).textTheme.bodyMedium
+                  ?.copyWith(color: colors.muted),
+            ),
           ),
           const SizedBox(height: 20),
           GeoMathCard(
@@ -67,14 +75,18 @@ class HomeScreen extends StatelessWidget {
                   key: const ValueKey('home-explore'),
                   label: s.text('foundation.explore'),
                   icon: Icons.view_in_ar_rounded,
-                  onPressed: () => scope.router.open('module-spike'),
+                  onPressed: () => scope.router.open(
+                    installed ? 'learning-explore' : 'module-spike',
+                  ),
                 ),
               ],
             ),
           ),
           const SizedBox(height: 12),
           Text(
-            s.text('foundation.spikeNote'),
+            s.text(
+              installed ? 'foundation.offlineNote' : 'foundation.spikeNote',
+            ),
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: 24),
@@ -126,7 +138,9 @@ class HomeScreen extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           Text(
-            s.text('foundation.foundation'),
+            s.text(
+              installed ? 'foundation.appVersion' : 'foundation.foundation',
+            ),
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.labelSmall
                 ?.copyWith(color: colors.muted),

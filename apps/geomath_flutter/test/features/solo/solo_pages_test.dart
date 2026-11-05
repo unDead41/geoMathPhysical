@@ -302,7 +302,7 @@ void main() {
     },
   );
   testWidgets(
-    'root Play to same Play reentry is frame safe and preserves a live R2 attempt',
+    'root Play reentry is frame safe and guarded exit persists the R2 attempt',
     (tester) async {
       final app = await boot(tester, PageClock());
       final c = app.composition.services.get(SoloServices.controller);
@@ -316,7 +316,7 @@ void main() {
       ).router;
       // Reset replaces the page while the outgoing AnimatedBuilder still listens.
       for (var i = 0; i < 2; i++) {
-        router.select(AppDestination.play);
+        await tester.runAsync(() => router.select(AppDestination.play));
         await tester.pump();
         await tester.runAsync(c.initialize);
         await tester.pump(const Duration(milliseconds: 350));
@@ -338,23 +338,28 @@ void main() {
           netOrder = game.netOrder;
       router.open('solo-game');
       await tester.pump(const Duration(milliseconds: 350));
-      router.select(AppDestination.play);
+      await tester.runAsync(() => router.select(AppDestination.play));
       await tester.pump(const Duration(milliseconds: 350));
       await tester.runAsync(c.initialize);
       await tester.pump(const Duration(milliseconds: 350));
       expect(tester.takeException(), isNull);
-      expect(identical(c.game, game), true);
+      // The new destination guard checkpoints and releases the active game.
+      // Resume restores the same attempt/choices, not the old in-memory object.
+      expect(c.game, isNull);
+      expect(c.savedSlot!.id, id);
+      expect(await tester.runAsync(c.resumeSaved), isTrue);
+      final resumed = c.game!;
       expect(identical(c.bank, bank), true);
       expect(c.attemptId, id);
       expect(c.selected, selected);
-      expect(game.stage, GeometryCardKind.net);
-      expect(game.netOrder, netOrder);
-      expect(game.hints, 1);
-      expect(game.score, 0);
+      expect(resumed.stage, GeometryCardKind.net);
+      expect(resumed.netOrder, netOrder);
+      expect(resumed.hints, game.hints);
+      expect(resumed.score, game.score);
       router.open('solo-resume');
       await tester.pump(const Duration(milliseconds: 350));
       expect(tester.takeException(), isNull);
-      expect(identical(c.game, game), true);
+      expect(identical(c.game, resumed), true);
       await tester.runAsync(c.checkpoint);
       await tester.pumpWidget(const SizedBox.shrink());
       await tester.runAsync(app.dispose);

@@ -377,6 +377,7 @@ final class _ChoiceRow extends StatelessWidget {
     hint: hint,
     button: true,
     enabled: enabled,
+    onTap: enabled ? onPressed : null,
     excludeSemantics: true,
     child: InkWell(
       key: ValueKey('preference-$id'),

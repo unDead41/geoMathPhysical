@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 2,
+  "scope": "learning-host-universal-preview-verified-device-pending",
+  "foundationReadyCommit": "9a1f49a7c92d13bb70b7fd1420c34629a7785f9e",
+  "canonicalSourceCommit": "37bc2cd262cc0a54e8ee31339ea37471c1ecfda5",
+  "moduleVersion": "1.6.2",
+  "runtimeInputSha256": "b636757864c9339dea9eeb12bfa3f75b9d85730f10c94fb872f8171c81ac02df",
+  "previewSourceReceipt": "learning-preview-build.json",
+  "actualChecks": [
+    {
+      "name": "flutter-analyze",
+      "status": "PASS",
+      "exitCode": 0,
+      "log": "resume-20261105/analyze.log",
+      "logSha256": "81e9bf32c8c7c4a8013f2295cab4ea1cdb1cfa7c997a8ef0661b69b36fbe5526"
+    },
+    {
+      "name": "all-flutter-unit-widget-tests",
+      "status": "PASS",
+      "pass": 139,
+      "fail": 0,
+      "exitCode": 0,
+      "log": "resume-20261105/flutter-tests.log",
+      "logSha256": "efd15b93b0637870153d4c1c3250b5924d191f76a772628c298de50cc66617c9"
+    },
+    {
+      "name": "learning-feature-unit-widget-tests",
+      "status": "PASS",
+      "pass": 47,
+      "fail": 0
+    },
+    {
+      "name": "canonical-source-tests",
+      "status": "PASS",
+      "pass": 341,
+      "fail": 0
+    },
+    {
+      "name": "node-source-adapter-surface-checks",
+      "status": "PASS",
+      "pass": 45,
+      "fail": 0
+    },
+    {
+      "name": "dart-javascript-checkpoint-parity",
+      "status": "PASS",
+      "tests": 1,
+      "cases": 25,
+      "fail": 0
+    },
+    {
+      "name": "learning-preview-build",
+      "status": "PASS",
+      "exitCode": 0,
+      "receipt": "learning-preview-build.json",
+      "log": "learning-preview-build.log",
+      "logSha256": "b6b9eb93ea2c6e59b18489f0945fa02d7a67ac2eb267c13b35ffb6ea0569cae3"
+    }
+  ],
+  "authoredTests": {
+    "featureHostCases": 47,
+    "acceptanceHostCases": 6,
+    "androidIntegrationCases": 4
+  },
+  "deviceEvidence": {
+    "status": "BLOCKED",
+    "integrationTests": "NOT_RUN",
+    "reason": "Learning integration remains unexecuted: software API35 emulator segfaulted before boot; separate userdata allocation attempt required7372.80MB with3173.76MB available. /dev/kvm absent.",
+    "log": "resume-20261105/android-blocker.txt",
+    "screenshots": [],
+    "talkBack": "NOT_RUN",
+    "physicalGestures": "NOT_RUN",
+    "phoneTabletVisualReview": "NOT_RUN"
+  },
+  "hostedCi": {
+    "latestCodeRun": "https://github.com/unDead41/geodecoder/actions/runs/41999196374",
+    "sourceCommit": "eeff8323a501cde956fcc8e9cf27e8d390c5f457",
+    "learningPreviewTargetCovered": false
+  },
+  "historicalAuthoringReceipt": "authoring-verification-result.json",
+  "foundationCiIsNotLearningEvidence": true,
+  "publishedRuntimeSourceCommit": "eeff8323a501cde956fcc8e9cf27e8d390c5f457",
+  "universalPreviewReceipt": "resume-20261105/apk.json",
+  "universalPreviewBuild": "PASS_ARM64_ARMV7_X86_64_ZIP_CRC_V2_SIGNATURE",
+  "requiredSharedCorrection": "GeoMathRouter.select must await contributed leave/BackPolicy before bottom destination reset."
+}

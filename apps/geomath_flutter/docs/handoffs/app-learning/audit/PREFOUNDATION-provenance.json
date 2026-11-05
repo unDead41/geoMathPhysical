@@ -1,0 +1,332 @@
+{
+  "schema": "geomath-learning-preflight-audit/1",
+  "observedAtUtc": "2026-11-04T14:35:11+00:00",
+  "implementationStarted": false,
+  "appInstructionSha": "38f061af963256528d5060ff076bae9ee05eafc3",
+  "observedRefs": {
+    "app": "38f061af963256528d5060ff076bae9ee05eafc3",
+    "main-digitalized": "37bc2cd262cc0a54e8ee31339ea37471c1ecfda5",
+    "main": "25836eb1a6f24459aace8a3980ae880a13e3b488",
+    "app-foundation": null
+  },
+  "versions": {
+    "firmwareMain": "2.0.2",
+    "digitalAuditSource": "2.9.1",
+    "moduleAuditSource": "1.6.2",
+    "flutterApplication": null
+  },
+  "foundation": {
+    "status": "WAITING_FOUNDATION_READY",
+    "sha": null,
+    "contractVersion": null,
+    "contractHashes": {},
+    "sourceLock": null,
+    "sameFoundationAsCloudGameVerified": false,
+    "refCheck": {
+      "ref": "app-foundation",
+      "path": "apps/geomath_flutter/docs/FOUNDATION_READY.json",
+      "httpStatus": 404,
+      "error": "No commit found for the ref app-foundation"
+    },
+    "sharedBranchCheck": {
+      "branch": "app-cloud-game",
+      "httpStatus": 404,
+      "error": "Branch not found"
+    }
+  },
+  "canonicalAudit": {
+    "sourceSha": "37bc2cd262cc0a54e8ee31339ea37471c1ecfda5",
+    "treeSha": "ce89242bbf9409c6ccad5129631dfe8ac3a52db8",
+    "role": "independent source audit; not a foundation source lock",
+    "verifiedSnapshotBlobCount": 183,
+    "inputs": [
+      {
+        "path": "AGENTS.md",
+        "git_blob": "a3c03cc6058a05f26e83c88e78c05d88159200f7",
+        "bytes": 4419,
+        "sha256": "39b7a6991457c03661a525d4339d26fb319d525f75be5f08bc8103ce22be5c1a"
+      },
+      {
+        "path": "digital/design-system/tokens.mjs",
+        "git_blob": "94a77935bf3b9c67cf6c5cd5766bc677858b58b4",
+        "bytes": 7186,
+        "sha256": "9b07725e80a595fcd2cb76cf05ca4043f9d6c5891d9f0a92699993df4412513a"
+      },
+      {
+        "path": "digital/docs/integration-sync/SQL_ORDER.md",
+        "git_blob": "0c9c412679c2996e39b48a89d4d0d89b48a0796b",
+        "bytes": 4514,
+        "sha256": "7a357f194478efe819e72b610194262f9ba1ac865c358444158e0ffb8c5cfc6f"
+      },
+      {
+        "path": "digital/module/GeoDecoder_Modul_V1.html",
+        "git_blob": "3af0469979d878c8e605d093db1be0c0649c6509",
+        "bytes": 572718,
+        "sha256": "7ddd5d60a25fbdf73c20f9f8e8fc0db4253e582fb50d17c944307b8f682066c4"
+      },
+      {
+        "path": "digital/module/package.json",
+        "git_blob": "92bc4f833583b45277c32d0ea50c92546c80c58d",
+        "bytes": 222,
+        "sha256": "c3e4a0769ac6f63db755daf85630332ce939a24379ec0f93958fd67f3953fa14"
+      },
+      {
+        "path": "digital/module/src/accessibility.mjs",
+        "git_blob": "eac9692ce0d9e9167d1f859ebba8eff2cde8cf9b",
+        "bytes": 10994,
+        "sha256": "c164483945ccd9ddb7e23d83763849210a95cc6f41c05eed47eb4a5809e67588"
+      },
+      {
+        "path": "digital/module/src/app.mjs",
+        "git_blob": "54d79dac1d3a53300b8b36d4b86f7cad56de201c",
+        "bytes": 33064,
+        "sha256": "656bd39a54f381b0e1a7fa0cc089c8640e489637e3decf4de4ea6f529abbe1a3"
+      },
+      {
+        "path": "digital/module/src/calculation-steps.mjs",
+        "git_blob": "87013cc606ac3758661d0037fbf95cd5654ff706",
+        "bytes": 27620,
+        "sha256": "bb816783f981a6289d3442f89af6c1f0d1b7237b9a3ace82f6e9f05448e4bce0"
+      },
+      {
+        "path": "digital/module/src/calculation-workshop.css",
+        "git_blob": "8ca181edfecafbfcfe0e43e2fc68c765c6ce73d3",
+        "bytes": 9293,
+        "sha256": "ca2248654131f36048635f8cf6fc750759791a1cab75728d459683c5a769e4b3"
+      },
+      {
+        "path": "digital/module/src/calculation-workshop.mjs",
+        "git_blob": "ff6f6f373b67bb6a2aeebc962366c6ba857a5cdb",
+        "bytes": 33109,
+        "sha256": "10012bee570d428e80049ed04d78ed3b91c8f8782e5139a22a1d0ff48770eab4"
+      },
+      {
+        "path": "digital/module/src/central-tokens.mjs",
+        "git_blob": "b5b43ee24d9acc71dd6f4a8298bbbfbbcad7f5c9",
+        "bytes": 12319,
+        "sha256": "bf1bc990ecc7b891f767d26db35555e4fbfa40cc304ae4c8d7bfd4e50135d669"
+      },
+      {
+        "path": "digital/module/src/content.mjs",
+        "git_blob": "8e757a7a777929d0e256d4dd570464e0a4217224",
+        "bytes": 10067,
+        "sha256": "74930a38486ce156625af42efee63b5e638eba5d8ea221a7766498c1245b2ae3"
+      },
+      {
+        "path": "digital/module/src/design-system.mjs",
+        "git_blob": "8e8e08aa9c6f649399bbec3cfdcf686e573ab84f",
+        "bytes": 1817,
+        "sha256": "2ed613b42e2103689e556e17e91c4d8aa29aa40a165cf221f0eb3e36d969931c"
+      },
+      {
+        "path": "digital/module/src/design-tokens.css",
+        "git_blob": "907c91e72610ce78985ad842db1b2d3817a999a9",
+        "bytes": 5621,
+        "sha256": "351f63ca2c83abfc5133abf1418cdd9af09902063492b45e7a58415866bd2ea3"
+      },
+      {
+        "path": "digital/module/src/geometry.mjs",
+        "git_blob": "f399dbbdeaaea8874ac54f2c74305e3b690fa628",
+        "bytes": 6446,
+        "sha256": "07c832055b11b4c7968085e6121f6581b28edc349304a4881dcc8acf177387ba"
+      },
+      {
+        "path": "digital/module/src/guided.mjs",
+        "git_blob": "2e1ffe9a104c6f71cc0d3caf5df1d3654da0c3b4",
+        "bytes": 3881,
+        "sha256": "8ea0b2b20d5343613a42f8af56dcca05ac8e2e0e9921b27c1491a11c160e0744"
+      },
+      {
+        "path": "digital/module/src/index.html",
+        "git_blob": "950b0591cf49e1b57ecdeee907ea57c859e4758d",
+        "bytes": 55000,
+        "sha256": "c8a1d5494a050f743ff82ea0dd52226301d14435961fb5540af1e7b5b790b18a"
+      },
+      {
+        "path": "digital/module/src/lab-geometry.mjs",
+        "git_blob": "37aa7bb48a3d401b7bcd2a7e8d46ca17e2f4b765",
+        "bytes": 9421,
+        "sha256": "16d2c2736b236465866d8e94bc78e4d2d0460c0f7376760880047a3178ef1a98"
+      },
+      {
+        "path": "digital/module/src/labs.mjs",
+        "git_blob": "c75a6e0c75bb36329b4cd6779376d218c74c8cff",
+        "bytes": 67928,
+        "sha256": "023873e7ac6dc0b97de4b9a9ba4fdc3591f77b6e64c915981d7d2c92bca72e7f"
+      },
+      {
+        "path": "digital/module/src/learning-mesh.mjs",
+        "git_blob": "02d8621fe45a33b1c908f702ad60f8f0827cd364",
+        "bytes": 3787,
+        "sha256": "5dc74f31077e12d35852cbfb984ee2cf77244bfd0543298a66316371f9df2787"
+      },
+      {
+        "path": "digital/module/src/lessons.mjs",
+        "git_blob": "56fab529e0393b94baf3377c6012ada8b744733f",
+        "bytes": 19959,
+        "sha256": "ef93b8ef46eb3ce6566b3bb95435d516c7dd7a574630bffb73cbf125a3bf71be"
+      },
+      {
+        "path": "digital/module/src/net-print.mjs",
+        "git_blob": "f44b4c0074c9c8f12db75ed853faea4e39c1db67",
+        "bytes": 11526,
+        "sha256": "558d61f8ab691b7aff0625a965848ae9b9bd47ffc147a79760744557ca419d60"
+      },
+      {
+        "path": "digital/module/src/net-studio-geometry.mjs",
+        "git_blob": "f1c9058beda091372fe92e9da45e67110924c385",
+        "bytes": 8869,
+        "sha256": "95c6cc517712d29f441b90b770c641dfff6867f8926fdf5f0603273ea73cc619"
+      },
+      {
+        "path": "digital/module/src/net-studio.mjs",
+        "git_blob": "bc4daa83499e789d52cd77ac05f566f3fe241273",
+        "bytes": 7537,
+        "sha256": "280299fa484ddbeda5df7a743dd3ed98da94da696e5f56ae26af92fd7e82a77f"
+      },
+      {
+        "path": "digital/module/src/net-tools.css",
+        "git_blob": "915654486a354f422ed8004326748a3835627390",
+        "bytes": 2755,
+        "sha256": "ee0fc010258f27f486d5c2d875e5b6861cd9d51eeaa8f8636ee09ad15d93d05d"
+      },
+      {
+        "path": "digital/module/src/notes.mjs",
+        "git_blob": "23a2f10f39d2968ebe5ca3ef0240f9d5db02d104",
+        "bytes": 13692,
+        "sha256": "3f0226a0a38c790efd3e2c821a5d15fc7fb4310ca72c0d35f4a7dff0cade488e"
+      },
+      {
+        "path": "digital/module/src/preset-nets.mjs",
+        "git_blob": "b8156072fd12a9e9c4d98d4d06c38dddd3f969ad",
+        "bytes": 3739,
+        "sha256": "4c53cd7c9a991ed4fe89f20883dc6c008f31485d9bc92b05f673cbf84adcd5b7"
+      },
+      {
+        "path": "digital/module/src/projection-geometry.mjs",
+        "git_blob": "65d1be264ba6fad1b152d29981e928cfc6a73d4d",
+        "bytes": 15474,
+        "sha256": "ac348b0d72a73b190d58aa993f66d0d566bd9740a5c660389bec994ded224369"
+      },
+      {
+        "path": "digital/module/src/projection-studio.css",
+        "git_blob": "02c1e551b8123c52df967004508fba0a4d518fec",
+        "bytes": 12527,
+        "sha256": "cad5286e99610694dc4fae7c8d6acd4abc04c6e31d41738cc6e9ca0530d9bae6"
+      },
+      {
+        "path": "digital/module/src/projection-studio.mjs",
+        "git_blob": "5d464de665bfb41b8415ef6738d10e7a15769516",
+        "bytes": 52750,
+        "sha256": "4c3bc2c4dd5d8f51f5c11d7c986d55131efe59c915554aeca824e048195e7e80"
+      },
+      {
+        "path": "digital/module/src/renderer.mjs",
+        "git_blob": "821c6cc6ac0964ef94485a388647fa67ddfc55e9",
+        "bytes": 6612,
+        "sha256": "a38bc6ca1815efc0d3846bcd1dad37b6b572363dae839eb4335b8a6bb84033de"
+      },
+      {
+        "path": "digital/module/src/style.css",
+        "git_blob": "f21ffb4473be4dd4e4d7f1c3c24870e36fae7236",
+        "bytes": 113511,
+        "sha256": "315dc2781c9798278dd3c3c61fabf16d70c065a7b1081e6a706378f893d0a506"
+      },
+      {
+        "path": "digital/module/src/surface-workshop.mjs",
+        "git_blob": "b025dc359614f365df32edd88522a8718220e091",
+        "bytes": 8637,
+        "sha256": "ca53b894f9201966b41310d256b2f47d10991006c665df235455aa8690c6b7a4"
+      },
+      {
+        "path": "digital/module/src/ui.mjs",
+        "git_blob": "d2fb5fd895fb16825e6d526b3ff30f226684455b",
+        "bytes": 1379,
+        "sha256": "42be6ca95a2b4bf3522e7e82ce33928bb23d3eb58e179c10cfc72a543f9dc36c"
+      },
+      {
+        "path": "digital/module/src/volume-lab.mjs",
+        "git_blob": "49f880e36cc0797a093f1bdc99d38a35de644c64",
+        "bytes": 2842,
+        "sha256": "4e2177fc9a295f3aedf04dd10c6fa06505a54194b307e663b0541dbb5f06549d"
+      },
+      {
+        "path": "digital/module/src/volume-transfer.mjs",
+        "git_blob": "e4d4729b36ae64bb86762ac8764a52a19ef9ecbe",
+        "bytes": 1649,
+        "sha256": "231a4751e8abb0af6583e0c4686aaa1050a8b40b8a6b8f301f889177fb365f60"
+      },
+      {
+        "path": "digital/module/tools/build.mjs",
+        "git_blob": "80cb7aecd4b5306914fa3026d0c8711ad293489a",
+        "bytes": 2143,
+        "sha256": "48b50689b128d35a26afe565b24893a3f26f55791912cdcce05b65edb7b9c118"
+      },
+      {
+        "path": "digital/module/tools/check.mjs",
+        "git_blob": "911b7979ce12e9a3af2e5f100c4b70a8fbd74cd5",
+        "bytes": 3489,
+        "sha256": "033ee71bdb85d2199525baca004fe6ca307e6a923582f4ceb935f795aa0446ad"
+      },
+      {
+        "path": "digital/package.json",
+        "git_blob": "aa9d75bfa052ca8f875685e5bd90294a5de89ca2",
+        "bytes": 1356,
+        "sha256": "44ba91a5282f3c81395b553274ad20c11b77f24c2c1c0e60807395f26969da59"
+      },
+      {
+        "path": "digital/dist/module-frame.mjs",
+        "git_blob": "cf1fabd31fae02d8f99599ee55f1e5b2a5b9c6f9",
+        "bytes": 7592,
+        "sha256": "d3f75e7839d749465fb2050035e27056cc71771ef400887e33208135fb65c230"
+      },
+      {
+        "path": "digital/dist/module-progress-view.mjs",
+        "git_blob": "7284904c55522360b0e1221947ebdd854902eecb",
+        "bytes": 1758,
+        "sha256": "2df91f7dd80891f8f668ca4daac73a8ded728e2d5718c8f7e8039c3c0e384ba7"
+      },
+      {
+        "path": "digital/dist/module-progress.mjs",
+        "git_blob": "d8bfbaf2c6a65cbbf6ab1f8fc46808ac7360c85e",
+        "bytes": 8751,
+        "sha256": "4d465f217eb1fe26ddb85faa7d7b1f18fd6c394351d7671194df3caf5a071f5f"
+      },
+      {
+        "path": "digital/dist/module-settings.mjs",
+        "git_blob": "ed7424a4be420beb34216b6ce8c6f11c386021b8",
+        "bytes": 2035,
+        "sha256": "ba43ab7df4429a53a3551d8aaac1068941963ae449d982808cac973a72975036"
+      },
+      {
+        "path": "digital/tools/design-tokens.mjs",
+        "git_blob": "eeb97abd0d850cbb39901de344b4cbce2b677b4f",
+        "bytes": 3011,
+        "sha256": "b8adec395be670bc74570e9940dcd043f4420880269d2bb60fbe92bed8dd5984"
+      },
+      {
+        "path": "digital/vendor/module-release.json",
+        "git_blob": "b3004606aa98aba55823fe3359c2331e31ff7153",
+        "bytes": 745,
+        "sha256": "bbe43f54de97a6e06c6ec730c519d4dcd3cbdd4824a7c356823fb2d41ebd5e97"
+      },
+      {
+        "path": "digital/docs/integration-sync/README.md",
+        "git_blob": "5e5f3c953e810e4ef6d67d801e5154505f48e3d2",
+        "bytes": 5615,
+        "sha256": "c9e511715e5dae4de10d80599c208e16d998417f35d902b085690b0e0822b56f"
+      }
+    ]
+  },
+  "runtimeEvidence": {
+    "flutterVersionObserved": "3.47.9",
+    "dartVersionObserved": "3.13.7",
+    "foundationSdkPinVerified": false,
+    "androidRun": false,
+    "flutterAnalyze": false,
+    "flutterTests": false,
+    "previewApkBuild": false,
+    "nativeScreenshots": false,
+    "talkBack": false
+  }
+}

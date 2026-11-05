@@ -1,0 +1,5 @@
+Actual Android attempt, own API35 x86_64 emulator, no /dev/kvm.
+The emulator reached adb offline and segfaulted before sys.boot_completed.
+Both software graphics attempts failed before app installation.
+Learning WebView suite, screenshots, TalkBack and real gestures: NOT RUN.
+APK build, CRC and signature verification are separate successful gates.

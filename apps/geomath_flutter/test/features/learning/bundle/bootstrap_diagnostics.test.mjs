@@ -1,0 +1,71 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import vm from 'node:vm';
+import {nativeWrapper,teachingRuntime} from './runtime_fixture.mjs';
+
+test('bootstrap diagnostics preserve the exact child origin/source guard and never create readiness',()=>{
+  const h=nativeWrapper();
+  const event={type:'geomath:bootstrap-diagnostic',version:1,stage:'head',code:'none',line:0};
+  let state=h.api.diagnostics();
+  assert.equal(state.bootstrap.configured,true);
+  assert.equal(state.bootstrap.srcdocAssigned,true);
+  assert.ok(state.bootstrap.sourceCharacters>500000);
+  assert.equal(state.moduleReady,false);
+  h.receive(event,{source:{}});
+  h.receive(event,{origin:'file://untrusted'});
+  state=h.api.diagnostics();
+  assert.equal(state.bootstrap.rejectedSource,1);
+  assert.equal(state.bootstrap.rejectedOrigin,1);
+  assert.equal(state.bootstrap.childStage,'none');
+  h.receive(event);
+  h.receive({...event,stage:'error',code:'TypeError',line:4532});
+  state=h.api.diagnostics();
+  assert.equal(state.bootstrap.childStage,'head');
+  assert.equal(state.bootstrap.childErrors,1);
+  assert.equal(state.bootstrap.lastErrorCode,'TypeError');
+  assert.equal(state.bootstrap.lastErrorLine,4532);
+  h.receive({...event,stage:'error',code:'unsafe exception text',line:99});
+  h.receive({...event,stage:'error',code:'Error',line:99,message:'secret exception body'});
+  state=h.api.diagnostics();
+  assert.equal(state.bootstrap.childErrors,1);
+  assert.equal(state.moduleReady,false);
+  assert.equal(state.settingsReady,false);
+  assert.deepEqual(h.native,[],'telemetry cannot emit native commands or acknowledge readiness');
+  for(const secret of [h.config.bridgeSession,h.config.progressSession,'secret exception body','unsafe exception text'])assert.equal(JSON.stringify(state.bootstrap).includes(secret),false);
+  h.ready();
+  assert.deepEqual(h.native.map(e=>e.command),['ready'],'normal secure ready handshake is unchanged');
+});
+
+test('real exported child reports bounded bootstrap stages and error codes without error contents',()=>{
+  const {prepared}=teachingRuntime();
+  const script=[...prepared.matchAll(/<script>([\s\S]*?)<\/script>/g)][0][1];
+  assert.ok(script.includes('geomath:bootstrap-diagnostic'));
+  assert.ok(prepared.indexOf('geomath:bootstrap-diagnostic')<prepared.indexOf('window.__geodecoderModuleHost='),'diagnostic observer precedes the preference and canonical bootstraps');
+  const messages=[],windowHandlers={},documentHandlers={};
+  const window={parent:{postMessage:value=>messages.push(structuredClone(value))},addEventListener:(event,fn)=>windowHandlers[event]=fn};
+  const document={addEventListener:(event,fn)=>documentHandlers[event]=fn};
+  vm.runInNewContext(script,{window,document});
+  windowHandlers.error({error:{name:'TypeError',message:'private value',stack:'private stack'},lineno:22,message:'private exception'});
+  windowHandlers.error({error:{name:'arbitrary exception body'},lineno:2000000});
+  windowHandlers.unhandledrejection({reason:{name:'RangeError',message:'private rejection'}});
+  documentHandlers.DOMContentLoaded();windowHandlers.load();
+  assert.deepEqual(messages.map(m=>[m.stage,m.code,m.line]),[['head','none',0],['error','TypeError',22],['error','unknown',0],['rejection','RangeError',0],['dom-ready','none',0],['loaded','none',0]]);
+  assert.ok(messages.every(m=>Object.keys(m).join(',')==='type,version,stage,code,line'));
+  assert.equal(JSON.stringify(messages).includes('private'),false);
+});
+
+test('real canonical bootstrap breadcrumbs preserve ordering and cannot grant ready',()=>{
+  const runtime=teachingRuntime();
+  const observed=runtime.messages.filter(m=>m.type==='geomath:bootstrap-diagnostic').map(m=>m.stage);
+  assert.deepEqual(observed,['canonical-start','render-start','render-end','models-end','access-end','host-start','host-end']);
+  const h=nativeWrapper();
+  for(const stage of ['preferences-start','preferences-end',...observed]){
+    h.receive({type:'geomath:bootstrap-diagnostic',version:1,stage,code:'none',line:0});
+    assert.equal(h.api.diagnostics().bootstrap.childStage,stage);
+    assert.equal(h.api.diagnostics().moduleReady,false);
+    assert.equal(h.api.diagnostics().settingsReady,false);
+    assert.deepEqual(h.native,[]);
+  }
+  assert.ok(runtime.prepared.indexOf("stage:'preferences-start'")<runtime.prepared.indexOf('window.__geodecoderModuleHost='));
+  assert.ok(runtime.prepared.indexOf("stage:'preferences-end'")>runtime.prepared.indexOf('window.__geodecoderModuleHost='));
+});

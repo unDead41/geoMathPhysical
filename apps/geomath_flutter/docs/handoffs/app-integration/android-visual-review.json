@@ -1,0 +1,821 @@
+{
+  "schema_version": 2,
+  "source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+  "capture_tool_sources": [
+    "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+    "f5e02d0c9b94b7a74f44a4c47b17b00f149883b1"
+  ],
+  "normal_apk_sha256": "d2a7ab8253b3e85dca5455f556338431e350206b85f327211338928c3c5bda09",
+  "reviewed_count": 32,
+  "status": "pass_with_documented_limits",
+  "blocking_findings": [],
+  "captures": [
+    {
+      "path": "/dev/shm/geomath-integration-nov05/final-captures/320dp-ms-light-100-contrast0-37-settings.png",
+      "sha256": "a187218dba75c178c8a755dda4adcd6ea5d73f6a55d23dc5bc7ca887202cc3af",
+      "observations": [
+        "Language, theme, text-size and motion controls have readable labels and values; no visible text overlap. The frame shows a portion of the scrollable settings form. Malay light100% narrow layout wraps without visible horizontal clipping."
+      ],
+      "visual_status": "clear_with_documented_limits",
+      "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_run_id": 42082666643,
+      "artifact_url": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+      "original_kind": "retained_original",
+      "paint_receipt": {
+        "path": "/dev/shm/geomath-integration-nov05/final-captures/320dp-ms-light-100-contrast0-37-settings-paint.json",
+        "sha256": "5557cd768b974085f0889a04bd92aaac9a927f666ccd4f6299da83f1eb4ab0a6",
+        "xml_ready_painted_stable_observation": true
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/final-captures/320dp-ms-light-100-contrast0-01-home-offline.png",
+      "sha256": "094741ed5bbafa7624e85a6e32df936deaef4c38c47e65f9a1ad6be1ee2b123d",
+      "observations": [
+        "Actual Home hero, learning CTA and navigation are painted and readable; no visible overflow. Lower content may require vertical scroll. Malay light100% narrow layout wraps without visible horizontal clipping."
+      ],
+      "visual_status": "clear_with_documented_limits",
+      "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_run_id": 42082666643,
+      "artifact_url": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+      "original_kind": "retained_original",
+      "paint_receipt": {
+        "path": "/dev/shm/geomath-integration-nov05/final-captures/320dp-ms-light-100-contrast0-01-home-offline-paint.json",
+        "sha256": "78873b28b040dbc2b9471ee548ff24b85eb367dab34ccd77c0e6ffa56ff860b0",
+        "xml_ready_painted_stable_observation": true
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/final-captures/320dp-ms-light-100-contrast0-41-learning-hub.png",
+      "sha256": "a29496a7fda5b2d48912a7db9417577b7f3fd0d59efb856409db14befe0444bb",
+      "observations": [
+        "Learning heading, geometry hero and Start exploring CTA are painted and readable; no visible overflow. Lower learning content may require vertical scroll. Malay light100% narrow layout wraps without visible horizontal clipping."
+      ],
+      "visual_status": "clear_with_documented_limits",
+      "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_run_id": 42082666643,
+      "artifact_url": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+      "original_kind": "retained_original",
+      "paint_receipt": {
+        "path": "/dev/shm/geomath-integration-nov05/final-captures/320dp-ms-light-100-contrast0-41-learning-hub-paint.json",
+        "sha256": "d5bdc44fd6d24e5cc1d57fba12a4a0840ae4a9e4c1581ec40582be0720420bb2",
+        "xml_ready_painted_stable_observation": true
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/final-captures/320dp-ms-light-100-contrast0-25-explore-cube.png",
+      "sha256": "b5217d404bbcba0ab3d5e9c2c65d83c6f81dfcec63868b49d9409cfe0d141ac2",
+      "observations": [
+        "Full canonical cube is visible: yellow top, blue front and orange/shaded right face. Native solid picker is ready. The viewport shows a scrolled canvas rather than the whole module page."
+      ],
+      "visual_status": "clear_with_documented_limits",
+      "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_run_id": 42082666643,
+      "artifact_url": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+      "original_kind": "retained_original",
+      "paint_receipt": {
+        "path": "/dev/shm/geomath-integration-nov05/final-captures/320dp-ms-light-100-contrast0-25-explore-cube-paint.json",
+        "sha256": "6a21905f58f239ba04e36a47c04fb442036a0000ec6bd76097af035665e2e4b7",
+        "xml_ready_painted_stable_observation": true
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/final-captures/320dp-ms-light-100-contrast0-02-solo-setup.png",
+      "sha256": "fffed8b13984228feb9ca68ae95b2b65bcce5ff4965dc1ee3f9ec154a2c5dced",
+      "observations": [
+        "Guest Solo setup, quiz/practice choice and primary Start CTA are readable; no visible overlap. This is setup evidence, not a question/result capture. Malay light100% narrow layout wraps without visible horizontal clipping."
+      ],
+      "visual_status": "clear_with_documented_limits",
+      "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_run_id": 42082666643,
+      "artifact_url": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+      "original_kind": "retained_original",
+      "paint_receipt": {
+        "path": "/dev/shm/geomath-integration-nov05/final-captures/320dp-ms-light-100-contrast0-02-solo-setup-paint.json",
+        "sha256": "ca8ea821cdccd40531a6923327ede0b45f06e0f70d6d2d8c4adb7f7985828c58",
+        "xml_ready_painted_stable_observation": true
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/final-captures/320dp-ms-light-100-contrast0-10-duel-unconfigured.png",
+      "sha256": "49896167af2c885c2644dd880ac11325a76a18e5f4c167e9b1f58007cdb51f67",
+      "observations": [
+        "Online Duel unavailable notice states the configured capability honestly and remains readable; Back navigation is visible. Malay light100% narrow layout wraps without visible horizontal clipping."
+      ],
+      "visual_status": "clear_with_documented_limits",
+      "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_run_id": 42082666643,
+      "artifact_url": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+      "original_kind": "retained_original",
+      "paint_receipt": {
+        "path": "/dev/shm/geomath-integration-nov05/final-captures/320dp-ms-light-100-contrast0-10-duel-unconfigured-paint.json",
+        "sha256": "573cf435f01701c5b5ad41da125aec74372b48b9dfe36fa918b8f07973df7551",
+        "xml_ready_painted_stable_observation": true
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/final-captures/320dp-ms-light-100-contrast0-classes-guest.png",
+      "sha256": "9eb843394aa41b506c914d612bd03549769eb040a3d04ba8df5c679797af183c",
+      "observations": [
+        "Guest class connection notice and selected Classes navigation are readable; disabled refresh does not imply connected data. Malay light100% narrow layout wraps without visible horizontal clipping."
+      ],
+      "visual_status": "clear_with_documented_limits",
+      "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_run_id": 42082666643,
+      "artifact_url": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+      "original_kind": "retained_original",
+      "paint_receipt": {
+        "path": "/dev/shm/geomath-integration-nov05/final-captures/320dp-ms-light-100-contrast0-classes-guest-paint.json",
+        "sha256": "931f6770997f30317d47ecce3a6006e6c0f6463c9ce65e5e6f17c5794afa9d2e",
+        "xml_ready_painted_stable_observation": true
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/final-captures/320dp-ms-light-100-contrast0-profile-guest.png",
+      "sha256": "827e1f9503573054097480919406ad53907ee3cf77704586263742f3434302db",
+      "observations": [
+        "Guest/local activity and unavailable online-profile notices are readable with Profile navigation selected. Malay light100% narrow layout wraps without visible horizontal clipping."
+      ],
+      "visual_status": "clear_with_documented_limits",
+      "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_run_id": 42082666643,
+      "artifact_url": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+      "original_kind": "retained_original",
+      "paint_receipt": {
+        "path": "/dev/shm/geomath-integration-nov05/final-captures/320dp-ms-light-100-contrast0-profile-guest-paint.json",
+        "sha256": "49a84b02b4596b76400cf2e8f43be5a28a168288e8d965eaa486d864b89c3b78",
+        "xml_ready_painted_stable_observation": true
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/final-captures/390dp-en-dark-125-contrast0-37-settings.png",
+      "sha256": "1e52bb478c308784d36eea289fe212c967238991fa3617263ee74cab145fdded",
+      "observations": [
+        "Language, theme, text-size and motion controls have readable labels and values; no visible text overlap. The frame shows a portion of the scrollable settings form. English dark125% layout remains readable with clearly separated controls and notices."
+      ],
+      "visual_status": "clear_with_documented_limits",
+      "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_run_id": 42082666643,
+      "artifact_url": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+      "original_kind": "retained_original",
+      "paint_receipt": {
+        "path": "/dev/shm/geomath-integration-nov05/final-captures/390dp-en-dark-125-contrast0-37-settings-paint.json",
+        "sha256": "981757b71196cea9dcab884bd6e481562ddd288a993f5e40f063c13daa170fe7",
+        "xml_ready_painted_stable_observation": true
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/final-captures/390dp-en-dark-125-contrast0-01-home-offline.png",
+      "sha256": "b46b44e8f55490f74cf356ff9f0bcdd37d32c65612c6f7b2dc6632f9145e273a",
+      "observations": [
+        "Actual Home hero, learning CTA and navigation are painted and readable; no visible overflow. Lower content may require vertical scroll. English dark125% layout remains readable with clearly separated controls and notices."
+      ],
+      "visual_status": "clear_with_documented_limits",
+      "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_run_id": 42082666643,
+      "artifact_url": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+      "original_kind": "retained_original",
+      "paint_receipt": {
+        "path": "/dev/shm/geomath-integration-nov05/final-captures/390dp-en-dark-125-contrast0-01-home-offline-paint.json",
+        "sha256": "311cbf441877406cf76565e1f99d23fe913a829d92967b1b8481e3e3f3471a3e",
+        "xml_ready_painted_stable_observation": true
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/final-captures/390dp-en-dark-125-contrast0-41-learning-hub.png",
+      "sha256": "a34aaf98d990dca4081ee13304720847c706cc853441056f53d68e61208084a4",
+      "observations": [
+        "Learning heading, geometry hero and Start exploring CTA are painted and readable; no visible overflow. Lower learning content may require vertical scroll. English dark125% layout remains readable with clearly separated controls and notices."
+      ],
+      "visual_status": "clear_with_documented_limits",
+      "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_run_id": 42082666643,
+      "artifact_url": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+      "original_kind": "retained_original",
+      "paint_receipt": {
+        "path": "/dev/shm/geomath-integration-nov05/final-captures/390dp-en-dark-125-contrast0-41-learning-hub-paint.json",
+        "sha256": "94a9c8642b502b95e39e4abf37fa0668c3286a30eafa2533650be6070651b3e4",
+        "xml_ready_painted_stable_observation": true
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/final-captures/390dp-en-dark-125-contrast0-25-explore-cube.png",
+      "sha256": "bbbe344082a6b5edc0911a0c3f44fe6a67618a9898e7fd11553634a5b7329ba7",
+      "observations": [
+        "Full canonical cube is now visible: yellow top, blue front and orange right face, with all visible cube edges contained above bottom navigation. Native Cube/Kubus picker appears ready; axis labels and rotation/zoom instructions are readable. The current module scroll position prioritizes the canvas; other controls remain outside this captured scroll position."
+      ],
+      "visual_status": "clear_with_documented_limits",
+      "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_tool_source_commit": "f5e02d0c9b94b7a74f44a4c47b17b00f149883b1",
+      "capture_run_id": 42089442055,
+      "artifact_url": "https://github.com/unDead41/geodecoder/actions/runs/42089442055/artifacts/13445750722",
+      "original_kind": "corrected_original",
+      "paint_receipt": {
+        "path": "/dev/shm/geomath-integration-nov05/final-captures/390dp-en-dark-125-contrast0-25-explore-cube-paint.json",
+        "sha256": "1a9e779ab4473d4ec6df5638d391c9e37b58864874cd8d87a6f0196790a0bc74",
+        "xml_ready_painted_stable_observation": true
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/final-captures/390dp-en-dark-125-contrast0-02-solo-setup.png",
+      "sha256": "0bad981f767c3e02d9f452ada5783d4019fe0c1dd0e7b31ac6828045bc75fe44",
+      "observations": [
+        "Guest Solo setup, quiz/practice choice and primary Start CTA are readable; no visible overlap. This is setup evidence, not a question/result capture. English dark125% layout remains readable with clearly separated controls and notices."
+      ],
+      "visual_status": "clear_with_documented_limits",
+      "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_run_id": 42082666643,
+      "artifact_url": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+      "original_kind": "retained_original",
+      "paint_receipt": {
+        "path": "/dev/shm/geomath-integration-nov05/final-captures/390dp-en-dark-125-contrast0-02-solo-setup-paint.json",
+        "sha256": "9dd2963530866331978317d9e0a7f8ce3c689d0dcfcb8466776fb3c244f7c78e",
+        "xml_ready_painted_stable_observation": true
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/final-captures/390dp-en-dark-125-contrast0-10-duel-unconfigured.png",
+      "sha256": "9fc7b804d7d966e4509a4c7a49e3b2dd4f2d7a2966e710ee3e8301d82cf56346",
+      "observations": [
+        "Online Duel unavailable notice states the configured capability honestly and remains readable; Back navigation is visible. English dark125% layout remains readable with clearly separated controls and notices."
+      ],
+      "visual_status": "clear_with_documented_limits",
+      "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_run_id": 42082666643,
+      "artifact_url": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+      "original_kind": "retained_original",
+      "paint_receipt": {
+        "path": "/dev/shm/geomath-integration-nov05/final-captures/390dp-en-dark-125-contrast0-10-duel-unconfigured-paint.json",
+        "sha256": "5045d3e5413b5cb7873642727dd816723f03d4810b1d051110075d3638c38a42",
+        "xml_ready_painted_stable_observation": true
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/final-captures/390dp-en-dark-125-contrast0-classes-guest.png",
+      "sha256": "80b4bb0b6e9aad0eb19d59f178578fb28dc638d1fdbc779636c8503e73b49098",
+      "observations": [
+        "Guest class connection notice and selected Classes navigation are readable; disabled refresh does not imply connected data. English dark125% layout remains readable with clearly separated controls and notices."
+      ],
+      "visual_status": "clear_with_documented_limits",
+      "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_run_id": 42082666643,
+      "artifact_url": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+      "original_kind": "retained_original",
+      "paint_receipt": {
+        "path": "/dev/shm/geomath-integration-nov05/final-captures/390dp-en-dark-125-contrast0-classes-guest-paint.json",
+        "sha256": "acd5147a20c2e07d4da4c9e0005e7b4ba424f016cad1667eda8b967d51f169ab",
+        "xml_ready_painted_stable_observation": true
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/final-captures/390dp-en-dark-125-contrast0-profile-guest.png",
+      "sha256": "3450182491afab80e349c041cd565ac14caaafb7da1dcaab89221c74e2c5e9d1",
+      "observations": [
+        "Guest/local activity and unavailable online-profile notices are readable with Profile navigation selected. English dark125% layout remains readable with clearly separated controls and notices."
+      ],
+      "visual_status": "clear_with_documented_limits",
+      "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_run_id": 42082666643,
+      "artifact_url": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+      "original_kind": "retained_original",
+      "paint_receipt": {
+        "path": "/dev/shm/geomath-integration-nov05/final-captures/390dp-en-dark-125-contrast0-profile-guest-paint.json",
+        "sha256": "18ac3ceee0a5d6dce1610d93690d540f8ad5f91885dbfa8be817a04541efc797",
+        "xml_ready_painted_stable_observation": true
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/final-captures/430dp-ms-dark-150-contrast1-37-settings.png",
+      "sha256": "ce4d1cccea6163926c542d0c9f3849e935d5e4647574d9dc36720ba3f3c50940",
+      "observations": [
+        "Language, theme, text-size and motion controls have readable labels and values; no visible text overlap. The frame shows a portion of the scrollable settings form. Malay dark150% high-contrast layout wraps labels without visible overlap; longer pages remain scrollable."
+      ],
+      "visual_status": "clear_with_documented_limits",
+      "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_run_id": 42082666643,
+      "artifact_url": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+      "original_kind": "retained_original",
+      "paint_receipt": {
+        "path": "/dev/shm/geomath-integration-nov05/final-captures/430dp-ms-dark-150-contrast1-37-settings-paint.json",
+        "sha256": "48f7887c62483106e6740c02fb5cffbf9ddf934d76d56035644160c78a38cb4c",
+        "xml_ready_painted_stable_observation": true
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/final-captures/430dp-ms-dark-150-contrast1-01-home-offline.png",
+      "sha256": "d75d400c57be295fa45faf9dcac2d3c200b66c507478e0b36f0120c928bfd0d6",
+      "observations": [
+        "Actual Home hero, learning CTA and navigation are painted and readable; no visible overflow. Lower content may require vertical scroll. Malay dark150% high-contrast layout wraps labels without visible overlap; longer pages remain scrollable."
+      ],
+      "visual_status": "clear_with_documented_limits",
+      "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_run_id": 42082666643,
+      "artifact_url": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+      "original_kind": "retained_original",
+      "paint_receipt": {
+        "path": "/dev/shm/geomath-integration-nov05/final-captures/430dp-ms-dark-150-contrast1-01-home-offline-paint.json",
+        "sha256": "370b0490f64202e861dee5a2e147938ee3b40af082fa8134d28940edba72efc1",
+        "xml_ready_painted_stable_observation": true
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/final-captures/430dp-ms-dark-150-contrast1-41-learning-hub.png",
+      "sha256": "4c162ce0c48423bb2348bc34b9a3f04e453de67a073d7de1738c3c205f2b374b",
+      "observations": [
+        "Learning heading, geometry hero and Start exploring CTA are painted and readable; no visible overflow. Lower learning content may require vertical scroll. Malay dark150% high-contrast layout wraps labels without visible overlap; longer pages remain scrollable."
+      ],
+      "visual_status": "clear_with_documented_limits",
+      "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_run_id": 42082666643,
+      "artifact_url": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+      "original_kind": "retained_original",
+      "paint_receipt": {
+        "path": "/dev/shm/geomath-integration-nov05/final-captures/430dp-ms-dark-150-contrast1-41-learning-hub-paint.json",
+        "sha256": "7fbfdd4c6c0dc84bfe3276b5b56a91478a8e3a57a6ef7cac5aa8f3e9b938e76c",
+        "xml_ready_painted_stable_observation": true
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/final-captures/430dp-ms-dark-150-contrast1-25-explore-cube.png",
+      "sha256": "0cba761eab0f7e3869914d070f99d3bb39f8774a0c083c9ec20f5db3f68f1caa",
+      "observations": [
+        "Full canonical cube is now visible: yellow top, blue front and orange right face, with all visible cube edges contained above bottom navigation. Native Cube/Kubus picker appears ready; axis labels and rotation/zoom instructions are readable. The current module scroll position prioritizes the canvas; other controls remain outside this captured scroll position."
+      ],
+      "visual_status": "clear_with_documented_limits",
+      "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_tool_source_commit": "f5e02d0c9b94b7a74f44a4c47b17b00f149883b1",
+      "capture_run_id": 42089442055,
+      "artifact_url": "https://github.com/unDead41/geodecoder/actions/runs/42089442055/artifacts/13445750722",
+      "original_kind": "corrected_original",
+      "paint_receipt": {
+        "path": "/dev/shm/geomath-integration-nov05/final-captures/430dp-ms-dark-150-contrast1-25-explore-cube-paint.json",
+        "sha256": "562d34b2afebc0e38e01ddd6c7b0b57a64b08e08479ae7234534ec0e3a3d2478",
+        "xml_ready_painted_stable_observation": true
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/final-captures/430dp-ms-dark-150-contrast1-02-solo-setup.png",
+      "sha256": "7e15e684b4b441939391df41a837d20b49eeabea5188ab99be73b2e79ea4d37e",
+      "observations": [
+        "Guest Solo setup, quiz/practice choice and primary Start CTA are readable; no visible overlap. This is setup evidence, not a question/result capture. Malay dark150% high-contrast layout wraps labels without visible overlap; longer pages remain scrollable."
+      ],
+      "visual_status": "clear_with_documented_limits",
+      "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_run_id": 42082666643,
+      "artifact_url": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+      "original_kind": "retained_original",
+      "paint_receipt": {
+        "path": "/dev/shm/geomath-integration-nov05/final-captures/430dp-ms-dark-150-contrast1-02-solo-setup-paint.json",
+        "sha256": "9528a7029ab638412b7e3f4cabea2437bee58050a5c1bc83e307045ac7464f9b",
+        "xml_ready_painted_stable_observation": true
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/final-captures/430dp-ms-dark-150-contrast1-10-duel-unconfigured.png",
+      "sha256": "e47042f23660b7e5eed62b26dab0ed8d6104e1d1adb45225f11f2f956f2afab9",
+      "observations": [
+        "Online Duel unavailable notice states the configured capability honestly and remains readable; Back navigation is visible. Malay dark150% high-contrast layout wraps labels without visible overlap; longer pages remain scrollable."
+      ],
+      "visual_status": "clear_with_documented_limits",
+      "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_run_id": 42082666643,
+      "artifact_url": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+      "original_kind": "retained_original",
+      "paint_receipt": {
+        "path": "/dev/shm/geomath-integration-nov05/final-captures/430dp-ms-dark-150-contrast1-10-duel-unconfigured-paint.json",
+        "sha256": "ca1b8826dccea6ec84394b276de5b3200af80d151efdc91beed0d0de5521303f",
+        "xml_ready_painted_stable_observation": true
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/final-captures/430dp-ms-dark-150-contrast1-classes-guest.png",
+      "sha256": "65576532100ca3d87ebe1e17be2316d6e323899cd7bd918a0e52d34e9adcce5b",
+      "observations": [
+        "Guest class connection notice and selected Classes navigation are readable; disabled refresh does not imply connected data. Malay dark150% high-contrast layout wraps labels without visible overlap; longer pages remain scrollable."
+      ],
+      "visual_status": "clear_with_documented_limits",
+      "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_run_id": 42082666643,
+      "artifact_url": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+      "original_kind": "retained_original",
+      "paint_receipt": {
+        "path": "/dev/shm/geomath-integration-nov05/final-captures/430dp-ms-dark-150-contrast1-classes-guest-paint.json",
+        "sha256": "55c0d74e8fe75f887323e2d9ecd6012de238c089ad880215748e54032a0e0f39",
+        "xml_ready_painted_stable_observation": true
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/final-captures/430dp-ms-dark-150-contrast1-profile-guest.png",
+      "sha256": "d4070741212d92723028155f9f32f5eb9ecaf6996267b15bd2452412cb8e0ae8",
+      "observations": [
+        "Guest/local activity and unavailable online-profile notices are readable with Profile navigation selected. Malay dark150% high-contrast layout wraps labels without visible overlap; longer pages remain scrollable."
+      ],
+      "visual_status": "clear_with_documented_limits",
+      "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_run_id": 42082666643,
+      "artifact_url": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+      "original_kind": "retained_original",
+      "paint_receipt": {
+        "path": "/dev/shm/geomath-integration-nov05/final-captures/430dp-ms-dark-150-contrast1-profile-guest-paint.json",
+        "sha256": "ab93306cafb15968fbfa411cc9a618b424a902c4b157ea5c04d158ce161a0dfc",
+        "xml_ready_painted_stable_observation": true
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/final-captures/768dp-en-light-150-contrast1-37-settings.png",
+      "sha256": "47adbac75c4d82a4b386ac7bc187d4f3972725a8db144a2379a9e239a73bc680",
+      "observations": [
+        "Language, theme, text-size and motion controls have readable labels and values; no visible text overlap. The frame shows a portion of the scrollable settings form. English light150% high-contrast tablet layout uses available width; labels, notices and navigation remain readable."
+      ],
+      "visual_status": "clear_with_documented_limits",
+      "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_run_id": 42082666643,
+      "artifact_url": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+      "original_kind": "retained_original",
+      "paint_receipt": {
+        "path": "/dev/shm/geomath-integration-nov05/final-captures/768dp-en-light-150-contrast1-37-settings-paint.json",
+        "sha256": "8b1b79628385fb1bdec731b2e529ae52226adf27f8cc18bd719cbef061301294",
+        "xml_ready_painted_stable_observation": true
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/final-captures/768dp-en-light-150-contrast1-01-home-offline.png",
+      "sha256": "2e9f626d84756f0be17abd82a08d50d3502bd9fb0986d7f12df09122b2a15d0f",
+      "observations": [
+        "Actual Home hero, learning CTA and navigation are painted and readable; no visible overflow. Lower content may require vertical scroll. English light150% high-contrast tablet layout uses available width; labels, notices and navigation remain readable."
+      ],
+      "visual_status": "clear_with_documented_limits",
+      "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_run_id": 42082666643,
+      "artifact_url": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+      "original_kind": "retained_original",
+      "paint_receipt": {
+        "path": "/dev/shm/geomath-integration-nov05/final-captures/768dp-en-light-150-contrast1-01-home-offline-paint.json",
+        "sha256": "510697b8dbaa77b132b507d42a3835c386b1dea12ec0de1666961e26cd90037b",
+        "xml_ready_painted_stable_observation": true
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/final-captures/768dp-en-light-150-contrast1-41-learning-hub.png",
+      "sha256": "038ddaf21825cc252a0ae7672f80e1a8e2b0e40b2a6b33deaf36462c6fb54eec",
+      "observations": [
+        "Learning heading, geometry hero and Start exploring CTA are painted and readable; no visible overflow. Lower learning content may require vertical scroll. English light150% high-contrast tablet layout uses available width; labels, notices and navigation remain readable."
+      ],
+      "visual_status": "clear_with_documented_limits",
+      "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_run_id": 42082666643,
+      "artifact_url": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+      "original_kind": "retained_original",
+      "paint_receipt": {
+        "path": "/dev/shm/geomath-integration-nov05/final-captures/768dp-en-light-150-contrast1-41-learning-hub-paint.json",
+        "sha256": "28a18816c7992b0ca4d2d3f0a0329ec20d1c5bafd2d85af35176a906ac426b33",
+        "xml_ready_painted_stable_observation": true
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/final-captures/768dp-en-light-150-contrast1-25-explore-cube.png",
+      "sha256": "6ec2e37ee6031dce5c5f35d6de1e9d54a3c862c191a26335a26959a52e6f69b3",
+      "observations": [
+        "Full canonical cube is visible in the right WebView column, alongside the ready native controls on the left. Cube, zoom and unfold/join controls have space in this tablet view."
+      ],
+      "visual_status": "clear_with_documented_limits",
+      "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_run_id": 42082666643,
+      "artifact_url": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+      "original_kind": "retained_original",
+      "paint_receipt": {
+        "path": "/dev/shm/geomath-integration-nov05/final-captures/768dp-en-light-150-contrast1-25-explore-cube-paint.json",
+        "sha256": "2f9e0b9620ce91c165b5e91fff9893e962b8d8b0c49e5145bd4ec08fc7a5ce60",
+        "xml_ready_painted_stable_observation": true
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/final-captures/768dp-en-light-150-contrast1-02-solo-setup.png",
+      "sha256": "7b9cb8b2fd12bc6a8bef4e18694e29b83dba597e32abb6429b191829deb06e52",
+      "observations": [
+        "Guest Solo setup, quiz/practice choice and primary Start CTA are readable; no visible overlap. This is setup evidence, not a question/result capture. English light150% high-contrast tablet layout uses available width; labels, notices and navigation remain readable."
+      ],
+      "visual_status": "clear_with_documented_limits",
+      "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_run_id": 42082666643,
+      "artifact_url": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+      "original_kind": "retained_original",
+      "paint_receipt": {
+        "path": "/dev/shm/geomath-integration-nov05/final-captures/768dp-en-light-150-contrast1-02-solo-setup-paint.json",
+        "sha256": "9dfb2e54206231ff1557b01bd3af0184f319b4e71b9be6d191918b49d45be16b",
+        "xml_ready_painted_stable_observation": true
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/final-captures/768dp-en-light-150-contrast1-10-duel-unconfigured.png",
+      "sha256": "d00a0e37ac6f4fb3f1186373d41bc63361cf4f7395b857830fc35918228a80c9",
+      "observations": [
+        "Online Duel unavailable notice states the configured capability honestly and remains readable; Back navigation is visible. English light150% high-contrast tablet layout uses available width; labels, notices and navigation remain readable."
+      ],
+      "visual_status": "clear_with_documented_limits",
+      "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_run_id": 42082666643,
+      "artifact_url": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+      "original_kind": "retained_original",
+      "paint_receipt": {
+        "path": "/dev/shm/geomath-integration-nov05/final-captures/768dp-en-light-150-contrast1-10-duel-unconfigured-paint.json",
+        "sha256": "f365193af79ab4a269bba7ce9df6ad6979bf1da21f52a3a05aca1a781208b044",
+        "xml_ready_painted_stable_observation": true
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/final-captures/768dp-en-light-150-contrast1-classes-guest.png",
+      "sha256": "1f2c7393b9c5399feb209d1b1c2992584f12ada5655762f897d3db6cff8a8481",
+      "observations": [
+        "Guest class connection notice and selected Classes navigation are readable; disabled refresh does not imply connected data. English light150% high-contrast tablet layout uses available width; labels, notices and navigation remain readable."
+      ],
+      "visual_status": "clear_with_documented_limits",
+      "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_run_id": 42082666643,
+      "artifact_url": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+      "original_kind": "retained_original",
+      "paint_receipt": {
+        "path": "/dev/shm/geomath-integration-nov05/final-captures/768dp-en-light-150-contrast1-classes-guest-paint.json",
+        "sha256": "2a046b8f4bf3c9c9f041b585a57e7a194d532e0fd7835156c3f3ce6b66552e62",
+        "xml_ready_painted_stable_observation": true
+      }
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/final-captures/768dp-en-light-150-contrast1-profile-guest.png",
+      "sha256": "845437854f62e96c650f687ed8b57b442ac097903de4c690ace6f21abf51ded4",
+      "observations": [
+        "Guest/local activity and unavailable online-profile notices are readable with Profile navigation selected. English light150% high-contrast tablet layout uses available width; labels, notices and navigation remain readable."
+      ],
+      "visual_status": "clear_with_documented_limits",
+      "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+      "capture_run_id": 42082666643,
+      "artifact_url": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+      "original_kind": "retained_original",
+      "paint_receipt": {
+        "path": "/dev/shm/geomath-integration-nov05/final-captures/768dp-en-light-150-contrast1-profile-guest-paint.json",
+        "sha256": "f42a9d7741fe379e8eb2ae0d61ff7dc2ba63f1f7537915d12067cb305c5c47d8",
+        "xml_ready_painted_stable_observation": true
+      }
+    }
+  ],
+  "profiles": [
+    {
+      "width_dp": 320,
+      "height_dp": 720,
+      "language": "ms",
+      "theme": "light",
+      "text_percent": 100,
+      "high_contrast": false,
+      "reduced_motion": true
+    },
+    {
+      "width_dp": 390,
+      "height_dp": 844,
+      "language": "en",
+      "theme": "dark",
+      "text_percent": 125,
+      "high_contrast": false,
+      "reduced_motion": true
+    },
+    {
+      "width_dp": 430,
+      "height_dp": 932,
+      "language": "ms",
+      "theme": "dark",
+      "text_percent": 150,
+      "high_contrast": true,
+      "reduced_motion": true
+    },
+    {
+      "width_dp": 768,
+      "height_dp": 1024,
+      "language": "en",
+      "theme": "light",
+      "text_percent": 150,
+      "high_contrast": true,
+      "reduced_motion": true
+    }
+  ],
+  "retained_original_count": 30,
+  "corrected_original_count": 2,
+  "original_png_bytes_preserved": true,
+  "verification": {
+    "all32_hashes_match_manifest_and_raw_originals": true,
+    "all32_have_successful_paint_receipt": true,
+    "manifest_path": "/dev/shm/geomath-integration-nov05/final-captures/production-captures.json",
+    "manifest_sha256": "0027e71b644e0a59a0913135ae020b6a3102233e20cf3d32fb2e91dea03c200f",
+    "provenance_path": "/dev/shm/geomath-integration-nov05/final-captures/capture-provenance.json",
+    "provenance_sha256": "33a81b6013b25be55bd8decfe67a5b6a61fa21e5c89a4536aa656c2c11038bc6"
+  },
+  "corrected_cube_xml_evidence": [
+    {
+      "path": "/dev/shm/geomath-integration-nov05/f5e-evidence/390dp-en-dark-125-contrast0-028-hierarchy.xml",
+      "sha256": "d60753275a57b6fc8da59ba8c46244aa9de0562ba210e734feff972b3c4e2616",
+      "native_picker_state": "ready",
+      "native_picker_enabled_and_clickable": true,
+      "final_cube_image_description": true,
+      "fully_visible": true,
+      "webview_bounds": [
+        0,
+        665,
+        780,
+        1432
+      ],
+      "canvas_bounds": [
+        44,
+        697,
+        716,
+        1243
+      ]
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/f5e-evidence/390dp-en-dark-125-contrast0-029-hierarchy.xml",
+      "sha256": "d60753275a57b6fc8da59ba8c46244aa9de0562ba210e734feff972b3c4e2616",
+      "native_picker_state": "ready",
+      "native_picker_enabled_and_clickable": true,
+      "final_cube_image_description": true,
+      "fully_visible": true,
+      "webview_bounds": [
+        0,
+        665,
+        780,
+        1432
+      ],
+      "canvas_bounds": [
+        44,
+        697,
+        716,
+        1243
+      ]
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/f5e-evidence/390dp-en-dark-125-contrast0-030-hierarchy.xml",
+      "sha256": "d60753275a57b6fc8da59ba8c46244aa9de0562ba210e734feff972b3c4e2616",
+      "native_picker_state": "ready",
+      "native_picker_enabled_and_clickable": true,
+      "final_cube_image_description": true,
+      "fully_visible": true,
+      "webview_bounds": [
+        0,
+        665,
+        780,
+        1432
+      ],
+      "canvas_bounds": [
+        44,
+        697,
+        716,
+        1243
+      ]
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/f5e-evidence/390dp-en-dark-125-contrast0-031-hierarchy.xml",
+      "sha256": "d60753275a57b6fc8da59ba8c46244aa9de0562ba210e734feff972b3c4e2616",
+      "native_picker_state": "ready",
+      "native_picker_enabled_and_clickable": true,
+      "final_cube_image_description": true,
+      "fully_visible": true,
+      "webview_bounds": [
+        0,
+        665,
+        780,
+        1432
+      ],
+      "canvas_bounds": [
+        44,
+        697,
+        716,
+        1243
+      ]
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/f5e-evidence/430dp-ms-dark-150-contrast1-055-hierarchy.xml",
+      "sha256": "0b31034aad0045f2636a865b704d445109df8253b2110f34bc5ea680aac2c2d6",
+      "native_picker_state": "ready",
+      "native_picker_enabled_and_clickable": true,
+      "final_cube_image_description": true,
+      "fully_visible": true,
+      "webview_bounds": [
+        0,
+        732,
+        860,
+        1608
+      ],
+      "canvas_bounds": [
+        44,
+        764,
+        796,
+        1310
+      ]
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/f5e-evidence/430dp-ms-dark-150-contrast1-056-hierarchy.xml",
+      "sha256": "0b31034aad0045f2636a865b704d445109df8253b2110f34bc5ea680aac2c2d6",
+      "native_picker_state": "ready",
+      "native_picker_enabled_and_clickable": true,
+      "final_cube_image_description": true,
+      "fully_visible": true,
+      "webview_bounds": [
+        0,
+        732,
+        860,
+        1608
+      ],
+      "canvas_bounds": [
+        44,
+        764,
+        796,
+        1310
+      ]
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/f5e-evidence/430dp-ms-dark-150-contrast1-057-hierarchy.xml",
+      "sha256": "0b31034aad0045f2636a865b704d445109df8253b2110f34bc5ea680aac2c2d6",
+      "native_picker_state": "ready",
+      "native_picker_enabled_and_clickable": true,
+      "final_cube_image_description": true,
+      "fully_visible": true,
+      "webview_bounds": [
+        0,
+        732,
+        860,
+        1608
+      ],
+      "canvas_bounds": [
+        44,
+        764,
+        796,
+        1310
+      ]
+    },
+    {
+      "path": "/dev/shm/geomath-integration-nov05/f5e-evidence/430dp-ms-dark-150-contrast1-058-hierarchy.xml",
+      "sha256": "0b31034aad0045f2636a865b704d445109df8253b2110f34bc5ea680aac2c2d6",
+      "native_picker_state": "ready",
+      "native_picker_enabled_and_clickable": true,
+      "final_cube_image_description": true,
+      "fully_visible": true,
+      "webview_bounds": [
+        0,
+        732,
+        860,
+        1608
+      ],
+      "canvas_bounds": [
+        44,
+        764,
+        796,
+        1310
+      ]
+    }
+  ],
+  "limitations": [
+    "Only eight representative states across four profiles are reviewed; this does not cover all48screens/16exceptions, all language/theme/font combinations, or every scroll position.",
+    "This visual review is of original normal-production Android screencaps. It does not promote prior host renders, reference mockups or synthetic fixtures to Android acceptance.",
+    "Still images do not establish manual TalkBack order, keyboard focus, target size measurements, gesture behavior, animation quality, physical-device compatibility or accessibility certification.",
+    "Guest/unconfigured Classes, Profile and Duel states do not prove signed-in cloud, teacher/student data, hosted services or a two-client Duel session.",
+    "First-use Solo guide gate and optional concept extras remain the previously documented partial UX deviations; setup images do not resolve them.",
+    "XML readiness and paint stability are preconditions, not proof that a canvas actually paints correct geometry; original raster review remains required.",
+    "The native learning-controls panel and WebView have separate scroll positions. Full canvas evidence does not demonstrate every learning control simultaneously visible or all touch interactions.",
+    "Thirty original images are retained from CI42082666643; only the two rejected cube images were recaptured in CI42089442055 using the exact same normal APK. This is a combined evidence set, not a single uninterrupted32-screen capture run.",
+    "The original377capture-set report remains blocked in history. This new review resolves only its two capture-composition/readiness findings; it does not revise earlier failed startup timelines or infer a broader root-cause fix."
+  ],
+  "history": {
+    "original377review_status": "blocked",
+    "original377review_path": "/dev/shm/geomath-integration-nov05/worker-2-capture/reviews/377-visual-review.json",
+    "original377review_sha256": "a4a588b6267e2a75885fd8b53483aa0509fb411b65b0171b7bb6869caea0b510",
+    "superseded_findings": [
+      "cube-390-not-visible",
+      "cube-430-clipped"
+    ]
+  }
+}

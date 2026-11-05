@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "fixture_source_commit": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+  "fixture_ci_run": 42066617435,
+  "xml": "320dp-ms-light-100-contrast0-045-hierarchy.xml",
+  "xml_sha256": "d18fe2f53368ef1e9e4a584f0edd815ac09b765d08d2e2f1879abaae183892c8",
+  "gesture": {
+    "x": 22,
+    "start_y": 1123,
+    "end_y": 632,
+    "webview_bounds": [
+      0,
+      571,
+      640,
+      1184
+    ],
+    "canvas_bounds": [
+      44,
+      1051,
+      576,
+      1185
+    ]
+  },
+  "minimum_canvas_visible_height_required": 200,
+  "observed_canvas_visible_height": 134,
+  "result": "PASS: both endpoints inside current WebView and x outside canonical canvas",
+  "scope": "Coordinate-selection regression only; does not claim this gesture was executed or the model became fully visible on Android."
+}

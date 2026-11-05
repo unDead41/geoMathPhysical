@@ -73,6 +73,11 @@ FeatureContribution classroomFeature() {
           if (controller.mutating || controller.management != null) {
             return BackDecision.stay;
           }
+          // A destination reset also visits covered pages. An idle dashboard
+          // has no draft/attempt to protect, including below the sign-in page.
+          if (controller.attempt == null && controller.selectedRoomId == null) {
+            return BackDecision.allow;
+          }
           final route = AppRouteScope.maybeOf(context);
           if (route != null &&
               (route.entry.instance != request.route.instance ||

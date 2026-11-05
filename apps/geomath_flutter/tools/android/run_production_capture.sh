@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+set -euo pipefail
+device=${GEOMATH_ANDROID_DEVICE:-emulator-5554}
+evidence_dir=docs/handoffs/app-integration/evidence/android
+mkdir -p "$evidence_dir"
+normal_apk=${GEOMATH_NORMAL_APK:?Set the hash-verified normal APK path}
+git rev-parse HEAD > "$evidence_dir/source-commit.txt"
+git status --porcelain > "$evidence_dir/source-status.txt"
+sha256sum "$normal_apk" > "$evidence_dir/normal-apk.sha256"
+final_state() {
+  status=$?
+  trap - EXIT
+  if [[ "$status" != 0 ]]; then
+    timeout 45s python3 tools/android/inspect_learning_failure.py --device "$device" --output "$evidence_dir/learning-failure-fields.json" || true
+  fi
+  # Raw logcat can contain private Dart VM/DevTools endpoints. Keep it in a
+  # pipe only; persist fixed bootstrap stages and classified CSP warnings.
+  timeout 12s adb -s "$device" logcat -d -s flutter:I chromium:I AndroidRuntime:E '*:S' 2>/dev/null | \
+    python3 tools/android/sanitize_android_log.py --output "$evidence_dir/production-diagnostics.json" || true
+  timeout 12s adb -s "$device" shell dumpsys webviewupdate > "$evidence_dir/webview-final.txt" || true
+  timeout 12s adb -s "$device" exec-out screencap -p > "$evidence_dir/last-screen.png" || true
+  printf '%s\n' "$status" > "$evidence_dir/run.exit"
+  exit "$status"
+}
+trap final_state EXIT
+adb -s "$device" shell settings put system screen_off_timeout 1800000
+adb -s "$device" shell svc power stayon true
+adb -s "$device" shell input keyevent KEYCODE_WAKEUP
+adb -s "$device" shell wm dismiss-keyguard
+adb -s "$device" shell cmd connectivity airplane-mode enable
+adb -s "$device" shell svc wifi disable
+adb -s "$device" shell svc data disable
+test "$(adb -s "$device" shell settings get global airplane_mode_on | tr -d '\r')" = 1
+adb -s "$device" shell input keyevent KEYCODE_HOME
+python3 tools/android/verify_device_ready.py --device "$device" --output "$evidence_dir"
+adb -s "$device" install -r "$normal_apk"
+if [[ "${GEOMATH_CAPTURE_CUBE_ONLY:-0}" == 1 ]]; then
+  python3 tools/android/capture_integration.py --device "$device" --output "$evidence_dir" --cube-only --widths 390 430
+else
+  python3 tools/android/capture_integration.py --device "$device" --output "$evidence_dir"
+fi
+python3 - "$evidence_dir" <<'PY'
+import json,pathlib,sys
+p=pathlib.Path(sys.argv[1]);c=json.loads((p/'production-captures.json').read_text())
+expected=2 if c.get('capture_scope')=='cube-only' else 32
+assert len(c['captures'])==expected
+(p/'production-only-result.json').write_text(json.dumps({
+ 'schema_version':1,'source_commit':(p/'source-commit.txt').read_text().strip(),
+ 'scope':'Normal production APK installed and launched through ADB; no rebuild or app/test retry',
+ 'full_publish_gate':False,'functional_tests_run_here':False,'production_capture_exit_code':0,
+ 'captures':expected,'requires_combination_with_prior_valid_captures':expected!=32,'offline':True,'normal_apk_sha256':(p/'normal-apk.sha256').read_text().split()[0]
+},indent=2)+'\n')
+PY

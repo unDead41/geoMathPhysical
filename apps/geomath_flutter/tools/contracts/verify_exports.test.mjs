@@ -67,7 +67,7 @@ test('the actual adapted teaching runtime preserves mesh coordinates and physica
   const adapterEnd=runtime.indexOf('const el=id=>document.getElementById(id);');
   assert.ok(cut>0&&adapterStart>cut&&adapterEnd>adapterStart);
   const probe=runtime.slice(0,cut)+runtime.slice(adapterStart,adapterEnd)+`\nglobalThis.probe={cards:['cube','cuboid','pyramid','cylinder','cone'].map(shape=>({shape,solid:studySolidMesh(shape),net:learningMesh(shape,1,96)})),models:MODEL_ORDER.map(shape=>({shape,mesh:studySolidMesh(shape)})),surface:studySurfacePieces('cylinder',LESSON_DATA.cylinder.defaults)};})();`;
-  const context={};vm.runInNewContext(probe,context);
+  const context={window:{parent:{postMessage(){}}},console:{info(){}}};vm.runInNewContext(probe,context);
   const observed=JSON.parse(JSON.stringify(context.probe));
   const source=read('assets/contracts/geometry_cards.json');
   for(const card of observed.cards)for(const kind of ['solid','net']){

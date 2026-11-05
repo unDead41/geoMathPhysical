@@ -162,6 +162,15 @@ void main() {
       sessions.logout();
       await _until(tester, () => first.phase == ModuleLoadPhase.closed);
       expect(sessions.current.epoch, greaterThan(oldActor.epoch));
+      // Reopen is a new platform-view lifetime. Drain the old native document
+      // before attaching another renderer, while retaining the stale envelope
+      // above to prove the new instance still rejects its former capability.
+      await first.webViewController!.runJavaScript(
+        'window.GeoMathModule.dispose()',
+      );
+      await tester.pumpWidget(const SizedBox.shrink());
+      first.dispose();
+      await tester.pump();
       final second = ModuleSpikeController(
         sessions: sessions,
         lifecycle: lifecycle,
@@ -267,7 +276,8 @@ Future<void> _mount(
         controller.phase == ModuleLoadPhase.ready ||
         controller.phase == ModuleLoadPhase.failed ||
         controller.phase == ModuleLoadPhase.closed,
-    timeout: const Duration(seconds: 50),
+    // Match the bounded 30s document + 60s child stages, plus reporting grace.
+    timeout: const Duration(seconds: 95),
     action: () async {
       if (DateTime.now().isBefore(nextDiagnostic)) return;
       nextDiagnostic = DateTime.now().add(const Duration(seconds: 10));
@@ -288,6 +298,7 @@ Future<void> _logStartupState(
 ) async {
   final safe = <String, Object?>{
     'phase': controller.phase.name,
+    'startupStage': controller.startupStage.name,
     'lifecycle': lifecycle.phase.name,
     'bridge': controller.bridge.status.name,
     'accepted': controller.acceptedCommandCount,
@@ -305,7 +316,7 @@ JSON.stringify((() => {
   return {documentReady:document.readyState,adapterAvailable:!!d,
     moduleReady:d?.moduleReady,settingsReady:d?.settingsReady,
     emittedReady:d?.emittedReady,readyAcknowledged:d?.readyAcknowledged,
-    active:d?.active};
+    active:d?.active,bootstrap:d?.bootstrap};
 })())
 ''')
           .timeout(const Duration(seconds: 2));

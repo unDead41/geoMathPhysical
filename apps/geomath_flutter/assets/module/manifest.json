@@ -11,7 +11,10 @@
   "module_progress_protocol": 1,
   "module_settings_version": 1,
   "native_bridge_version": 1,
-  "adapter_version": 2,
+  "adapter_version": 3,
+  "learning_private_api_version": 1,
+  "learning_checkpoint_schema": 1,
+  "learning_checkpoint_max_bytes": 2097152,
   "files": [
     {
       "path": "assets/module/canonical-module.html",
@@ -25,8 +28,8 @@
     },
     {
       "path": "assets/module/native-adapter.js",
-      "sha256": "0910fe197787e08e7105f6a0bdb5703ffd1702a2dc0779c231d65cec70c3e322",
-      "bytes": 726804
+      "sha256": "0b994e0855d31a6d50a5997d83065e6187af77a60762e5ca2af9938ec4a82a39",
+      "bytes": 801769
     }
   ]
 }

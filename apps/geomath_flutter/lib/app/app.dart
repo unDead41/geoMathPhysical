@@ -120,13 +120,14 @@ Future<void>? _bootstrapFlight;
 Future<void> runGeoMath({
   List<FeatureContribution> features = const [],
   String initialRoute = 'home',
+  Future<Result<void>> Function(AppDependencies)? initialize,
 }) {
   if (_bootstrapFlight case final pending?) return pending;
   final completion = Completer<void>();
   _bootstrapFlight = completion.future;
   Future<void>(() async {
     try {
-      await _bootstrap(features, initialRoute);
+      await _bootstrap(features, initialRoute, initialize);
       completion.complete();
     } catch (error, stack) {
       completion.completeError(error, stack);
@@ -140,17 +141,25 @@ Future<void> runGeoMath({
 Future<void> _bootstrap(
   List<FeatureContribution> features,
   String initialRoute,
+  Future<Result<void>> Function(AppDependencies)? initialize,
 ) async {
   WidgetsFlutterBinding.ensureInitialized();
   final result = await AppDependencies.bootstrap(features: features);
   switch (result) {
     case Success<AppDependencies>(:final value):
-      if (!value.composition.routes.contains(initialRoute)) {
+      final initialized = initialize == null
+          ? const Success<void>(null)
+          : await initialize(value);
+      if (!initialized.isSuccess ||
+          !value.composition.routes.contains(initialRoute)) {
         await value.dispose();
         runApp(
           BootstrapRecoveryApp(
-            onRetry: () =>
-                runGeoMath(features: features, initialRoute: initialRoute),
+            onRetry: () => runGeoMath(
+              features: features,
+              initialRoute: initialRoute,
+              initialize: initialize,
+            ),
           ),
         );
         return;
@@ -166,8 +175,11 @@ Future<void> _bootstrap(
     case Failed<AppDependencies>():
       runApp(
         BootstrapRecoveryApp(
-          onRetry: () =>
-              runGeoMath(features: features, initialRoute: initialRoute),
+          onRetry: () => runGeoMath(
+            features: features,
+            initialRoute: initialRoute,
+            initialize: initialize,
+          ),
         ),
       );
   }
@@ -202,7 +214,7 @@ class _BootstrapRecoveryAppState extends State<BootstrapRecoveryApp> {
                 ),
                 const SizedBox(height: 12),
                 const Text(
-                  'Simpanan peranti belum tersedia. Tiada rekod didakwa telah disimpan.\n\nDevice storage is unavailable. No records have been claimed as saved.',
+                  'GeoMath belum dapat dimulakan. Cuba semula untuk memulihkan simpanan dan sesi.\n\nGeoMath could not start. Retry to restore device storage and session.',
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 24),

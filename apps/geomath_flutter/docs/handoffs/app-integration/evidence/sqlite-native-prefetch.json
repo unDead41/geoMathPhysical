@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "package_release": "sqlite3-3.8.0",
+  "pinned_hash_table_sha256": "d0426e29a849c95147566e6ff6e51f535faf8ddac92b0ddb67e8a290e921fe0f",
+  "package_and_hook_unchanged": true,
+  "assets": [
+    {
+      "cached": true,
+      "attempts": 0,
+      "bytes": 1899528,
+      "sha256": "d0d6eeaf4fa1e833c9344dafce3f8cb00c952f633175e1ec224bd6d05fceecf3",
+      "filename": "libsqlite3.arm.android.so",
+      "source_url": "https://github.com/simolus3/sqlite3.dart/releases/download/sqlite3-3.8.0/libsqlite3.arm.android.so",
+      "cache_path": ".dart_tool/hooks_runner/shared/sqlite3/build/download-d0d6eeaf/libsqlite3.so"
+    },
+    {
+      "cached": true,
+      "attempts": 0,
+      "bytes": 1849568,
+      "sha256": "3e6fb0d96f0848a42a023311b4ced7cfb58007ff6aadc7307b2ad5a44e1dc7d1",
+      "filename": "libsqlite3.arm64.android.so",
+      "source_url": "https://github.com/simolus3/sqlite3.dart/releases/download/sqlite3-3.8.0/libsqlite3.arm64.android.so",
+      "cache_path": ".dart_tool/hooks_runner/shared/sqlite3/build/download-3e6fb0d9/libsqlite3.so"
+    },
+    {
+      "cached": true,
+      "attempts": 0,
+      "bytes": 1825768,
+      "sha256": "3adb7821b2688ad1be4e9db3a08e51e066f91d1b958564c28cedccd1f18f48fd",
+      "filename": "libsqlite3.x64.android.so",
+      "source_url": "https://github.com/simolus3/sqlite3.dart/releases/download/sqlite3-3.8.0/libsqlite3.x64.android.so",
+      "cache_path": ".dart_tool/hooks_runner/shared/sqlite3/build/download-3adb7821/libsqlite3.so"
+    },
+    {
+      "cached": false,
+      "attempts": 1,
+      "bytes": 1823648,
+      "sha256": "d3d1eac2a4e0eb84f4e8d94d820e5963fddfd11aa95179ea215ddc3bc7bd1078",
+      "earlier_failures": [],
+      "filename": "libsqlite3.x64.linux.so",
+      "source_url": "https://github.com/simolus3/sqlite3.dart/releases/download/sqlite3-3.8.0/libsqlite3.x64.linux.so",
+      "cache_path": ".dart_tool/hooks_runner/shared/sqlite3/build/download-d3d1eac2/libsqlite3.so"
+    }
+  ],
+  "status": "verified"
+}

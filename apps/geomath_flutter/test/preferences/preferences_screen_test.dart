@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:ui' show SemanticsAction;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -7,6 +10,62 @@ import 'package:geomath_flutter/core/preferences/preferences.dart';
 import 'package:geomath_flutter/features/preferences/preferences_screen.dart';
 
 void main() {
+  testWidgets(
+    'preference semantics opens one picker and disables taps during save',
+    (tester) async {
+      _viewport(tester, 390);
+      final store = _Store();
+      final repository = (await SharedPreferencesRepository.open(store: store))
+          .valueOrNull!;
+      final semantics = tester.ensureSemantics();
+      await tester.pumpWidget(_Harness(repository: repository));
+      await tester.pumpAndSettle();
+      final language = find.semantics.byLabel('Bahasa, Bahasa Melayu');
+      expect(language, findsOne);
+      expect(
+        language.evaluate().single.getSemanticsData().hasAction(
+          SemanticsAction.tap,
+        ),
+        isTrue,
+      );
+      tester.semantics.tap(language);
+      await tester.pumpAndSettle();
+      expect(find.byType(BottomSheet), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey('preference-option-AppLanguage.en')),
+        findsOneWidget,
+      );
+      final blocked = Completer<void>();
+      store.blocked = blocked.future;
+      await tester.tap(
+        find.byKey(const ValueKey('preference-option-AppLanguage.en')),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+      expect(store.writes, 1);
+      expect(repository.value.language, AppLanguage.ms);
+      final disabled = language.evaluate().single.getSemanticsData();
+      expect(disabled.hasAction(SemanticsAction.tap), isFalse);
+      // A platform accessibility action cannot bypass the pending-save guard.
+      tester.semantics.performAction(
+        language,
+        SemanticsAction.tap,
+        checkForAction: false,
+      );
+      await tester.pump();
+      expect(find.byType(BottomSheet), findsNothing);
+      expect(store.writes, 1);
+      blocked.complete();
+      await tester.pumpAndSettle();
+      expect(repository.value.language, AppLanguage.en);
+      expect(store.writes, 1);
+      expect(tester.takeException(), isNull);
+      semantics.dispose();
+      await tester.pumpWidget(const SizedBox.shrink());
+      repository.dispose();
+    },
+  );
+
   testWidgets('every native preference changes through the UI and reopens', (
     tester,
   ) async {
@@ -180,12 +239,16 @@ final class _Harness extends StatelessWidget {
 final class _Store implements PreferencesStore {
   String? saved;
   bool fail = false;
+  Future<void>? blocked;
+  int writes = 0;
 
   @override
   Future<String?> read() async => saved;
 
   @override
   Future<void> write(String value) async {
+    writes++;
+    await blocked;
     if (fail) throw StateError('storage failure');
     saved = value;
   }

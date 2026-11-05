@@ -1,0 +1,145 @@
+   Woah! You appear to be trying to run flutter as root.
+   We strongly recommend running the flutter tool without superuser privileges.
+  /
+📎
+00:00 +0: loading /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/core/formative_record_test.dart
+00:00 +0: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/core/formative_record_test.dart: reflection validation preserves canonical stages, limits and trimming
+00:00 +1: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/core/formative_record_test.dart: merging cannot regress stage or completed explanation
+00:00 +2: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/core/formative_record_test.dart: completed solo validates canonical mode, integer accounting and duration
+00:00 +3: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/core/formative_record_test.dart: outbox event only permits canonical formative fields
+00:00 +4: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/core/session_network_test.dart: guest partition survives reopen; same auth refresh preserves epoch
+00:00 +5: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/core/session_network_test.dart: failed identity persistence does not claim a stable guest partition
+00:00 +6: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/core/session_network_test.dart: protected adapter persists only through secure storage and clears
+00:00 +7: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/core/session_network_test.dart: late responses and callbacks after logout cannot affect another actor
+00:00 +8: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/core/session_network_test.dart: bounded retry respects Retry-After and halts terminal failures
+00:00 +9: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/module/module_host_bridge_test.dart: ready handshake and progress retain authoritative native actor
+00:00 +10: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/contracts/geometry_card_provider_test.dart: all five game shapes have canonical neutral solid and net cards
+00:00 +11: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/contracts/geometry_card_provider_test.dart: all five game shapes have canonical neutral solid and net cards
+00:00 +12: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/contracts/geometry_card_provider_test.dart: all five game shapes have canonical neutral solid and net cards
+00:00 +13: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/contracts/geometry_card_provider_test.dart: all five game shapes have canonical neutral solid and net cards
+00:00 +14: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/contracts/geometry_card_provider_test.dart: all five game shapes have canonical neutral solid and net cards
+00:00 +15: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/module/module_host_bridge_test.dart: background blocks input and foreground resumes the same ready instance
+00:00 +16: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/contracts/geometry_card_provider_test.dart: damaged card source does not produce a successful geometry DTO
+00:00 +17: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/contracts/geometry_card_provider_test.dart: damaged card source does not produce a successful geometry DTO
+00:00 +18: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/module/module_host_bridge_test.dart: malformed/unknown/oversize messages cannot make an instance ready
+00:00 +19: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/module/module_host_bridge_test.dart: progress validation enforces canonical stages, fields and inclusive limits
+00:00 +20: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/module/module_host_bridge_test.dart: navigation uses an explicit native allowlist and cannot invoke RPC
+00:00 +21: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/labs/labs_hub_test.dart: ms lab modes are reachable at 320.0 dp/1.5 text
+00:01 +22: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/labs/labs_hub_test.dart: ms lab modes are reachable at 320.0 dp/1.5 text
+00:01 +23: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/labs/labs_hub_test.dart: ms lab modes are reachable at 320.0 dp/1.5 text
+00:01 +24: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/labs/labs_hub_test.dart: ms lab modes are reachable at 320.0 dp/1.5 text
+00:01 +25: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/labs/labs_hub_test.dart: ms lab modes are reachable at 320.0 dp/1.5 text
+00:02 +26: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/labs/labs_hub_test.dart: ms lab modes are reachable at 320.0 dp/1.5 text
+00:02 +27: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/labs/labs_hub_test.dart: ms lab modes are reachable at 320.0 dp/1.5 text
+00:02 +28: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/labs/labs_hub_test.dart: ms lab modes are reachable at 320.0 dp/1.5 text
+00:02 +29: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/labs/labs_hub_test.dart: ms lab modes are reachable at 320.0 dp/1.5 text
+00:02 +30: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/labs/labs_hub_test.dart: ms lab modes are reachable at 320.0 dp/1.5 text
+00:02 +31: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/labs/labs_hub_test.dart: ms lab modes are reachable at 320.0 dp/1.5 text
+00:02 +32: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/labs/labs_hub_test.dart: ms lab modes are reachable at 320.0 dp/1.5 text
+00:02 +33: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/acceptance/feature_acceptance_test.dart: records read the shared durable DTO and follow the native actor
+00:02 +34: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/acceptance/feature_acceptance_test.dart: records read the shared durable DTO and follow the native actor
+00:02 +35: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/acceptance/feature_acceptance_test.dart: records read the shared durable DTO and follow the native actor
+00:02 +36: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/acceptance/feature_acceptance_test.dart: records read the shared durable DTO and follow the native actor
+00:03 +37: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/acceptance/feature_acceptance_test.dart: records read the shared durable DTO and follow the native actor
+00:03 +38: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/acceptance/feature_acceptance_test.dart: records read the shared durable DTO and follow the native actor
+00:03 +39: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/acceptance/feature_acceptance_test.dart: records read the shared durable DTO and follow the native actor
+00:03 +40: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/surface/surface_header_test.dart: guidance and tap alternatives reflow at phone and tablet sizes
+00:04 +41: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/surface/surface_header_test.dart: guidance and tap alternatives reflow at phone and tablet sizes
+00:04 +42: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/surface/surface_header_test.dart: guidance and tap alternatives reflow at phone and tablet sizes
+00:04 +43: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/surface/surface_header_test.dart: guidance and tap alternatives reflow at phone and tablet sizes
+00:05 +44: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/surface/surface_header_test.dart: guidance and tap alternatives reflow at phone and tablet sizes
+00:05 +45: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/surface/surface_header_test.dart: guidance and tap alternatives reflow at phone and tablet sizes
+00:05 +46: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/surface/surface_header_test.dart: guidance and tap alternatives reflow at phone and tablet sizes
+00:05 +47: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/surface/surface_header_test.dart: guidance and tap alternatives reflow at phone and tablet sizes
+00:05 +48: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/surface/surface_header_test.dart: guidance and tap alternatives reflow at phone and tablet sizes
+00:05 +49: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/surface/surface_header_test.dart: guidance and tap alternatives reflow at phone and tablet sizes
+00:05 +50: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/surface/surface_header_test.dart: guidance and tap alternatives reflow at phone and tablet sizes
+00:05 +51: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/surface/surface_header_test.dart: guidance and tap alternatives reflow at phone and tablet sizes
+00:05 +52: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/studio/learning_records_page_test.dart: EX11 keeps unsaved reflection, exposes Retry and waits for the durable receipt
+00:05 +53: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/studio/learning_records_page_test.dart: EX11 keeps unsaved reflection, exposes Retry and waits for the durable receipt
+00:06 +54: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/labs/labs_hub_test.dart: en lab modes are reachable at 768.0 dp/1.0 text
+00:06 +55: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/studio/learning_records_page_test.dart: four real records stay literal through locale/text changes and disappear on actor switch
+00:06 +56: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/studio/learning_records_page_test.dart: four real records stay literal through locale/text changes and disappear on actor switch
+00:06 +57: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/studio/learning_records_page_test.dart: four real records stay literal through locale/text changes and disappear on actor switch
+00:06 +58: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/studio/learning_records_page_test.dart: four real records stay literal through locale/text changes and disappear on actor switch
+00:06 +59: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/studio/learning_records_page_test.dart: four real records stay literal through locale/text changes and disappear on actor switch
+00:06 +60: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/studio/learning_records_page_test.dart: four real records stay literal through locale/text changes and disappear on actor switch
+00:06 +61: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/studio/learning_records_page_test.dart: four real records stay literal through locale/text changes and disappear on actor switch
+00:06 +62: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:06 +63: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:06 +64: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:07 +65: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:07 +66: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:07 +67: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:07 +68: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:07 +69: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:07 +70: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:07 +71: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:07 +72: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:07 +73: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:07 +74: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:07 +75: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:07 +76: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:07 +77: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:07 +78: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:08 +79: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:08 +80: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:08 +81: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:08 +82: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:08 +83: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:08 +84: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:08 +85: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:08 +86: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:08 +87: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:08 +88: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:08 +89: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:08 +90: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:08 +91: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:08 +92: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:08 +93: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:09 +94: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:09 +95: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:09 +96: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:09 +97: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:09 +98: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:09 +99: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:09 +100: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:09 +101: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:09 +102: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:09 +103: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:09 +104: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:09 +105: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:09 +106: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:09 +107: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:09 +108: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:09 +109: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:09 +110: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: native routes carry the chosen canonical shape
+00:09 +111: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/storage/sqlite_formative_records_test.dart: quiz history is bounded at fifty without pruning practice records
+00:10 +112: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/storage/sqlite_formative_records_test.dart: quiz history is bounded at fifty without pruning practice records
+00:10 +113: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: 320dp and 150% dark contrast preserve the selected shape
+00:10 +114: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: 320dp and 150% dark contrast preserve the selected shape
+00:10 +115: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: 320dp and 150% dark contrast preserve the selected shape
+00:10 +116: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/features/learning/explore/learning_hub_test.dart: 320dp and 150% dark contrast preserve the selected shape
+00:10 +117: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/preferences/preferences_screen_test.dart: every native preference changes through the UI and reopens
+00:11 +118: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/preferences/preferences_screen_test.dart: every native preference changes through the UI and reopens
+00:11 +119: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/preferences/preferences_screen_test.dart: every native preference changes through the UI and reopens
+00:11 +120: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/preferences/preferences_screen_test.dart: every native preference changes through the UI and reopens
+00:11 +121: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/preferences/preferences_screen_test.dart: every native preference changes through the UI and reopens
+00:12 +122: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/preferences/preferences_screen_test.dart: every native preference changes through the UI and reopens
+00:12 +123: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/preferences/preferences_screen_test.dart: every native preference changes through the UI and reopens
+00:12 +124: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/preferences/preferences_screen_test.dart: every native preference changes through the UI and reopens
+00:12 +125: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/preferences/preferences_screen_test.dart: every native preference changes through the UI and reopens
+00:12 +126: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/foundation/report_accessibility_test.dart: 320 dp / 150% report keeps keyboard and back actions reachable
+00:12 +127: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/foundation/report_accessibility_test.dart: 320 dp / 150% report keeps keyboard and back actions reachable
+00:12 +128: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/foundation/report_accessibility_test.dart: 320 dp / 150% report keeps keyboard and back actions reachable
+00:12 +129: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/foundation/report_accessibility_test.dart: 320 dp / 150% report keeps keyboard and back actions reachable
+00:13 +130: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/foundation/report_accessibility_test.dart: 320 dp / 150% report keeps keyboard and back actions reachable
+00:13 +131: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/foundation/report_accessibility_test.dart: 320 dp / 150% report keeps keyboard and back actions reachable
+00:13 +132: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/foundation/report_accessibility_test.dart: 320 dp / 150% report keeps keyboard and back actions reachable
+00:13 +133: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/foundation/report_accessibility_test.dart: 320 dp / 150% report keeps keyboard and back actions reachable
+00:13 +134: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/preferences/preferences_screen_test.dart: settings reachable at 430.0 dp, ms, dark/contrast/150%
+00:13 +135: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/foundation/report_accessibility_test.dart: failed TXT export retains draft and never claims saved
+00:14 +136: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/foundation/report_accessibility_test.dart: failed TXT export retains draft and never claims saved
+00:14 +137: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/foundation/report_accessibility_test.dart: failed TXT export retains draft and never claims saved
+00:14 +138: /workspace/scratch/2c9458ca3d01/worktrees/app-learning/apps/geomath_flutter/test/foundation/report_accessibility_test.dart: failed TXT export retains draft and never claims saved
+00:14 +139: All tests passed!

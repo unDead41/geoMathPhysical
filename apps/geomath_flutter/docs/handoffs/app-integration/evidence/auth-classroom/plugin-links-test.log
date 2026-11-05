@@ -1,0 +1,4 @@
+00:00 +0: loading /dev/shm/geomath-integration-nov05/worker-4/apps/geomath_flutter/test/integration/auth_classroom_links_test.dart
+00:00 +0: cold plugin link uses the locked method and bounds URI input
+00:00 +1: warm plugin stream cancels its listener and drops oversized input
+00:00 +2: All tests passed!

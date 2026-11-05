@@ -1,0 +1,240 @@
+{
+  "schema_version": 1,
+  "status": "HOST_VERIFIED_APK_BUILT_ANDROID_SMOKE_BLOCKED",
+  "tested_base_commit": "f697a58a28c3d068e0fe18fc571d1cfdb51ef3ee",
+  "source_state": "base plus reviewed checkpoint retry fix; runtime file hashes below",
+  "foundation_sha": "9a1f49a7c92d13bb70b7fd1420c34629a7785f9e",
+  "sdk": {
+    "flutter": "3.47.9",
+    "dart": "3.13.7",
+    "jdk": "17.0.20"
+  },
+  "checks": {
+    "flutter analyze --no-pub": 0,
+    "flutter test --no-pub": {
+      "exit": 0,
+      "pass": 139,
+      "fail": 0
+    },
+    "node source/bridge/surface/checkpoint suites": {
+      "exit": 0,
+      "pass": 46,
+      "fail": 0,
+      "checkpoint_cases": 25
+    },
+    "dart format --output=none --set-exit-if-changed lib test integration_test test_driver": 0,
+    "node tools/module/build_module.mjs --feature-only <pinned-source> <tree>": 0,
+    "flutter build apk --debug --no-pub -t lib/dev/learning_main.dart": 0,
+    "APK ZIP CRC and current bundled asset match": 0,
+    "apksigner verify --verbose": 0,
+    "git diff --check": 0
+  },
+  "apk": {
+    "schemaVersion": 1,
+    "filename": "GeoMath-Learning-0.1.0-debug.apk",
+    "bytes": 172228092,
+    "sha256": "a9f50b3effe0bc5277e65d58eea0b35264ca44406c5d1f319418a13b517f55dd",
+    "flutterEngines": [
+      "arm64-v8a",
+      "armeabi-v7a",
+      "x86_64"
+    ],
+    "entryPoint": "lib/dev/learning_main.dart",
+    "buildExitCode": 0,
+    "zipCrc": "PASS",
+    "bundledAssetsMatchCurrentSource": {
+      "assets/module/manifest.json": true,
+      "assets/module/native-adapter.js": true,
+      "assets/module/canonical-module.html": true
+    },
+    "actualAndroidWebViewRun": "BLOCKED_BEFORE_BOOT",
+    "testedBaseCommit": "f697a58a28c3d068e0fe18fc571d1cfdb51ef3ee",
+    "sourceControllerSha256": "ba9f4fa1427b518969d17e20958d859b43b6dc312bc0ec6cb040d17cbfc1a629"
+  },
+  "runtime_files": [
+    {
+      "path": "lib/features/learning/application/learning_module_controller.dart",
+      "sha256": "ba9f4fa1427b518969d17e20958d859b43b6dc312bc0ec6cb040d17cbfc1a629"
+    },
+    {
+      "path": "lib/features/learning/application/learning_services.dart",
+      "sha256": "2e9c8344408f88ae04627c033cafe95e6688e55a83212faca1a72372c0f1b343"
+    },
+    {
+      "path": "lib/features/learning/labs/lab_strings.dart",
+      "sha256": "3160b252c2873af3bbe85180117785e75290b3e9d9d4dfeca26a5e343628c530"
+    },
+    {
+      "path": "lib/features/learning/labs/labs_hub.dart",
+      "sha256": "de33b8f46c1c2ae69f70db05d5f013a2a52643810f5934397e7c755b51fb57d7"
+    },
+    {
+      "path": "lib/features/learning/labs/net_volume_pages.dart",
+      "sha256": "e05e90eb4d7d4b98b6c5c73aae50e4f3cc4bc0b3939cadc589f75b1040369dd8"
+    },
+    {
+      "path": "lib/features/learning/labs/surface_pages.dart",
+      "sha256": "b030b72f84047e549e6596844f35f6eee844d2755a9ecce87fb6abb43267da47"
+    },
+    {
+      "path": "lib/features/learning/labs/surface_strings.dart",
+      "sha256": "a0fc31338d4176deef23bee981c96a0f8d1e7ea1f1bfedd3e802c37ac5e49a6f"
+    },
+    {
+      "path": "lib/features/learning/learning_catalogue.dart",
+      "sha256": "02ac91b9ae406da2ce4390f11ce0575718047447fc3f9776e895983445977f15"
+    },
+    {
+      "path": "lib/features/learning/learning_feature.dart",
+      "sha256": "38de987be277c3ae77b936d98e9f57a676c0b32bd543e83431f3107d800436d8"
+    },
+    {
+      "path": "lib/features/learning/learning_strings.dart",
+      "sha256": "987bf1eef68af8a2b25532298980c2dbb7fbf8e7edbe637c3c4e33a982a2cb54"
+    },
+    {
+      "path": "lib/features/learning/module_asset_repository.dart",
+      "sha256": "ac417bf67f3d9e66009fe1075812da88d593ceb32a921c6467ec474ac1240278"
+    },
+    {
+      "path": "lib/features/learning/module_spike_host.dart",
+      "sha256": "6c7e030105b80a71f2a81aa485da7151d81b29a5d5de8a06165decc4ec15eb26"
+    },
+    {
+      "path": "lib/features/learning/persistence/learning_checkpoint_repository.dart",
+      "sha256": "90560555e4b36b5848856bf86d0293ce5f332d53d4f42c9124d22ccfbaf58c01"
+    },
+    {
+      "path": "lib/features/learning/persistence/learning_checkpoint_schema.dart",
+      "sha256": "a1780fdb60e976720b3899a7f4af522cf41f44e9a569a1d9bc7996d8d4c56cfd"
+    },
+    {
+      "path": "lib/features/learning/persistence/learning_reflection_controller.dart",
+      "sha256": "e49090862c24566c215badca57fed5841a2e9d3cc6c354c1cd3417858631b73f"
+    },
+    {
+      "path": "lib/features/learning/presentation/explore_pages.dart",
+      "sha256": "3137d53fcd953cb482a7a250daf13d843212022d4736b3638bbe543bc21402de"
+    },
+    {
+      "path": "lib/features/learning/presentation/learning_hub.dart",
+      "sha256": "4024f68f382e222861cbb66c4c9bcb2c207325259134d3f3177f452b1f21de4f"
+    },
+    {
+      "path": "lib/features/learning/presentation/learning_module_page.dart",
+      "sha256": "b6ba5a7fc31ffb6a929fa61fd052e129deada41974dee941ebbcdd897a8cbba3"
+    },
+    {
+      "path": "lib/features/learning/studio/learning_records_page.dart",
+      "sha256": "b9b380ceb46c1b7b6d8d8e7aea2c46b4e1220a3d2604fdc7da4292bf15ef788d"
+    },
+    {
+      "path": "lib/features/learning/studio/studio_pages.dart",
+      "sha256": "00b3cfc311119da09960514080573eb52337b6872af990401f445710bf027f5e"
+    },
+    {
+      "path": "lib/features/learning/studio/studio_strings.dart",
+      "sha256": "45d6c2ba14933719154cf56bd0cb6bf662e53a9cbd3e50697bfbd727678a606b"
+    },
+    {
+      "path": "lib/dev/learning_main.dart",
+      "sha256": "a9312a9695185c9680ad28e5b679d70bcbd13d719df34d331e93b147ba31c6e6"
+    },
+    {
+      "path": "tools/module/build_module.mjs",
+      "sha256": "96fd4309dde6fe5635e19ec8dbb0db06d821f00a5e4ece5b1e071a37228572ca"
+    },
+    {
+      "path": "tools/module/learning_adapter.mjs",
+      "sha256": "ee274edae01ce0b421006ffee776f854b142b277785c6570cdddeff5a416f4c1"
+    },
+    {
+      "path": "tools/module/learning_schema.mjs",
+      "sha256": "8f7beb02c04e8768770a55cc8ab26dfd19128673317eece83563a30913f0dab3"
+    },
+    {
+      "path": "tools/module/native-adapter.template.js",
+      "sha256": "ed2c07925d02e19fd3dba08e2554ee0ecd2e145f9efc763c5d2b354f1bdee9e8"
+    },
+    {
+      "path": "tools/module/surface_adapter.mjs",
+      "sha256": "d0153b9710b2fce20908f5461253807d4b90ac40c973e46e7b9478becc766ef5"
+    },
+    {
+      "path": "assets/module/.gitattributes",
+      "sha256": "91661751e073b861f225a5be091c9134419796db9210c6093275ac1a272e9eb8"
+    },
+    {
+      "path": "assets/module/canonical-module.html",
+      "sha256": "7ddd5d60a25fbdf73c20f9f8e8fc0db4253e582fb50d17c944307b8f682066c4"
+    },
+    {
+      "path": "assets/module/index.html",
+      "sha256": "e8db2197527c325fa2c879a56b3aac8a0dc8fe65c449c154b405d4c9d00c8331"
+    },
+    {
+      "path": "assets/module/manifest.json",
+      "sha256": "8ec24f96a930683de87e5311043edba5fe30679e4a30bd2f11d8b4e3dfde1a13"
+    },
+    {
+      "path": "assets/module/native-adapter.js",
+      "sha256": "47edd959776f4e2d8056ddcbf06121a01075cd88f4588497112b65a6f8b8b95e"
+    },
+    {
+      "path": "integration_test/learning_acceptance_test.dart",
+      "sha256": "c3f4292556b1474971c441dcf9039fe4a5f18e4d9f0148ad0fa5b4876eeadf9d"
+    }
+  ],
+  "evidence_files": [
+    {
+      "path": "analyze.log",
+      "bytes": 206,
+      "sha256": "81e9bf32c8c7c4a8013f2295cab4ea1cdb1cfa7c997a8ef0661b69b36fbe5526"
+    },
+    {
+      "path": "android-blocker.txt",
+      "bytes": 350,
+      "sha256": "21efee7b3195b364561921bde3b6d47a828411cd5760ae26dac62f56a5dcc4b5"
+    },
+    {
+      "path": "apk-signature.log",
+      "bytes": 343,
+      "sha256": "b0a1af67205efcd284e5bbae691ebf4a0d296b4fcae02cd28e7e0509d0e0efbc"
+    },
+    {
+      "path": "apk.json",
+      "bytes": 733,
+      "sha256": "44db4b6d8c634afce5058514a453e850f50d0abbed4556607991fe31780c3bca"
+    },
+    {
+      "path": "flutter-tests.log",
+      "bytes": 27655,
+      "sha256": "efd15b93b0637870153d4c1c3250b5924d191f76a772628c298de50cc66617c9"
+    },
+    {
+      "path": "format.log",
+      "bytes": 195,
+      "sha256": "b41f8d2e950f542dd4660640191ac195cd81de36c621800c844da830f684cf20"
+    },
+    {
+      "path": "module-export.log",
+      "bytes": 236,
+      "sha256": "337a478c6509f0bc58864708bf9d750240489cdb4449eda63e49b8b353905db2"
+    },
+    {
+      "path": "node-tests.log",
+      "bytes": 4960,
+      "sha256": "217be81fec820ce6200f17f7faf7f9d816650a57ea190a6b4d53518041e06b01"
+    },
+    {
+      "path": "preview-build.log",
+      "bytes": 1056,
+      "sha256": "deafe595ebd3b2deea1ff403a9c0e9416a47265433d2d4fdcc7fe536248cbb14"
+    },
+    {
+      "path": "result.json",
+      "bytes": 8454,
+      "sha256": "1a4dbb0bda52b2c0b9039bf35b2b0688f74149a7f1e8c86a3a389a25a480dfe8"
+    }
+  ]
+}

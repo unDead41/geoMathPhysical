@@ -1,0 +1,2983 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-06",
+  "timezone": "Asia/Kuala_Lumpur",
+  "app_version": "0.1.0+1",
+  "status": "partial",
+  "status_definitions": {
+    "ready": "Acceptance demonstrated by the cited integrated evidence within the stated capability.",
+    "partial": "Implementation exists; one or more integrated/device/hosted acceptance items remain explicitly unverified.",
+    "blocked": "A required implementation or executable prerequisite is unavailable."
+  },
+  "source_refs": {
+    "foundation": "9a1f49a7c92d13bb70b7fd1420c34629a7785f9e",
+    "learning": "8a5527438ee828a306afba36a337a3ca3bbedb83",
+    "cloud_game": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+    "initial_app_base": "38f061af963256528d5060ff076bae9ee05eafc3",
+    "baseline_integrated_runtime": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+    "corrected_solo_case": "2daa2802ffea0ac0ddbde65ac2d9c7b0d261a939",
+    "revalidated_runtime": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+    "capture_completion_tools": "f5e02d0c9b94b7a74f44a4c47b17b00f149883b1",
+    "delivered_apk_runtime": "377a444b7ff6956de8f40b617a40dcbcb9a4a837"
+  },
+  "catalog": "docs/geomath-app/screen_catalog.json",
+  "coverage": {
+    "numbered_screens": 48,
+    "supplemental_states": 16,
+    "mapped": 64,
+    "placeholder_screen_count_claimed_ready": 0
+  },
+  "evidence_policy": "Exact-source494host/50canonical/26tool checks,fresh builds and3 affected real-WebView cases validate the native correction. Thirty reviewed originals combine with two corrected390/430cube originals from the same APK;33capture-tool checks pass. Baseline functional and corrected Solo cases remain inherited evidence; no single full combined green workflow is claimed.",
+  "visual_profiles": {
+    "required_width_dp": [
+      320,
+      390,
+      430,
+      768
+    ],
+    "languages": [
+      "ms",
+      "en"
+    ],
+    "themes": [
+      "light",
+      "dark",
+      "strongContrast"
+    ],
+    "text_scale": [
+      1.0,
+      1.25,
+      1.5
+    ],
+    "reduced_motion": true,
+    "historical_cloud_host_sweep": "19 guest/unconfigured routes x 16 profiles: widths320/390/430/768,ms/en,light/dark,text150. Does not cover all populated states,contrast125,keyboard,TalkBack or real Android.",
+    "integrated_device_screenshots": "32 original normal-main ADB PNGs in four profiles:30 retained plus2 corrected captures, with per-image run/source provenance; not32 boots",
+    "complete_talkback_gesture_keyboard_audit": "unverified"
+  },
+  "items": [
+    {
+      "id": "01",
+      "title": "Utama",
+      "kind": "page",
+      "requirements": [
+        "U01"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "foundation READY evidence; not a combined-feature Android receipt",
+          "source_ref": "9a1f49a7c92d13bb70b7fd1420c34629a7785f9e",
+          "receipt": "docs/handoffs/app-foundation/LATEST.md"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        }
+      ],
+      "screenshot_evidence": [
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "320dp-ms-light-100-contrast0-01-home-offline.png",
+          "sha256": "094741ed5bbafa7624e85a6e32df936deaef4c38c47e65f9a1ad6be1ee2b123d",
+          "scope": "normal main cold reopen, persisted preferences, airplane mode",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "390dp-en-dark-125-contrast0-01-home-offline.png",
+          "sha256": "b46b44e8f55490f74cf356ff9f0bcdd37d32c65612c6f7b2dc6632f9145e273a",
+          "scope": "normal main cold reopen, persisted preferences, airplane mode",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "430dp-ms-dark-150-contrast1-01-home-offline.png",
+          "sha256": "d75d400c57be295fa45faf9dcac2d3c200b66c507478e0b36f0120c928bfd0d6",
+          "scope": "normal main cold reopen, persisted preferences, airplane mode",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "768dp-en-light-150-contrast1-01-home-offline.png",
+          "sha256": "2e9f626d84756f0be17abd82a08d50d3502bd9fb0986d7f12df09122b2a15d0f",
+          "scope": "normal main cold reopen, persisted preferences, airplane mode",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        }
+      ],
+      "acceptance_limits": [
+        "Integrated evidence is cited; complete manual TalkBack/gestures and all visual combinations remain unverified."
+      ],
+      "owner": "app-foundation / app-integration",
+      "route": {
+        "name": "home",
+        "path": "/"
+      },
+      "state": "HomeScreen; native hero and feature shortcuts",
+      "implementation_paths": [
+        "lib/features/home/home_screen.dart"
+      ],
+      "test_pointers": [
+        "test/foundation/preview_bootstrap_contract_test.dart",
+        "integration_test/app_flow_test.dart"
+      ],
+      "capability": "Offline native UI"
+    },
+    {
+      "id": "02",
+      "title": "Pilih permainan",
+      "kind": "page",
+      "requirements": [
+        "G01",
+        "G02"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        }
+      ],
+      "screenshot_evidence": [
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "320dp-ms-light-100-contrast0-02-solo-setup.png",
+          "sha256": "fffed8b13984228feb9ca68ae95b2b65bcce5ff4965dc1ee3f9ec154a2c5dced",
+          "scope": "production offline guest Solo setup",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "390dp-en-dark-125-contrast0-02-solo-setup.png",
+          "sha256": "0bad981f767c3e02d9f452ada5783d4019fe0c1dd0e7b31ac6828045bc75fe44",
+          "scope": "production offline guest Solo setup",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "430dp-ms-dark-150-contrast1-02-solo-setup.png",
+          "sha256": "7e15e684b4b441939391df41a837d20b49eeabea5188ab99be73b2e79ea4d37e",
+          "scope": "production offline guest Solo setup",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "768dp-en-light-150-contrast1-02-solo-setup.png",
+          "sha256": "7b9cb8b2fd12bc6a8bef4e18694e29b83dba597e32abb6429b191829deb06e52",
+          "scope": "production offline guest Solo setup",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        }
+      ],
+      "acceptance_limits": [
+        "Entry layout checked; no complete 16-profile keyboard/form validation audit.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-play",
+        "path": "/play"
+      },
+      "state": "SoloPlayPage / quiz or practice setup",
+      "implementation_paths": [
+        "lib/features/solo/presentation/solo_pages.dart"
+      ],
+      "test_pointers": [
+        "test/features/solo/solo_engine_test.dart:132",
+        "test/features/solo/solo_pages_test.dart:89",
+        "test/features/cloud_game/cloud_game_startup_test.dart::saved account HTTP 502/429/503 leaves guest Solo reachable"
+      ],
+      "capability": "Offline guest/local Solo"
+    },
+    {
+      "id": "03",
+      "title": "Sambung permainan",
+      "kind": "page",
+      "requirements": [
+        "G05"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        },
+        {
+          "scope": "Corrected Solo R1/R2 selection, durable save and database reopen; one real-Android case, no claim for every game stage.",
+          "source_ref": "2daa2802ffea0ac0ddbde65ac2d9c7b0d261a939",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Empty slot entry checked in full matrix; durable restore checked with real SQLite fixtures.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "solo-resume",
+        "path": "/play/resume"
+      },
+      "state": "SoloResumePage / saved slot",
+      "implementation_paths": [
+        "lib/features/solo/presentation/solo_pages.dart"
+      ],
+      "test_pointers": [
+        "test/features/solo/solo_persistence_test.dart:186",
+        "test/features/cloud_game/cloud_game_solo_lifecycle_test.dart"
+      ],
+      "capability": "Offline guest/local Solo"
+    },
+    {
+      "id": "04",
+      "title": "Cara bermain",
+      "kind": "page",
+      "requirements": [
+        "G03",
+        "U04"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "foundation READY evidence; not a combined-feature Android receipt",
+          "source_ref": "9a1f49a7c92d13bb70b7fd1420c34629a7785f9e",
+          "receipt": "docs/handoffs/app-foundation/LATEST.md"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Existing foundation evidence is inherited; changed production composition and navigation require the integration run.",
+        "New integrated screenshots and complete TalkBack/gesture/keyboard acceptance are not supplied by the feature-branch host tests."
+      ],
+      "owner": "app-foundation / app-integration",
+      "route": {
+        "name": "guide",
+        "path": "/guide"
+      },
+      "state": "GuideScreen; finite neutral R1/R2 demonstration, replay and reduced motion",
+      "implementation_paths": [
+        "lib/features/help/guide_screen.dart"
+      ],
+      "test_pointers": [
+        "test/design/shared_widgets_test.dart",
+        "integration_test/app_flow_test.dart"
+      ],
+      "capability": "Offline native UI"
+    },
+    {
+      "id": "05",
+      "title": "Kuiz 10",
+      "kind": "page",
+      "requirements": [
+        "G01",
+        "G02",
+        "G03",
+        "G04"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        },
+        {
+          "scope": "Corrected Solo R1/R2 selection, durable save and database reopen; one real-Android case, no claim for every game stage.",
+          "source_ref": "2daa2802ffea0ac0ddbde65ac2d9c7b0d261a939",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Active quiz uses feature fixture tests; guest direct-entry matrix has no active attempt.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "solo-game",
+        "path": "/play/solo"
+      },
+      "state": "SoloGamePage / SoloMode.quiz",
+      "implementation_paths": [
+        "lib/features/solo/presentation/solo_pages.dart"
+      ],
+      "test_pointers": [
+        "test/features/solo/solo_engine_test.dart:132",
+        "test/features/solo/solo_pages_test.dart:89",
+        "test/features/cloud_game/cloud_game_startup_test.dart::saved account HTTP 502/429/503 leaves guest Solo reachable"
+      ],
+      "capability": "Offline guest/local Solo"
+    },
+    {
+      "id": "06",
+      "title": "Latihan 15",
+      "kind": "page",
+      "requirements": [
+        "G01",
+        "G02",
+        "G03",
+        "G04"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Practice bank/engine and missed-ID flow have fixture pointers; complete 16-profile active-practice sweep absent.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "solo-game",
+        "path": "/play/solo"
+      },
+      "state": "SoloGamePage / SoloMode.practice",
+      "implementation_paths": [
+        "lib/features/solo/presentation/solo_pages.dart"
+      ],
+      "test_pointers": [
+        "test/features/solo/solo_engine_test.dart:132",
+        "test/features/solo/solo_pages_test.dart:233"
+      ],
+      "capability": "Offline guest/local Solo"
+    },
+    {
+      "id": "07",
+      "title": "Semakan jawapan",
+      "kind": "state",
+      "requirements": [
+        "G03",
+        "G04"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Wrong/skip review gates are fixture-tested; no all-profile active-review sweep.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "solo-game",
+        "path": "/play/solo"
+      },
+      "state": "SoloGamePage / feedback and review",
+      "implementation_paths": [
+        "lib/features/solo/presentation/solo_pages.dart"
+      ],
+      "test_pointers": [
+        "test/features/solo/solo_engine_test.dart:161",
+        "test/features/solo/solo_pages_test.dart:233"
+      ],
+      "capability": "Offline guest/local Solo"
+    },
+    {
+      "id": "08",
+      "title": "Keputusan dan analisis",
+      "kind": "page",
+      "requirements": [
+        "G06"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Fixture pointers cover analysis/review isolation; no all-profile populated-result sweep.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "solo-game",
+        "path": "/play/solo"
+      },
+      "state": "SoloGamePage._result / detailed answer analysis",
+      "implementation_paths": [
+        "lib/features/solo/presentation/solo_pages.dart"
+      ],
+      "test_pointers": [
+        "test/features/solo/solo_pages_test.dart:233",
+        "test/features/solo/solo_persistence_test.dart:273"
+      ],
+      "capability": "Offline guest/local Solo"
+    },
+    {
+      "id": "09",
+      "title": "Papan skor kuiz setempat",
+      "kind": "page",
+      "requirements": [
+        "G06"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Empty score layout checked in full matrix; best50 is a database fixture check.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "solo-scores",
+        "path": "/play/scores"
+      },
+      "state": "SoloScoresPage / local quiz scores",
+      "implementation_paths": [
+        "lib/features/solo/presentation/solo_pages.dart"
+      ],
+      "test_pointers": [
+        "test/features/solo/solo_persistence_test.dart:353",
+        "test/features/cloud_game/cloud_game_widgets_test.dart"
+      ],
+      "capability": "Offline guest/local Solo"
+    },
+    {
+      "id": "10",
+      "title": "Cipta/sertai Duel",
+      "kind": "page",
+      "requirements": [
+        "D01"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        }
+      ],
+      "screenshot_evidence": [
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "320dp-ms-light-100-contrast0-10-duel-unconfigured.png",
+          "sha256": "49896167af2c885c2644dd880ac11325a76a18e5f4c167e9b1f58007cdb51f67",
+          "scope": "production Duel capability/online-required state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "390dp-en-dark-125-contrast0-10-duel-unconfigured.png",
+          "sha256": "9fc7b804d7d966e4509a4c7a49e3b2dd4f2d7a2966e710ee3e8301d82cf56346",
+          "scope": "production Duel capability/online-required state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "430dp-ms-dark-150-contrast1-10-duel-unconfigured.png",
+          "sha256": "e47042f23660b7e5eed62b26dab0ed8d6104e1d1adb45225f11f2f956f2afab9",
+          "scope": "production Duel capability/online-required state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "768dp-en-light-150-contrast1-10-duel-unconfigured.png",
+          "sha256": "d00a0e37ac6f4fb3f1186373d41bc63361cf4f7395b857830fc35918228a80c9",
+          "scope": "production Duel capability/online-required state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        }
+      ],
+      "acceptance_limits": [
+        "No-config entry checked in full matrix; configured entry uses scripted transport; hosted creation/join not verified.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-duel",
+        "path": "/duel"
+      },
+      "state": "DuelScreen._entry",
+      "implementation_paths": [
+        "lib/features/duel/duel_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/duel/duel_screen_test.dart:72",
+        "test/features/duel/duel_screen_test.dart:159"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "11",
+      "title": "Lobi Duel",
+      "kind": "page",
+      "requirements": [
+        "D01",
+        "D02"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Unavailable raw route checked in full matrix; live two-client lobby/countdown not verified.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-duel-lobby",
+        "path": "/duel/lobby"
+      },
+      "state": "DuelScreen._lobby / waiting and countdown",
+      "implementation_paths": [
+        "lib/features/duel/duel_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/duel/duel_controller_test.dart",
+        "test/features/duel/duel_screen_test.dart"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "12",
+      "title": "Duel berlangsung",
+      "kind": "page",
+      "requirements": [
+        "D01",
+        "D02",
+        "D03"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Scripted active match at 320dp BM/English light/dark150; no hosted two-client run.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-duel-match",
+        "path": "/duel/match"
+      },
+      "state": "DuelScreen._match / validated server projection",
+      "implementation_paths": [
+        "lib/features/duel/duel_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/duel/duel_screen_test.dart:72",
+        "test/features/duel/duel_screen_test.dart:175",
+        "test/features/duel/duel_projection_test.dart"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "13",
+      "title": "Keputusan Duel",
+      "kind": "page",
+      "requirements": [
+        "D03"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Scripted populated result at 320dp BM/English light/dark150; hosted result unverified.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-duel-result",
+        "path": "/duel/result"
+      },
+      "state": "DuelScreen._result",
+      "implementation_paths": [
+        "lib/features/duel/duel_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/duel/duel_screen_test.dart:72",
+        "test/features/duel/duel_projection_test.dart"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "14",
+      "title": "Log masuk",
+      "kind": "page",
+      "requirements": [
+        "C01"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Unavailable entry checked in full matrix; scripted Auth verification is separate from hosted sign-in.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-login",
+        "path": "/auth/login"
+      },
+      "state": "AuthScreenMode.login",
+      "implementation_paths": [
+        "lib/features/auth/presentation/auth_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/auth/auth_screen_test.dart",
+        "test/features/auth/native_auth_repository_test.dart:223"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "15",
+      "title": "Daftar akaun",
+      "kind": "page",
+      "requirements": [
+        "C01"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Unavailable entry checked in full matrix; hosted signup/confirmation email not verified.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-signup",
+        "path": "/auth/signup"
+      },
+      "state": "AuthScreenMode.signup",
+      "implementation_paths": [
+        "lib/features/auth/presentation/auth_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/auth/native_auth_repository_test.dart:322",
+        "test/features/auth/auth_screen_test.dart"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "16",
+      "title": "Pemulihan akaun",
+      "kind": "page",
+      "requirements": [
+        "C01"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Unavailable entry checked in full matrix; real delivery and native OS link dispatch unverified.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-recover",
+        "path": "/auth/recover"
+      },
+      "state": "AuthScreenMode.recover / email recovery link",
+      "implementation_paths": [
+        "lib/features/auth/presentation/auth_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/auth/native_auth_repository_test.dart:630",
+        "test/features/auth/native_auth_repository_test.dart:944"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "17",
+      "title": "Dashboard guru",
+      "kind": "page",
+      "requirements": [
+        "C02",
+        "C03"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Guest/unavailable entry checked in full matrix; teacher fixture at320dp dark150 BM/English; hosted role/RLS unverified.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-classes",
+        "path": "/classes"
+      },
+      "state": "ClassroomScreen._dashboard / server role teacher",
+      "implementation_paths": [
+        "lib/features/classroom/presentation/classroom_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/classroom/classroom_widgets_test.dart:201",
+        "test/features/classroom/classroom_repository_test.dart:67"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "18",
+      "title": "Ahli dan jemputan kelas",
+      "kind": "page",
+      "requirements": [
+        "C02",
+        "C03"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Source renders members/invites inside selected class; no separate full-profile populated member list sweep.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-classes",
+        "path": "/classes"
+      },
+      "state": "ClassroomScreen._class / members and invitations",
+      "implementation_paths": [
+        "lib/features/classroom/presentation/classroom_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/classroom/classroom_controller_test.dart:123",
+        "test/features/classroom/classroom_controller_test.dart:288",
+        "test/features/classroom/classroom_widgets_test.dart:201"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "19",
+      "title": "Pantau bilik",
+      "kind": "page",
+      "requirements": [
+        "C02",
+        "C04"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Waiting/score separation and server clock have fixture pointers; live multi-client monitor unverified.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-classes",
+        "path": "/classes"
+      },
+      "state": "ClassroomScreen._room / teacher monitor",
+      "implementation_paths": [
+        "lib/features/classroom/presentation/classroom_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/classroom/classroom_widgets_test.dart:222",
+        "test/features/classroom/classroom_controller_test.dart:504"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "20",
+      "title": "Keputusan bilik",
+      "kind": "page",
+      "requirements": [
+        "C02",
+        "C04"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Closed attempt ID and score display have fixture pointers; no hosted populated-results/device sweep.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-classes",
+        "path": "/classes"
+      },
+      "state": "ClassroomScreen._room / closed-room board",
+      "implementation_paths": [
+        "lib/features/classroom/presentation/classroom_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/classroom/classroom_controller_test.dart:336",
+        "test/features/classroom/classroom_controller_test.dart:435",
+        "test/features/classroom/classroom_widgets_test.dart:222"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "21",
+      "title": "Dashboard pelajar",
+      "kind": "page",
+      "requirements": [
+        "C02",
+        "C03"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Server-role branch implemented; student fixture coverage is narrower than complete dashboard profile matrix.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-classes",
+        "path": "/classes"
+      },
+      "state": "ClassroomScreen._dashboard / server role student",
+      "implementation_paths": [
+        "lib/features/classroom/presentation/classroom_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/classroom/classroom_controller_test.dart:201",
+        "test/features/classroom/classroom_widgets_test.dart:241"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "22",
+      "title": "Bilik pelajar",
+      "kind": "page",
+      "requirements": [
+        "C02",
+        "C04"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Scripted attempt/explicit R1 and identical pending event covered by pointers; hosted attempt resume unverified.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-classes",
+        "path": "/classes"
+      },
+      "state": "ClassroomScreen._room and _game / same attempt",
+      "implementation_paths": [
+        "lib/features/classroom/presentation/classroom_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/classroom/classroom_widgets_test.dart:241",
+        "test/features/classroom/classroom_controller_test.dart:435",
+        "test/features/classroom/classroom_controller_test.dart:449"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "23",
+      "title": "Profil saya",
+      "kind": "page",
+      "requirements": [
+        "C05"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        }
+      ],
+      "screenshot_evidence": [
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "320dp-ms-light-100-contrast0-profile-guest.png",
+          "sha256": "827e1f9503573054097480919406ad53907ee3cf77704586263742f3434302db",
+          "scope": "production profile guest sign-in state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "390dp-en-dark-125-contrast0-profile-guest.png",
+          "sha256": "3450182491afab80e349c041cd565ac14caaafb7da1dcaab89221c74e2c5e9d1",
+          "scope": "production profile guest sign-in state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "430dp-ms-dark-150-contrast1-profile-guest.png",
+          "sha256": "d4070741212d92723028155f9f32f5eb9ecaf6996267b15bd2452412cb8e0ae8",
+          "scope": "production profile guest sign-in state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "768dp-en-light-150-contrast1-profile-guest.png",
+          "sha256": "845437854f62e96c650f687ed8b57b442ac097903de4c690ace6f21abf51ded4",
+          "scope": "production profile guest sign-in state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        }
+      ],
+      "acceptance_limits": [
+        "Guest entry checked in full matrix; signed-in draft fixture at320dp BM/English dark150; hosted save/profile completion unverified.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-profile",
+        "path": "/profile"
+      },
+      "state": "ProfileScreen / server profile or completion",
+      "implementation_paths": [
+        "lib/features/profile/presentation/profile_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/profile/profile_screen_test.dart:124",
+        "test/features/profile/profile_repository_test.dart:82"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "24",
+      "title": "Kata laluan dan keselamatan",
+      "kind": "page",
+      "requirements": [
+        "C01",
+        "C05"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Raw guest route cannot authorize password update; actual server reauthentication/logout not verified.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-security",
+        "path": "/account/security"
+      },
+      "state": "AuthScreenMode.security",
+      "implementation_paths": [
+        "lib/features/auth/presentation/auth_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/auth/native_auth_repository_test.dart:871",
+        "test/features/auth/native_auth_repository_test.dart:914",
+        "test/features/auth/native_auth_repository_test.dart:931"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "25",
+      "title": "Teroka 3D",
+      "kind": "page",
+      "requirements": [
+        "L01",
+        "L02",
+        "U02"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host Dart/JS tests; not integrated Android",
+          "source_ref": "8a5527438ee828a306afba36a337a3ca3bbedb83",
+          "receipt": "docs/handoffs/app-learning/evidence/resume-20261105/result.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        },
+        {
+          "scope": "Corrected native host on Android: real bundled WebView,11-model count,rotate/fold,preferences,actor change; missing/corrupt asset rejection in separate cases.",
+          "source_ref": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        }
+      ],
+      "screenshot_evidence": [
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "320dp-ms-light-100-contrast0-25-explore-cube.png",
+          "sha256": "b5217d404bbcba0ab3d5e9c2c65d83c6f81dfcec63868b49d9409cfe0d141ac2",
+          "scope": "real offline Android WebView canonical cube canvas",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42089442055/artifacts/13445750722",
+          "path": "390dp-en-dark-125-contrast0-25-explore-cube.png",
+          "sha256": "bbbe344082a6b5edc0911a0c3f44fe6a67618a9898e7fd11553634a5b7329ba7",
+          "scope": "real offline Android WebView canonical cube canvas",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "f5e02d0c9b94b7a74f44a4c47b17b00f149883b1",
+          "capture_run_id": 42089442055
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42089442055/artifacts/13445750722",
+          "path": "430dp-ms-dark-150-contrast1-25-explore-cube.png",
+          "sha256": "0cba761eab0f7e3869914d070f99d3bb39f8774a0c083c9ec20f5db3f68f1caa",
+          "scope": "real offline Android WebView canonical cube canvas",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "f5e02d0c9b94b7a74f44a4c47b17b00f149883b1",
+          "capture_run_id": 42089442055
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "768dp-en-light-150-contrast1-25-explore-cube.png",
+          "sha256": "6ec2e37ee6031dce5c5f35d6de1e9d54a3c862c191a26335a26959a52e6f69b3",
+          "scope": "real offline Android WebView canonical cube canvas",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        }
+      ],
+      "acceptance_limits": [
+        "Baseline functional scope and current native-host revalidation are cited separately. Complete visual-state, manual accessibility and hosted acceptance remain unverified."
+      ],
+      "owner": "app-learning",
+      "route": {
+        "name": "learning-explore",
+        "path": "/learn/explore"
+      },
+      "state": "LearningExplorePage; eleven physical-face-colour models",
+      "implementation_paths": [
+        "lib/features/learning/presentation/explore_pages.dart"
+      ],
+      "test_pointers": [
+        "test/features/learning/explore/learning_catalogue_test.dart",
+        "test/features/learning/acceptance/bundled_assets_acceptance_test.dart",
+        "integration_test/learning_acceptance_test.dart"
+      ],
+      "capability": "Bundled offline module; SVG/URL preview/select/copy only; no OS printing/file-save/open-URL success claimed"
+    },
+    {
+      "id": "26",
+      "title": "Pandangan 2D",
+      "kind": "page",
+      "requirements": [
+        "L03",
+        "U02"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host Dart/JS tests; not integrated Android",
+          "source_ref": "8a5527438ee828a306afba36a337a3ca3bbedb83",
+          "receipt": "docs/handoffs/app-learning/evidence/resume-20261105/result.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Baseline functional scope and current native-host revalidation are cited separately. Complete visual-state, manual accessibility and hosted acceptance remain unverified."
+      ],
+      "owner": "app-learning",
+      "route": {
+        "name": "learning-views",
+        "path": "/learn/views"
+      },
+      "state": "LearningViewsPage; six views and stable model",
+      "implementation_paths": [
+        "lib/features/learning/presentation/explore_pages.dart"
+      ],
+      "test_pointers": [
+        "test/features/learning/explore/learning_catalogue_test.dart",
+        "test/features/learning/acceptance/feature_acceptance_test.dart",
+        "integration_test/learning_acceptance_test.dart"
+      ],
+      "capability": "Bundled offline module; SVG/URL preview/select/copy only; no OS printing/file-save/open-URL success claimed"
+    },
+    {
+      "id": "27",
+      "title": "Nota pembelajaran",
+      "kind": "page",
+      "requirements": [
+        "L04"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host Dart/JS tests; not integrated Android",
+          "source_ref": "8a5527438ee828a306afba36a337a3ca3bbedb83",
+          "receipt": "docs/handoffs/app-learning/evidence/resume-20261105/result.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Baseline functional scope and current native-host revalidation are cited separately. Complete visual-state, manual accessibility and hosted acceptance remain unverified."
+      ],
+      "owner": "app-learning",
+      "route": {
+        "name": "learning-notes",
+        "path": "/learn/notes/:shapeId"
+      },
+      "state": "LearningNotesPage; canonical notes for selected model",
+      "implementation_paths": [
+        "lib/features/learning/presentation/explore_pages.dart"
+      ],
+      "test_pointers": [
+        "test/features/learning/acceptance/feature_acceptance_test.dart",
+        "integration_test/learning_acceptance_test.dart"
+      ],
+      "capability": "Bundled offline module; SVG/URL preview/select/copy only; no OS printing/file-save/open-URL success claimed"
+    },
+    {
+      "id": "28",
+      "title": "Kalkulator ukuran",
+      "kind": "page",
+      "requirements": [
+        "L04"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host Dart/JS tests; not integrated Android",
+          "source_ref": "8a5527438ee828a306afba36a337a3ca3bbedb83",
+          "receipt": "docs/handoffs/app-learning/evidence/resume-20261105/result.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Baseline functional scope and current native-host revalidation are cited separately. Complete visual-state, manual accessibility and hosted acceptance remain unverified."
+      ],
+      "owner": "app-learning",
+      "route": {
+        "name": "learning-calculator",
+        "path": "/learn/calculator/:shapeId"
+      },
+      "state": "LearningCalculatorPage; canonical measurements and units",
+      "implementation_paths": [
+        "lib/features/learning/presentation/explore_pages.dart"
+      ],
+      "test_pointers": [
+        "test/features/learning/acceptance/feature_acceptance_test.dart",
+        "test/features/learning/bundle/learning_adapter.test.mjs",
+        "integration_test/learning_acceptance_test.dart"
+      ],
+      "capability": "Bundled offline module; SVG/URL preview/select/copy only; no OS printing/file-save/open-URL success claimed"
+    },
+    {
+      "id": "29",
+      "title": "Bina bentangan",
+      "kind": "page",
+      "requirements": [
+        "L05",
+        "L08"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host Dart/JS tests; not integrated Android",
+          "source_ref": "8a5527438ee828a306afba36a337a3ca3bbedb83",
+          "receipt": "docs/handoffs/app-learning/evidence/resume-20261105/result.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Baseline functional scope and current native-host revalidation are cited separately. Complete visual-state, manual accessibility and hosted acceptance remain unverified."
+      ],
+      "owner": "app-learning",
+      "route": {
+        "name": "learning-net",
+        "path": "/learn/labs/net"
+      },
+      "state": "LearningNetPage; predict/try/check/explain and persisted draft",
+      "implementation_paths": [
+        "lib/features/learning/labs/net_volume_pages.dart"
+      ],
+      "test_pointers": [
+        "test/features/learning/labs/labs_hub_test.dart",
+        "test/features/learning/bundle/native_learning_bridge.test.mjs",
+        "integration_test/learning_acceptance_test.dart"
+      ],
+      "capability": "Bundled offline module; SVG/URL preview/select/copy only; no OS printing/file-save/open-URL success claimed"
+    },
+    {
+      "id": "30",
+      "title": "Makmal isi padu",
+      "kind": "page",
+      "requirements": [
+        "L05",
+        "L08"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host Dart/JS tests; not integrated Android",
+          "source_ref": "8a5527438ee828a306afba36a337a3ca3bbedb83",
+          "receipt": "docs/handoffs/app-learning/evidence/resume-20261105/result.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Baseline functional scope and current native-host revalidation are cited separately. Complete visual-state, manual accessibility and hosted acceptance remain unverified."
+      ],
+      "owner": "app-learning",
+      "route": {
+        "name": "learning-volume",
+        "path": "/learn/labs/volume"
+      },
+      "state": "LearningVolumePage; advanced volume modes and reflection",
+      "implementation_paths": [
+        "lib/features/learning/labs/net_volume_pages.dart"
+      ],
+      "test_pointers": [
+        "test/features/learning/labs/labs_hub_test.dart",
+        "test/features/learning/bundle/native_learning_bridge.test.mjs",
+        "integration_test/learning_acceptance_test.dart"
+      ],
+      "capability": "Bundled offline module; SVG/URL preview/select/copy only; no OS printing/file-save/open-URL success claimed"
+    },
+    {
+      "id": "31",
+      "title": "Luas permukaan dan rumus",
+      "kind": "page",
+      "requirements": [
+        "L05",
+        "L08"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host Dart/JS tests; not integrated Android",
+          "source_ref": "8a5527438ee828a306afba36a337a3ca3bbedb83",
+          "receipt": "docs/handoffs/app-learning/evidence/resume-20261105/result.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Baseline functional scope and current native-host revalidation are cited separately. Complete visual-state, manual accessibility and hosted acceptance remain unverified."
+      ],
+      "owner": "app-learning",
+      "route": {
+        "name": "learning-area",
+        "path": "/learn/labs/area"
+      },
+      "state": "LearningAreaPage; surface area/derive formula modes",
+      "implementation_paths": [
+        "lib/features/learning/labs/surface_pages.dart"
+      ],
+      "test_pointers": [
+        "test/features/learning/surface/surface_header_test.dart",
+        "test/features/learning/surface/surface_adapter.test.mjs",
+        "integration_test/learning_acceptance_test.dart"
+      ],
+      "capability": "Bundled offline module; SVG/URL preview/select/copy only; no OS printing/file-save/open-URL success claimed"
+    },
+    {
+      "id": "32",
+      "title": "Bongkah gabungan",
+      "kind": "page",
+      "requirements": [
+        "L05",
+        "L08"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host Dart/JS tests; not integrated Android",
+          "source_ref": "8a5527438ee828a306afba36a337a3ca3bbedb83",
+          "receipt": "docs/handoffs/app-learning/evidence/resume-20261105/result.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Baseline functional scope and current native-host revalidation are cited separately. Complete visual-state, manual accessibility and hosted acceptance remain unverified."
+      ],
+      "owner": "app-learning",
+      "route": {
+        "name": "learning-composite",
+        "path": "/learn/labs/composite"
+      },
+      "state": "LearningCompositePage; canonical composite construction",
+      "implementation_paths": [
+        "lib/features/learning/labs/surface_pages.dart"
+      ],
+      "test_pointers": [
+        "test/features/learning/surface/surface_header_test.dart",
+        "test/features/learning/surface/surface_adapter.test.mjs",
+        "integration_test/learning_acceptance_test.dart"
+      ],
+      "capability": "Bundled offline module; SVG/URL preview/select/copy only; no OS printing/file-save/open-URL success claimed"
+    },
+    {
+      "id": "33",
+      "title": "Hab makmal",
+      "kind": "page",
+      "requirements": [
+        "L05"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host Dart/JS tests; not integrated Android",
+          "source_ref": "8a5527438ee828a306afba36a337a3ca3bbedb83",
+          "receipt": "docs/handoffs/app-learning/evidence/resume-20261105/result.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Baseline functional scope and current native-host revalidation are cited separately. Complete visual-state, manual accessibility and hosted acceptance remain unverified."
+      ],
+      "owner": "app-learning",
+      "route": {
+        "name": "learning-labs",
+        "path": "/learn/labs"
+      },
+      "state": "LearningLabsHub; shared lab cards",
+      "implementation_paths": [
+        "lib/features/learning/labs/labs_hub.dart"
+      ],
+      "test_pointers": [
+        "test/features/learning/labs/labs_hub_test.dart",
+        "integration_test/learning_acceptance_test.dart"
+      ],
+      "capability": "Bundled offline module; SVG/URL preview/select/copy only; no OS printing/file-save/open-URL success claimed"
+    },
+    {
+      "id": "34",
+      "title": "Pelan dan Dongakan",
+      "kind": "page",
+      "requirements": [
+        "L06"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host Dart/JS tests; not integrated Android",
+          "source_ref": "8a5527438ee828a306afba36a337a3ca3bbedb83",
+          "receipt": "docs/handoffs/app-learning/evidence/resume-20261105/result.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Baseline functional scope and current native-host revalidation are cited separately. Complete visual-state, manual accessibility and hosted acceptance remain unverified."
+      ],
+      "owner": "app-learning",
+      "route": {
+        "name": "learning-projection",
+        "path": "/learn/projection"
+      },
+      "state": "LearningProjectionPage; plan/elevation, scales and tolerance",
+      "implementation_paths": [
+        "lib/features/learning/studio/studio_pages.dart"
+      ],
+      "test_pointers": [
+        "test/features/learning/studio/checkpoint_schema_parity.test.mjs",
+        "test/features/learning/acceptance/feature_acceptance_test.dart",
+        "integration_test/learning_acceptance_test.dart"
+      ],
+      "capability": "Bundled offline module; SVG/URL preview/select/copy only; no OS printing/file-save/open-URL success claimed"
+    },
+    {
+      "id": "35",
+      "title": "Semakan langkah pengiraan",
+      "kind": "page",
+      "requirements": [
+        "L07"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host Dart/JS tests; not integrated Android",
+          "source_ref": "8a5527438ee828a306afba36a337a3ca3bbedb83",
+          "receipt": "docs/handoffs/app-learning/evidence/resume-20261105/result.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Baseline functional scope and current native-host revalidation are cited separately. Complete visual-state, manual accessibility and hosted acceptance remain unverified."
+      ],
+      "owner": "app-learning",
+      "route": {
+        "name": "learning-calculation",
+        "path": "/learn/calculation"
+      },
+      "state": "LearningCalculationPage; bounded canonical parser",
+      "implementation_paths": [
+        "lib/features/learning/studio/studio_pages.dart"
+      ],
+      "test_pointers": [
+        "test/features/learning/bundle/learning_adapter.test.mjs",
+        "test/features/learning/acceptance/feature_acceptance_test.dart",
+        "integration_test/learning_acceptance_test.dart"
+      ],
+      "capability": "Bundled offline module; SVG/URL preview/select/copy only; no OS printing/file-save/open-URL success claimed"
+    },
+    {
+      "id": "36",
+      "title": "Rekod latihan kendiri",
+      "kind": "page",
+      "requirements": [
+        "L08",
+        "O03"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host Dart/JS tests; not integrated Android",
+          "source_ref": "8a5527438ee828a306afba36a337a3ca3bbedb83",
+          "receipt": "docs/handoffs/app-learning/evidence/resume-20261105/result.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Baseline functional scope and current native-host revalidation are cited separately. Complete visual-state, manual accessibility and hosted acceptance remain unverified."
+      ],
+      "owner": "app-learning",
+      "route": {
+        "name": "learning-records",
+        "path": "/learn/records"
+      },
+      "state": "LearningRecordsPage; shared canonical reflection reader",
+      "implementation_paths": [
+        "lib/features/learning/studio/learning_records_page.dart"
+      ],
+      "test_pointers": [
+        "test/features/learning/studio/learning_records_page_test.dart",
+        "test/features/learning/studio/learning_reflection_controller_test.dart",
+        "integration_test/learning_acceptance_test.dart"
+      ],
+      "capability": "Actor-bound local reflection records; signed-in queue uses the shared writer; unavailable hosted sync preserves pending rows"
+    },
+    {
+      "id": "37",
+      "title": "Tetapan penggunaan",
+      "kind": "page",
+      "requirements": [
+        "U03"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "foundation READY evidence; not a combined-feature Android receipt",
+          "source_ref": "9a1f49a7c92d13bb70b7fd1420c34629a7785f9e",
+          "receipt": "docs/handoffs/app-foundation/LATEST.md"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        },
+        {
+          "scope": "Corrected native host on Android: real bundled WebView,11-model count,rotate/fold,preferences,actor change; missing/corrupt asset rejection in separate cases.",
+          "source_ref": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        }
+      ],
+      "screenshot_evidence": [
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "320dp-ms-light-100-contrast0-37-settings.png",
+          "sha256": "a187218dba75c178c8a755dda4adcd6ea5d73f6a55d23dc5bc7ca887202cc3af",
+          "scope": "production preferences saved through Android UI",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "390dp-en-dark-125-contrast0-37-settings.png",
+          "sha256": "1e52bb478c308784d36eea289fe212c967238991fa3617263ee74cab145fdded",
+          "scope": "production preferences saved through Android UI",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "430dp-ms-dark-150-contrast1-37-settings.png",
+          "sha256": "ce4d1cccea6163926c542d0c9f3849e935d5e4647574d9dc36720ba3f3c50940",
+          "scope": "production preferences saved through Android UI",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "768dp-en-light-150-contrast1-37-settings.png",
+          "sha256": "47adbac75c4d82a4b386ac7bc187d4f3972725a8db144a2379a9e239a73bc680",
+          "scope": "production preferences saved through Android UI",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        }
+      ],
+      "acceptance_limits": [
+        "Integrated evidence is cited; complete manual TalkBack/gestures and all visual combinations remain unverified."
+      ],
+      "owner": "app-foundation / app-integration",
+      "route": {
+        "name": "preferences",
+        "path": "/settings"
+      },
+      "state": "PreferencesScreen; language/theme/contrast/text/motion/audio",
+      "implementation_paths": [
+        "lib/features/preferences/preferences_screen.dart"
+      ],
+      "test_pointers": [
+        "test/preferences/preferences_screen_test.dart",
+        "test/preferences/preferences_repository_test.dart"
+      ],
+      "capability": "Offline native UI"
+    },
+    {
+      "id": "38",
+      "title": "Tema gelap halaman utama",
+      "kind": "variant",
+      "requirements": [
+        "U03"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "foundation READY evidence; not a combined-feature Android receipt",
+          "source_ref": "9a1f49a7c92d13bb70b7fd1420c34629a7785f9e",
+          "receipt": "docs/handoffs/app-foundation/LATEST.md"
+        }
+      ],
+      "screenshot_evidence": [
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "390dp-en-dark-125-contrast0-01-home-offline.png",
+          "sha256": "b46b44e8f55490f74cf356ff9f0bcdd37d32c65612c6f7b2dc6632f9145e273a",
+          "scope": "normal main cold reopen, persisted preferences, airplane mode",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "430dp-ms-dark-150-contrast1-01-home-offline.png",
+          "sha256": "d75d400c57be295fa45faf9dcac2d3c200b66c507478e0b36f0120c928bfd0d6",
+          "scope": "normal main cold reopen, persisted preferences, airplane mode",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        }
+      ],
+      "acceptance_limits": [
+        "Integrated evidence is cited; complete manual TalkBack/gestures and all visual combinations remain unverified."
+      ],
+      "owner": "app-foundation / app-integration",
+      "route": {
+        "name": "home",
+        "path": "/"
+      },
+      "state": "HomeScreen with dark preference; same route/state",
+      "implementation_paths": [
+        "lib/features/home/home_screen.dart"
+      ],
+      "test_pointers": [
+        "test/design/design_contract_test.dart",
+        "test/preferences/preferences_screen_test.dart",
+        "integration_test/foundation_smoke_test.dart"
+      ],
+      "capability": "Offline native UI"
+    },
+    {
+      "id": "39",
+      "title": "Pusat bantuan",
+      "kind": "page",
+      "requirements": [
+        "U04"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "foundation READY evidence; not a combined-feature Android receipt",
+          "source_ref": "9a1f49a7c92d13bb70b7fd1420c34629a7785f9e",
+          "receipt": "docs/handoffs/app-foundation/LATEST.md"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Integrated evidence is cited; complete manual TalkBack/gestures and all visual combinations remain unverified."
+      ],
+      "owner": "app-foundation / app-integration",
+      "route": {
+        "name": "help",
+        "path": "/help"
+      },
+      "state": "HelpScreen; offline guide and report navigation",
+      "implementation_paths": [
+        "lib/features/help/help_screen.dart"
+      ],
+      "test_pointers": [
+        "test/foundation/preview_bootstrap_contract_test.dart",
+        "integration_test/app_flow_test.dart"
+      ],
+      "capability": "Offline native UI"
+    },
+    {
+      "id": "40",
+      "title": "Lapor masalah dan pratonton",
+      "kind": "page+sheet",
+      "requirements": [
+        "U04"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "foundation READY evidence; not a combined-feature Android receipt",
+          "source_ref": "9a1f49a7c92d13bb70b7fd1420c34629a7785f9e",
+          "receipt": "docs/handoffs/app-foundation/LATEST.md"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Integrated evidence is cited; complete manual TalkBack/gestures and all visual combinations remain unverified."
+      ],
+      "owner": "app-foundation / app-integration",
+      "route": {
+        "name": "report",
+        "path": "/report"
+      },
+      "state": "ReportScreen; local report form, preview, redaction, copy and TXT export",
+      "implementation_paths": [
+        "lib/features/help/report_screen.dart"
+      ],
+      "test_pointers": [
+        "test/foundation/report_accessibility_test.dart",
+        "test/foundation/back_policy_contract_test.dart"
+      ],
+      "capability": "Local preview/copy/TXT Android document adapter; no email/report transmission is queued or claimed"
+    },
+    {
+      "id": "41",
+      "title": "Hab Belajar",
+      "kind": "page",
+      "requirements": [
+        "L01",
+        "U01"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host Dart/JS tests; not integrated Android",
+          "source_ref": "8a5527438ee828a306afba36a337a3ca3bbedb83",
+          "receipt": "docs/handoffs/app-learning/evidence/resume-20261105/result.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        }
+      ],
+      "screenshot_evidence": [
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "320dp-ms-light-100-contrast0-41-learning-hub.png",
+          "sha256": "a29496a7fda5b2d48912a7db9417577b7f3fd0d59efb856409db14befe0444bb",
+          "scope": "production learning hub",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "390dp-en-dark-125-contrast0-41-learning-hub.png",
+          "sha256": "a34aaf98d990dca4081ee13304720847c706cc853441056f53d68e61208084a4",
+          "scope": "production learning hub",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "430dp-ms-dark-150-contrast1-41-learning-hub.png",
+          "sha256": "4c162ce0c48423bb2348bc34b9a3f04e453de67a073d7de1738c3c205f2b374b",
+          "scope": "production learning hub",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "768dp-en-light-150-contrast1-41-learning-hub.png",
+          "sha256": "038ddaf21825cc252a0ae7672f80e1a8e2b0e40b2a6b33deaf36462c6fb54eec",
+          "scope": "production learning hub",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        }
+      ],
+      "acceptance_limits": [
+        "Baseline functional scope and current native-host revalidation are cited separately. Complete visual-state, manual accessibility and hosted acceptance remain unverified."
+      ],
+      "owner": "app-learning",
+      "route": {
+        "name": "learning",
+        "path": "/learn"
+      },
+      "state": "LearningHub; links to explore/labs/studio/records",
+      "implementation_paths": [
+        "lib/features/learning/presentation/learning_hub.dart"
+      ],
+      "test_pointers": [
+        "test/features/learning/explore/learning_hub_test.dart",
+        "test/features/learning/acceptance/feature_acceptance_test.dart",
+        "integration_test/learning_acceptance_test.dart"
+      ],
+      "capability": "Bundled offline module; SVG/URL preview/select/copy only; no OS printing/file-save/open-URL success claimed"
+    },
+    {
+      "id": "42",
+      "title": "Cipta kelas",
+      "kind": "form",
+      "requirements": [
+        "C02"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Form fixture preserves input and closes on account switch; hosted create and all-profile keyboard sweep unverified.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-classes",
+        "path": "/classes"
+      },
+      "state": "ClassroomScreen._createClass / _ClassroomInputDialog",
+      "implementation_paths": [
+        "lib/features/classroom/presentation/classroom_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/classroom/classroom_widgets_test.dart:117",
+        "test/features/classroom/classroom_widgets_test.dart:181"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "43",
+      "title": "Cipta bilik",
+      "kind": "form",
+      "requirements": [
+        "C02"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Owned teacher action exists; no dedicated successful create-room modal/device end-to-end evidence in worker6.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-classes",
+        "path": "/classes"
+      },
+      "state": "ClassroomScreen._createRoom / _ClassroomInputDialog",
+      "implementation_paths": [
+        "lib/features/classroom/presentation/classroom_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/classroom/classroom_controller_test.dart:81",
+        "test/features/classroom/classroom_controller_test.dart:201",
+        "test/features/classroom/classroom_widgets_test.dart:201"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "44",
+      "title": "Sertai kelas/bilik melalui PIN",
+      "kind": "form",
+      "requirements": [
+        "C02"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Leading-zero PIN and server expiry have fixture pointers; dedicated real join-PIN/device flow unverified.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-classes",
+        "path": "/classes"
+      },
+      "state": "ClassroomScreen._joinPin / PIN validation",
+      "implementation_paths": [
+        "lib/features/classroom/presentation/classroom_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/classroom/classroom_controller_test.dart:81",
+        "test/features/classroom/classroom_controller_test.dart:596"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "45",
+      "title": "Sahkan e-mel",
+      "kind": "state",
+      "requirements": [
+        "C01"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Unavailable entry checked in full matrix; no delivered email or native OS callback activation proof.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-confirmation",
+        "path": "/auth/verify"
+      },
+      "state": "AuthScreenMode.confirmation / email link",
+      "implementation_paths": [
+        "lib/features/auth/presentation/auth_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/auth/native_auth_repository_test.dart:322",
+        "test/features/auth/native_auth_repository_test.dart:697",
+        "test/features/auth/native_auth_repository_test.dart:721"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "46",
+      "title": "Kata laluan baharu",
+      "kind": "form",
+      "requirements": [
+        "C01"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Raw route is not recovery permission; scripted verified recovery is separate from live device callback.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-reset",
+        "path": "/auth/reset"
+      },
+      "state": "AuthScreenMode.reset / verified recovery only",
+      "implementation_paths": [
+        "lib/features/auth/presentation/auth_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/auth/native_auth_repository_test.dart:545",
+        "test/features/auth/native_auth_repository_test.dart:630",
+        "test/features/auth/native_auth_repository_test.dart:944"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "47",
+      "title": "Sesi aktif",
+      "kind": "page",
+      "requirements": [
+        "C05"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Guest error entry checked in full matrix; list validation has repository pointers; no populated sessions all-profile widget/device sweep.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-sessions",
+        "path": "/account/sessions"
+      },
+      "state": "SessionsScreen / sanitized active session list",
+      "implementation_paths": [
+        "lib/features/auth/presentation/sessions_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/auth/native_auth_repository_test.dart:1070",
+        "test/features/auth/native_auth_repository_test.dart:1107"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "48",
+      "title": "Sambungan Duel terganggu",
+      "kind": "state",
+      "requirements": [
+        "D02",
+        "D03",
+        "N01"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Pending payload/reconnect/lifecycle have scripted transport coverage; live network-loss device test unverified.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-duel-match",
+        "path": "/duel/match"
+      },
+      "state": "DuelScreen._connection / unknown outcome and resync",
+      "implementation_paths": [
+        "lib/features/duel/duel_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/duel/duel_controller_test.dart:35",
+        "test/features/duel/duel_controller_test.dart:257",
+        "test/features/duel/duel_controller_test.dart:524"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "EX01",
+      "title": "Sunting nama kelas",
+      "kind": "supplemental-state",
+      "requirements": [
+        "C03"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Rename conflict draft fixture; hosted revisions unverified.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-classes",
+        "path": "/classes"
+      },
+      "state": "_ManagementDialog / editClass rename_class",
+      "implementation_paths": [
+        "lib/features/classroom/presentation/classroom_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/classroom/classroom_controller_test.dart:123",
+        "test/features/classroom/classroom_widgets_test.dart:289"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "EX02",
+      "title": "Sunting nama bilik",
+      "kind": "supplemental-state",
+      "requirements": [
+        "C03"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Exact revision wire fixture; dedicated room rename modal/device sweep absent.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-classes",
+        "path": "/classes"
+      },
+      "state": "_ManagementDialog / editRoom rename_room",
+      "implementation_paths": [
+        "lib/features/classroom/presentation/classroom_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/classroom/classroom_controller_test.dart:123",
+        "test/features/classroom/classroom_controller_test.dart:260"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "EX03",
+      "title": "Pengesahan arkib",
+      "kind": "supplemental-state",
+      "requirements": [
+        "C03"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Source confirmation and lifecycle guards; hosted archive effects unverified.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-classes",
+        "path": "/classes"
+      },
+      "state": "_ManagementDialog / archive_class or archive_room",
+      "implementation_paths": [
+        "lib/features/classroom/presentation/classroom_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/classroom/classroom_controller_test.dart:336",
+        "test/features/classroom/classroom_controller_test.dart:596"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "EX04",
+      "title": "Senarai arkib / restore",
+      "kind": "supplemental-state",
+      "requirements": [
+        "C03"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Closed state/expired PIN preserved by fixtures; dedicated restored list device flow absent.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-classes",
+        "path": "/classes"
+      },
+      "state": "_dashboard archive filter / restore_class or restore_room",
+      "implementation_paths": [
+        "lib/features/classroom/presentation/classroom_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/classroom/classroom_controller_test.dart:336",
+        "test/features/classroom/classroom_controller_test.dart:596"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "EX05",
+      "title": "Pengesahan padam rekod kosong",
+      "kind": "supplemental-state",
+      "requirements": [
+        "C03"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Unknown-outcome and not_empty keep draft; hosted delete authorization unverified.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-classes",
+        "path": "/classes"
+      },
+      "state": "_ManagementDialog / delete_class or delete_room",
+      "implementation_paths": [
+        "lib/features/classroom/presentation/classroom_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/classroom/classroom_controller_test.dart:310",
+        "test/features/classroom/classroom_controller_test.dart:610"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "EX06",
+      "title": "Keluarkan ahli kelas",
+      "kind": "supplemental-state",
+      "requirements": [
+        "C03"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Revision/actor denial and membership removal fixtures; hosted historical preservation unverified.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-classes",
+        "path": "/classes"
+      },
+      "state": "_class / removeMember and expected_revision",
+      "implementation_paths": [
+        "lib/features/classroom/presentation/classroom_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/classroom/classroom_controller_test.dart:123",
+        "test/features/classroom/classroom_controller_test.dart:201",
+        "test/features/classroom/classroom_controller_test.dart:490"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "EX07",
+      "title": "Batal/tolak jemputan",
+      "kind": "supplemental-state",
+      "requirements": [
+        "C03"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "UUID-only wire and issuance staleness have fixture pointers; live two-account issuance unverified.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-classes",
+        "path": "/classes"
+      },
+      "state": "_invitation / cancel_invite or decline_invite",
+      "implementation_paths": [
+        "lib/features/classroom/presentation/classroom_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/classroom/classroom_controller_test.dart:123",
+        "test/features/classroom/classroom_controller_test.dart:288"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "EX08",
+      "title": "Conflict revision / refresh",
+      "kind": "supplemental-state",
+      "requirements": [
+        "C03"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Conflict/unknown outcome keeps text and blocks replay; hosted concurrency unverified.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-classes",
+        "path": "/classes"
+      },
+      "state": "_ManagementDialog / refreshManagement explicit revision adoption",
+      "implementation_paths": [
+        "lib/features/classroom/presentation/classroom_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/classroom/classroom_widgets_test.dart:289",
+        "test/features/classroom/classroom_widgets_test.dart:381",
+        "test/features/classroom/classroom_controller_test.dart:260"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "EX09",
+      "title": "Senarai pending sync",
+      "kind": "supplemental-state",
+      "requirements": [
+        "O04"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Guest local page full matrix; queued unavailable state has320dp fixture; hosted ack unverified.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "sync.pending",
+        "path": "/sync"
+      },
+      "state": "SyncScreen / pending count, events and retry",
+      "implementation_paths": [
+        "lib/features/sync/presentation/sync_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/sync/native_outbox_test.dart:679",
+        "test/features/sync/sync_bootstrap_widget_test.dart:100"
+      ],
+      "capability": "Durable local pending/status UI; signed-in upload requires hosted geo_offline_sync; guest never auto-uploads"
+    },
+    {
+      "id": "EX10",
+      "title": "Login semula untuk sync",
+      "kind": "supplemental-state",
+      "requirements": [
+        "O05"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Controller status/owner isolation pointers; no dedicated needsAuth button all-profile/device flow.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "sync.pending",
+        "path": "/sync"
+      },
+      "state": "SyncScreen / needsAuth and current-owner sign-in",
+      "implementation_paths": [
+        "lib/features/sync/presentation/sync_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/sync/native_outbox_test.dart:808",
+        "test/features/sync/native_outbox_test.dart:850"
+      ],
+      "capability": "Durable local pending/status UI; signed-in upload requires hosted geo_offline_sync; guest never auto-uploads"
+    },
+    {
+      "id": "EX11",
+      "title": "Storan gagal/penuh",
+      "kind": "supplemental-state",
+      "requirements": [
+        "O02"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Cloud/solo failures covered by real SQLite or fixtures; learning UI presentation remains Prompt2/4 integration, not claimed.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "sync.pending",
+        "path": "/sync"
+      },
+      "state": "SyncScreen.unsaved + solo save failure + shared writer failed receipt",
+      "implementation_paths": [
+        "lib/features/sync/presentation/sync_screen.dart",
+        "lib/features/learning/presentation/learning_module_page.dart",
+        "lib/features/learning/persistence/learning_reflection_controller.dart"
+      ],
+      "test_pointers": [
+        "test/features/cloud_game/cloud_game_storage_test.dart",
+        "test/features/solo/solo_pages_test.dart:89",
+        "test/features/sync/native_outbox_test.dart:454"
+      ],
+      "capability": "Durable local pending/status UI; signed-in upload requires hosted geo_offline_sync; guest never auto-uploads"
+    },
+    {
+      "id": "EX12",
+      "title": "Keluar Duel / forfeit",
+      "kind": "supplemental-state",
+      "requirements": [
+        "D02"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "All back-origin fixture pointers preserve server clock/capability; actual server forfeit unverified.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-duel-match",
+        "path": "/duel/match"
+      },
+      "state": "DuelScreen._confirmLeave / forfeit",
+      "implementation_paths": [
+        "lib/features/duel/duel_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/duel/duel_screen_test.dart:253",
+        "test/features/duel/duel_screen_test.dart:319",
+        "test/features/duel/duel_controller_test.dart:556"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "EX13",
+      "title": "Draf belum disimpan",
+      "kind": "supplemental-state",
+      "requirements": [
+        "C05"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Actor switch and tab exit while save pending have fixture pointers; hosted unknown outcome unverified.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-profile",
+        "path": "/profile"
+      },
+      "state": "ProfileScreenState.requestLeave / save discard stay",
+      "implementation_paths": [
+        "lib/features/profile/presentation/profile_screen.dart",
+        "lib/features/learning/presentation/learning_module_page.dart"
+      ],
+      "test_pointers": [
+        "test/features/profile/profile_screen_test.dart:328",
+        "test/features/profile/profile_screen_test.dart:359"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "EX14",
+      "title": "Pemulihan akaun legacy",
+      "kind": "supplemental-state",
+      "requirements": [
+        "C01"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Native implementation uses source legacy action, not email OTP; real legacy account recovery unverified.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-legacy-recovery",
+        "path": "/auth/legacy-recovery"
+      },
+      "state": "AuthScreenMode.legacyRecovery / recoverLegacy exact 32hex source code",
+      "implementation_paths": [
+        "lib/features/auth/presentation/auth_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/auth/native_auth_repository_test.dart:810",
+        "test/features/auth/native_auth_repository_test.dart:834"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "EX15",
+      "title": "Cache read-only / akses ditarik",
+      "kind": "supplemental-state",
+      "requirements": [
+        "N01"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        }
+      ],
+      "screenshot_evidence": [],
+      "acceptance_limits": [
+        "Cache/stale/denial tested at controller level; hosted revocation/device subscription test unverified.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-classes",
+        "path": "/classes"
+      },
+      "state": "ClassroomScreen stale notice / denial purges selected data",
+      "implementation_paths": [
+        "lib/features/classroom/presentation/classroom_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/classroom/classroom_controller_test.dart:383",
+        "test/features/classroom/classroom_controller_test.dart:711",
+        "test/features/sync/native_outbox_test.dart:1196"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    },
+    {
+      "id": "EX16",
+      "title": "Backend capability belum tersedia",
+      "kind": "supplemental-state",
+      "requirements": [
+        "N01"
+      ],
+      "status": "partial",
+      "implementation_status": "implemented",
+      "test_evidence": [
+        {
+          "scope": "feature branch host tests; not integrated Android",
+          "source_ref": "33e6734a27db789f04a9a048bf7f69ebd046e016",
+          "receipt": "docs/handoffs/app-cloud-game/VERIFICATION.json"
+        },
+        {
+          "scope": "Inherited integrated real-Android functional cases on baseline; the changed native startup owner is separately revalidated. Server cases remain fixtures, not hosted acceptance.",
+          "source_ref": "245f9ee5a2cd7c9148b92003c1a082eb735d90c1",
+          "receipt": "docs/handoffs/app-integration/evidence/local/android-result.json"
+        }
+      ],
+      "screenshot_evidence": [
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "320dp-ms-light-100-contrast0-10-duel-unconfigured.png",
+          "sha256": "49896167af2c885c2644dd880ac11325a76a18e5f4c167e9b1f58007cdb51f67",
+          "scope": "production Duel capability/online-required state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "320dp-ms-light-100-contrast0-classes-guest.png",
+          "sha256": "9eb843394aa41b506c914d612bd03549769eb040a3d04ba8df5c679797af183c",
+          "scope": "production classroom guest/capability state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "320dp-ms-light-100-contrast0-profile-guest.png",
+          "sha256": "827e1f9503573054097480919406ad53907ee3cf77704586263742f3434302db",
+          "scope": "production profile guest sign-in state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "390dp-en-dark-125-contrast0-10-duel-unconfigured.png",
+          "sha256": "9fc7b804d7d966e4509a4c7a49e3b2dd4f2d7a2966e710ee3e8301d82cf56346",
+          "scope": "production Duel capability/online-required state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "390dp-en-dark-125-contrast0-classes-guest.png",
+          "sha256": "80b4bb0b6e9aad0eb19d59f178578fb28dc638d1fdbc779636c8503e73b49098",
+          "scope": "production classroom guest/capability state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "390dp-en-dark-125-contrast0-profile-guest.png",
+          "sha256": "3450182491afab80e349c041cd565ac14caaafb7da1dcaab89221c74e2c5e9d1",
+          "scope": "production profile guest sign-in state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "430dp-ms-dark-150-contrast1-10-duel-unconfigured.png",
+          "sha256": "e47042f23660b7e5eed62b26dab0ed8d6104e1d1adb45225f11f2f956f2afab9",
+          "scope": "production Duel capability/online-required state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "430dp-ms-dark-150-contrast1-classes-guest.png",
+          "sha256": "65576532100ca3d87ebe1e17be2316d6e323899cd7bd918a0e52d34e9adcce5b",
+          "scope": "production classroom guest/capability state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "430dp-ms-dark-150-contrast1-profile-guest.png",
+          "sha256": "d4070741212d92723028155f9f32f5eb9ecaf6996267b15bd2452412cb8e0ae8",
+          "scope": "production profile guest sign-in state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "768dp-en-light-150-contrast1-10-duel-unconfigured.png",
+          "sha256": "d00a0e37ac6f4fb3f1186373d41bc63361cf4f7395b857830fc35918228a80c9",
+          "scope": "production Duel capability/online-required state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "768dp-en-light-150-contrast1-classes-guest.png",
+          "sha256": "1f2c7393b9c5399feb209d1b1c2992584f12ada5655762f897d3db6cff8a8481",
+          "scope": "production classroom guest/capability state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        },
+        {
+          "artifact": "https://github.com/unDead41/geodecoder/actions/runs/42082666643/artifacts/13443621646",
+          "path": "768dp-en-light-150-contrast1-profile-guest.png",
+          "sha256": "845437854f62e96c650f687ed8b57b442ac097903de4c690ace6f21abf51ded4",
+          "scope": "production profile guest sign-in state",
+          "runtime_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_tool_source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+          "capture_run_id": 42082666643
+        }
+      ],
+      "acceptance_limits": [
+        "No-config guest entries checked in full matrix; actual hosted capability deployment unverified.",
+        "Integrated production Android execution, TalkBack and system gestures require the integration device receipt."
+      ],
+      "owner": "app-cloud-game",
+      "route": {
+        "name": "cloud-game-login",
+        "path": "/auth/login"
+      },
+      "state": "Auth unavailable; classroom capability absent; Duel protocol stop; sync unavailable pending kept",
+      "implementation_paths": [
+        "lib/features/auth/presentation/auth_screen.dart"
+      ],
+      "test_pointers": [
+        "test/features/cloud_game/cloud_game_widgets_test.dart",
+        "test/features/classroom/classroom_controller_test.dart:232",
+        "test/features/duel/duel_controller_test.dart:473",
+        "test/features/sync/native_outbox_test.dart:808",
+        "test/features/cloud_game/cloud_game_startup_test.dart::saved account HTTP 502/429/503 leaves guest Solo reachable"
+      ],
+      "capability": "Online capability required; no-config/unavailable UI is real; hosted acceptance is unverified"
+    }
+  ],
+  "critical_integration_gates": [
+    "Production main registers learning and cloud/game contributions once, awaits startup, and resolves one shared actor/database/preferences/audio/writer/sync owner.",
+    "Destination reset awaits active leave policy; quick learning edits and storage failure Stay/Leave must be verified.",
+    "Combined analyze/unit/widget/Node tests; normal main APK and real Android feature tests must run on the same reviewed source.",
+    "Provider/callback capability remains disabled until platform and hosted allowlist/cold/warm/replayed/recovery acceptance is established."
+  ],
+  "hosted_limits": [
+    "No Auth/SMTP/provider/backend deployment is implied by this matrix.",
+    "Live authorized Auth/profile/CRUD/sync acknowledgements and two-client protocol2 Duel remain unverified unless separate real staging evidence is cited.",
+    "Physical phone, iOS and capacity/performance acceptance are separate."
+  ],
+  "offline_milestone_status": "ready",
+  "integration_receipts": {
+    "host": "docs/handoffs/app-integration/evidence/local/host-result.json",
+    "android": "docs/handoffs/app-integration/evidence/local/android-result.json",
+    "visual": "docs/handoffs/app-integration/android-visual-review.json"
+  },
+  "gate_results": {
+    "host_tests": "494 passed on corrected runtime",
+    "canonical_checks": "50 passed",
+    "tools": "26 native-run checks plus33 capture-follow-up checks",
+    "real_android_revalidation": "3 affected WebView cases passed; baseline and Solo receipts retained separately",
+    "normal_main_32_captures": "pass:30 retained plus2 recaptured originals",
+    "gate_status": "passed_affected_revalidation",
+    "native_provider_callback_enabled": false,
+    "hosted_and_manual_acceptance": "unverified"
+  }
+}

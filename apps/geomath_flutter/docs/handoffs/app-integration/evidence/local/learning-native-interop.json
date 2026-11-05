@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "scope": "bounded native learning JavaScript waits; actual controller and SQLite host regression tests",
+  "root_source_baseline": "deceaaf3ce942d3af37aab6d79cc133e1f7821fa",
+  "changes": [
+    "Native evaluate Futures consume the remaining existing eight-second admission/readiness/result deadline.",
+    "Native event-clear and reflection-progress write Futures have an eight-second timeout.",
+    "Timeout fails with unavailable; queue and checkpoint coalescing release, late values cannot mutate snapshots or acknowledge persistence.",
+    "Changing native activity mode requires a successful prior checkpoint; a failure preserves the mode and draft.",
+    "Actor change between action notification and checkpoint continuation returns stale rather than an unsaved Success.",
+    "A narrow native transport port permits injected missing replies without changing the production WebView host or bridge authorization."
+  ],
+  "checks": [
+    {
+      "command": "flutter test --no-pub --concurrency=1 test/features/learning test/learning test/module/module_host_bridge_test.dart test/integration/solo_sync_learning_test.dart --reporter expanded",
+      "exit_code": 0,
+      "passed": 81,
+      "failed": 0
+    },
+    {
+      "command": "flutter analyze --no-pub lib/features/learning/application/learning_module_controller.dart test/features/learning/application/learning_module_interop_test.dart",
+      "exit_code": 0,
+      "issues": 0
+    },
+    {
+      "command": "dart format --output=none --set-exit-if-changed lib/features/learning/application/learning_module_controller.dart test/features/learning/application/learning_module_interop_test.dart",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "regression_proof": [
+    {
+      "negative_control": "Remove only the native Future timeout while retaining transport seam.",
+      "result": "Missing native action regression fails with Future not completed; restoring timeout passes."
+    },
+    {
+      "negative_control": "Retain the prior captured-success return when actor changes before checkpoint continuation.",
+      "result": "Actor notification regression reports expected stale / actual success; separating the actor check passes."
+    }
+  ],
+  "earlier_attempts": [
+    "First broader concurrent run had two test timeouts: a new outer ten-second test bound and an existing SQLite open thirty-second timeout under host load. Test outer bound now permits the complete eight-second admission plus eight-second result phases. Concurrency-one rerun passed80/80, then final added actor regression sweep passed81/81."
+  ],
+  "file_sha256": {
+    "lib/features/learning/application/learning_module_controller.dart": "c981c6d08a4cbe0ad1fc1ba8ef6fbb42ea2e908721aebc287b9fcfde87a45dad",
+    "test/features/learning/application/learning_module_interop_test.dart": "0b3389ff7b81240be31f0e7abe4ef156c7bf0703bc24efb2834f78cc248b4860"
+  },
+  "limits": [
+    "Host native-transport injection is not Android WebView execution.",
+    "Platform timeout does not cancel JavaScript already delivered; late Future values are ignored and a subsequent checkpoint retries current live state.",
+    "Initial host WebView construction/load and hosted services remain separate gates."
+  ]
+}

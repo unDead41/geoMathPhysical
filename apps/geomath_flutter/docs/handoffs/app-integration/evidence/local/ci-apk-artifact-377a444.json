@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "source_commit": "377a444b7ff6956de8f40b617a40dcbcb9a4a837",
+  "run_id": 42082666643,
+  "artifact_id": 13442263909,
+  "archive_sha256": "4d2a83e53e9eaa57edd21a22e3a4c292eae3d6aa90c439f3e14f695f68b2d980",
+  "apk_sha256": "d2a7ab8253b3e85dca5455f556338431e350206b85f327211338928c3c5bda09",
+  "apk_bytes": 174927836,
+  "inner_zip_crc": "PASS",
+  "packaged_source_assets_verified": 20,
+  "assets": [
+    {
+      "path": "assets/contracts/bank15.json",
+      "sha256": "3b7eb0c7fb8949452cc692cf35a075ac937526928491d14c9934a807689dff9b",
+      "bytes": 4930
+    },
+    {
+      "path": "assets/contracts/cards/cone-net.svg",
+      "sha256": "94081fca55b1ad24dc77a6d3220da283ee6f391de106d80b411af472ed5f54ff",
+      "bytes": 15377
+    },
+    {
+      "path": "assets/contracts/cards/cone-solid.svg",
+      "sha256": "1df1ed741747ab95c31dc07063df2f38b479aae3cabaf6dfb02042c1217f98f6",
+      "bytes": 15578
+    },
+    {
+      "path": "assets/contracts/cards/cube-net.svg",
+      "sha256": "b7d5d6f531d38abf020778627ecf9b2c409788b8c12a3e42517858a34023de8a",
+      "bytes": 1056
+    },
+    {
+      "path": "assets/contracts/cards/cube-solid.svg",
+      "sha256": "f0363873bbc040b31d7d9f7e99cfc7a58702e75b4f543f0e35c66fe29520ba43",
+      "bytes": 1064
+    },
+    {
+      "path": "assets/contracts/cards/cuboid-net.svg",
+      "sha256": "b88d909736d52feee245b79e7fc2dd4150f9235a5a3308e236198c12bbf187ea",
+      "bytes": 1058
+    },
+    {
+      "path": "assets/contracts/cards/cuboid-solid.svg",
+      "sha256": "295cb692a1b89f6afe5fd296a94ab336e48dae836a923d9504a12d2af59a9eea",
+      "bytes": 1063
+    },
+    {
+      "path": "assets/contracts/cards/cylinder-net.svg",
+      "sha256": "7dc0833484c07b5ee1f16b9e75fb26279e8d6824e8ab416a03fb7db6c56b51b3",
+      "bytes": 19230
+    },
+    {
+      "path": "assets/contracts/cards/cylinder-solid.svg",
+      "sha256": "862920cf0962369d1ffe4dd80438ba0265518c1ec2e4f2743d5914128d346e88",
+      "bytes": 19248
+    },
+    {
+      "path": "assets/contracts/cards/pyramid-net.svg",
+      "sha256": "f68992a34660e52eaceccd6a5d3b3b6a9e79790b48e9e022ca745835e56fdd8b",
+      "bytes": 827
+    },
+    {
+      "path": "assets/contracts/cards/pyramid-solid.svg",
+      "sha256": "05ce6db2fd51c8a5fec8f8d6c46a4eedad93f4cda8eb055e27d5e8d9eaf850b5",
+      "bytes": 833
+    },
+    {
+      "path": "assets/contracts/engine_golden.json",
+      "sha256": "8ff4839660bdf1875eb67bdcb8348168aea50617369e97472bf4ee4702623a70",
+      "bytes": 596720
+    },
+    {
+      "path": "assets/contracts/geometry_cards.json",
+      "sha256": "79c1c071a0efdffa3cc7f3086078299a09a680890dd62463edc226f7320cf693",
+      "bytes": 358325
+    },
+    {
+      "path": "assets/contracts/learning_catalogue.json",
+      "sha256": "3d6b88394c8b719669d337d3a76ee1e6e7910feaca89fb42e614e12a7fb16397",
+      "bytes": 16767
+    },
+    {
+      "path": "assets/contracts/manifest.json",
+      "sha256": "dfed97ebc0be73ef93e467307d84f75f4187fd1009935d643da3ba3fe769c557",
+      "bytes": 2709
+    },
+    {
+      "path": "assets/contracts/ruleset.json",
+      "sha256": "d227ff089cf9c1d6e47400c16611c00cf3f447158be717bc04ad37f8a64cd348",
+      "bytes": 605
+    },
+    {
+      "path": "assets/module/canonical-module.html",
+      "sha256": "7ddd5d60a25fbdf73c20f9f8e8fc0db4253e582fb50d17c944307b8f682066c4",
+      "bytes": 572718
+    },
+    {
+      "path": "assets/module/index.html",
+      "sha256": "e8db2197527c325fa2c879a56b3aac8a0dc8fe65c449c154b405d4c9d00c8331",
+      "bytes": 696
+    },
+    {
+      "path": "assets/module/manifest.json",
+      "sha256": "7ab20f8b016082aadbc02b0b2e1ac5472388d8250baeb9befd3db91552e49a57",
+      "bytes": 1137
+    },
+    {
+      "path": "assets/module/native-adapter.js",
+      "sha256": "0b994e0855d31a6d50a5997d83065e6187af77a60762e5ca2af9938ec4a82a39",
+      "bytes": 801769
+    }
+  ],
+  "device_execution_receipt": "android-result.json only after actual runtime-result success"
+}

@@ -1,0 +1,164 @@
+{
+  "schema_version": 1,
+  "branch": "app-learning",
+  "status": "HOST_VERIFIED_APK_BUILT_ANDROID_SMOKE_BLOCKED",
+  "foundation": {
+    "sha": "9a1f49a7c92d13bb70b7fd1420c34629a7785f9e",
+    "contract_version": "1.0.0",
+    "contract_sha256": "0a31f7aef121a151ee91a4ae92250fd893ad62108f27a9389b5fa5ed9a918356",
+    "source_lock_sha256": "cf7d5e6a54c6da65d70f97caae26cff059de558f3fd56db97245252358220452",
+    "pubspec_lock_sha256": "9ba313c3af1f80193c6c0a61c2e38fcee51f1b5aabb8404ebdccfd04210f542c",
+    "required_same_sha_for": "app-cloud-game",
+    "cloud_game_adoption_verified": false
+  },
+  "contribution_entry": "lib/features/learning/learning_feature.dart#learningFeature",
+  "preview_entry": "lib/dev/learning_main.dart",
+  "preview_initial_route": "learning",
+  "routes": [
+    {
+      "name": "learning",
+      "path": "/learn"
+    },
+    {
+      "name": "learning-explore",
+      "path": "/learn/explore"
+    },
+    {
+      "name": "learning-views",
+      "path": "/learn/views"
+    },
+    {
+      "name": "learning-notes",
+      "path": "/learn/notes/:shapeId"
+    },
+    {
+      "name": "learning-calculator",
+      "path": "/learn/calculator/:shapeId"
+    },
+    {
+      "name": "learning-labs",
+      "path": "/learn/labs"
+    },
+    {
+      "name": "learning-net",
+      "path": "/learn/labs/net"
+    },
+    {
+      "name": "learning-volume",
+      "path": "/learn/labs/volume"
+    },
+    {
+      "name": "learning-area",
+      "path": "/learn/labs/area"
+    },
+    {
+      "name": "learning-composite",
+      "path": "/learn/labs/composite"
+    },
+    {
+      "name": "learning-projection",
+      "path": "/learn/projection"
+    },
+    {
+      "name": "learning-calculation",
+      "path": "/learn/calculation"
+    },
+    {
+      "name": "learning-records",
+      "path": "/learn/records"
+    }
+  ],
+  "localisation_delegates": [
+    {
+      "namespace": "learning",
+      "path": "lib/features/learning/learning_strings.dart",
+      "export": "learningStrings"
+    },
+    {
+      "namespace": "learning_labs",
+      "path": "lib/features/learning/labs/lab_strings.dart",
+      "export": "learningLabStrings"
+    },
+    {
+      "namespace": "learning_surface",
+      "path": "lib/features/learning/labs/surface_strings.dart",
+      "export": "learningSurfaceStrings"
+    },
+    {
+      "namespace": "learning_studio",
+      "path": "lib/features/learning/studio/studio_strings.dart",
+      "export": "learningStudioStrings"
+    }
+  ],
+  "migrations": [
+    {
+      "namespace": "learning_checkpoints",
+      "version": 1,
+      "entry": "LearningCheckpointRepository.migration",
+      "path": "lib/features/learning/persistence/learning_checkpoint_repository.dart",
+      "table": "learning_checkpoints",
+      "purpose": "Separate bounded actor/scope/slot checkpoint only; shared reflection/outbox schema is unchanged."
+    }
+  ],
+  "assets": [
+    {
+      "manifest": "assets/module/manifest.json",
+      "sha256": "8ec24f96a930683de87e5311043edba5fe30679e4a30bd2f11d8b4e3dfde1a13",
+      "registry_action": "Already reserved by foundation. Resolve current submanifest; do not copy the foundation snapshot file hashes into the global registry.",
+      "source_commit": "37bc2cd262cc0a54e8ee31339ea37471c1ecfda5",
+      "module_version": "1.6.2",
+      "adapter_version": 3
+    }
+  ],
+  "dependencies": [],
+  "shared_api_changes": [
+    {
+      "required": true,
+      "owner": "app-integration",
+      "path": "lib/app/app_router.dart#GeoMathRouter.select",
+      "change": "Await the active contributed leave/BackPolicy before navigation.reset for bottom destinations. Respect Stay/Leave when checkpoint storage fails.",
+      "reason": "Current select/reset bypasses learning leave guard. An edit followed immediately by selecting Utama can be lost before the two-second autosave. Source-proven integration defect; no shared file changed here.",
+      "verification": "Real Android quick edit -> select another destination -> reopen preserves edits. Inject storage failure: Stay retains the live draft; Leave makes no durable-save claim."
+    }
+  ],
+  "platform_needs": [
+    {
+      "required": true,
+      "action": "Build and run learning preview target on a real Android WebView",
+      "commands": [
+        "flutter analyze",
+        "flutter test test/features/learning",
+        "flutter build apk --debug -t lib/dev/learning_main.dart",
+        "bash docs/handoffs/app-learning/evidence/run_learning_android.sh"
+      ],
+      "reason": "Learning preview APK built with Flutter3.47.9/Dart3.13.7 and JDK17; ZIP CRC, v2 signature and packaged canonical assets verified. Own API35 emulator segfaulted before boot without KVM, so learning-specific real WebView run/screenshots remain required.",
+      "integration_test": "integration_test/learning_acceptance_test.dart"
+    },
+    {
+      "required": false,
+      "action": "Native SVG file picker/printing and OS external URL opener",
+      "current_behavior": "Explicit native SVG preview/select/copy and allowlisted URL select/copy work through existing SDK. No file saved/printing/browser opening is claimed.",
+      "reason": "Frozen Android file channel hardcodes reportTXT; no unsupported platform method or new plugin was added."
+    }
+  ],
+  "handoff": "docs/handoffs/app-learning/LATEST.md",
+  "verification": {
+    "flutter_analyze": "PASS",
+    "flutter_unit_widget_tests": {
+      "pass": 139,
+      "fail": 0
+    },
+    "learning_feature_tests": {
+      "pass": 47,
+      "fail": 0
+    },
+    "node_adapter_checks": {
+      "pass": 45,
+      "fail": 0
+    },
+    "checkpoint_parity_cases": 25,
+    "learning_preview_apk": "PASS_ANDROID_X64",
+    "learning_android_webview": "NOT_RUN",
+    "evidence": "docs/handoffs/app-learning/evidence/verification-result.json"
+  }
+}
