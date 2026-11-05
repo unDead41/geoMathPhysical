@@ -232,3 +232,23 @@ while the app build used Flutter3.47.9 NDK28.2. The scoped job now removes the
 unused defaults and redundant normal APK copies; its20GiB guard remains.
 No runtime, contract, asset or test bytes change in this resource-only correction.
 See [the source/resource receipt](evidence/ci-41961837268.txt).
+
+## Sixth CI: real module passes, native clipboard/focus remains
+
+Run [41963202642](https://github.com/unDead41/geodecoder/actions/runs/41963202642)
+passed92 Flutter tests,12 Node contracts and APK at
+`d72a5bbdb6be49028a3162c2437a707372e3832f`. Three of four Android tests
+passed, including real rotation/unfolding, native ACK/duplicates, preferences and
+actor switching plus missing/corrupt assets. App flow reached report copy but its
+single clipboard read was null. The retained post-test image shows a System UI
+ANR; it does not prove focus at the earlier read. See the
+[receipt](evidence/ci-41963202642.txt) and
+[diagnostic image](evidence/ci-41963202642-last-screen.png).
+
+The next route preserves API36, uses a Pixel2/720x1280/320dpi/2048MB guest on
+the private runner's two CPUs, and prebuilds the identical integration target for
+Flutter drive before boot. It keeps all four scenarios, assertions and native
+deadlines. Report copy waits for its visible native-write receipt, then polls the
+real clipboard for exact equality. No clipboard mock or production workaround is
+installed. Native service logs and pre-cleanup driver screenshots diagnose future
+focus failures. See [the resource ADR](../../adr/android-emulator-resource-budget.md).

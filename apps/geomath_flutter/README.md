@@ -53,7 +53,7 @@ Run these commands from `apps/geomath_flutter`:
 flutter --version
 flutter doctor -v
 flutter pub get
-dart format --output=none --set-exit-if-changed lib test integration_test
+dart format --output=none --set-exit-if-changed lib test integration_test test_driver
 flutter analyze
 flutter test
 node --test tools/contracts/verify_exports.test.mjs
@@ -70,6 +70,18 @@ For focused debugging, either scenario can also run separately:
 flutter test integration_test/module_spike_test.dart -d DEVICE_ID
 flutter test integration_test/app_flow_test.dart -d DEVICE_ID
 ```
+
+CI prebuilds the same integration target and runs it with the supported
+`flutter drive` adaptor. This keeps compilation separate from a small emulator
+on the private repository's runner. To reproduce that route on an x64 emulator:
+
+```text
+flutter build apk --debug --target-platform android-x64 -t integration_test/foundation_smoke_test.dart
+flutter drive --no-pub --driver=test_driver/integration_driver.dart --target=integration_test/foundation_smoke_test.dart --use-application-binary=build/app/outputs/flutter-apk/app-debug.apk -d DEVICE_ID
+```
+
+The integration APK runs tests; rebuild `flutter build apk --debug` to obtain the
+normal application APK. CI preserves the normal APK separately before this step.
 
 Replace `DEVICE_ID` with the actual Android ID shown by `flutter devices`.
 The APK is `build/app/outputs/flutter-apk/app-debug.apk`.

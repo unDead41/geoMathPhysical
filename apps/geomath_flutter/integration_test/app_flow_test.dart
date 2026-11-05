@@ -148,7 +148,28 @@ void main() {
         expect(preview.data, contains('Reports are never sent automatically.'));
         expect(preview.data, isNot(contains(app.sessions.current.sessionId)));
         await _tap(tester, 'report-copy');
-        final copied = await Clipboard.getData(Clipboard.kTextPlain);
+        await tester.scrollUntilVisible(
+          find.text('Report text copied.'),
+          160,
+          scrollable: find
+              .descendant(
+                of: find.byType(DraggableScrollableSheet),
+                matching: find.byType(Scrollable),
+              )
+              .first,
+        );
+        await tester.pumpAndSettle();
+        expect(find.text('Report text copied.'), findsOneWidget);
+        ClipboardData? copied;
+        await _until(
+          tester,
+          () => copied?.text == preview.data,
+          action: () async {
+            copied = await Clipboard.getData(
+              Clipboard.kTextPlain,
+            ).timeout(const Duration(seconds: 2));
+          },
+        );
         expect(copied?.text, preview.data);
 
         final closePreview = tester.binding.handlePopRoute();
@@ -247,12 +268,14 @@ Future<void> _until(
   WidgetTester tester,
   bool Function() condition, {
   Duration timeout = const Duration(seconds: 15),
+  Future<void> Function()? action,
 }) async {
   final deadline = DateTime.now().add(timeout);
   while (!condition()) {
     if (DateTime.now().isAfter(deadline)) {
       fail('Android app-flow condition did not complete within $timeout.');
     }
+    await action?.call();
     await tester.pump(const Duration(milliseconds: 100));
   }
 }

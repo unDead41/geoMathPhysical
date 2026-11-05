@@ -146,35 +146,37 @@
       "status": "passed",
       "command": "flutter pub get --offline",
       "exit_code": 0,
-      "evidence": "evidence/pub-get.txt",
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41963202642.txt",
       "note": "Official pub.dev archives preloaded and SHA-256 verified; direct online Dart networking was unreliable in the managed host.",
-      "tested_commit": "bcaf83b963aebdeb8f3876fe7ecb9aedd49ba457",
-      "ci_run_id": 41954312460,
+      "tested_commit": "d72a5bbdb6be49028a3162c2437a707372e3832f",
+      "ci_run_id": 41963202642,
       "ci_evidence": "docs/handoffs/app-foundation/evidence/ci-41954312460-verify.txt"
     },
     "format": {
-      "status": "passed",
+      "status": "pending",
       "command": "dart format --output=none --set-exit-if-changed lib test integration_test",
       "exit_code": 0,
-      "tested_commit": "d8e5a6518ad4f175a3dd0086917907da4b637eed",
-      "ci_run_id": 41961837268,
-      "evidence": "docs/handoffs/app-foundation/evidence/ci-41961837268.txt"
+      "tested_commit": "d72a5bbdb6be49028a3162c2437a707372e3832f",
+      "ci_run_id": 41963202642,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41963202642.txt",
+      "reason": "A new test_driver entry and test helper await the next configured formatter check."
     },
     "analyze": {
-      "status": "passed",
+      "status": "pending",
       "command": "flutter analyze",
       "exit_code": 0,
-      "tested_commit": "d8e5a6518ad4f175a3dd0086917907da4b637eed",
-      "ci_run_id": 41961837268,
-      "evidence": "docs/handoffs/app-foundation/evidence/ci-41961837268.txt"
+      "tested_commit": "d72a5bbdb6be49028a3162c2437a707372e3832f",
+      "ci_run_id": 41963202642,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41963202642.txt",
+      "reason": "Prebuilt driver/test helper changes await the next analysis gate."
     },
     "unit_widget_tests": {
       "status": "passed",
       "command": "flutter test",
       "exit_code": 0,
-      "tested_commit": "d8e5a6518ad4f175a3dd0086917907da4b637eed",
-      "ci_run_id": 41961837268,
-      "evidence": "docs/handoffs/app-foundation/evidence/ci-41961837268.txt",
+      "tested_commit": "d72a5bbdb6be49028a3162c2437a707372e3832f",
+      "ci_run_id": 41963202642,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41963202642.txt",
       "passed": 92,
       "failed": 0
     },
@@ -182,9 +184,9 @@
       "status": "passed",
       "command": "node --test tools/contracts/verify_exports.test.mjs test/foundation/native_adapter_contract.test.mjs",
       "exit_code": 0,
-      "tested_commit": "d8e5a6518ad4f175a3dd0086917907da4b637eed",
-      "ci_run_id": 41961837268,
-      "evidence": "docs/handoffs/app-foundation/evidence/ci-41961837268.txt",
+      "tested_commit": "d72a5bbdb6be49028a3162c2437a707372e3832f",
+      "ci_run_id": 41963202642,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41963202642.txt",
       "passed": 12,
       "failed": 0
     },
@@ -192,10 +194,12 @@
       "status": "passed",
       "command": "flutter build apk --debug",
       "exit_code": 0,
-      "tested_commit": "d8e5a6518ad4f175a3dd0086917907da4b637eed",
-      "ci_run_id": 41961837268,
-      "evidence": "docs/handoffs/app-foundation/evidence/ci-41961837268.txt",
-      "artifact_id": 13385608802
+      "tested_commit": "d72a5bbdb6be49028a3162c2437a707372e3832f",
+      "ci_run_id": 41963202642,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41963202642.txt",
+      "artifact_id": 13386951282,
+      "bytes": 172051208,
+      "sha256": "a24233c9e53793d174a7e9b80bb79c63fb1eebd1265dcf8a78e4a9f52499e9e0"
     },
     "android_run_local": {
       "status": "blocked",
@@ -205,11 +209,11 @@
       "reason": "Retained API36 software emulator restarted framework services during first-boot ART verification; cmd: Cannot find service: package prevented APK installation."
     },
     "android_smoke": {
-      "status": "blocked",
-      "command": "flutter test integration_test/foundation_smoke_test.dart -d emulator-5554",
+      "status": "pending",
+      "command": "flutter drive --no-pub --driver=test_driver/integration_driver.dart --target=integration_test/foundation_smoke_test.dart --use-application-binary=$RUNNER_TEMP/geomath-integration-debug.apk -d emulator-5554",
       "exit_code": null,
-      "reason": "Source checks passed. The20GiB resource guard stopped before emulator:21445091328 free bytes,29745152 below budget. Unused runner-default NDK cleanup awaits verification.",
-      "evidence": "docs/handoffs/app-foundation/evidence/ci-41961837268.txt"
+      "reason": "Previous source passed3/4 Android tests. App-flow clipboard read returnednull; post-test screenshot shows System UI ANR. Lower-render-load prebuilt-driver run and bounded actual clipboard read await verification.",
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41963202642.txt"
     }
   },
   "android_local": {
@@ -223,7 +227,7 @@
     "screenshots": []
   },
   "blockers": [
-    "Android integration/screenshot gate awaits rerun with unused runner NDKs removed. The20GiB guard and30s native handshake remain unchanged."
+    "Final app-flow/native clipboard, normal APK run and screenshots await stable-emulator prebuilt-driver verification. Three real module/asset Android scenarios passed atd72a5bb."
   ],
   "not_claimed": [
     "physical Android phone",
@@ -292,6 +296,18 @@
       "android_smoke": "blocked_before_device",
       "evidence": "docs/handoffs/app-foundation/evidence/ci-41961837268.txt",
       "reason": "All92 Flutter/12 Node checks and APK passed. Resource guard required21474836480 bytes, found21445091328; no emulator/test ran."
+    },
+    {
+      "run_id": 41963202642,
+      "url": "https://github.com/unDead41/geodecoder/actions/runs/41963202642",
+      "tested_commit": "d72a5bbdb6be49028a3162c2437a707372e3832f",
+      "job": 127034140409,
+      "verify": "passed",
+      "android_smoke": "passed_3_failed_1",
+      "evidence_artifact_id": 13386773501,
+      "normal_apk_artifact_id": 13386951282,
+      "evidence": "docs/handoffs/app-foundation/evidence/ci-41963202642.txt",
+      "reason": "Real WebView/ACK/preferences/actor switch and two asset negative tests passed. App-flow clipboard returnednull after a hit-testable copy; post-test screenshot shows System UI ANR."
     }
   ],
   "android_ci": {

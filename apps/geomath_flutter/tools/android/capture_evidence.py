@@ -66,6 +66,8 @@ def main():
         'api': 'ro.build.version.sdk', 'boot_completed': 'sys.boot_completed',
     }.items()}
     device['device_id'] = args.device
+    device['display_size'] = adb('shell', 'wm', 'size').decode().strip()
+    device['display_density'] = adb('shell', 'wm', 'density').decode().strip()
     device['airplane_mode'] = adb('shell', 'settings', 'get', 'global', 'airplane_mode_on').decode().strip()
     (output/'device.json').write_text(json.dumps(device, indent=2)+'\n')
     print(json.dumps({'screenshots': ['01-home-offline.png','37-settings.png','module-preview.png'],

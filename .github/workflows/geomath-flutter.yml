@@ -70,10 +70,12 @@ jobs:
         run: |
           flutter --version
           flutter doctor -v
+          nproc
+          free -h
       - name: Dependencies
         run: flutter pub get
       - name: Format
-        run: dart format --output=none --set-exit-if-changed lib test integration_test
+        run: dart format --output=none --set-exit-if-changed lib test integration_test test_driver
       - name: Analyze
         run: flutter analyze
       - name: Unit and widget tests
@@ -96,6 +98,13 @@ jobs:
           # The normal APK is uploaded and preserved; integration repackages it.
           rm -f -- build/app/outputs/apk/debug/app-debug.apk
           # Release native build daemons before allocating the emulator.
+          (cd android && ./gradlew --stop)
+      - name: Prebuild the Android integration APK
+        run: |
+          flutter build apk --debug --target-platform android-x64 -t integration_test/foundation_smoke_test.dart
+          mv build/app/outputs/flutter-apk/app-debug.apk "$RUNNER_TEMP/geomath-integration-debug.apk"
+          test -s "$RUNNER_TEMP/geomath-integration-debug.apk"
+          rm -f -- build/app/outputs/apk/debug/app-debug.apk
           (cd android && ./gradlew --stop)
       - name: Android disk headroom
         shell: bash
@@ -124,9 +133,9 @@ jobs:
           api-level: 36
           target: google_apis
           arch: x86_64
-          profile: pixel_7_pro
+          profile: pixel_2
           cores: 2
-          ram-size: 3072M
+          ram-size: 2048M
           disk-size: 4096M
           working-directory: apps/geomath_flutter
           disable-animations: true
