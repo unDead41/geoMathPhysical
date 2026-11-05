@@ -46,7 +46,7 @@ export function teachingRuntime({transform=code=>code}={}){
   const parent={postMessage:m=>messages.push(JSON.parse(JSON.stringify(m)))};
   const host={media,language:'ms',audioEnabled:false,settings:{autoRotate:false,showLabels:true},start(fn){this.refresh=fn;fn(this.settings);},translate:v=>v};
   const window={parent,__geodecoderModuleHost:host,matchMedia:()=>media,addEventListener(type,fn){(listeners[type]??=[]).push(fn);}};
-  const context={window,document,Document:DocumentPort,Event,KeyboardEvent:class extends Event{constructor(type,options){super(type,options);this.key=options.key;}},TextEncoder,location:{hash:''},history:{replaceState(){}},performance:{now:()=>clock},ResizeObserver:class{observe(){}},requestAnimationFrame:fn=>{frames.set(++frameId,fn);return frameId;},cancelAnimationFrame:id=>frames.delete(id),console};
+  const context={window,document,Document:DocumentPort,Event,KeyboardEvent:class extends Event{constructor(type,options){super(type,options);this.key=options.key;}},TextEncoder,location:{hash:''},history:{replaceState(){}},performance:{now:()=>clock},ResizeObserver:class{observe(){}},requestAnimationFrame:fn=>{frames.set(++frameId,fn);return frameId;},cancelAnimationFrame:id=>frames.delete(id),console:{...console,info(){}}};
   vm.runInNewContext(transform(code),context,{timeout:5000});
   let sequence=0;
   const receive=data=>{for(const fn of listeners.message||[])fn({source:parent,data});};

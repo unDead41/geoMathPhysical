@@ -168,3 +168,21 @@ remaining descendants before normal APK cleanup. The committed regression fails
 against the former leader-only cleanup and passes against the corrected helper;
 original statuses0/7/125/124 remain unchanged. Both Python runner regression
 modules execute in CI before Android builds.
+
+
+## Child bootstrap isolation (full run still failing)
+
+Full run42053609842 atdeceaaf reached real Android tests after direct VM readiness.
+Host488/Node48/Python7, formatter/analyzer and both normal APK builds passed.
+The second actor WebView still failed its secure handshake; child telemetry only
+reached head, without error or origin/source rejection. Learning device cases
+also timed out; these failures remain failures and app is not advanced.
+
+Fixed, non-payload console/validated-message breadcrumbs now distinguish the
+preference parser, canonical renderer, access and host bootstrap steps. The
+canonical572718-byteHTML remains unchanged. Screenshot platform calls are bounded
+and announce start/end so an SDK image-surface stall can be distinguished from a
+learning action stall. The optional runtime-bootstrap diagnostic runs the same
+combined device cases with SDK image conversion disabled; native production ADB
+captures remain a separate mandatory full-gate step. Diagnostic receipts always
+have full_publish_gate:false and cannot authorize app publication.

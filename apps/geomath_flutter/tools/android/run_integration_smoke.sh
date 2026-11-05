@@ -21,6 +21,10 @@ case "$suite" in
     integration_target=integration_test/module_spike_test.dart
     drive_timeout=12m
     ;;
+  runtime-bootstrap)
+    integration_target=integration_test/integration_smoke_test.dart
+    drive_timeout=15m
+    ;;
   *) echo 'Unsupported diagnostic suite' >&2; exit 2 ;;
 esac
 test -s "$test_apk"

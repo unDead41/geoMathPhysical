@@ -53,3 +53,19 @@ test('real exported child reports bounded bootstrap stages and error codes witho
   assert.ok(messages.every(m=>Object.keys(m).join(',')==='type,version,stage,code,line'));
   assert.equal(JSON.stringify(messages).includes('private'),false);
 });
+
+test('real canonical bootstrap breadcrumbs preserve ordering and cannot grant ready',()=>{
+  const runtime=teachingRuntime();
+  const observed=runtime.messages.filter(m=>m.type==='geomath:bootstrap-diagnostic').map(m=>m.stage);
+  assert.deepEqual(observed,['canonical-start','render-start','render-end','models-end','access-end','host-start','host-end']);
+  const h=nativeWrapper();
+  for(const stage of ['preferences-start','preferences-end',...observed]){
+    h.receive({type:'geomath:bootstrap-diagnostic',version:1,stage,code:'none',line:0});
+    assert.equal(h.api.diagnostics().bootstrap.childStage,stage);
+    assert.equal(h.api.diagnostics().moduleReady,false);
+    assert.equal(h.api.diagnostics().settingsReady,false);
+    assert.deepEqual(h.native,[]);
+  }
+  assert.ok(runtime.prepared.indexOf("stage:'preferences-start'")<runtime.prepared.indexOf('window.__geodecoderModuleHost='));
+  assert.ok(runtime.prepared.indexOf("stage:'preferences-end'")>runtime.prepared.indexOf('window.__geodecoderModuleHost='));
+});

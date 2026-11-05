@@ -44,7 +44,24 @@ try{
   if(!adapted.includes(progressSource))throw Error('Canonical progress adapter anchor changed');
   adapted=adapted.replace(progressSource,"geomathLearningTransport.progress({type:'geodecoder:module-progress',protocol:1,session:this.session,...record})");
   const initial={language:'ms',textSize:100,motionPaused:false,contrast:'standard',autoRotate:false,showLabels:true,audioEnabled:false};
+  // Fixed non-payload breadcrumbs distinguish parsing, renderer and optional
+  // accessibility/bootstrap stalls in the real opaque Android child.
+  const breadcrumb=stage=>`;console.info('GEOMATH_CHILD_STAGE ${stage}');window.parent.postMessage({type:'geomath:bootstrap-diagnostic',version:1,stage:'${stage}',code:'none',line:0},'*');`;
+  const boot='renderContent();redrawSmallModels();moduleAccess.init();';
+  if(adapted.split(boot).length!==2)throw Error('Canonical initial renderer bootstrap anchor changed');
+  adapted=adapted.replace(boot,breadcrumb('render-start')+'renderContent();'+breadcrumb('render-end')+'redrawSmallModels();'+breadcrumb('models-end')+'moduleAccess.init();'+breadcrumb('access-end'));
+  const hostBoot='window.__geodecoderModuleHost?.start(refreshModuleHost);';
+  adapted=adapted.replace(hostBoot,breadcrumb('host-start')+hostBoot+breadcrumb('host-end'));
+  const scriptBoot="<script>\n'use strict';\n(()=>{";
+  if(!adapted.includes(scriptBoot))throw Error('Canonical script bootstrap anchor changed');
+  adapted=adapted.replace(scriptBoot,scriptBoot+breadcrumb('canonical-start'));
   let prepared=prepareModuleFrame(adapted,{settings:initial,instanceId:'geomath-settings-v1'});
+  const preferencesBoot='<script>window.__geodecoderModuleHost=';
+  if(!prepared.includes(preferencesBoot))throw Error('Canonical preferences bootstrap anchor changed');
+  prepared=prepared.replace(preferencesBoot,'<script>'+breadcrumb('preferences-start')+'window.__geodecoderModuleHost=');
+  const prefStart=prepared.indexOf(breadcrumb('preferences-start'));
+  const prefEnd=prepared.indexOf('</script>',prefStart);
+  prepared=prepared.slice(0,prefEnd)+breadcrumb('preferences-end')+prepared.slice(prefEnd);
   // Observe the opaque child's real parsing/bootstrap milestones without
   // exporting arbitrary exception messages, code, URLs or native credentials.
   const bootstrapDiagnostic=`<script>(()=>{const codes=new Set(['Error','TypeError','SyntaxError','ReferenceError','RangeError','URIError','EvalError','AggregateError']);const report=(stage,code='none',line=0)=>window.parent.postMessage({type:'geomath:bootstrap-diagnostic',version:1,stage,code,line},'*');const code=e=>codes.has(e?.name)?e.name:'unknown';window.addEventListener('error',e=>report('error',code(e.error),Number.isSafeInteger(e.lineno)&&e.lineno>=0&&e.lineno<=1000000?e.lineno:0));window.addEventListener('unhandledrejection',e=>report('rejection',code(e.reason)));document.addEventListener('DOMContentLoaded',()=>report('dom-ready'));window.addEventListener('load',()=>report('loaded'));report('head');})();</script>`;

@@ -33,15 +33,19 @@ void main() {
 
   Future<void> capture(WidgetTester tester, String name) async {
     if (!screenshots) return;
+    debugPrint('GEOMATH_CAPTURE_START $name');
     if (!surfaceConverted) {
-      await binding.convertFlutterSurfaceToImage();
+      await binding.convertFlutterSurfaceToImage().timeout(
+        const Duration(seconds: 20),
+      );
       surfaceConverted = true;
       // The pinned SDK registers a per-test teardown that reverts its image
       // surface. Keep this suite's conversion flag in the same lifetime.
       addTearDown(() => surfaceConverted = false);
     }
     await tester.pump(const Duration(milliseconds: 250));
-    await binding.takeScreenshot(name);
+    await binding.takeScreenshot(name).timeout(const Duration(seconds: 20));
+    debugPrint('GEOMATH_CAPTURE_END $name');
   }
 
   Future<void> capturePresentationMatrix(
@@ -95,6 +99,7 @@ void main() {
       };
       var number = 25;
       for (final entry in routes.entries) {
+        debugPrint('GEOMATH_LEARNING_ROUTE ${entry.key}');
         _openPath(app, router, entry.key);
         await tester.pump();
         if (entry.value case final section?) {

@@ -44,7 +44,7 @@
     count('accepted');
     const message = event.data;
     if(message.type==='geomath:bootstrap-diagnostic'){
-      if(!exact(message,['type','version','stage','code','line'])||message.version!==1||!['head','dom-ready','loaded','error','rejection'].includes(message.stage)||!['none','Error','TypeError','SyntaxError','ReferenceError','RangeError','URIError','EvalError','AggregateError','unknown'].includes(message.code)||!Number.isSafeInteger(message.line)||message.line<0||message.line>1000000)return;
+      if(!exact(message,['type','version','stage','code','line'])||message.version!==1||!['head','preferences-start','preferences-end','canonical-start','render-start','render-end','models-end','access-end','host-start','host-end','dom-ready','loaded','error','rejection'].includes(message.stage)||!['none','Error','TypeError','SyntaxError','ReferenceError','RangeError','URIError','EvalError','AggregateError','unknown'].includes(message.code)||!Number.isSafeInteger(message.line)||message.line<0||message.line>1000000)return;
       if(message.stage==='error'||message.stage==='rejection'){
         count('childErrors');bootstrap.lastErrorCode=message.code;bootstrap.lastErrorLine=message.line;
       }else bootstrap.childStage=message.stage;

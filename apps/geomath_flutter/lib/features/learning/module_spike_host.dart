@@ -225,6 +225,17 @@ final class ModuleSpikeController extends ChangeNotifier {
       final controller = WebViewController();
       _webViewController = controller;
       await controller.setJavaScriptMode(JavaScriptMode.unrestricted);
+      if (kDebugMode) {
+        await controller.setOnConsoleMessage((message) {
+          // Fixed non-payload breadcrumbs only. Console output cannot accept a
+          // bridge command, report readiness, or export arbitrary child text.
+          if (RegExp(
+            r'^GEOMATH_CHILD_STAGE (?:preferences-start|preferences-end|canonical-start|render-start|render-end|models-end|access-end|host-start|host-end)$',
+          ).hasMatch(message.message)) {
+            debugPrint(message.message);
+          }
+        });
+      }
       await controller.addJavaScriptChannel(
         'GeoMathNative',
         onMessageReceived: (message) => unawaited(_receive(message.message)),

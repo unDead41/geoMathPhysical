@@ -23,12 +23,12 @@ env:
   FLUTTER_VERSION: '3.47.9'
   # Explicit commit marker is only an infrastructure diagnostic, never a
   # substitute for the unmarked full publication gate. All other events are full.
-  GEOMATH_ANDROID_SUITE: ${{ contains(github.event.head_commit.message, '[android-diagnostic:module-spike]') && 'module-spike' || 'full' }}
+  GEOMATH_ANDROID_SUITE: ${{ contains(github.event.head_commit.message, '[android-diagnostic:module-spike]') && 'module-spike' || contains(github.event.head_commit.message, '[android-diagnostic:runtime-bootstrap]') && 'runtime-bootstrap' || 'full' }}
   GRADLE_OPTS: '-Dorg.gradle.workers.max=2 -Dorg.gradle.jvmargs=-Xmx2g -Dkotlin.daemon.jvm.options=-Xmx512m'
 
 jobs:
   verify:
-    name: "${{ contains(github.event.head_commit.message, '[android-diagnostic:module-spike]') && 'Android diagnostic only (module-spike)' || 'verify' }}"
+    name: "${{ contains(github.event.head_commit.message, '[android-diagnostic:') && 'Android diagnostic only' || 'verify' }}"
     runs-on: ubuntu-24.04
     timeout-minutes: 90
     defaults:
@@ -186,9 +186,12 @@ jobs:
           case "$GEOMATH_ANDROID_SUITE" in
             full) integration_target=integration_test/integration_smoke_test.dart ;;
             module-spike) integration_target=integration_test/module_spike_test.dart ;;
+            runtime-bootstrap) integration_target=integration_test/integration_smoke_test.dart ;;
             *) echo 'Unsupported diagnostic suite' >&2; exit 2 ;;
           esac
-          flutter build apk --debug --target-platform android-x64 -t "$integration_target" --dart-define=LEARNING_SCREENSHOTS=true
+          learning_screenshots=true
+          if [[ "$GEOMATH_ANDROID_SUITE" == runtime-bootstrap ]]; then learning_screenshots=false; fi
+          flutter build apk --debug --target-platform android-x64 -t "$integration_target" --dart-define=LEARNING_SCREENSHOTS="$learning_screenshots"
           mv build/app/outputs/flutter-apk/app-debug.apk "$RUNNER_TEMP/geomath-integration-debug.apk"
           test -s "$RUNNER_TEMP/geomath-integration-debug.apk"
           rm -f -- build/app/outputs/apk/debug/app-debug.apk
