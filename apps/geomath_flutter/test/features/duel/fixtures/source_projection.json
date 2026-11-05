@@ -1,0 +1,3440 @@
+{
+  "sourceCommit": "752ce908d16d13acc9cc7510797e8363d182c3f5",
+  "sourceDirectory": "digital/backend/duel/functions/geodecoder-duel",
+  "sourceBlobs": {
+    "handler.mjs": "c8b0e4636b6613d9e3d29af491e7bccb1b3ee23f",
+    "questions.mjs": "801fa44fbe7b260466de762d52c7ce4bfa61b498"
+  },
+  "fixtureMethod": "Real projectDuelSnapshot over synthetic SQL-shaped inputs; no hosted service claim.",
+  "snapshots": {
+    "active_P1": {
+      "ok": true,
+      "protocol": 2,
+      "serverNow": 1700000030000,
+      "room": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "code": "123456",
+        "status": "playing",
+        "startsAt": 1700000000000,
+        "deadlineAt": 1700000900000,
+        "lobbyExpiresAt": 1700000600000,
+        "total": 10,
+        "winnerId": null,
+        "reason": null
+      },
+      "me": {
+        "id": "22222222-2222-4222-8222-222222222222",
+        "slot": 1,
+        "name": "Player one",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000,
+        "hintUsed": false,
+        "seq": 2,
+        "nextReadyAt": null,
+        "reviewPending": false,
+        "attempts": {
+          "solid": null,
+          "net": null
+        },
+        "answers": []
+      },
+      "currentQuestion": {
+        "id": "duel-0",
+        "index": 0,
+        "topic": "properties",
+        "copy": {
+          "ms": {
+            "prompt": "Bongkah apakah ini? Tapak segi empat sama dengan 4 muka segi tiga.",
+            "lines": [
+              "Bongkah apakah ini?",
+              "Tapak segi empat sama dengan",
+              "4 muka segi tiga."
+            ]
+          },
+          "en": {
+            "prompt": "Which solid is this? A square base with 4 triangular faces.",
+            "lines": [
+              "Which solid is this?",
+              "A square base with",
+              "4 triangular faces."
+            ]
+          }
+        }
+      },
+      "opponent": {
+        "id": "33333333-3333-4333-8333-333333333333",
+        "slot": 2,
+        "name": "Player two",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000
+      },
+      "actionResult": null
+    },
+    "active_P2": {
+      "ok": true,
+      "protocol": 2,
+      "serverNow": 1700000030000,
+      "room": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "code": "123456",
+        "status": "playing",
+        "startsAt": 1700000000000,
+        "deadlineAt": 1700000900000,
+        "lobbyExpiresAt": 1700000600000,
+        "total": 10,
+        "winnerId": null,
+        "reason": null
+      },
+      "me": {
+        "id": "22222222-2222-4222-8222-222222222222",
+        "slot": 1,
+        "name": "Player one",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000,
+        "hintUsed": false,
+        "seq": 2,
+        "nextReadyAt": null,
+        "reviewPending": false,
+        "attempts": {
+          "solid": null,
+          "net": null
+        },
+        "answers": []
+      },
+      "currentQuestion": {
+        "id": "duel-0",
+        "index": 0,
+        "topic": "formula",
+        "copy": {
+          "ms": {
+            "prompt": "V=a^2*t/3; t=tinggi a=panjang sisi tapak segi empat sama Bongkah apakah ini?",
+            "lines": [
+              "V=a^2*t/3; t=tinggi",
+              "a=panjang sisi tapak segi empat sama",
+              "Bongkah apakah ini?"
+            ]
+          },
+          "en": {
+            "prompt": "V=a^2*t/3; t=height a=side length of the square base Which solid is this?",
+            "lines": [
+              "V=a^2*t/3; t=height",
+              "a=side length of the square base",
+              "Which solid is this?"
+            ]
+          }
+        }
+      },
+      "opponent": {
+        "id": "33333333-3333-4333-8333-333333333333",
+        "slot": 2,
+        "name": "Player two",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000
+      },
+      "actionResult": null
+    },
+    "active_P3": {
+      "ok": true,
+      "protocol": 2,
+      "serverNow": 1700000030000,
+      "room": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "code": "123456",
+        "status": "playing",
+        "startsAt": 1700000000000,
+        "deadlineAt": 1700000900000,
+        "lobbyExpiresAt": 1700000600000,
+        "total": 10,
+        "winnerId": null,
+        "reason": null
+      },
+      "me": {
+        "id": "22222222-2222-4222-8222-222222222222",
+        "slot": 1,
+        "name": "Player one",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000,
+        "hintUsed": false,
+        "seq": 2,
+        "nextReadyAt": null,
+        "reviewPending": false,
+        "attempts": {
+          "solid": null,
+          "net": null
+        },
+        "answers": []
+      },
+      "currentQuestion": {
+        "id": "duel-0",
+        "index": 0,
+        "topic": "net",
+        "copy": {
+          "ms": {
+            "prompt": "Pilih bentangan bagi 1 segi empat sama dan 4 segi tiga.",
+            "lines": [
+              "Pilih bentangan bagi",
+              "1 segi empat sama",
+              "dan 4 segi tiga."
+            ]
+          },
+          "en": {
+            "prompt": "Choose the net with 1 square and 4 triangles.",
+            "lines": [
+              "Choose the net with",
+              "1 square",
+              "and 4 triangles."
+            ]
+          }
+        }
+      },
+      "opponent": {
+        "id": "33333333-3333-4333-8333-333333333333",
+        "slot": 2,
+        "name": "Player two",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000
+      },
+      "actionResult": null
+    },
+    "active_S1": {
+      "ok": true,
+      "protocol": 2,
+      "serverNow": 1700000030000,
+      "room": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "code": "123456",
+        "status": "playing",
+        "startsAt": 1700000000000,
+        "deadlineAt": 1700000900000,
+        "lobbyExpiresAt": 1700000600000,
+        "total": 10,
+        "winnerId": null,
+        "reason": null
+      },
+      "me": {
+        "id": "22222222-2222-4222-8222-222222222222",
+        "slot": 1,
+        "name": "Player one",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000,
+        "hintUsed": false,
+        "seq": 2,
+        "nextReadyAt": null,
+        "reviewPending": false,
+        "attempts": {
+          "solid": null,
+          "net": null
+        },
+        "answers": []
+      },
+      "currentQuestion": {
+        "id": "duel-0",
+        "index": 0,
+        "topic": "properties",
+        "copy": {
+          "ms": {
+            "prompt": "Tin minuman ada dua tapak bulatan sama. Bongkah apakah ini?",
+            "lines": [
+              "Tin minuman ada dua",
+              "tapak bulatan sama.",
+              "Bongkah apakah ini?"
+            ]
+          },
+          "en": {
+            "prompt": "A drinks can has two equal circular bases. Which solid is this?",
+            "lines": [
+              "A drinks can has two",
+              "equal circular bases.",
+              "Which solid is this?"
+            ]
+          }
+        }
+      },
+      "opponent": {
+        "id": "33333333-3333-4333-8333-333333333333",
+        "slot": 2,
+        "name": "Player two",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000
+      },
+      "actionResult": null
+    },
+    "active_S2": {
+      "ok": true,
+      "protocol": 2,
+      "serverNow": 1700000030000,
+      "room": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "code": "123456",
+        "status": "playing",
+        "startsAt": 1700000000000,
+        "deadlineAt": 1700000900000,
+        "lobbyExpiresAt": 1700000600000,
+        "total": 10,
+        "winnerId": null,
+        "reason": null
+      },
+      "me": {
+        "id": "22222222-2222-4222-8222-222222222222",
+        "slot": 1,
+        "name": "Player one",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000,
+        "hintUsed": false,
+        "seq": 2,
+        "nextReadyAt": null,
+        "reviewPending": false,
+        "attempts": {
+          "solid": null,
+          "net": null
+        },
+        "answers": []
+      },
+      "currentQuestion": {
+        "id": "duel-0",
+        "index": 0,
+        "topic": "formula",
+        "copy": {
+          "ms": {
+            "prompt": "V=pi*j^2*t L=2*pi*j*(j+t) Bongkah apakah ini?",
+            "lines": [
+              "V=pi*j^2*t",
+              "L=2*pi*j*(j+t)",
+              "Bongkah apakah ini?"
+            ]
+          },
+          "en": {
+            "prompt": "V=pi*j^2*t L=2*pi*j*(j+t) Which solid is this?",
+            "lines": [
+              "V=pi*j^2*t",
+              "L=2*pi*j*(j+t)",
+              "Which solid is this?"
+            ]
+          }
+        },
+        "formulaKey": {
+          "ms": "V = isi padu · L = luas permukaan · j = jejari · t = tinggi",
+          "en": "V = volume · L = surface area · j = radius · t = height"
+        }
+      },
+      "opponent": {
+        "id": "33333333-3333-4333-8333-333333333333",
+        "slot": 2,
+        "name": "Player two",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000
+      },
+      "actionResult": null
+    },
+    "active_S3": {
+      "ok": true,
+      "protocol": 2,
+      "serverNow": 1700000030000,
+      "room": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "code": "123456",
+        "status": "playing",
+        "startsAt": 1700000000000,
+        "deadlineAt": 1700000900000,
+        "lobbyExpiresAt": 1700000600000,
+        "total": 10,
+        "winnerId": null,
+        "reason": null
+      },
+      "me": {
+        "id": "22222222-2222-4222-8222-222222222222",
+        "slot": 1,
+        "name": "Player one",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000,
+        "hintUsed": false,
+        "seq": 2,
+        "nextReadyAt": null,
+        "reviewPending": false,
+        "attempts": {
+          "solid": null,
+          "net": null
+        },
+        "answers": []
+      },
+      "currentQuestion": {
+        "id": "duel-0",
+        "index": 0,
+        "topic": "net",
+        "copy": {
+          "ms": {
+            "prompt": "Pilih bentangan: 2 bulatan sama saiz, 1 segi empat tepat.",
+            "lines": [
+              "Pilih bentangan:",
+              "2 bulatan sama saiz,",
+              "1 segi empat tepat."
+            ]
+          },
+          "en": {
+            "prompt": "Choose the net: 2 circles of the same size, 1 rectangle.",
+            "lines": [
+              "Choose the net:",
+              "2 circles of the same size,",
+              "1 rectangle."
+            ]
+          }
+        }
+      },
+      "opponent": {
+        "id": "33333333-3333-4333-8333-333333333333",
+        "slot": 2,
+        "name": "Player two",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000
+      },
+      "actionResult": null
+    },
+    "active_K1": {
+      "ok": true,
+      "protocol": 2,
+      "serverNow": 1700000030000,
+      "room": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "code": "123456",
+        "status": "playing",
+        "startsAt": 1700000000000,
+        "deadlineAt": 1700000900000,
+        "lobbyExpiresAt": 1700000600000,
+        "total": 10,
+        "winnerId": null,
+        "reason": null
+      },
+      "me": {
+        "id": "22222222-2222-4222-8222-222222222222",
+        "slot": 1,
+        "name": "Player one",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000,
+        "hintUsed": false,
+        "seq": 2,
+        "nextReadyAt": null,
+        "reviewPending": false,
+        "attempts": {
+          "solid": null,
+          "net": null
+        },
+        "answers": []
+      },
+      "currentQuestion": {
+        "id": "duel-0",
+        "index": 0,
+        "topic": "properties",
+        "copy": {
+          "ms": {
+            "prompt": "Enam muka berbentuk segi empat sama. Bongkah apakah ini?",
+            "lines": [
+              "Enam muka berbentuk",
+              "segi empat sama.",
+              "Bongkah apakah ini?"
+            ]
+          },
+          "en": {
+            "prompt": "Six faces in the shape of squares. Which solid is this?",
+            "lines": [
+              "Six faces in the shape",
+              "of squares.",
+              "Which solid is this?"
+            ]
+          }
+        }
+      },
+      "opponent": {
+        "id": "33333333-3333-4333-8333-333333333333",
+        "slot": 2,
+        "name": "Player two",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000
+      },
+      "actionResult": null
+    },
+    "active_K2": {
+      "ok": true,
+      "protocol": 2,
+      "serverNow": 1700000030000,
+      "room": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "code": "123456",
+        "status": "playing",
+        "startsAt": 1700000000000,
+        "deadlineAt": 1700000900000,
+        "lobbyExpiresAt": 1700000600000,
+        "total": 10,
+        "winnerId": null,
+        "reason": null
+      },
+      "me": {
+        "id": "22222222-2222-4222-8222-222222222222",
+        "slot": 1,
+        "name": "Player one",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000,
+        "hintUsed": false,
+        "seq": 2,
+        "nextReadyAt": null,
+        "reviewPending": false,
+        "attempts": {
+          "solid": null,
+          "net": null
+        },
+        "answers": []
+      },
+      "currentQuestion": {
+        "id": "duel-0",
+        "index": 0,
+        "topic": "formula",
+        "copy": {
+          "ms": {
+            "prompt": "V=a^3; L=6*a^2 a=panjang tepi Bongkah apakah ini?",
+            "lines": [
+              "V=a^3; L=6*a^2",
+              "a=panjang tepi",
+              "Bongkah apakah ini?"
+            ]
+          },
+          "en": {
+            "prompt": "V=a^3; L=6*a^2 a=edge length Which solid is this?",
+            "lines": [
+              "V=a^3; L=6*a^2",
+              "a=edge length",
+              "Which solid is this?"
+            ]
+          }
+        }
+      },
+      "opponent": {
+        "id": "33333333-3333-4333-8333-333333333333",
+        "slot": 2,
+        "name": "Player two",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000
+      },
+      "actionResult": null
+    },
+    "active_K3": {
+      "ok": true,
+      "protocol": 2,
+      "serverNow": 1700000030000,
+      "room": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "code": "123456",
+        "status": "playing",
+        "startsAt": 1700000000000,
+        "deadlineAt": 1700000900000,
+        "lobbyExpiresAt": 1700000600000,
+        "total": 10,
+        "winnerId": null,
+        "reason": null
+      },
+      "me": {
+        "id": "22222222-2222-4222-8222-222222222222",
+        "slot": 1,
+        "name": "Player one",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000,
+        "hintUsed": false,
+        "seq": 2,
+        "nextReadyAt": null,
+        "reviewPending": false,
+        "attempts": {
+          "solid": null,
+          "net": null
+        },
+        "answers": []
+      },
+      "currentQuestion": {
+        "id": "duel-0",
+        "index": 0,
+        "topic": "net",
+        "copy": {
+          "ms": {
+            "prompt": "Pilih bentangan: 6 segi empat sama, semuanya sama saiz.",
+            "lines": [
+              "Pilih bentangan:",
+              "6 segi empat sama,",
+              "semuanya sama saiz."
+            ]
+          },
+          "en": {
+            "prompt": "Choose the net: 6 squares, all the same size.",
+            "lines": [
+              "Choose the net:",
+              "6 squares,",
+              "all the same size."
+            ]
+          }
+        }
+      },
+      "opponent": {
+        "id": "33333333-3333-4333-8333-333333333333",
+        "slot": 2,
+        "name": "Player two",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000
+      },
+      "actionResult": null
+    },
+    "active_C1": {
+      "ok": true,
+      "protocol": 2,
+      "serverNow": 1700000030000,
+      "room": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "code": "123456",
+        "status": "playing",
+        "startsAt": 1700000000000,
+        "deadlineAt": 1700000900000,
+        "lobbyExpiresAt": 1700000600000,
+        "total": 10,
+        "winnerId": null,
+        "reason": null
+      },
+      "me": {
+        "id": "22222222-2222-4222-8222-222222222222",
+        "slot": 1,
+        "name": "Player one",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000,
+        "hintUsed": false,
+        "seq": 2,
+        "nextReadyAt": null,
+        "reviewPending": false,
+        "attempts": {
+          "solid": null,
+          "net": null
+        },
+        "answers": []
+      },
+      "currentQuestion": {
+        "id": "duel-0",
+        "index": 0,
+        "topic": "formula",
+        "copy": {
+          "ms": {
+            "prompt": "V=pi*j^2*t/3 j=jejari; t=tinggi. Bongkah apakah ini?",
+            "lines": [
+              "V=pi*j^2*t/3",
+              "j=jejari; t=tinggi.",
+              "Bongkah apakah ini?"
+            ]
+          },
+          "en": {
+            "prompt": "V=pi*j^2*t/3 j=radius; t=height. Which solid is this?",
+            "lines": [
+              "V=pi*j^2*t/3",
+              "j=radius; t=height.",
+              "Which solid is this?"
+            ]
+          }
+        }
+      },
+      "opponent": {
+        "id": "33333333-3333-4333-8333-333333333333",
+        "slot": 2,
+        "name": "Player two",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000
+      },
+      "actionResult": null
+    },
+    "active_C2": {
+      "ok": true,
+      "protocol": 2,
+      "serverNow": 1700000030000,
+      "room": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "code": "123456",
+        "status": "playing",
+        "startsAt": 1700000000000,
+        "deadlineAt": 1700000900000,
+        "lobbyExpiresAt": 1700000600000,
+        "total": 10,
+        "winnerId": null,
+        "reason": null
+      },
+      "me": {
+        "id": "22222222-2222-4222-8222-222222222222",
+        "slot": 1,
+        "name": "Player one",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000,
+        "hintUsed": false,
+        "seq": 2,
+        "nextReadyAt": null,
+        "reviewPending": false,
+        "attempts": {
+          "solid": null,
+          "net": null
+        },
+        "answers": []
+      },
+      "currentQuestion": {
+        "id": "duel-0",
+        "index": 0,
+        "topic": "formula",
+        "copy": {
+          "ms": {
+            "prompt": "L=pi*j*(j+s) j=jejari; s=tinggi sendeng. Bentuk apa?",
+            "lines": [
+              "L=pi*j*(j+s)",
+              "j=jejari; s=tinggi",
+              "sendeng. Bentuk apa?"
+            ]
+          },
+          "en": {
+            "prompt": "L=pi*j*(j+s) j=radius; s=slant height. Which shape is it?",
+            "lines": [
+              "L=pi*j*(j+s)",
+              "j=radius; s=slant",
+              "height. Which shape is it?"
+            ]
+          }
+        }
+      },
+      "opponent": {
+        "id": "33333333-3333-4333-8333-333333333333",
+        "slot": 2,
+        "name": "Player two",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000
+      },
+      "actionResult": null
+    },
+    "active_C3": {
+      "ok": true,
+      "protocol": 2,
+      "serverNow": 1700000030000,
+      "room": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "code": "123456",
+        "status": "playing",
+        "startsAt": 1700000000000,
+        "deadlineAt": 1700000900000,
+        "lobbyExpiresAt": 1700000600000,
+        "total": 10,
+        "winnerId": null,
+        "reason": null
+      },
+      "me": {
+        "id": "22222222-2222-4222-8222-222222222222",
+        "slot": 1,
+        "name": "Player one",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000,
+        "hintUsed": false,
+        "seq": 2,
+        "nextReadyAt": null,
+        "reviewPending": false,
+        "attempts": {
+          "solid": null,
+          "net": null
+        },
+        "answers": []
+      },
+      "currentQuestion": {
+        "id": "duel-0",
+        "index": 0,
+        "topic": "net",
+        "copy": {
+          "ms": {
+            "prompt": "Pilih bentangan yang ada 1 sektor bulatan dan 1 bulatan.",
+            "lines": [
+              "Pilih bentangan yang",
+              "ada 1 sektor bulatan",
+              "dan 1 bulatan."
+            ]
+          },
+          "en": {
+            "prompt": "Choose the net with 1 sector of a circle and 1 circle.",
+            "lines": [
+              "Choose the net with",
+              "1 sector of a circle",
+              "and 1 circle."
+            ]
+          }
+        }
+      },
+      "opponent": {
+        "id": "33333333-3333-4333-8333-333333333333",
+        "slot": 2,
+        "name": "Player two",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000
+      },
+      "actionResult": null
+    },
+    "active_B1": {
+      "ok": true,
+      "protocol": 2,
+      "serverNow": 1700000030000,
+      "room": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "code": "123456",
+        "status": "playing",
+        "startsAt": 1700000000000,
+        "deadlineAt": 1700000900000,
+        "lobbyExpiresAt": 1700000600000,
+        "total": 10,
+        "winnerId": null,
+        "reason": null
+      },
+      "me": {
+        "id": "22222222-2222-4222-8222-222222222222",
+        "slot": 1,
+        "name": "Player one",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000,
+        "hintUsed": false,
+        "seq": 2,
+        "nextReadyAt": null,
+        "reviewPending": false,
+        "attempts": {
+          "solid": null,
+          "net": null
+        },
+        "answers": []
+      },
+      "currentQuestion": {
+        "id": "duel-0",
+        "index": 0,
+        "topic": "properties",
+        "copy": {
+          "ms": {
+            "prompt": "Dalam contoh ini, kotak ada 3 ukuran yang tidak sama. Bongkah apakah ini?",
+            "lines": [
+              "Dalam contoh ini, kotak ada",
+              "3 ukuran yang tidak sama.",
+              "Bongkah apakah ini?"
+            ]
+          },
+          "en": {
+            "prompt": "In this example, the box has 3 dimensions of different lengths. Which solid is this?",
+            "lines": [
+              "In this example, the box has",
+              "3 dimensions of different lengths.",
+              "Which solid is this?"
+            ]
+          }
+        }
+      },
+      "opponent": {
+        "id": "33333333-3333-4333-8333-333333333333",
+        "slot": 2,
+        "name": "Player two",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000
+      },
+      "actionResult": null
+    },
+    "active_B2": {
+      "ok": true,
+      "protocol": 2,
+      "serverNow": 1700000030000,
+      "room": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "code": "123456",
+        "status": "playing",
+        "startsAt": 1700000000000,
+        "deadlineAt": 1700000900000,
+        "lobbyExpiresAt": 1700000600000,
+        "total": 10,
+        "winnerId": null,
+        "reason": null
+      },
+      "me": {
+        "id": "22222222-2222-4222-8222-222222222222",
+        "slot": 1,
+        "name": "Player one",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000,
+        "hintUsed": false,
+        "seq": 2,
+        "nextReadyAt": null,
+        "reviewPending": false,
+        "attempts": {
+          "solid": null,
+          "net": null
+        },
+        "answers": []
+      },
+      "currentQuestion": {
+        "id": "duel-0",
+        "index": 0,
+        "topic": "formula",
+        "copy": {
+          "ms": {
+            "prompt": "V=p*l*t; dalam contoh ini, p,l,t ialah 3 ukuran berbeza. Bongkah apakah ini?",
+            "lines": [
+              "V=p*l*t; dalam contoh ini,",
+              "p,l,t ialah 3 ukuran berbeza.",
+              "Bongkah apakah ini?"
+            ]
+          },
+          "en": {
+            "prompt": "V=p*l*t; in this example, p,l,t are 3 different dimensions. Which solid is this?",
+            "lines": [
+              "V=p*l*t; in this example,",
+              "p,l,t are 3 different dimensions.",
+              "Which solid is this?"
+            ]
+          }
+        }
+      },
+      "opponent": {
+        "id": "33333333-3333-4333-8333-333333333333",
+        "slot": 2,
+        "name": "Player two",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000
+      },
+      "actionResult": null
+    },
+    "active_B3": {
+      "ok": true,
+      "protocol": 2,
+      "serverNow": 1700000030000,
+      "room": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "code": "123456",
+        "status": "playing",
+        "startsAt": 1700000000000,
+        "deadlineAt": 1700000900000,
+        "lobbyExpiresAt": 1700000600000,
+        "total": 10,
+        "winnerId": null,
+        "reason": null
+      },
+      "me": {
+        "id": "22222222-2222-4222-8222-222222222222",
+        "slot": 1,
+        "name": "Player one",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000,
+        "hintUsed": false,
+        "seq": 2,
+        "nextReadyAt": null,
+        "reviewPending": false,
+        "attempts": {
+          "solid": null,
+          "net": null
+        },
+        "answers": []
+      },
+      "currentQuestion": {
+        "id": "duel-0",
+        "index": 0,
+        "topic": "net",
+        "copy": {
+          "ms": {
+            "prompt": "Kotak: 6cm x 4cm dengan tinggi 3cm. Pilih bentangannya.",
+            "lines": [
+              "Kotak: 6cm x 4cm",
+              "dengan tinggi 3cm.",
+              "Pilih bentangannya."
+            ]
+          },
+          "en": {
+            "prompt": "A box: 6cm x 4cm with a height of 3cm. Choose its net.",
+            "lines": [
+              "A box: 6cm x 4cm",
+              "with a height of 3cm.",
+              "Choose its net."
+            ]
+          }
+        }
+      },
+      "opponent": {
+        "id": "33333333-3333-4333-8333-333333333333",
+        "slot": 2,
+        "name": "Player two",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000
+      },
+      "actionResult": null
+    },
+    "net_stage": {
+      "ok": true,
+      "protocol": 2,
+      "serverNow": 1700000030000,
+      "room": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "code": "123456",
+        "status": "playing",
+        "startsAt": 1700000000000,
+        "deadlineAt": 1700000900000,
+        "lobbyExpiresAt": 1700000600000,
+        "total": 10,
+        "winnerId": null,
+        "reason": null
+      },
+      "me": {
+        "id": "22222222-2222-4222-8222-222222222222",
+        "slot": 1,
+        "name": "Player one",
+        "ready": true,
+        "answered": 0,
+        "stage": "net",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000,
+        "hintUsed": false,
+        "seq": 2,
+        "nextReadyAt": null,
+        "reviewPending": false,
+        "attempts": {
+          "solid": "cube",
+          "net": null
+        },
+        "answers": []
+      },
+      "currentQuestion": {
+        "id": "duel-0",
+        "index": 0,
+        "topic": "properties",
+        "copy": {
+          "ms": {
+            "prompt": "Enam muka berbentuk segi empat sama. Bongkah apakah ini?",
+            "lines": [
+              "Enam muka berbentuk",
+              "segi empat sama.",
+              "Bongkah apakah ini?"
+            ]
+          },
+          "en": {
+            "prompt": "Six faces in the shape of squares. Which solid is this?",
+            "lines": [
+              "Six faces in the shape",
+              "of squares.",
+              "Which solid is this?"
+            ]
+          }
+        }
+      },
+      "opponent": {
+        "id": "33333333-3333-4333-8333-333333333333",
+        "slot": 2,
+        "name": "Player two",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000
+      },
+      "actionResult": {
+        "type": "solid"
+      }
+    },
+    "confirmed_hint": {
+      "ok": true,
+      "protocol": 2,
+      "serverNow": 1700000030000,
+      "room": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "code": "123456",
+        "status": "playing",
+        "startsAt": 1700000000000,
+        "deadlineAt": 1700000900000,
+        "lobbyExpiresAt": 1700000600000,
+        "total": 10,
+        "winnerId": null,
+        "reason": null
+      },
+      "me": {
+        "id": "22222222-2222-4222-8222-222222222222",
+        "slot": 1,
+        "name": "Player one",
+        "ready": true,
+        "answered": 0,
+        "stage": "net",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 1,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000,
+        "hintUsed": true,
+        "seq": 2,
+        "nextReadyAt": null,
+        "reviewPending": false,
+        "attempts": {
+          "solid": "cube",
+          "net": null
+        },
+        "answers": []
+      },
+      "currentQuestion": {
+        "id": "duel-0",
+        "index": 0,
+        "topic": "properties",
+        "copy": {
+          "ms": {
+            "prompt": "Enam muka berbentuk segi empat sama. Bongkah apakah ini?",
+            "lines": [
+              "Enam muka berbentuk",
+              "segi empat sama.",
+              "Bongkah apakah ini?"
+            ],
+            "hint": "12 tepi sama panjang. Setiap muka sama bentuk dan saiz."
+          },
+          "en": {
+            "prompt": "Six faces in the shape of squares. Which solid is this?",
+            "lines": [
+              "Six faces in the shape",
+              "of squares.",
+              "Which solid is this?"
+            ],
+            "hint": "12 edges of equal length. Every face has the same shape and size."
+          }
+        }
+      },
+      "opponent": {
+        "id": "33333333-3333-4333-8333-333333333333",
+        "slot": 2,
+        "name": "Player two",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000
+      },
+      "actionResult": {
+        "type": "hint"
+      }
+    },
+    "review_correct": {
+      "ok": true,
+      "protocol": 2,
+      "serverNow": 1700000030000,
+      "room": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "code": "123456",
+        "status": "playing",
+        "startsAt": 1700000000000,
+        "deadlineAt": 1700000900000,
+        "lobbyExpiresAt": 1700000600000,
+        "total": 10,
+        "winnerId": null,
+        "reason": null
+      },
+      "me": {
+        "id": "22222222-2222-4222-8222-222222222222",
+        "slot": 1,
+        "name": "Player one",
+        "ready": true,
+        "answered": 1,
+        "stage": "solid",
+        "score": 1,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000,
+        "hintUsed": false,
+        "seq": 2,
+        "nextReadyAt": 1700000030900,
+        "reviewPending": true,
+        "attempts": {
+          "solid": null,
+          "net": null
+        },
+        "answers": [
+          {
+            "id": "K1",
+            "shape": "cube",
+            "topic": "properties",
+            "outcome": "correct",
+            "hint": false,
+            "failedAt": null,
+            "elapsed": 500,
+            "firstTry": true,
+            "question": {
+              "id": "K1",
+              "index": 0,
+              "topic": "properties",
+              "copy": {
+                "ms": {
+                  "prompt": "Enam muka berbentuk segi empat sama. Bongkah apakah ini?",
+                  "lines": [
+                    "Enam muka berbentuk",
+                    "segi empat sama.",
+                    "Bongkah apakah ini?"
+                  ],
+                  "hint": "12 tepi sama panjang. Setiap muka sama bentuk dan saiz."
+                },
+                "en": {
+                  "prompt": "Six faces in the shape of squares. Which solid is this?",
+                  "lines": [
+                    "Six faces in the shape",
+                    "of squares.",
+                    "Which solid is this?"
+                  ],
+                  "hint": "12 edges of equal length. Every face has the same shape and size."
+                }
+              },
+              "shape": "cube"
+            },
+            "attempts": {
+              "solid": "cube",
+              "net": "cube"
+            }
+          }
+        ]
+      },
+      "currentQuestion": null,
+      "opponent": {
+        "id": "33333333-3333-4333-8333-333333333333",
+        "slot": 2,
+        "name": "Player two",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000
+      },
+      "actionResult": {
+        "type": "correct",
+        "target": null
+      }
+    },
+    "review_wrong_r1": {
+      "ok": true,
+      "protocol": 2,
+      "serverNow": 1700000030000,
+      "room": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "code": "123456",
+        "status": "playing",
+        "startsAt": 1700000000000,
+        "deadlineAt": 1700000900000,
+        "lobbyExpiresAt": 1700000600000,
+        "total": 10,
+        "winnerId": null,
+        "reason": null
+      },
+      "me": {
+        "id": "22222222-2222-4222-8222-222222222222",
+        "slot": 1,
+        "name": "Player one",
+        "ready": true,
+        "answered": 1,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 1,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000,
+        "hintUsed": false,
+        "seq": 2,
+        "nextReadyAt": 1700000031800,
+        "reviewPending": true,
+        "attempts": {
+          "solid": null,
+          "net": null
+        },
+        "answers": [
+          {
+            "id": "K1",
+            "shape": "cube",
+            "topic": "properties",
+            "outcome": "wrong",
+            "hint": false,
+            "failedAt": "solid",
+            "elapsed": 500,
+            "firstTry": false,
+            "question": {
+              "id": "K1",
+              "index": 0,
+              "topic": "properties",
+              "copy": {
+                "ms": {
+                  "prompt": "Enam muka berbentuk segi empat sama. Bongkah apakah ini?",
+                  "lines": [
+                    "Enam muka berbentuk",
+                    "segi empat sama.",
+                    "Bongkah apakah ini?"
+                  ],
+                  "hint": "12 tepi sama panjang. Setiap muka sama bentuk dan saiz."
+                },
+                "en": {
+                  "prompt": "Six faces in the shape of squares. Which solid is this?",
+                  "lines": [
+                    "Six faces in the shape",
+                    "of squares.",
+                    "Which solid is this?"
+                  ],
+                  "hint": "12 edges of equal length. Every face has the same shape and size."
+                }
+              },
+              "shape": "cube"
+            },
+            "attempts": {
+              "solid": "cone",
+              "net": null
+            }
+          }
+        ]
+      },
+      "currentQuestion": null,
+      "opponent": {
+        "id": "33333333-3333-4333-8333-333333333333",
+        "slot": 2,
+        "name": "Player two",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000
+      },
+      "actionResult": {
+        "type": "wrong",
+        "target": "r1"
+      }
+    },
+    "review_wrong_r2": {
+      "ok": true,
+      "protocol": 2,
+      "serverNow": 1700000030000,
+      "room": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "code": "123456",
+        "status": "playing",
+        "startsAt": 1700000000000,
+        "deadlineAt": 1700000900000,
+        "lobbyExpiresAt": 1700000600000,
+        "total": 10,
+        "winnerId": null,
+        "reason": null
+      },
+      "me": {
+        "id": "22222222-2222-4222-8222-222222222222",
+        "slot": 1,
+        "name": "Player one",
+        "ready": true,
+        "answered": 1,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 1,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000,
+        "hintUsed": false,
+        "seq": 2,
+        "nextReadyAt": 1700000031800,
+        "reviewPending": true,
+        "attempts": {
+          "solid": null,
+          "net": null
+        },
+        "answers": [
+          {
+            "id": "K1",
+            "shape": "cube",
+            "topic": "properties",
+            "outcome": "wrong",
+            "hint": false,
+            "failedAt": "net",
+            "elapsed": 500,
+            "firstTry": false,
+            "question": {
+              "id": "K1",
+              "index": 0,
+              "topic": "properties",
+              "copy": {
+                "ms": {
+                  "prompt": "Enam muka berbentuk segi empat sama. Bongkah apakah ini?",
+                  "lines": [
+                    "Enam muka berbentuk",
+                    "segi empat sama.",
+                    "Bongkah apakah ini?"
+                  ],
+                  "hint": "12 tepi sama panjang. Setiap muka sama bentuk dan saiz."
+                },
+                "en": {
+                  "prompt": "Six faces in the shape of squares. Which solid is this?",
+                  "lines": [
+                    "Six faces in the shape",
+                    "of squares.",
+                    "Which solid is this?"
+                  ],
+                  "hint": "12 edges of equal length. Every face has the same shape and size."
+                }
+              },
+              "shape": "cube"
+            },
+            "attempts": {
+              "solid": "cube",
+              "net": "cone"
+            }
+          }
+        ]
+      },
+      "currentQuestion": null,
+      "opponent": {
+        "id": "33333333-3333-4333-8333-333333333333",
+        "slot": 2,
+        "name": "Player two",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000
+      },
+      "actionResult": {
+        "type": "wrong",
+        "target": "r2"
+      }
+    },
+    "review_skipped": {
+      "ok": true,
+      "protocol": 2,
+      "serverNow": 1700000030000,
+      "room": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "code": "123456",
+        "status": "playing",
+        "startsAt": 1700000000000,
+        "deadlineAt": 1700000900000,
+        "lobbyExpiresAt": 1700000600000,
+        "total": 10,
+        "winnerId": null,
+        "reason": null
+      },
+      "me": {
+        "id": "22222222-2222-4222-8222-222222222222",
+        "slot": 1,
+        "name": "Player one",
+        "ready": true,
+        "answered": 1,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 1,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000,
+        "hintUsed": false,
+        "seq": 2,
+        "nextReadyAt": 1700000031800,
+        "reviewPending": true,
+        "attempts": {
+          "solid": null,
+          "net": null
+        },
+        "answers": [
+          {
+            "id": "K1",
+            "shape": "cube",
+            "topic": "properties",
+            "outcome": "skipped",
+            "hint": false,
+            "failedAt": null,
+            "elapsed": 500,
+            "firstTry": false,
+            "question": {
+              "id": "K1",
+              "index": 0,
+              "topic": "properties",
+              "copy": {
+                "ms": {
+                  "prompt": "Enam muka berbentuk segi empat sama. Bongkah apakah ini?",
+                  "lines": [
+                    "Enam muka berbentuk",
+                    "segi empat sama.",
+                    "Bongkah apakah ini?"
+                  ],
+                  "hint": "12 tepi sama panjang. Setiap muka sama bentuk dan saiz."
+                },
+                "en": {
+                  "prompt": "Six faces in the shape of squares. Which solid is this?",
+                  "lines": [
+                    "Six faces in the shape",
+                    "of squares.",
+                    "Which solid is this?"
+                  ],
+                  "hint": "12 edges of equal length. Every face has the same shape and size."
+                }
+              },
+              "shape": "cube"
+            },
+            "attempts": {
+              "solid": null,
+              "net": null
+            }
+          }
+        ]
+      },
+      "currentQuestion": null,
+      "opponent": {
+        "id": "33333333-3333-4333-8333-333333333333",
+        "slot": 2,
+        "name": "Player two",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000
+      },
+      "actionResult": {
+        "type": "skipped",
+        "target": null
+      }
+    },
+    "complete_final_review": {
+      "ok": true,
+      "protocol": 2,
+      "serverNow": 1700000030000,
+      "room": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "code": "123456",
+        "status": "complete",
+        "startsAt": 1700000000000,
+        "deadlineAt": 1700000900000,
+        "lobbyExpiresAt": 1700000600000,
+        "total": 10,
+        "winnerId": "22222222-2222-4222-8222-222222222222",
+        "reason": "score"
+      },
+      "me": {
+        "id": "22222222-2222-4222-8222-222222222222",
+        "slot": 1,
+        "name": "Player one",
+        "ready": true,
+        "answered": 10,
+        "stage": "solid",
+        "score": 10,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": 1700000030000,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000,
+        "hintUsed": false,
+        "seq": 2,
+        "nextReadyAt": 1700000030900,
+        "reviewPending": true,
+        "attempts": {
+          "solid": null,
+          "net": null
+        },
+        "answers": [
+          {
+            "id": "K1",
+            "shape": "cube",
+            "topic": "properties",
+            "outcome": "correct",
+            "hint": false,
+            "failedAt": null,
+            "elapsed": 500,
+            "firstTry": true,
+            "question": {
+              "id": "K1",
+              "index": 0,
+              "topic": "properties",
+              "copy": {
+                "ms": {
+                  "prompt": "Enam muka berbentuk segi empat sama. Bongkah apakah ini?",
+                  "lines": [
+                    "Enam muka berbentuk",
+                    "segi empat sama.",
+                    "Bongkah apakah ini?"
+                  ],
+                  "hint": "12 tepi sama panjang. Setiap muka sama bentuk dan saiz."
+                },
+                "en": {
+                  "prompt": "Six faces in the shape of squares. Which solid is this?",
+                  "lines": [
+                    "Six faces in the shape",
+                    "of squares.",
+                    "Which solid is this?"
+                  ],
+                  "hint": "12 edges of equal length. Every face has the same shape and size."
+                }
+              },
+              "shape": "cube"
+            },
+            "attempts": {
+              "solid": "cube",
+              "net": "cube"
+            }
+          },
+          {
+            "id": "K2",
+            "shape": "cube",
+            "topic": "formula",
+            "outcome": "correct",
+            "hint": false,
+            "failedAt": null,
+            "elapsed": 500,
+            "firstTry": true,
+            "question": {
+              "id": "K2",
+              "index": 1,
+              "topic": "formula",
+              "copy": {
+                "ms": {
+                  "prompt": "V=a^3; L=6*a^2 a=panjang tepi Bongkah apakah ini?",
+                  "lines": [
+                    "V=a^3; L=6*a^2",
+                    "a=panjang tepi",
+                    "Bongkah apakah ini?"
+                  ],
+                  "hint": "Panjang, lebar serta tinggi sama bagi bongkah ini."
+                },
+                "en": {
+                  "prompt": "V=a^3; L=6*a^2 a=edge length Which solid is this?",
+                  "lines": [
+                    "V=a^3; L=6*a^2",
+                    "a=edge length",
+                    "Which solid is this?"
+                  ],
+                  "hint": "The length, width and height of this solid are equal."
+                }
+              },
+              "shape": "cube"
+            },
+            "attempts": {
+              "solid": "cube",
+              "net": "cube"
+            }
+          },
+          {
+            "id": "P1",
+            "shape": "pyramid",
+            "topic": "properties",
+            "outcome": "correct",
+            "hint": false,
+            "failedAt": null,
+            "elapsed": 500,
+            "firstTry": true,
+            "question": {
+              "id": "P1",
+              "index": 2,
+              "topic": "properties",
+              "copy": {
+                "ms": {
+                  "prompt": "Bongkah apakah ini? Tapak segi empat sama dengan 4 muka segi tiga.",
+                  "lines": [
+                    "Bongkah apakah ini?",
+                    "Tapak segi empat sama dengan",
+                    "4 muka segi tiga."
+                  ],
+                  "hint": "Muka sisi akan bertemu pada puncak apabila dilipat."
+                },
+                "en": {
+                  "prompt": "Which solid is this? A square base with 4 triangular faces.",
+                  "lines": [
+                    "Which solid is this?",
+                    "A square base with",
+                    "4 triangular faces."
+                  ],
+                  "hint": "The side faces meet at an apex when folded."
+                }
+              },
+              "shape": "pyramid"
+            },
+            "attempts": {
+              "solid": "pyramid",
+              "net": "pyramid"
+            }
+          },
+          {
+            "id": "P2",
+            "shape": "pyramid",
+            "topic": "formula",
+            "outcome": "correct",
+            "hint": false,
+            "failedAt": null,
+            "elapsed": 500,
+            "firstTry": true,
+            "question": {
+              "id": "P2",
+              "index": 3,
+              "topic": "formula",
+              "copy": {
+                "ms": {
+                  "prompt": "V=a^2*t/3; t=tinggi a=panjang sisi tapak segi empat sama Bongkah apakah ini?",
+                  "lines": [
+                    "V=a^2*t/3; t=tinggi",
+                    "a=panjang sisi tapak segi empat sama",
+                    "Bongkah apakah ini?"
+                  ],
+                  "hint": "a^2 ialah luas tapak. Fikir bentuk muka sisi bongkah."
+                },
+                "en": {
+                  "prompt": "V=a^2*t/3; t=height a=side length of the square base Which solid is this?",
+                  "lines": [
+                    "V=a^2*t/3; t=height",
+                    "a=side length of the square base",
+                    "Which solid is this?"
+                  ],
+                  "hint": "a^2 is the base area. Think about the solid’s side faces."
+                }
+              },
+              "shape": "pyramid"
+            },
+            "attempts": {
+              "solid": "pyramid",
+              "net": "pyramid"
+            }
+          },
+          {
+            "id": "S1",
+            "shape": "cylinder",
+            "topic": "properties",
+            "outcome": "correct",
+            "hint": false,
+            "failedAt": null,
+            "elapsed": 500,
+            "firstTry": true,
+            "question": {
+              "id": "S1",
+              "index": 4,
+              "topic": "properties",
+              "copy": {
+                "ms": {
+                  "prompt": "Tin minuman ada dua tapak bulatan sama. Bongkah apakah ini?",
+                  "lines": [
+                    "Tin minuman ada dua",
+                    "tapak bulatan sama.",
+                    "Bongkah apakah ini?"
+                  ],
+                  "hint": "2 tapak bulatan sama saiz disambungkan oleh satu permukaan melengkung."
+                },
+                "en": {
+                  "prompt": "A drinks can has two equal circular bases. Which solid is this?",
+                  "lines": [
+                    "A drinks can has two",
+                    "equal circular bases.",
+                    "Which solid is this?"
+                  ],
+                  "hint": "Two circular bases of the same size are joined by a curved surface."
+                }
+              },
+              "shape": "cylinder"
+            },
+            "attempts": {
+              "solid": "cylinder",
+              "net": "cylinder"
+            }
+          },
+          {
+            "id": "S2",
+            "shape": "cylinder",
+            "topic": "formula",
+            "outcome": "correct",
+            "hint": false,
+            "failedAt": null,
+            "elapsed": 500,
+            "firstTry": true,
+            "question": {
+              "id": "S2",
+              "index": 5,
+              "topic": "formula",
+              "copy": {
+                "ms": {
+                  "prompt": "V=pi*j^2*t L=2*pi*j*(j+t) Bongkah apakah ini?",
+                  "lines": [
+                    "V=pi*j^2*t",
+                    "L=2*pi*j*(j+t)",
+                    "Bongkah apakah ini?"
+                  ],
+                  "hint": "j=jejari dan t=tinggi. Tapak atas dan bawah sama saiz."
+                },
+                "en": {
+                  "prompt": "V=pi*j^2*t L=2*pi*j*(j+t) Which solid is this?",
+                  "lines": [
+                    "V=pi*j^2*t",
+                    "L=2*pi*j*(j+t)",
+                    "Which solid is this?"
+                  ],
+                  "hint": "j=radius and t=height. The top and bottom bases are the same size."
+                }
+              },
+              "formulaKey": {
+                "ms": "V = isi padu · L = luas permukaan · j = jejari · t = tinggi",
+                "en": "V = volume · L = surface area · j = radius · t = height"
+              },
+              "shape": "cylinder"
+            },
+            "attempts": {
+              "solid": "cylinder",
+              "net": "cylinder"
+            }
+          },
+          {
+            "id": "C1",
+            "shape": "cone",
+            "topic": "formula",
+            "outcome": "correct",
+            "hint": false,
+            "failedAt": null,
+            "elapsed": 500,
+            "firstTry": true,
+            "question": {
+              "id": "C1",
+              "index": 6,
+              "topic": "formula",
+              "copy": {
+                "ms": {
+                  "prompt": "V=pi*j^2*t/3 j=jejari; t=tinggi. Bongkah apakah ini?",
+                  "lines": [
+                    "V=pi*j^2*t/3",
+                    "j=jejari; t=tinggi.",
+                    "Bongkah apakah ini?"
+                  ],
+                  "hint": "Lihat tapaknya yang bulat. Permukaan melengkungnya mengecil ke puncak."
+                },
+                "en": {
+                  "prompt": "V=pi*j^2*t/3 j=radius; t=height. Which solid is this?",
+                  "lines": [
+                    "V=pi*j^2*t/3",
+                    "j=radius; t=height.",
+                    "Which solid is this?"
+                  ],
+                  "hint": "Look at its circular base. Its curved surface narrows to an apex."
+                }
+              },
+              "shape": "cone"
+            },
+            "attempts": {
+              "solid": "cone",
+              "net": "cone"
+            }
+          },
+          {
+            "id": "C2",
+            "shape": "cone",
+            "topic": "formula",
+            "outcome": "correct",
+            "hint": false,
+            "failedAt": null,
+            "elapsed": 500,
+            "firstTry": true,
+            "question": {
+              "id": "C2",
+              "index": 7,
+              "topic": "formula",
+              "copy": {
+                "ms": {
+                  "prompt": "L=pi*j*(j+s) j=jejari; s=tinggi sendeng. Bentuk apa?",
+                  "lines": [
+                    "L=pi*j*(j+s)",
+                    "j=jejari; s=tinggi",
+                    "sendeng. Bentuk apa?"
+                  ],
+                  "hint": "Tinggi sendeng diukur dari tepi tapak ke puncak di sepanjang garis lurus pada permukaan melengkung."
+                },
+                "en": {
+                  "prompt": "L=pi*j*(j+s) j=radius; s=slant height. Which shape is it?",
+                  "lines": [
+                    "L=pi*j*(j+s)",
+                    "j=radius; s=slant",
+                    "height. Which shape is it?"
+                  ],
+                  "hint": "The slant height is measured along a straight line on the curved surface from the base edge to the apex."
+                }
+              },
+              "shape": "cone"
+            },
+            "attempts": {
+              "solid": "cone",
+              "net": "cone"
+            }
+          },
+          {
+            "id": "B1",
+            "shape": "cuboid",
+            "topic": "properties",
+            "outcome": "correct",
+            "hint": false,
+            "failedAt": null,
+            "elapsed": 500,
+            "firstTry": true,
+            "question": {
+              "id": "B1",
+              "index": 8,
+              "topic": "properties",
+              "copy": {
+                "ms": {
+                  "prompt": "Dalam contoh ini, kotak ada 3 ukuran yang tidak sama. Bongkah apakah ini?",
+                  "lines": [
+                    "Dalam contoh ini, kotak ada",
+                    "3 ukuran yang tidak sama.",
+                    "Bongkah apakah ini?"
+                  ],
+                  "hint": "Perhatikan panjang, lebar serta tinggi kotak contoh ini. Muka berhadapan sama bentuk dan saiz."
+                },
+                "en": {
+                  "prompt": "In this example, the box has 3 dimensions of different lengths. Which solid is this?",
+                  "lines": [
+                    "In this example, the box has",
+                    "3 dimensions of different lengths.",
+                    "Which solid is this?"
+                  ],
+                  "hint": "Look at the length, width and height of this example. Opposite faces are congruent."
+                }
+              },
+              "shape": "cuboid"
+            },
+            "attempts": {
+              "solid": "cuboid",
+              "net": "cuboid"
+            }
+          },
+          {
+            "id": "B2",
+            "shape": "cuboid",
+            "topic": "formula",
+            "outcome": "correct",
+            "hint": false,
+            "failedAt": null,
+            "elapsed": 500,
+            "firstTry": true,
+            "question": {
+              "id": "B2",
+              "index": 9,
+              "topic": "formula",
+              "copy": {
+                "ms": {
+                  "prompt": "V=p*l*t; dalam contoh ini, p,l,t ialah 3 ukuran berbeza. Bongkah apakah ini?",
+                  "lines": [
+                    "V=p*l*t; dalam contoh ini,",
+                    "p,l,t ialah 3 ukuran berbeza.",
+                    "Bongkah apakah ini?"
+                  ],
+                  "hint": "p=panjang, l=lebar, t=tinggi. Lihat kotak kasut."
+                },
+                "en": {
+                  "prompt": "V=p*l*t; in this example, p,l,t are 3 different dimensions. Which solid is this?",
+                  "lines": [
+                    "V=p*l*t; in this example,",
+                    "p,l,t are 3 different dimensions.",
+                    "Which solid is this?"
+                  ],
+                  "hint": "p=length, l=width, t=height. Think of a shoe box."
+                }
+              },
+              "shape": "cuboid"
+            },
+            "attempts": {
+              "solid": "cuboid",
+              "net": "cuboid"
+            }
+          }
+        ]
+      },
+      "currentQuestion": null,
+      "opponent": {
+        "id": "33333333-3333-4333-8333-333333333333",
+        "slot": 2,
+        "name": "Player two",
+        "ready": true,
+        "answered": 10,
+        "stage": "solid",
+        "score": 8,
+        "mistakes": 0,
+        "skipped": 2,
+        "hints": 0,
+        "finishedAt": 1700000030000,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000
+      },
+      "actionResult": null
+    },
+    "complete_advanced": {
+      "ok": true,
+      "protocol": 2,
+      "serverNow": 1700000030000,
+      "room": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "code": "123456",
+        "status": "complete",
+        "startsAt": 1700000000000,
+        "deadlineAt": 1700000900000,
+        "lobbyExpiresAt": 1700000600000,
+        "total": 10,
+        "winnerId": "22222222-2222-4222-8222-222222222222",
+        "reason": "score"
+      },
+      "me": {
+        "id": "22222222-2222-4222-8222-222222222222",
+        "slot": 1,
+        "name": "Player one",
+        "ready": true,
+        "answered": 10,
+        "stage": "solid",
+        "score": 10,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": 1700000030000,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000,
+        "hintUsed": false,
+        "seq": 3,
+        "nextReadyAt": null,
+        "reviewPending": false,
+        "attempts": {
+          "solid": null,
+          "net": null
+        },
+        "answers": [
+          {
+            "id": "K1",
+            "shape": "cube",
+            "topic": "properties",
+            "outcome": "correct",
+            "hint": false,
+            "failedAt": null,
+            "elapsed": 500,
+            "firstTry": true,
+            "question": {
+              "id": "K1",
+              "index": 0,
+              "topic": "properties",
+              "copy": {
+                "ms": {
+                  "prompt": "Enam muka berbentuk segi empat sama. Bongkah apakah ini?",
+                  "lines": [
+                    "Enam muka berbentuk",
+                    "segi empat sama.",
+                    "Bongkah apakah ini?"
+                  ],
+                  "hint": "12 tepi sama panjang. Setiap muka sama bentuk dan saiz."
+                },
+                "en": {
+                  "prompt": "Six faces in the shape of squares. Which solid is this?",
+                  "lines": [
+                    "Six faces in the shape",
+                    "of squares.",
+                    "Which solid is this?"
+                  ],
+                  "hint": "12 edges of equal length. Every face has the same shape and size."
+                }
+              },
+              "shape": "cube"
+            },
+            "attempts": {
+              "solid": "cube",
+              "net": "cube"
+            }
+          },
+          {
+            "id": "K2",
+            "shape": "cube",
+            "topic": "formula",
+            "outcome": "correct",
+            "hint": false,
+            "failedAt": null,
+            "elapsed": 500,
+            "firstTry": true,
+            "question": {
+              "id": "K2",
+              "index": 1,
+              "topic": "formula",
+              "copy": {
+                "ms": {
+                  "prompt": "V=a^3; L=6*a^2 a=panjang tepi Bongkah apakah ini?",
+                  "lines": [
+                    "V=a^3; L=6*a^2",
+                    "a=panjang tepi",
+                    "Bongkah apakah ini?"
+                  ],
+                  "hint": "Panjang, lebar serta tinggi sama bagi bongkah ini."
+                },
+                "en": {
+                  "prompt": "V=a^3; L=6*a^2 a=edge length Which solid is this?",
+                  "lines": [
+                    "V=a^3; L=6*a^2",
+                    "a=edge length",
+                    "Which solid is this?"
+                  ],
+                  "hint": "The length, width and height of this solid are equal."
+                }
+              },
+              "shape": "cube"
+            },
+            "attempts": {
+              "solid": "cube",
+              "net": "cube"
+            }
+          },
+          {
+            "id": "P1",
+            "shape": "pyramid",
+            "topic": "properties",
+            "outcome": "correct",
+            "hint": false,
+            "failedAt": null,
+            "elapsed": 500,
+            "firstTry": true,
+            "question": {
+              "id": "P1",
+              "index": 2,
+              "topic": "properties",
+              "copy": {
+                "ms": {
+                  "prompt": "Bongkah apakah ini? Tapak segi empat sama dengan 4 muka segi tiga.",
+                  "lines": [
+                    "Bongkah apakah ini?",
+                    "Tapak segi empat sama dengan",
+                    "4 muka segi tiga."
+                  ],
+                  "hint": "Muka sisi akan bertemu pada puncak apabila dilipat."
+                },
+                "en": {
+                  "prompt": "Which solid is this? A square base with 4 triangular faces.",
+                  "lines": [
+                    "Which solid is this?",
+                    "A square base with",
+                    "4 triangular faces."
+                  ],
+                  "hint": "The side faces meet at an apex when folded."
+                }
+              },
+              "shape": "pyramid"
+            },
+            "attempts": {
+              "solid": "pyramid",
+              "net": "pyramid"
+            }
+          },
+          {
+            "id": "P2",
+            "shape": "pyramid",
+            "topic": "formula",
+            "outcome": "correct",
+            "hint": false,
+            "failedAt": null,
+            "elapsed": 500,
+            "firstTry": true,
+            "question": {
+              "id": "P2",
+              "index": 3,
+              "topic": "formula",
+              "copy": {
+                "ms": {
+                  "prompt": "V=a^2*t/3; t=tinggi a=panjang sisi tapak segi empat sama Bongkah apakah ini?",
+                  "lines": [
+                    "V=a^2*t/3; t=tinggi",
+                    "a=panjang sisi tapak segi empat sama",
+                    "Bongkah apakah ini?"
+                  ],
+                  "hint": "a^2 ialah luas tapak. Fikir bentuk muka sisi bongkah."
+                },
+                "en": {
+                  "prompt": "V=a^2*t/3; t=height a=side length of the square base Which solid is this?",
+                  "lines": [
+                    "V=a^2*t/3; t=height",
+                    "a=side length of the square base",
+                    "Which solid is this?"
+                  ],
+                  "hint": "a^2 is the base area. Think about the solid’s side faces."
+                }
+              },
+              "shape": "pyramid"
+            },
+            "attempts": {
+              "solid": "pyramid",
+              "net": "pyramid"
+            }
+          },
+          {
+            "id": "S1",
+            "shape": "cylinder",
+            "topic": "properties",
+            "outcome": "correct",
+            "hint": false,
+            "failedAt": null,
+            "elapsed": 500,
+            "firstTry": true,
+            "question": {
+              "id": "S1",
+              "index": 4,
+              "topic": "properties",
+              "copy": {
+                "ms": {
+                  "prompt": "Tin minuman ada dua tapak bulatan sama. Bongkah apakah ini?",
+                  "lines": [
+                    "Tin minuman ada dua",
+                    "tapak bulatan sama.",
+                    "Bongkah apakah ini?"
+                  ],
+                  "hint": "2 tapak bulatan sama saiz disambungkan oleh satu permukaan melengkung."
+                },
+                "en": {
+                  "prompt": "A drinks can has two equal circular bases. Which solid is this?",
+                  "lines": [
+                    "A drinks can has two",
+                    "equal circular bases.",
+                    "Which solid is this?"
+                  ],
+                  "hint": "Two circular bases of the same size are joined by a curved surface."
+                }
+              },
+              "shape": "cylinder"
+            },
+            "attempts": {
+              "solid": "cylinder",
+              "net": "cylinder"
+            }
+          },
+          {
+            "id": "S2",
+            "shape": "cylinder",
+            "topic": "formula",
+            "outcome": "correct",
+            "hint": false,
+            "failedAt": null,
+            "elapsed": 500,
+            "firstTry": true,
+            "question": {
+              "id": "S2",
+              "index": 5,
+              "topic": "formula",
+              "copy": {
+                "ms": {
+                  "prompt": "V=pi*j^2*t L=2*pi*j*(j+t) Bongkah apakah ini?",
+                  "lines": [
+                    "V=pi*j^2*t",
+                    "L=2*pi*j*(j+t)",
+                    "Bongkah apakah ini?"
+                  ],
+                  "hint": "j=jejari dan t=tinggi. Tapak atas dan bawah sama saiz."
+                },
+                "en": {
+                  "prompt": "V=pi*j^2*t L=2*pi*j*(j+t) Which solid is this?",
+                  "lines": [
+                    "V=pi*j^2*t",
+                    "L=2*pi*j*(j+t)",
+                    "Which solid is this?"
+                  ],
+                  "hint": "j=radius and t=height. The top and bottom bases are the same size."
+                }
+              },
+              "formulaKey": {
+                "ms": "V = isi padu · L = luas permukaan · j = jejari · t = tinggi",
+                "en": "V = volume · L = surface area · j = radius · t = height"
+              },
+              "shape": "cylinder"
+            },
+            "attempts": {
+              "solid": "cylinder",
+              "net": "cylinder"
+            }
+          },
+          {
+            "id": "C1",
+            "shape": "cone",
+            "topic": "formula",
+            "outcome": "correct",
+            "hint": false,
+            "failedAt": null,
+            "elapsed": 500,
+            "firstTry": true,
+            "question": {
+              "id": "C1",
+              "index": 6,
+              "topic": "formula",
+              "copy": {
+                "ms": {
+                  "prompt": "V=pi*j^2*t/3 j=jejari; t=tinggi. Bongkah apakah ini?",
+                  "lines": [
+                    "V=pi*j^2*t/3",
+                    "j=jejari; t=tinggi.",
+                    "Bongkah apakah ini?"
+                  ],
+                  "hint": "Lihat tapaknya yang bulat. Permukaan melengkungnya mengecil ke puncak."
+                },
+                "en": {
+                  "prompt": "V=pi*j^2*t/3 j=radius; t=height. Which solid is this?",
+                  "lines": [
+                    "V=pi*j^2*t/3",
+                    "j=radius; t=height.",
+                    "Which solid is this?"
+                  ],
+                  "hint": "Look at its circular base. Its curved surface narrows to an apex."
+                }
+              },
+              "shape": "cone"
+            },
+            "attempts": {
+              "solid": "cone",
+              "net": "cone"
+            }
+          },
+          {
+            "id": "C2",
+            "shape": "cone",
+            "topic": "formula",
+            "outcome": "correct",
+            "hint": false,
+            "failedAt": null,
+            "elapsed": 500,
+            "firstTry": true,
+            "question": {
+              "id": "C2",
+              "index": 7,
+              "topic": "formula",
+              "copy": {
+                "ms": {
+                  "prompt": "L=pi*j*(j+s) j=jejari; s=tinggi sendeng. Bentuk apa?",
+                  "lines": [
+                    "L=pi*j*(j+s)",
+                    "j=jejari; s=tinggi",
+                    "sendeng. Bentuk apa?"
+                  ],
+                  "hint": "Tinggi sendeng diukur dari tepi tapak ke puncak di sepanjang garis lurus pada permukaan melengkung."
+                },
+                "en": {
+                  "prompt": "L=pi*j*(j+s) j=radius; s=slant height. Which shape is it?",
+                  "lines": [
+                    "L=pi*j*(j+s)",
+                    "j=radius; s=slant",
+                    "height. Which shape is it?"
+                  ],
+                  "hint": "The slant height is measured along a straight line on the curved surface from the base edge to the apex."
+                }
+              },
+              "shape": "cone"
+            },
+            "attempts": {
+              "solid": "cone",
+              "net": "cone"
+            }
+          },
+          {
+            "id": "B1",
+            "shape": "cuboid",
+            "topic": "properties",
+            "outcome": "correct",
+            "hint": false,
+            "failedAt": null,
+            "elapsed": 500,
+            "firstTry": true,
+            "question": {
+              "id": "B1",
+              "index": 8,
+              "topic": "properties",
+              "copy": {
+                "ms": {
+                  "prompt": "Dalam contoh ini, kotak ada 3 ukuran yang tidak sama. Bongkah apakah ini?",
+                  "lines": [
+                    "Dalam contoh ini, kotak ada",
+                    "3 ukuran yang tidak sama.",
+                    "Bongkah apakah ini?"
+                  ],
+                  "hint": "Perhatikan panjang, lebar serta tinggi kotak contoh ini. Muka berhadapan sama bentuk dan saiz."
+                },
+                "en": {
+                  "prompt": "In this example, the box has 3 dimensions of different lengths. Which solid is this?",
+                  "lines": [
+                    "In this example, the box has",
+                    "3 dimensions of different lengths.",
+                    "Which solid is this?"
+                  ],
+                  "hint": "Look at the length, width and height of this example. Opposite faces are congruent."
+                }
+              },
+              "shape": "cuboid"
+            },
+            "attempts": {
+              "solid": "cuboid",
+              "net": "cuboid"
+            }
+          },
+          {
+            "id": "B2",
+            "shape": "cuboid",
+            "topic": "formula",
+            "outcome": "correct",
+            "hint": false,
+            "failedAt": null,
+            "elapsed": 500,
+            "firstTry": true,
+            "question": {
+              "id": "B2",
+              "index": 9,
+              "topic": "formula",
+              "copy": {
+                "ms": {
+                  "prompt": "V=p*l*t; dalam contoh ini, p,l,t ialah 3 ukuran berbeza. Bongkah apakah ini?",
+                  "lines": [
+                    "V=p*l*t; dalam contoh ini,",
+                    "p,l,t ialah 3 ukuran berbeza.",
+                    "Bongkah apakah ini?"
+                  ],
+                  "hint": "p=panjang, l=lebar, t=tinggi. Lihat kotak kasut."
+                },
+                "en": {
+                  "prompt": "V=p*l*t; in this example, p,l,t are 3 different dimensions. Which solid is this?",
+                  "lines": [
+                    "V=p*l*t; in this example,",
+                    "p,l,t are 3 different dimensions.",
+                    "Which solid is this?"
+                  ],
+                  "hint": "p=length, l=width, t=height. Think of a shoe box."
+                }
+              },
+              "shape": "cuboid"
+            },
+            "attempts": {
+              "solid": "cuboid",
+              "net": "cuboid"
+            }
+          }
+        ]
+      },
+      "currentQuestion": null,
+      "opponent": {
+        "id": "33333333-3333-4333-8333-333333333333",
+        "slot": 2,
+        "name": "Player two",
+        "ready": true,
+        "answered": 10,
+        "stage": "solid",
+        "score": 8,
+        "mistakes": 0,
+        "skipped": 2,
+        "hints": 0,
+        "finishedAt": 1700000030000,
+        "elapsed": 30000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000
+      },
+      "actionResult": {
+        "type": "advanced"
+      }
+    },
+    "complete_deadline": {
+      "ok": true,
+      "protocol": 2,
+      "serverNow": 1700000900000,
+      "room": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "code": "123456",
+        "status": "complete",
+        "startsAt": 1700000000000,
+        "deadlineAt": 1700000900000,
+        "lobbyExpiresAt": 1700000600000,
+        "total": 10,
+        "winnerId": null,
+        "reason": "tie"
+      },
+      "me": {
+        "id": "22222222-2222-4222-8222-222222222222",
+        "slot": 1,
+        "name": "Player one",
+        "ready": true,
+        "answered": 10,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 10,
+        "hints": 0,
+        "finishedAt": 1700000900000,
+        "elapsed": 900000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000,
+        "hintUsed": false,
+        "seq": 2,
+        "nextReadyAt": null,
+        "reviewPending": false,
+        "attempts": {
+          "solid": null,
+          "net": null
+        },
+        "answers": [
+          {
+            "id": "K1",
+            "shape": "cube",
+            "topic": "properties",
+            "outcome": "skipped",
+            "hint": false,
+            "failedAt": null,
+            "elapsed": 500,
+            "firstTry": false,
+            "question": {
+              "id": "K1",
+              "index": 0,
+              "topic": "properties",
+              "copy": {
+                "ms": {
+                  "prompt": "Enam muka berbentuk segi empat sama. Bongkah apakah ini?",
+                  "lines": [
+                    "Enam muka berbentuk",
+                    "segi empat sama.",
+                    "Bongkah apakah ini?"
+                  ],
+                  "hint": "12 tepi sama panjang. Setiap muka sama bentuk dan saiz."
+                },
+                "en": {
+                  "prompt": "Six faces in the shape of squares. Which solid is this?",
+                  "lines": [
+                    "Six faces in the shape",
+                    "of squares.",
+                    "Which solid is this?"
+                  ],
+                  "hint": "12 edges of equal length. Every face has the same shape and size."
+                }
+              },
+              "shape": "cube"
+            },
+            "attempts": {
+              "solid": null,
+              "net": null
+            }
+          },
+          {
+            "id": "K2",
+            "shape": "cube",
+            "topic": "formula",
+            "outcome": "skipped",
+            "hint": false,
+            "failedAt": null,
+            "elapsed": 500,
+            "firstTry": false,
+            "question": {
+              "id": "K2",
+              "index": 1,
+              "topic": "formula",
+              "copy": {
+                "ms": {
+                  "prompt": "V=a^3; L=6*a^2 a=panjang tepi Bongkah apakah ini?",
+                  "lines": [
+                    "V=a^3; L=6*a^2",
+                    "a=panjang tepi",
+                    "Bongkah apakah ini?"
+                  ],
+                  "hint": "Panjang, lebar serta tinggi sama bagi bongkah ini."
+                },
+                "en": {
+                  "prompt": "V=a^3; L=6*a^2 a=edge length Which solid is this?",
+                  "lines": [
+                    "V=a^3; L=6*a^2",
+                    "a=edge length",
+                    "Which solid is this?"
+                  ],
+                  "hint": "The length, width and height of this solid are equal."
+                }
+              },
+              "shape": "cube"
+            },
+            "attempts": {
+              "solid": null,
+              "net": null
+            }
+          },
+          {
+            "id": "P1",
+            "shape": "pyramid",
+            "topic": "properties",
+            "outcome": "skipped",
+            "hint": false,
+            "failedAt": null,
+            "elapsed": 500,
+            "firstTry": false,
+            "question": {
+              "id": "P1",
+              "index": 2,
+              "topic": "properties",
+              "copy": {
+                "ms": {
+                  "prompt": "Bongkah apakah ini? Tapak segi empat sama dengan 4 muka segi tiga.",
+                  "lines": [
+                    "Bongkah apakah ini?",
+                    "Tapak segi empat sama dengan",
+                    "4 muka segi tiga."
+                  ],
+                  "hint": "Muka sisi akan bertemu pada puncak apabila dilipat."
+                },
+                "en": {
+                  "prompt": "Which solid is this? A square base with 4 triangular faces.",
+                  "lines": [
+                    "Which solid is this?",
+                    "A square base with",
+                    "4 triangular faces."
+                  ],
+                  "hint": "The side faces meet at an apex when folded."
+                }
+              },
+              "shape": "pyramid"
+            },
+            "attempts": {
+              "solid": null,
+              "net": null
+            }
+          },
+          {
+            "id": "P2",
+            "shape": "pyramid",
+            "topic": "formula",
+            "outcome": "skipped",
+            "hint": false,
+            "failedAt": null,
+            "elapsed": 500,
+            "firstTry": false,
+            "question": {
+              "id": "P2",
+              "index": 3,
+              "topic": "formula",
+              "copy": {
+                "ms": {
+                  "prompt": "V=a^2*t/3; t=tinggi a=panjang sisi tapak segi empat sama Bongkah apakah ini?",
+                  "lines": [
+                    "V=a^2*t/3; t=tinggi",
+                    "a=panjang sisi tapak segi empat sama",
+                    "Bongkah apakah ini?"
+                  ],
+                  "hint": "a^2 ialah luas tapak. Fikir bentuk muka sisi bongkah."
+                },
+                "en": {
+                  "prompt": "V=a^2*t/3; t=height a=side length of the square base Which solid is this?",
+                  "lines": [
+                    "V=a^2*t/3; t=height",
+                    "a=side length of the square base",
+                    "Which solid is this?"
+                  ],
+                  "hint": "a^2 is the base area. Think about the solid’s side faces."
+                }
+              },
+              "shape": "pyramid"
+            },
+            "attempts": {
+              "solid": null,
+              "net": null
+            }
+          },
+          {
+            "id": "S1",
+            "shape": "cylinder",
+            "topic": "properties",
+            "outcome": "skipped",
+            "hint": false,
+            "failedAt": null,
+            "elapsed": 500,
+            "firstTry": false,
+            "question": {
+              "id": "S1",
+              "index": 4,
+              "topic": "properties",
+              "copy": {
+                "ms": {
+                  "prompt": "Tin minuman ada dua tapak bulatan sama. Bongkah apakah ini?",
+                  "lines": [
+                    "Tin minuman ada dua",
+                    "tapak bulatan sama.",
+                    "Bongkah apakah ini?"
+                  ],
+                  "hint": "2 tapak bulatan sama saiz disambungkan oleh satu permukaan melengkung."
+                },
+                "en": {
+                  "prompt": "A drinks can has two equal circular bases. Which solid is this?",
+                  "lines": [
+                    "A drinks can has two",
+                    "equal circular bases.",
+                    "Which solid is this?"
+                  ],
+                  "hint": "Two circular bases of the same size are joined by a curved surface."
+                }
+              },
+              "shape": "cylinder"
+            },
+            "attempts": {
+              "solid": null,
+              "net": null
+            }
+          },
+          {
+            "id": "S2",
+            "shape": "cylinder",
+            "topic": "formula",
+            "outcome": "skipped",
+            "hint": false,
+            "failedAt": null,
+            "elapsed": 500,
+            "firstTry": false,
+            "question": {
+              "id": "S2",
+              "index": 5,
+              "topic": "formula",
+              "copy": {
+                "ms": {
+                  "prompt": "V=pi*j^2*t L=2*pi*j*(j+t) Bongkah apakah ini?",
+                  "lines": [
+                    "V=pi*j^2*t",
+                    "L=2*pi*j*(j+t)",
+                    "Bongkah apakah ini?"
+                  ],
+                  "hint": "j=jejari dan t=tinggi. Tapak atas dan bawah sama saiz."
+                },
+                "en": {
+                  "prompt": "V=pi*j^2*t L=2*pi*j*(j+t) Which solid is this?",
+                  "lines": [
+                    "V=pi*j^2*t",
+                    "L=2*pi*j*(j+t)",
+                    "Which solid is this?"
+                  ],
+                  "hint": "j=radius and t=height. The top and bottom bases are the same size."
+                }
+              },
+              "formulaKey": {
+                "ms": "V = isi padu · L = luas permukaan · j = jejari · t = tinggi",
+                "en": "V = volume · L = surface area · j = radius · t = height"
+              },
+              "shape": "cylinder"
+            },
+            "attempts": {
+              "solid": null,
+              "net": null
+            }
+          },
+          {
+            "id": "C1",
+            "shape": "cone",
+            "topic": "formula",
+            "outcome": "skipped",
+            "hint": false,
+            "failedAt": null,
+            "elapsed": 500,
+            "firstTry": false,
+            "question": {
+              "id": "C1",
+              "index": 6,
+              "topic": "formula",
+              "copy": {
+                "ms": {
+                  "prompt": "V=pi*j^2*t/3 j=jejari; t=tinggi. Bongkah apakah ini?",
+                  "lines": [
+                    "V=pi*j^2*t/3",
+                    "j=jejari; t=tinggi.",
+                    "Bongkah apakah ini?"
+                  ],
+                  "hint": "Lihat tapaknya yang bulat. Permukaan melengkungnya mengecil ke puncak."
+                },
+                "en": {
+                  "prompt": "V=pi*j^2*t/3 j=radius; t=height. Which solid is this?",
+                  "lines": [
+                    "V=pi*j^2*t/3",
+                    "j=radius; t=height.",
+                    "Which solid is this?"
+                  ],
+                  "hint": "Look at its circular base. Its curved surface narrows to an apex."
+                }
+              },
+              "shape": "cone"
+            },
+            "attempts": {
+              "solid": null,
+              "net": null
+            }
+          },
+          {
+            "id": "C2",
+            "shape": "cone",
+            "topic": "formula",
+            "outcome": "skipped",
+            "hint": false,
+            "failedAt": null,
+            "elapsed": 500,
+            "firstTry": false,
+            "question": {
+              "id": "C2",
+              "index": 7,
+              "topic": "formula",
+              "copy": {
+                "ms": {
+                  "prompt": "L=pi*j*(j+s) j=jejari; s=tinggi sendeng. Bentuk apa?",
+                  "lines": [
+                    "L=pi*j*(j+s)",
+                    "j=jejari; s=tinggi",
+                    "sendeng. Bentuk apa?"
+                  ],
+                  "hint": "Tinggi sendeng diukur dari tepi tapak ke puncak di sepanjang garis lurus pada permukaan melengkung."
+                },
+                "en": {
+                  "prompt": "L=pi*j*(j+s) j=radius; s=slant height. Which shape is it?",
+                  "lines": [
+                    "L=pi*j*(j+s)",
+                    "j=radius; s=slant",
+                    "height. Which shape is it?"
+                  ],
+                  "hint": "The slant height is measured along a straight line on the curved surface from the base edge to the apex."
+                }
+              },
+              "shape": "cone"
+            },
+            "attempts": {
+              "solid": null,
+              "net": null
+            }
+          },
+          {
+            "id": "B1",
+            "shape": "cuboid",
+            "topic": "properties",
+            "outcome": "skipped",
+            "hint": false,
+            "failedAt": null,
+            "elapsed": 500,
+            "firstTry": false,
+            "question": {
+              "id": "B1",
+              "index": 8,
+              "topic": "properties",
+              "copy": {
+                "ms": {
+                  "prompt": "Dalam contoh ini, kotak ada 3 ukuran yang tidak sama. Bongkah apakah ini?",
+                  "lines": [
+                    "Dalam contoh ini, kotak ada",
+                    "3 ukuran yang tidak sama.",
+                    "Bongkah apakah ini?"
+                  ],
+                  "hint": "Perhatikan panjang, lebar serta tinggi kotak contoh ini. Muka berhadapan sama bentuk dan saiz."
+                },
+                "en": {
+                  "prompt": "In this example, the box has 3 dimensions of different lengths. Which solid is this?",
+                  "lines": [
+                    "In this example, the box has",
+                    "3 dimensions of different lengths.",
+                    "Which solid is this?"
+                  ],
+                  "hint": "Look at the length, width and height of this example. Opposite faces are congruent."
+                }
+              },
+              "shape": "cuboid"
+            },
+            "attempts": {
+              "solid": null,
+              "net": null
+            }
+          },
+          {
+            "id": "B2",
+            "shape": "cuboid",
+            "topic": "formula",
+            "outcome": "skipped",
+            "hint": false,
+            "failedAt": null,
+            "elapsed": 500,
+            "firstTry": false,
+            "question": {
+              "id": "B2",
+              "index": 9,
+              "topic": "formula",
+              "copy": {
+                "ms": {
+                  "prompt": "V=p*l*t; dalam contoh ini, p,l,t ialah 3 ukuran berbeza. Bongkah apakah ini?",
+                  "lines": [
+                    "V=p*l*t; dalam contoh ini,",
+                    "p,l,t ialah 3 ukuran berbeza.",
+                    "Bongkah apakah ini?"
+                  ],
+                  "hint": "p=panjang, l=lebar, t=tinggi. Lihat kotak kasut."
+                },
+                "en": {
+                  "prompt": "V=p*l*t; in this example, p,l,t are 3 different dimensions. Which solid is this?",
+                  "lines": [
+                    "V=p*l*t; in this example,",
+                    "p,l,t are 3 different dimensions.",
+                    "Which solid is this?"
+                  ],
+                  "hint": "p=length, l=width, t=height. Think of a shoe box."
+                }
+              },
+              "shape": "cuboid"
+            },
+            "attempts": {
+              "solid": null,
+              "net": null
+            }
+          }
+        ]
+      },
+      "currentQuestion": null,
+      "opponent": {
+        "id": "33333333-3333-4333-8333-333333333333",
+        "slot": 2,
+        "name": "Player two",
+        "ready": true,
+        "answered": 10,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 10,
+        "hints": 0,
+        "finishedAt": 1700000900000,
+        "elapsed": 900000,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000
+      },
+      "actionResult": null
+    },
+    "waiting": {
+      "ok": true,
+      "protocol": 2,
+      "serverNow": 1700000030000,
+      "room": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "code": "123456",
+        "status": "waiting",
+        "startsAt": null,
+        "deadlineAt": null,
+        "lobbyExpiresAt": 1700000600000,
+        "total": 10,
+        "winnerId": null,
+        "reason": null
+      },
+      "me": {
+        "id": "22222222-2222-4222-8222-222222222222",
+        "slot": 1,
+        "name": "Player one",
+        "ready": false,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 0,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000,
+        "hintUsed": false,
+        "seq": 2,
+        "nextReadyAt": null,
+        "reviewPending": false,
+        "attempts": {
+          "solid": null,
+          "net": null
+        },
+        "answers": []
+      },
+      "currentQuestion": null,
+      "opponent": {
+        "id": "33333333-3333-4333-8333-333333333333",
+        "slot": 2,
+        "name": "Player two",
+        "ready": false,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 0,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000
+      },
+      "actionResult": null
+    },
+    "countdown": {
+      "ok": true,
+      "protocol": 2,
+      "serverNow": 1700000030000,
+      "room": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "code": "123456",
+        "status": "countdown",
+        "startsAt": 1700000033000,
+        "deadlineAt": 1700000933000,
+        "lobbyExpiresAt": 1700000600000,
+        "total": 10,
+        "winnerId": null,
+        "reason": null
+      },
+      "me": {
+        "id": "22222222-2222-4222-8222-222222222222",
+        "slot": 1,
+        "name": "Player one",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 0,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000,
+        "hintUsed": false,
+        "seq": 2,
+        "nextReadyAt": 1700000033000,
+        "reviewPending": false,
+        "attempts": {
+          "solid": null,
+          "net": null
+        },
+        "answers": []
+      },
+      "currentQuestion": null,
+      "opponent": {
+        "id": "33333333-3333-4333-8333-333333333333",
+        "slot": 2,
+        "name": "Player two",
+        "ready": true,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 0,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000
+      },
+      "actionResult": null
+    },
+    "cancelled": {
+      "ok": true,
+      "protocol": 2,
+      "serverNow": 1700000030000,
+      "room": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "code": "123456",
+        "status": "cancelled",
+        "startsAt": null,
+        "deadlineAt": null,
+        "lobbyExpiresAt": 1700000600000,
+        "total": 10,
+        "winnerId": null,
+        "reason": "left"
+      },
+      "me": {
+        "id": "22222222-2222-4222-8222-222222222222",
+        "slot": 1,
+        "name": "Player one",
+        "ready": false,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 0,
+        "forfeited": true,
+        "lastSeenAt": 1700000030000,
+        "hintUsed": false,
+        "seq": 2,
+        "nextReadyAt": null,
+        "reviewPending": false,
+        "attempts": {
+          "solid": null,
+          "net": null
+        },
+        "answers": []
+      },
+      "currentQuestion": null,
+      "opponent": {
+        "id": "33333333-3333-4333-8333-333333333333",
+        "slot": 2,
+        "name": "Player two",
+        "ready": false,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 0,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000
+      },
+      "actionResult": null
+    },
+    "expired": {
+      "ok": true,
+      "protocol": 2,
+      "serverNow": 1700000030000,
+      "room": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "code": "123456",
+        "status": "expired",
+        "startsAt": null,
+        "deadlineAt": null,
+        "lobbyExpiresAt": 1700000600000,
+        "total": 10,
+        "winnerId": null,
+        "reason": "lobby_expired"
+      },
+      "me": {
+        "id": "22222222-2222-4222-8222-222222222222",
+        "slot": 1,
+        "name": "Player one",
+        "ready": false,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 0,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000,
+        "hintUsed": false,
+        "seq": 2,
+        "nextReadyAt": null,
+        "reviewPending": false,
+        "attempts": {
+          "solid": null,
+          "net": null
+        },
+        "answers": []
+      },
+      "currentQuestion": null,
+      "opponent": {
+        "id": "33333333-3333-4333-8333-333333333333",
+        "slot": 2,
+        "name": "Player two",
+        "ready": false,
+        "answered": 0,
+        "stage": "solid",
+        "score": 0,
+        "mistakes": 0,
+        "skipped": 0,
+        "hints": 0,
+        "finishedAt": null,
+        "elapsed": 0,
+        "forfeited": false,
+        "lastSeenAt": 1700000030000
+      },
+      "actionResult": null
+    }
+  }
+}
