@@ -94,4 +94,22 @@ flutter run
 ```
 
 Guest learning and Solo need no cloud config. Existing public connection configuration remains external to source control.
-See `docs/RUN_ANDROID.md` for the existing public-defines flow. APK and final build verification are recorded separately after assembly.
+See `docs/RUN_ANDROID.md` for the existing public-defines flow. The configured ARM64 debug APK is built and statically verified; see the receipt below.
+
+
+## Verified Android APK
+
+`GeoMath-0.2.0-arm64-debug.apk` — **98,315,390 bytes** (about 93.8 MiB).
+SHA256: `7104f929be85b08e4a324207a61c501702e449cc6683436ffe535468137bdea4`.
+
+Normal `lib/main.dart`, package `com.geomath.dev`, version 0.2.0/code 2, minimum API 24/target API 36.
+The ARM64 Flutter engine is present; tiny ARMv7/x86_64 helper libraries do not make this an APK for those devices.
+APK v2 Android Debug signature and ZIP CRC passed. All 20 bundled runtime assets match source, both hash manifests verify,
+and the 15-question bank is intact. The existing public configuration defines are compiled in; their values are omitted from logs.
+All 180 runtime input blobs match local tested snapshot 212712d and published code commit b44f48b.
+See [static APK inspection](apk-verification.json) for exact commands, hashes, ABI and signature evidence.
+
+The successful retry completed Gradle in 532.6 seconds after repairing a nested scratch Build Tools installation.
+An earlier baseline attempt exceeded environment memory; neither failed attempt is counted as a passing build.
+This binary has not been executed on Android or a physical phone. Hosted account/class/Duel acceptance remains unverified.
+The independent GitHub workflow 42162256465 was still building at handoff; local results above are the executed evidence, not a CI pass claim.

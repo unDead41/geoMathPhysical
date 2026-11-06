@@ -1,0 +1,204 @@
+{
+  "kind": "configured-normal-main-android-arm64-debug-apk-static-inspection",
+  "source_head_at_inspection": "4535bd295fa2f2413db6b155534f928dd78eb6e1",
+  "source_head_at_build_start": "212712dcf6ea603af9251846e4c4a1a49a29c16f",
+  "runtime_git_blob_inventory": {
+    "files": 180,
+    "inventory_sha256": "e72c5fc5c18da235279d942a779d2f7ef85443a955304d4f97582f2c8d34e06d",
+    "equivalent_at_build_and_inspection_heads": true
+  },
+  "tracked_runtime_diff": [],
+  "build_target": "lib/main.dart (Flutter default)",
+  "build_command": "flutter build apk --debug --no-pub --target-platform android-arm64 --dart-define-from-file=config/public.local.json",
+  "configuration": "existing ignored public.local.json; values intentionally omitted",
+  "public_configuration_sha256": "b70aa4f695de9d0604b9318f5ca3353a568f4ae94f7f6892f877051506ba1c17",
+  "public_define_values_present_in_kernel": {
+    "GEOMATH_SUPABASE_URL": true,
+    "GEOMATH_SUPABASE_PUBLISHABLE_KEY": true,
+    "GEOMATH_AUTH_REDIRECT_URI": true
+  },
+  "apk": {
+    "path": "/workspace/scratch/459484a16739/app-uiux-refinement/apps/geomath_flutter/build/app/outputs/flutter-apk/app-debug.apk",
+    "bytes": 98315390,
+    "sha256": "7104f929be85b08e4a324207a61c501702e449cc6683436ffe535468137bdea4"
+  },
+  "package": {
+    "application_id": "com.geomath.dev",
+    "version_code": "2",
+    "version_name": "0.2.0",
+    "debuggable": true,
+    "launcher": "com.geomath.dev.MainActivity",
+    "min_sdk": "24",
+    "target_sdk": "36"
+  },
+  "packaged_native_abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86_64"
+  ],
+  "flutter_runtime_abis": [
+    "arm64-v8a"
+  ],
+  "supported_target": "Android ARM64; other packaged ABIs have helper libraries only",
+  "extra_helper_libraries": [
+    {
+      "path": "lib/armeabi-v7a/libdartjni.so",
+      "bytes": 57416,
+      "sha256": "8dd52537fd16351d1b169dc833d6ca2afcb92e540ff745f836158f8650d2cb48"
+    },
+    {
+      "path": "lib/armeabi-v7a/libdatastore_shared_counter.so",
+      "bytes": 5916,
+      "sha256": "b4a465c02ee3ab581128ce8fedf83b40f6868c73c74b88e98908803229947e6a"
+    },
+    {
+      "path": "lib/x86_64/libdartjni.so",
+      "bytes": 99784,
+      "sha256": "8450bc15a50b2fb76278fac9f4327248aca327ef4cf59f737119b693c22a7b83"
+    },
+    {
+      "path": "lib/x86_64/libdatastore_shared_counter.so",
+      "bytes": 7336,
+      "sha256": "ccd1862ef8f854d2322f3ee07adebd107890ded3b7c96b8f3528ac99aab4a4f6"
+    }
+  ],
+  "manifest_verification": [
+    {
+      "path": "assets/contracts/manifest.json",
+      "entries_verified": 15
+    },
+    {
+      "path": "assets/module/manifest.json",
+      "entries_verified": 3
+    }
+  ],
+  "bank": {
+    "questions": 15,
+    "bank_version": "bank15-sha256:6ea4e9057d1f04e4f485aeefd89ec3cb681deb07b2dad7e76862e78e22159065"
+  },
+  "runtime_assets": [
+    {
+      "path": "assets/contracts/bank15.json",
+      "bytes": 4930,
+      "sha256": "3b7eb0c7fb8949452cc692cf35a075ac937526928491d14c9934a807689dff9b"
+    },
+    {
+      "path": "assets/contracts/cards/cone-net.svg",
+      "bytes": 15377,
+      "sha256": "94081fca55b1ad24dc77a6d3220da283ee6f391de106d80b411af472ed5f54ff"
+    },
+    {
+      "path": "assets/contracts/cards/cone-solid.svg",
+      "bytes": 15578,
+      "sha256": "1df1ed741747ab95c31dc07063df2f38b479aae3cabaf6dfb02042c1217f98f6"
+    },
+    {
+      "path": "assets/contracts/cards/cube-net.svg",
+      "bytes": 1056,
+      "sha256": "b7d5d6f531d38abf020778627ecf9b2c409788b8c12a3e42517858a34023de8a"
+    },
+    {
+      "path": "assets/contracts/cards/cube-solid.svg",
+      "bytes": 1064,
+      "sha256": "f0363873bbc040b31d7d9f7e99cfc7a58702e75b4f543f0e35c66fe29520ba43"
+    },
+    {
+      "path": "assets/contracts/cards/cuboid-net.svg",
+      "bytes": 1058,
+      "sha256": "b88d909736d52feee245b79e7fc2dd4150f9235a5a3308e236198c12bbf187ea"
+    },
+    {
+      "path": "assets/contracts/cards/cuboid-solid.svg",
+      "bytes": 1063,
+      "sha256": "295cb692a1b89f6afe5fd296a94ab336e48dae836a923d9504a12d2af59a9eea"
+    },
+    {
+      "path": "assets/contracts/cards/cylinder-net.svg",
+      "bytes": 19230,
+      "sha256": "7dc0833484c07b5ee1f16b9e75fb26279e8d6824e8ab416a03fb7db6c56b51b3"
+    },
+    {
+      "path": "assets/contracts/cards/cylinder-solid.svg",
+      "bytes": 19248,
+      "sha256": "862920cf0962369d1ffe4dd80438ba0265518c1ec2e4f2743d5914128d346e88"
+    },
+    {
+      "path": "assets/contracts/cards/pyramid-net.svg",
+      "bytes": 827,
+      "sha256": "f68992a34660e52eaceccd6a5d3b3b6a9e79790b48e9e022ca745835e56fdd8b"
+    },
+    {
+      "path": "assets/contracts/cards/pyramid-solid.svg",
+      "bytes": 833,
+      "sha256": "05ce6db2fd51c8a5fec8f8d6c46a4eedad93f4cda8eb055e27d5e8d9eaf850b5"
+    },
+    {
+      "path": "assets/contracts/engine_golden.json",
+      "bytes": 596720,
+      "sha256": "8ff4839660bdf1875eb67bdcb8348168aea50617369e97472bf4ee4702623a70"
+    },
+    {
+      "path": "assets/contracts/geometry_cards.json",
+      "bytes": 358325,
+      "sha256": "79c1c071a0efdffa3cc7f3086078299a09a680890dd62463edc226f7320cf693"
+    },
+    {
+      "path": "assets/contracts/learning_catalogue.json",
+      "bytes": 16767,
+      "sha256": "3d6b88394c8b719669d337d3a76ee1e6e7910feaca89fb42e614e12a7fb16397"
+    },
+    {
+      "path": "assets/contracts/manifest.json",
+      "bytes": 2709,
+      "sha256": "dfed97ebc0be73ef93e467307d84f75f4187fd1009935d643da3ba3fe769c557"
+    },
+    {
+      "path": "assets/contracts/ruleset.json",
+      "bytes": 605,
+      "sha256": "d227ff089cf9c1d6e47400c16611c00cf3f447158be717bc04ad37f8a64cd348"
+    },
+    {
+      "path": "assets/module/canonical-module.html",
+      "bytes": 572718,
+      "sha256": "7ddd5d60a25fbdf73c20f9f8e8fc0db4253e582fb50d17c944307b8f682066c4"
+    },
+    {
+      "path": "assets/module/index.html",
+      "bytes": 696,
+      "sha256": "e8db2197527c325fa2c879a56b3aac8a0dc8fe65c449c154b405d4c9d00c8331"
+    },
+    {
+      "path": "assets/module/manifest.json",
+      "bytes": 1137,
+      "sha256": "a54b5d4e0ee4afcb9d5d497e12902e587c8e4ab573e1282ef239907f63de2930"
+    },
+    {
+      "path": "assets/module/native-adapter.js",
+      "bytes": 814651,
+      "sha256": "c5037a779423774d0748c5be68e265b619007183bbd167335a76bd1f925f21c9"
+    }
+  ],
+  "flutter_runtime_entries": [
+    {
+      "path": "assets/flutter_assets/kernel_blob.bin",
+      "bytes": 86424200,
+      "sha256": "43e839c15d2c8b8e510d04d65d5ab8e3db0958b324c3954fe888c998bf99e9f1"
+    },
+    {
+      "path": "lib/arm64-v8a/libflutter.so",
+      "bytes": 38846424,
+      "sha256": "5b368215d1ee0dff3ef83f830477185f32d05705663fd028e50e840487617a2f"
+    }
+  ],
+  "aapt_badging": "package: name='com.geomath.dev' versionCode='2' versionName='0.2.0' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'\nsdkVersion:'24'\ntargetSdkVersion:'36'\nuses-permission: name='android.permission.INTERNET'\nuses-permission: name='com.geomath.dev.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION'\napplication-label:'GeoMath'\napplication-label-af:'GeoMath'\napplication-label-am:'GeoMath'\napplication-label-ar:'GeoMath'\napplication-label-as:'GeoMath'\napplication-label-az:'GeoMath'\napplication-label-be:'GeoMath'\napplication-label-bg:'GeoMath'\napplication-label-bn:'GeoMath'\napplication-label-bs:'GeoMath'\napplication-label-ca:'GeoMath'\napplication-label-cs:'GeoMath'\napplication-label-da:'GeoMath'\napplication-label-de:'GeoMath'\napplication-label-el:'GeoMath'\napplication-label-en-AU:'GeoMath'\napplication-label-en-CA:'GeoMath'\napplication-label-en-GB:'GeoMath'\napplication-label-en-IN:'GeoMath'\napplication-label-en-XC:'GeoMath'\napplication-label-es:'GeoMath'\napplication-label-es-US:'GeoMath'\napplication-label-et:'GeoMath'\napplication-label-eu:'GeoMath'\napplication-label-fa:'GeoMath'\napplication-label-fi:'GeoMath'\napplication-label-fr:'GeoMath'\napplication-label-fr-CA:'GeoMath'\napplication-label-gl:'GeoMath'\napplication-label-gu:'GeoMath'\napplication-label-hi:'GeoMath'\napplication-label-hr:'GeoMath'\napplication-label-hu:'GeoMath'\napplication-label-hy:'GeoMath'\napplication-label-in:'GeoMath'\napplication-label-is:'GeoMath'\napplication-label-it:'GeoMath'\napplication-label-iw:'GeoMath'\napplication-label-ja:'GeoMath'\napplication-label-ka:'GeoMath'\napplication-label-kk:'GeoMath'\napplication-label-km:'GeoMath'\napplication-label-kn:'GeoMath'\napplication-label-ko:'GeoMath'\napplication-label-ky:'GeoMath'\napplication-label-lo:'GeoMath'\napplication-label-lt:'GeoMath'\napplication-label-lv:'GeoMath'\napplication-label-mk:'GeoMath'\napplication-label-ml:'GeoMath'\napplication-label-mn:'GeoMath'\napplication-label-mr:'GeoMath'\napplication-label-ms:'GeoMath'\napplication-label-my:'GeoMath'\napplication-label-nb:'GeoMath'\napplication-label-ne:'GeoMath'\napplication-label-nl:'GeoMath'\napplication-label-or:'GeoMath'\napplication-label-pa:'GeoMath'\napplication-label-pl:'GeoMath'\napplication-label-pt:'GeoMath'\napplication-label-pt-BR:'GeoMath'\napplication-label-pt-PT:'GeoMath'\napplication-label-ro:'GeoMath'\napplication-label-ru:'GeoMath'\napplication-label-si:'GeoMath'\napplication-label-sk:'GeoMath'\napplication-label-sl:'GeoMath'\napplication-label-sq:'GeoMath'\napplication-label-sr:'GeoMath'\napplication-label-sr-Latn:'GeoMath'\napplication-label-sv:'GeoMath'\napplication-label-sw:'GeoMath'\napplication-label-ta:'GeoMath'\napplication-label-te:'GeoMath'\napplication-label-th:'GeoMath'\napplication-label-tl:'GeoMath'\napplication-label-tr:'GeoMath'\napplication-label-uk:'GeoMath'\napplication-label-ur:'GeoMath'\napplication-label-uz:'GeoMath'\napplication-label-vi:'GeoMath'\napplication-label-zh-CN:'GeoMath'\napplication-label-zh-HK:'GeoMath'\napplication-label-zh-TW:'GeoMath'\napplication-label-zu:'GeoMath'\napplication-icon-160:'res/mipmap-mdpi-v4/ic_launcher.png'\napplication-icon-240:'res/mipmap-hdpi-v4/ic_launcher.png'\napplication-icon-320:'res/mipmap-xhdpi-v4/ic_launcher.png'\napplication-icon-480:'res/mipmap-xxhdpi-v4/ic_launcher.png'\napplication-icon-640:'res/mipmap-xxxhdpi-v4/ic_launcher.png'\napplication: label='GeoMath' icon='res/mipmap-mdpi-v4/ic_launcher.png'\napplication-debuggable\nlaunchable-activity: name='com.geomath.dev.MainActivity'  label='' icon=''\nuses-library-not-required:'androidx.window.extensions'\nuses-library-not-required:'androidx.window.sidecar'\nfeature-group: label=''\n  uses-feature: name='android.hardware.faketouch'\n  uses-implied-feature: name='android.hardware.faketouch' reason='default feature for all apps'\nmain\nother-activities\nother-receivers\nsupports-screens: 'small' 'normal' 'large' 'xlarge'\nsupports-any-density: 'true'\nlocales: '--_--' 'af' 'am' 'ar' 'as' 'az' 'be' 'bg' 'bn' 'bs' 'ca' 'cs' 'da' 'de' 'el' 'en-AU' 'en-CA' 'en-GB' 'en-IN' 'en-XC' 'es' 'es-US' 'et' 'eu' 'fa' 'fi' 'fr' 'fr-CA' 'gl' 'gu' 'hi' 'hr' 'hu' 'hy' 'in' 'is' 'it' 'iw' 'ja' 'ka' 'kk' 'km' 'kn' 'ko' 'ky' 'lo' 'lt' 'lv' 'mk' 'ml' 'mn' 'mr' 'ms' 'my' 'nb' 'ne' 'nl' 'or' 'pa' 'pl' 'pt' 'pt-BR' 'pt-PT' 'ro' 'ru' 'si' 'sk' 'sl' 'sq' 'sr' 'sr-Latn' 'sv' 'sw' 'ta' 'te' 'th' 'tl' 'tr' 'uk' 'ur' 'uz' 'vi' 'zh-CN' 'zh-HK' 'zh-TW' 'zu'\ndensities: '160' '240' '320' '480' '640'\nnative-code: 'arm64-v8a' 'armeabi-v7a' 'x86_64'",
+  "apksigner_verification": "Verifies\nVerified using v1 scheme (JAR signing): false\nVerified using v2 scheme (APK Signature Scheme v2): true\nVerified using v3 scheme (APK Signature Scheme v3): false\nVerified using v3.1 scheme (APK Signature Scheme v3.1): false\nVerified using v4 scheme (APK Signature Scheme v4): false\nVerified for SourceStamp: false\nNumber of signers: 1\nSigner #1 certificate DN: C=US, O=Android, CN=Android Debug\nSigner #1 certificate SHA-256 digest: 73f7dfb6f845b2ca669687adcb8402142696f89116d8b1f47c0ce3d93a6c8d40\nSigner #1 certificate SHA-1 digest: 212fb7aad604ff1b53a934518c3ff237666be1c2\nSigner #1 certificate MD5 digest: b5cc3ee0cac0170259a529a17dae88b9\nSigner #1 key algorithm: RSA\nSigner #1 key size (bits): 2048\nSigner #1 public key SHA-256 digest: f01cce83adc6737afdfd6a1e9ee068361dd504e1f03e121d7e002b464c9917cf\nSigner #1 public key SHA-1 digest: db3fa100393860c2d2074cd72b4b0a05a0ba1fe5\nSigner #1 public key MD5 digest: 9eac4ece3de7521fd9c0d608ba17c1be",
+  "android_execution_evidence": false,
+  "deliverable": {
+    "path": "/workspace/scratch/459484a16739/deliverables/GeoMath-0.2.0-arm64-debug.apk",
+    "bytes": 98315390,
+    "sha256": "7104f929be85b08e4a324207a61c501702e449cc6683436ffe535468137bdea4",
+    "identical_to_inspected_apk": true
+  },
+  "published_code_commit": "b44f48b596a91178ef1531f2697e30c2ff547df3",
+  "published_runtime_blobs_readback_verified": 180
+}
