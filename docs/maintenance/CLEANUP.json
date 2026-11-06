@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "prepared_for_verification",
+  "status": "completed",
   "repository": "unDead41/geoMathPhysical",
   "date_malaysia": "2026-11-06",
   "version": "2.0.4",
@@ -185,7 +185,58 @@
     "bytes": 3770007
   },
   "verification": {
-    "status": "pending",
-    "limits": "Host checks and compilation do not establish USB/phone or hosted acceptance."
+    "status": "passed",
+    "source_commit": "0babf592ca83f0ba07e16bf69ac8bd14501b0417",
+    "main_run": "https://github.com/unDead41/geoMathPhysical/actions/runs/42220241261",
+    "candidate_run": "https://github.com/unDead41/geoMathPhysical/actions/runs/42219823775",
+    "native_modes": [
+      "--entrypoint src/main.cpp --rgb",
+      "--separate-modules --rgb"
+    ],
+    "per_native_mode": {
+      "version_checker": 6,
+      "pure_core": 14,
+      "integration": 79,
+      "failures": 0
+    },
+    "audio_regressions": 4,
+    "audio_scripts": 30,
+    "audio_files_present": 0,
+    "esp32": {
+      "environment": "esp32dev-rgb",
+      "result": "compiled"
+    },
+    "windows_package": {
+      "result": "passed",
+      "files": 59,
+      "checksum_entries": 58,
+      "reproducible": true,
+      "powershell_syntax": "passed",
+      "legacy_environment_aliases": 4,
+      "tamper_rejection": "passed"
+    },
+    "protected_source_blobs": 37,
+    "preserved_binary_assets": 8,
+    "version_increase": {
+      "from": "2.0.3",
+      "to": "2.0.4",
+      "result": "passed"
+    },
+    "limits": "No USB upload, physical ESP32/RFID/RGB/LCD test or actual Windows installation was performed."
+  },
+  "active_branches": [
+    "main"
+  ],
+  "archive_commit": "a771e18c982443a987cfb550e585122ce49f2854",
+  "completion": {
+    "retirement_run": "https://github.com/unDead41/geoMathPhysical/actions/runs/42220765756",
+    "retired_original_branches": 6,
+    "retired_temporary_branches": 2,
+    "main_at_retirement": "0babf592ca83f0ba07e16bf69ac8bd14501b0417",
+    "verified_source_snapshot": {
+      "files": 169,
+      "bytes": 3855026
+    },
+    "archive_tree_policy": "Reviewed main tree, with all seven exact original heads plus preparation history retained as archive commit parents."
   }
 }
