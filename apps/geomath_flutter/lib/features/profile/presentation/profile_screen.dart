@@ -29,6 +29,8 @@ class ProfileScreen extends StatefulWidget {
 class ProfileScreenState extends State<ProfileScreen> {
   final _name = TextEditingController();
   final _username = TextEditingController();
+  final _nameFocus = FocusNode(debugLabel: 'profile-name');
+  final _usernameFocus = FocusNode(debugLabel: 'profile-username');
   AccountProfile? _profile;
   AccountRole _role = AccountRole.student;
   String _avatar = 'initial';
@@ -137,6 +139,11 @@ class ProfileScreenState extends State<ProfileScreen> {
         _failure = null;
         _saved = false;
       });
+      if (!AccountValidation.validDisplayName(_name.text)) {
+        _nameFocus.requestFocus();
+      } else {
+        _usernameFocus.requestFocus();
+      }
       return false;
     }
     final actor = _actor;
@@ -223,6 +230,7 @@ class ProfileScreenState extends State<ProfileScreen> {
     final enabled = !_busy && _loaded && !_unknownOutcome;
     return GeoMathScaffold(
       title: _t('title'),
+      maxWidth: 640,
       showBackButton: true,
       onBack: () => AppScope.of(context).router.back(),
       actions: [
@@ -288,9 +296,14 @@ class ProfileScreenState extends State<ProfileScreen> {
                 StatusNotice(
                   tone: StatusTone.warning,
                   message: _t('unknownOutcome'),
+                  liveRegion: true,
                 ),
               if (_saved)
-                StatusNotice(tone: StatusTone.success, message: _t('saved')),
+                StatusNotice(
+                  tone: StatusTone.success,
+                  message: _t('saved'),
+                  liveRegion: true,
+                ),
               if (_profile == null)
                 SectionHeader(title: _t('complete'), subtitle: _t('roleNote')),
               if (_profile != null)
@@ -299,10 +312,19 @@ class ProfileScreenState extends State<ProfileScreen> {
                   subtitle: '${_t('role')}: ${_t(_profile!.role.name)}',
                 ),
               const SizedBox(height: 16),
+              if (dirty && !_unknownOutcome) ...[
+                StatusNotice(
+                  key: const Key('profile-draft'),
+                  message: _t('draftNote'),
+                  tone: StatusTone.neutral,
+                ),
+                const SizedBox(height: 16),
+              ],
               LabeledField(
                 key: const Key('profile-name'),
                 label: _t('name'),
                 controller: _name,
+                focusNode: _nameFocus,
                 enabled: enabled,
                 helperText: _t('nameHint'),
                 errorText:
@@ -325,12 +347,14 @@ class ProfileScreenState extends State<ProfileScreen> {
                   key: const Key('profile-username'),
                   label: _t('username'),
                   controller: _username,
+                  focusNode: _usernameFocus,
                   enabled: enabled,
                   maxLength: 24,
                   helperText: _t('usernameHint'),
-                  errorText:
-                      _attemptedSave &&
-                          !AccountValidation.validUsername(_username.text)
+                  errorText: _failure?.message == 'profile.usernameTaken'
+                      ? _t('usernameTaken')
+                      : _attemptedSave &&
+                            !AccountValidation.validUsername(_username.text)
                       ? _t('usernameInvalid')
                       : null,
                   autofillHints: const [AutofillHints.newUsername],
@@ -431,6 +455,8 @@ class ProfileScreenState extends State<ProfileScreen> {
     unawaited(_bindings?.cancel());
     _name.dispose();
     _username.dispose();
+    _nameFocus.dispose();
+    _usernameFocus.dispose();
     super.dispose();
   }
 }

@@ -43,6 +43,9 @@ final class _ClassroomScreenState extends State<ClassroomScreen> {
   bool _archive = false, _visible = true;
   GeometryShape? _solid, _net;
   String _gameIdentity = '';
+  ClassroomScope? _clipboardScope;
+  String? _clipboardTarget, _clipboardMessage;
+  bool _copying = false, _clipboardError = false;
   Timer? _ticker;
   late Future<Result<Map<String, ClassroomQuestion>>> _bank;
 
@@ -69,6 +72,14 @@ final class _ClassroomScreenState extends State<ClassroomScreen> {
 
   void _changed() {
     _syncTicker();
+    if (_clipboardScope case final scope?) {
+      if (!c.isScopeCurrent(scope)) {
+        _clipboardScope = null;
+        _clipboardTarget = null;
+        _clipboardMessage = null;
+        _copying = false;
+      }
+    }
     final state = c.attempt;
     final identity = state == null
         ? ''
@@ -156,7 +167,17 @@ final class _ClassroomScreenState extends State<ClassroomScreen> {
                 liveRegion: true,
               ),
             if (c.failure != null) ...[
-              _error(c.failure!),
+              if (c.snapshot == null)
+                RetryPanel(
+                  key: const ValueKey('classroom-load-error'),
+                  title: t('loadFailed'),
+                  message: _failureMessage(c.failure!),
+                  retryLabel: t('refresh'),
+                  busy: c.loading,
+                  onRetry: c.busy ? null : () => c.refresh(explicit: true),
+                )
+              else
+                _error(c.failure!),
               const SizedBox(height: 12),
             ],
             if (c.requiresReconciliation) ...[
@@ -184,7 +205,12 @@ final class _ClassroomScreenState extends State<ClassroomScreen> {
               ),
               const SizedBox(height: 12),
             ],
-            if (c.loading && c.snapshot == null) Text(t('loading')),
+            if (c.loading && c.snapshot == null)
+              StatusNotice(
+                key: const ValueKey('classroom-loading'),
+                message: t('loading'),
+                liveRegion: true,
+              ),
             if (c.snapshot != null) ...[
               if (!c.crud) ...[
                 StatusNotice(message: t('capability')),
@@ -212,12 +238,14 @@ final class _ClassroomScreenState extends State<ClassroomScreen> {
   }
 
   Widget _error(AppFailure failure) => StatusNotice(
-    message: strings.text(
-      failure.message.replaceAll('_', '.'),
-      fallback: t('error.generic'),
-    ),
+    message: _failureMessage(failure),
     tone: StatusTone.error,
     liveRegion: true,
+  );
+
+  String _failureMessage(AppFailure failure) => strings.text(
+    failure.message.replaceAll('_', '.'),
+    fallback: t('error.generic'),
   );
 
   Widget _dashboard() {
@@ -268,8 +296,14 @@ final class _ClassroomScreenState extends State<ClassroomScreen> {
           ),
         if (classes.isEmpty)
           EmptyState(
-            title: t('empty'),
-            message: t(c.teacher ? 'emptyTeacher' : 'emptyStudent'),
+            title: t(_archive && c.teacher ? 'emptyArchive' : 'empty'),
+            message: t(
+              _archive && c.teacher
+                  ? 'emptyArchiveHelp'
+                  : c.teacher
+                  ? 'emptyTeacher'
+                  : 'emptyStudent',
+            ),
           ),
         for (final item in classes)
           Padding(
@@ -329,6 +363,7 @@ final class _ClassroomScreenState extends State<ClassroomScreen> {
             'class',
             item.id,
             item.archived,
+            item.name,
           ),
           if (c.crud)
             _managementActions(
@@ -380,6 +415,14 @@ final class _ClassroomScreenState extends State<ClassroomScreen> {
         ],
         const SizedBox(height: 20),
         SectionHeader(title: t('rooms')),
+        if (rooms.isEmpty) ...[
+          const SizedBox(height: 12),
+          EmptyState(
+            title: t('noRooms'),
+            message: t(own ? 'noRoomsTeacher' : 'noRoomsStudent'),
+            icon: Icons.meeting_room_outlined,
+          ),
+        ],
         if (own && !item.archived) ...[
           const SizedBox(height: 12),
           ActionButton(
@@ -506,10 +549,13 @@ final class _ClassroomScreenState extends State<ClassroomScreen> {
     String kind,
     String id,
     bool disabled,
+    String name,
   ) => GeoMathCard(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        SectionHeader(title: t(kind == 'class' ? 'classPin' : 'roomPin')),
+        const SizedBox(height: 8),
         if (pin != null) ...[
           SelectableText(
             pin,
@@ -517,6 +563,42 @@ final class _ClassroomScreenState extends State<ClassroomScreen> {
             style: Theme.of(context).textTheme.headlineLarge,
           ),
           if (expires != null) Text(t('expires', {'time': _date(expires)})),
+          const SizedBox(height: 8),
+          Text(t(kind == 'class' ? 'classPinHelp' : 'roomPinHelp')),
+          const SizedBox(height: 12),
+          ActionButton(
+            key: ValueKey('classroom-copy-invitation-$kind-$id'),
+            label: t('copyInvitation'),
+            icon: Icons.mail_outline_rounded,
+            kind: ActionButtonKind.secondary,
+            busy: _copying && _clipboardTarget == '$kind:$id',
+            onPressed: c.canWrite && !disabled && !_copying
+                ? () => _copyPin(pin, expires, kind, id, name, invitation: true)
+                : null,
+          ),
+          const SizedBox(height: 8),
+          ActionButton(
+            key: ValueKey('classroom-copy-pin-$kind-$id'),
+            label: t('copyPin'),
+            icon: Icons.copy_rounded,
+            kind: ActionButtonKind.tonal,
+            onPressed: c.canWrite && !disabled && !_copying
+                ? () => _copyPin(pin, expires, kind, id, name)
+                : null,
+          ),
+          if (_clipboardTarget == '$kind:$id' && _clipboardMessage != null) ...[
+            const SizedBox(height: 12),
+            StatusNotice(
+              key: ValueKey(
+                _clipboardError
+                    ? 'classroom-clipboard-error'
+                    : 'classroom-clipboard-success',
+              ),
+              message: t(_clipboardMessage!),
+              tone: _clipboardError ? StatusTone.error : StatusTone.success,
+              liveRegion: true,
+            ),
+          ],
         ] else
           Text(t('pinExpired')),
         const SizedBox(height: 12),
@@ -536,6 +618,49 @@ final class _ClassroomScreenState extends State<ClassroomScreen> {
       ],
     ),
   );
+
+  Future<void> _copyPin(
+    String pin,
+    DateTime? expires,
+    String kind,
+    String id,
+    String name, {
+    bool invitation = false,
+  }) async {
+    final scope = c.captureScope();
+    if (!c.canWrite || _copying) return;
+    final text = invitation
+        ? [
+            t(kind == 'class' ? 'classInvitation' : 'roomInvitation', {
+              'name': name,
+              'pin': pin,
+            }),
+            if (expires != null) t('expires', {'time': _date(expires)}),
+          ].join('\n')
+        : pin;
+    setState(() {
+      _clipboardScope = scope;
+      _clipboardTarget = '$kind:$id';
+      _clipboardMessage = null;
+      _copying = true;
+    });
+    var failed = false;
+    try {
+      await Clipboard.setData(ClipboardData(text: text));
+    } catch (_) {
+      failed = true;
+    }
+    if (!mounted || !c.isScopeCurrent(scope)) return;
+    setState(() {
+      _copying = false;
+      _clipboardError = failed;
+      _clipboardMessage = failed
+          ? 'copyFailed'
+          : invitation
+          ? 'invitationCopied'
+          : 'pinCopied';
+    });
+  }
 
   Widget _room(ClassroomRoom room) => Column(
     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -559,6 +684,7 @@ final class _ClassroomScreenState extends State<ClassroomScreen> {
             'room',
             room.id,
             room.archived,
+            room.name,
           ),
         if (room.status == 'open' && !room.archived) ...[
           const SizedBox(height: 12),
@@ -620,7 +746,18 @@ final class _ClassroomScreenState extends State<ClassroomScreen> {
       SectionHeader(title: t('board')),
       const SizedBox(height: 8),
       if (!room.closed) Text(t('notFinal')),
-      if (room.players.isEmpty) Text(t('noPlayers')),
+      if (room.players.isEmpty)
+        EmptyState(
+          title: t(room.closed ? 'noResults' : 'noPlayersTitle'),
+          message: t(
+            room.closed
+                ? 'noPlayersClosed'
+                : c.snapshot!.ownsRoom(room.id) && !room.archived
+                ? 'noPlayersTeacher'
+                : 'noPlayers',
+          ),
+          icon: Icons.groups_outlined,
+        ),
       for (var i = 0; i < room.players.length; i++)
         Padding(
           padding: const EdgeInsets.only(top: 8),
@@ -1021,14 +1158,70 @@ final class _ClassroomInputDialog extends StatefulWidget {
 
 final class _ClassroomInputDialogState extends State<_ClassroomInputDialog> {
   final field = TextEditingController(), form = GlobalKey<FormState>();
-  final errorFocus = FocusNode();
+  final errorFocus = FocusNode(), fieldFocus = FocusNode();
   late final ActorBinding actor;
-  bool closing = false;
+  bool closing = false, pasting = false;
+  String? clipboardMessage;
+  int edits = 0;
   @override
   void initState() {
     super.initState();
     actor = widget.controller.sessions.current;
+    field.addListener(_edited);
     widget.controller.addListener(_changed);
+  }
+
+  void _edited() => ++edits;
+
+  Future<void> _pastePin() async {
+    if (pasting || !widget.controller.canWrite) return;
+    final revision = edits;
+    setState(() {
+      pasting = true;
+      clipboardMessage = null;
+    });
+    String? value;
+    var failed = false;
+    try {
+      value = (await Clipboard.getData(Clipboard.kTextPlain))?.text?.trim();
+    } catch (_) {
+      failed = true;
+    }
+    if (!mounted || closing || !widget.controller.sessions.isCurrent(actor)) {
+      return;
+    }
+    setState(() {
+      pasting = false;
+      if (edits != revision) {
+        clipboardMessage = 'pasteDraftKept';
+      } else if (failed) {
+        clipboardMessage = 'pasteFailed';
+      } else if (value == null || !ClassroomValidation.pin(value)) {
+        clipboardMessage = 'pasteInvalid';
+      } else {
+        field.value = TextEditingValue(
+          text: value,
+          selection: TextSelection.collapsed(offset: value.length),
+        );
+        fieldFocus.requestFocus();
+      }
+    });
+  }
+
+  Future<void> _submit() async {
+    final c = widget.controller;
+    if (pasting || !c.canWrite || !c.sessions.isCurrent(actor)) return;
+    if (!form.currentState!.validate()) {
+      fieldFocus.requestFocus();
+      return;
+    }
+    final saved = await widget.submit(field.text);
+    if (!mounted) return;
+    if (saved) {
+      _close();
+    } else {
+      errorFocus.requestFocus();
+    }
   }
 
   void _close() {
@@ -1054,6 +1247,7 @@ final class _ClassroomInputDialogState extends State<_ClassroomInputDialog> {
     widget.controller.removeListener(_changed);
     field.dispose();
     errorFocus.dispose();
+    fieldFocus.dispose();
     super.dispose();
   }
 
@@ -1069,15 +1263,25 @@ final class _ClassroomInputDialogState extends State<_ClassroomInputDialog> {
         content: SingleChildScrollView(
           child: Form(
             key: form,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 LabeledField(
+                  key: const ValueKey('classroom-input-field'),
                   label: widget.label,
                   controller: field,
+                  focusNode: fieldFocus,
                   helperText: widget.help,
                   enabled: !c.mutating,
+                  textInputAction: TextInputAction.done,
+                  onFieldSubmitted: (_) => _submit(),
+                  onChanged: (_) {
+                    if (clipboardMessage != null) {
+                      setState(() => clipboardMessage = null);
+                    }
+                  },
                   keyboardType: widget.numeric
                       ? TextInputType.number
                       : TextInputType.text,
@@ -1089,8 +1293,32 @@ final class _ClassroomInputDialogState extends State<_ClassroomInputDialog> {
                       : null,
                   validator: (value) => widget.validate(value?.trim() ?? '')
                       ? null
-                      : t('error.invalid_payload'),
+                      : t(
+                          widget.numeric
+                              ? 'pinInvalid'
+                              : 'error.invalid_payload',
+                        ),
                 ),
+                if (widget.numeric) ...[
+                  const SizedBox(height: 12),
+                  ActionButton(
+                    key: const ValueKey('classroom-paste-pin'),
+                    label: t('pastePin'),
+                    icon: Icons.content_paste_rounded,
+                    kind: ActionButtonKind.secondary,
+                    busy: pasting,
+                    onPressed: !pasting && c.canWrite ? _pastePin : null,
+                  ),
+                  if (clipboardMessage != null) ...[
+                    const SizedBox(height: 12),
+                    StatusNotice(
+                      key: const ValueKey('classroom-clipboard-error'),
+                      message: t(clipboardMessage!),
+                      tone: StatusTone.warning,
+                      liveRegion: true,
+                    ),
+                  ],
+                ],
                 if (c.failure != null)
                   Focus(
                     focusNode: errorFocus,
@@ -1131,19 +1359,8 @@ final class _ClassroomInputDialogState extends State<_ClassroomInputDialog> {
               child: Text(t('refresh')),
             ),
           FilledButton(
-            onPressed: !c.canWrite
-                ? null
-                : () async {
-                    if (!form.currentState!.validate()) return;
-                    final saved = await widget.submit(field.text);
-                    if (!mounted) return;
-                    if (saved) {
-                      _close();
-                    } else {
-                      errorFocus.requestFocus();
-                    }
-                  },
-            child: Text(t('confirm')),
+            onPressed: c.canWrite && !pasting ? _submit : null,
+            child: Text(t(widget.numeric ? 'join' : 'confirm')),
           ),
         ],
       ),

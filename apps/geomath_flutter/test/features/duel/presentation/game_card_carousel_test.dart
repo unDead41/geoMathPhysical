@@ -173,6 +173,37 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  testWidgets('swipes snap to a card and resizing retains its identity', (
+    tester,
+  ) async {
+    _setSize(tester, 390);
+    await tester.pumpWidget(_app(reducedMotion: true));
+    await tester.drag(find.byKey(_scroll), const Offset(-170, 0));
+    await tester.pumpAndSettle();
+    var index =
+        int.parse(RegExp(r'Card (\d)').firstMatch(_positionText(tester))![1]!) -
+        1;
+    var stride =
+        tester.getTopLeft(find.byKey(const ValueKey('choice-1'))).dx -
+        tester.getTopLeft(find.byKey(const ValueKey('choice-0'))).dx;
+    expect(_scrollPosition(tester).pixels, closeTo(index * stride, .01));
+
+    await tester.ensureVisible(find.byKey(const ValueKey('choice-3')));
+    await tester.pumpAndSettle();
+    expect(_positionText(tester), 'Card 4 of 5');
+    for (final width in [320.0, 430.0, 768.0, 320.0]) {
+      tester.view.physicalSize = Size(width, 700);
+      await tester.pumpAndSettle();
+      index = 3;
+      stride =
+          tester.getTopLeft(find.byKey(const ValueKey('choice-1'))).dx -
+          tester.getTopLeft(find.byKey(const ValueKey('choice-0'))).dx;
+      expect(_positionText(tester), 'Card 4 of 5');
+      expect(_scrollPosition(tester).pixels, closeTo(index * stride, .01));
+      expect(tester.takeException(), isNull);
+    }
+  });
+
   for (final platformPreference in [false, true]) {
     testWidgets(
       '${platformPreference ? 'platform' : 'explicit'} reduced motion jumps immediately',
@@ -193,7 +224,7 @@ void main() {
     );
   }
 
-  for (final width in [320.0, 390.0, 768.0]) {
+  for (final width in [320.0, 390.0, 430.0, 768.0]) {
     for (final textScale in [1.0, 1.5]) {
       testWidgets(
         'cards and 48 dp controls fit $width dp at $textScale scale',

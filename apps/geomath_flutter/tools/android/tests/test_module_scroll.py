@@ -87,6 +87,30 @@ class CubeReadinessTest(unittest.TestCase):
         list(root)[1].append(button)
         self.assertEqual(scroll.inspect_cube(root).picker_state,'missing')
 
+    def test_native_unfold_action_replaces_legacy_picker_readiness(self):
+        for label in ['Buka', 'Unfold']:
+            root=self.tree()
+            list(root)[-1].set('content-desc',label)
+            self.assertTrue(scroll.inspect_cube(root).ready)
+            list(root)[-1].set('clickable','false')
+            self.assertFalse(scroll.inspect_cube(root).ready)
+            list(root)[-1].set('clickable','true')
+            list(root)[-1].set('enabled','false')
+            self.assertFalse(scroll.inspect_cube(root).ready)
+
+    def test_carousel_browsing_never_proves_native_module_readiness(self):
+        root=self.tree()
+        list(root)[-1].set('content-desc','Bongkah seterusnya')
+        self.assertEqual(scroll.inspect_cube(root).picker_state,'missing')
+
+    def test_webview_unfold_cannot_impersonate_native_ready_control(self):
+        root=self.tree()
+        button=list(root)[-1]
+        button.set('content-desc','Unfold')
+        root.remove(button)
+        list(root)[1].append(button)
+        self.assertEqual(scroll.inspect_cube(root).picker_state,'missing')
+
     def test_placeholder_never_counts_as_loaded(self):
         state=scroll.inspect_cube(self.tree(description='Interactive cube model'))
         self.assertFalse(state.ready)

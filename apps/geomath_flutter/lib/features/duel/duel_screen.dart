@@ -14,6 +14,7 @@ import '../../core/widgets/widgets.dart';
 import 'duel_controller.dart';
 import 'duel_projection.dart';
 import 'presentation/game_card_carousel.dart';
+import 'presentation/game_card_drag.dart';
 import 'presentation/game_question_content.dart';
 
 /// Every entry route projects the same service-owned session and poll owner.
@@ -37,6 +38,10 @@ final class _DuelScreenState extends State<DuelScreen> {
   Object? _selectionStage;
   int? _instance;
   bool _currentRoute = true, _confirming = false;
+  bool _clipboardBusy = false;
+  int _pinEditRevision = 0;
+  String? _clipboardNotice;
+  Object? _clipboardScope;
   Timer? _ticker;
   DuelController get c => widget.controller;
   AppStrings get s => AppStrings.of(context);
@@ -47,6 +52,7 @@ final class _DuelScreenState extends State<DuelScreen> {
   void initState() {
     super.initState();
     c.addListener(_changed);
+    _pin.addListener(_pinEdited);
     // Display-only ticks: network polling and review advancement have one owner.
     _ticker = Timer.periodic(const Duration(milliseconds: 250), (_) {
       if (mounted && _currentRoute && c.snapshot != null) setState(() {});
@@ -57,6 +63,8 @@ final class _DuelScreenState extends State<DuelScreen> {
   void _changed() {
     if (mounted) setState(() {});
   }
+
+  void _pinEdited() => _pinEditRevision++;
 
   @override
   void didChangeDependencies() {
@@ -140,14 +148,118 @@ final class _DuelScreenState extends State<DuelScreen> {
       shape == null ? t('none') : s.text('shape.${shape.name}');
   int get _reviewSeconds => (c.reviewRemaining / 1000).ceil();
 
+  Future<void> _pastePin() async {
+    if (!mounted ||
+        !_currentRoute ||
+        c.busy ||
+        _clipboardBusy ||
+        c.hasSession) {
+      return;
+    }
+    final actor = c.actor, generation = c.sessionGeneration;
+    final pinRevision = _pinEditRevision;
+    bool current() =>
+        mounted &&
+        _currentRoute &&
+        c.actor == actor &&
+        c.sessionGeneration == generation &&
+        !c.hasSession;
+    setState(() {
+      _clipboardBusy = true;
+      _clipboardNotice = null;
+    });
+    try {
+      final text = (await Clipboard.getData(Clipboard.kTextPlain))?.text ?? '';
+      // A newer field edit supersedes the pending paste, even if the player
+      // subsequently restores the same text that was present when it began.
+      if (!current() || _pinEditRevision != pinRevision) return;
+      // Accept the PIN alone or the one public PIN in a copied invitation.
+      // Never truncate a longer number into a different room's PIN.
+      final matches = RegExp(r'\b\d{6}\b').allMatches(text).toList();
+      if (matches.length != 1) {
+        setState(() => _clipboardNotice = 'clipboardInvalid');
+        return;
+      }
+      _pin.value = TextEditingValue(
+        text: matches.single[0]!,
+        selection: const TextSelection.collapsed(offset: 6),
+      );
+      setState(() => _clipboardNotice = 'pinPasted');
+    } catch (_) {
+      if (current() && _pinEditRevision == pinRevision) {
+        setState(() => _clipboardNotice = 'clipboardError');
+      }
+    } finally {
+      if (mounted) setState(() => _clipboardBusy = false);
+    }
+  }
+
+  Future<void> _copyPin(
+    DuelSnapshot snapshot, {
+    bool invitation = false,
+  }) async {
+    if (!mounted ||
+        _clipboardBusy ||
+        !_currentRoute ||
+        c.snapshot?.room.id != snapshot.room.id) {
+      return;
+    }
+    final actor = c.actor, generation = c.sessionGeneration;
+    bool current() =>
+        mounted &&
+        _currentRoute &&
+        c.actor == actor &&
+        c.sessionGeneration == generation &&
+        c.snapshot?.room.id == snapshot.room.id;
+    setState(() {
+      _clipboardBusy = true;
+      _clipboardNotice = null;
+    });
+    try {
+      await Clipboard.setData(
+        ClipboardData(
+          text: invitation
+              ? t('invitation', {'pin': snapshot.room.code})
+              : snapshot.room.code,
+        ),
+      );
+      if (current()) {
+        setState(
+          () =>
+              _clipboardNotice = invitation ? 'invitationCopied' : 'pinCopied',
+        );
+      }
+    } catch (_) {
+      if (current()) setState(() => _clipboardNotice = 'clipboardError');
+    } finally {
+      if (mounted) setState(() => _clipboardBusy = false);
+    }
+  }
+
+  Widget _clipboardStatus() => StatusNotice(
+    key: const ValueKey('duel-clipboard-status'),
+    message: t(_clipboardNotice!),
+    tone:
+        _clipboardNotice == 'clipboardError' ||
+            _clipboardNotice == 'clipboardInvalid'
+        ? StatusTone.warning
+        : StatusTone.success,
+    liveRegion: true,
+  );
+
   @override
   Widget build(BuildContext context) {
     final snapshot = c.snapshot;
+    final clipboardScope = (c.actor, c.sessionGeneration, snapshot?.room.id);
+    if (_clipboardScope != clipboardScope) {
+      _clipboardScope = clipboardScope;
+      _clipboardNotice = null;
+    }
     final stage = (
       c.actor,
       c.sessionGeneration,
       snapshot?.room.id,
-      snapshot?.seq,
+      snapshot?.currentQuestion?.index,
       snapshot?.me.stage,
     );
     if (_selectionStage != stage) {
@@ -271,6 +383,20 @@ final class _DuelScreenState extends State<DuelScreen> {
       ),
       const SizedBox(height: 12),
       ActionButton(
+        key: const ValueKey('duel-paste-pin'),
+        label: t('pastePin'),
+        kind: ActionButtonKind.tonal,
+        icon: Icons.content_paste_rounded,
+        onPressed: c.busy || _clipboardBusy
+            ? null
+            : () => unawaited(_pastePin()),
+      ),
+      if (_clipboardNotice != null) ...[
+        const SizedBox(height: 12),
+        _clipboardStatus(),
+      ],
+      const SizedBox(height: 12),
+      ActionButton(
         key: const ValueKey('duel-join'),
         label: t('join'),
         kind: ActionButtonKind.secondary,
@@ -336,11 +462,62 @@ final class _DuelScreenState extends State<DuelScreen> {
                 ),
               }),
             ),
+            const SizedBox(height: 16),
+            Text(t('joinInstructions'), textAlign: TextAlign.center),
+            const SizedBox(height: 12),
+            ActionButton(
+              key: const ValueKey('duel-copy-pin'),
+              label: t('copyPin'),
+              kind: ActionButtonKind.secondary,
+              icon: Icons.copy_rounded,
+              onPressed: _clipboardBusy
+                  ? null
+                  : () => unawaited(_copyPin(snapshot)),
+            ),
+            const SizedBox(height: 8),
+            ActionButton(
+              key: const ValueKey('duel-copy-invitation'),
+              label: t('copyInvitation'),
+              kind: ActionButtonKind.tonal,
+              icon: Icons.person_add_alt_1_outlined,
+              onPressed: _clipboardBusy
+                  ? null
+                  : () => unawaited(_copyPin(snapshot, invitation: true)),
+            ),
+            if (_clipboardNotice != null) ...[
+              const SizedBox(height: 12),
+              _clipboardStatus(),
+            ],
           ],
         ),
       ),
       const SizedBox(height: 16),
       _players(snapshot),
+      const SizedBox(height: 16),
+      StatusNotice(
+        key: const ValueKey('duel-lobby-status'),
+        title: t('readyCount', {
+          'count': [
+            snapshot.me,
+            ?snapshot.opponent,
+          ].where((player) => player.ready).length,
+        }),
+        message: t(
+          c.pending
+              ? 'pending'
+              : !c.connected
+              ? 'reconnecting'
+              : snapshot.room.status == DuelRoomStatus.countdown
+              ? 'bothReady'
+              : snapshot.opponent == null
+              ? 'waitingFriend'
+              : snapshot.me.ready
+              ? 'waitingReady'
+              : 'readyPrompt',
+        ),
+        tone: c.pending || !c.connected ? StatusTone.warning : StatusTone.info,
+        liveRegion: true,
+      ),
       const SizedBox(height: 16),
       if (snapshot.room.status == DuelRoomStatus.countdown)
         StatusNotice(
@@ -392,16 +569,30 @@ final class _DuelScreenState extends State<DuelScreen> {
     final question = snapshot.currentQuestion!;
     final copy = question.localized(s.locale.languageCode);
     final actor = c.actor, generation = c.sessionGeneration;
+    final scope = (
+      actor,
+      generation,
+      snapshot.room.id,
+      question.index,
+      snapshot.me.stage,
+    );
     final left = snapshot.room.deadlineAt! - c.serverMilliseconds;
     // Recheck at the gesture boundary as well as while building. A callback
     // from a prior route/session/stage cannot scan the controller's new state.
     bool canAnswer() =>
+        mounted &&
         _currentRoute &&
         c.actor == actor &&
         c.sessionGeneration == generation &&
         identical(c.snapshot, snapshot) &&
         c.canAnswer &&
         snapshot.room.deadlineAt! > c.serverMilliseconds;
+    void choose(GeometryShape shape) {
+      if (!canAnswer()) return;
+      if (_selected != shape) unawaited(GeoFeedback.selection(context));
+      setState(() => _selected = shape);
+    }
+
     return Column(
       key: const ValueKey('duel-question'),
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -439,13 +630,7 @@ final class _DuelScreenState extends State<DuelScreen> {
         ),
         const SizedBox(height: 12),
         GameCardCarousel(
-          scopeKey: (
-            actor,
-            generation,
-            snapshot.room.id,
-            question.index,
-            snapshot.me.stage,
-          ),
+          scopeKey: scope,
           keyPrefix: 'duel-cards',
           itemCount: GeometryShape.values.length,
           previousLabel: t('previousCard'),
@@ -455,64 +640,86 @@ final class _DuelScreenState extends State<DuelScreen> {
           reducedMotion: MediaQuery.disableAnimationsOf(context),
           cardBuilder: (context, index, width) {
             final shape = GeometryShape.values[index];
-            return Semantics(
-              selected: _selected == shape,
-              child: GeoMathCard(
-                key: ValueKey('duel-card-${shape.name}'),
-                padding: const EdgeInsets.all(10),
-                onTap: canAnswer()
-                    ? () {
-                        if (canAnswer()) setState(() => _selected = shape);
-                      }
-                    : null,
-                semanticLabel:
-                    '${_shape(shape)}, ${t(snapshot.me.stage == GeometryCardKind.solid ? 'solidStage' : 'netStage')}',
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    GeometryCardView(
-                      shape: shape,
-                      kind: snapshot.me.stage,
-                      provider: widget.geometry,
-                      size: math.min(110, width - 20),
-                      semanticLabel: _shape(shape),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(_shape(shape), textAlign: TextAlign.center),
-                    const SizedBox(height: 6),
-                    // Reserve selection space so choosing never shifts the
-                    // scan control or changes the carousel's height.
-                    SizedBox(
-                      height: 24,
-                      child: _selected == shape
-                          ? Icon(
-                              Icons.check_circle_rounded,
-                              color: Theme.of(context).colorScheme.primary,
-                            )
-                          : null,
-                    ),
-                  ],
+            return GameCardDraggable(
+              data: GameCardDragData(
+                scopeKey: scope,
+                shape: shape,
+                kind: snapshot.me.stage,
+              ),
+              enabled: canAnswer(),
+              label: _shape(shape),
+              child: Semantics(
+                selected: _selected == shape,
+                child: GeoMathCard(
+                  key: ValueKey('duel-card-${shape.name}'),
+                  padding: const EdgeInsets.all(10),
+                  color: _selected == shape
+                      ? Theme.of(context).colorScheme.primaryContainer
+                      : null,
+                  onTap: canAnswer() ? () => choose(shape) : null,
+                  semanticLabel:
+                      '${_shape(shape)}, ${t(snapshot.me.stage == GeometryCardKind.solid ? 'solidStage' : 'netStage')}',
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      GeometryCardView(
+                        shape: shape,
+                        kind: snapshot.me.stage,
+                        provider: widget.geometry,
+                        size: math.min(110, width - 20),
+                        semanticLabel: _shape(shape),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(_shape(shape), textAlign: TextAlign.center),
+                      const SizedBox(height: 6),
+                      // Reserve selection space so choosing never shifts the
+                      // scan control or changes the carousel's height.
+                      SizedBox(
+                        height: 24,
+                        child: _selected == shape
+                            ? Icon(
+                                Icons.check_circle_rounded,
+                                color: Theme.of(context).colorScheme.primary,
+                              )
+                            : null,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );
           },
         ),
         const SizedBox(height: 12),
-        if (_selected != null)
-          Text(t('selection', {'shape': _shape(_selected)})),
-        const SizedBox(height: 12),
-        ActionButton(
-          key: const ValueKey('duel-scan'),
-          label: t('check'),
-          busy: c.busy,
-          onPressed: canAnswer() && _selected != null
-              ? () {
-                  final selected = _selected;
-                  if (canAnswer() && selected != null) {
-                    unawaited(c.scan(selected, kind: snapshot.me.stage));
+        GameReaderTarget(
+          key: ValueKey(
+            'duel-reader-${snapshot.me.stage == GeometryCardKind.solid ? 'r1' : 'r2'}',
+          ),
+          scopeKey: scope,
+          kind: snapshot.me.stage,
+          active: true,
+          canSelect: canAnswer,
+          onSelected: choose,
+          title: t('activeReader', {
+            'reader': snapshot.me.stage == GeometryCardKind.solid ? 'R1' : 'R2',
+          }),
+          message: t('dropHere'),
+          selection: _selected == null
+              ? null
+              : t('selection', {'shape': _shape(_selected)}),
+          child: ActionButton(
+            key: const ValueKey('duel-scan'),
+            label: t('check'),
+            busy: c.busy,
+            onPressed: canAnswer() && _selected != null
+                ? () {
+                    final selected = _selected;
+                    if (canAnswer() && selected != null) {
+                      unawaited(c.scan(selected, kind: snapshot.me.stage));
+                    }
                   }
-                }
-              : null,
+                : null,
+          ),
         ),
         const SizedBox(height: 10),
         ActionButton(
@@ -677,6 +884,7 @@ final class _DuelScreenState extends State<DuelScreen> {
     c.removeListener(_changed);
     if (_instance case final instance?) c.removeBackHandler(instance);
     _name.dispose();
+    _pin.removeListener(_pinEdited);
     _pin.dispose();
     super.dispose();
   }

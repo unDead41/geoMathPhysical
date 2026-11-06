@@ -100,7 +100,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('preference-option-1.5')));
     await tester.pumpAndSettle();
-    for (final id in ['music', 'sound', 'motion', 'contrast']) {
+    for (final id in ['music', 'sound', 'haptics', 'motion', 'contrast']) {
       final control = find.byKey(ValueKey('preference-$id'));
       await tester.ensureVisible(control);
       await tester.pumpAndSettle();
@@ -115,6 +115,7 @@ void main() {
       strongContrast: true,
       musicEnabled: false,
       soundEnabled: false,
+      hapticsEnabled: false,
     );
     expect(repository.value, expected);
     expect(tester.takeException(), isNull);
@@ -157,9 +158,11 @@ void main() {
   for (final width in [320.0, 390.0, 430.0, 768.0]) {
     for (final language in AppLanguage.values) {
       testWidgets(
-        'settings reachable at $width dp, ${language.name}, dark/contrast/150%',
+        'settings reachable at $width dp, ${language.name}, dark/contrast/app150%/system150%',
         (tester) async {
           _viewport(tester, width);
+          tester.platformDispatcher.textScaleFactorTestValue = 1.5;
+          addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
           final repository = MemoryPreferencesRepository(
             AppPreferences(
               language: language,
@@ -223,8 +226,13 @@ final class _Harness extends StatelessWidget {
       ],
       builder: (context, child) => MediaQuery(
         data: MediaQuery.of(context).copyWith(
-          textScaler: TextScaler.linear(repository.value.textScale),
-          disableAnimations: repository.value.reducedMotion,
+          textScaler: GeoMathTextScaler(
+            system: MediaQuery.textScalerOf(context),
+            appScale: repository.value.textScale,
+          ),
+          disableAnimations:
+              MediaQuery.disableAnimationsOf(context) ||
+              repository.value.reducedMotion,
         ),
         child: AppStringsScope(
           strings: AppStrings(repository.value.language),

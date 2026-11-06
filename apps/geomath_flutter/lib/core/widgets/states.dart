@@ -6,6 +6,49 @@ import 'geomath_scaffold.dart';
 
 enum StatusTone { info, success, warning, error, neutral }
 
+/// A labeled, stable loading surface with a static indicator when motion is
+/// reduced. Callers keep their existing form/controller mounted while busy.
+final class LoadingState extends StatelessWidget {
+  const LoadingState({super.key, required this.label, this.message});
+
+  final String label;
+  final String? message;
+
+  @override
+  Widget build(BuildContext context) => Semantics(
+    liveRegion: true,
+    child: GeoMathCard(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ExcludeSemantics(
+            child: SizedBox.square(
+              dimension: 24,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                value: MediaQuery.disableAnimationsOf(context) ? .5 : null,
+              ),
+            ),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(label, style: Theme.of(context).textTheme.labelLarge),
+                if (message != null) ...[
+                  const SizedBox(height: 4),
+                  Text(message!, style: Theme.of(context).textTheme.bodyMedium),
+                ],
+              ],
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
 final class StatusNotice extends StatelessWidget {
   const StatusNotice({
     required this.message,
@@ -77,10 +120,13 @@ final class StatusNotice extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     if (title != null) ...[
-                      Text(
-                        title!,
-                        style: Theme.of(context).textTheme.labelLarge
-                            ?.copyWith(color: foreground),
+                      Semantics(
+                        header: true,
+                        child: Text(
+                          title!,
+                          style: Theme.of(context).textTheme.labelLarge
+                              ?.copyWith(color: foreground),
+                        ),
                       ),
                       const SizedBox(height: 4),
                     ],

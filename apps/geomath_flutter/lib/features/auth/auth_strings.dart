@@ -22,6 +22,16 @@ final authStrings = FeatureLocalizations(
       'password': 'Password',
       'repeatPassword': 'Confirm password',
       'currentPassword': 'Current password',
+      'identifierInvalid': 'Enter a valid email or username.',
+      'usernameHint': '3–24 characters: a–z, 0–9 or underscore.',
+      'nameHint': '2–60 characters; no control characters.',
+      'nameInvalid': 'Enter a display name with 2–60 characters and no control characters.',
+      'passwordHint': 'Use 10–128 characters.',
+      'passwordMismatch': 'Enter the same password in both fields.',
+      'currentPasswordInvalid':
+          'Enter your current password (up to 128 characters).',
+      'recoveryCodeInvalid':
+          'Enter your saved 32 character recovery code (0–9, a–f).',
       'student': 'Student',
       'teacher': 'Teacher',
       'role': 'Account role',
@@ -99,6 +109,17 @@ final authStrings = FeatureLocalizations(
       'password': 'Kata laluan',
       'repeatPassword': 'Sahkan kata laluan',
       'currentPassword': 'Kata laluan semasa',
+      'identifierInvalid': 'Masukkan email atau nama pengguna yang sah.',
+      'usernameHint': '3–24 aksara: a–z, 0–9 atau garis bawah.',
+      'nameHint': '2–60 aksara; tanpa aksara kawalan.',
+      'nameInvalid': 'Masukkan nama paparan 2–60 aksara tanpa aksara kawalan.',
+      'passwordHint': 'Gunakan 10–128 aksara.',
+      'passwordMismatch':
+          'Masukkan kata laluan yang sama dalam kedua-dua medan.',
+      'currentPasswordInvalid':
+          'Masukkan kata laluan semasa anda (sehingga 128 aksara).',
+      'recoveryCodeInvalid':
+          'Masukkan kod pemulihan tersimpan 32 aksara (0–9, a–f).',
       'student': 'Pelajar',
       'teacher': 'Guru',
       'role': 'Peranan akaun',

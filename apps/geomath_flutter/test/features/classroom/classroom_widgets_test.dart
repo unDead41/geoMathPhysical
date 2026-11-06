@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geomath_flutter/app/app_dependencies.dart';
 import 'package:geomath_flutter/core/design/design.dart';
@@ -68,9 +71,10 @@ void main() {
     bool room = false,
     AppLanguage language = AppLanguage.en,
     bool narrow = false,
+    double width = 320,
   }) async {
     if (narrow) {
-      tester.view.physicalSize = const Size(320, 800);
+      tester.view.physicalSize = Size(width, 800);
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);
@@ -134,6 +138,274 @@ void main() {
     await tester.pumpWidget(const SizedBox.shrink());
     await tester.pump();
   }
+
+  testWidgets(
+    'initial loading and failure offer an explicit retry without old account data',
+    (tester) async {
+      final h = await mount(tester, narrow: true);
+      final pending = Completer<Result<CloudReply>>();
+      h.gateway.respond = (_) => pending.future;
+      h.sessions.bindUser(userId: teacherB, sessionId: 'new-teacher-session');
+      await tester.pump();
+      expect(find.byKey(const ValueKey('classroom-loading')), findsOneWidget);
+      expect(find.text('001234'), findsNothing);
+      pending.complete(
+        const Failed(
+          AppFailure(
+            code: FailureCode.network,
+            message: 'classroom.error.network',
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      final retry = find.byKey(const ValueKey('classroom-load-error'));
+      expect(retry, findsOneWidget);
+      h.gateway.respond = (_) =>
+          Success(CloudReply(data: snapshotFixture(user: teacherB)));
+      final action = find.descendant(
+        of: retry,
+        matching: find.byType(ActionButton),
+      );
+      await tester.ensureVisible(action);
+      await tester.tap(action);
+      await tester.pumpAndSettle();
+      expect(retry, findsNothing);
+      expect(h.controller.snapshot!.profile.id, teacherB);
+      expect(tester.takeException(), isNull);
+      await unmount(tester);
+    },
+  );
+
+  testWidgets(
+    'paste reads the real clipboard without joining and keeps leading zeroes',
+    (tester) async {
+      final h = await mount(tester, role: 'student', narrow: true);
+      var clipboard = ' 001234\n';
+      var reads = 0;
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(SystemChannels.platform, (call) async {
+            if (call.method == 'Clipboard.getData') {
+              ++reads;
+              return {'text': clipboard};
+            }
+            return null;
+          });
+      addTearDown(
+        () => TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+            .setMockMethodCallHandler(SystemChannels.platform, null),
+      );
+      await tester.tap(find.byKey(const ValueKey('classroom-join-pin')));
+      await tester.pumpAndSettle();
+      final dialog = find.byKey(const ValueKey('classroom-input'));
+      final field = find.descendant(
+        of: dialog,
+        matching: find.byType(TextFormField),
+      );
+      final paste = find.byKey(const ValueKey('classroom-paste-pin'));
+      await tester.ensureVisible(paste);
+      await tester.tap(paste);
+      await tester.pumpAndSettle();
+      expect(reads, 1);
+      expect(tester.widget<TextFormField>(field).controller!.text, '001234');
+      expect(h.gateway.calls.where((r) => r.action == 'join_pin'), isEmpty);
+      clipboard = '12x034';
+      await tester.ensureVisible(paste);
+      await tester.tap(paste);
+      await tester.pumpAndSettle();
+      expect(reads, 2);
+      expect(tester.widget<TextFormField>(field).controller!.text, '001234');
+      expect(
+        find.byKey(const ValueKey('classroom-clipboard-error')),
+        findsOneWidget,
+      );
+      final confirm = find.descendant(of: dialog, matching: find.text('Join'));
+      await tester.ensureVisible(confirm);
+      await tester.tap(confirm);
+      await tester.pumpAndSettle();
+      expect(h.gateway.calls.last.action, 'join_pin');
+      expect(h.gateway.calls.last.payload, {'pin': '001234'});
+      expect(tester.takeException(), isNull);
+      await unmount(tester);
+    },
+  );
+
+  testWidgets(
+    'clipboard read failure keeps the entered PIN and offers typing',
+    (tester) async {
+      await mount(tester, role: 'student', narrow: true);
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(SystemChannels.platform, (call) async {
+            if (call.method == 'Clipboard.getData') {
+              throw PlatformException(code: 'clipboard-unavailable');
+            }
+            return null;
+          });
+      addTearDown(
+        () => TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+            .setMockMethodCallHandler(SystemChannels.platform, null),
+      );
+      await tester.tap(find.byKey(const ValueKey('classroom-join-pin')));
+      await tester.pumpAndSettle();
+      final field = find.descendant(
+        of: find.byKey(const ValueKey('classroom-input')),
+        matching: find.byType(TextFormField),
+      );
+      await tester.enterText(field, '009876');
+      final paste = find.byKey(const ValueKey('classroom-paste-pin'));
+      await tester.ensureVisible(paste);
+      await tester.tap(paste);
+      await tester.pumpAndSettle();
+      expect(tester.widget<TextFormField>(field).controller!.text, '009876');
+      expect(find.textContaining('Type the PIN'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+      await unmount(tester);
+    },
+  );
+
+  testWidgets('pending clipboard read cannot fill the next account', (
+    tester,
+  ) async {
+    final h = await mount(tester, role: 'student');
+    final pending = Completer<Object?>();
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(SystemChannels.platform, (call) async {
+          if (call.method == 'Clipboard.getData') return pending.future;
+          return null;
+        });
+    addTearDown(
+      () => TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(SystemChannels.platform, null),
+    );
+    await tester.tap(find.byKey(const ValueKey('classroom-join-pin')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('classroom-paste-pin')));
+    await tester.pump();
+    h.sessions.logout();
+    await tester.pumpAndSettle();
+    pending.complete({'text': '001234'});
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('classroom-input')), findsNothing);
+    expect(find.text('001234'), findsNothing);
+    expect(h.gateway.calls.where((r) => r.action == 'join_pin'), isEmpty);
+    expect(tester.takeException(), isNull);
+    await unmount(tester);
+  });
+
+  for (final language in AppLanguage.values) {
+    testWidgets(
+      'copy ${language.name} class invitation confirms actual clipboard write at 320dp 150%',
+      (tester) async {
+        final h = await mount(tester, narrow: true, language: language);
+        String? copied;
+        var failWrite = false;
+        TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+            .setMockMethodCallHandler(SystemChannels.platform, (call) async {
+              if (call.method == 'Clipboard.setData') {
+                if (failWrite) {
+                  throw PlatformException(code: 'clipboard-unavailable');
+                }
+                copied = (call.arguments as Map)['text'] as String;
+              }
+              return null;
+            });
+        addTearDown(
+          () => TestDefaultBinaryMessengerBinding
+              .instance
+              .defaultBinaryMessenger
+              .setMockMethodCallHandler(SystemChannels.platform, null),
+        );
+        final copy = find.byKey(
+          ValueKey('classroom-copy-invitation-class-$classA'),
+        );
+        await tester.ensureVisible(copy);
+        await tester.tap(copy);
+        await tester.pumpAndSettle();
+        expect(copied, contains('Kelas A'));
+        expect(copied, contains('001234'));
+        expect(copied, isNot(contains(r'\n')));
+        expect(copied!.split('\n'), hasLength(5));
+        expect(
+          copied,
+          contains(language == AppLanguage.en ? '\nExpires: ' : '\nTamat: '),
+        );
+        expect(
+          copied,
+          contains(language == AppLanguage.en ? 'Classes' : 'Kelas'),
+        );
+        expect(
+          copied,
+          contains(
+            language == AppLanguage.en ? 'Join with PIN' : 'Sertai dengan PIN',
+          ),
+        );
+        expect(
+          find.byKey(const ValueKey('classroom-clipboard-success')),
+          findsOneWidget,
+        );
+        failWrite = true;
+        await tester.ensureVisible(copy);
+        await tester.tap(copy);
+        await tester.pumpAndSettle();
+        expect(
+          find.byKey(const ValueKey('classroom-clipboard-error')),
+          findsOneWidget,
+        );
+        expect(
+          find.byKey(const ValueKey('classroom-clipboard-success')),
+          findsNothing,
+        );
+        failWrite = false;
+        final copyPin = find.byKey(
+          ValueKey('classroom-copy-pin-class-$classA'),
+        );
+        await tester.ensureVisible(copyPin);
+        await tester.tap(copyPin);
+        await tester.pumpAndSettle();
+        expect(copied, '001234');
+        expect(h.gateway.calls.where((r) => r.action == 'rotate_pin'), isEmpty);
+        expect(tester.takeException(), isNull);
+        await unmount(tester);
+      },
+    );
+  }
+
+  testWidgets('room invitation explains both class and room enrollment', (
+    tester,
+  ) async {
+    final h = await mount(tester, narrow: true);
+    final data = snapshotFixture(detailRoom: roomA);
+    (data['room'] as Map<String, Object?>).addAll({
+      'pin': '000321',
+      'pin_expires_at': '2026-11-06T00:00:00Z',
+    });
+    h.gateway.data(data);
+    await tester.runAsync(() => h.controller.openRoom(roomA));
+    await tester.pumpAndSettle();
+    String? copied;
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(SystemChannels.platform, (call) async {
+          if (call.method == 'Clipboard.setData') {
+            copied = (call.arguments as Map)['text'] as String;
+          }
+          return null;
+        });
+    addTearDown(
+      () => TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(SystemChannels.platform, null),
+    );
+    final copy = find.byKey(ValueKey('classroom-copy-invitation-room-$roomA'));
+    await tester.ensureVisible(copy);
+    await tester.tap(copy);
+    await tester.pumpAndSettle();
+    expect(copied, contains('Bilik A'));
+    expect(copied, contains('Room PIN: 000321'));
+    expect(copied, contains('joins the class and room'));
+    expect(copied, contains('\nExpires: '));
+    expect(copied, isNot(contains(r'\n')));
+    expect(copied!.split('\n'), hasLength(5));
+    expect(tester.takeException(), isNull);
+    await unmount(tester);
+  });
 
   testWidgets(
     'create failure retains input and account switch clears its draft',
@@ -253,10 +525,18 @@ void main() {
   );
 
   testWidgets(
-    'teacher class UI keeps actions reachable at 320dp dark 150 percent in BM and English',
+    'teacher class UI keeps actions reachable at 320/390/430/768dp dark 150 percent in BM and English',
     (tester) async {
-      for (final language in AppLanguage.values) {
-        final h = await mount(tester, narrow: true, language: language);
+      for (final (width, language) in [
+        for (final width in <double>[320, 390, 430, 768])
+          for (final language in AppLanguage.values) (width, language),
+      ]) {
+        final h = await mount(
+          tester,
+          narrow: true,
+          language: language,
+          width: width,
+        );
         expect(
           find.byKey(const ValueKey('classroom-create-class')),
           findsOneWidget,
@@ -571,10 +851,7 @@ void main() {
       h.gateway.data(
         snapshotFixture(user: studentA, role: 'student', status: 'playing'),
       );
-      final confirm = find.descendant(
-        of: dialog,
-        matching: find.text('Confirm'),
-      );
+      final confirm = find.descendant(of: dialog, matching: find.text('Join'));
       await tester.ensureVisible(confirm);
       await tester.tap(confirm);
       await tester.pumpAndSettle();

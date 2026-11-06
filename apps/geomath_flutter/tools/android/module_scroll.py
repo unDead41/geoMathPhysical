@@ -103,8 +103,11 @@ class CubeReadiness:
 def inspect_cube(root: ET.Element) -> CubeReadiness:
     """Bounded XML precondition, not proof that the raster contains geometry.
 
-    Flutter exposes a disabled dropdown as enabled=true, clickable=false, so
-    both attributes are required. Placeholder image labels are never ready.
+    Accept the legacy solid dropdown or the current native Unfold action.
+    Both are bound to the native controller's ready state. A carousel browse
+    arrow is deliberately insufficient because browsing is available while
+    loading. Enabled and clickable are both required, and a child WebView
+    control can never provide native readiness. Placeholder images never pass.
     """
     parents = {child: parent for parent in root.iter() for child in parent}
     picker_state = 'missing'
@@ -113,7 +116,7 @@ def inspect_cube(root: ET.Element) -> CubeReadiness:
         text = (node.get('content-desc', '')+' '+node.get('text', '')).casefold()
         if node.get('class') == 'android.widget.Button':
             words = text.split()
-            if words in (['solid', 'cube'], ['bongkah', 'kubus']):
+            if words in (['solid', 'cube'], ['bongkah', 'kubus'], ['unfold'], ['buka']):
                 current = node
                 inside_webview = False
                 while current in parents:

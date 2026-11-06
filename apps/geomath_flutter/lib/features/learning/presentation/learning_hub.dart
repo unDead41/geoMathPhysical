@@ -5,6 +5,7 @@ import '../../../core/design/design.dart';
 import '../../../core/l10n/app_strings.dart';
 import '../../../core/widgets/widgets.dart';
 import '../learning_catalogue.dart';
+import 'learning_shape_carousel.dart';
 
 /// The learning entry point is native; the canonical model opens on demand.
 final class LearningHub extends StatefulWidget {
@@ -77,7 +78,7 @@ final class _LearningHubState extends State<LearningHub> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    ShapeSelector(
+                    LearningShapeCarousel(
                       options: [
                         for (final item in catalogue.models)
                           ShapeOption(

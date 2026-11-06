@@ -217,6 +217,7 @@ final class _AiBattleScreenState extends State<AiBattleScreen> {
     final profile = AiDifficultyProfile.of(_difficulty);
     return GeoMathScaffold(
       key: const ValueKey('ai-setup-shell'),
+      scrollKey: const PageStorageKey<String>('ai-setup-scroll'),
       title: t('title'),
       subtitle: t('intro'),
       onBack: AppScope.of(context).router.back,
@@ -385,6 +386,7 @@ final class _AiBattleScreenState extends State<AiBattleScreen> {
     bool current() => _current(game, actor, attempt, question, stage);
     return GeoMathScaffold(
       key: ValueKey(('ai-match-shell', attempt, game.index)),
+      scrollKey: PageStorageKey(('ai-match-scroll', attempt, game.index)),
       title: t('title'),
       onBack: AppScope.of(context).router.back,
       actions: [
@@ -717,6 +719,7 @@ final class _AiBattleScreenState extends State<AiBattleScreen> {
 
   Widget _result(AiBattleGame game) => GeoMathScaffold(
     key: ValueKey(('ai-result-shell', c.attemptId)),
+    scrollKey: PageStorageKey(('ai-result-scroll', c.attemptId)),
     title: t('result'),
     onBack: AppScope.of(context).router.back,
     body: Column(

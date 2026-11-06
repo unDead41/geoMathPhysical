@@ -73,6 +73,33 @@ void main() {
     return (app, controller, port);
   }
 
+  test('module preferences forward effective OS text and reduced motion without changing stored preferences', () async {
+    final (app, controller, _) = await create();
+    await app.preferences.save(app.preferences.value.copyWith(textScale: 1.5));
+    controller.host.updateAccessibility(textScale: 2.25, reducedMotion: true);
+    expect(controller.host.presentationSettings['textSize'], 225);
+    expect(controller.host.presentationSettings['motionPaused'], isTrue);
+    expect(app.preferences.value.textScale, 1.5);
+    expect(app.preferences.value.reducedMotion, isFalse);
+    controller.host.updateAccessibility(textScale: 1.5, reducedMotion: false);
+    expect(controller.host.presentationSettings['textSize'], 150);
+    expect(controller.host.presentationSettings['motionPaused'], isFalse);
+    expect(
+      () => controller.host.updateAccessibility(
+        textScale: double.nan,
+        reducedMotion: false,
+      ),
+      throwsArgumentError,
+    );
+    expect(
+      () => controller.host.updateAccessibility(
+        textScale: -1,
+        reducedMotion: false,
+      ),
+      throwsArgumentError,
+    );
+  });
+
   test('missing native action reply releases checkpoint queue without saving or changing mode', () async {
     final (app, controller, port) = await create();
     final withheld = Completer<Object>();
@@ -190,4 +217,72 @@ void main() {
       isEmpty,
     );
   });
+
+  test(
+    'a delayed old-shape fold cannot unfold the next selected model',
+    () async {
+      final (_, controller, port) = await create();
+      port.checkpoint = learningCheckpointFixture()..['section'] = 'explore';
+      final entered = Completer<void>();
+      final firstSnapshot = Completer<Object>();
+      var held = false;
+      port.intercept = (script) async {
+        const prefix = 'JSON.stringify(window.GeoMathModule.learningAction(';
+        if (script.startsWith(prefix)) {
+          final payload = jsonDecode(
+            script.substring(prefix.length, script.length - 2),
+          ) as Map<String, dynamic>;
+          port.actions.add(payload);
+          if (payload['action'] == 'launch') {
+            (port.checkpoint['explore'] as Map)['shape'] = payload['shape'];
+          }
+          return jsonEncode({'accepted': true, 'sequence': ++port.sequence});
+        }
+        if (!held) {
+          held = true;
+          entered.complete();
+          return firstSnapshot.future;
+        }
+        return jsonEncode({
+          'ready': true,
+          'sequence': port.sequence,
+          'pending': false,
+          'result': {'ok': true},
+          'checkpoint': port.checkpoint,
+        });
+      };
+      final moving = controller.action({
+        'action': 'fold',
+        'value': .3,
+      }, expectedShape: 'cube');
+      await entered.future;
+      final selecting = controller.action({
+        'action': 'launch',
+        'section': 'explore',
+        'shape': 'cone',
+      });
+      final oldCoalesced = controller.action({
+        'action': 'fold',
+        'value': .8,
+      }, expectedShape: 'cube');
+      firstSnapshot.complete(
+        jsonEncode({
+          'ready': true,
+          'sequence': port.sequence,
+          'pending': false,
+          'result': {'ok': true},
+          'checkpoint': port.checkpoint,
+        }),
+      );
+      expect((await moving).isSuccess, isTrue);
+      expect((await selecting).isSuccess, isTrue);
+      expect((await oldCoalesced).failureOrNull?.code, FailureCode.stale);
+      expect(controller.shape, 'cone');
+      expect(controller.failure, isNull);
+      expect(port.actions, [
+        {'action': 'fold', 'value': .3},
+        {'action': 'launch', 'section': 'explore', 'shape': 'cone'},
+      ]);
+    },
+  );
 }

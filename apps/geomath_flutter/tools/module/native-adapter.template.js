@@ -18,7 +18,7 @@
 
   const object = value => value && typeof value === 'object' && !Array.isArray(value);
   const exact = (value, keys) => object(value) && Object.keys(value).length === keys.length && keys.every(key => Object.hasOwn(value,key));
-  const validSettings = value => object(value) && ['ms','en'].includes(value.language) && [100,125,150].includes(value.textSize) && typeof value.motionPaused === 'boolean' && ['standard','strong'].includes(value.contrast) && typeof value.audioEnabled === 'boolean';
+  const validSettings = value => object(value) && ['ms','en'].includes(value.language) && typeof value.textSize === 'number' && Number.isFinite(value.textSize) && value.textSize > 0 && value.textSize <= 1000 && typeof value.motionPaused === 'boolean' && ['standard','strong'].includes(value.contrast) && typeof value.audioEnabled === 'boolean';
   function send(command, payload = {}) {
     if (!config || !active || !window.GeoMathNative?.postMessage) return false;
     const encoded=JSON.stringify({nativeBridgeVersion:1, instanceId:config.instanceId, bridgeSession:config.bridgeSession, command, payload});

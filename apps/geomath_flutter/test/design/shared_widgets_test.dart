@@ -1,9 +1,178 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geomath_flutter/core/design/design.dart';
 import 'package:geomath_flutter/core/widgets/widgets.dart';
 
 void main() {
+  testWidgets('app bar renders the full text scale and wraps its title', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(320, 900);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    const title = 'Penerokaan model geometri pembelajaran';
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: GeoMathTheme.light(),
+        builder: (context, child) => MediaQuery(
+          data: MediaQuery.of(context)
+              .copyWith(textScaler: const TextScaler.linear(2.25)),
+          child: child!,
+        ),
+        home: const GeoMathScaffold(title: title, body: Text('Activity')),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final paragraph = tester.renderObject<RenderParagraph>(find.text(title));
+    expect(paragraph.textScaler.scale(16), 36);
+    expect(paragraph.softWrap, isTrue);
+    expect(paragraph.overflow, TextOverflow.visible);
+    expect(paragraph.didExceedMaxLines, isFalse);
+    final boxes = paragraph.getBoxesForSelection(
+      const TextSelection(baseOffset: 0, extentOffset: title.length),
+    );
+    expect(boxes.map((box) => box.top).toSet().length, greaterThan(1));
+    expect(
+      tester.getSize(find.byType(AppBar)).height,
+      greaterThanOrEqualTo(paragraph.size.height),
+    );
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets(
+    'scroll storage stays independent of late and persisted expansion state',
+    (tester) async {
+      final bucket = PageStorageBucket();
+      late StateSetter update;
+      var generation = 0;
+      var lateSection = false;
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: GeoMathTheme.light(),
+          home: PageStorage(
+            bucket: bucket,
+            child: StatefulBuilder(
+              builder: (context, setState) {
+                update = setState;
+                return GeoMathScaffold(
+                  key: ValueKey(generation),
+                  title: 'Analysis',
+                  body: Column(
+                    children: [
+                      const SizedBox(height: 500),
+                      const ExpansionTile(
+                        key: PageStorageKey('remembered-section'),
+                        title: Text('Remembered section'),
+                        children: [Text('Saved expanded content')],
+                      ),
+                      if (lateSection)
+                        const ExpansionTile(
+                          key: ValueKey('late-analysis-section'),
+                          title: Text('Late analysis section'),
+                          children: [Text('Late expanded content')],
+                        ),
+                      const SizedBox(height: 1500),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+      );
+      await tester.ensureVisible(find.text('Remembered section'));
+      await tester.tap(find.text('Remembered section'));
+      await tester.pumpAndSettle();
+      expect(find.text('Saved expanded content'), findsOneWidget);
+      final scroll = tester.state<ScrollableState>(find.byType(Scrollable));
+      scroll.position.jumpTo(450);
+      await tester.pumpAndSettle();
+      update(() => lateSection = true);
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
+      expect(find.text('Saved expanded content'), findsOneWidget);
+      await tester.tap(find.text('Late analysis section'));
+      await tester.pumpAndSettle();
+      expect(find.text('Late expanded content'), findsOneWidget);
+      await tester.tap(find.text('Late analysis section'));
+      await tester.pumpAndSettle();
+      expect(find.text('Late expanded content'), findsNothing);
+      final offset = scroll.position.pixels;
+      update(() => generation++);
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
+      expect(find.text('Saved expanded content'), findsOneWidget);
+      expect(
+        tester.state<ScrollableState>(find.byType(Scrollable)).position.pixels,
+        offset,
+      );
+      await tester.tap(find.text('Remembered section'));
+      await tester.pumpAndSettle();
+      expect(find.text('Saved expanded content'), findsNothing);
+      await tester.tap(find.text('Remembered section'));
+      await tester.pumpAndSettle();
+      expect(find.text('Saved expanded content'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    },
+  );
+
+  testWidgets(
+    'loading and retry remain readable with reduced motion and large text',
+    (tester) async {
+      tester.view.physicalSize = const Size(320, 900);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      var retries = 0;
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: GeoMathTheme.dark(strongContrast: true),
+          builder: (context, child) => MediaQuery(
+            data: MediaQuery.of(context).copyWith(
+              textScaler: const TextScaler.linear(2.25),
+              disableAnimations: true,
+            ),
+            child: child!,
+          ),
+          home: GeoMathScaffold(
+            title: 'Status penyimpanan',
+            body: Column(
+              children: [
+                const LoadingState(
+                  label: 'Sedang menyimpan',
+                  message: 'Kekalkan draf sementara simpanan disahkan.',
+                ),
+                const SizedBox(height: 16),
+                RetryPanel(
+                  title: 'Belum disimpan',
+                  message:
+                      'Draf anda masih tersedia. Cuba lagi apabila bersedia.',
+                  retryLabel: 'Cuba semula',
+                  onRetry: () => retries++,
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(
+        tester
+            .widget<CircularProgressIndicator>(
+              find.byType(CircularProgressIndicator),
+            )
+            .value,
+        .5,
+      );
+      await tester.ensureVisible(find.text('Cuba semula'));
+      await tester.tap(find.text('Cuba semula'));
+      expect(retries, 1);
+      expect(tester.takeException(), isNull);
+    },
+  );
+
   testWidgets(
     'confirmation actions remain reachable with keyboard at 320 dp/150%',
     (tester) async {

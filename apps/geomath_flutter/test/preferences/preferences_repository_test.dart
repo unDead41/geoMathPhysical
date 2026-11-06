@@ -30,6 +30,7 @@ void main() {
         reducedMotion: true,
         musicEnabled: false,
         soundEnabled: false,
+        hapticsEnabled: false,
       );
       expect((await repository.save(expected)).isSuccess, isTrue);
       repository.dispose();
@@ -39,6 +40,29 @@ void main() {
       )).valueOrNull!;
       expect(reopened.value, expected);
       reopened.dispose();
+    },
+  );
+
+  test(
+    'legacy schema-v1 settings retain every value and use default haptics',
+    () async {
+      const legacy = AppPreferences(
+        language: AppLanguage.en,
+        theme: AppTheme.dark,
+        textScale: 1.25,
+        strongContrast: true,
+        reducedMotion: true,
+        soundEnabled: false,
+      );
+      final legacyJson = legacy.toJson()..remove('hapticsEnabled');
+      await store.write(jsonEncode(legacyJson));
+      final repository = (await SharedPreferencesRepository.open(store: store))
+          .valueOrNull!;
+      expect(repository.value, legacy);
+      expect(repository.value.hapticsEnabled, isTrue);
+      // Reading the additive default never rewrites an existing document.
+      expect(jsonDecode((await store.read())!), legacyJson);
+      repository.dispose();
     },
   );
 
@@ -155,6 +179,7 @@ void main() {
         'reducedMotion': 0,
         'musicEnabled': null,
         'soundEnabled': 'false',
+        'hapticsEnabled': null,
       }.entries) {
         expect(
           () => AppPreferences.fromJson({

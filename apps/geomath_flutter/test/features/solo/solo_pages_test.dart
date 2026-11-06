@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geomath_flutter/app/app.dart';
 import 'package:geomath_flutter/app/app_dependencies.dart';
@@ -12,7 +13,9 @@ import 'package:geomath_flutter/core/result.dart';
 import 'package:geomath_flutter/core/runtime/clock.dart';
 import 'package:geomath_flutter/core/runtime/random_source.dart';
 import 'package:geomath_flutter/core/session/guest_identity_store.dart';
+import 'package:geomath_flutter/core/widgets/widgets.dart';
 import 'package:geomath_flutter/features/duel/presentation/game_card_carousel.dart';
+import 'package:geomath_flutter/features/duel/presentation/game_card_drag.dart';
 import 'package:geomath_flutter/features/duel/presentation/game_question_content.dart';
 import 'package:geomath_flutter/features/solo/solo_feature.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -120,6 +123,81 @@ void main() {
       tester.state<ScrollableState>(carouselScroller()).position.pixels;
 
   testWidgets(
+    'dragging uses the active reader without scanning and old R1 gestures cannot select or submit at R2',
+    (tester) async {
+      tester.view.physicalSize = const Size(390, 1100);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      final clock = PageClock();
+      final app = await boot(tester, clock);
+      final c = app.composition.services.get(SoloServices.controller);
+      await tester.runAsync(
+        () => c.start(
+          name: 'Drag QA',
+          mode: SoloMode.review,
+          questionIds: ['K1', 'C3'],
+        ),
+      );
+      await tester.pumpWidget(
+        GeoMathApp(dependencies: app, initialRoute: 'solo-game'),
+      );
+      await flush(tester, c);
+      final game = c.game!, correct = c.game!.question.shape;
+      final card = find.byKey(ValueKey('solo-choice-solid-${correct.name}'));
+      final data = tester
+          .widget<GameCardDraggable>(
+            find.ancestor(of: card, matching: find.byType(GameCardDraggable)),
+          )
+          .data;
+      Future<void> dropOn(String target) async {
+        await tester.ensureVisible(card);
+        await tester.pump(const Duration(milliseconds: 350));
+        final gesture = await tester.startGesture(tester.getCenter(card));
+        await tester.pump(kLongPressTimeout + const Duration(milliseconds: 50));
+        await gesture.moveTo(tester.getCenter(find.byKey(ValueKey(target))));
+        await tester.pump();
+        await gesture.up();
+        await flush(tester, c);
+      }
+
+      await dropOn('solo-reader-r2');
+      expect(c.selected, isNull);
+      expect(game.attemptedSolid, isNull);
+      await dropOn('solo-reader-r1');
+      expect(c.selected, correct);
+      expect(game.attemptedSolid, isNull);
+      expect(game.score, 0);
+      final oldTap = tester.widget<GeoMathCard>(card).onTap!;
+      final oldScan = tester
+          .widget<ActionButton>(find.byKey(const ValueKey('solo-r1')))
+          .onPressed!;
+      await tapKey(tester, 'solo-r1');
+      expect(game.stage, GeometryCardKind.net);
+      expect(c.selected, isNull);
+      final target = tester.widget<DragTarget<GameCardDragData>>(
+        find.descendant(
+          of: find.byKey(const ValueKey('solo-reader-r2')),
+          matching: find.byType(DragTarget<GameCardDragData>),
+        ),
+      );
+      final details = DragTargetDetails(data: data, offset: Offset.zero);
+      expect(target.onWillAcceptWithDetails!(details), false);
+      target.onAcceptWithDetails!(details);
+      oldTap();
+      oldScan();
+      await tester.pump();
+      expect(c.selected, isNull);
+      expect(game.stage, GeometryCardKind.net);
+      expect(game.attemptedNet, isNull);
+      expect(game.score, 0);
+      expect(tester.takeException(), isNull);
+      await flush(tester, c);
+      await tester.pumpWidget(const SizedBox.shrink());
+      await tester.runAsync(app.dispose);
+    },
+  );
+
+  testWidgets(
     'all five R1 and R2 cards browse without selection, attempts, score or RNG draws',
     (tester) async {
       tester.view.physicalSize = const Size(390, 900);
@@ -170,6 +248,8 @@ void main() {
           expect(choice.hitTestable(), findsOneWidget);
         }
         await tapKey(tester, 'solo-cards-previous');
+        await tester.ensureVisible(carouselScroller());
+        await tester.pump(const Duration(milliseconds: 350));
         final beforeSwipe = browseOffset(tester);
         await tester.drag(carouselScroller(), const Offset(-240, 0));
         await tester.pump(const Duration(milliseconds: 350));

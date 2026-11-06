@@ -39,9 +39,7 @@ void main() {
   testWidgets('native routes carry the chosen canonical shape', (tester) async {
     final app = await _open(tester);
     try {
-      await tester.ensureVisible(find.widgetWithText(ChoiceChip, 'Sphere'));
-      await tester.tap(find.widgetWithText(ChoiceChip, 'Sphere'));
-      await tester.pumpAndSettle();
+      await _selectShape(tester, 10);
       expect(find.text('Selected shape: Sphere'), findsOneWidget);
       for (final route in _routes) {
         final key = route == 'learning-explore'
@@ -75,9 +73,7 @@ void main() {
     final bundle = _CatalogueBundle();
     final app = await _open(tester, bundle: bundle);
     try {
-      await tester.ensureVisible(find.widgetWithText(ChoiceChip, 'Hemisphere'));
-      await tester.tap(find.widgetWithText(ChoiceChip, 'Hemisphere'));
-      await tester.pumpAndSettle();
+      await _selectShape(tester, 11);
       expect(bundle.catalogueLoads, 1);
       final saved = await tester.runAsync(
         () => app.preferences.save(
@@ -150,6 +146,19 @@ void main() {
     expect(find.text('Start exploring'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
+}
+
+Future<void> _selectShape(WidgetTester tester, int position) async {
+  final next = find.byKey(const ValueKey('learning-shape-next'));
+  await tester.ensureVisible(next);
+  for (var index = 1; index < position; index++) {
+    await tester.tap(next);
+    await tester.pumpAndSettle();
+  }
+  final choose = find.byKey(const ValueKey('learning-shape-select'));
+  await tester.ensureVisible(choose);
+  await tester.tap(choose);
+  await tester.pumpAndSettle();
 }
 
 // These tests exercise the actual foundation router, preferences and SQLite

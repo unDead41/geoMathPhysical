@@ -1,0 +1,38 @@
+[
+  {
+    "path": "screenshots/phone-home.png",
+    "source_filename": "320-ms-light-150-home-top.png",
+    "sha256": "795076493315b7169ab847911fbf95d27a630c8189accea1b5df699d1d37f69b",
+    "kind": "host-native-widget-render",
+    "source_snapshot": "212712dcf6ea603af9251846e4c4a1a49a29c16f",
+    "android_surface": false,
+    "personal_data": false
+  },
+  {
+    "path": "screenshots/phone-learning.png",
+    "source_filename": "390-ms-light-150-learning-top.png",
+    "sha256": "0e74cdd9b1d60f8c7b60913ab5a7583ceac00e47c17b7ff799f05312a6e7acac",
+    "kind": "host-native-widget-render",
+    "source_snapshot": "212712dcf6ea603af9251846e4c4a1a49a29c16f",
+    "android_surface": false,
+    "personal_data": false
+  },
+  {
+    "path": "screenshots/tablet-learning.png",
+    "source_filename": "768-ms-light-150-learning-top.png",
+    "sha256": "363110a223eb314b949facc957996d6d29eb7b3c649f146e7a86962b1e989a2c",
+    "kind": "host-native-widget-render",
+    "source_snapshot": "212712dcf6ea603af9251846e4c4a1a49a29c16f",
+    "android_surface": false,
+    "personal_data": false
+  },
+  {
+    "path": "screenshots/tablet-large-text-settings.png",
+    "source_filename": "800-ms-light-225-composed-preferences-top.png",
+    "sha256": "c655249ebf6dcdc0dc2704a4732538bdec2a36b9df16f5d1a232441ec258f0fe",
+    "kind": "host-native-widget-render",
+    "source_snapshot": "212712dcf6ea603af9251846e4c4a1a49a29c16f",
+    "android_surface": false,
+    "personal_data": false
+  }
+]

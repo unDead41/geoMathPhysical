@@ -2,7 +2,7 @@ name: GeoMath Flutter
 
 on:
   push:
-    branches: [app-foundation, app-learning, app-cloud-game, app-integration, app]
+    branches: [app-foundation, app-learning, app-cloud-game, app-integration, app-uiux-refinement, app]
     paths:
       - 'apps/geomath_flutter/**'
       - '.github/workflows/geomath-flutter.yml'

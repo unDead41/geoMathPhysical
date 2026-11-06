@@ -397,6 +397,24 @@ abstract final class GeoMathTheme {
           ),
         ),
       ),
+      navigationRailTheme: NavigationRailThemeData(
+        backgroundColor: surface,
+        indicatorColor: colors.infoContainer,
+        selectedIconTheme: IconThemeData(color: colors.primary),
+        unselectedIconTheme: IconThemeData(color: colors.muted),
+        selectedLabelTextStyle: text.labelMedium?.copyWith(
+          color: colors.primary,
+        ),
+        unselectedLabelTextStyle: text.labelMedium?.copyWith(
+          color: colors.muted,
+        ),
+      ),
+      iconButtonTheme: IconButtonThemeData(
+        style: ButtonStyle(
+          minimumSize: minimumSize,
+          tapTargetSize: MaterialTapTargetSize.padded,
+        ),
+      ),
       dividerTheme: DividerThemeData(color: colors.border, thickness: 1),
       bottomSheetTheme: BottomSheetThemeData(
         backgroundColor: surface,

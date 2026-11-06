@@ -109,6 +109,7 @@ final class _PreferencesScreenState extends State<PreferencesScreen> {
       ),
     );
     if (!mounted || choice == null || choice == selected) return;
+    GeoFeedback.selection(context);
     await _save(update(choice));
   }
 
@@ -122,6 +123,7 @@ final class _PreferencesScreenState extends State<PreferencesScreen> {
         contributions: AppStrings.of(context).contributions,
       );
       String t(String key) => strings.text(key);
+      String local(String key) => _labels[preferences.language]![key]!;
       final language = preferences.language == AppLanguage.ms
           ? t('settings.malay')
           : t('settings.english');
@@ -150,6 +152,8 @@ final class _PreferencesScreenState extends State<PreferencesScreen> {
               const SizedBox(height: 16),
             ],
             _PreferenceGroup(
+              title: local('appearance'),
+              subtitle: local('textScaleNote'),
               children: [
                 _ChoiceRow(
                   id: 'language',
@@ -231,6 +235,7 @@ final class _PreferencesScreenState extends State<PreferencesScreen> {
             ),
             const SizedBox(height: 16),
             _PreferenceGroup(
+              title: local('feedback'),
               children: [
                 _SwitchRow(
                   id: 'music',
@@ -255,6 +260,23 @@ final class _PreferencesScreenState extends State<PreferencesScreen> {
                             _save(preferences.copyWith(soundEnabled: value)),
                 ),
                 _SwitchRow(
+                  id: 'haptics',
+                  label: local('haptics'),
+                  hint: local('hapticsHint'),
+                  icon: Icons.vibration_rounded,
+                  value: preferences.hapticsEnabled,
+                  onChanged: _saving
+                      ? null
+                      : (value) =>
+                            _save(preferences.copyWith(hapticsEnabled: value)),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            _PreferenceGroup(
+              title: local('accessibility'),
+              children: [
+                _SwitchRow(
                   id: 'motion',
                   label: t('settings.reducedMotion'),
                   hint: t('settings.reducedMotionHint'),
@@ -265,11 +287,6 @@ final class _PreferencesScreenState extends State<PreferencesScreen> {
                       : (value) =>
                             _save(preferences.copyWith(reducedMotion: value)),
                 ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            _PreferenceGroup(
-              children: [
                 _SwitchRow(
                   id: 'contrast',
                   label: t('settings.strongContrast'),
@@ -333,24 +350,57 @@ final class _PreferencesScreenState extends State<PreferencesScreen> {
 }
 
 final class _PreferenceGroup extends StatelessWidget {
-  const _PreferenceGroup({required this.children});
+  const _PreferenceGroup({
+    required this.title,
+    this.subtitle,
+    required this.children,
+  });
 
+  final String title;
+  final String? subtitle;
   final List<Widget> children;
 
   @override
-  Widget build(BuildContext context) => GeoMathCard(
-    padding: EdgeInsets.zero,
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        for (var index = 0; index < children.length; index++) ...[
-          if (index > 0) const Divider(height: 1),
-          children[index],
-        ],
-      ],
-    ),
+  Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      SectionHeader(title: title, subtitle: subtitle),
+      const SizedBox(height: 12),
+      GeoMathCard(
+        padding: EdgeInsets.zero,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            for (var index = 0; index < children.length; index++) ...[
+              if (index > 0) const Divider(height: 1),
+              children[index],
+            ],
+          ],
+        ),
+      ),
+    ],
   );
 }
+
+const _labels = {
+  AppLanguage.ms: {
+    'appearance': 'Paparan',
+    'textScaleNote': 'Saiz teks peranti turut digunakan bersama pilihan ini.',
+    'feedback': 'Bunyi dan maklum balas',
+    'accessibility': 'Kebolehcapaian',
+    'haptics': 'Getaran sentuhan',
+    'hapticsHint': 'Getaran ringkas apabila membuat pilihan. Dimatikan apabila gerakan dikurangkan.',
+  },
+  AppLanguage.en: {
+    'appearance': 'Appearance',
+    'textScaleNote':
+        'Your device text size is also applied alongside this preference.',
+    'feedback': 'Sound and feedback',
+    'accessibility': 'Accessibility',
+    'haptics': 'Touch feedback',
+    'hapticsHint': 'A brief vibration when making a selection. Disabled with reduced motion.',
+  },
+};
 
 final class _ChoiceRow extends StatelessWidget {
   const _ChoiceRow({

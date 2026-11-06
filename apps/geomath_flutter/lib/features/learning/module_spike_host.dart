@@ -196,6 +196,8 @@ final class ModuleSpikeController extends ChangeNotifier {
   bool _routeVisible = true;
   bool _audioAllowed = false;
   Brightness _brightness = Brightness.light;
+  double? _effectiveTextScale;
+  bool _systemReducedMotion = false;
   String? _currentTopLevelUrl;
   late final ModuleStartupDeadline _startup;
 
@@ -422,11 +424,37 @@ final class ModuleSpikeController extends ChangeNotifier {
 
   Map<String, Object> get _settings => {
     'language': preferences.value.language.name,
-    'textSize': (preferences.value.textScale * 100).round(),
-    'motionPaused': preferences.value.reducedMotion,
+    'textSize': (_effectiveTextScale ?? preferences.value.textScale) * 100,
+    'motionPaused': preferences.value.reducedMotion || _systemReducedMotion,
     'contrast': preferences.value.strongContrast ? 'strong' : 'standard',
     'audioEnabled': preferences.value.soundEnabled && _audioAllowed,
   };
+
+  @visibleForTesting
+  Map<String, Object> get presentationSettings => Map.unmodifiable(_settings);
+
+  /// The native shell already composes device text scaling with the app's
+  /// multiplier. Forward that effective size and the device motion request to
+  /// the same trusted child, without changing stored preferences or its draft.
+  void updateAccessibility({
+    required double textScale,
+    required bool reducedMotion,
+  }) {
+    if (!textScale.isFinite || textScale <= 0 || textScale > 10) {
+      throw ArgumentError.value(
+        textScale,
+        'textScale',
+        'Invalid effective text scale',
+      );
+    }
+    if (_effectiveTextScale == textScale &&
+        _systemReducedMotion == reducedMotion) {
+      return;
+    }
+    _effectiveTextScale = textScale;
+    _systemReducedMotion = reducedMotion;
+    _preferencesChanged();
+  }
 
   /// Theme/media changes update presentation through the existing settings v1
   /// bridge. Neither document, camera, dimensions nor unfolding is reloaded.
@@ -645,6 +673,10 @@ final class _ModuleSpikeScreenState extends State<ModuleSpikeScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _controller.updateBrightness(Theme.of(context).brightness);
+    _controller.updateAccessibility(
+      textScale: MediaQuery.textScalerOf(context).scale(16) / 16,
+      reducedMotion: MediaQuery.disableAnimationsOf(context),
+    );
     _controller.setRouteVisible(
       AppRouteScope.maybeOf(context)?.isCurrent ?? true,
     );
