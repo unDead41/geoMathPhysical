@@ -1,3 +1,14 @@
+# GeoMath Physical repository scope
+
+- Repository ini ialah `unDead41/geoMathPhysical`; `main` khusus firmware ESP32.
+- Portal web, modul browser, PWA dan backend berada dalam `unDead41/geoMathDigital`.
+- Flutter, Android, Lawan AI dan aset App berada dalam `unDead41/geoMathApp`.
+- Jangan tambah `digital/`, `apps/`, `supabase/` atau entry portal web ke sini.
+- Gunakan `python tools/check_repository_scope.py` sebelum menerbitkan perubahan.
+- Branch lama Digital/App dipulihkan melalui manifest asal dan tag arkib yang
+  diterangkan dalam `docs/REPOSITORY_SPLIT.md`, kemudian teruskan kerja di repo sasaran.
+- Arahan pemilikan ini mengatasi andaian monorepo dalam dokumen sejarah.
+
 # GeoDecoder contributor guidance
 
 - Before any update, read `docs/SOR_VERSIONING.md` and inspect current `main`.

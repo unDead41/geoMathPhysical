@@ -1,0 +1,188 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-06",
+  "source_repository": "unDead41/geoMathPhysical",
+  "source_url": "https://github.com/unDead41/geoMathPhysical.git",
+  "physical_main": "25836eb1a6f24459aace8a3980ae880a13e3b488",
+  "ui_sha": "67c1e1bf76064d5df2787bef90ec789d1a21a975",
+  "ai_sha": "288dc703d61479cb89a22d4f2416d71d9b8294ac",
+  "digital_sha": "752ce908d16d13acc9cc7510797e8363d182c3f5",
+  "branches": [
+    {
+      "name": "app",
+      "sha": "00ab7966af645c64b71709ae44aefcde7487f292"
+    },
+    {
+      "name": "app-cloud-game",
+      "sha": "288dc703d61479cb89a22d4f2416d71d9b8294ac"
+    },
+    {
+      "name": "app-foundation",
+      "sha": "9a1f49a7c92d13bb70b7fd1420c34629a7785f9e"
+    },
+    {
+      "name": "app-integration",
+      "sha": "20eed848cc015d6253accd6cf72fcf127bf72827"
+    },
+    {
+      "name": "app-learning",
+      "sha": "8a5527438ee828a306afba36a337a3ca3bbedb83"
+    },
+    {
+      "name": "app-uiux-refinement",
+      "sha": "67c1e1bf76064d5df2787bef90ec789d1a21a975"
+    },
+    {
+      "name": "codex/game-flow-rgb",
+      "sha": "e457b0536987d35042da4d47337fea65a0ad5d77"
+    },
+    {
+      "name": "codex/question-audio-elevenlabs",
+      "sha": "09122e801b91041237b897c021229721a4bbcd6c"
+    },
+    {
+      "name": "codex/question-bank-harmonised-lcd",
+      "sha": "d241ea5683c2af24d418af468cff3cdf394226ba"
+    },
+    {
+      "name": "codex/serial-unassign",
+      "sha": "797a21f01ebcd47966aef5316aa813f2834e9347"
+    },
+    {
+      "name": "digitalize/security-activeSession",
+      "sha": "ef697c86a5bfdf5a5658c3df92bce1d7f3f88652"
+    },
+    {
+      "name": "digitalized-classroom-crud",
+      "sha": "ef697c86a5bfdf5a5658c3df92bce1d7f3f88652"
+    },
+    {
+      "name": "digitalized-core-backend",
+      "sha": "ef697c86a5bfdf5a5658c3df92bce1d7f3f88652"
+    },
+    {
+      "name": "digitalized-core-backend-scaling",
+      "sha": "ef697c86a5bfdf5a5658c3df92bce1d7f3f88652"
+    },
+    {
+      "name": "digitalized-core-portal",
+      "sha": "ef697c86a5bfdf5a5658c3df92bce1d7f3f88652"
+    },
+    {
+      "name": "digitalized-game-duel",
+      "sha": "ef697c86a5bfdf5a5658c3df92bce1d7f3f88652"
+    },
+    {
+      "name": "digitalized-game-duel-ui-refresh",
+      "sha": "ef697c86a5bfdf5a5658c3df92bce1d7f3f88652"
+    },
+    {
+      "name": "digitalized-game-language",
+      "sha": "ef697c86a5bfdf5a5658c3df92bce1d7f3f88652"
+    },
+    {
+      "name": "digitalized-module-content",
+      "sha": "ef697c86a5bfdf5a5658c3df92bce1d7f3f88652"
+    },
+    {
+      "name": "digitalized-module-design",
+      "sha": "ef697c86a5bfdf5a5658c3df92bce1d7f3f88652"
+    },
+    {
+      "name": "digitalized-module-explore-ui-refresh",
+      "sha": "ef697c86a5bfdf5a5658c3df92bce1d7f3f88652"
+    },
+    {
+      "name": "digitalized-module-guided",
+      "sha": "ef697c86a5bfdf5a5658c3df92bce1d7f3f88652"
+    },
+    {
+      "name": "digitalized-module-labs-ui-refresh",
+      "sha": "ef697c86a5bfdf5a5658c3df92bce1d7f3f88652"
+    },
+    {
+      "name": "digitalized-module-pelan-pengiraan",
+      "sha": "ef697c86a5bfdf5a5658c3df92bce1d7f3f88652"
+    },
+    {
+      "name": "digitalized-module-studio-ui-refresh",
+      "sha": "ef697c86a5bfdf5a5658c3df92bce1d7f3f88652"
+    },
+    {
+      "name": "digitalized-release-legacy",
+      "sha": "71db77c0206de664e50fa57ff57e1825af13f938"
+    },
+    {
+      "name": "digitalized-utility-auth-email",
+      "sha": "ef697c86a5bfdf5a5658c3df92bce1d7f3f88652"
+    },
+    {
+      "name": "digitalized-utility-auth-providers",
+      "sha": "752ce908d16d13acc9cc7510797e8363d182c3f5"
+    },
+    {
+      "name": "digitalized-utility-help-support",
+      "sha": "ef697c86a5bfdf5a5658c3df92bce1d7f3f88652"
+    },
+    {
+      "name": "digitalized-utility-offline-sync",
+      "sha": "ef697c86a5bfdf5a5658c3df92bce1d7f3f88652"
+    },
+    {
+      "name": "digitalized-utility-preferences",
+      "sha": "ef697c86a5bfdf5a5658c3df92bce1d7f3f88652"
+    },
+    {
+      "name": "digitalized-utility-profile",
+      "sha": "ef697c86a5bfdf5a5658c3df92bce1d7f3f88652"
+    },
+    {
+      "name": "digitalized-utility-save-resume",
+      "sha": "ef697c86a5bfdf5a5658c3df92bce1d7f3f88652"
+    },
+    {
+      "name": "digitalized-utility-security",
+      "sha": "ef697c86a5bfdf5a5658c3df92bce1d7f3f88652"
+    },
+    {
+      "name": "digitalized-ux-design-system",
+      "sha": "ef697c86a5bfdf5a5658c3df92bce1d7f3f88652"
+    },
+    {
+      "name": "digitalized-ux-mockup-completion",
+      "sha": "37bc2cd262cc0a54e8ee31339ea37471c1ecfda5"
+    },
+    {
+      "name": "digitalized-ux-motion-audio",
+      "sha": "ef697c86a5bfdf5a5658c3df92bce1d7f3f88652"
+    },
+    {
+      "name": "digitalized-ux-ui-upgrade",
+      "sha": "ef697c86a5bfdf5a5658c3df92bce1d7f3f88652"
+    },
+    {
+      "name": "digitalized-ux-usability",
+      "sha": "ef697c86a5bfdf5a5658c3df92bce1d7f3f88652"
+    },
+    {
+      "name": "main",
+      "sha": "25836eb1a6f24459aace8a3980ae880a13e3b488"
+    },
+    {
+      "name": "main-digitalized",
+      "sha": "752ce908d16d13acc9cc7510797e8363d182c3f5"
+    },
+    {
+      "name": "sharing",
+      "sha": "fa81fc0c1b88292b790978f86be90b22d14b01e1"
+    },
+    {
+      "name": "testing/components",
+      "sha": "36d999a9016cf0389005cede7567b654c462b03d"
+    },
+    {
+      "name": "ui/ux-redesign-concept",
+      "sha": "4d83561667cf74fbe5cd6144ce5e3e7f660a75cd"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+name: GeoMath Physical checks
+on:
+  push:
+    branches: [main, sharing, 'feature/**', 'fix/**', 'chore/**']
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  verify:
+    if: github.ref != 'refs/heads/sharing'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - run: python3 tools/check_repository_scope.py
+      - run: python3 tools/check_version.py
+      - run: python3 tests/run_tests.py --entrypoint src/main.cpp --rgb

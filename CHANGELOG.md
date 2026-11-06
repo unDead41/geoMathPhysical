@@ -1,5 +1,14 @@
 # Changelog
 
+## v2.0.3 - 2026-11-06
+
+- Asingkan pembangunan kepada geoMathPhysical, geoMathDigital dan geoMathApp.
+- Pindahkan sejarah branch mengikut pemilikan platform; simpan rujukan asal
+  dalam tag arkib sebelum membersihkan branch Digital/App daripada Physical.
+- Tetapkan panduan repository, pautan clone dan semakan automatik pemilikan fail.
+- Label keluaran dinaikkan mengikut SOR. Pengguna meneruskan Build/Upload
+  melalui projek Physical; UID/NVS, pin dan peraturan permainan dikekalkan.
+
 ## v2.0.2 - 2026-10-28
 
 - Kemas kini cara bermain murid kepada 31 halaman bergambar tanpa nombor halaman:

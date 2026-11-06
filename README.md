@@ -1,6 +1,6 @@
-# GeoDecoder
+# GeoMath Physical (GeoDecoder)
 
-Versi semasa: **v2.0.2**.
+Versi semasa: **v2.0.3**.
 Rujukan kemas kini: [SOR versi](docs/SOR_VERSIONING.md) dan [changelog](CHANGELOG.md).
 
 Kuiz geometri 3D menggunakan ESP32 klasik/WROOM-32, dua pembaca MFRC522,
@@ -8,6 +8,18 @@ LCD I2C 20x4, dua butang dan dua RGB empat kaki.
 
 **Aliran kerja utama: VS Code + PlatformIO IDE.** Build, Upload dan Serial
 Monitor tersedia terus dalam VS Code. Arduino IDE tidak diperlukan.
+
+## Repository GeoMath yang berasingan
+
+| Repository | Kegunaan |
+| --- | --- |
+| [geoMathPhysical](https://github.com/unDead41/geoMathPhysical) | ESP32, RFID, LCD, butang, RGB, wiring dan bahan cetakan |
+| [geoMathDigital](https://github.com/unDead41/geoMathDigital) | Portal web, permainan browser, modul dan backend Supabase |
+| [geoMathApp](https://github.com/unDead41/geoMathApp) | Flutter Android, UI native, Lawan AI dan aset offline |
+
+Repository ini khusus untuk **Physical**. Mulakan kerja firmware daripada
+`main` di sini. Kerja Digital dan App mesti bermula dalam repository masing-masing.
+Panduan pemisahan dan pemulihan sejarah: [REPOSITORY_SPLIT.md](docs/REPOSITORY_SPLIT.md).
 
 ## Panduan PDF
 
@@ -29,7 +41,7 @@ dan serasi dengan keluaran dokumentasi **v2.0.2**: soalan bongkah R1 -> R2,
 soalan bentangan R2 -> R1, salah tamat +0 dengan penerangan sehingga NEXT,
 serta masa yang dijeda dan keputusan akhir. Semua 27 paparan LCD dijana
 daripada fungsi paparan sebenar pada sumber
-[`d8d8ad4`](https://github.com/unDead41/geodecoder/commit/d8d8ad46f041fef489542ea530367dde47ac7db6).
+[`d8d8ad4`](https://github.com/unDead41/geoMathPhysical/commit/d8d8ad46f041fef489542ea530367dde47ac7db6).
 Semua 31 halaman dirender dan diperiksa; ilustrasi bukan rakaman ujian alat fizikal.
 
 **Panduan A-Z dan PDF LCD 15 halaman masih edisi terdahulu.** Gunakan panduan
@@ -39,7 +51,7 @@ LED/environment dalam A-Z dan terus Build/Upload. Salinan A-Z berasal daripada
 `sharing` commit `de86754fb042e12c9254eb883621febf6f055a31`.
 
 Bahagian installer A-Z menggunakan `setup.ps1` dalam pakej
-[`sharing`](https://github.com/unDead41/geodecoder/tree/sharing).
+[`sharing`](https://github.com/unDead41/geoMathPhysical/tree/sharing).
 Dapatkan installer bersama ZIP branch itu. Untuk folder `main`, ikut
 langkah VS Code + PlatformIO di bawah.
 
@@ -58,8 +70,8 @@ Clone repo, contohnya melalui terminal VS Code:
 
 ```powershell
 cd "$env:USERPROFILE\Desktop"
-git clone https://github.com/unDead41/geodecoder.git
-cd geodecoder
+git clone https://github.com/unDead41/geoMathPhysical.git
+cd geoMathPhysical
 code .
 ```
 
@@ -67,7 +79,7 @@ Untuk repo private, log masuk akaun GitHub sendiri apabila Git meminta.
 Jika tidak menggunakan Git CLI, pilih **Source Control > Clone Repository**,
 masukkan URL repo dan buka folder yang diklon.
 
-Buka **folder `geodecoder` yang mengandungi `platformio.ini`**. PlatformIO
+Buka **folder `geoMathPhysical` yang mengandungi `platformio.ini`**. PlatformIO
 akan memasang platform ESP32 dan library yang ditetapkan secara automatik.
 Pemasangan pertama memerlukan Internet dan mengambil masa lebih lama.
 Jangan cipta projek PlatformIO baharu atau pindahkan hanya satu fail `.ino`.
@@ -265,7 +277,7 @@ Untuk melihat port: `pio device list`.
 Pada boot/reset ESP32, Serial 115200 baud memaparkan:
 
 ```text
-[FIRMWARE] GeoDecoder v2.0.2 | ESP32 | env=esp32dev-rgb
+[FIRMWARE] GeoDecoder v2.0.3 | ESP32 | env=esp32dev-rgb
 ```
 
 Jika Monitor dibuka selepas banner berlalu, taip `version`; `status` turut
