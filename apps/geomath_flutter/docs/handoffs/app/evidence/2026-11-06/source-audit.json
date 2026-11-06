@@ -1,0 +1,17 @@
+{
+  "target_branch": "app",
+  "remote_app": "20eed848cc015d6253accd6cf72fcf127bf72827",
+  "remote_cloud": "288dc703d61479cb89a22d4f2416d71d9b8294ac",
+  "remote_ui": "67c1e1bf76064d5df2787bef90ec789d1a21a975",
+  "remote_ui_tree": "228c3053d59a319ed8f0415941a6a810b188201d",
+  "local_cloud": "b3195a1617187f362af58ca5390adca2fe3e65fa",
+  "local_common": "e9fd03ce3533865640907c25bf91961f21b6b291",
+  "hydrated_cloud_files": 425,
+  "ui_changed": 97,
+  "ui_files_imported": 97,
+  "missing_ui_files": [],
+  "overlap_files": [
+    "apps/geomath_flutter/lib/features/solo/presentation/solo_pages.dart",
+    "apps/geomath_flutter/lib/features/solo/presentation/solo_strings.dart"
+  ]
+}

@@ -1,5 +1,7 @@
 # GeoMath Android
 
+**Consolidated source: branch `app`.** [AI continuation guide](AI_HANDOFF.md) maps the game, UI, storage, tests and remaining hosted/device/signing gates. Lawan AI is part of the same GeoMath application. [Current combined verification](docs/handoffs/app/LATEST.md).
+
 App **0.3.0+4**, foundation contract **1.0.0**. Production `lib/main.dart` combines
 native account/classroom/Solo/Duel/sync with the bundled canonical learning WebView.
 

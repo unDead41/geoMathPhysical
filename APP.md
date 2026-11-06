@@ -1,31 +1,13 @@
-# GeoMath / GeoDecoder — Android app
+# GeoMath / GeoDecoder — Android application
 
-**Offline Android milestone verified; hosted/manual acceptance partial.** App **0.1.0+1**,
-foundation contract **1.0.0**. Integration branch `app-integration`; `app` advances after the documented
-affected-runtime gate. Exact-source host/build checks,three real-WebView cases
-and32 reviewed production captures validate the startup correction; earlier
-functional Android receipts remain separately labelled. This status supersedes the planning-only
-entry; the original `docs/geomath-app/` archive remains unchanged.
+**Current consolidated development branch: `app`. App 0.3.0+4; foundation contract 1.0.0.** The application is ready for another AI to continue game development; hosted/device/release acceptance remains separately bounded.
 
-Production code is in `apps/geomath_flutter/`. Its default `lib/main.dart`
-registers learning, native Auth/profile/classroom/Solo/Duel and one sync owner.
-The offline canonical module retains11models, stable face colors, labs and studio;
-Solo retains5game shapes including cone and single-attempt R1/R2 rules.
+The runnable project is [apps/geomath_flutter](apps/geomath_flutter/). Begin with [its AGENTS.md](apps/geomath_flutter/AGENTS.md), [AI_HANDOFF.md](apps/geomath_flutter/AI_HANDOFF.md) and [current combined verification](apps/geomath_flutter/docs/handoffs/app/LATEST.md). The default `lib/main.dart` registers one production owner set for learning, accounts/profile/classroom, Solo/Duel/sync and offline adaptive AI. Lawan AI is part of the original **GeoMath / com.geomath.dev** application.
 
-Start with [the app README](apps/geomath_flutter/README.md) and
-[Android commands](apps/geomath_flutter/docs/RUN_ANDROID.md).
-[Acceptance64items](apps/geomath_flutter/docs/SCREEN_ACCEPTANCE.md) and
-[integration handoff](apps/geomath_flutter/docs/handoffs/app-integration/LATEST.md)
-separate local/device evidence from hosted and manual acceptance.
+This branch consolidates foundation, learning, integration, cloud/game and the latest UI/UX refinement. It retains all eleven learning models, stable physical face colors, labs/studio, five canonical game shapes including cone, swipe/guarded card selection, explicit R1/R2 scans, typeset mathematics/variable legends, actor-bound records and server-authoritative online decisions.
 
-The source branches use the same foundation READY commit
-`9a1f49a7c92d13bb70b7fd1420c34629a7785f9e`. Frozen source locks and dependency
-lockfile are preserved. Native callback handling is reserved in the Android
-manifest, but Google/recovery capability remains disabled until its hosted and
-actual callback gate passes. SMS is absent. Missing cloud capabilities remain
-visible; an offline fixture result does not prove hosted Auth or two-client Duel.
+The combined source passed 676 Flutter tests (18 opt-in visual profiles skipped), formatting/analyzer checks, 60 Node checks and 36 Python tooling checks. Two offline rebuilds reproduce the shipped module bytes. An original-identity ARM64 release APK built and passed static signature/manifest/source/asset verification. No new Android/emulator/phone execution, manual TalkBack, hosted two-client/Auth acceptance or store release is inferred.
 
-Firmware, Digital sources, backend/Auth/SMTP settings, Pages and store deployment
-are unchanged. App version is independent of the inherited firmware version.
-The12mockup boards and48screen/16state planning catalogue remain available in
-[the original development package](docs/geomath-app/README.md).
+The source map and continuation commands are in AI_HANDOFF.md. Native callback capabilities and hosted synchronization acknowledgements still require real acceptance. Same package/name alone does not solve a mismatched signing key or decreasing Android version code; preserve installed app data and establish the original-key update path before changing an installation.
+
+The inherited firmware, Digital sources, backend/provider settings, original planning archive and unrelated branch refs are not changed. This app development branch is not a new firmware release. Historical feature handoffs and the [original development plan](docs/geomath-app/README.md) remain available with their original source/evidence limits.

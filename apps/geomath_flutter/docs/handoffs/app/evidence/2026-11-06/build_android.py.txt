@@ -1,0 +1,84 @@
+"""Build all existing GeoMath features plus offline AI with the original identity.
+
+No source/package/manifest rewrite. Signing compatibility is reported separately;
+a valid new APK is not evidence that an unknown installed signing key matches.
+"""
+from pathlib import Path
+import hashlib
+import json
+import os
+import re
+import shutil
+import subprocess
+import urllib.parse
+
+root = Path('/workspace/scratch/7395917c0f68/app-handoff')
+source = root / 'repo/apps/geomath_flutter'
+target = root / 'android-build'
+toolchain = Path('/workspace/scratch/459484a16739/toolchains')
+flutter = toolchain / 'flutter/bin/flutter'
+jdk = toolchain / 'jdk/usr/lib/jvm/java-17-openjdk-amd64'
+sdk = toolchain / 'android-sdk'
+reports = root / 'reports/android'
+reports.mkdir(exist_ok=True)
+if target.exists():
+    raise SystemExit('Original app build copy already exists; reconcile before retry.')
+shutil.copytree(source, target, ignore=shutil.ignore_patterns('build', '.dart_tool', '.gradle', 'local.properties'))
+defines = json.loads((root / 'bootstrap/public-defines.local.json').read_text())
+defines['GEOMATH_AUTH_REDIRECT_URI'] = 'com.geomath.dev://auth/callback'
+config = target / 'config/public.local.json'
+config.parent.mkdir(exist_ok=True)
+config.write_text(json.dumps(defines))
+
+hashes = {}
+for prefix in ['lib', 'assets', 'android']:
+    for p in sorted((source / prefix).rglob('*')):
+        if not p.is_file() or any(x in p.parts for x in ['.gradle', 'build']):
+            continue
+        rel = p.relative_to(source)
+        if rel.name == 'local.properties':
+            continue
+        digest = hashlib.file_digest(p.open('rb'), 'sha256').hexdigest()
+        assert hashlib.file_digest((target / rel).open('rb'), 'sha256').hexdigest() == digest
+        hashes[str(rel)] = digest
+receipt = {
+    'remote_source_commit': None,
+    'runtime_source_commit': None,
+    'source_local_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=root / 'repo', text=True).strip(),
+    'source_sha256': hashes,
+    'application_id': 'com.geomath.dev',
+    'launcher_label': 'GeoMath',
+    'version_name': '0.3.0',
+    'configured_build_number': 4,
+    'build_mode': 'release',
+    'signing': 'existing development debug key; compatibility checked separately',
+    'build_copy_source_or_platform_changes': [],
+    'physical_device_execution': 'not tested',
+}
+(reports / 'build-inputs.json').write_text(json.dumps(receipt, indent=2) + '\n')
+trust = root / 'bootstrap/java-cacerts-original'
+shutil.copyfile('/etc/ssl/certs/java/cacerts', trust)
+if os.environ.get('SSL_CERT_FILE'):
+    subprocess.run([str(jdk / 'bin/keytool'), '-importcert', '-noprompt', '-trustcacerts', '-alias', 'geomath-managed-network', '-file', os.environ['SSL_CERT_FILE'], '-keystore', str(trust), '-storepass', 'changeit'], check=True, capture_output=True)
+options = [f'-Djavax.net.ssl.trustStore={trust}', '-Djavax.net.ssl.trustStoreType=JKS']
+proxy = urllib.parse.urlparse(os.environ.get('HTTPS_PROXY', ''))
+if proxy.hostname:
+    assert not proxy.username and not proxy.password
+    options += [f'-Dhttp.proxyHost={proxy.hostname}', f'-Dhttp.proxyPort={proxy.port}', f'-Dhttps.proxyHost={proxy.hostname}', f'-Dhttps.proxyPort={proxy.port}', '-Dhttp.nonProxyHosts=localhost|127.*|[::1]']
+env = dict(os.environ, ANDROID_HOME=str(sdk), ANDROID_SDK_ROOT=str(sdk), JAVA_HOME=str(jdk), PATH=str(jdk / 'bin') + ':' + os.environ['PATH'], PUB_CACHE='/workspace/scratch/459484a16739/pub-cache', GRADLE_USER_HOME='/workspace/scratch/459484a16739/gradle-cache', JAVA_TOOL_OPTIONS=' '.join(options), GRADLE_OPTS='-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 -Dorg.gradle.jvmargs=-Xmx2g -Dkotlin.daemon.jvm.options=-Xmx512m')
+commands = [
+    [str(flutter), 'pub', 'get', '--offline'],
+    [str(flutter), 'build', 'apk', '--release', '--split-per-abi', '--target-platform', 'android-arm64', '--build-name=0.3.0', '--build-number=4', '--dart-define-from-file=config/public.local.json'],
+]
+for command in commands:
+    print(json.dumps({'command': command, 'copy': str(target), 'ssl_verification': True}), flush=True)
+    subprocess.run(command, cwd=target, env=env, check=True)
+apk = target / 'build/app/outputs/flutter-apk/app-arm64-v8a-release.apk'
+delivered = root / 'build/GeoMath-0.3.0-arm64.apk'
+delivered.parent.mkdir(exist_ok=True)
+shutil.copyfile(apk, delivered)
+receipt['apk'] = {'filename': delivered.name, 'bytes': delivered.stat().st_size, 'sha256': hashlib.file_digest(delivered.open('rb'), 'sha256').hexdigest()}
+badging = subprocess.check_output([str(sdk / 'build-tools/36.0.0/aapt'), 'dump', 'badging', str(delivered)], text=True)
+receipt['version_code'] = int(re.search(r"versionCode='(\d+)'", badging).group(1))
+(reports / 'build-inputs.json').write_text(json.dumps(receipt, indent=2) + '\n')
+print(json.dumps({'apk': str(delivered), **receipt['apk']}), flush=True)

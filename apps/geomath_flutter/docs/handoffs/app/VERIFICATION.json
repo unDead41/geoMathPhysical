@@ -1,0 +1,84 @@
+{
+  "status": "READY_FOR_AI_DEVELOPMENT_HANDOFF",
+  "branch": "app",
+  "app_version": "0.3.0+4",
+  "runtime_commit": "888f6ec23d66678182825e3d3ab50ba69413d62e",
+  "runtime_tree": "498d62ae455b7087663d6e26ffb0e40d1f0a7936",
+  "tested_local_commit": "f9255a660a421b6656928fc5eb8c199f46b66b19",
+  "merge_parents": [
+    "288dc703d61479cb89a22d4f2416d71d9b8294ac",
+    "67c1e1bf76064d5df2787bef90ec789d1a21a975"
+  ],
+  "prior_app_and_integration": "20eed848cc015d6253accd6cf72fcf127bf72827",
+  "included_foundation": "9a1f49a7c92d13bb70b7fd1420c34629a7785f9e",
+  "included_learning": "8a5527438ee828a306afba36a337a3ca3bbedb83",
+  "foundation_contract": "1.0.0",
+  "formatter": {
+    "files": 235,
+    "changed": 0,
+    "exit": 0
+  },
+  "analyzer": {
+    "result": "no issues",
+    "exit": 0
+  },
+  "flutter": {
+    "passed": 676,
+    "failed": 0,
+    "skipped_opt_in_capture_profiles": 18,
+    "exit": 0
+  },
+  "node": {
+    "passed": 60,
+    "exit": 0
+  },
+  "python": {
+    "passed": 36,
+    "discovery_groups": [
+      7,
+      29
+    ],
+    "exit": 0
+  },
+  "offline_rebuild": {
+    "runs": 2,
+    "all_four_bundled_files_byte_identical": true
+  },
+  "apk_static_verification": {
+    "filename": "GeoMath-0.3.0-arm64.apk",
+    "bytes": 21588239,
+    "sha256": "ff6ad3a93d8987d780d1fccc21bbbf9bbe92b1ba171aa4f549f27691d6acb3ae",
+    "source_runtime_commit": "888f6ec23d66678182825e3d3ab50ba69413d62e",
+    "built_local_commit": "d79b9bf8d82246bf48f33d0d6e443de08200d7ca",
+    "tested_local_commit": "f9255a660a421b6656928fc5eb8c199f46b66b19",
+    "compiled_source_and_assets_unchanged_between_build_and_tests": true,
+    "source_fingerprints_verified": 186,
+    "tracked_android_files_byte_verified": 19,
+    "bundled_assets_byte_verified": 20,
+    "pubspec_and_lock_match": true,
+    "package": "com.geomath.dev",
+    "launcher_label": "GeoMath",
+    "version_name": "0.3.0",
+    "source_build_number": 4,
+    "split_apk_version_code": 2004,
+    "minimum_api": 24,
+    "abis": [
+      "arm64-v8a"
+    ],
+    "mode": "release",
+    "signature_v2": true,
+    "certificate_sha256": "73f7dfb6f845b2ca669687adcb8402142696f89116d8b1f47c0ce3d93a6c8d40",
+    "signing": "existing development debug key; not store signing",
+    "zip_crc": "passed",
+    "original_auth_view_filter": true,
+    "phone_or_emulator_execution": "not tested",
+    "in_place_phone_update": "not verified; matching original signing key and increasing Android version code required"
+  },
+  "new_android_or_phone_execution": false,
+  "new_visual_capture_run": false,
+  "hosted_acceptance": "not executed",
+  "production_signing_and_in_place_phone_update": "not established",
+  "hosted_or_provider_or_pages_deployments": [],
+  "firmware_digital_backend_planning_archive_changes": [],
+  "final_documentation_head": "verify the current remote app ref; no self-referential commit hash is embedded here"
+}

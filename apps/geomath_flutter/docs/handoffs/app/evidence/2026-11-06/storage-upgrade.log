@@ -1,0 +1,7 @@
+   Woah! You appear to be trying to run flutter as root.
+   We strongly recommend running the flutter tool without superuser privileges.
+  /
+📎
+00:00 +0: loading /workspace/scratch/7395917c0f68/app-handoff/worker-5/apps/geomath_flutter/test/integration/handoff_storage_upgrade_test.dart
+00:00 +0: legacy data survives combined migrations, AI completion and repeated reopen
+00:00 +1: All tests passed!

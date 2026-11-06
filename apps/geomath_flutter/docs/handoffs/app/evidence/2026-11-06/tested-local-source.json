@@ -1,0 +1,17 @@
+{
+  "local_tested_commit": "f9255a660a421b6656928fc5eb8c199f46b66b19",
+  "tree": "498d62ae455b7087663d6e26ffb0e40d1f0a7936",
+  "version": "0.3.0+4",
+  "merges": [
+    {
+      "worker": "1a41ddc09b482a19f8b06200a4da88cd2194a3c5",
+      "merged": "d383f8aae30e5860cbd792fa1068210e84729d0c",
+      "path": "apps/geomath_flutter/test/design/adaptive_navigation_test.dart"
+    },
+    {
+      "worker": "c2b5917897b4aa96524d5158f3bf8c021054ad8c",
+      "merged": "f9255a660a421b6656928fc5eb8c199f46b66b19",
+      "path": "apps/geomath_flutter/test/integration/handoff_storage_upgrade_test.dart"
+    }
+  ]
+}

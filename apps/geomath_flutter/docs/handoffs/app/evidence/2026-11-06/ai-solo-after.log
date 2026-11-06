@@ -1,0 +1,68 @@
+   Woah! You appear to be trying to run flutter as root.
+   We strongly recommend running the flutter tool without superuser privileges.
+  /
+📎
+00:00 +0: loading /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_policy_test.dart
+00:00 +0: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_policy_test.dart: correct-count pressure is monotone, bounded and difficulty-specific
+00:00 +1: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_policy_test.dart: fixed draw adapts only within selected profile and is a pair probability
+00:00 +2: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_policy_test.dart: every correct/wrong completion stays inside all adaptive timing bounds
+00:00 +3: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_policy_test.dart: invalid or unbounded random draws cannot produce an AI plan
+00:00 +4: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_battle_game_test.dart: canonical balanced round and player stream are independent of AI difficulty
+00:00 +5: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_battle_game_test.dart: selection/premature scan cannot consume attempt or retroactively change the plan
+00:00 +6: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_battle_game_test.dart: AI finishes exactly once and cannot advance past an unanswered player
+00:00 +7: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_battle_game_test.dart: wrong R1 and R2 are actual wrong pairs with full bounded answer time
+00:00 +8: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_battle_game_test.dart: wrong and skip consume one player question, preserve scores and use long review gate
+00:00 +9: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_battle_game_test.dart: pause freezes both R2 and AI clocks including repeated paused checkpoints
+00:00 +10: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_battle_game_test.dart: reopen requires Resume and preserves selections, remaining time and future randomness
+00:00 +11: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_battle_game_test.dart: review remainder survives pause and reopen without premature advance
+00:00 +12: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_battle_game_test.dart: selected cards at either stage survive pause, but settled selections fail
+00:00 +13: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_battle_game_test.dart: difficulty and policy cap stay fixed through ten questions and completion replay
+00:00 +14: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_battle_game_test.dart: winner compares score first, answering time second and supports exact draw
+00:00 +15: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_battle_game_test.dart: malformed bank/ruleset/policy/timers/AI answer/plan/RNG state snapshots fail closed
+00:00 +16: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_battle_game_test.dart: backwards clocks cannot create a second AI result or rewind a plan
+00:00 +17: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/data/ai_battle_repository_test.dart: real SQLite reopen retains the same opaque paused plan and stage
+00:00 +18: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/data/ai_battle_repository_test.dart: checkpoints never touch quiz scores, completed history or outbox
+00:00 +19: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/data/ai_battle_repository_test.dart: create, update, replace and queued deletion cannot overwrite another attempt
+00:00 +20: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/data/ai_battle_repository_test.dart: guest and account slots remain isolated across session epochs and deletion
+00:00 +21: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/data/ai_battle_repository_test.dart: corrupt and foreign envelopes survive until explicit replacement
+00:00 +22: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/data/ai_battle_repository_test.dart: non-JSON, cyclic, too-deep and oversized UTF8 values cannot replace a valid slot
+00:00 +23: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/data/ai_battle_repository_test.dart: queued checkpoint captures caller data before any pending SQLite commit
+00:00 +24: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/data/ai_battle_repository_test.dart: actor change inside the actual transaction rolls back a written checkpoint
+00:00 +25: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/data/ai_battle_repository_test.dart: actor change before transaction entry rejects without writing
+00:00 +26: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/data/ai_battle_repository_test.dart: a late read and post-commit acknowledgement never adopt another actor
+00:00 +27: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/data/ai_battle_repository_test.dart: failure after actual update rolls back and the serial queue remains usable
+00:00 +28: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/data/ai_battle_repository_test.dart: stale deletion rolls back and a closed database reports a recoverable failure
+00:01 +29: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/ai_entry_test.dart: normal production composes one AI owner through the play feature
+00:01 +30: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/presentation/ai_battle_screen_test.dart: 320dp/150% ms/light setup, match, pause and review fit
+00:02 +31: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/presentation/ai_battle_screen_test.dart: 320dp/150% ms/light setup, match, pause and review fit
+00:02 +32: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/presentation/ai_battle_screen_test.dart: 320dp/150% ms/light setup, match, pause and review fit
+00:02 +33: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/presentation/ai_battle_screen_test.dart: 320dp/150% ms/light setup, match, pause and review fit
+00:02 +34: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/presentation/ai_battle_screen_test.dart: 320dp/150% ms/light setup, match, pause and review fit
+00:02 +35: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/presentation/ai_battle_screen_test.dart: 320dp/150% ms/light setup, match, pause and review fit
+00:02 +36: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/presentation/ai_battle_screen_test.dart: 320dp/150% ms/light setup, match, pause and review fit
+00:02 +37: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/presentation/ai_battle_screen_test.dart: 320dp/150% ms/light setup, match, pause and review fit
+00:02 +38: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/presentation/ai_battle_screen_test.dart: 320dp/150% ms/light setup, match, pause and review fit
+00:02 +39: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/presentation/ai_battle_screen_test.dart: 320dp/150% ms/light setup, match, pause and review fit
+00:02 +40: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/presentation/ai_battle_screen_test.dart: 320dp/150% ms/light setup, match, pause and review fit
+00:02 +41: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/presentation/ai_battle_screen_test.dart: 320dp/150% ms/light setup, match, pause and review fit
+00:02 +42: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/presentation/ai_battle_screen_test.dart: 320dp/150% ms/light setup, match, pause and review fit
+00:02 +43: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/presentation/ai_battle_screen_test.dart: 320dp/150% ms/light setup, match, pause and review fit
+00:04 +44: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/presentation/ai_battle_screen_test.dart: 320dp/150% ms/light setup, match, pause and review fit
+00:04 +45: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/presentation/ai_battle_screen_test.dart: 320dp/150% ms/light setup, match, pause and review fit
+00:05 +46: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: all five R1 and R2 cards browse without selection, attempts, score or RNG draws
+00:06 +47: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: all five R1 and R2 cards browse without selection, attempts, score or RNG draws
+00:06 +48: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/presentation/ai_battle_screen_test.dart: 320dp/150% en/light setup, match, pause and review fit
+00:07 +49: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/presentation/ai_battle_screen_test.dart: 320dp/150% en/light setup, match, pause and review fit
+00:07 +50: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/presentation/ai_battle_screen_test.dart: 320dp/150% en/light setup, match, pause and review fit
+00:07 +51: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:08 +52: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: real app keeps the R2 attempt across language/theme/150% text and shows failed saves
+00:09 +53: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/presentation/ai_battle_screen_test.dart: left/right browsing does not select, consume a scan or expose the AI answer
+00:09 +54: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/presentation/ai_battle_screen_test.dart: left/right browsing does not select, consume a scan or expose the AI answer
+00:09 +55: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: wrong review and final analysis preserve the original when practising missed IDs
+00:10 +56: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/solo/solo_pages_test.dart: wrong review and final analysis preserve the original when practising missed IDs
+00:10 +57: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/presentation/ai_battle_screen_test.dart: current target stays committed, next target adapts, preference changes keep the match and carousel
+00:10 +58: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/presentation/ai_battle_screen_test.dart: current target stays committed, next target adapts, preference changes keep the match and carousel
+00:11 +59: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/presentation/ai_battle_screen_test.dart: replacement confirmation cannot start under a different actor
+00:11 +60: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/presentation/ai_battle_screen_test.dart: question transitions reset vertical position while preferences retain it
+00:12 +61: /workspace/scratch/7395917c0f68/app-handoff/worker-1/apps/geomath_flutter/test/features/ai_battle/presentation/ai_battle_screen_test.dart: slow real SQLite route read becomes ready and cleanup drains across widget frames
+00:13 +62: All tests passed!

@@ -1,0 +1,12 @@
+{
+  "remote_runtime_commit": "888f6ec23d66678182825e3d3ab50ba69413d62e",
+  "tree": "498d62ae455b7087663d6e26ffb0e40d1f0a7936",
+  "parent_cloud": "288dc703d61479cb89a22d4f2416d71d9b8294ac",
+  "parent_ui": "67c1e1bf76064d5df2787bef90ec789d1a21a975",
+  "local_tested_commit": "f9255a660a421b6656928fc5eb8c199f46b66b19",
+  "version": "0.3.0+4",
+  "flutter_passed": 676,
+  "visual_profiles_skipped": 18,
+  "node_passed": 60,
+  "python_passed": 36
+}

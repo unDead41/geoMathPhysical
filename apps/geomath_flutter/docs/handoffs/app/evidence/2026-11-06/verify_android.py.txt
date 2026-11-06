@@ -1,0 +1,91 @@
+from pathlib import Path
+import hashlib
+import json
+import os
+import re
+import subprocess
+import zipfile
+
+root = Path('/workspace/scratch/7395917c0f68/app-handoff')
+repo = root / 'repo'
+app = repo / 'apps/geomath_flutter'
+copy = root / 'android-build'
+reports = root / 'reports/android'
+apk = root / 'build/GeoMath-0.3.0-arm64.apk'
+toolchain = Path('/workspace/scratch/459484a16739/toolchains')
+sdk = toolchain / 'android-sdk/build-tools/36.0.0'
+jdk = toolchain / 'jdk/usr/lib/jvm/java-17-openjdk-amd64'
+env = dict(os.environ, JAVA_HOME=str(jdk), PATH=str(jdk / 'bin') + ':' + os.environ['PATH'])
+inputs = json.loads((reports / 'build-inputs.json').read_text())
+publication = json.loads((root / 'reports/publication-runtime.json').read_text())
+for rel, digest in inputs['source_sha256'].items():
+    assert hashlib.sha256((app / rel).read_bytes()).hexdigest() == digest, rel
+for prefix in ['lib', 'assets']:
+    for p in (app / prefix).rglob('*'):
+        if p.is_file():
+            assert p.read_bytes() == (copy / p.relative_to(app)).read_bytes(), str(p)
+tracked_android = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', 'HEAD', '--', 'apps/geomath_flutter/android'], cwd=repo, text=True).splitlines()
+for path in tracked_android:
+    rel = Path(path).relative_to('apps/geomath_flutter')
+    assert (app / rel).read_bytes() == (copy / rel).read_bytes(), str(rel)
+for rel in ['pubspec.yaml', 'pubspec.lock']:
+    assert (app / rel).read_bytes() == (copy / rel).read_bytes(), rel
+assert not subprocess.check_output(['git', 'diff', '--name-only', inputs['source_local_commit'], publication['local_tested_commit'], '--', 'apps/geomath_flutter/lib', 'apps/geomath_flutter/assets', 'apps/geomath_flutter/android', 'apps/geomath_flutter/pubspec.yaml', 'apps/geomath_flutter/pubspec.lock'], cwd=repo, text=True).strip()
+signature = subprocess.check_output([str(sdk / 'apksigner'), 'verify', '--verbose', '--print-certs', str(apk)], env=env, text=True)
+assert 'Verified using v2 scheme (APK Signature Scheme v2): true' in signature
+certs = re.findall(r'Signer #\d+ certificate SHA-256 digest: ([0-9a-f]+)', signature)
+assert len(certs) == 1
+badging = subprocess.check_output([str(sdk / 'aapt'), 'dump', 'badging', str(apk)], text=True)
+assert "package: name='com.geomath.dev' versionCode='2004' versionName='0.3.0'" in badging
+assert "application-label:'GeoMath'" in badging
+assert "sdkVersion:'24'" in badging
+assert 'application-debuggable' not in badging
+manifest = subprocess.check_output([str(sdk / 'aapt'), 'dump', 'xmltree', str(apk), 'AndroidManifest.xml'], text=True)
+assert 'android.intent.action.VIEW' in manifest and 'android.intent.action.MAIN' in manifest
+assert 'com.geomath.ai.preview' not in manifest
+with zipfile.ZipFile(apk) as z:
+    assert z.testzip() is None
+    abis = sorted({p.split('/')[1] for p in z.namelist() if p.startswith('lib/')})
+    assert abis == ['arm64-v8a']
+    assets = 0
+    for p in (app / 'assets').rglob('*'):
+        if p.is_file() and p.name != '.gitattributes':
+            assert p.read_bytes() == z.read('assets/flutter_assets/assets/' + str(p.relative_to(app / 'assets')))
+            assets += 1
+inputs['remote_source_commit'] = publication['remote_runtime_commit']
+inputs['runtime_source_commit'] = publication['remote_runtime_commit']
+inputs['tested_local_commit'] = publication['local_tested_commit']
+inputs['final_tests_only_changes_do_not_change_compiled_inputs'] = True
+(reports / 'build-inputs.json').write_text(json.dumps(inputs, indent=2) + '\n')
+receipt = {
+    'filename': apk.name,
+    'bytes': apk.stat().st_size,
+    'sha256': hashlib.file_digest(apk.open('rb'), 'sha256').hexdigest(),
+    'source_runtime_commit': publication['remote_runtime_commit'],
+    'built_local_commit': inputs['source_local_commit'],
+    'tested_local_commit': publication['local_tested_commit'],
+    'compiled_source_and_assets_unchanged_between_build_and_tests': True,
+    'source_fingerprints_verified': len(inputs['source_sha256']),
+    'tracked_android_files_byte_verified': len(tracked_android),
+    'bundled_assets_byte_verified': assets,
+    'pubspec_and_lock_match': True,
+    'package': 'com.geomath.dev',
+    'launcher_label': 'GeoMath',
+    'version_name': '0.3.0',
+    'source_build_number': 4,
+    'split_apk_version_code': 2004,
+    'minimum_api': 24,
+    'abis': abis,
+    'mode': 'release',
+    'signature_v2': True,
+    'certificate_sha256': certs[0],
+    'signing': 'existing development debug key; not store signing',
+    'zip_crc': 'passed',
+    'original_auth_view_filter': True,
+    'phone_or_emulator_execution': 'not tested',
+    'in_place_phone_update': 'not verified; matching original signing key and increasing Android version code required',
+}
+(reports / 'apk-verification.json').write_text(json.dumps(receipt, indent=2) + '\n')
+(reports / 'apk-signature.txt').write_text(signature)
+(reports / 'apk-badging.txt').write_text(badging)
+print(json.dumps(receipt, indent=2))
