@@ -59,9 +59,11 @@ def main():
     archived = git('ls-remote', URL, 'refs/tags/' + PLAN['archive_tag'])
     if archived:
         raise SystemExit('Archive tag exists; verify it rather than replacing it.')
-    base = next(b['sha'] for b in PLAN['original_branches'] if b['name'] == 'main')
-    args = ['commit-tree', git('rev-parse', base + '^{tree}')]
-    for parent in dict.fromkeys(list(current.values()) + [b['sha'] for b in PLAN['original_branches']]):
+    # Use the already-reviewed current main tree so the contents-only CI token
+    # does not attempt to republish old workflow files. Original trees remain
+    # reachable through their exact original parent commits.
+    args = ['commit-tree', git('rev-parse', expected['main'] + '^{tree}')]
+    for parent in dict.fromkeys([expected['main']] + list(current.values()) + [b['sha'] for b in PLAN['original_branches']]):
         args += ['-p', parent]
     archive = git(*args, '-m', 'Preserve original and preparation heads before GeoMath repository cleanup')
     git('push', URL, archive + ':refs/tags/' + PLAN['archive_tag'], env=auth())

@@ -36,5 +36,6 @@
   "verified_main_sha": "0babf592ca83f0ba07e16bf69ac8bd14501b0417",
   "verification_run_id": 42220241261,
   "archive_tag": "archive/physical-before-cleanup-20261106",
-  "previous_firmware_version": "v2.0.3"
+  "previous_firmware_version": "v2.0.3",
+  "archive_tree_policy": "Current reviewed main tree; all exact original heads are archive commit parents."
 }
