@@ -242,6 +242,21 @@
       "label": "GeoMath AI",
       "identity_changes_in_build_copy_only": true,
       "physical_device_execution": "not tested"
+    },
+    "preferred_apk": {
+      "filename": "GeoMath-0.2.1-Lengkap-arm64.apk",
+      "package": "com.geomath.dev",
+      "label": "GeoMath",
+      "version_name": "0.2.1",
+      "version_code": 2003,
+      "configured_build_number": 3,
+      "source_commit": "57c0c1b1f1444cb136dc37f66bacd8cdb50d0d61",
+      "source_or_platform_changes": [],
+      "installed_signing_key_match": "unknown; matching old key is required for in-place update",
+      "same_signer_as_inspected_0_1_0_apk": false,
+      "same_signer_as_inspected_0_2_0_apk": true,
+      "physical_device_execution": "not tested",
+      "handoff": "docs/handoffs/app-cloud-game/ai-battle-20261106/ORIGINAL_APP_APK.md"
     }
   }
 }

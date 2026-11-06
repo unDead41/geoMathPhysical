@@ -1,0 +1,78 @@
+from pathlib import Path
+import hashlib
+import json
+import os
+import re
+import subprocess
+import zipfile
+
+root = Path('/workspace/scratch/7395917c0f68')
+app = root / 'ai-battle/repo/apps/geomath_flutter'
+reports = root / 'ai-battle/reports/original-app'
+apk = root / 'GeoMath-0.2.1-Lengkap-arm64.apk'
+tools = Path('/workspace/scratch/459484a16739/toolchains')
+sdk = tools / 'android-sdk/build-tools/36.0.0'
+jdk = tools / 'jdk/usr/lib/jvm/java-17-openjdk-amd64'
+env = dict(os.environ, JAVA_HOME=str(jdk), PATH=str(jdk / 'bin') + ':' + os.environ['PATH'])
+
+def inspect(path):
+    signature = subprocess.check_output([str(sdk / 'apksigner'), 'verify', '--verbose', '--print-certs', str(path)], env=env, text=True)
+    certs = re.findall(r'Signer #\d+ certificate SHA-256 digest: ([0-9a-f]+)', signature)
+    assert len(certs) == 1
+    badging = subprocess.check_output([str(sdk / 'aapt'), 'dump', 'badging', str(path)], text=True)
+    return signature, certs[0], badging
+
+signature, cert, badging = inspect(apk)
+assert "package: name='com.geomath.dev' versionCode='2003' versionName='0.2.1'" in badging
+assert "application-label:'GeoMath'" in badging
+assert 'Verified using v2 scheme (APK Signature Scheme v2): true' in signature
+manifest = subprocess.check_output([str(sdk / 'aapt'), 'dump', 'xmltree', str(apk), 'AndroidManifest.xml'], text=True)
+assert 'android.intent.action.VIEW' in manifest
+assert 'com.geomath.dev' in manifest
+assert 'com.geomath.ai.preview' not in manifest
+assert 'android.intent.action.MAIN' in manifest
+with zipfile.ZipFile(apk) as z:
+    assert z.testzip() is None
+    abis = sorted({p.split('/')[1] for p in z.namelist() if p.startswith('lib/')})
+    assert abis == ['arm64-v8a']
+    assert 'lib/arm64-v8a/libapp.so' in z.namelist()
+    assert 'lib/arm64-v8a/libflutter.so' in z.namelist()
+    for original in (app / 'assets').rglob('*'):
+        if not original.is_file() or original.name == '.gitattributes':
+            continue
+        relative = original.relative_to(app / 'assets')
+        packaged = 'assets/flutter_assets/assets/' + str(relative)
+        assert z.read(packaged) == original.read_bytes(), str(relative)
+
+inputs = json.loads((reports / 'build-inputs.json').read_text())
+for rel, digest in inputs['source_sha256'].items():
+    assert hashlib.sha256((app / rel).read_bytes()).hexdigest() == digest
+baseline = json.loads((root / 'ai-battle/reports/preview-build-inputs.json').read_text())
+for rel, digest in baseline['runtime_sha256'].items():
+    assert inputs['source_sha256'][rel] == digest
+old_paths = [Path('/workspace/scratch/459484a16739/install-audit/GeoMath-Duel-Class-Profile-Debug.apk'), Path('/workspace/scratch/459484a16739/deliverables/GeoMath-0.2.0-arm64-debug.apk')]
+compatibility = []
+for old in old_paths:
+    _, old_cert, old_badging = inspect(old)
+    compatibility.append({'apk': old.name, 'package': old_badging.splitlines()[0], 'certificate_sha256': old_cert, 'same_signer_as_this_build': old_cert == cert})
+receipt = {
+    'filename': apk.name, 'bytes': apk.stat().st_size,
+    'sha256': hashlib.file_digest(apk.open('rb'), 'sha256').hexdigest(),
+    'package': 'com.geomath.dev', 'launcher_label': 'GeoMath',
+    'version_name': '0.2.1', 'version_code': 2003,
+    'configured_build_number': 3, 'abis': abis, 'zip_crc': 'passed',
+    'signature_v2': True, 'certificate_sha256': cert,
+    'original_auth_view_filter': True,
+    'source_fingerprints_verified': len(inputs['source_sha256']),
+    'unchanged_tested_dart_and_assets': len(baseline['runtime_sha256']),
+    'full_flutter_suite_on_same_dart_and_assets': 598,
+    'known_apk_signing_comparison': compatibility,
+    'installed_phone_certificate': 'unknown; no connected phone inspected',
+    'matching_older_0_1_private_keystore': 'not available in scoped build workspace',
+    'in_place_update_guaranteed_for_users_phone': False,
+    'physical_device_installation': 'not tested',
+}
+(reports / 'apk-verification.json').write_text(json.dumps(receipt, indent=2) + '\n')
+(reports / 'apk-signature.txt').write_text(signature)
+(reports / 'apk-badging.txt').write_text(badging)
+print(json.dumps(receipt, indent=2))

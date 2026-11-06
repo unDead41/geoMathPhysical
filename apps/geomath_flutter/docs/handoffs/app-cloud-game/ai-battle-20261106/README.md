@@ -1,5 +1,7 @@
 # GeoMath — offline adaptive AI battle
 
+**Packaging correction:** the preferred artifact now uses the original **GeoMath** application identity. [Original-app APK and signing compatibility](ORIGINAL_APP_APK.md). The separate GeoMath AI preview described below is historical.
+
 Implemented and verified on 6 November 2026. Main → **Lawan AI / Play AI** opens a separate local ten-question game with Easy, Medium and Hard opponents. More completed correct player pairs increase the next question's target accuracy and reduce its response-time bounds, up to the selected level's caps. The new ARM64 preview APK is built and signature-verified; physical-phone acceptance is pending.
 
 ## Exact source
