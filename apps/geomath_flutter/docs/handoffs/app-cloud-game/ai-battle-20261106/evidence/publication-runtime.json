@@ -1,0 +1,9 @@
+{
+  "remote_runtime_commit": "ec578641a3e33e167c23aab85780550d7575f6e0",
+  "remote_parent": "1d7c8f7e4a6b980b1a911729e73818f79476302f",
+  "runtime_tree": "d903bbf78a8caa62f2cc6edcf087fbcd49732608",
+  "local_runtime_commit": "c50b539f47744ce1ff21070be38141db9868b429",
+  "full_flutter_tests": 598,
+  "analyzer": "no issues",
+  "canonical_tests": 12
+}

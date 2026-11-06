@@ -36,7 +36,8 @@
     "shared_gateway": "AuthServices.gateway is the exact verified NativeAuthRepository also resolved by profile/classroom/sync.",
     "shared_writer": "FoundationServices.recordsWriter resolves SyncFormativeRecordWriter over shared LocalFormativeRecords and SQLite. Learning and Solo must borrow this same port.",
     "sync_owner": "Resolve one SyncServices.controller per dependency lifetime; foreground/reopen wakes coalesce. No background force-stop delivery guarantee.",
-    "lifecycle": "Use existing foundation lifecycle/back/audio owners; Solo pauses and checkpoints, Duel/room clock stays server-authoritative."
+    "lifecycle": "Use existing foundation lifecycle/back/audio owners; Solo pauses and checkpoints, Duel/room clock stays server-authoritative. Offline AI pauses both clocks and retains fixed plans; foreground requires explicit Resume.",
+    "ai_battle_composition": "soloFeature() flattens aiBattleFeature() services/routes/localizations/migrations exactly once; no root production factory edit."
   },
   "routes": [
     {
@@ -114,6 +115,12 @@
     {
       "name": "sync.pending",
       "path": "/sync"
+    },
+    {
+      "name": "ai-battle",
+      "path": "/play/ai",
+      "show_navigation": false,
+      "back_policy": "pause both clocks and durably save; block leave on failure"
     }
   ],
   "localizations": [
@@ -123,7 +130,8 @@
     "classroom",
     "solo",
     "duel",
-    "sync"
+    "sync",
+    "ai_battle"
   ],
   "migrations": [
     {
@@ -142,6 +150,14 @@
         "sync_solo_receipts"
       ],
       "source": "lib/features/sync/data/sync_receipt_schema.dart"
+    },
+    {
+      "namespace": "ai_battle",
+      "version": 1,
+      "tables": [
+        "ai_battle_slots"
+      ],
+      "source": "lib/features/ai_battle/data/ai_battle_repository.dart"
     }
   ],
   "schema_policy": "Foundation owns module_reflections/completed_solo_records/formative_outbox. No parallel learning reflection schema or web/hosted migration edit.",
@@ -208,5 +224,24 @@
     "new_dependencies": [],
     "new_schema": [],
     "new_backend_deployments": []
+  },
+  "followup_ai_2026_11_06": {
+    "runtime_commit": "ec578641a3e33e167c23aab85780550d7575f6e0",
+    "parent": "1d7c8f7e4a6b980b1a911729e73818f79476302f",
+    "runtime_tree": "d903bbf78a8caa62f2cc6edcf087fbcd49732608",
+    "handoff": "docs/handoffs/app-cloud-game/ai-battle-20261106/README.md",
+    "new_dependencies": [],
+    "new_hosted_schema": [],
+    "new_backend_deployments": [],
+    "local_migration": "ai_battle:1",
+    "official_score_writes": false,
+    "full_flutter_tests": 598,
+    "canonical_checks": 12,
+    "apk_preview": {
+      "package": "com.geomath.ai.preview",
+      "label": "GeoMath AI",
+      "identity_changes_in_build_copy_only": true,
+      "physical_device_execution": "not tested"
+    }
   }
 }

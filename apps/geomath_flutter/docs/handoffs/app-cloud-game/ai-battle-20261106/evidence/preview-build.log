@@ -1,0 +1,29 @@
+{"command": ["/workspace/scratch/459484a16739/toolchains/flutter/bin/flutter", "pub", "get", "--offline"], "copy": "/workspace/scratch/7395917c0f68/ai-battle/preview-build", "ssl_verification": true}
+   Woah! You appear to be trying to run flutter as root.
+   We strongly recommend running the flutter tool without superuser privileges.
+  /
+📎
+Resolving dependencies...
+Downloading packages...
+Got dependencies!
+{"command": ["/workspace/scratch/459484a16739/toolchains/flutter/bin/flutter", "build", "apk", "--release", "--split-per-abi", "--target-platform", "android-arm64", "--build-name=0.1.0-ai.1", "--build-number=2", "--dart-define-from-file=config/ai-preview.local.json"], "copy": "/workspace/scratch/7395917c0f68/ai-battle/preview-build", "ssl_verification": true}
+   Woah! You appear to be trying to run flutter as root.
+   We strongly recommend running the flutter tool without superuser privileges.
+  /
+📎
+Resolving dependencies...
+Downloading packages...
+  material_color_utilities 0.13.0 (0.13.1 available)
+  objective_c 9.6.2 (9.6.3 available)
+  sqlite3 3.8.0 (3.9.0 available)
+  synchronized 3.5.0 (3.6.1 available)
+  test_api 0.7.12 (0.7.15 available)
+Got dependencies!
+5 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Running Gradle task 'assembleRelease'...
+Picked up JAVA_TOOL_OPTIONS: -Djavax.net.ssl.trustStore=/workspace/scratch/7395917c0f68/ai-battle/bootstrap/java-cacerts -Djavax.net.ssl.trustStoreType=JKS -Dhttp.proxyHost=127.0.0.1 -Dhttp.proxyPort=34095 -Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=34095 -Dhttp.nonProxyHosts=localhost|127.*|[::1]
+Warning: SDK processing. This version only understands SDK XML versions up to 3 but an SDK XML file of version 4 was encountered. This can happen if you use versions of Android Studio and the command-line tools that were released at different times.
+Running Gradle task 'assembleRelease'...                           39.8s
+✓ Built build/app/outputs/flutter-apk/app-arm64-v8a-release.apk (21.3MB)
+{"apk": "/workspace/scratch/7395917c0f68/GeoMath-AI-Preview-arm64.apk", "filename": "GeoMath-AI-Preview-arm64.apk", "bytes": 21255875, "sha256": "e7d2e249c9738170b0753b5f116707797431236e5be8dc88f668e50043c4ecab"}

@@ -1,0 +1,9 @@
+   Woah! You appear to be trying to run flutter as root.
+   We strongly recommend running the flutter tool without superuser privileges.
+  /
+📎
+00:00 +0: loading /workspace/scratch/7395917c0f68/ai-battle/worker-5/apps/geomath_flutter/test/features/ai_battle/ai_entry_test.dart
+00:00 +0: normal production composes one AI owner through the play feature
+00:00 +1: standalone AI contribution registers without the Solo feature
+00:00 +2: Main opens real AI while preserving the separate R2 Solo save and score/outbox tables
+00:02 +3: All tests passed!

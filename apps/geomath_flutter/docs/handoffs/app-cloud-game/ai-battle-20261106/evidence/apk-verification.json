@@ -1,0 +1,21 @@
+{
+  "apk": "GeoMath-AI-Preview-arm64.apk",
+  "bytes": 21255875,
+  "sha256": "e7d2e249c9738170b0753b5f116707797431236e5be8dc88f668e50043c4ecab",
+  "zip_crc": "passed",
+  "signature_exit": 0,
+  "signature_v2": true,
+  "abis": [
+    "arm64-v8a"
+  ],
+  "package": "com.geomath.ai.preview",
+  "label": "GeoMath AI",
+  "version_name": "0.1.0-ai.1",
+  "version_code": 2002,
+  "configured_build_number": 2,
+  "launcher": "launchable-activity: name='com.geomath.dev.MainActivity'  label='' icon=''",
+  "auth_view_filter_present": false,
+  "runtime_files_byte_verified": 158,
+  "pubspec_and_lock_unchanged": true,
+  "device_installation": "not tested"
+}

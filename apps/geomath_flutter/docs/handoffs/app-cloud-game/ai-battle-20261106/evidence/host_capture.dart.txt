@@ -1,0 +1,322 @@
+// Opt-in actual Flutter host renders, not Android screenshots.
+import 'dart:io';
+import 'dart:math';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
+
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:geomath_flutter/app/app.dart';
+import 'package:geomath_flutter/app/app_dependencies.dart';
+import 'package:geomath_flutter/app/cloud_game_features.dart';
+import 'package:geomath_flutter/app/production_features.dart';
+import 'package:geomath_flutter/core/features/feature_contribution.dart';
+import 'package:geomath_flutter/core/geometry/geometry_card_provider.dart';
+import 'package:geomath_flutter/core/preferences/app_preferences.dart';
+import 'package:geomath_flutter/core/preferences/preferences_repository.dart';
+import 'package:geomath_flutter/core/result.dart';
+import 'package:geomath_flutter/core/runtime/clock.dart';
+import 'package:geomath_flutter/core/runtime/random_source.dart';
+import 'package:geomath_flutter/core/session/guest_identity_store.dart';
+import 'package:geomath_flutter/features/ai_battle/ai_battle_feature.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+
+const output = '/workspace/scratch/7395917c0f68/ai-battle/reports/previews';
+const fonts =
+    '/workspace/scratch/459484a16739/toolchains/flutter/bin/cache/artifacts/material_fonts';
+
+void main() {
+  sqfliteFfiInit();
+  testWidgets('capture actual offline adaptive AI widgets', (tester) async {
+    tester.view.physicalSize = const Size(390, 1300);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    FlutterSecureStorage.setMockInitialValues({});
+    await tester.runAsync(() async {
+      for (final family in ['Roboto', 'Ahem']) {
+        final loader = FontLoader(family);
+        for (final name in [
+          'Roboto-Regular.ttf',
+          'Roboto-Medium.ttf',
+          'Roboto-Bold.ttf',
+          'Roboto-Italic.ttf',
+        ]) {
+          loader.addFont(_font(name));
+        }
+        await loader.load();
+      }
+      await (FontLoader(
+        'MaterialIcons',
+      )..addFont(_font('MaterialIcons-Regular.otf'))).load();
+      await Directory(output).create(recursive: true);
+    });
+    final clock = _CaptureClock();
+    final random = _CaptureRandom();
+    final app = (await tester.runAsync(() async {
+      final result = await AppDependencies.bootstrap(
+        features: productionFeatures().map(_fontFeature).toList(),
+        databasePath: inMemoryDatabasePath,
+        databaseFactory: databaseFactoryFfi,
+        preferencesStore: _CapturePreferences(),
+        guestStore: _CaptureGuest(),
+        clock: clock,
+        random: random,
+      );
+      final app = result.valueOrNull!;
+      await app.preferences.save(
+        app.preferences.value.copyWith(
+          language: AppLanguage.ms,
+          theme: AppTheme.light,
+          reducedMotion: true,
+          musicEnabled: false,
+          soundEnabled: false,
+        ),
+      );
+      await app.composition.services
+          .get(CloudGamePreviewServices.startup)
+          .ready;
+      await app.composition.services
+          .get(AiBattleServices.controller)
+          .initialize();
+      return app;
+    }))!;
+    final c = app.composition.services.get(AiBattleServices.controller);
+    final capture = GlobalKey();
+    try {
+      // Controlled seed selects an actual canonical formula prompt for the
+      // repeatable visual fixture; production RNG/answers are unchanged.
+      for (var seed = 0; seed < 1000; seed++) {
+        random.matchSeed = seed;
+        final trial = AiBattleGame(
+          bank: c.bank!,
+          playerName: 'Pratonton AI',
+          difficulty: AiDifficulty.medium,
+          playerRandom: random,
+          aiRandom: DefaultRandomSource(Random(11)),
+        );
+        if (trial.player.question.id == 'B2') break;
+      }
+      await tester.pumpWidget(
+        RepaintBoundary(
+          key: capture,
+          child: GeoMathApp(dependencies: app, initialRoute: 'ai-battle'),
+        ),
+      );
+      await _settle(tester);
+      await tester.enterText(
+        find.descendant(
+          of: find.byKey(const ValueKey('ai-name')),
+          matching: find.byType(TextFormField),
+        ),
+        'Pratonton AI',
+      );
+      await _save(tester, capture, '01-host-ai-setup-ms.png');
+      expect(
+        await tester.runAsync(
+          () => c.start(name: 'Pratonton AI', difficulty: AiDifficulty.medium),
+        ),
+        isTrue,
+      );
+      expect(c.game!.player.question.id, 'B2');
+      await _settle(tester);
+      await _save(tester, capture, '02-host-ai-formula-solid-ms.png');
+      await tester.runAsync(() async {
+        clock.milliseconds += 1800;
+        c.choose(c.game!.player.question.shape);
+        c.scan('r1');
+        await c.checkpoint();
+      });
+      await _settle(tester);
+      final carousel = find.byKey(const ValueKey('ai-cards-position'));
+      await tester.ensureVisible(carousel);
+      await tester.pump();
+      await _save(tester, capture, '03-host-ai-net-carousel-ms.png');
+
+      expect(
+        await tester.runAsync(
+          () => c.start(
+            name: 'Pratonton AI',
+            difficulty: AiDifficulty.hard,
+            replaceConfirmed: true,
+          ),
+        ),
+        isTrue,
+      );
+      for (var question = 0; question < 8; question++) {
+        await tester.runAsync(() async {
+          clock.milliseconds += 1500;
+          final shape = c.game!.player.question.shape;
+          c.choose(shape);
+          c.scan('r1');
+          c.choose(shape);
+          c.scan('r2');
+          clock.milliseconds += c.game!.currentPlan.answerDelayMs + 2000;
+          c.tick();
+          clock.milliseconds += 1000;
+          expect(c.continueQuestion(), isTrue);
+          await c.checkpoint();
+        });
+        await tester.pump();
+      }
+      await _settle(tester);
+      expect(c.game!.player.score, 8);
+      expect(c.game!.currentPlan.accuracy, closeTo(.96, .00001));
+      await _save(tester, capture, '04-host-ai-hard-adapted-ms.png');
+      for (var question = 8; question < 10; question++) {
+        await tester.runAsync(() async {
+          clock.milliseconds += 1500;
+          final shape = c.game!.player.question.shape;
+          c.choose(shape);
+          c.scan('r1');
+          c.choose(shape);
+          c.scan('r2');
+          clock.milliseconds += c.game!.currentPlan.answerDelayMs + 2000;
+          c.tick();
+          clock.milliseconds += 1000;
+          expect(c.continueQuestion(), isTrue);
+          await c.checkpoint();
+        });
+        await tester.pump();
+      }
+      await _settle(tester);
+      expect(c.game!.status, AiBattleStatus.finished);
+      await _save(tester, capture, '05-host-ai-results-ms.png');
+      expect(tester.takeException(), isNull);
+    } finally {
+      await tester.pumpWidget(const SizedBox.shrink());
+      await tester.runAsync(app.dispose);
+    }
+  });
+}
+
+Future<ByteData> _font(String name) async =>
+    ByteData.sublistView(await File('$fonts/$name').readAsBytes());
+
+FeatureContribution _fontFeature(
+  FeatureContribution feature,
+) => FeatureContribution(
+  id: feature.id,
+  services: feature.services,
+  migrations: feature.migrations,
+  localizations: feature.localizations,
+  routes: [
+    for (final route in feature.routes)
+      FeatureRoute(
+        name: route.name,
+        path: route.path,
+        backPolicy: route.backPolicy,
+        showNavigation: route.showNavigation,
+        builder: (context, services) {
+          final base = Theme.of(context);
+          final label = WidgetStatePropertyAll(
+            base.textTheme.labelLarge?.copyWith(fontFamily: 'Roboto'),
+          );
+          return Theme(
+            data: base.copyWith(
+              textTheme: base.textTheme.apply(fontFamily: 'Roboto'),
+              primaryTextTheme: base.primaryTextTheme.apply(
+                fontFamily: 'Roboto',
+              ),
+              appBarTheme: base.appBarTheme.copyWith(
+                titleTextStyle: base.appBarTheme.titleTextStyle?.copyWith(
+                  fontFamily: 'Roboto',
+                ),
+              ),
+              chipTheme: base.chipTheme.copyWith(
+                labelStyle: base.chipTheme.labelStyle?.copyWith(
+                  fontFamily: 'Roboto',
+                ),
+                secondaryLabelStyle: base.chipTheme.secondaryLabelStyle
+                    ?.copyWith(fontFamily: 'Roboto'),
+              ),
+              filledButtonTheme: FilledButtonThemeData(
+                style: base.filledButtonTheme.style?.copyWith(textStyle: label),
+              ),
+              outlinedButtonTheme: OutlinedButtonThemeData(
+                style: base.outlinedButtonTheme.style?.copyWith(
+                  textStyle: label,
+                ),
+              ),
+              textButtonTheme: TextButtonThemeData(
+                style: base.textButtonTheme.style?.copyWith(textStyle: label),
+              ),
+            ),
+            child: DefaultTextStyle.merge(
+              style: const TextStyle(fontFamily: 'Roboto'),
+              child: Builder(
+                builder: (inner) => route.builder(inner, services),
+              ),
+            ),
+          );
+        },
+      ),
+  ],
+);
+
+Future<void> _settle(WidgetTester tester) async {
+  for (var i = 0; i < 8; i++) {
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 10)),
+    );
+    await tester.pump(const Duration(milliseconds: 30));
+  }
+}
+
+Future<void> _save(WidgetTester tester, GlobalKey key, String name) async {
+  await tester.pump();
+  expect(tester.takeException(), isNull, reason: name);
+  final boundary =
+      key.currentContext!.findRenderObject()! as RenderRepaintBoundary;
+  await tester.runAsync(() async {
+    final rendered = await boundary.toImage(pixelRatio: 2);
+    try {
+      final bytes = (await rendered.toByteData(
+        format: ui.ImageByteFormat.png,
+      ))!;
+      await File('$output/$name').writeAsBytes(
+        bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes),
+      );
+    } finally {
+      rendered.dispose();
+    }
+  });
+}
+
+final class _CaptureClock implements Clock {
+  int milliseconds = 0;
+  @override
+  int monotonicMilliseconds() => milliseconds;
+  @override
+  DateTime now() =>
+      DateTime.utc(2026, 11, 6).add(Duration(milliseconds: milliseconds));
+}
+
+final class _CaptureRandom implements RandomSource {
+  int matchSeed = 0;
+  final Random random = Random(21);
+  @override
+  double nextDouble() => random.nextDouble();
+  @override
+  int nextInt(int maximum) =>
+      maximum == 1 << 30 ? matchSeed : random.nextInt(maximum);
+}
+
+final class _CapturePreferences implements PreferencesStore {
+  String? value;
+  @override
+  Future<String?> read() async => value;
+  @override
+  Future<void> write(String text) async {
+    value = text;
+  }
+}
+
+final class _CaptureGuest implements GuestIdentityStore {
+  @override
+  Future<Result<String?>> read() async => const Success('ai-host-capture');
+  @override
+  Future<Result<void>> write(String guestId) async => const Success(null);
+}

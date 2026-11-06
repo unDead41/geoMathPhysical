@@ -1,0 +1,23 @@
+   Woah! You appear to be trying to run flutter as root.
+   We strongly recommend running the flutter tool without superuser privileges.
+  /
+📎
+00:00 +0: loading /workspace/scratch/7395917c0f68/ai-battle/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_policy_test.dart
+00:00 +0: /workspace/scratch/7395917c0f68/ai-battle/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_policy_test.dart: correct-count pressure is monotone, bounded and difficulty-specific
+00:00 +1: /workspace/scratch/7395917c0f68/ai-battle/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_policy_test.dart: fixed draw adapts only within selected profile and is a pair probability
+00:00 +2: /workspace/scratch/7395917c0f68/ai-battle/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_policy_test.dart: every correct/wrong completion stays inside all adaptive timing bounds
+00:00 +3: /workspace/scratch/7395917c0f68/ai-battle/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_policy_test.dart: invalid or unbounded random draws cannot produce an AI plan
+00:00 +4: /workspace/scratch/7395917c0f68/ai-battle/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_battle_game_test.dart: canonical balanced round and player stream are independent of AI difficulty
+00:00 +5: /workspace/scratch/7395917c0f68/ai-battle/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_battle_game_test.dart: selection/premature scan cannot consume attempt or retroactively change the plan
+00:00 +6: /workspace/scratch/7395917c0f68/ai-battle/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_battle_game_test.dart: AI finishes exactly once and cannot advance past an unanswered player
+00:00 +7: /workspace/scratch/7395917c0f68/ai-battle/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_battle_game_test.dart: wrong R1 and R2 are actual wrong pairs with full bounded answer time
+00:00 +8: /workspace/scratch/7395917c0f68/ai-battle/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_battle_game_test.dart: wrong and skip consume one player question, preserve scores and use long review gate
+00:00 +9: /workspace/scratch/7395917c0f68/ai-battle/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_battle_game_test.dart: pause freezes both R2 and AI clocks including repeated paused checkpoints
+00:00 +10: /workspace/scratch/7395917c0f68/ai-battle/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_battle_game_test.dart: reopen requires Resume and preserves selections, remaining time and future randomness
+00:00 +11: /workspace/scratch/7395917c0f68/ai-battle/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_battle_game_test.dart: review remainder survives pause and reopen without premature advance
+00:00 +12: /workspace/scratch/7395917c0f68/ai-battle/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_battle_game_test.dart: selected cards at either stage survive pause, but settled selections fail
+00:00 +13: /workspace/scratch/7395917c0f68/ai-battle/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_battle_game_test.dart: difficulty and policy cap stay fixed through ten questions and completion replay
+00:00 +14: /workspace/scratch/7395917c0f68/ai-battle/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_battle_game_test.dart: winner compares score first, answering time second and supports exact draw
+00:00 +15: /workspace/scratch/7395917c0f68/ai-battle/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_battle_game_test.dart: malformed bank/ruleset/policy/timers/AI answer/plan/RNG state snapshots fail closed
+00:00 +16: /workspace/scratch/7395917c0f68/ai-battle/worker-1/apps/geomath_flutter/test/features/ai_battle/domain/ai_battle_game_test.dart: backwards clocks cannot create a second AI result or rewind a plan
+00:00 +17: All tests passed!

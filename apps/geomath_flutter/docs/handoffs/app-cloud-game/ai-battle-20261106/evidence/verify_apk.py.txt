@@ -1,0 +1,50 @@
+from pathlib import Path
+import subprocess, os, json, zipfile, hashlib
+
+root = Path('/workspace/scratch/7395917c0f68')
+apk = root / 'GeoMath-AI-Preview-arm64.apk'
+sdk = Path('/workspace/scratch/459484a16739/toolchains/android-sdk/build-tools/36.0.0')
+jdk = '/workspace/scratch/459484a16739/toolchains/jdk/usr/lib/jvm/java-17-openjdk-amd64'
+env = dict(os.environ, JAVA_HOME=jdk, PATH=jdk + '/bin:' + os.environ['PATH'])
+badging = subprocess.check_output([str(sdk / 'aapt'), 'dump', 'badging', str(apk)], env=env, text=True)
+sig = subprocess.run([str(sdk / 'apksigner'), 'verify', '--verbose', '--print-certs', str(apk)], env=env, check=True, capture_output=True, text=True)
+manifest = subprocess.check_output([str(sdk / 'aapt'), 'dump', 'xmltree', str(apk), 'AndroidManifest.xml'], env=env, text=True)
+assert "package: name='com.geomath.ai.preview' versionCode='2002' versionName='0.1.0-ai.1'" in badging
+assert "application-label:'GeoMath AI'" in badging
+assert 'android.intent.action.VIEW' not in manifest
+assert 'android.intent.action.MAIN' in manifest
+assert 'Verified using v2 scheme (APK Signature Scheme v2): true' in sig.stdout
+with zipfile.ZipFile(apk) as z:
+    assert z.testzip() is None
+    abis = sorted({p.split('/')[1] for p in z.namelist() if p.startswith('lib/')})
+    assert abis == ['arm64-v8a'], abis
+    assert 'lib/arm64-v8a/libapp.so' in z.namelist()
+    assert 'lib/arm64-v8a/libflutter.so' in z.namelist()
+source = root / 'ai-battle/repo/apps/geomath_flutter'
+copy = root / 'ai-battle/preview-build'
+for p in ['pubspec.yaml', 'pubspec.lock']:
+    assert (source / p).read_bytes() == (copy / p).read_bytes(), p
+receipt = json.loads((root / 'ai-battle/reports/preview-build-inputs.json').read_text())
+for rel, digest in receipt['runtime_sha256'].items():
+    assert hashlib.sha256((source / rel).read_bytes()).hexdigest() == digest
+    assert hashlib.sha256((copy / rel).read_bytes()).hexdigest() == digest
+summary = {
+    'apk': apk.name, 'bytes': apk.stat().st_size,
+    'sha256': hashlib.file_digest(apk.open('rb'), 'sha256').hexdigest(),
+    'zip_crc': 'passed', 'signature_exit': sig.returncode, 'signature_v2': True,
+    'abis': abis, 'package': 'com.geomath.ai.preview', 'label': 'GeoMath AI',
+    'version_name': '0.1.0-ai.1', 'version_code': 2002,
+    'configured_build_number': 2,
+    'launcher': next(p for p in badging.splitlines() if p.startswith('launchable-activity:')),
+    'auth_view_filter_present': False,
+    'runtime_files_byte_verified': len(receipt['runtime_sha256']),
+    'pubspec_and_lock_unchanged': True, 'device_installation': 'not tested',
+}
+reports = root / 'ai-battle/reports'
+receipt['identity']['configured_build_number'] = 2
+receipt['identity']['version_code'] = 2002
+(reports / 'preview-build-inputs.json').write_text(json.dumps(receipt, indent=2) + '\n')
+(reports / 'apk-verification.json').write_text(json.dumps(summary, indent=2) + '\n')
+(reports / 'apk-signature.txt').write_text(sig.stdout)
+(reports / 'apk-badging.txt').write_text(badging)
+print(json.dumps(summary, indent=2))

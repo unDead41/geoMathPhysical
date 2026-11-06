@@ -1,0 +1,35 @@
+   Woah! You appear to be trying to run flutter as root.
+   We strongly recommend running the flutter tool without superuser privileges.
+  /
+📎
+00:00 +0: loading /workspace/scratch/7395917c0f68/ai-battle/worker-4/apps/geomath_flutter/test/features/ai_battle/presentation/ai_battle_screen_test.dart
+00:00 +0: slow real SQLite route read becomes ready and cleanup drains across widget frames
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: false
+  Actual: <true>
+A fixed300ms pump budget cannot claim readiness.
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///workspace/scratch/7395917c0f68/ai-battle/worker-4/apps/geomath_flutter/test/features/ai_battle/presentation/ai_battle_screen_test.dart:603:9)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/scratch/7395917c0f68/ai-battle/worker-4/apps/geomath_flutter/test/features/ai_battle/presentation/ai_battle_screen_test.dart line 603
+The test description was:
+  slow real SQLite route read becomes ready and cleanup drains across widget frames
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +0 -1: slow real SQLite route read becomes ready and cleanup drains across widget frames [E]
+  Test failed. See exception logs above.
+  The test description was: slow real SQLite route read becomes ready and cleanup drains across widget frames
+
+00:01 +0 -1: Some tests failed.
+
+Failing tests:
+  /workspace/scratch/7395917c0f68/ai-battle/worker-4/apps/geomath_flutter/test/features/ai_battle/presentation/ai_battle_screen_test.dart: slow real SQLite route read becomes ready and cleanup drains across widget frames

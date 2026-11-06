@@ -1,0 +1,100 @@
+"""Build the verified AI source with a side-by-side Android preview identity.
+
+Only the isolated copy's Android identity/launcher label/callback filter differ.
+The actual feature, shared runtime and bundled source are copied byte-for-byte.
+"""
+from pathlib import Path
+import hashlib
+import json
+import os
+import re
+import shutil
+import subprocess
+import sys
+import urllib.parse
+import xml.etree.ElementTree as ET
+
+root = Path('/workspace/scratch/7395917c0f68/ai-battle')
+source = root / 'repo/apps/geomath_flutter'
+target = root / 'preview-build'
+tools = Path('/workspace/scratch/459484a16739/toolchains')
+flutter = tools / 'flutter/bin/flutter'
+jdk = tools / 'jdk/usr/lib/jvm/java-17-openjdk-amd64'
+sdk = tools / 'android-sdk'
+reports = root / 'reports'
+reports.mkdir(exist_ok=True)
+resume = '--resume' in sys.argv
+if target.exists() and not resume:
+    raise SystemExit('Preview copy already exists; reconcile it before another build.')
+if not resume:
+    shutil.copytree(source, target, ignore=shutil.ignore_patterns('build', '.dart_tool', '.gradle', 'local.properties'))
+gradle = target / 'android/app/build.gradle.kts'
+original_gradle = gradle.read_text()
+anchor = 'applicationId = "com.geomath.dev"'
+if resume:
+    assert original_gradle.count('applicationId = "com.geomath.ai.preview"') == 1
+else:
+    assert original_gradle.count(anchor) == 1
+    gradle.write_text(original_gradle.replace(anchor, 'applicationId = "com.geomath.ai.preview"'))
+manifest = target / 'android/app/src/main/AndroidManifest.xml'
+ET.register_namespace('android', 'http://schemas.android.com/apk/res/android')
+xml = ET.parse(manifest)
+android = '{http://schemas.android.com/apk/res/android}'
+app = xml.getroot().find('application')
+assert app is not None
+app.set(android + 'label', 'GeoMath AI')
+removed = 0
+for activity in app.findall('activity'):
+    for intent_filter in list(activity.findall('intent-filter')):
+        if any(action.get(android + 'name') == 'android.intent.action.VIEW' for action in intent_filter.findall('action')):
+            activity.remove(intent_filter)
+            removed += 1
+assert removed == (0 if resume else 1)
+xml.write(manifest, encoding='utf-8', xml_declaration=True)
+config = target / 'config/ai-preview.local.json'
+config.parent.mkdir(exist_ok=True)
+shutil.copyfile(root / 'bootstrap/public-defines.local.json', config)
+
+runtime = {}
+for prefix in ['lib', 'assets']:
+    for original in sorted((source / prefix).rglob('*')):
+        if not original.is_file():
+            continue
+        relative = original.relative_to(source)
+        digest = hashlib.file_digest(original.open('rb'), 'sha256').hexdigest()
+        assert hashlib.file_digest((target / relative).open('rb'), 'sha256').hexdigest() == digest
+        runtime[str(relative)] = digest
+receipt = {
+    'source_local_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=root / 'repo', text=True).strip(),
+    'runtime_sha256': runtime,
+    'identity': {'application_id': 'com.geomath.ai.preview', 'launcher_label': 'GeoMath AI', 'mode': 'release', 'signing': 'development debug key', 'version_name': '0.1.0-ai.1', 'configured_build_number': 2},
+    'build_copy_only_changes': ['Android applicationId', 'launcher label', 'removed auth VIEW intent filter to avoid intercepting the existing app'],
+    'production_repository_platform_files_changed': False,
+    'device_installation': 'not tested',
+    'target_platform': 'android-arm64',
+}
+(reports / 'preview-build-inputs.json').write_text(json.dumps(receipt, indent=2) + '\n')
+trust = root / 'bootstrap/java-cacerts'
+shutil.copyfile('/etc/ssl/certs/java/cacerts', trust)
+if os.environ.get('SSL_CERT_FILE'):
+    subprocess.run([str(jdk / 'bin/keytool'), '-importcert', '-noprompt', '-trustcacerts', '-alias', 'geomath-managed-network', '-file', os.environ['SSL_CERT_FILE'], '-keystore', str(trust), '-storepass', 'changeit'], check=True, capture_output=True)
+options = [f'-Djavax.net.ssl.trustStore={trust}', '-Djavax.net.ssl.trustStoreType=JKS']
+proxy = urllib.parse.urlparse(os.environ.get('HTTPS_PROXY', ''))
+if proxy.hostname:
+    assert not proxy.username and not proxy.password
+    options += [f'-Dhttp.proxyHost={proxy.hostname}', f'-Dhttp.proxyPort={proxy.port}', f'-Dhttps.proxyHost={proxy.hostname}', f'-Dhttps.proxyPort={proxy.port}', '-Dhttp.nonProxyHosts=localhost|127.*|[::1]']
+env = dict(os.environ, ANDROID_HOME=str(sdk), ANDROID_SDK_ROOT=str(sdk), JAVA_HOME=str(jdk), PATH=str(jdk / 'bin') + ':' + os.environ['PATH'], PUB_CACHE='/workspace/scratch/459484a16739/pub-cache', GRADLE_USER_HOME='/workspace/scratch/459484a16739/gradle-cache', JAVA_TOOL_OPTIONS=' '.join(options), GRADLE_OPTS='-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 -Dorg.gradle.jvmargs=-Xmx2g -Dkotlin.daemon.jvm.options=-Xmx512m')
+for command in [
+    [str(flutter), 'pub', 'get', '--offline'],
+    [str(flutter), 'build', 'apk', '--release', '--split-per-abi', '--target-platform', 'android-arm64', '--build-name=0.1.0-ai.1', '--build-number=2', '--dart-define-from-file=config/ai-preview.local.json'],
+]:
+    print(json.dumps({'command': command, 'copy': str(target), 'ssl_verification': True}), flush=True)
+    subprocess.run(command, cwd=target, env=env, check=True)
+apk = target / 'build/app/outputs/flutter-apk/app-arm64-v8a-release.apk'
+delivered = root.parent / 'GeoMath-AI-Preview-arm64.apk'
+shutil.copyfile(apk, delivered)
+receipt['apk'] = {'filename': delivered.name, 'bytes': delivered.stat().st_size, 'sha256': hashlib.file_digest(delivered.open('rb'), 'sha256').hexdigest()}
+badging = subprocess.check_output([str(sdk / 'build-tools/36.0.0/aapt'), 'dump', 'badging', str(delivered)], text=True)
+receipt['identity']['version_code'] = int(re.search(r"versionCode='(\d+)'", badging).group(1))
+(reports / 'preview-build-inputs.json').write_text(json.dumps(receipt, indent=2) + '\n')
+print(json.dumps({'apk': str(delivered), **receipt['apk']}), flush=True)

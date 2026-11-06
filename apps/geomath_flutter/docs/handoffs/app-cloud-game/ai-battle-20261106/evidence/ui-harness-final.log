@@ -1,0 +1,16 @@
+   Woah! You appear to be trying to run flutter as root.
+   We strongly recommend running the flutter tool without superuser privileges.
+  /
+📎
+00:00 +0: loading /workspace/scratch/7395917c0f68/ai-battle/worker-4/apps/geomath_flutter/test/features/ai_battle/presentation/ai_battle_screen_test.dart
+00:00 +0: 320dp/150% ms/light setup, match, pause and review fit
+00:03 +1: 320dp/150% ms/dark setup, match, pause and review fit
+00:04 +2: 320dp/150% en/light setup, match, pause and review fit
+00:06 +3: 320dp/150% en/dark setup, match, pause and review fit
+00:07 +4: left/right browsing does not select, consume a scan or expose the AI answer
+00:08 +5: pause retains both clocks and explicit resume does not fast-forward AI
+00:09 +6: current target stays committed, next target adapts, preference changes keep the match and carousel
+00:10 +7: replacement confirmation cannot start under a different actor
+00:10 +8: question transitions reset vertical position while preferences retain it
+00:12 +9: slow real SQLite route read becomes ready and cleanup drains across widget frames
+00:13 +10: All tests passed!

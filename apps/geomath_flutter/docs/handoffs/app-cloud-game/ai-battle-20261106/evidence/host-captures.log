@@ -1,0 +1,7 @@
+   Woah! You appear to be trying to run flutter as root.
+   We strongly recommend running the flutter tool without superuser privileges.
+  /
+📎
+00:00 +0: loading /workspace/scratch/7395917c0f68/ai-battle/worker-6/apps/geomath_flutter/host_capture/ai_battle_capture.dart
+00:00 +0: capture actual offline adaptive AI widgets
+00:04 +1: All tests passed!

@@ -1,0 +1,18 @@
+   Woah! You appear to be trying to run flutter as root.
+   We strongly recommend running the flutter tool without superuser privileges.
+  /
+📎
+00:00 +0: loading /workspace/scratch/7395917c0f68/ai-battle/worker-3/apps/geomath_flutter/test/features/ai_battle/data/ai_battle_repository_test.dart
+00:00 +0: real SQLite reopen retains the same opaque paused plan and stage
+00:00 +1: checkpoints never touch quiz scores, completed history or outbox
+00:00 +2: create, update, replace and queued deletion cannot overwrite another attempt
+00:00 +3: guest and account slots remain isolated across session epochs and deletion
+00:00 +4: corrupt and foreign envelopes survive until explicit replacement
+00:00 +5: non-JSON, cyclic, too-deep and oversized UTF8 values cannot replace a valid slot
+00:00 +6: queued checkpoint captures caller data before any pending SQLite commit
+00:00 +7: actor change inside the actual transaction rolls back a written checkpoint
+00:00 +8: actor change before transaction entry rejects without writing
+00:00 +9: a late read and post-commit acknowledgement never adopt another actor
+00:00 +10: failure after actual update rolls back and the serial queue remains usable
+00:00 +11: stale deletion rolls back and a closed database reports a recoverable failure
+00:00 +12: All tests passed!

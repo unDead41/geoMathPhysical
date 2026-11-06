@@ -1,0 +1,13 @@
+   Woah! You appear to be trying to run flutter as root.
+   We strongly recommend running the flutter tool without superuser privileges.
+  /
+📎
+00:00 +0: loading /workspace/scratch/7395917c0f68/ai-battle/worker-6/apps/geomath_flutter/test/integration/ai_battle_flow_test.dart
+00:00 +0: easy: full real ten-question match adapts only future plans and never enters rankings/outbox
+00:00 +1: medium: full real ten-question match adapts only future plans and never enters rankings/outbox
+00:00 +2: hard: full real ten-question match adapts only future plans and never enters rankings/outbox
+00:00 +3: native SQLite process reopen in player R2 / AI solid retains exact plan and remaining active time
+00:00 +4: native SQLite process reopen in player R2 / AI net retains exact plan and remaining active time
+00:00 +5: failed save blocks leave and actor change cannot publish or upload another account AI match
+00:00 +6: real AI route browses solid and net cards without choosing or consuming an attempt at 320dp/150%
+00:02 +7: All tests passed!

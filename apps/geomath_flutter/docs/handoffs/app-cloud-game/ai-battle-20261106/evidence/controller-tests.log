@@ -1,0 +1,18 @@
+   Woah! You appear to be trying to run flutter as root.
+   We strongly recommend running the flutter tool without superuser privileges.
+  /
+📎
+00:00 +0: loading /workspace/scratch/7395917c0f68/ai-battle/worker-2/apps/geomath_flutter/test/features/ai_battle/application/ai_battle_controller_test.dart
+00:00 +0: initial fixed plan is durable before either clock starts
+00:00 +1: background pauses both R2 and AI until explicit resume
+00:00 +2: storage failure is visible and blocks exit until a durable retry
+00:00 +3: actor switch while initial save is pending cannot adopt the match
+00:00 +4: old commit acknowledgement cannot mark newer R2 progress saved
+00:00 +5: duplicate leave shares one save and preserves the fixed resume plan
+00:00 +6: invalid domain checkpoint remains stored until explicit replacement
+00:00 +7: durable selected solid resumes without consuming a scan
+00:00 +8: durable selected net resumes without consuming a scan
+00:00 +9: read denial and initial write denial never publish false success
+00:00 +10: background during initial save requires explicit resume after return
+00:00 +11: finished match is saved separately and next match resets adaptation
+00:00 +12: All tests passed!
