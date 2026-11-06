@@ -1,6 +1,6 @@
 # GeoMath Physical (GeoDecoder)
 
-Versi semasa: **v2.0.3**.
+Versi semasa: **v2.0.4**.
 Rujukan kemas kini: [SOR versi](docs/SOR_VERSIONING.md) dan [changelog](CHANGELOG.md).
 
 Kuiz geometri 3D menggunakan ESP32 klasik/WROOM-32, dua pembaca MFRC522,
@@ -50,10 +50,11 @@ firmware v1.1.1; mulai v1.1.3, Build sentiasa RGB. Langkau langkah memilih
 LED/environment dalam A-Z dan terus Build/Upload. Salinan A-Z berasal daripada
 `sharing` commit `de86754fb042e12c9254eb883621febf6f055a31`.
 
-Bahagian installer A-Z menggunakan `setup.ps1` dalam pakej
-[`sharing`](https://github.com/unDead41/geoMathPhysical/tree/sharing).
-Dapatkan installer bersama ZIP branch itu. Untuk folder `main`, ikut
-langkah VS Code + PlatformIO di bawah.
+Installer Windows kini dijana daripada sumber `main` yang sama; tiada branch
+`sharing` berasingan. Jalankan `python tools/build_sharing_package.py --check`
+untuk menghasilkan ZIP dalam `artifacts/`, atau muat turun artifak CI.
+Extract All ZIP, kemudian jalankan `setup.ps1` di dalam pakej.
+Untuk folder sumber `main`, ikut langkah VS Code + PlatformIO di bawah.
 
 Cara bermain murid menunjukkan bongkah 3D dengan kad RFID di bawahnya untuk
 R1, serta kad RFID yang ditampal cetakan bentangan untuk R2. Demonstrasi
@@ -277,7 +278,7 @@ Untuk melihat port: `pio device list`.
 Pada boot/reset ESP32, Serial 115200 baud memaparkan:
 
 ```text
-[FIRMWARE] GeoDecoder v2.0.3 | ESP32 | env=esp32dev-rgb
+[FIRMWARE] GeoDecoder v2.0.4 | ESP32 | env=esp32dev-rgb
 ```
 
 Jika Monitor dibuka selepas banner berlalu, taip `version`; `status` turut
@@ -344,7 +345,7 @@ python tools/check_version.py
 ```
 
 Setiap arahan `tests/run_tests.py` menyemak keselarasan versi, menjalankan
-14 kes teras/application tanpa Arduino dan 75 kes integrasi firmware.
+14 kes teras/application tanpa Arduino dan 79 kes integrasi firmware.
 Mod `--separate-modules` mengkompil setiap tab secara
 berasingan supaya header serta kebergantungan modul turut disahkan.
 
@@ -365,3 +366,11 @@ Rujukan rasmi:
 [ESP32 Dev Module](https://docs.platformio.org/en/latest/boards/espressif32/esp32dev.html).
 
 
+
+## Sumber yang disatukan
+
+`main` ialah satu-satunya branch sumber aktif. Installer berkongsi firmware, pin,
+versi dan PDF asal yang sama; pakej ZIP tidak membawa salinan ujian lama atau
+konfigurasi COM/NVS peribadi. [Skrip audio](docs/audio/README.md) meliputi
+15 soalan dan 15 hint mengikut fokus R1/R2 semasa. MP3 dan pemain fizikal belum tersedia.
+Lihat [rekod cleanup](docs/maintenance/CLEANUP.md) untuk asal branch dan arkib.

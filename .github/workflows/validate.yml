@@ -1,17 +1,48 @@
 name: GeoMath Physical checks
 on:
   push:
-    branches: [main, sharing, 'feature/**', 'fix/**', 'chore/**']
+    branches: [main, 'feature/**', 'fix/**', 'chore/**']
   pull_request:
 permissions:
   contents: read
+concurrency:
+  group: physical-check-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   verify:
-    if: github.ref != 'refs/heads/sharing'
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
       - run: python3 tools/check_repository_scope.py
       - run: python3 tools/check_version.py
-      - run: python3 tests/run_tests.py --entrypoint src/main.cpp --rgb
+      - name: Native firmware and module checks
+        run: |
+          python3 tests/run_tests.py --entrypoint src/main.cpp --rgb
+          python3 tests/run_tests.py --separate-modules --rgb
+          python3 tests/test_question_audio.py
+          python3 tools/question_audio.py
+      - uses: actions/cache@v5
+        with:
+          path: ~/.platformio
+          key: physical-esp32-v1-espressif32-6.12.0-pio-6.1.18
+      - name: Compile the sole ESP32 RGB default
+        run: |
+          python3 -m pip install platformio==6.1.18
+          python3 -m platformio run
+      - name: Build and verify the generated Windows package
+        run: |
+          python3 tools/build_sharing_package.py --check
+          unzip -q artifacts/GeoMathPhysical-*-sharing.zip -d "$RUNNER_TEMP/physical-package"
+          pwsh -NoProfile -File tools/sharing/check_package.ps1 -PackageRoot "$RUNNER_TEMP/physical-package/GeoMathPhysical"
+          git diff --exit-code
+          python3 tools/check_repository_scope.py
+      - uses: actions/upload-artifact@v7
+        with:
+          name: GeoMathPhysical-sharing
+          path: artifacts/GeoMathPhysical-*-sharing.zip
+          if-no-files-found: error
+          retention-days: 14

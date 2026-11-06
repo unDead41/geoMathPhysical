@@ -1,5 +1,13 @@
 # Changelog
 
+## v2.0.4 - 2026-11-06
+
+- Satukan sejarah branch Physical dan kekalkan satu sumber firmware `main`.
+- Bawa installer sharing ke templat pakej yang dijana daripada main; satu environment RGB sahaja.
+- Selaraskan pakej skrip audio dengan metadata fokus soalan semasa; teks suara asal dikekalkan.
+- Arkibkan sumber branch dan provenance pemisahan; buang skrip migrasi serta fixture ujian tidak aktif.
+- Pin, flow permainan, UID/NVS dan PDF asal dikekalkan. Pull, Build/Upload untuk label versi baharu; tiada erase flash diperlukan.
+
 ## v2.0.3 - 2026-11-06
 
 - Asingkan pembangunan kepada geoMathPhysical, geoMathDigital dan geoMathApp.

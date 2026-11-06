@@ -1,0 +1,88 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "GeoDecoder: Build",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}/geodecoder.ps1",
+        "-Action",
+        "Build"
+      ],
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "GeoDecoder: Upload",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}/geodecoder.ps1",
+        "-Action",
+        "Upload"
+      ],
+      "problemMatcher": [
+        "$gcc"
+      ]
+    },
+    {
+      "label": "GeoDecoder: Monitor",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}/geodecoder.ps1",
+        "-Action",
+        "Monitor"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "GeoDecoder: Configure",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}/geodecoder.ps1",
+        "-Action",
+        "Configure"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "GeoDecoder: Ports",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}/geodecoder.ps1",
+        "-Action",
+        "Ports"
+      ],
+      "problemMatcher": []
+    }
+  ]
+}

@@ -10,3 +10,6 @@ platformio.local.ini
 *.log
 .DS_Store
 Thumbs.db
+artifacts/
+__pycache__/
+*.pyc

@@ -88,9 +88,8 @@ Pada boot/reset, selepas Serial 115200 bermula, firmware menunjukkan contohnya:
 [FIRMWARE] GeoDecoder v1.0.0 | ESP32 | env=esp32dev-rgb
 ```
 
-Mulai v1.1.3, hanya build RGB diterbitkan: `esp32dev-rgb` dalam main dan
-`esp32dev-sharing-rgb` dalam sharing; kedua-duanya memaparkan label hardware
-Serial `env=esp32dev-rgb` yang sama. `version` mencetak identiti sama
+Mulai v1.1.3, hanya build RGB diterbitkan: `esp32dev-rgb` dalam main dan pakej sharing yang dijana daripada main.
+Branch sharing lama dipulihkan melalui arkib; pakej baharu tidak mempunyai sumber firmware kedua. `version` mencetak identiti sama
 tanpa menukar permainan, timer, reader, ujian komponen atau UID. `status` turut
 mencetaknya. Arahan baca ini tersedia semasa kuiz dan ujian komponen.
 
@@ -112,7 +111,7 @@ permulaan semula. LCD murid tidak perlu memaparkan maklumat developer ini.
 
 Versi yang sama tidak membuktikan semua pengubahsuaian tempatan identik.
 Nyatakan SHA, branch dan perubahan belum commit semasa audit. Untuk memadankan
-keluaran rasmi, gunakan commit keluaran yang bersih; pakej sharing menyatakan
+keluaran rasmi, gunakan commit keluaran yang bersih; pakej sharing yang dijana menyatakan
 SHA main sumbernya dan menggunakan firmware bernombor sama.
 
 ## 7. Pengesahan sebelum diterbitkan
@@ -122,7 +121,7 @@ SHA main sumbernya dan menggunakan firmware bernombor sama.
   sahaja tidak memerlukan keseluruhan ujian firmware; checker tetap wajib.
 - Jika firmware berubah, uji entry PlatformIO dan environment terkesan; jalankan
   mod modul berasingan apabila header/modul berubah. Build default tunggal pada
-  setiap branch yang diubah dan semak versi firmware sama dalam main/sharing.
+  main dan semak versi firmware sama dalam pakej sharing yang dijana.
   Semakan native LED biasa boleh dikekalkan sebagai keserasian developer;
   ia bukan environment kedua untuk pengguna.
 - Perubahan label versi tidak memadam atau mendaftar semula UID/NVS. Kekalkan

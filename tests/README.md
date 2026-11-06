@@ -50,7 +50,8 @@ engine tests use the public engine API. All card UIDs in tests are synthetic.
 
 Current: `domain.cpp`, `behaviour.cpp`, `expected_displays.h`, `fakes/` and
 the two runners. Original `core_test.cpp`, `integration_test.cpp` and `stubs/`
-are historical fixtures from the supplied ZIP, not the active test contract.
+were inactive fixtures from the supplied ZIP. They are retained in the cleanup archive tag;
+current source keeps only the active fakes and maintained runners.
 
 Simulation does not replace ESP32 cross-compilation, USB upload or physical
 RFID/LCD checks. Latest actual results: `../VERIFICATION.md`.

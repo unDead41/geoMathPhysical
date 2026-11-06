@@ -1,0 +1,191 @@
+{
+  "schema_version": 1,
+  "status": "prepared_for_verification",
+  "repository": "unDead41/geoMathPhysical",
+  "date_malaysia": "2026-11-06",
+  "version": "2.0.4",
+  "base_main": "4189dade7544f9e72d015ea18c738c3dac716bf7",
+  "original_branches": [
+    {
+      "name": "codex/game-flow-rgb",
+      "sha": "e457b0536987d35042da4d47337fea65a0ad5d77"
+    },
+    {
+      "name": "codex/question-audio-elevenlabs",
+      "sha": "09122e801b91041237b897c021229721a4bbcd6c"
+    },
+    {
+      "name": "codex/question-bank-harmonised-lcd",
+      "sha": "d241ea5683c2af24d418af468cff3cdf394226ba"
+    },
+    {
+      "name": "codex/serial-unassign",
+      "sha": "797a21f01ebcd47966aef5316aa813f2834e9347"
+    },
+    {
+      "name": "main",
+      "sha": "4189dade7544f9e72d015ea18c738c3dac716bf7"
+    },
+    {
+      "name": "sharing",
+      "sha": "f05f266d7c0a941329f0e39cc4202fcecd7efabc"
+    },
+    {
+      "name": "testing/components",
+      "sha": "36d999a9016cf0389005cede7567b654c462b03d"
+    }
+  ],
+  "archive_tag": "archive/physical-before-cleanup-20261106",
+  "target_active_branches": [
+    "main"
+  ],
+  "integrated_changes": [
+    "All Physical branch histories are consolidated; sharing firmware already matches main byte-for-byte.",
+    "Windows installer templates are retained once and generate a reproducible sharing ZIP from current main.",
+    "The unique audio script pack uses current SOLID/NET metadata, retaining all 30 original speech texts; no MP3 or playback is claimed.",
+    "Inactive pre-architecture C++ fixtures and completed repository-migration executables are removed; live tests and all printable assets remain."
+  ],
+  "removed_files": [
+    {
+      "path": "migration/retire_migrated_branches.py",
+      "git_blob": "bfbacee40ea7143961a12dbc1407b6c98f399673",
+      "bytes": 4754
+    },
+    {
+      "path": "migration/sources.json",
+      "git_blob": "f018d00a64ba4f4f6951a4326248e5de9dc01c3a",
+      "bytes": 5341
+    },
+    {
+      "path": ".github/workflows/retire-migrated-branches.yml",
+      "git_blob": "2ec061e1d8cc5a8780d1535dabbfe7435065a9b7",
+      "bytes": 764
+    },
+    {
+      "path": "tests/core_test.cpp",
+      "git_blob": "545221dd169e392db7572af0b375f369d00e12e3",
+      "bytes": 1374
+    },
+    {
+      "path": "tests/integration_test.cpp",
+      "git_blob": "07c270021174997d0bd7866d3c96f60002184707",
+      "bytes": 17234
+    },
+    {
+      "path": "tests/stubs/Arduino.h",
+      "git_blob": "c0e4831fb74e1fafe6941bedc96e05f9a097d413",
+      "bytes": 1856
+    },
+    {
+      "path": "tests/stubs/MFRC522.h",
+      "git_blob": "7f9c5618d42017bfa5809e2f138cc2544b4b0a8f",
+      "bytes": 1099
+    },
+    {
+      "path": "tests/stubs/Preferences.h",
+      "git_blob": "d8e4b736ea68bb920e1d56d8425eb6bcc23714d2",
+      "bytes": 808
+    },
+    {
+      "path": "tests/stubs/SPI.h",
+      "git_blob": "8a55aad4aee0f3ef7686467a86fdd7512e360a3b",
+      "bytes": 166
+    },
+    {
+      "path": "tests/stubs/Wire.h",
+      "git_blob": "18087684b48d33f302be5de19a92424a36a7635d",
+      "bytes": 228
+    },
+    {
+      "path": "tests/stubs/hd44780.h",
+      "git_blob": "6f70f09beec2219624baeca92e2cd7deaa104fb4",
+      "bytes": 13
+    },
+    {
+      "path": "tests/stubs/hd44780ioClass/hd44780_I2Cexp.h",
+      "git_blob": "fa5fc6a3d474a2950efabec0d8461624bccb92f2",
+      "bytes": 472
+    }
+  ],
+  "protected_source_blobs": {
+    "main/app.ino": "78d310153e201c5753269c427ba5845162c52bd9",
+    "main/app_ports.ino": "3674bde9e23d05ec2f60f79de9ce02f643fd7bf3",
+    "main/application/app.h": "65d618aed33c31057377068b43a8b40ca6449c74",
+    "main/application/ports.h": "697d928cdeb688cb9014f4c3b26b4e01f2005958",
+    "main/application/quiz.h": "014f2e625d14dd254782bdc42dfed10d6d840c81",
+    "main/application/registry.h": "cc82bdd3f6fdc180198c3a77f2cee17f8174af9e",
+    "main/application/runtime.h": "0ad5d122de11feeded2b1292fdaaf7410e70b4e7",
+    "main/buttons.ino": "0e4c13ebbcd919206b667c7e86c575b194735236",
+    "main/component_tests.ino": "c5021be8f1230af2d95b42f3ac722517cb5829b3",
+    "main/config.h": "dc97ee9003659a4379cb0c7dd885f52ac6627f69",
+    "main/domain/quiz_engine.h": "5e78d9d7bc614ba73f1a6a64bb27f5f7623f5ec4",
+    "main/domain/registry.h": "fa2b7d39dcad83209439c6d5a12af4ab87cb72cc",
+    "main/domain/rgb_random.h": "d50bc7ad62d918bfc70c3bc983052f1d82d96648",
+    "main/domain/rules.h": "e67474e46a5c35eab4ff1fa1efddffce6850231c",
+    "main/domain/types.h": "b7b36063aa1b0a853802740cd71d675d26570b41",
+    "main/hardware/buttons.h": "ff933094554b50608c05e30235709c1e64b93090",
+    "main/hardware/component_tests.h": "3db51ccfca7209dff4d0d0c939d3b63e7950edfa",
+    "main/hardware/inputs.h": "f07073d13dd22098ddceadc910e472501dcacd08",
+    "main/hardware/lcd.h": "99bb9f4fea71fddd5b13ad342e2c7f6de041bcd4",
+    "main/hardware/rfid.h": "df1414349e7757b365e7789de6b748ccfd13cee6",
+    "main/hardware/rgb.h": "aa0af4f3a0a64bf38607aa65e21703152933bf0d",
+    "main/hardware/storage.h": "730919ef5677541b4e75a66d01bc806613a50410",
+    "main/lcd_display.ino": "6c9a4bedb1a17b5787704012ca45088aef2d0ae6",
+    "main/main.ino": "01c61ffc4cd699aa36c20d5aa3037e5b72e95737",
+    "main/nvs_storage.ino": "554bfc3967256a38b53f902caa384a06cfba129d",
+    "main/presentation/lcd_frame.h": "098e139480d30e299aa66e88097fe2fe842b5d76",
+    "main/presentation/lcd_view.h": "ab6cabea1ad8430a54926836320589f8d702f2bb",
+    "main/presentation/serial_commands.h": "598aeae61db6080add83b154e7da9525fe1fa78f",
+    "main/question_bank.h": "9720154edd30850684e5f88504e02cdfd2ed2c0c",
+    "main/quiz.ino": "1b40106672da8f845510326290ce5ca4394ed993",
+    "main/rfid.ino": "663e59b28a91b0356afde3ff59211dd8bbe0f273",
+    "main/rgb_leds.ino": "d1c1db78268d15aac3d329807979b38d17744a4d",
+    "main/serial_commands.ino": "b0e28f6de8b35905839b34c2b7094eb68df7b94e",
+    "main/tag_registry.ino": "c5e7f5e0a655dd6eec3d8a1f82bc4b4bd450194a",
+    "platformio.ini": "77cf99032c02b8d36a450e40574ccd4cff0391ac",
+    "platformio.local.ini.example": "340caf66a7eeea8c3aa2d6c50879f4e13af18fbc",
+    "src/main.cpp": "6d36ad2267f55b5dd276674d4e73728012838e79"
+  },
+  "binary_assets": {
+    "docs/lcd/GeoDecoder_15_Contoh_LCD_PNG.zip": {
+      "git_blob": "dd26b7daac641c7f6cc98b58e8252db758a387b6",
+      "bytes": 1738397
+    },
+    "docs/lcd/GeoDecoder_15_Contoh_LCD_Soalan_dan_Hint.pdf": {
+      "git_blob": "dad4872789882191a864caff40210b0ce98d4be4",
+      "bytes": 200929
+    },
+    "print_labels/GeoDecoder_Bentangan_2_Set_Tanpa_Tulisan_A4.pdf": {
+      "git_blob": "ffba1993343c84dce7135628973679c8334c569d",
+      "bytes": 51397
+    },
+    "print_labels/GeoDecoder_Kad_2D_Kiri_Kanan_A4.pdf": {
+      "git_blob": "62787ee222be75380d17aad710bb78e755aefdbf",
+      "bytes": 116015
+    },
+    "print_labels/GeoDecoder_Kad_3D_Kiri_Kanan_A4.pdf": {
+      "git_blob": "2020333238d79e92776a0a0e5fc27b106d17ef14",
+      "bytes": 117530
+    },
+    "print_labels/GeoDecoder_Kad_RFID_A4.pdf": {
+      "git_blob": "0cef4bc04114685561fb2e55a0139f567b5bba19",
+      "bytes": 125935
+    },
+    "tutorial/GeoDecoder_Cara_Bermain_Murid.pdf": {
+      "git_blob": "c9cdf35d24b0425fd1b05b17dbcf7399918878a6",
+      "bytes": 217584
+    },
+    "tutorial/GeoDecoder_Panduan_A-Z.pdf": {
+      "git_blob": "c337829725a093b859912229d86cbd9daed3aca0",
+      "bytes": 692742
+    }
+  },
+  "baseline": {
+    "files": 129,
+    "bytes": 3770007
+  },
+  "verification": {
+    "status": "pending",
+    "limits": "Host checks and compilation do not establish USB/phone or hosted acceptance."
+  }
+}

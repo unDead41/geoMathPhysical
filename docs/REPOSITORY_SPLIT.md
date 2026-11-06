@@ -19,13 +19,13 @@ kontrak, pembinaan dan ujian sedia ada masih sah.
 
 ## Sejarah dan branch lama
 
-`migration/sources.json` menyimpan semua nama branch dan SHA asal sebelum
-pemisahan. `migration/receipt.json` dalam setiap repository sasaran menyimpan
+`docs/archive/repository-split-20261106/sources.json` menyimpan semua nama branch dan SHA asal sebelum
+pemisahan. `docs/archive/repository-split-20261106/receipt.json` dalam repository App/Digital menyimpan
 padanan SHA sejarah yang ditapis. Branch `source/main-digitalized` di Digital
 ialah sejarah sumber; `main-digitalized` sedia ada dikekalkan sebagai snapshot
 Pages. Kerja baharu Digital bermula daripada `geoMathDigital/main`.
 
-Workflow **Retire migrated GeoMath branches** menyemak semua branch sasaran,
+Workflow pemisahan asal (sudah selesai dan dikeluarkan) menyemak semua branch sasaran,
 menyimpan setiap commit asal sebagai parent kepada commit arkib bertree Physical,
 dan mencipta tag `archive/mixed-before-20261106` sebelum mengeluarkan branch
 Digital/App daripada senarai branch aktif Physical. Setiap pengeluaran
@@ -42,3 +42,7 @@ git show <SHA-daripada-migration-sources.json>:<laluan-fail-asal>
 Gunakan clone berasingan untuk kerja seterusnya. Jangan merge tree monorepo
 lama ke dalam mana-mana repository baharu. Rujukan SHA canonical dan laporan
 ujian sejarah kekal sebagai provenance asal, bukan arahan lokasi pembangunan.
+
+Cleanup Physical seterusnya menyatukan semua branch sumber pada `main`.
+Sejarah sharing dan audio asal dipelihara melalui `archive/physical-before-cleanup-20261106`;
+manifest, senarai fail dan bukti pengesahan tersedia dalam `docs/maintenance/CLEANUP.json`.
