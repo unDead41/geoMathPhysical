@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "packageId": "GeoDecoder-sharing",
-  "packageVersion": "2.0.2-sharing.1",
-  "firmwareVersion": "2.0.2",
-  "sourceSha": "25836eb1a6f24459aace8a3980ae880a13e3b488",
+  "packageVersion": "2.0.3-sharing.1",
+  "firmwareVersion": "2.0.3",
+  "sourceSha": "4189dade7544f9e72d015ea18c738c3dac716bf7",
   "platformioCore": "6.1.18",
   "tutorial": {
     "status": "included",
@@ -40,7 +40,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "70bb0cf06ad411b54ff223ff0382ede103294549e2aac4a385c93dbe3e12023d"
+      "sha256": "da8b2718f2d3caf9ae26208e95057e6e625df71770bae279d93ab63d79cdd682"
     },
     {
       "path": "SAMBUNGAN.md",
@@ -124,7 +124,7 @@
     },
     {
       "path": "main/firmware_version.h",
-      "sha256": "79f77c164a7832a499f7f7c6690eae08c9ae8b6137e0ce8dee2a7fc862689a29"
+      "sha256": "719f24aa2a37293844d9ee9370ca6696cc3f63b121fb5bfef3e847e85dc79a8f"
     },
     {
       "path": "main/hardware/buttons.h",

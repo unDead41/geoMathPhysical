@@ -1,7 +1,7 @@
-# GeoDecoder - pakej perkongsian
+# GeoMath Physical - pakej perkongsian
 
-Versi semasa: **v2.0.2**. Pakej **2.0.2-sharing.1**.
-Sumber firmware: main [`25836eb1a6f24459aace8a3980ae880a13e3b488`](https://github.com/unDead41/geodecoder/commit/25836eb1a6f24459aace8a3980ae880a13e3b488).
+Versi semasa: **v2.0.3**. Pakej **2.0.3-sharing.1**.
+Sumber firmware: main [`4189dade7544f9e72d015ea18c738c3dac716bf7`](https://github.com/unDead41/geoMathPhysical/commit/4189dade7544f9e72d015ea18c738c3dac716bf7).
 Semua fail `main/` dan `src/main.cpp` sama tepat dengan sumber itu.
 `platformio.ini` menggunakan nama environment khusus sharing; board, pin dan dependency kekal sama.
 Installer tidak mengubah firmware atau pendaftaran UID.
@@ -9,6 +9,13 @@ Installer tidak mengubah firmware atau pendaftaran UID.
 Sasaran: Windows 10/11 **x64**, PowerShell 5.1+, Internet, ESP32 klasik
 WROOM-32/32E. Board C3/S3, ARM Windows dan RGB NeoPixel bukan sasaran pakej ini.
 Arduino IDE dan Git tidak diperlukan. Build boleh dibuat tanpa board.
+
+## Repository khusus Physical
+
+Pakej ini mengandungi firmware dan bahan Physical.
+Portal web/backend: [geoMathDigital](https://github.com/unDead41/geoMathDigital).
+Aplikasi Flutter: [geoMathApp](https://github.com/unDead41/geoMathApp).
+[Platform dan sejarah pemisahan](https://github.com/unDead41/geoMathPhysical/blob/main/docs/REPOSITORY_SPLIT.md).
 
 ## Pasang dengan satu arahan
 
