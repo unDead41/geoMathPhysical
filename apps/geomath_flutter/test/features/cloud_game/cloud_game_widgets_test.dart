@@ -31,6 +31,7 @@ void main() {
     'solo-resume',
     'solo-game',
     'solo-scores',
+    'ai-battle',
     'cloud-game-duel',
     'cloud-game-duel-lobby',
     'cloud-game-duel-match',
@@ -131,7 +132,7 @@ void main() {
                 for (final text in tester.widgetList<Text>(find.byType(Text))) {
                   expect(
                     RegExp(
-                      r'^(auth|profile|classroom|solo|duel|sync|cloud_game_preview)\.[A-Za-z_]',
+                      r'^(auth|profile|classroom|solo|duel|sync|ai_battle|cloud_game_preview)\.[A-Za-z_]',
                     ).hasMatch(text.data ?? ''),
                     isFalse,
                     reason: '$route exposed an untranslated key: ${text.data}',
@@ -183,6 +184,7 @@ void main() {
           expect(app.sessions.current, actor);
         }
         for (final entry in const {
+          'solo-ai': 'ai-battle',
           'solo-duel': 'cloud-game-duel',
           'solo-sync': 'sync.pending',
         }.entries) {

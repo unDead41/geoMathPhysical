@@ -183,6 +183,29 @@ final class _SoloPlayPageState extends State<SoloPlayPage> {
                 onPressed: () =>
                     AppScope.of(context).router.open('solo-scores'),
               ),
+              if (routes.contains('ai-battle')) ...[
+                _gap(),
+                GeoMathCard(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        _text(context, 'aiNote'),
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      const SizedBox(height: 12),
+                      ActionButton(
+                        key: const ValueKey('solo-ai'),
+                        label: _text(context, 'ai'),
+                        kind: ActionButtonKind.secondary,
+                        icon: Icons.smart_toy_outlined,
+                        onPressed: () =>
+                            AppScope.of(context).router.open('ai-battle'),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
               if (routes.contains('cloud-game-duel')) ...[
                 _gap(),
                 ActionButton(

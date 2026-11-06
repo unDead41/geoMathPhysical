@@ -1,6 +1,7 @@
 import '../../app/app_dependencies.dart';
 import '../../core/features/feature_contribution.dart';
 import '../../core/navigation/app_navigation.dart';
+import '../ai_battle/ai_battle_feature.dart';
 import 'data/solo_repository.dart';
 import 'presentation/solo_pages.dart';
 import 'presentation/solo_strings.dart';
@@ -19,10 +20,14 @@ abstract final class SoloServices {
 
 FeatureContribution soloFeature() {
   SoloController? active;
+  // The play contribution owns these offline modes together. Keeping the AI
+  // registrations here makes the normal app and the Solo preview expose the
+  // same entry point without another composition root or parallel service owner.
+  final ai = aiBattleFeature();
   return FeatureContribution(
     id: 'solo',
-    migrations: soloMigrations(),
-    localizations: [soloStrings()],
+    migrations: [...soloMigrations(), ...ai.migrations],
+    localizations: [soloStrings(), ...ai.localizations],
     services: [
       ServiceFactory<SoloRepository>(
         key: SoloServices.repository,
@@ -45,6 +50,7 @@ FeatureContribution soloFeature() {
         ),
         dispose: (controller) => controller.dispose(),
       ),
+      ...ai.services,
     ],
     routes: [
       FeatureRoute(
@@ -83,6 +89,7 @@ FeatureContribution soloFeature() {
         builder: (_, s) =>
             SoloScoresPage(controller: s.get(SoloServices.controller)),
       ),
+      ...ai.routes,
     ],
   );
 }
