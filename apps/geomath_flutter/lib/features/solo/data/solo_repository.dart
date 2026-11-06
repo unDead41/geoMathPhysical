@@ -123,6 +123,17 @@ final class SoloRepository {
     return result.future;
   }
 
+  /// Presence only; the resume screen still validates the full bank/ruleset.
+  /// Home can offer a review without loading or mutating the game controller.
+  Future<Result<bool>> hasLocalSlot(ActorBinding actor) =>
+      _guard(actor, () async {
+        final rows = await database.query(
+          'SELECT 1 FROM solo_checkpoints WHERE partition = ? LIMIT 1',
+          [actor.partition],
+        );
+        return rows.isNotEmpty;
+      });
+
   Future<Result<SoloSlot?>> read(ActorBinding actor, SoloBank bank) =>
       _guard(actor, () async {
         final rows = await database.query(

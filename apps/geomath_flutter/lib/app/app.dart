@@ -3,11 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import '../core/design/geomath_theme.dart';
+import '../core/design/design.dart';
 import '../core/features/feature_composition.dart';
 import '../core/features/feature_contribution.dart';
 import '../core/l10n/app_strings.dart';
 import '../core/result.dart';
+import '../core/widgets/geo_feedback.dart';
 import 'app_dependencies.dart';
 import 'app_router.dart';
 
@@ -25,7 +26,7 @@ class GeoMathApp extends StatefulWidget {
   State<GeoMathApp> createState() => _GeoMathAppState();
 }
 
-class _GeoMathAppState extends State<GeoMathApp> {
+class _GeoMathAppState extends State<GeoMathApp> with WidgetsBindingObserver {
   late GeoMathRouter router = GeoMathRouter(
     widget.dependencies,
     initialRoute: widget.initialRoute,
@@ -36,6 +37,15 @@ class _GeoMathAppState extends State<GeoMathApp> {
           uri: Uri(path: router.currentConfiguration),
         ),
       );
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeAccessibilityFeatures() => setState(() {});
+
   @override
   void didUpdateWidget(GeoMathApp oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -62,6 +72,13 @@ class _GeoMathAppState extends State<GeoMathApp> {
     animation: widget.dependencies.preferences,
     builder: (context, _) {
       final prefs = widget.dependencies.preferences.value;
+      final reducedMotion =
+          prefs.reducedMotion ||
+          WidgetsBinding
+              .instance
+              .platformDispatcher
+              .accessibilityFeatures
+              .disableAnimations;
       final strings = AppStrings(
         prefs.language,
         contributions:
@@ -77,7 +94,7 @@ class _GeoMathAppState extends State<GeoMathApp> {
             theme: GeoMathTheme.light(strongContrast: prefs.strongContrast),
             darkTheme: GeoMathTheme.dark(strongContrast: prefs.strongContrast),
             themeMode: GeoMathTheme.mode(prefs.theme),
-            themeAnimationDuration: prefs.reducedMotion
+            themeAnimationDuration: reducedMotion
                 ? Duration.zero
                 : const Duration(milliseconds: 180),
             locale: strings.locale,
@@ -93,12 +110,19 @@ class _GeoMathAppState extends State<GeoMathApp> {
             routeInformationParser: const GeoMathRouteParser(),
             builder: (context, child) => MediaQuery(
               data: MediaQuery.of(context).copyWith(
-                textScaler: TextScaler.linear(prefs.textScale),
+                textScaler: GeoMathTextScaler(
+                  system: MediaQuery.textScalerOf(context),
+                  appScale: prefs.textScale,
+                ),
                 disableAnimations:
                     MediaQuery.disableAnimationsOf(context) ||
                     prefs.reducedMotion,
               ),
-              child: child!,
+              child: GeoFeedbackPolicy(
+                hapticsEnabled: prefs.hapticsEnabled,
+                reducedMotion: reducedMotion,
+                child: child!,
+              ),
             ),
           ),
         ),
@@ -107,6 +131,7 @@ class _GeoMathAppState extends State<GeoMathApp> {
   );
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     routeInformation.dispose();
     router.dispose();
     if (widget.disposeDependencies) unawaited(widget.dependencies.dispose());

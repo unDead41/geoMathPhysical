@@ -237,12 +237,29 @@ final class LearningModuleController extends ChangeNotifier {
     return action({'action': 'launch', 'section': section, 'mode': ?next});
   }
 
-  Future<Result<void>> action(Map<String, Object?> payload) {
+  Future<Result<void>> action(
+    Map<String, Object?> payload, {
+    String? expectedShape,
+  }) {
     final completion = Completer<Result<void>>();
     _operations = _operations
         .then((_) async {
           if (!isCurrent) {
             completion.complete(_stale());
+            return;
+          }
+          // Pointer movement can wait behind a deliberate shape launch. Drop
+          // that old-model input when it reaches the queue head; it must not
+          // rotate or unfold the newly selected model or replace its failure.
+          if (expectedShape != null && shape != expectedShape) {
+            completion.complete(
+              const Failed<void>(
+                AppFailure(
+                  code: FailureCode.stale,
+                  message: 'The selected shape has changed.',
+                ),
+              ),
+            );
             return;
           }
           final result = await _dispatch(payload);

@@ -5,6 +5,7 @@ import '../../app/app_router.dart';
 import '../../core/design/design.dart';
 import '../../core/l10n/app_strings.dart';
 import '../../core/widgets/widgets.dart';
+import 'home_study_summary.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -89,6 +90,7 @@ class HomeScreen extends StatelessWidget {
             ),
             style: Theme.of(context).textTheme.bodySmall,
           ),
+          if (installed) const HomeStudySummary(),
           const SizedBox(height: 24),
           SectionHeader(title: s.text('foundation.shortcuts')),
           const SizedBox(height: 12),

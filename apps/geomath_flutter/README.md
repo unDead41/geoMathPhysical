@@ -1,7 +1,13 @@
 # GeoMath Android
 
-App **0.1.0+1**, foundation contract **1.0.0**. Production `lib/main.dart` combines
+App **0.2.0+2**, foundation contract **1.0.0**. Production `lib/main.dart` combines
 native account/classroom/Solo/Duel/sync with the bundled canonical learning WebView.
+
+The UI refinement follows the [eighteen-item scope](docs/uiux-refinement/SPEC.md):
+adaptive navigation, accessible system text, optional haptics, swipeable learning
+and game choices, real model controls, contextual learning panels, PIN clipboard
+actions and actor-scoped local resume/progress. Domain geometry, calculation,
+game timing and server authority retain their existing owners.
 
 ## Run
 

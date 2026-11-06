@@ -10,6 +10,42 @@ import 'learning_checkpoint_schema.dart';
 
 export 'learning_checkpoint_schema.dart' show LearningCheckpointSchema;
 
+/// A validated, actor-scoped local draft that can be resumed from Home.
+final class LearningResumeCheckpoint {
+  const LearningResumeCheckpoint({
+    required this.slot,
+    required this.payload,
+    required this.updatedAt,
+  });
+
+  final String slot;
+  final Map<String, Object?> payload;
+  final DateTime updatedAt;
+
+  String get section => payload['section']! as String;
+  String get shapeId {
+    final specialized = switch (section) {
+      'calculation' => (payload['calculation'] as Map?)?['draft'],
+      'projection' => (payload['projection'] as Map?)?['state'],
+      'notes' || 'calculator' => payload['notes'],
+      _ => null,
+    };
+    final shape = specialized is Map ? specialized['shape'] : null;
+    return shape is String && LearningCheckpointSchema.models.contains(shape)
+        ? shape
+        : (payload['explore']! as Map)['shape']! as String;
+  }
+
+  String? get mode {
+    final parts = slot.split(':');
+    return parts.length == 3 &&
+            parts.first == section &&
+            parts.last != 'default'
+        ? parts.last
+        : null;
+  }
+}
+
 /// Local editing checkpoints, intentionally separate from formative records.
 /// The native binding determines partition/scope; none is accepted from JSON.
 final class LearningCheckpointRepository {
@@ -45,6 +81,70 @@ final class LearningCheckpointRepository {
     '''),
   );
 
+  /// Reads without emitting database changes or promoting a draft to a record.
+  /// A corrupt newest draft remains visible as a recovery failure, never zero
+  /// progress or an older draft silently presented as the latest one.
+  Future<Result<LearningResumeCheckpoint?>> readLatest(
+    ActorBinding actor,
+  ) async {
+    try {
+      _ensureCurrent(actor);
+      final rows = await database.query(
+        'SELECT slot, schema_version, source_commit, module_version, payload, updated_at_ms '
+        'FROM $table WHERE partition = ? AND scope = ? '
+        'ORDER BY updated_at_ms DESC, slot ASC LIMIT 1',
+        [actor.partition, actor.scope],
+      );
+      _ensureCurrent(actor);
+      if (rows.isEmpty) return const Success(null);
+      final row = rows.single;
+      final slot = row['slot'];
+      final timestamp = row['updated_at_ms'];
+      if (slot is! String ||
+          !_slot.hasMatch(slot) ||
+          timestamp is! int ||
+          timestamp < 0) {
+        return const Failed(_invalidFailure);
+      }
+      final payload = _decodeRow(row);
+      return Success(
+        LearningResumeCheckpoint(
+          slot: slot,
+          payload: payload,
+          updatedAt: DateTime.fromMillisecondsSinceEpoch(
+            timestamp,
+            isUtc: true,
+          ),
+        ),
+      );
+    } on _CheckpointFailure catch (error) {
+      return Failed(error.failure);
+    } on FormatException {
+      return const Failed(_invalidFailure);
+    } catch (_) {
+      return const Failed(_storageFailure);
+    }
+  }
+
+  static Map<String, Object?> _decodeRow(Map<String, Object?> row) {
+    if (row['schema_version'] != LearningCheckpointSchema.version ||
+        row['source_commit'] != LearningCheckpointSchema.sourceCommit ||
+        row['module_version'] != LearningCheckpointSchema.moduleVersion) {
+      throw const _CheckpointFailure(_incompatibleFailure);
+    }
+    final encoded = row['payload'];
+    if (encoded is! String ||
+        !LearningCheckpointSchema.permitsEncoded(encoded)) {
+      throw const _CheckpointFailure(_invalidFailure);
+    }
+    final decoded = jsonDecode(encoded);
+    if (decoded is! Map<String, Object?> ||
+        !LearningCheckpointSchema.isValid(decoded)) {
+      throw const _CheckpointFailure(_invalidFailure);
+    }
+    return Map<String, Object?>.unmodifiable(decoded);
+  }
+
   Future<Result<Map<String, Object?>?>> read(
     ActorBinding actor,
     String slot,
@@ -66,24 +166,9 @@ final class LearningCheckpointRepository {
         if (rows.length != 1) {
           throw const _CheckpointFailure(_storageFailure);
         }
-        final row = rows.single;
-        if (row['schema_version'] != LearningCheckpointSchema.version ||
-            row['source_commit'] != LearningCheckpointSchema.sourceCommit ||
-            row['module_version'] != LearningCheckpointSchema.moduleVersion) {
-          throw const _CheckpointFailure(_incompatibleFailure);
-        }
-        final encoded = row['payload'];
-        if (encoded is! String ||
-            !LearningCheckpointSchema.permitsEncoded(encoded)) {
-          throw const _CheckpointFailure(_invalidFailure);
-        }
-        final decoded = jsonDecode(encoded);
-        if (decoded is! Map<String, Object?> ||
-            !LearningCheckpointSchema.isValid(decoded)) {
-          throw const _CheckpointFailure(_invalidFailure);
-        }
+        final decoded = _decodeRow(rows.single);
         _ensureCurrent(actor);
-        return Map<String, Object?>.unmodifiable(decoded);
+        return decoded;
       });
       _ensureCurrent(actor);
       return Success(value);

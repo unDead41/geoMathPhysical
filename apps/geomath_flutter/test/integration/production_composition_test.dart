@@ -8,6 +8,7 @@ import 'package:geomath_flutter/features/sync/sync_feature.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 import '../features/cloud_game/support/cloud_game_test_support.dart';
+import 'support/settle_local_home.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +33,7 @@ void main() {
         expect(app.composition.routes.byPath(path), isNotNull);
       }
       await tester.pumpWidget(GeoMathApp(dependencies: app));
-      await tester.pump();
+      await settleLocalHome(tester, app);
       expect(find.textContaining('masih dalam pembangunan'), findsNothing);
       expect(find.textContaining('GeoMath Foundation'), findsNothing);
       await tester.tap(find.byKey(const ValueKey('home-explore')));
@@ -41,6 +42,7 @@ void main() {
       );
       expect(scope.router.navigation.current.route.name, 'learning-explore');
       await tester.pumpWidget(const SizedBox.shrink());
+      await tester.runAsync(app.dispose);
     },
   );
   testWidgets('idle classroom covered by login permits a destination exit', (
@@ -59,8 +61,9 @@ void main() {
     scope.router.open('cloud-game-login');
     await tester.pumpAndSettle();
     await tester.runAsync(() => scope.router.select(AppDestination.home));
-    await tester.pumpAndSettle();
+    await settleLocalHome(tester, app);
     expect(scope.router.navigation.current.route.name, 'home');
     await tester.pumpWidget(const SizedBox.shrink());
+    await tester.runAsync(app.dispose);
   });
 }

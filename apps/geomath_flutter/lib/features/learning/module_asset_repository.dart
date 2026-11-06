@@ -64,7 +64,7 @@ final class ModuleAssetRepository {
           manifest['native_bridge_version'] != 1 ||
           manifest['module_progress_protocol'] != 1 ||
           manifest['module_settings_version'] != 1 ||
-          manifest['adapter_version'] != 3 ||
+          manifest['adapter_version'] != 4 ||
           manifest['learning_private_api_version'] != 1 ||
           manifest['learning_checkpoint_schema'] !=
               LearningCheckpointSchema.version ||

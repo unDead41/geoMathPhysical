@@ -71,6 +71,7 @@ final class GeoMathRouter extends RouterDelegate<String>
   final AppNavigationController navigation;
   final GlobalKey<ReportScreenState> reportKey = GlobalKey();
   final _popups = _PopupObserver();
+  final _pageStorage = <String, PageStorageBucket>{};
   @override
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -88,26 +89,35 @@ final class GeoMathRouter extends RouterDelegate<String>
     final installed = dependencies.composition.routes.byPath(
       paths[destination.index],
     );
-    await navigation.requestReset(
-      installed?.name ?? 'foundation-${destination.name}',
-    );
+    final target = installed?.name ?? 'foundation-${destination.name}';
+    if (navigation.entries.length == 1 &&
+        navigation.current.route.name == target) {
+      return;
+    }
+    await navigation.requestReset(target);
   }
 
   AppDestination get destination {
-    final route = navigation.current.route;
-    for (final value in AppDestination.values.skip(1)) {
-      final path = [
-        '/',
-        '/learn',
-        '/play',
-        '/classes',
-        '/profile',
-      ][value.index];
-      if ((value == AppDestination.play && route.path.startsWith('/duel')) ||
-          route.path.startsWith(path) ||
-          route.name == 'foundation-${value.name}') {
-        return value;
+    // Settings/help are utilities of the current destination, so covering a
+    // learning page must not make its navigation selection jump to Home.
+    for (final entry in navigation.entries.reversed) {
+      final route = entry.route;
+      for (final value in AppDestination.values.skip(1)) {
+        final path = [
+          '/',
+          '/learn',
+          '/play',
+          '/classes',
+          '/profile',
+        ][value.index];
+        if ((value == AppDestination.play && route.path.startsWith('/duel')) ||
+            route.path == path ||
+            route.path.startsWith('$path/') ||
+            route.name == 'foundation-${value.name}') {
+          return value;
+        }
       }
+      if (route.path == '/') return AppDestination.home;
     }
     return AppDestination.home;
   }
@@ -194,16 +204,40 @@ final class GeoMathRouter extends RouterDelegate<String>
               entry: entry,
               isCurrent: navigation.current.instance == entry.instance,
               child: Builder(
-                builder: (routeContext) => Scaffold(
-                  body: entry.route.name == 'report'
-                      ? ReportScreen(key: reportKey)
-                      : entry.route.builder(
-                          routeContext,
-                          dependencies.composition.services,
+                builder: (routeContext) => LayoutBuilder(
+                  builder: (context, constraints) {
+                    final rail =
+                        entry.route.showNavigation &&
+                        constraints.maxWidth >= 600;
+                    return PageStorage(
+                      bucket: _pageStorage.putIfAbsent(
+                        _location(entry.route, entry.arguments),
+                        PageStorageBucket.new,
+                      ),
+                      child: Scaffold(
+                        body: Row(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            if (rail) _destinationRail(routeContext),
+                            Expanded(
+                              // Rail/bar and preference switches keep the
+                              // mounted feature (including WebViews) in place.
+                              key: const ValueKey('destination-content'),
+                              child: entry.route.name == 'report'
+                                  ? ReportScreen(key: reportKey)
+                                  : entry.route.builder(
+                                      routeContext,
+                                      dependencies.composition.services,
+                                    ),
+                            ),
+                          ],
                         ),
-                  bottomNavigationBar: entry.route.showNavigation
-                      ? _destinationNav(routeContext)
-                      : null,
+                        bottomNavigationBar: entry.route.showNavigation && !rail
+                            ? _destinationNav(routeContext)
+                            : null,
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
@@ -214,32 +248,79 @@ final class GeoMathRouter extends RouterDelegate<String>
     ),
   );
 
-  Widget _destinationNav(BuildContext context) => SafeArea(
-    top: false,
-    child: NavigationBar(
-      selectedIndex: destination.index,
-      onDestinationSelected: (index) => select(AppDestination.values[index]),
-      destinations: [
-        for (final item in [
-          ('home', Icons.home_outlined, Icons.home_rounded),
-          ('learn', Icons.view_in_ar_outlined, Icons.view_in_ar_rounded),
-          ('play', Icons.sports_esports_outlined, Icons.sports_esports_rounded),
-          ('classes', Icons.groups_outlined, Icons.groups_rounded),
-          ('profile', Icons.person_outline_rounded, Icons.person_rounded),
-        ])
-          NavigationDestination(
-            key: ValueKey('nav-${item.$1}'),
-            icon: Icon(item.$2),
-            selectedIcon: Icon(item.$3),
-            label: AppStrings.of(context).text(
-              item.$1 == 'classes' && MediaQuery.sizeOf(context).width < 360
-                  ? 'foundation.navClassCompact'
-                  : 'nav.${item.$1}',
-            ),
-          ),
-      ],
-    ),
+  List<GeoDestination> _destinations(BuildContext context) => [
+    for (final item in [
+      ('home', Icons.home_outlined, Icons.home_rounded),
+      ('learn', Icons.view_in_ar_outlined, Icons.view_in_ar_rounded),
+      ('play', Icons.sports_esports_outlined, Icons.sports_esports_rounded),
+      ('classes', Icons.groups_outlined, Icons.groups_rounded),
+      ('profile', Icons.person_outline_rounded, Icons.person_rounded),
+    ])
+      GeoDestination(
+        id: item.$1,
+        icon: item.$2,
+        selectedIcon: item.$3,
+        label: AppStrings.of(context).text(
+          item.$1 == 'classes' && MediaQuery.sizeOf(context).width < 360
+              ? 'foundation.navClassCompact'
+              : 'nav.${item.$1}',
+        ),
+      ),
+  ];
+
+  void _selectDestination(BuildContext context, int index) {
+    if (index != destination.index) GeoFeedback.selection(context);
+    select(AppDestination.values[index]);
+  }
+
+  Widget _destinationNav(BuildContext context) => GeoDestinationBar(
+    selectedIndex: destination.index,
+    onSelected: (index) => _selectDestination(context, index),
+    destinations: _destinations(context),
   );
+
+  Widget _destinationRail(BuildContext context) {
+    final destinations = _destinations(context);
+    // Full labels wrap inside the rail; even 600 dp leaves a phone-sized
+    // feature pane instead of compressing controls to fit an extended rail.
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        border: BorderDirectional(
+          end: BorderSide(color: Theme.of(context).dividerColor),
+        ),
+      ),
+      child: SafeArea(
+        right: false,
+        child: NavigationRail(
+          scrollable: true,
+          minWidth: 112,
+          groupAlignment: -1,
+          labelType: NavigationRailLabelType.all,
+          selectedIndex: destination.index,
+          onDestinationSelected: (index) => _selectDestination(context, index),
+          destinations: [
+            for (final item in destinations)
+              NavigationRailDestination(
+                icon: SizedBox.square(
+                  key: ValueKey('nav-${item.id}'),
+                  dimension: 48,
+                  child: Icon(item.icon),
+                ),
+                selectedIcon: SizedBox.square(
+                  key: ValueKey('nav-${item.id}'),
+                  dimension: 48,
+                  child: Icon(item.selectedIcon),
+                ),
+                label: SizedBox(
+                  width: 92,
+                  child: Text(item.label, textAlign: TextAlign.center),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   void dispose() {

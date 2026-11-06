@@ -183,6 +183,35 @@ void main() {
     await sessions.dispose();
     await directory.delete(recursive: true);
   });
+  test('Home slot presence is owner-bound and does not validate or replace a saved attempt', () async {
+    final actor = sessions.current;
+    expect((await repository.hasLocalSlot(actor)).valueOrNull, isFalse);
+    await db.transaction(
+      (tx) => tx.rawInsert(
+        'INSERT INTO solo_checkpoints (partition, payload) VALUES (?, ?)',
+        [actor.partition, '{recovery-required'],
+      ),
+    );
+    expect((await repository.hasLocalSlot(actor)).valueOrNull, isTrue);
+    expect(
+      (await repository.read(actor, bank())).failureOrNull?.code,
+      FailureCode.invalid,
+    );
+    expect(
+      (await db.query('SELECT payload FROM solo_checkpoints'))
+          .single['payload'],
+      '{recovery-required',
+    );
+    sessions.bindUser(userId: 'owner-home', sessionId: 'owner-session');
+    expect(
+      (await repository.hasLocalSlot(sessions.current)).valueOrNull,
+      isFalse,
+    );
+    expect(
+      (await repository.hasLocalSlot(actor)).failureOrNull?.code,
+      FailureCode.stale,
+    );
+  });
   test('real SQLite retains selected R1/R2 and never overwrites a slot without confirmation', () async {
     final actor = sessions.current,
         g = SoloGame(

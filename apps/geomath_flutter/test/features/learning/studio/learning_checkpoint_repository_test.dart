@@ -16,6 +16,34 @@ import 'checkpoint_fixture.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   sqfliteFfiInit();
+  test(
+    'resume labels follow the active workshop rather than the explore model',
+    () {
+      final calculation = learningCheckpointFixture();
+      ((calculation['calculation'] as Map)['draft'] as Map)['shape'] = 'cone';
+      expect(LearningCheckpointSchema.isValid(calculation), isTrue);
+      final resume = LearningResumeCheckpoint(
+        slot: 'calculation:cube:default',
+        payload: calculation,
+        updatedAt: DateTime.utc(2026),
+      );
+      expect(resume.shapeId, 'cone');
+      final projection = learningCheckpointFixture()
+        ..['section'] = 'projection';
+      final state = (projection['projection'] as Map)['state'] as Map;
+      state['shape'] = 'cuboid';
+      state['dimensions'] = {'p': 4, 'l': 3, 't': 2};
+      expect(LearningCheckpointSchema.isValid(projection), isTrue);
+      expect(
+        LearningResumeCheckpoint(
+          slot: 'projection:cube:default',
+          payload: projection,
+          updatedAt: DateTime.utc(2026),
+        ).shapeId,
+        'cuboid',
+      );
+    },
+  );
   late Directory directory;
   late SqliteAppDatabase database;
   late SessionController sessions;
@@ -49,6 +77,79 @@ void main() {
     await sessions.dispose();
     await directory.delete(recursive: true);
   });
+
+  test(
+    'latest resume reads the newest valid draft in the current owner and scope',
+    () async {
+      final actor = sessions.current;
+      expect((await repository.readLatest(actor)).valueOrNull, isNull);
+      final first = learningCheckpointFixture()..['section'] = 'explore';
+      final second = learningCheckpointFixture();
+      expect(
+        (await repository.save(actor, 'explore:cube:default', first)).isSuccess,
+        isTrue,
+      );
+      expect(
+        (await repository.save(
+          actor,
+          'calculation:cube:default',
+          second,
+        )).isSuccess,
+        isTrue,
+      );
+      await database.transaction(
+        (tx) => tx.rawUpdate(
+          'UPDATE learning_checkpoints SET updated_at_ms = updated_at_ms + 1000 WHERE slot = ?',
+          ['calculation:cube:default'],
+        ),
+      );
+      final latest = (await repository.readLatest(actor)).valueOrNull!;
+      expect(latest.section, 'calculation');
+      expect(latest.shapeId, 'cube');
+      expect(latest.payload, second);
+      expect(latest.mode, isNull);
+      sessions.changeScope('another');
+      expect(
+        (await repository.readLatest(sessions.current)).valueOrNull,
+        isNull,
+      );
+      expect(
+        (await repository.readLatest(actor)).failureOrNull?.code,
+        FailureCode.stale,
+      );
+      sessions.bindUser(userId: 'owner-A', sessionId: 'a');
+      expect(
+        (await repository.readLatest(sessions.current)).valueOrNull,
+        isNull,
+      );
+    },
+  );
+
+  test(
+    'latest resume reports corrupt data without replacing the saved draft',
+    () async {
+      final actor = sessions.current;
+      await repository.save(
+        actor,
+        'calculation:cube:default',
+        learningCheckpointFixture(),
+      );
+      await database.transaction(
+        (tx) => tx.rawUpdate(
+          'UPDATE learning_checkpoints SET payload = ? WHERE slot = ?',
+          ['{broken', 'calculation:cube:default'],
+        ),
+      );
+      expect(
+        (await repository.readLatest(actor)).failureOrNull?.code,
+        FailureCode.invalid,
+      );
+      final rows = await database.query(
+        'SELECT payload FROM learning_checkpoints',
+      );
+      expect(rows.single['payload'], '{broken');
+    },
+  );
 
   test('real SQLite checkpoint, raw draft and Undo survive reopen with a fresh session', () async {
     final previous = sessions.current;

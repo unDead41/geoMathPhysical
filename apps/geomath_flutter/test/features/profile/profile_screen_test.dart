@@ -120,11 +120,64 @@ void main() {
     of: find.byKey(const Key('profile-name')),
     matching: find.byType(TextField),
   );
-  for (final language in AppLanguage.values) {
+  testWidgets(
+    'invalid name focuses its field and keeps the profile draft and avatar',
+    (tester) async {
+      final profiles = Profiles();
+      final app = await open(tester, profiles);
+      try {
+        await tester.pumpWidget(
+          GeoMathApp(dependencies: app, initialRoute: 'cloud-game-profile'),
+        );
+        await tester.pumpAndSettle();
+        await tester.enterText(nameField(), 'X');
+        await tester.pumpAndSettle();
+        final cone = find.widgetWithText(ChoiceChip, 'Kon');
+        await tester.ensureVisible(cone);
+        await tester.tap(cone);
+        await tester.pumpAndSettle();
+        final save = find.byKey(const Key('profile-save'));
+        await tester.ensureVisible(save);
+        await tester.pumpAndSettle();
+        await tester.tap(save);
+        await tester.pumpAndSettle();
+        expect(profiles.saves, 0);
+        final name = tester.widget<LabeledField>(
+          find.byKey(const Key('profile-name')),
+        );
+        expect(name.errorText, isNotNull);
+        expect(name.focusNode?.hasFocus, isTrue);
+        expect(tester.widget<TextField>(nameField()).controller!.text, 'X');
+        expect(tester.widget<ChoiceChip>(cone).selected, isTrue);
+        await tester.enterText(nameField(), 'Corrected Draft');
+        await tester.pump();
+        expect(
+          tester
+              .widget<LabeledField>(find.byKey(const Key('profile-name')))
+              .errorText,
+          isNull,
+        );
+        await tester.ensureVisible(save);
+        await tester.pumpAndSettle();
+        await tester.tap(save);
+        await tester.pumpAndSettle();
+        expect(profiles.saves, 1);
+        expect(profiles.value.displayName, 'Corrected Draft');
+        expect(profiles.value.avatar, 'cone');
+        expect(tester.takeException(), isNull);
+      } finally {
+        await close(tester, app);
+      }
+    },
+  );
+  for (final (width, language) in [
+    for (final width in <double>[320, 390, 430, 768])
+      for (final language in AppLanguage.values) (width, language),
+  ]) {
     testWidgets(
-      'profile draft survives ${language.name} theme and 150 percent text at 320dp',
+      'profile draft survives ${language.name} theme and 150 percent text at ${width}dp',
       (tester) async {
-        tester.view.physicalSize = const Size(320, 1100);
+        tester.view.physicalSize = Size(width, 1100);
         tester.view.devicePixelRatio = 1;
         addTearDown(tester.view.resetPhysicalSize);
         addTearDown(tester.view.resetDevicePixelRatio);

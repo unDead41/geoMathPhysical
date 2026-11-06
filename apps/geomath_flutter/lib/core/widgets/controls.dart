@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../design/geomath_theme.dart';
+import 'geo_feedback.dart';
 
 enum ActionButtonKind { primary, secondary, tonal, danger }
 
@@ -204,7 +205,12 @@ final class ChoiceChips<T> extends StatelessWidget {
               avatar: option.icon == null ? null : Icon(option.icon, size: 20),
               selected: selected == option.value,
               onSelected: enabled && onSelected != null
-                  ? (_) => onSelected!(option.value)
+                  ? (_) {
+                      if (selected != option.value) {
+                        GeoFeedback.selection(context);
+                      }
+                      onSelected!(option.value);
+                    }
                   : null,
             ),
           ),

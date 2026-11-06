@@ -30,6 +30,7 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  final _form = GlobalKey<FormState>();
   final _identifier = TextEditingController();
   final _email = TextEditingController();
   final _username = TextEditingController();
@@ -40,6 +41,7 @@ class _AuthScreenState extends State<AuthScreen> {
   final _recoveryCode = TextEditingController();
   AccountRole _role = AccountRole.student;
   bool _busy = false;
+  bool _attemptedSubmit = false;
   AppFailure? _failure;
   String? _success;
   StreamSubscription<ActorBinding>? _bindings;
@@ -58,6 +60,7 @@ class _AuthScreenState extends State<AuthScreen> {
         setState(() {
           _failure = null;
           _success = null;
+          _attemptedSubmit = false;
         });
       }
     });
@@ -100,8 +103,13 @@ class _AuthScreenState extends State<AuthScreen> {
   Future<void> _run(
     Future<Result<void>> Function() action, {
     String success = 'done',
+    bool validate = false,
   }) async {
     if (_busy) return;
+    if (validate) {
+      setState(() => _attemptedSubmit = true);
+      if (!_form.currentState!.validate()) return;
+    }
     final operation = ++_operation;
     setState(() {
       _busy = true;
@@ -137,308 +145,420 @@ class _AuthScreenState extends State<AuthScreen> {
         mode == AuthScreenMode.security;
     return GeoMathScaffold(
       title: _t(mode.name),
+      maxWidth: 560,
       showBackButton: true,
       onBack: () => AppScope.of(context).router.back(),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          if (!repository.configured)
-            StatusNotice(
-              key: const Key('auth-unavailable'),
-              message: _t('unavailable'),
-            ),
-          if (repository.configured && !repository.nativeCallbackReady)
-            StatusNotice(
-              key: const Key('auth-callback-unavailable'),
-              message: _t('callbackUnavailable'),
-            ),
-          if (repository.callbackFailure case final failure?)
-            StatusNotice(tone: StatusTone.error, message: _t(failure.message)),
-          if (repository.recoveryRequired)
-            ActionButton(
-              label: _t('reset'),
-              onPressed: !_busy ? () => _open('cloud-game-reset') : null,
-            ),
-          if (_failure case final failure?) ...[
-            const SizedBox(height: 12),
-            StatusNotice(tone: StatusTone.error, message: _t(failure.message)),
-            if (failure.retryAfter case final delay?)
-              Text(
-                AppStrings.of(context).text(
-                  'auth.retryIn',
-                  parameters: {'seconds': delay.inSeconds},
-                ),
+      body: Form(
+        key: _form,
+        autovalidateMode: _attemptedSubmit
+            ? AutovalidateMode.onUserInteraction
+            : AutovalidateMode.disabled,
+        onChanged: () {
+          if (!_busy && (_failure != null || _success != null)) {
+            setState(() {
+              _failure = null;
+              _success = null;
+            });
+          }
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            if (!repository.configured)
+              StatusNotice(
+                key: const Key('auth-unavailable'),
+                message: _t('unavailable'),
               ),
-          ],
-          if (_success case final success?)
-            StatusNotice(tone: StatusTone.success, message: _t(success)),
-          const SizedBox(height: 16),
-          if (mode == AuthScreenMode.login) ...[
-            LabeledField(
-              label: _t('identifier'),
-              controller: _identifier,
-              enabled: canUse,
-              autofillHints: const [AutofillHints.username],
-            ),
-            const SizedBox(height: 12),
-            LabeledField(
-              label: _t('password'),
-              controller: _password,
-              obscureText: true,
-              enabled: canUse,
-              autofillHints: const [AutofillHints.password],
-            ),
-            const SizedBox(height: 20),
-            ActionButton(
-              key: const Key('auth-login-submit'),
-              label: _t('login'),
-              busy: _busy,
-              busyLabel: _t('working'),
-              onPressed: canUse
-                  ? () => _run(
+            if (repository.configured && !repository.nativeCallbackReady)
+              StatusNotice(
+                key: const Key('auth-callback-unavailable'),
+                message: _t('callbackUnavailable'),
+              ),
+            if (repository.callbackFailure case final failure?)
+              StatusNotice(
+                tone: StatusTone.error,
+                message: _t(failure.message),
+                liveRegion: true,
+              ),
+            if (repository.recoveryRequired)
+              ActionButton(
+                label: _t('reset'),
+                onPressed: !_busy ? () => _open('cloud-game-reset') : null,
+              ),
+            if (_failure case final failure?) ...[
+              const SizedBox(height: 12),
+              StatusNotice(
+                tone: StatusTone.error,
+                message: _t(failure.message),
+                liveRegion: true,
+              ),
+              if (failure.retryAfter case final delay?)
+                Text(
+                  AppStrings.of(context).text(
+                    'auth.retryIn',
+                    parameters: {'seconds': delay.inSeconds},
+                  ),
+                ),
+            ],
+            if (_success case final success?)
+              StatusNotice(
+                tone: StatusTone.success,
+                message: _t(success),
+                liveRegion: true,
+              ),
+            const SizedBox(height: 16),
+            if (mode == AuthScreenMode.login) ...[
+              LabeledField(
+                key: const Key('auth-identifier'),
+                label: _t('identifier'),
+                controller: _identifier,
+                enabled: canUse,
+                autofillHints: const [AutofillHints.username],
+                textInputAction: TextInputAction.next,
+                validator: (value) =>
+                    AccountValidation.validEmail(value ?? '') ||
+                        AccountValidation.validUsername(value ?? '')
+                    ? null
+                    : _t('identifierInvalid'),
+              ),
+              const SizedBox(height: 12),
+              LabeledField(
+                key: const Key('auth-password'),
+                label: _t('password'),
+                controller: _password,
+                obscureText: true,
+                enabled: canUse,
+                autofillHints: const [AutofillHints.password],
+                textInputAction: TextInputAction.done,
+                onFieldSubmitted: (_) {
+                  if (canUse) {
+                    _run(
                       () => repository.login(
                         identifier: _identifier.text,
                         password: _password.text,
                       ),
-                    )
-                  : null,
-            ),
-            const SizedBox(height: 10),
-            ActionButton(
-              key: const Key('auth-google-submit'),
-              label: _t('google'),
-              kind: ActionButtonKind.secondary,
-              onPressed: canUse && repository.nativeCallbackReady
-                  ? () => _run(repository.startGoogle)
-                  : null,
-            ),
-            const SizedBox(height: 10),
-            ActionButton(
-              label: _t('signup'),
-              kind: ActionButtonKind.tonal,
-              onPressed: !_busy ? () => _open('cloud-game-signup') : null,
-            ),
-            TextButton(
-              onPressed: !_busy ? () => _open('cloud-game-recover') : null,
-              child: Text(_t('recover')),
-            ),
-            TextButton(
-              onPressed: !_busy ? () => _open('cloud-game-confirmation') : null,
-              child: Text(_t('confirmation')),
-            ),
-          ],
-          if (mode == AuthScreenMode.signup || callbackAction) ...[
-            LabeledField(
-              label: _t('email'),
-              controller: _email,
-              enabled: canUse,
-              keyboardType: TextInputType.emailAddress,
-              autofillHints: const [AutofillHints.email],
-            ),
-            const SizedBox(height: 12),
-          ],
-          if (mode == AuthScreenMode.recover)
-            TextButton(
-              onPressed: !_busy
-                  ? () => _open('cloud-game-legacy-recovery')
-                  : null,
-              child: Text(_t('legacyRecover')),
-            ),
-          if (mode == AuthScreenMode.legacyRecovery) ...[
-            StatusNotice(message: _t('legacyHint')),
-            LabeledField(
-              label: _t('username'),
-              controller: _username,
-              enabled: canUse,
-              maxLength: 24,
-            ),
-            const SizedBox(height: 12),
-            LabeledField(
-              label: _t('recoveryCode'),
-              controller: _recoveryCode,
-              obscureText: true,
-              enabled: canUse,
-              maxLength: 32,
-            ),
-            const SizedBox(height: 12),
-          ],
-          if (mode == AuthScreenMode.signup) ...[
-            LabeledField(
-              label: _t('username'),
-              controller: _username,
-              enabled: canUse,
-              maxLength: 24,
-            ),
-            const SizedBox(height: 12),
-            LabeledField(
-              label: _t('displayName'),
-              controller: _name,
-              enabled: canUse,
-            ),
-            const SizedBox(height: 12),
-            Text(_t('role')),
-            ChoiceChips<AccountRole>(
-              options: [
-                for (final role in AccountRole.values)
-                  ChoiceChipOption(value: role, label: _t(role.name)),
-              ],
-              selected: _role,
-              onSelected: (value) => setState(() => _role = value),
-              enabled: canUse,
-            ),
-            const SizedBox(height: 12),
-          ],
-          if (mode == AuthScreenMode.security &&
-              repository.identity?.googleOnly == true)
-            StatusNotice(message: _t('googleSecurity')),
-          if (mode == AuthScreenMode.security &&
-              repository.identity?.googleOnly != true) ...[
-            LabeledField(
-              label: _t('currentPassword'),
-              controller: _currentPassword,
-              obscureText: true,
-              enabled: canUse,
-            ),
-            const SizedBox(height: 12),
-          ],
-          if (passwordMode) ...[
-            LabeledField(
-              label: _t('password'),
-              controller: _password,
-              obscureText: true,
-              enabled:
-                  canUse &&
-                  (mode != AuthScreenMode.security ||
-                      repository.identity?.googleOnly != true),
-              maxLength: 128,
-            ),
-            const SizedBox(height: 12),
-            LabeledField(
-              label: _t('repeatPassword'),
-              controller: _repeat,
-              obscureText: true,
-              enabled:
-                  canUse &&
-                  (mode != AuthScreenMode.security ||
-                      repository.identity?.googleOnly != true),
-              maxLength: 128,
-            ),
-            const SizedBox(height: 20),
-            ActionButton(
-              label: _t(
-                mode == AuthScreenMode.signup ? 'signup' : 'savePassword',
+                      validate: true,
+                    );
+                  }
+                },
+                validator: (value) =>
+                    AccountValidation.validPassword(value ?? '')
+                    ? null
+                    : _t('passwordHint'),
               ),
-              busy: _busy,
-              onPressed:
-                  canUse &&
-                      (mode != AuthScreenMode.reset ||
-                          repository.recoveryRequired) &&
-                      (mode != AuthScreenMode.security ||
-                          repository.identity?.googleOnly != true)
-                  ? () {
-                      if (_password.text != _repeat.text) {
-                        setState(
-                          () => _failure = const AppFailure(
-                            code: FailureCode.invalid,
-                            message: 'auth.invalidPassword',
-                          ),
-                        );
-                        return;
-                      }
-                      _run(
-                        () => switch (mode) {
-                          AuthScreenMode.signup => repository.signup(
-                            email: _email.text,
-                            username: _username.text,
-                            password: _password.text,
-                            displayName: _name.text,
-                            role: _role,
-                          ),
-                          AuthScreenMode.legacyRecovery =>
-                            repository.recoverLegacy(
+              const SizedBox(height: 20),
+              ActionButton(
+                key: const Key('auth-login-submit'),
+                label: _t('login'),
+                busy: _busy,
+                busyLabel: _t('working'),
+                onPressed: canUse
+                    ? () => _run(
+                        () => repository.login(
+                          identifier: _identifier.text,
+                          password: _password.text,
+                        ),
+                        validate: true,
+                      )
+                    : null,
+              ),
+              const SizedBox(height: 10),
+              ActionButton(
+                key: const Key('auth-google-submit'),
+                label: _t('google'),
+                kind: ActionButtonKind.secondary,
+                onPressed: canUse && repository.nativeCallbackReady
+                    ? () => _run(repository.startGoogle)
+                    : null,
+              ),
+              const SizedBox(height: 10),
+              ActionButton(
+                label: _t('signup'),
+                kind: ActionButtonKind.tonal,
+                onPressed: !_busy ? () => _open('cloud-game-signup') : null,
+              ),
+              TextButton(
+                onPressed: !_busy ? () => _open('cloud-game-recover') : null,
+                child: Text(_t('recover')),
+              ),
+              TextButton(
+                onPressed: !_busy
+                    ? () => _open('cloud-game-confirmation')
+                    : null,
+                child: Text(_t('confirmation')),
+              ),
+            ],
+            if (mode == AuthScreenMode.signup || callbackAction) ...[
+              LabeledField(
+                key: const Key('auth-email'),
+                label: _t('email'),
+                controller: _email,
+                enabled: canUse,
+                keyboardType: TextInputType.emailAddress,
+                autofillHints: const [AutofillHints.email],
+                textInputAction: TextInputAction.next,
+                validator: (value) => AccountValidation.validEmail(value ?? '')
+                    ? null
+                    : _t('invalidEmail'),
+              ),
+              const SizedBox(height: 12),
+            ],
+            if (mode == AuthScreenMode.recover)
+              TextButton(
+                onPressed: !_busy
+                    ? () => _open('cloud-game-legacy-recovery')
+                    : null,
+                child: Text(_t('legacyRecover')),
+              ),
+            if (mode == AuthScreenMode.legacyRecovery) ...[
+              StatusNotice(message: _t('legacyHint')),
+              LabeledField(
+                key: const Key('auth-username'),
+                label: _t('username'),
+                controller: _username,
+                enabled: canUse,
+                maxLength: 24,
+                helperText: _t('usernameHint'),
+                textInputAction: TextInputAction.next,
+                validator: (value) =>
+                    AccountValidation.validUsername(value ?? '')
+                    ? null
+                    : _t('usernameHint'),
+              ),
+              const SizedBox(height: 12),
+              LabeledField(
+                key: const Key('auth-recovery-code'),
+                label: _t('recoveryCode'),
+                controller: _recoveryCode,
+                obscureText: true,
+                enabled: canUse,
+                maxLength: 32,
+                textInputAction: TextInputAction.next,
+                validator: (value) =>
+                    RegExp(r'^[a-f0-9]{32}$')
+                        .hasMatch((value ?? '').trim().toLowerCase())
+                    ? null
+                    : _t('recoveryCodeInvalid'),
+              ),
+              const SizedBox(height: 12),
+            ],
+            if (mode == AuthScreenMode.signup) ...[
+              LabeledField(
+                key: const Key('auth-username'),
+                label: _t('username'),
+                controller: _username,
+                enabled: canUse,
+                maxLength: 24,
+                helperText: _t('usernameHint'),
+                errorText: _failure?.message == 'auth.usernameTaken'
+                    ? _t('usernameTaken')
+                    : null,
+                autofillHints: const [AutofillHints.newUsername],
+                textInputAction: TextInputAction.next,
+                validator: (value) =>
+                    AccountValidation.validUsername(value ?? '')
+                    ? null
+                    : _t('usernameHint'),
+              ),
+              const SizedBox(height: 12),
+              LabeledField(
+                key: const Key('auth-name'),
+                label: _t('displayName'),
+                controller: _name,
+                enabled: canUse,
+                helperText: _t('nameHint'),
+                autofillHints: const [AutofillHints.name],
+                textInputAction: TextInputAction.next,
+                validator: (value) =>
+                    AccountValidation.validSignupDisplayName(value ?? '')
+                    ? null
+                    : _t('nameInvalid'),
+              ),
+              const SizedBox(height: 12),
+              Text(_t('role')),
+              ChoiceChips<AccountRole>(
+                options: [
+                  for (final role in AccountRole.values)
+                    ChoiceChipOption(value: role, label: _t(role.name)),
+                ],
+                selected: _role,
+                onSelected: (value) => setState(() => _role = value),
+                enabled: canUse,
+              ),
+              const SizedBox(height: 12),
+            ],
+            if (mode == AuthScreenMode.security &&
+                repository.identity?.googleOnly == true)
+              StatusNotice(message: _t('googleSecurity')),
+            if (mode == AuthScreenMode.security &&
+                repository.identity?.googleOnly != true) ...[
+              LabeledField(
+                key: const Key('auth-current-password'),
+                label: _t('currentPassword'),
+                controller: _currentPassword,
+                obscureText: true,
+                enabled: canUse,
+                autofillHints: const [AutofillHints.password],
+                textInputAction: TextInputAction.next,
+                validator: (value) =>
+                    value != null && value.isNotEmpty && value.length <= 128
+                    ? null
+                    : _t('currentPasswordInvalid'),
+              ),
+              const SizedBox(height: 12),
+            ],
+            if (passwordMode) ...[
+              LabeledField(
+                key: const Key('auth-password'),
+                label: _t('password'),
+                controller: _password,
+                obscureText: true,
+                enabled:
+                    canUse &&
+                    (mode != AuthScreenMode.security ||
+                        repository.identity?.googleOnly != true),
+                maxLength: 128,
+                helperText: _t('passwordHint'),
+                autofillHints: const [AutofillHints.newPassword],
+                textInputAction: TextInputAction.next,
+                validator: (value) =>
+                    AccountValidation.validPassword(value ?? '')
+                    ? null
+                    : _t('passwordHint'),
+              ),
+              const SizedBox(height: 12),
+              LabeledField(
+                key: const Key('auth-password-repeat'),
+                label: _t('repeatPassword'),
+                controller: _repeat,
+                obscureText: true,
+                enabled:
+                    canUse &&
+                    (mode != AuthScreenMode.security ||
+                        repository.identity?.googleOnly != true),
+                maxLength: 128,
+                autofillHints: const [AutofillHints.newPassword],
+                textInputAction: TextInputAction.done,
+                validator: (value) =>
+                    value == _password.text && (value?.isNotEmpty ?? false)
+                    ? null
+                    : _t('passwordMismatch'),
+              ),
+              const SizedBox(height: 20),
+              ActionButton(
+                key: Key(
+                  mode == AuthScreenMode.signup
+                      ? 'auth-signup-submit'
+                      : 'auth-password-submit',
+                ),
+                label: _t(
+                  mode == AuthScreenMode.signup ? 'signup' : 'savePassword',
+                ),
+                busy: _busy,
+                onPressed:
+                    canUse &&
+                        (mode != AuthScreenMode.reset ||
+                            repository.recoveryRequired) &&
+                        (mode != AuthScreenMode.security ||
+                            repository.identity?.googleOnly != true)
+                    ? () {
+                        _run(
+                          () => switch (mode) {
+                            AuthScreenMode.signup => repository.signup(
+                              email: _email.text,
                               username: _username.text,
                               password: _password.text,
-                              recoveryCode: _recoveryCode.text,
+                              displayName: _name.text,
+                              role: _role,
                             ),
-                          AuthScreenMode.reset => repository.resetPassword(
-                            _password.text,
-                          ),
-                          _ => repository.changePassword(
-                            password: _password.text,
-                            currentPassword: _currentPassword.text,
-                          ),
-                        },
-                        success: mode == AuthScreenMode.signup
-                            ? 'checkEmail'
-                            : 'done',
-                      );
-                    }
-                  : null,
-            ),
-          ],
-          if (mode == AuthScreenMode.reset && !repository.recoveryRequired)
-            StatusNotice(message: _t('invalidLink')),
-          if (callbackAction)
-            ActionButton(
-              label: _t(
-                mode == AuthScreenMode.recover ? 'sendRecovery' : 'resend',
-              ),
-              busy: _busy,
-              onPressed: canUse && repository.nativeCallbackReady
-                  ? () => _run(
-                      () => mode == AuthScreenMode.recover
-                          ? repository.requestRecovery(_email.text)
-                          : repository.resendConfirmation(_email.text),
-                      success: 'linkSent',
-                    )
-                  : null,
-            ),
-          if (mode == AuthScreenMode.security) ...[
-            const SizedBox(height: 20),
-            ActionButton(
-              label: _t('sessions'),
-              kind: ActionButtonKind.secondary,
-              onPressed: !_busy ? () => _open('cloud-game-sessions') : null,
-            ),
-            for (final scope in LogoutScope.values) ...[
-              const SizedBox(height: 12),
-              ActionButton(
-                label: _t(switch (scope) {
-                  LogoutScope.local => 'logoutCurrent',
-                  LogoutScope.others => 'logoutOthers',
-                  LogoutScope.global => 'logoutAll',
-                }),
-                kind: ActionButtonKind.danger,
-                onPressed: canUse && !repository.sessions.current.isGuest
-                    ? () async {
-                        final actor = repository.sessions.current;
-                        final confirmed = await showGeoMathConfirmation(
-                          context,
-                          title: _t('logoutTitle'),
-                          message: _t('logoutMessage'),
-                          confirmLabel: _t('confirm'),
-                          cancelLabel: _t('cancel'),
-                          danger: true,
+                            AuthScreenMode.legacyRecovery =>
+                              repository.recoverLegacy(
+                                username: _username.text,
+                                password: _password.text,
+                                recoveryCode: _recoveryCode.text,
+                              ),
+                            AuthScreenMode.reset => repository.resetPassword(
+                              _password.text,
+                            ),
+                            _ => repository.changePassword(
+                              password: _password.text,
+                              currentPassword: _currentPassword.text,
+                            ),
+                          },
+                          success: mode == AuthScreenMode.signup
+                              ? 'checkEmail'
+                              : 'done',
+                          validate: true,
                         );
-                        if (confirmed &&
-                            mounted &&
-                            repository.sessions.isCurrent(actor)) {
-                          await _run(() => repository.logout(scope));
-                        }
                       }
                     : null,
               ),
             ],
+            if (mode == AuthScreenMode.reset && !repository.recoveryRequired)
+              StatusNotice(message: _t('invalidLink')),
+            if (callbackAction)
+              ActionButton(
+                label: _t(
+                  mode == AuthScreenMode.recover ? 'sendRecovery' : 'resend',
+                ),
+                busy: _busy,
+                onPressed: canUse && repository.nativeCallbackReady
+                    ? () => _run(
+                        () => mode == AuthScreenMode.recover
+                            ? repository.requestRecovery(_email.text)
+                            : repository.resendConfirmation(_email.text),
+                        success: 'linkSent',
+                        validate: true,
+                      )
+                    : null,
+              ),
+            if (mode == AuthScreenMode.security) ...[
+              const SizedBox(height: 20),
+              ActionButton(
+                label: _t('sessions'),
+                kind: ActionButtonKind.secondary,
+                onPressed: !_busy ? () => _open('cloud-game-sessions') : null,
+              ),
+              for (final scope in LogoutScope.values) ...[
+                const SizedBox(height: 12),
+                ActionButton(
+                  label: _t(switch (scope) {
+                    LogoutScope.local => 'logoutCurrent',
+                    LogoutScope.others => 'logoutOthers',
+                    LogoutScope.global => 'logoutAll',
+                  }),
+                  kind: ActionButtonKind.danger,
+                  onPressed: canUse && !repository.sessions.current.isGuest
+                      ? () async {
+                          final actor = repository.sessions.current;
+                          final confirmed = await showGeoMathConfirmation(
+                            context,
+                            title: _t('logoutTitle'),
+                            message: _t('logoutMessage'),
+                            confirmLabel: _t('confirm'),
+                            cancelLabel: _t('cancel'),
+                            danger: true,
+                          );
+                          if (confirmed &&
+                              mounted &&
+                              repository.sessions.isCurrent(actor)) {
+                            await _run(() => repository.logout(scope));
+                          }
+                        }
+                      : null,
+                ),
+              ],
+            ],
+            if (repository.identity != null) ...[
+              const SizedBox(height: 16),
+              StatusNotice(message: _t('signedIn')),
+              ActionButton(
+                label: _t('profile'),
+                onPressed: !_busy ? () => _open('cloud-game-profile') : null,
+              ),
+            ],
           ],
-          if (repository.identity != null) ...[
-            const SizedBox(height: 16),
-            StatusNotice(message: _t('signedIn')),
-            ActionButton(
-              label: _t('profile'),
-              onPressed: !_busy ? () => _open('cloud-game-profile') : null,
-            ),
-          ],
-        ],
+        ),
       ),
     );
   }

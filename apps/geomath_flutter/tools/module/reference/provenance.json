@@ -1,0 +1,11 @@
+{
+  "repository": "unDead41/geodecoder",
+  "source_commit": "37bc2cd262cc0a54e8ee31339ea37471c1ecfda5",
+  "canonical_html_sha256": "7ddd5d60a25fbdf73c20f9f8e8fc0db4253e582fb50d17c944307b8f682066c4",
+  "files": [
+    {"path":"module-frame.mjs","source":"digital/dist/module-frame.mjs","git_blob":"cf1fabd31fae02d8f99599ee55f1e5b2a5b9c6f9","sha256":"d3f75e7839d749465fb2050035e27056cc71771ef400887e33208135fb65c230","bytes":7592},
+    {"path":"module-language.mjs","source":"digital/dist/module-language.mjs","git_blob":"b5f9f289d8d2ed23074659103a65829e9f4ad054","sha256":"16b37e316ee23c15b340d7574cd934b7c8cff609015541fa86585a80297edd03","bytes":5001},
+    {"path":"module-copy.mjs","source":"digital/dist/module-copy.mjs","git_blob":"001dd5f9be0bd783d73564d001de6be382196ca0","sha256":"55b6f5b373b193a3fd649fc6123742707b5485ad42fe68681f0e54b9bd900eb0","bytes":107425},
+    {"path":"module-design.mjs","source":"digital/dist/module-design.mjs","git_blob":"61daa3fbddd10bb2fa90cfa4cef4a9112846310d","sha256":"4edaeb9362aa5e8aea7ceb50b51ec05253210fb049bb755911ee7439e99a484f","bytes":7324}
+  ]
+}

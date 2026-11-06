@@ -82,6 +82,8 @@ export function createLearningSchema() {
     if(v.action==='zoom')return exact(v,['action','delta'])&&number(v.delta,-.5,.5);
     if(v.action==='fold')return exact(v,['action','value'])&&number(v.value,0,1);
     if(v.action==='view')return exact(v,['action','view'])&&views.includes(v.view);
+    if(v.action==='preset')return exact(v,['action','view'])&&[...views,'isometric'].includes(v.view);
+    if(v.action==='panel')return exact(v,['action','panel'])&&['notes','calculator','none'].includes(v.panel);
     if(v.action==='selectFace')return exact(v,['action','id'])&&integer(v.id,0,20);
     return false;
   }

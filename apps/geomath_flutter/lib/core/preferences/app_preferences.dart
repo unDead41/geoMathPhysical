@@ -16,6 +16,7 @@ final class AppPreferences {
     this.reducedMotion = false,
     this.musicEnabled = true,
     this.soundEnabled = true,
+    this.hapticsEnabled = true,
   }) : assert(textScale == 1 || textScale == 1.25 || textScale == 1.5);
 
   static const schemaVersion = 1;
@@ -28,6 +29,7 @@ final class AppPreferences {
   final bool reducedMotion;
   final bool musicEnabled;
   final bool soundEnabled;
+  final bool hapticsEnabled;
 
   bool get isValid => supportedTextScales.contains(textScale);
 
@@ -39,6 +41,7 @@ final class AppPreferences {
     bool? reducedMotion,
     bool? musicEnabled,
     bool? soundEnabled,
+    bool? hapticsEnabled,
   }) => AppPreferences(
     language: language ?? this.language,
     theme: theme ?? this.theme,
@@ -47,6 +50,7 @@ final class AppPreferences {
     reducedMotion: reducedMotion ?? this.reducedMotion,
     musicEnabled: musicEnabled ?? this.musicEnabled,
     soundEnabled: soundEnabled ?? this.soundEnabled,
+    hapticsEnabled: hapticsEnabled ?? this.hapticsEnabled,
   );
 
   Map<String, Object> toJson() => {
@@ -58,6 +62,7 @@ final class AppPreferences {
     'reducedMotion': reducedMotion,
     'musicEnabled': musicEnabled,
     'soundEnabled': soundEnabled,
+    'hapticsEnabled': hapticsEnabled,
   };
 
   /// Invalid or future data is rejected; the repository never overwrites it
@@ -95,6 +100,11 @@ final class AppPreferences {
       reducedMotion: flag('reducedMotion'),
       musicEnabled: flag('musicEnabled'),
       soundEnabled: flag('soundEnabled'),
+      // This additive field keeps already-saved schema-v1 settings readable.
+      // An explicitly malformed value still fails without replacing storage.
+      hapticsEnabled: json.containsKey('hapticsEnabled')
+          ? flag('hapticsEnabled')
+          : true,
     );
   }
 
@@ -107,7 +117,8 @@ final class AppPreferences {
       strongContrast == other.strongContrast &&
       reducedMotion == other.reducedMotion &&
       musicEnabled == other.musicEnabled &&
-      soundEnabled == other.soundEnabled;
+      soundEnabled == other.soundEnabled &&
+      hapticsEnabled == other.hapticsEnabled;
 
   @override
   int get hashCode => Object.hash(
@@ -118,5 +129,6 @@ final class AppPreferences {
     reducedMotion,
     musicEnabled,
     soundEnabled,
+    hapticsEnabled,
   );
 }

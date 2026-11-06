@@ -12,6 +12,7 @@ import '../../../core/result.dart';
 import '../../../core/session/actor_binding.dart';
 import '../../../core/widgets/widgets.dart';
 import '../../duel/presentation/game_card_carousel.dart';
+import '../../duel/presentation/game_card_drag.dart';
 import '../../duel/presentation/game_question_content.dart';
 import '../data/solo_repository.dart';
 import '../domain/solo_bank.dart';
@@ -391,6 +392,19 @@ final class _SoloGamePageState extends State<SoloGamePage> {
       }
       if (g.status == SoloStatus.finished) return _result(context, c, g);
       final english = AppStrings.of(context).locale.languageCode == 'en';
+      final actor = c.actor, attempt = c.attemptId;
+      final question = g.question.id, stage = g.stage;
+      final scope = (actor, attempt, question, stage);
+      bool canSelect() =>
+          mounted &&
+          visible &&
+          c.actor == actor &&
+          c.sessions.isCurrent(actor) &&
+          c.attemptId == attempt &&
+          identical(c.game, g) &&
+          g.question.id == question &&
+          g.stage == stage &&
+          g.interactive;
       return GeoMathScaffold(
         title: _text(context, 'question', {
           'number': g.index + 1,
@@ -473,33 +487,33 @@ final class _SoloGamePageState extends State<SoloGamePage> {
                     subtitle: _text(context, 'choose'),
                   ),
                   _gap(),
-                  _choices(context, c, g),
+                  _choices(context, c, g, scope, canSelect),
                   _gap(),
-                  ActionButton(
-                    key: const ValueKey('solo-r1'),
-                    label: _text(context, 'r1'),
-                    icon: Icons.filter_1_outlined,
-                    onPressed:
-                        g.stage == GeometryCardKind.solid && c.selected != null
-                        ? () => c.scan('r1')
-                        : null,
+                  _reader(
+                    context,
+                    c,
+                    g,
+                    GeometryCardKind.solid,
+                    scope,
+                    canSelect,
                   ),
                   _gap(),
-                  ActionButton(
-                    key: const ValueKey('solo-r2'),
-                    label: _text(context, 'r2'),
-                    icon: Icons.filter_2_outlined,
-                    onPressed:
-                        g.stage == GeometryCardKind.net && c.selected != null
-                        ? () => c.scan('r2')
-                        : null,
+                  _reader(
+                    context,
+                    c,
+                    g,
+                    GeometryCardKind.net,
+                    scope,
+                    canSelect,
                   ),
                   _gap(),
                   ActionButton(
                     key: const ValueKey('solo-hint'),
                     label: _text(context, g.hintOpen ? 'hideHint' : 'hint'),
                     kind: ActionButtonKind.tonal,
-                    onPressed: c.hint,
+                    onPressed: () {
+                      if (canSelect()) c.hint();
+                    },
                   ),
                   if (g.hintOpen) ...[
                     _gap(),
@@ -510,7 +524,9 @@ final class _SoloGamePageState extends State<SoloGamePage> {
                     key: const ValueKey('solo-skip'),
                     label: _text(context, 'skip'),
                     kind: ActionButtonKind.secondary,
-                    onPressed: c.skip,
+                    onPressed: () {
+                      if (canSelect()) c.skip();
+                    },
                   ),
                 ],
               ),
@@ -573,10 +589,16 @@ final class _SoloGamePageState extends State<SoloGamePage> {
       );
     },
   );
-  Widget _choices(BuildContext context, SoloController c, SoloGame g) {
+  Widget _choices(
+    BuildContext context,
+    SoloController c,
+    SoloGame g,
+    Object scope,
+    bool Function() canSelect,
+  ) {
     final order = g.stage == GeometryCardKind.solid ? g.solidOrder : g.netOrder;
     return GameCardCarousel(
-      scopeKey: (c.attemptId, g.question.id, g.stage),
+      scopeKey: scope,
       keyPrefix: 'solo-cards',
       itemCount: order.length,
       previousLabel: _text(context, 'previousCard'),
@@ -584,43 +606,116 @@ final class _SoloGamePageState extends State<SoloGamePage> {
       positionLabel: (number, total) =>
           _text(context, 'cardPosition', {'number': number, 'total': total}),
       reducedMotion: MediaQuery.disableAnimationsOf(context),
-      cardBuilder: (context, i, cardWidth) => Semantics(
-        selected: c.selected == order[i],
-        button: true,
+      cardBuilder: (context, i, cardWidth) => GameCardDraggable(
+        data: GameCardDragData(scopeKey: scope, shape: order[i], kind: g.stage),
+        enabled: canSelect(),
         label: '${_text(context, g.stage.name)} ${String.fromCharCode(65 + i)}',
-        child: GeoMathCard(
-          key: ValueKey('solo-choice-${g.stage.name}-${order[i].name}'),
-          padding: const EdgeInsets.all(10),
-          color: c.selected == order[i]
-              ? Theme.of(context).colorScheme.primaryContainer
-              : null,
-          onTap: () => c.choose(order[i]),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ExcludeSemantics(
-                child: GeometryCardView(
-                  shape: order[i],
-                  kind: g.stage,
-                  provider: widget.geometry,
-                  semanticLabel: '',
-                  size: (cardWidth - 32).clamp(88.0, 128.0).toDouble(),
+        child: Semantics(
+          selected: c.selected == order[i],
+          button: true,
+          label:
+              '${_text(context, g.stage.name)} ${String.fromCharCode(65 + i)}',
+          child: GeoMathCard(
+            key: ValueKey('solo-choice-${g.stage.name}-${order[i].name}'),
+            padding: const EdgeInsets.all(10),
+            color: c.selected == order[i]
+                ? Theme.of(context).colorScheme.primaryContainer
+                : null,
+            onTap: canSelect()
+                ? () {
+                    _choose(c, order[i], canSelect);
+                  }
+                : null,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ExcludeSemantics(
+                  child: GeometryCardView(
+                    shape: order[i],
+                    kind: g.stage,
+                    provider: widget.geometry,
+                    semanticLabel: '',
+                    size: (cardWidth - 32).clamp(88.0, 128.0).toDouble(),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                '${_text(context, g.stage.name)} ${String.fromCharCode(65 + i)}',
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(
-                height: 24,
-                child: c.selected == order[i]
-                    ? const Icon(Icons.check_circle_outline_rounded)
-                    : null,
-              ),
-            ],
+                const SizedBox(height: 8),
+                Text(
+                  '${_text(context, g.stage.name)} ${String.fromCharCode(65 + i)}',
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 24,
+                  child: c.selected == order[i]
+                      ? const Icon(Icons.check_circle_outline_rounded)
+                      : null,
+                ),
+              ],
+            ),
           ),
         ),
+      ),
+    );
+  }
+
+  void _choose(
+    SoloController c,
+    GeometryShape shape,
+    bool Function() canSelect,
+  ) {
+    if (!canSelect()) return;
+    if (c.selected != shape) unawaited(GeoFeedback.selection(context));
+    c.choose(shape);
+  }
+
+  Widget _reader(
+    BuildContext context,
+    SoloController c,
+    SoloGame g,
+    GeometryCardKind kind,
+    Object scope,
+    bool Function() canSelect,
+  ) {
+    final active = g.stage == kind;
+    final reader = kind == GeometryCardKind.solid ? 'r1' : 'r2';
+    final order = kind == GeometryCardKind.solid ? g.solidOrder : g.netOrder;
+    final selectedIndex = c.selected == null ? -1 : order.indexOf(c.selected!);
+    return GameReaderTarget(
+      key: ValueKey('solo-reader-$reader'),
+      scopeKey: scope,
+      kind: kind,
+      active: active,
+      canSelect: canSelect,
+      onSelected: (shape) => _choose(c, shape, canSelect),
+      title: _text(context, active ? 'activeReader' : 'inactiveReader', {
+        'reader': reader.toUpperCase(),
+      }),
+      message: _text(
+        context,
+        active
+            ? 'dropHere'
+            : kind == GeometryCardKind.solid
+            ? 'readerComplete'
+            : 'readerLocked',
+      ),
+      selection: !active || selectedIndex < 0
+          ? null
+          : _text(context, 'selection', {
+              'card':
+                  '${_text(context, kind.name)} ${String.fromCharCode(65 + selectedIndex)}',
+            }),
+      child: ActionButton(
+        key: ValueKey('solo-$reader'),
+        label: _text(context, reader),
+        icon: kind == GeometryCardKind.solid
+            ? Icons.filter_1_outlined
+            : Icons.filter_2_outlined,
+        onPressed: active && canSelect() && c.selected != null
+            ? () {
+                if (canSelect() && g.stage == kind && c.selected != null) {
+                  c.scan(reader);
+                }
+              }
+            : null,
       ),
     );
   }

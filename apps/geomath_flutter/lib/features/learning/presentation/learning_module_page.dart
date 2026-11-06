@@ -13,8 +13,12 @@ import '../../../core/navigation/app_navigation.dart';
 import '../../../core/widgets/widgets.dart';
 import '../application/learning_module_controller.dart';
 import '../application/learning_services.dart';
+import '../learning_catalogue.dart';
 import '../module_spike_host.dart';
 import '../persistence/learning_reflection_controller.dart';
+import 'learning_model_controls.dart';
+import 'learning_module_workspace.dart';
+import 'learning_shape_carousel.dart';
 
 /// Native shell and navigation around the actual canonical activity. The same
 /// platform document survives presentation changes and covered routes.
@@ -45,7 +49,7 @@ class LearningModulePageState extends State<LearningModulePage> {
   late LearningReflectionController _reflections;
   LearningBackCoordinator? _back;
   int? _routeInstance;
-  String _selectedView = 'front';
+  int _shapeSelectionEpoch = 0;
   bool _nativeSheetOpen = false;
   bool _routeSeedConsumed = false;
   StreamSubscription<Object?>? _actorSubscription;
@@ -57,8 +61,16 @@ class LearningModulePageState extends State<LearningModulePage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _controller ??= _createController();
-    _controller!.updateBrightness(Theme.of(context).brightness);
+    _applyPresentation(_controller!);
     _controller!.setVisible(AppRouteScope.maybeOf(context)?.isCurrent ?? true);
+  }
+
+  void _applyPresentation(LearningModuleController controller) {
+    controller.updateBrightness(Theme.of(context).brightness);
+    controller.host.updateAccessibility(
+      textScale: MediaQuery.textScalerOf(context).scale(16) / 16,
+      reducedMotion: MediaQuery.disableAnimationsOf(context),
+    );
   }
 
   LearningModuleController _createController({
@@ -131,6 +143,7 @@ class LearningModulePageState extends State<LearningModulePage> {
         );
       },
     );
+    _applyPresentation(controller);
     unawaited(controller.initialize());
     return controller;
   }
@@ -295,6 +308,15 @@ class LearningModulePageState extends State<LearningModulePage> {
         ],
         body: LayoutBuilder(
           builder: (context, constraints) {
+            final shape = c.shape;
+            final selectionEpoch = _shapeSelectionEpoch;
+            Future<bool> shapeAction(Map<String, Object?> action) async {
+              if (selectionEpoch != _shapeSelectionEpoch || !c.isReady) {
+                return false;
+              }
+              return (await c.action(action, expectedShape: shape)).isSuccess;
+            }
+
             final controls = Padding(
               padding: const EdgeInsets.all(12),
               child: Column(
@@ -330,15 +352,48 @@ class LearningModulePageState extends State<LearningModulePage> {
                     _shapeSelector(c),
                   if (['explore', 'views'].contains(widget.section)) ...[
                     const SizedBox(height: 8),
-                    _modelToolbar(c),
-                    if (widget.section == 'views') _viewControls(c),
-                    if (['sphere', 'hemisphere'].contains(c.shape))
-                      Text(
-                        text(
-                          'Bentuk ini tiada bentangan rata tepat dalam modul.',
-                          'This model has no exact flat net in the module.',
-                        ),
+                    if (widget.section == 'explore') ...[
+                      LearningUnfoldControl(
+                        shapeId: c.shape,
+                        progress:
+                            ((c.snapshot?['explore'] as Map?)?['progress']
+                                    as num?)
+                                ?.toDouble() ??
+                            0,
+                        onChanged: c.isReady
+                            ? (value) => shapeAction({
+                                'action': 'fold',
+                                'value': value,
+                              })
+                            : null,
                       ),
+                      const SizedBox(height: 8),
+                    ],
+                    ExpansionTile(
+                      key: const PageStorageKey('learning-camera-tools'),
+                      title: Text(
+                        AppStrings.of(context).text('learning.cameraControls'),
+                      ),
+                      children: [
+                        LearningCameraControls(
+                          yaw:
+                              ((c.snapshot?['explore'] as Map?)?['yaw'] as num?)
+                                  ?.toDouble() ??
+                              .55,
+                          pitch:
+                              ((c.snapshot?['explore'] as Map?)?['pitch']
+                                      as num?)
+                                  ?.toDouble() ??
+                              .35,
+                          showPresets: widget.section == 'explore',
+                          onAction: c.isReady ? shapeAction : null,
+                        ),
+                      ],
+                    ),
+                    if (widget.section == 'views') _viewControls(c),
+                    if (widget.section == 'views' &&
+                        ['sphere', 'hemisphere'].contains(c.shape))
+                      Text(AppStrings.of(context).text('learning.noExactNet')),
                     if (c.shape == 'cube' || c.shape == 'cuboid')
                       ExpansionTile(
                         title: Text(
@@ -439,31 +494,9 @@ class LearningModulePageState extends State<LearningModulePage> {
                 ],
               ),
             );
-            final module = _module(c);
-            if (constraints.maxWidth >= 768) {
-              return Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  SizedBox(
-                    width: 290,
-                    child: SingleChildScrollView(child: controls),
-                  ),
-                  const VerticalDivider(width: 1),
-                  Expanded(child: module),
-                ],
-              );
-            }
-            return Column(
-              children: [
-                ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxHeight: constraints.maxHeight * .38,
-                  ),
-                  child: SingleChildScrollView(child: controls),
-                ),
-                const Divider(height: 1),
-                Expanded(child: module),
-              ],
+            return LearningModuleWorkspace(
+              controls: controls,
+              activity: _module(c),
             );
           },
         ),
@@ -472,139 +505,50 @@ class LearningModulePageState extends State<LearningModulePage> {
   }
 
   Widget _shapeSelector(LearningModuleController c) {
-    const ids = [
-      'cube',
-      'cuboid',
-      'pyramid',
-      'cylinder',
-      'cone',
-      'triangular-prism',
-      'tetrahedron',
-      'pentagonal-prism',
-      'hexagonal-prism',
-      'sphere',
-      'hemisphere',
-    ];
-    return DropdownButtonFormField<String>(
-      key: ValueKey('learning-shape-${c.shape}'),
-      initialValue: c.shape,
-      isExpanded: true,
-      decoration: InputDecoration(labelText: text('Bongkah', 'Solid')),
-      items: [
-        for (final id in ids)
-          DropdownMenuItem(
-            value: id,
-            child: Text(
-              AppStrings.of(context)
-                  .text('learning.shape.${id.replaceAll('-', '_')}'),
-              overflow: TextOverflow.ellipsis,
-            ),
+    return LearningShapeCarousel(
+      options: [
+        for (final id in LearningCatalogue.canonicalIds)
+          ShapeOption(
+            id: id,
+            label: AppStrings.of(context)
+                .text('learning.shape.${id.replaceAll('-', '_')}'),
           ),
       ],
-      onChanged: c.isReady
+      selectedId: c.shape,
+      onSelected: c.isReady
           ? (shape) {
-              if (shape != null) {
-                unawaited(
-                  c.action({
-                    'action': 'launch',
-                    'section': widget.section,
-                    'shape': shape,
-                    if (widget.mode != null) 'mode': widget.mode,
-                  }),
-                );
-              }
+              setState(() => _shapeSelectionEpoch++);
+              unawaited(
+                c.action({
+                  'action': 'launch',
+                  'section': widget.section,
+                  'shape': shape,
+                  if (widget.mode != null) 'mode': widget.mode,
+                }),
+              );
             }
           : null,
     );
   }
 
-  Widget _modelToolbar(LearningModuleController c) => ModelToolbar(
-    actions: [
-      for (final item in [
-        (
-          'left',
-          text('Putar kiri', 'Rotate left'),
-          Icons.rotate_left_rounded,
-          {'action': 'rotate', 'yaw': -.25, 'pitch': 0},
-        ),
-        (
-          'right',
-          text('Putar kanan', 'Rotate right'),
-          Icons.rotate_right_rounded,
-          {'action': 'rotate', 'yaw': .25, 'pitch': 0},
-        ),
-        (
-          'zoom',
-          text('Zum', 'Zoom in'),
-          Icons.zoom_in_rounded,
-          {'action': 'zoom', 'delta': .15},
-        ),
-        (
-          'reset',
-          text('Kamera asal', 'Reset camera'),
-          Icons.center_focus_strong_rounded,
-          {'action': 'reset'},
-        ),
-        (
-          'fold',
-          text('Buka', 'Unfold'),
-          Icons.open_in_full_rounded,
-          {'action': 'fold', 'value': 1},
-        ),
-        (
-          'join',
-          text('Cantum', 'Join'),
-          Icons.close_fullscreen_rounded,
-          {'action': 'fold', 'value': 0},
-        ),
-        (
-          'pause',
-          text('Jeda', 'Pause'),
-          Icons.pause_rounded,
-          {'action': 'pause'},
-        ),
-        (
-          'resume',
-          text('Sambung', 'Resume'),
-          Icons.play_arrow_rounded,
-          {'action': 'resume'},
-        ),
-      ])
-        ModelToolbarAction(
-          id: item.$1,
-          label: item.$2,
-          icon: item.$3,
-          onPressed:
-              c.isReady &&
-                  !(['sphere', 'hemisphere'].contains(c.shape) &&
-                      ['fold', 'join'].contains(item.$1)) &&
-                  !(widget.section == 'views' &&
-                      ['fold', 'join'].contains(item.$1))
-              ? () => unawaited(c.action(item.$4))
-              : null,
-        ),
-    ],
-  );
-
-  Widget _viewControls(LearningModuleController c) => ChoiceChips<String>(
-    options: [
-      for (final view in ['front', 'back', 'left', 'right', 'top', 'bottom'])
-        ChoiceChipOption(
-          value: view,
-          label: AppStrings.of(context).text('face.$view'),
-        ),
-    ],
-    selected:
-        (c.snapshot?['explore'] as Map?)?['view'] as String? ?? _selectedView,
-    onSelected: c.isReady
-        ? (view) async {
-            final result = await c.action({'action': 'view', 'view': view});
-            if (mounted && result.isSuccess) {
-              setState(() => _selectedView = view);
-            }
-          }
-        : null,
-  );
+  Widget _viewControls(LearningModuleController c) {
+    final shape = c.shape;
+    return ChoiceChips<String>(
+      options: [
+        for (final view in ['front', 'back', 'left', 'right', 'top', 'bottom'])
+          ChoiceChipOption(
+            value: view,
+            label: AppStrings.of(context).text('face.$view'),
+          ),
+      ],
+      selected: (c.snapshot?['explore'] as Map?)?['view'] as String? ?? 'front',
+      onSelected: c.isReady
+          ? (view) => unawaited(
+              c.action({'action': 'view', 'view': view}, expectedShape: shape),
+            )
+          : null,
+    );
+  }
 
   Widget _navigationControls(LearningModuleController c) => ExpansionTile(
     title: Text(text('Alat pembelajaran', 'Learning tools')),
@@ -628,13 +572,17 @@ class LearningModulePageState extends State<LearningModulePage> {
               selected: item.$1 == c.currentSection,
               onPressed: item.$1 == c.currentSection || !c.isReady
                   ? null
-                  : () => unawaited(
-                      c.action({
-                        'action': 'launch',
-                        'section': item.$1,
-                        if (c.currentSection == 'calculation') 'shape': c.shape,
-                      }),
-                    ),
+                  : () {
+                      setState(() => _shapeSelectionEpoch++);
+                      unawaited(
+                        c.action({
+                          'action': 'launch',
+                          'section': item.$1,
+                          if (c.currentSection == 'calculation')
+                            'shape': c.shape,
+                        }),
+                      );
+                    },
             ),
           if (['notes', 'calculator'].contains(c.currentSection))
             ModelToolbarAction(
@@ -668,7 +616,7 @@ class LearningModulePageState extends State<LearningModulePage> {
         c.host.phase == ModuleLoadPhase.failed ||
         c.host.phase == ModuleLoadPhase.closed) {
       return Center(
-        child: Padding(
+        child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
           child: Column(
             mainAxisSize: MainAxisSize.min,

@@ -150,7 +150,7 @@ export function installLearningAdapter(env,schema) {
     return checkpoint;
   }
   function diagnostics(){
-    return {section:section(),shape:state.shape,modelCount:env.models.length,yaw:state.yaw,pitch:state.pitch,zoom:state.zoom,progress:state.progress,mode:state.mode,selected:state.selected,playing:state.playing,auto:state.auto,labKind:labs.ready?labs.kind:null,labMode:labs.ready?(labs.kind==='net'?labs.net.mode:labs.kind==='volume'?labs.volume.kind:labs.kind==='area'?labs.area.mode:labs.comp.kind):null,projectionShape:projection.state.shape,projectionScale:projection.state.scale,calculationShape:calculation.draft?.shape||null,faceColors:env.faceColors(state.shape),meshSource:'learning-mesh.mjs/studySolidMesh'};
+    return {section:section(),shape:state.shape,modelCount:env.models.length,yaw:state.yaw,pitch:state.pitch,zoom:state.zoom,progress:state.progress,mode:state.mode,selected:state.selected,playing:state.playing,auto:state.auto,...env.panelState(),labKind:labs.ready?labs.kind:null,labMode:labs.ready?(labs.kind==='net'?labs.net.mode:labs.kind==='volume'?labs.volume.kind:labs.kind==='area'?labs.area.mode:labs.comp.kind):null,projectionShape:projection.state.shape,projectionScale:projection.state.scale,calculationShape:calculation.draft?.shape||null,faceColors:env.faceColors(state.shape),meshSource:'learning-mesh.mjs/studySolidMesh'};
   }
   function emit(result={ok:true},sequence=requestSequence){
     try{post('geomath:learning-state',{requestSequence:sequence,result,checkpoint:capture(),transitionCheckpoint,diagnostics:diagnostics()});}
@@ -189,6 +189,7 @@ export function installLearningAdapter(env,schema) {
     if(!preflight(value))throw Error('checkpoint-invalid');
     const v=clone(value);restoring=true;
     try{
+      env.setPanel('none');
       pause();
       launch({section:v.section,shape:v.section==='projection'?v.projection?.state.shape:v.section==='calculation'?v.calculation?.draft.shape:v.explore.shape});
       if(v.notes){notes.render(v.notes.shape);notes.piMode=v.notes.piMode;for(const [key,raw] of Object.entries(v.notes.dimensions))el('measure-'+key).value=raw;notes.calculate();}
@@ -228,6 +229,13 @@ export function installLearningAdapter(env,schema) {
     }
     if(value.action==='restore')return restore(value.checkpoint);
     if(value.action==='checkpoint')return;
+    if(value.action==='panel'){if(!env.setPanel(value.panel))throw Error('panel-unavailable');return;}
+    if(value.action==='preset'){
+      if(current!=='explore')throw Error('preset-unavailable');
+      const preset=env.cameraPresets[value.view];
+      state.auto=false;state.camera=null;state.manualOrbit=true;
+      state.yaw=preset.yaw;state.pitch=preset.pitch;env.refresh();env.redraw();return;
+    }
     if(value.action==='export-net')return exportNet();
     if(value.action==='pause')return pause();
     if(value.action==='resume'){if(state.learningView==='labs')labs.resume();else if(state.learningView==='explore'&&state.pausedAnimation)el('play').click();return;}
@@ -280,7 +288,7 @@ export function installLearningAdapter(env,schema) {
     if(!schema.action(m.value)){emit({ok:false,error:'action-invalid'});return;}
     const initialLaunch=m.value.action==='launch'&&!hasLaunched;
     if(initialLaunch)hasLaunched=true;
-    try{transition(()=>control(m.value),initialLaunch||m.value.action==='restore');emit();}catch(error){emit({ok:false,error:['checkpoint-invalid','surface-checkpoint-invalid','face-unavailable','undo-unavailable','net-unavailable','net-export-unavailable','net-export-invalid','workflow-unavailable'].includes(error.message)?error.message:'action-failed'});}
+    try{transition(()=>control(m.value),initialLaunch||m.value.action==='restore');emit();}catch(error){emit({ok:false,error:['checkpoint-invalid','surface-checkpoint-invalid','face-unavailable','undo-unavailable','net-unavailable','net-export-unavailable','net-export-invalid','workflow-unavailable','panel-unavailable','preset-unavailable'].includes(error.message)?error.message:'action-failed'});}
   });
   const schedule=()=>{if(restoring||queued)return;queued=true;Promise.resolve().then(()=>{queued=false;if(!restoring)emit();});};
   for(const name of ['input','change','click','pointerup'])document.addEventListener(name,schedule);
@@ -291,5 +299,5 @@ export function installLearningAdapter(env,schema) {
 }
 
 export function learningAdapterSource(){
-  return `\nconst geomathValidateLearningGeometry=(${validateLearningGeometry.toString()});\nconst geomathLearningSchema=(${createLearningSchema.toString()})();\nconst geomathLearningTransport=(${installLearningAdapter.toString()})({state,labs:learningLabs,notes:learningNotes,projection:projectionStudio,calculation:calculationWorkshop,access:moduleAccess,LabMotion,ease,transferFrame,el,models:MODEL_ORDER,fields:MEASURE_FIELDS,studioShapes:STUDIO_SHAPES.map(s=>s.key),noNet:shape=>Boolean(MODEL_DATA[shape].noNet),surfaceCount:shape=>MODEL_DATA[shape].labels.length,faceColors:shape=>MODEL_DATA[shape].labels.map((_,id)=>geomathFaceColor(shape,id)),surfaceLaunch:geomathSurfaceLaunch,surfaceSnapshot:geomathSurfaceSnapshot,surfaceRestore:geomathSurfaceRestore,surfaceValidate:geomathSurfaceValidate,selectShape,switchView:switchLearningView,switchMode,selectView,selectFace,stopAnimation,resetCamera,zoomBy,refresh:refreshControls,redraw:redrawSmallModels,installTransitions:wrap=>{const view=switchLearningView;switchLearningView=function(...args){return wrap(()=>view(...args));};const mode=switchMode;switchMode=function(...args){return wrap(()=>mode(...args));};const study=setStudyMode;setStudyMode=function(...args){return wrap(()=>study(...args));};const choose=learningLabs.choose;learningLabs.choose=function(...args){return wrap(()=>choose.apply(this,args));};},revalidateCalculation:(c,step)=>{if(c.problem.valid)for(let i=0;i<step;i++){const key=calcSteps[i],value=key==='unit'?{value:c.draft.answers.unitValue,unit:c.draft.answers.unit}:c.draft.answers[key],result=calculationCheckStep(c.problem,key,value);c.draft.checks[key]=result;if(!result.correct)break;}c.activeStep=step;c.updateSteps();},validateGeometry:v=>geomathValidateLearningGeometry(v,{modelData:MODEL_DATA,fields:MEASURE_FIELDS,studioFields,learningMesh,netStudioState,volumeInfo,transferPlan,transferFrame,ease,surfaceValidate:geomathSurfaceValidate,projectionModel,calculationContextOptions,calculationUnitOptions,calculationFields})},geomathLearningSchema);\n`;
+  return `\nconst geomathValidateLearningGeometry=(${validateLearningGeometry.toString()});\nconst geomathLearningSchema=(${createLearningSchema.toString()})();\nconst geomathLearningTransport=(${installLearningAdapter.toString()})({state,labs:learningLabs,notes:learningNotes,projection:projectionStudio,calculation:calculationWorkshop,access:moduleAccess,setPanel:geomathModuleUx.setPanel,panelState:geomathModuleUx.panelState,cameraPresets:geomathModuleUx.presets,LabMotion,ease,transferFrame,el,models:MODEL_ORDER,fields:MEASURE_FIELDS,studioShapes:STUDIO_SHAPES.map(s=>s.key),noNet:shape=>Boolean(MODEL_DATA[shape].noNet),surfaceCount:shape=>MODEL_DATA[shape].labels.length,faceColors:shape=>MODEL_DATA[shape].labels.map((_,id)=>geomathFaceColor(shape,id)),surfaceLaunch:geomathSurfaceLaunch,surfaceSnapshot:geomathSurfaceSnapshot,surfaceRestore:geomathSurfaceRestore,surfaceValidate:geomathSurfaceValidate,selectShape,switchView:switchLearningView,switchMode,selectView,selectFace,stopAnimation,resetCamera,zoomBy,refresh:refreshControls,redraw:redrawSmallModels,installTransitions:wrap=>{const view=switchLearningView;switchLearningView=function(...args){return wrap(()=>view(...args));};const mode=switchMode;switchMode=function(...args){return wrap(()=>mode(...args));};const study=setStudyMode;setStudyMode=function(...args){return wrap(()=>study(...args));};const choose=learningLabs.choose;learningLabs.choose=function(...args){return wrap(()=>choose.apply(this,args));};},revalidateCalculation:(c,step)=>{if(c.problem.valid)for(let i=0;i<step;i++){const key=calcSteps[i],value=key==='unit'?{value:c.draft.answers.unitValue,unit:c.draft.answers.unit}:c.draft.answers[key],result=calculationCheckStep(c.problem,key,value);c.draft.checks[key]=result;if(!result.correct)break;}c.activeStep=step;c.updateSteps();},validateGeometry:v=>geomathValidateLearningGeometry(v,{modelData:MODEL_DATA,fields:MEASURE_FIELDS,studioFields,learningMesh,netStudioState,volumeInfo,transferPlan,transferFrame,ease,surfaceValidate:geomathSurfaceValidate,projectionModel,calculationContextOptions,calculationUnitOptions,calculationFields})},geomathLearningSchema);\n`;
 }

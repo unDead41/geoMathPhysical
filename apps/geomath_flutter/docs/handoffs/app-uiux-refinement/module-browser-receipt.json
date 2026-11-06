@@ -1,0 +1,1942 @@
+{
+  "kind": "real-offline-module-desktop-browser",
+  "source": {
+    "git_head": "4a48628b5171557f3d49075bf6b1a09fec4bf98b",
+    "runtime_diff": "",
+    "inputs": {
+      "index.html": "e8db2197527c325fa2c879a56b3aac8a0dc8fe65c449c154b405d4c9d00c8331",
+      "native-adapter.js": "c5037a779423774d0748c5be68e265b619007183bbd167335a76bd1f925f21c9",
+      "canonical-module.html": "7ddd5d60a25fbdf73c20f9f8e8fc0db4253e582fb50d17c944307b8f682066c4",
+      "manifest.json": "a54b5d4e0ee4afcb9d5d497e12902e587c8e4ab573e1282ef239907f63de2930"
+    }
+  },
+  "browser": "151.0.7922.34",
+  "native_host": "test postMessage receiver only; actual bundled browser controller/canvas",
+  "android_evidence": false,
+  "captures": [
+    {
+      "path": "320-ms-light-150-cube-fold-selected-top.png",
+      "bytes": 62402,
+      "sha256": "7f1b0d5178f68f60751e1bf3c5e733b77acf87c1a3aed8293cd443e32501fcf3",
+      "profile": "320-ms-light-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "cube",
+        "modelCount": 11,
+        "yaw": 0.55,
+        "pitch": 0.35,
+        "zoom": 1,
+        "progress": 0.45,
+        "mode": "model",
+        "selected": 4,
+        "playing": false,
+        "auto": false,
+        "panel": "none",
+        "height": 48,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#F69B45",
+          "#E9799B",
+          "#42B883",
+          "#F4C95D",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "320-ms-light-150-notes-overlay.png",
+      "bytes": 50779,
+      "sha256": "ac5e4b32e4cfe2ff4fbce0a26379bcc662439b26bd2dc5d0798741a7a4dd13a5",
+      "profile": "320-ms-light-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "cube",
+        "modelCount": 11,
+        "yaw": 0.9550000000000003,
+        "pitch": 0.53,
+        "zoom": 2.2,
+        "progress": 0.45,
+        "mode": "model",
+        "selected": 4,
+        "playing": false,
+        "auto": false,
+        "panel": "notes",
+        "height": 48,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#F69B45",
+          "#E9799B",
+          "#42B883",
+          "#F4C95D",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "320-ms-light-150-calculator-overlay.png",
+      "bytes": 49812,
+      "sha256": "e5b524b22000a372f25555be39594aaeac6940bab9419117bdc29dcb425e4666",
+      "profile": "320-ms-light-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "cube",
+        "modelCount": 11,
+        "yaw": 0.9550000000000003,
+        "pitch": 0.53,
+        "zoom": 2.2,
+        "progress": 0.45,
+        "mode": "model",
+        "selected": 4,
+        "playing": false,
+        "auto": false,
+        "panel": "calculator",
+        "height": 53,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#F69B45",
+          "#E9799B",
+          "#42B883",
+          "#F4C95D",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "320-ms-light-150-cube-six-views.png",
+      "bytes": 50717,
+      "sha256": "d6c4655e9a29419077d5b92b6763389f7346a81afcb4509b2d066781c2a4ec17",
+      "profile": "320-ms-light-150",
+      "diagnostics": {
+        "section": "views",
+        "shape": "cube",
+        "modelCount": 11,
+        "yaw": 0.9550000000000003,
+        "pitch": 0.53,
+        "zoom": 2.2,
+        "progress": 0.45,
+        "mode": "views",
+        "selected": null,
+        "playing": true,
+        "auto": false,
+        "panel": "none",
+        "height": 53,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#F69B45",
+          "#E9799B",
+          "#42B883",
+          "#F4C95D",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "320-ms-light-150-cone-curved-surface.png",
+      "bytes": 72419,
+      "sha256": "fea44559ac51deebe914253c91c07d3dd4b74bc32278c6e01203ad6c3175b653",
+      "profile": "320-ms-light-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "cone",
+        "modelCount": 11,
+        "yaw": 0.55,
+        "pitch": 0.35,
+        "zoom": 1,
+        "progress": 0,
+        "mode": "model",
+        "selected": 1,
+        "playing": false,
+        "auto": false,
+        "panel": "none",
+        "height": 53,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "320-ms-light-150-sphere-no-flat-net.png",
+      "bytes": 80514,
+      "sha256": "40e576d00cd9ca1cf264d6a8edf06ee6079a9c82e892725216176305018c88d4",
+      "profile": "320-ms-light-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "sphere",
+        "modelCount": 11,
+        "yaw": 0.55,
+        "pitch": 0.35,
+        "zoom": 1,
+        "progress": 0,
+        "mode": "model",
+        "selected": null,
+        "playing": false,
+        "auto": false,
+        "panel": "none",
+        "height": 53,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "320-en-dark-150-cube-fold-selected-top.png",
+      "bytes": 58811,
+      "sha256": "ba9f972031b81ad5d4f8a9ee2e5622e0deebc680e680c652971767adef2c08b4",
+      "profile": "320-en-dark-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "cube",
+        "modelCount": 11,
+        "yaw": 0.55,
+        "pitch": 0.35,
+        "zoom": 1,
+        "progress": 0.45,
+        "mode": "model",
+        "selected": 4,
+        "playing": false,
+        "auto": false,
+        "panel": "none",
+        "height": 48,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#F69B45",
+          "#E9799B",
+          "#42B883",
+          "#F4C95D",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "320-en-dark-150-notes-overlay.png",
+      "bytes": 51383,
+      "sha256": "c969a29f7b6a587c16e17f66f5a65e28b95753ba760f95e63b08ab1219134adc",
+      "profile": "320-en-dark-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "cube",
+        "modelCount": 11,
+        "yaw": 0.9550000000000003,
+        "pitch": 0.53,
+        "zoom": 2.2,
+        "progress": 0.45,
+        "mode": "model",
+        "selected": 4,
+        "playing": false,
+        "auto": false,
+        "panel": "notes",
+        "height": 48,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#F69B45",
+          "#E9799B",
+          "#42B883",
+          "#F4C95D",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "320-en-dark-150-calculator-overlay.png",
+      "bytes": 50378,
+      "sha256": "1ef3343bd91889d991bd64f98ca5d33438126dd80900a9499575b10122143f95",
+      "profile": "320-en-dark-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "cube",
+        "modelCount": 11,
+        "yaw": 0.9550000000000003,
+        "pitch": 0.53,
+        "zoom": 2.2,
+        "progress": 0.45,
+        "mode": "model",
+        "selected": 4,
+        "playing": false,
+        "auto": false,
+        "panel": "calculator",
+        "height": 53,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#F69B45",
+          "#E9799B",
+          "#42B883",
+          "#F4C95D",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "320-en-dark-150-cube-six-views.png",
+      "bytes": 47631,
+      "sha256": "cf698695f7e921b550ea4d07bb76e731e19467e50c17f64ddc84ffb9ba28cd79",
+      "profile": "320-en-dark-150",
+      "diagnostics": {
+        "section": "views",
+        "shape": "cube",
+        "modelCount": 11,
+        "yaw": 0.9550000000000003,
+        "pitch": 0.53,
+        "zoom": 2.2,
+        "progress": 0.4471262068965517,
+        "mode": "views",
+        "selected": null,
+        "playing": true,
+        "auto": false,
+        "panel": "none",
+        "height": 53,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#F69B45",
+          "#E9799B",
+          "#42B883",
+          "#F4C95D",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "320-en-dark-150-cone-curved-surface.png",
+      "bytes": 67043,
+      "sha256": "62a765c64414360a941c9d9ae071a090c05efa60ac73dcf28e5b510885aec935",
+      "profile": "320-en-dark-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "cone",
+        "modelCount": 11,
+        "yaw": 0.55,
+        "pitch": 0.35,
+        "zoom": 1,
+        "progress": 0,
+        "mode": "model",
+        "selected": 1,
+        "playing": false,
+        "auto": false,
+        "panel": "none",
+        "height": 53,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "320-en-dark-150-sphere-no-flat-net.png",
+      "bytes": 75686,
+      "sha256": "63496c86d53b5f86c995f5fde83f2b18cfde1e6e0923cb5df3f09f57b9a69ce8",
+      "profile": "320-en-dark-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "sphere",
+        "modelCount": 11,
+        "yaw": 0.55,
+        "pitch": 0.35,
+        "zoom": 1,
+        "progress": 0,
+        "mode": "model",
+        "selected": null,
+        "playing": false,
+        "auto": false,
+        "panel": "none",
+        "height": 53,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "390-ms-light-150-cube-fold-selected-top.png",
+      "bytes": 67535,
+      "sha256": "5f2db7ffdd22768ee234d7a178a34d6ea3c7170efb8aec6c97fd04572dcce96d",
+      "profile": "390-ms-light-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "cube",
+        "modelCount": 11,
+        "yaw": 0.55,
+        "pitch": 0.35,
+        "zoom": 1,
+        "progress": 0.45,
+        "mode": "model",
+        "selected": 4,
+        "playing": false,
+        "auto": false,
+        "panel": "none",
+        "height": 48,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#F69B45",
+          "#E9799B",
+          "#42B883",
+          "#F4C95D",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "390-ms-light-150-notes-overlay.png",
+      "bytes": 59817,
+      "sha256": "2880580579c8543ab88496accd6e40023c369fd7e8914a9ca82900a431a85f41",
+      "profile": "390-ms-light-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "cube",
+        "modelCount": 11,
+        "yaw": 0.9550000000000003,
+        "pitch": 0.53,
+        "zoom": 2.2,
+        "progress": 0.45,
+        "mode": "model",
+        "selected": 4,
+        "playing": false,
+        "auto": false,
+        "panel": "notes",
+        "height": 48,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#F69B45",
+          "#E9799B",
+          "#42B883",
+          "#F4C95D",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "390-ms-light-150-calculator-overlay.png",
+      "bytes": 62125,
+      "sha256": "f4c1c4074234e0a6c9ddf8f0d70ebf0e58c9563c991a4e4aa09ab91c0fed9c97",
+      "profile": "390-ms-light-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "cube",
+        "modelCount": 11,
+        "yaw": 0.9550000000000003,
+        "pitch": 0.53,
+        "zoom": 2.2,
+        "progress": 0.45,
+        "mode": "model",
+        "selected": 4,
+        "playing": false,
+        "auto": false,
+        "panel": "calculator",
+        "height": 53,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#F69B45",
+          "#E9799B",
+          "#42B883",
+          "#F4C95D",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "390-ms-light-150-cube-six-views.png",
+      "bytes": 55391,
+      "sha256": "b14d90dc3d64dbf2695281f91b1a4efda1f105dab536cf693a86d5cca673dbe5",
+      "profile": "390-ms-light-150",
+      "diagnostics": {
+        "section": "views",
+        "shape": "cube",
+        "modelCount": 11,
+        "yaw": 0.9550000000000003,
+        "pitch": 0.53,
+        "zoom": 2.2,
+        "progress": 0.45,
+        "mode": "views",
+        "selected": null,
+        "playing": true,
+        "auto": false,
+        "panel": "none",
+        "height": 53,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#F69B45",
+          "#E9799B",
+          "#42B883",
+          "#F4C95D",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "390-ms-light-150-cone-curved-surface.png",
+      "bytes": 77011,
+      "sha256": "72c972a91ca12bb9c877057b292af8566cd8d2697290fd3ca80d159648b28598",
+      "profile": "390-ms-light-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "cone",
+        "modelCount": 11,
+        "yaw": 0.55,
+        "pitch": 0.35,
+        "zoom": 1,
+        "progress": 0,
+        "mode": "model",
+        "selected": 1,
+        "playing": false,
+        "auto": false,
+        "panel": "none",
+        "height": 53,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "390-ms-light-150-sphere-no-flat-net.png",
+      "bytes": 85542,
+      "sha256": "698f818e9390a48e1a28dcdaa2c1f13004fd30ea53050445dfddfd46ce9aaf58",
+      "profile": "390-ms-light-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "sphere",
+        "modelCount": 11,
+        "yaw": 0.55,
+        "pitch": 0.35,
+        "zoom": 1,
+        "progress": 0,
+        "mode": "model",
+        "selected": null,
+        "playing": false,
+        "auto": false,
+        "panel": "none",
+        "height": 53,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "390-en-dark-150-cube-fold-selected-top.png",
+      "bytes": 63322,
+      "sha256": "b523034cb40a8244cb92dd276dc910e8c5c3c6982a49bd66077fa27fe12f3e80",
+      "profile": "390-en-dark-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "cube",
+        "modelCount": 11,
+        "yaw": 0.55,
+        "pitch": 0.35,
+        "zoom": 1,
+        "progress": 0.45,
+        "mode": "model",
+        "selected": 4,
+        "playing": false,
+        "auto": false,
+        "panel": "none",
+        "height": 48,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#F69B45",
+          "#E9799B",
+          "#42B883",
+          "#F4C95D",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "390-en-dark-150-notes-overlay.png",
+      "bytes": 62545,
+      "sha256": "c32c7d79dfc76239fa464428b91c0089a47a793b6e25fb2fea931dc64d84a28e",
+      "profile": "390-en-dark-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "cube",
+        "modelCount": 11,
+        "yaw": 0.9550000000000003,
+        "pitch": 0.53,
+        "zoom": 2.2,
+        "progress": 0.45,
+        "mode": "model",
+        "selected": 4,
+        "playing": false,
+        "auto": false,
+        "panel": "notes",
+        "height": 48,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#F69B45",
+          "#E9799B",
+          "#42B883",
+          "#F4C95D",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "390-en-dark-150-calculator-overlay.png",
+      "bytes": 63152,
+      "sha256": "fe3dc033ca1c2c979974ba88e8b9f702e58d3952bfe2de2dd641750e80daf6ce",
+      "profile": "390-en-dark-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "cube",
+        "modelCount": 11,
+        "yaw": 0.9550000000000003,
+        "pitch": 0.53,
+        "zoom": 2.2,
+        "progress": 0.45,
+        "mode": "model",
+        "selected": 4,
+        "playing": false,
+        "auto": false,
+        "panel": "calculator",
+        "height": 53,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#F69B45",
+          "#E9799B",
+          "#42B883",
+          "#F4C95D",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "390-en-dark-150-cube-six-views.png",
+      "bytes": 48720,
+      "sha256": "ca11cc9079db83a80a6acd9d744e113d3c0a884924f13dea3fd0d24ca00be2d4",
+      "profile": "390-en-dark-150",
+      "diagnostics": {
+        "section": "views",
+        "shape": "cube",
+        "modelCount": 11,
+        "yaw": 0.9550000000000003,
+        "pitch": 0.53,
+        "zoom": 2.2,
+        "progress": 0.45,
+        "mode": "views",
+        "selected": null,
+        "playing": true,
+        "auto": false,
+        "panel": "none",
+        "height": 53,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#F69B45",
+          "#E9799B",
+          "#42B883",
+          "#F4C95D",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "390-en-dark-150-cone-curved-surface.png",
+      "bytes": 72289,
+      "sha256": "42a91d9dc02373a4b31f0bed6af997724507daf827d1089ec55ceecc0cec64ab",
+      "profile": "390-en-dark-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "cone",
+        "modelCount": 11,
+        "yaw": 0.55,
+        "pitch": 0.35,
+        "zoom": 1,
+        "progress": 0,
+        "mode": "model",
+        "selected": 1,
+        "playing": false,
+        "auto": false,
+        "panel": "none",
+        "height": 53,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "390-en-dark-150-sphere-no-flat-net.png",
+      "bytes": 85056,
+      "sha256": "a719932fc80aa057e9ba60cf428b5c2509459498bac56b2479f5e5d6d648e002",
+      "profile": "390-en-dark-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "sphere",
+        "modelCount": 11,
+        "yaw": 0.55,
+        "pitch": 0.35,
+        "zoom": 1,
+        "progress": 0,
+        "mode": "model",
+        "selected": null,
+        "playing": false,
+        "auto": false,
+        "panel": "none",
+        "height": 53,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "430-ms-light-150-cube-fold-selected-top.png",
+      "bytes": 68767,
+      "sha256": "431180e64b4ca24c703c0c4f30d82eb49c012d2264808d5788d9ff32c5266c03",
+      "profile": "430-ms-light-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "cube",
+        "modelCount": 11,
+        "yaw": 0.55,
+        "pitch": 0.35,
+        "zoom": 1,
+        "progress": 0.45,
+        "mode": "model",
+        "selected": 4,
+        "playing": false,
+        "auto": false,
+        "panel": "none",
+        "height": 48,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#F69B45",
+          "#E9799B",
+          "#42B883",
+          "#F4C95D",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "430-ms-light-150-notes-overlay.png",
+      "bytes": 60617,
+      "sha256": "4221e37b7bb7b86e37d064995513e0a1645efd0c030e743987980e0084d4faa2",
+      "profile": "430-ms-light-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "cube",
+        "modelCount": 11,
+        "yaw": 0.9550000000000003,
+        "pitch": 0.53,
+        "zoom": 2.2,
+        "progress": 0.45,
+        "mode": "model",
+        "selected": 4,
+        "playing": false,
+        "auto": false,
+        "panel": "notes",
+        "height": 48,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#F69B45",
+          "#E9799B",
+          "#42B883",
+          "#F4C95D",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "430-ms-light-150-calculator-overlay.png",
+      "bytes": 62512,
+      "sha256": "f378f860c6124a8a4f115f86b65391e69a5c8f9a9e1ac7182f4eacc427b20caa",
+      "profile": "430-ms-light-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "cube",
+        "modelCount": 11,
+        "yaw": 0.9550000000000003,
+        "pitch": 0.53,
+        "zoom": 2.2,
+        "progress": 0.45,
+        "mode": "model",
+        "selected": 4,
+        "playing": false,
+        "auto": false,
+        "panel": "calculator",
+        "height": 53,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#F69B45",
+          "#E9799B",
+          "#42B883",
+          "#F4C95D",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "430-ms-light-150-cube-six-views.png",
+      "bytes": 58362,
+      "sha256": "9cf06fe5358649bae7d5c513b20fb2c041010fe1816972df769d0b17f9b7353c",
+      "profile": "430-ms-light-150",
+      "diagnostics": {
+        "section": "views",
+        "shape": "cube",
+        "modelCount": 11,
+        "yaw": 0.9550000000000003,
+        "pitch": 0.53,
+        "zoom": 2.2,
+        "progress": 0.45,
+        "mode": "views",
+        "selected": null,
+        "playing": true,
+        "auto": false,
+        "panel": "none",
+        "height": 53,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#F69B45",
+          "#E9799B",
+          "#42B883",
+          "#F4C95D",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "430-ms-light-150-cone-curved-surface.png",
+      "bytes": 78437,
+      "sha256": "4de8a430d244f4c369fa8ed18dbda4b8d2a82dae3d03eaf65160398e62b9cdb4",
+      "profile": "430-ms-light-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "cone",
+        "modelCount": 11,
+        "yaw": 0.55,
+        "pitch": 0.35,
+        "zoom": 1,
+        "progress": 0,
+        "mode": "model",
+        "selected": 1,
+        "playing": false,
+        "auto": false,
+        "panel": "none",
+        "height": 53,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "430-ms-light-150-sphere-no-flat-net.png",
+      "bytes": 89661,
+      "sha256": "01c89c7bb1d846f4fed32b5173d4a77d4d0f3c1c190a877d7389246f1c37af15",
+      "profile": "430-ms-light-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "sphere",
+        "modelCount": 11,
+        "yaw": 0.55,
+        "pitch": 0.35,
+        "zoom": 1,
+        "progress": 0,
+        "mode": "model",
+        "selected": null,
+        "playing": false,
+        "auto": false,
+        "panel": "none",
+        "height": 53,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "430-en-dark-150-cube-fold-selected-top.png",
+      "bytes": 64101,
+      "sha256": "0671a6d7cf24a2217a48ead51e26b1985021bd2b2497e0272a978ccb42a5eb18",
+      "profile": "430-en-dark-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "cube",
+        "modelCount": 11,
+        "yaw": 0.55,
+        "pitch": 0.35,
+        "zoom": 1,
+        "progress": 0.45,
+        "mode": "model",
+        "selected": 4,
+        "playing": false,
+        "auto": false,
+        "panel": "none",
+        "height": 48,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#F69B45",
+          "#E9799B",
+          "#42B883",
+          "#F4C95D",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "430-en-dark-150-notes-overlay.png",
+      "bytes": 65020,
+      "sha256": "604a4cb002f262fdaf315cc1432e3b8cf194791de5aeaf1e4fd1a5d5667a2e73",
+      "profile": "430-en-dark-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "cube",
+        "modelCount": 11,
+        "yaw": 0.9550000000000003,
+        "pitch": 0.53,
+        "zoom": 2.2,
+        "progress": 0.45,
+        "mode": "model",
+        "selected": 4,
+        "playing": false,
+        "auto": false,
+        "panel": "notes",
+        "height": 48,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#F69B45",
+          "#E9799B",
+          "#42B883",
+          "#F4C95D",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "430-en-dark-150-calculator-overlay.png",
+      "bytes": 65192,
+      "sha256": "d04353b2a800a959aa6f37d02940cb5af6e759e222e93b95c10aa890cce8aeaf",
+      "profile": "430-en-dark-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "cube",
+        "modelCount": 11,
+        "yaw": 0.9550000000000003,
+        "pitch": 0.53,
+        "zoom": 2.2,
+        "progress": 0.45,
+        "mode": "model",
+        "selected": 4,
+        "playing": false,
+        "auto": false,
+        "panel": "calculator",
+        "height": 53,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#F69B45",
+          "#E9799B",
+          "#42B883",
+          "#F4C95D",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "430-en-dark-150-cube-six-views.png",
+      "bytes": 53543,
+      "sha256": "0a3c28f6fe635165c8d5a0c608db81b12c5acc5ff5de64975a6abbbaab3c4399",
+      "profile": "430-en-dark-150",
+      "diagnostics": {
+        "section": "views",
+        "shape": "cube",
+        "modelCount": 11,
+        "yaw": 0.9550000000000003,
+        "pitch": 0.53,
+        "zoom": 2.2,
+        "progress": 0.45,
+        "mode": "views",
+        "selected": null,
+        "playing": true,
+        "auto": false,
+        "panel": "none",
+        "height": 53,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#F69B45",
+          "#E9799B",
+          "#42B883",
+          "#F4C95D",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "430-en-dark-150-cone-curved-surface.png",
+      "bytes": 73076,
+      "sha256": "01f4bc76cffe00465c8db65d0ca93c507e59b36d394cbb3d1b89e539c0b2fa4e",
+      "profile": "430-en-dark-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "cone",
+        "modelCount": 11,
+        "yaw": 0.55,
+        "pitch": 0.35,
+        "zoom": 1,
+        "progress": 0,
+        "mode": "model",
+        "selected": 1,
+        "playing": false,
+        "auto": false,
+        "panel": "none",
+        "height": 53,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "430-en-dark-150-sphere-no-flat-net.png",
+      "bytes": 90347,
+      "sha256": "093c12ca1f9f3616467a7f1f29ff0ff3f8bfb6a5b93bab1b1a47169a905b13fc",
+      "profile": "430-en-dark-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "sphere",
+        "modelCount": 11,
+        "yaw": 0.55,
+        "pitch": 0.35,
+        "zoom": 1,
+        "progress": 0,
+        "mode": "model",
+        "selected": null,
+        "playing": false,
+        "auto": false,
+        "panel": "none",
+        "height": 53,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "768-ms-light-150-cube-fold-selected-top.png",
+      "bytes": 98735,
+      "sha256": "b32aa6891c84266c34a3798fdf70757369aea25830d3ecd66ccd7f089bba3b8c",
+      "profile": "768-ms-light-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "cube",
+        "modelCount": 11,
+        "yaw": 0.55,
+        "pitch": 0.35,
+        "zoom": 1,
+        "progress": 0.45,
+        "mode": "model",
+        "selected": 4,
+        "playing": false,
+        "auto": false,
+        "panel": "none",
+        "height": 48,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#F69B45",
+          "#E9799B",
+          "#42B883",
+          "#F4C95D",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "768-ms-light-150-notes-overlay.png",
+      "bytes": 106035,
+      "sha256": "16304e8dba115621b99b3742d4753af29c71420d54916a5985697b56d73b1022",
+      "profile": "768-ms-light-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "cube",
+        "modelCount": 11,
+        "yaw": 0.9550000000000003,
+        "pitch": 0.53,
+        "zoom": 2.2,
+        "progress": 0.45,
+        "mode": "model",
+        "selected": 4,
+        "playing": false,
+        "auto": false,
+        "panel": "notes",
+        "height": 48,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#F69B45",
+          "#E9799B",
+          "#42B883",
+          "#F4C95D",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "768-ms-light-150-calculator-overlay.png",
+      "bytes": 116499,
+      "sha256": "2fc4cc1247ac9fa891d0f029b75d539354517ee98712492b0ed14b5f46bdd2ef",
+      "profile": "768-ms-light-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "cube",
+        "modelCount": 11,
+        "yaw": 0.9550000000000003,
+        "pitch": 0.53,
+        "zoom": 2.2,
+        "progress": 0.45,
+        "mode": "model",
+        "selected": 4,
+        "playing": false,
+        "auto": false,
+        "panel": "calculator",
+        "height": 53,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#F69B45",
+          "#E9799B",
+          "#42B883",
+          "#F4C95D",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "768-ms-light-150-cube-six-views.png",
+      "bytes": 105136,
+      "sha256": "e86dfb2886cf1f62243efbc025324f2f9daab67c71fd50d0c146c92bb8ac17e6",
+      "profile": "768-ms-light-150",
+      "diagnostics": {
+        "section": "views",
+        "shape": "cube",
+        "modelCount": 11,
+        "yaw": 0.9550000000000003,
+        "pitch": 0.53,
+        "zoom": 2.2,
+        "progress": 0.4471420689655172,
+        "mode": "views",
+        "selected": null,
+        "playing": true,
+        "auto": false,
+        "panel": "none",
+        "height": 53,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#F69B45",
+          "#E9799B",
+          "#42B883",
+          "#F4C95D",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "768-ms-light-150-cone-curved-surface.png",
+      "bytes": 113196,
+      "sha256": "cbcebbea27917892e5dc833f606d3f11b49c19d78e735bc6fa5602692de72338",
+      "profile": "768-ms-light-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "cone",
+        "modelCount": 11,
+        "yaw": 0.55,
+        "pitch": 0.35,
+        "zoom": 1,
+        "progress": 0,
+        "mode": "model",
+        "selected": 1,
+        "playing": false,
+        "auto": false,
+        "panel": "none",
+        "height": 53,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "768-ms-light-150-sphere-no-flat-net.png",
+      "bytes": 126595,
+      "sha256": "0a7c5e6b719ae16a29f06c019a36e2842a3169eed973f7ca1546ed207c34100b",
+      "profile": "768-ms-light-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "sphere",
+        "modelCount": 11,
+        "yaw": 0.55,
+        "pitch": 0.35,
+        "zoom": 1,
+        "progress": 0,
+        "mode": "model",
+        "selected": null,
+        "playing": false,
+        "auto": false,
+        "panel": "none",
+        "height": 53,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "768-en-dark-150-cube-fold-selected-top.png",
+      "bytes": 94942,
+      "sha256": "9cce88bcd06f8e5227b3328bc0bf1a0a0c7a53bb062692ce611344eda3c11bca",
+      "profile": "768-en-dark-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "cube",
+        "modelCount": 11,
+        "yaw": 0.55,
+        "pitch": 0.35,
+        "zoom": 1,
+        "progress": 0.45,
+        "mode": "model",
+        "selected": 4,
+        "playing": false,
+        "auto": false,
+        "panel": "none",
+        "height": 48,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#F69B45",
+          "#E9799B",
+          "#42B883",
+          "#F4C95D",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "768-en-dark-150-notes-overlay.png",
+      "bytes": 107119,
+      "sha256": "06e76353be44ebf14101250afd8bb10dc34e6f07b8f8585db30772496f66c756",
+      "profile": "768-en-dark-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "cube",
+        "modelCount": 11,
+        "yaw": 0.9550000000000003,
+        "pitch": 0.53,
+        "zoom": 2.2,
+        "progress": 0.45,
+        "mode": "model",
+        "selected": 4,
+        "playing": false,
+        "auto": false,
+        "panel": "notes",
+        "height": 48,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#F69B45",
+          "#E9799B",
+          "#42B883",
+          "#F4C95D",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "768-en-dark-150-calculator-overlay.png",
+      "bytes": 121288,
+      "sha256": "635b2aaa9cecb442ae3f26b210e02ac6f01123799734e62c633797dbdfd3a03e",
+      "profile": "768-en-dark-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "cube",
+        "modelCount": 11,
+        "yaw": 0.9550000000000003,
+        "pitch": 0.53,
+        "zoom": 2.2,
+        "progress": 0.45,
+        "mode": "model",
+        "selected": 4,
+        "playing": false,
+        "auto": false,
+        "panel": "calculator",
+        "height": 53,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#F69B45",
+          "#E9799B",
+          "#42B883",
+          "#F4C95D",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "768-en-dark-150-cube-six-views.png",
+      "bytes": 94941,
+      "sha256": "d012c4af82548382ca74a06f7d49c6d23f8e2faf0e5f01f7375c3f48d4a1744e",
+      "profile": "768-en-dark-150",
+      "diagnostics": {
+        "section": "views",
+        "shape": "cube",
+        "modelCount": 11,
+        "yaw": 0.9550000000000003,
+        "pitch": 0.53,
+        "zoom": 2.2,
+        "progress": 0.45,
+        "mode": "views",
+        "selected": null,
+        "playing": true,
+        "auto": false,
+        "panel": "none",
+        "height": 53,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#F69B45",
+          "#E9799B",
+          "#42B883",
+          "#F4C95D",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "768-en-dark-150-cone-curved-surface.png",
+      "bytes": 111148,
+      "sha256": "3185be4acc273634e7ed7ccc85a502daf3a500b788210840dfb59623646385c3",
+      "profile": "768-en-dark-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "cone",
+        "modelCount": 11,
+        "yaw": 0.55,
+        "pitch": 0.35,
+        "zoom": 1,
+        "progress": 0,
+        "mode": "model",
+        "selected": 1,
+        "playing": false,
+        "auto": false,
+        "panel": "none",
+        "height": 53,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF",
+          "#9B7EDC"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    },
+    {
+      "path": "768-en-dark-150-sphere-no-flat-net.png",
+      "bytes": 131229,
+      "sha256": "d3aee9239387c56ce52c203d22fe1789d16e3b19dcff39d1704f0718e041c1f5",
+      "profile": "768-en-dark-150",
+      "diagnostics": {
+        "section": "explore",
+        "shape": "sphere",
+        "modelCount": 11,
+        "yaw": 0.55,
+        "pitch": 0.35,
+        "zoom": 1,
+        "progress": 0,
+        "mode": "model",
+        "selected": null,
+        "playing": false,
+        "auto": false,
+        "panel": "none",
+        "height": 53,
+        "labKind": null,
+        "labMode": null,
+        "projectionShape": "cube",
+        "projectionScale": 1,
+        "calculationShape": null,
+        "faceColors": [
+          "#4C8DFF"
+        ],
+        "meshSource": "learning-mesh.mjs/studySolidMesh"
+      }
+    }
+  ],
+  "checks": [
+    {
+      "profile": "320-ms-light-150",
+      "check": "actual Canvas2D raster",
+      "width": 266,
+      "height": 272,
+      "nontransparent": 25896
+    },
+    {
+      "profile": "320-ms-light-150",
+      "check": "real pointer drag rotates",
+      "before": {
+        "yaw": 0.55,
+        "pitch": 0.35
+      },
+      "after": {
+        "yaw": 0.9550000000000003,
+        "pitch": 0.53
+      }
+    },
+    {
+      "profile": "320-ms-light-150",
+      "check": "real two-finger touch pinch zooms",
+      "before": 1,
+      "after": 2.2
+    },
+    {
+      "profile": "320-ms-light-150",
+      "check": "keyboard panel resize",
+      "heightPercent": 53
+    },
+    {
+      "profile": "320-ms-light-150",
+      "check": "panel reopen retains mounted document and entered measurement"
+    },
+    {
+      "profile": "320-ms-light-150",
+      "check": "sphere fold rejected",
+      "error": "net-unavailable"
+    },
+    {
+      "profile": "320-en-dark-150",
+      "check": "actual Canvas2D raster",
+      "width": 266,
+      "height": 272,
+      "nontransparent": 25822
+    },
+    {
+      "profile": "320-en-dark-150",
+      "check": "real pointer drag rotates",
+      "before": {
+        "yaw": 0.55,
+        "pitch": 0.35
+      },
+      "after": {
+        "yaw": 0.9550000000000003,
+        "pitch": 0.53
+      }
+    },
+    {
+      "profile": "320-en-dark-150",
+      "check": "real two-finger touch pinch zooms",
+      "before": 1,
+      "after": 2.2
+    },
+    {
+      "profile": "320-en-dark-150",
+      "check": "keyboard panel resize",
+      "heightPercent": 53
+    },
+    {
+      "profile": "320-en-dark-150",
+      "check": "panel reopen retains mounted document and entered measurement"
+    },
+    {
+      "profile": "320-en-dark-150",
+      "check": "sphere fold rejected",
+      "error": "net-unavailable"
+    },
+    {
+      "profile": "390-ms-light-150",
+      "check": "actual Canvas2D raster",
+      "width": 336,
+      "height": 272,
+      "nontransparent": 27318
+    },
+    {
+      "profile": "390-ms-light-150",
+      "check": "real pointer drag rotates",
+      "before": {
+        "yaw": 0.55,
+        "pitch": 0.35
+      },
+      "after": {
+        "yaw": 0.9550000000000003,
+        "pitch": 0.53
+      }
+    },
+    {
+      "profile": "390-ms-light-150",
+      "check": "real two-finger touch pinch zooms",
+      "before": 1,
+      "after": 2.2
+    },
+    {
+      "profile": "390-ms-light-150",
+      "check": "keyboard panel resize",
+      "heightPercent": 53
+    },
+    {
+      "profile": "390-ms-light-150",
+      "check": "panel reopen retains mounted document and entered measurement"
+    },
+    {
+      "profile": "390-ms-light-150",
+      "check": "sphere fold rejected",
+      "error": "net-unavailable"
+    },
+    {
+      "profile": "390-en-dark-150",
+      "check": "actual Canvas2D raster",
+      "width": 336,
+      "height": 272,
+      "nontransparent": 27229
+    },
+    {
+      "profile": "390-en-dark-150",
+      "check": "real pointer drag rotates",
+      "before": {
+        "yaw": 0.55,
+        "pitch": 0.35
+      },
+      "after": {
+        "yaw": 0.9550000000000003,
+        "pitch": 0.53
+      }
+    },
+    {
+      "profile": "390-en-dark-150",
+      "check": "real two-finger touch pinch zooms",
+      "before": 1,
+      "after": 2.2
+    },
+    {
+      "profile": "390-en-dark-150",
+      "check": "keyboard panel resize",
+      "heightPercent": 53
+    },
+    {
+      "profile": "390-en-dark-150",
+      "check": "panel reopen retains mounted document and entered measurement"
+    },
+    {
+      "profile": "390-en-dark-150",
+      "check": "sphere fold rejected",
+      "error": "net-unavailable"
+    },
+    {
+      "profile": "430-ms-light-150",
+      "check": "actual Canvas2D raster",
+      "width": 376,
+      "height": 272,
+      "nontransparent": 27345
+    },
+    {
+      "profile": "430-ms-light-150",
+      "check": "real pointer drag rotates",
+      "before": {
+        "yaw": 0.55,
+        "pitch": 0.35
+      },
+      "after": {
+        "yaw": 0.9550000000000003,
+        "pitch": 0.53
+      }
+    },
+    {
+      "profile": "430-ms-light-150",
+      "check": "real two-finger touch pinch zooms",
+      "before": 1,
+      "after": 2.2
+    },
+    {
+      "profile": "430-ms-light-150",
+      "check": "keyboard panel resize",
+      "heightPercent": 53
+    },
+    {
+      "profile": "430-ms-light-150",
+      "check": "panel reopen retains mounted document and entered measurement"
+    },
+    {
+      "profile": "430-ms-light-150",
+      "check": "sphere fold rejected",
+      "error": "net-unavailable"
+    },
+    {
+      "profile": "430-en-dark-150",
+      "check": "actual Canvas2D raster",
+      "width": 376,
+      "height": 272,
+      "nontransparent": 27256
+    },
+    {
+      "profile": "430-en-dark-150",
+      "check": "real pointer drag rotates",
+      "before": {
+        "yaw": 0.55,
+        "pitch": 0.35
+      },
+      "after": {
+        "yaw": 0.9550000000000003,
+        "pitch": 0.53
+      }
+    },
+    {
+      "profile": "430-en-dark-150",
+      "check": "real two-finger touch pinch zooms",
+      "before": 1,
+      "after": 2.2
+    },
+    {
+      "profile": "430-en-dark-150",
+      "check": "keyboard panel resize",
+      "heightPercent": 53
+    },
+    {
+      "profile": "430-en-dark-150",
+      "check": "panel reopen retains mounted document and entered measurement"
+    },
+    {
+      "profile": "430-en-dark-150",
+      "check": "sphere fold rejected",
+      "error": "net-unavailable"
+    },
+    {
+      "profile": "768-ms-light-150",
+      "check": "actual Canvas2D raster",
+      "width": 714,
+      "height": 288,
+      "nontransparent": 33475
+    },
+    {
+      "profile": "768-ms-light-150",
+      "check": "real pointer drag rotates",
+      "before": {
+        "yaw": 0.55,
+        "pitch": 0.35
+      },
+      "after": {
+        "yaw": 0.9550000000000003,
+        "pitch": 0.53
+      }
+    },
+    {
+      "profile": "768-ms-light-150",
+      "check": "real two-finger touch pinch zooms",
+      "before": 1,
+      "after": 2.2
+    },
+    {
+      "profile": "768-ms-light-150",
+      "check": "keyboard panel resize",
+      "heightPercent": 53
+    },
+    {
+      "profile": "768-ms-light-150",
+      "check": "panel reopen retains mounted document and entered measurement"
+    },
+    {
+      "profile": "768-ms-light-150",
+      "check": "sphere fold rejected",
+      "error": "net-unavailable"
+    },
+    {
+      "profile": "768-en-dark-150",
+      "check": "actual Canvas2D raster",
+      "width": 714,
+      "height": 288,
+      "nontransparent": 33386
+    },
+    {
+      "profile": "768-en-dark-150",
+      "check": "real pointer drag rotates",
+      "before": {
+        "yaw": 0.55,
+        "pitch": 0.35
+      },
+      "after": {
+        "yaw": 0.9550000000000003,
+        "pitch": 0.53
+      }
+    },
+    {
+      "profile": "768-en-dark-150",
+      "check": "real two-finger touch pinch zooms",
+      "before": 1,
+      "after": 2.2
+    },
+    {
+      "profile": "768-en-dark-150",
+      "check": "keyboard panel resize",
+      "heightPercent": 53
+    },
+    {
+      "profile": "768-en-dark-150",
+      "check": "panel reopen retains mounted document and entered measurement"
+    },
+    {
+      "profile": "768-en-dark-150",
+      "check": "sphere fold rejected",
+      "error": "net-unavailable"
+    }
+  ],
+  "errors": [],
+  "completed": true
+}

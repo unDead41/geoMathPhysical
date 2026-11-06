@@ -12,6 +12,19 @@ final duelStrings = FeatureLocalizations(
       'nameHint': '2–60 characters',
       'pin': 'Room PIN',
       'pinHint': '6 digits from your friend',
+      'pastePin': 'Paste PIN or invitation',
+      'copyPin': 'Copy PIN',
+      'copyInvitation': 'Copy invitation',
+      'joinInstructions': 'Your friend opens Play → Duel → Join a room, enters this PIN and chooses a display name.',
+      'invitation': 'Join my GeoMath Duel. Open Play → Duel → Join a room and enter PIN {pin}. Both players choose I’m ready to begin.',
+      'pinPasted': 'PIN pasted. Check it, then join when you are ready.',
+      'pinCopied': 'PIN copied.',
+      'invitationCopied':
+          'Invitation copied. Paste it in a message to your friend.',
+      'clipboardInvalid':
+          'Copy one 6-digit PIN or a Duel invitation, then try again.',
+      'clipboardError':
+          'Clipboard access failed. You can enter or select the PIN manually.',
       'create': 'Create a room',
       'join': 'Join a room',
       'orJoin': 'Have a PIN?',
@@ -26,6 +39,12 @@ final duelStrings = FeatureLocalizations(
       'ready': 'Ready',
       'notReady': 'Not ready',
       'readyAction': 'I’m ready',
+      'readyCount': '{count} of 2 players ready',
+      'readyPrompt':
+          'Choose I’m ready when you are set. Your friend must also be ready.',
+      'waitingReady':
+          'You are ready. Waiting for your friend to choose I’m ready.',
+      'bothReady': 'Both players are ready. The server is starting the match.',
       'readyNote':
           'The match begins three seconds after both players are ready.',
       'countdown': 'Starting in {seconds}',
@@ -36,7 +55,9 @@ final duelStrings = FeatureLocalizations(
       'solidStage': 'R1 · Choose the solid',
       'netStage': 'R2 · Choose the matching net',
       'selection': 'Selected: {shape}',
-      'choose': 'Swipe to browse. Tap a card, then check your selection.',
+      'choose': 'Swipe to browse. Tap a card or hold and drag it to the active reader, then check your selection.',
+      'activeReader': '{reader} · Active reader',
+      'dropHere': 'Drop a card here to select it. Check selection confirms your answer.',
       'previousCard': 'Previous card',
       'nextCard': 'Next card',
       'cardPosition': 'Card {index} of {count}',
@@ -117,6 +138,19 @@ final duelStrings = FeatureLocalizations(
       'nameHint': '2–60 aksara',
       'pin': 'PIN bilik',
       'pinHint': '6 digit daripada rakan',
+      'pastePin': 'Tampal PIN atau jemputan',
+      'copyPin': 'Salin PIN',
+      'copyInvitation': 'Salin jemputan',
+      'joinInstructions': 'Rakan membuka Main → Duel → Sertai bilik, memasukkan PIN ini dan memilih nama paparan.',
+      'invitation': 'Sertai Duel GeoMath saya. Buka Main → Duel → Sertai bilik dan masukkan PIN {pin}. Kedua-dua pemain memilih Saya sedia untuk bermula.',
+      'pinPasted':
+          'PIN ditampal. Semak PIN, kemudian sertai apabila anda sedia.',
+      'pinCopied': 'PIN disalin.',
+      'invitationCopied':
+          'Jemputan disalin. Tampalkannya dalam mesej kepada rakan.',
+      'clipboardInvalid':
+          'Salin satu PIN 6 digit atau jemputan Duel, kemudian cuba lagi.',
+      'clipboardError': 'Papan klip tidak dapat dicapai. Anda boleh menaip atau memilih PIN secara manual.',
       'create': 'Cipta bilik',
       'join': 'Sertai bilik',
       'orJoin': 'Sudah ada PIN?',
@@ -131,6 +165,12 @@ final duelStrings = FeatureLocalizations(
       'ready': 'Sedia',
       'notReady': 'Belum sedia',
       'readyAction': 'Saya sedia',
+      'readyCount': '{count} daripada 2 pemain sedia',
+      'readyPrompt':
+          'Pilih Saya sedia apabila bersedia. Rakan anda juga perlu bersedia.',
+      'waitingReady': 'Anda sedia. Menunggu rakan memilih Saya sedia.',
+      'bothReady':
+          'Kedua-dua pemain sedia. Pelayan sedang memulakan perlawanan.',
       'readyNote':
           'Perlawanan bermula tiga saat selepas kedua-dua pemain bersedia.',
       'countdown': 'Bermula dalam {seconds}',
@@ -141,7 +181,9 @@ final duelStrings = FeatureLocalizations(
       'solidStage': 'R1 · Pilih pepejal',
       'netStage': 'R2 · Pilih bentangan yang sepadan',
       'selection': 'Dipilih: {shape}',
-      'choose': 'Leret untuk melihat kad. Ketik kad, kemudian semak pilihan.',
+      'choose': 'Leret untuk melihat kad. Ketik kad atau tekan lama dan seret ke pembaca aktif, kemudian semak pilihan.',
+      'activeReader': '{reader} · Pembaca aktif',
+      'dropHere': 'Letak kad di sini untuk memilihnya. Semak pilihan mengesahkan jawapan anda.',
       'previousCard': 'Kad sebelumnya',
       'nextCard': 'Kad seterusnya',
       'cardPosition': 'Kad {index} daripada {count}',
