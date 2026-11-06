@@ -1,0 +1,24 @@
+name: Retire consolidated branches
+on:
+  push:
+    branches: [maintenance/cleanup-20261106]
+    paths: ['tools/maintenance/retire-plan.json']
+permissions:
+  contents: write
+concurrency:
+  group: retire-consolidated-branches
+  cancel-in-progress: false
+jobs:
+  retire:
+    if: contains(github.event.head_commit.message, '[retire cleanup]')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Verify main, archive all heads and retire redundant branches
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/maintenance/retire_branches.py

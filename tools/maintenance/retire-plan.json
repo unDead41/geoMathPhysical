@@ -1,0 +1,40 @@
+{
+  "repository": "unDead41/geoMathPhysical",
+  "original_branches": [
+    {
+      "name": "codex/game-flow-rgb",
+      "sha": "e457b0536987d35042da4d47337fea65a0ad5d77"
+    },
+    {
+      "name": "codex/question-audio-elevenlabs",
+      "sha": "09122e801b91041237b897c021229721a4bbcd6c"
+    },
+    {
+      "name": "codex/question-bank-harmonised-lcd",
+      "sha": "d241ea5683c2af24d418af468cff3cdf394226ba"
+    },
+    {
+      "name": "codex/serial-unassign",
+      "sha": "797a21f01ebcd47966aef5316aa813f2834e9347"
+    },
+    {
+      "name": "main",
+      "sha": "4189dade7544f9e72d015ea18c738c3dac716bf7"
+    },
+    {
+      "name": "sharing",
+      "sha": "f05f266d7c0a941329f0e39cc4202fcecd7efabc"
+    },
+    {
+      "name": "testing/components",
+      "sha": "36d999a9016cf0389005cede7567b654c462b03d"
+    }
+  ],
+  "candidate_branch": "chore/repository-cleanup",
+  "candidate_sha": "0babf592ca83f0ba07e16bf69ac8bd14501b0417",
+  "maintenance_branch": "maintenance/cleanup-20261106",
+  "verified_main_sha": "0babf592ca83f0ba07e16bf69ac8bd14501b0417",
+  "verification_run_id": 42220241261,
+  "archive_tag": "archive/physical-before-cleanup-20261106",
+  "previous_firmware_version": "v2.0.3"
+}
